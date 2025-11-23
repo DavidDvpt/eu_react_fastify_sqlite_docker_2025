@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: ../back-end
+      dockerfile: Dockerfile.api
+    environment:
+      DATABASE_URL: "file:/data/prod.sqlite"
+    volumes:
+      - sqlite-prod:/data
+    # API NON exposée (tu ne veux qu'un seul port externe)
+    expose:
+      - "3000"
+
+  front:
+    build:
+      context: ../front-end
+      dockerfile: Dockerfile.front
+    ports:
+      - "8080:80" # unique port externe
+    depends_on:
+      - api
+
+volumes:
+  sqlite-prod:

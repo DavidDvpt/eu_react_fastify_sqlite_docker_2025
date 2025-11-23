@@ -1,0 +1,20 @@
+{
+  "name": "eu_react_fastify_docker",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev:docker": "docker compose -f docker/docker-compose.dev.yml up -d",
+    "dev:backend": "cd back-end && npm run dev",
+    "dev:frontend": "cd front-end && npm run dev",
+    "wait:api": "wait-port 3000",
+    "dev": "npm run dev:docker && npm run dev:backend & npm run wait:api && npm run dev:frontend"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "wait-port": "^1.1.0"
+  }
+}

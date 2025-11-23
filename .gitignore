@@ -1,0 +1,20 @@
+# Node
+node_modules/
+
+# Env
+.env
+.env.local
+
+# Build
+dist/
+build/
+
+# SQLite (ne jamais versionner la DB prod)
+database/data/*.sqlite
+database/data/*.db
+
+# Logs
+*.log
+
+# Docker volumes (si jamais)
+docker-volumes/
