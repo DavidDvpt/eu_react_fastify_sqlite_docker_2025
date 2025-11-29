@@ -1,95 +1,85 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
 }
 
-model ItemCategories {
-  id           String  @id @default(uuid())
+model item_categories {
+  id           String         @id @default(uuid())
   date_created String
   date_updated String?
-  is_active    Boolean
-  name         String  @unique
+  is_active    Int
+  name         String         @unique
 
-  ItemTypes ItemTypes[]
-
-  @@map("ItemCategories")
+  item_types   item_types[]
 }
 
 model user {
-  id            String  @id @default(uuid())
-  firstname     String
-  lastname      String
-  pseudo        String  @unique
+  id           String  @id @default(uuid())
+  firstname    String
+  lastname     String
+  pseudo       String  @unique
   password_hash String
-  role          Int
-  date_created  String
-  date_updated  String?
-  is_active     Boolean
-
-  @@map("user")
+  role         Int
+  date_created String
+  date_updated String?
+  is_active    Int
 }
 
-model ItemTypes {
-  id           String  @id @default(uuid())
+model item_types {
+  id           String             @id @default(uuid())
   category_id  String
   date_created String
   date_updated String?
-  is_active    Boolean
-  name         String  @unique
+  is_active    Int
+  name         String             @unique
 
-  category ItemCategories @relation(fields: [category_id], references: [id], onDelete: Cascade)
-  Items    Items[]
-
-  @@index([category_id], map: "IX_ItemTypes_category_id")
-  @@map("ItemTypes")
+  category     item_categories    @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  items        items[]
 }
 
-model Items {
-  id           String  @id @default(uuid())
+model items {
+  id           String        @id @default(uuid())
   image_url_id String
   value        Decimal
-  is_limited   Boolean
+  is_limited   Int
   item_type_id String
   date_created String
   date_updated String?
-  is_active    Boolean
-  name         String  @unique
+  is_active    Int
+  name         String        @unique
 
-  itemType      ItemTypes       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
-  InventoryLots InventoryLots[]
-  Transactions  Transactions[]
-
-  @@index([item_type_id], map: "IX_Items_item_type_id")
-  @@map("Items")
+  item_type    item_types    @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  inventory_lots inventory_lots[]
+  transactions   transactions[]
 }
 
-model InventoryLots {
-  id                 String  @id @default(uuid())
+model inventory_lots {
+  id                String     @id @default(uuid())
   quantity_remaining Int
-  quantity_exported  Int
-  price_remaining    String
-  item_id            String
-  lot_type           Int
-  date_created       String
-  date_updated       String?
-  is_active          Boolean
+  quantity_exported Int
+  price_remaining   String
+  item_id           String
+  lot_type          Int
+  date_created      String
+  date_updated      String?
+  is_active         Int
 
-  item                     Items                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  InventoryLotTransactions InventoryLotTransactions[]
-
-  @@index([item_id], map: "IX_InventoryLots_item_id")
-  @@map("InventoryLots")
+  item              items      @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  links             inventory_lot_transactions[]
 }
 
-model Transactions {
-  id               String   @id @default(uuid())
+model transactions {
+  id              String      @id @default(uuid())
   transaction_type Int
   sell_status      Int?
   quantity         Int
@@ -98,25 +88,20 @@ model Transactions {
   fee              Decimal?
   date_created     String
   date_updated     String?
-  is_active        Boolean
+  is_active        Int
   item_id          String
 
-  item                     Items                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  InventoryLotTransactions InventoryLotTransactions[]
-
-  @@index([item_id], map: "IX_Transactions_item_id")
-  @@map("Transactions")
+  item             items       @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  lots             inventory_lot_transactions[]
 }
 
-model InventoryLotTransactions {
+model inventory_lot_transactions {
   inventory_lot_id String
   transaction_id   String
-  Quantity         Int
+  quantity         Int
 
-  inventoryLot InventoryLots @relation(fields: [inventory_lot_id], references: [id])
-  transaction  Transactions  @relation(fields: [transaction_id], references: [id])
+  inventory_lot inventory_lots @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)
+  transaction   transactions   @relation(fields: [transaction_id], references: [id], onDelete: Restrict)
 
   @@id([inventory_lot_id, transaction_id])
-  @@index([transaction_id], map: "IX_InventoryLotTransactions_transaction_id")
-  @@map("InventoryLotTransactions")
 }

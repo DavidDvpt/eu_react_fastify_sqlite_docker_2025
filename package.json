@@ -6,8 +6,10 @@
     "dev:docker": "docker compose -f docker/docker-compose.dev.yml up -d",
     "dev:backend": "cd back-end && npm run dev",
     "dev:frontend": "cd front-end && npm run dev",
-    "wait:api": "wait-port 3000",
-    "dev": "npm run dev:docker && npm run dev:backend & npm run wait:api && npm run dev:frontend"
+    "wait:api": "wait-port 8020",
+    "dev:start": "sh ./scripts/dev-init.sh",
+    "dev:stop": "sh ./scripts/dev-stop.sh",
+    "db:reset": "sh ./scripts/reset-db.sh"
   },
   "keywords": [],
   "author": "",

@@ -2,10 +2,9 @@ import Fastify from "fastify";
 
 export function buildApp() {
   const app = Fastify({
-    logger: true, // you can set it to false in prod
+    logger: true,
   });
 
-  // route exemple
   app.get("/api/health", async () => {
     return { status: "ok" };
   });
