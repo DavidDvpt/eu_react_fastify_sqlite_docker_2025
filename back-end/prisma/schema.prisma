@@ -6,93 +6,124 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../src/generated/prisma"
+  output   = "./generated"
 }
 
 datasource db {
   provider = "postgresql"
 }
 
-model item_categories {
-  id           String         @id @default(uuid())
-  date_created String
-  date_updated String?
-  is_active    Int
-  name         String         @unique
+enum Role {
+  ADMIN
+  USER
+}
 
-  item_types   item_types[]
+enum LotType {
+  SESSION_LINE
+  TRANSACTION
+  LOT
+}
+
+enum TransactionType {
+  PURCHASE
+  FOUND
+  GIFT
+  EXISTING_STOCK
+  LOST
+  GIVEN
+}
+
+enum TransactionStatus {
+  SOLDED
+  RETURNED
+  RUNNING
+}
+
+enum TransactionLineType {
+  GAIN
+  LOST
 }
 
 model user {
-  id           String  @id @default(uuid())
-  firstname    String
-  lastname     String
-  pseudo       String  @unique
+  id            String  @id @default(uuid())
+  firstname     String
+  lastname      String
+  pseudo        String  @unique
   password_hash String
-  role         Int
+  role          Role
+  date_created  String
+  date_updated  String?
+  is_active     Boolean
+}
+
+model item_categories {
+  id           String  @id @default(uuid())
   date_created String
   date_updated String?
-  is_active    Int
+  is_active    Boolean
+  name         String  @unique
+
+  item_types item_types[]
 }
 
 model item_types {
-  id           String             @id @default(uuid())
+  id           String  @id @default(uuid())
   category_id  String
   date_created String
   date_updated String?
-  is_active    Int
-  name         String             @unique
+  is_active    Boolean
+  name         String  @unique
 
-  category     item_categories    @relation(fields: [category_id], references: [id], onDelete: Cascade)
-  items        items[]
+  category item_categories @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  items    items[]
 }
 
 model items {
-  id           String        @id @default(uuid())
+  id           String  @id @default(uuid())
   image_url_id String
   value        Decimal
-  is_limited   Int
+  is_limited   Boolean
   item_type_id String
   date_created String
   date_updated String?
-  is_active    Int
-  name         String        @unique
+  is_active    Boolean
+  name         String  @unique
 
-  item_type    item_types    @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  item_type      item_types       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
   inventory_lots inventory_lots[]
   transactions   transactions[]
 }
 
 model inventory_lots {
-  id                String     @id @default(uuid())
+  id                 String  @id @default(uuid())
   quantity_remaining Int
-  quantity_exported Int
-  price_remaining   String
-  item_id           String
-  lot_type          Int
-  date_created      String
-  date_updated      String?
-  is_active         Int
+  quantity_exported  Int
+  price_remaining    String
+  item_id            String
+  lot_type           LotType
+  date_created       String
+  date_updated       String?
+  is_active          Boolean
 
-  item              items      @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  links             inventory_lot_transactions[]
+  item  items                        @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  links inventory_lot_transactions[]
 }
 
 model transactions {
-  id              String      @id @default(uuid())
-  transaction_type Int
-  sell_status      Int?
+  id               String             @id @default(uuid())
+  transaction_type TransactionType
+  sell_status      TransactionStatus?
   quantity         Int
   tt_value         Decimal
   ttc_value        Decimal
   fee              Decimal?
   date_created     String
   date_updated     String?
-  is_active        Int
+  is_active        Boolean
   item_id          String
 
-  item             items       @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  lots             inventory_lot_transactions[]
+  item items                        @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  lots inventory_lot_transactions[]
 }
 
 model inventory_lot_transactions {

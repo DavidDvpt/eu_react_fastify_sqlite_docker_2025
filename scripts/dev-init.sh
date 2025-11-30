@@ -34,6 +34,12 @@ npx prisma migrate reset --force
 echo "🧱 Applying migrations..."
 npx prisma migrate dev --name init
 
+echo "🔧 Generating Prisma Client..."
+npx prisma generate
+
+echo "🌱 Running seed..."
+npx prisma db seed
+
 # 3. Start backend if not already running
 if nc -z localhost $API_PORT; then
   echo "⚠️ Backend already running on port $API_PORT."
