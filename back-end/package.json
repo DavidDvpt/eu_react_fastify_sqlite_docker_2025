@@ -4,10 +4,19 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "tsx watch src/server.ts",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "prisma:reset": "dotenv -e .env -- npx prisma migrate reset --force",
+    "prisma:migrate": "dotenv -e .env -- npx prisma migrate dev --name",
+    "prisma:deploy": "dotenv -e .env -- npx prisma migrate deploy",
+    "prisma:generate": "dotenv -e .env -- npx prisma generate",
+    "prisma:seed": "dotenv -e .env -- npx prisma db seed",
+    "test": "dotenv -e .env.test -- vitest",
+    "test:all": "npm run test:db:migrate && npm run test",
+    "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
+    "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
+    "sql:extract": "tsx tools/sql-to-ts.ts"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +29,7 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "dotenv-cli": "^11.0.0",
     "prisma": "^7.0.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",

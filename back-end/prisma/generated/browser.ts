@@ -52,3 +52,8 @@ export type transactions = Prisma.transactionsModel
  * 
  */
 export type inventory_lot_transactions = Prisma.inventory_lot_transactionsModel
+/**
+ * Model seed_patch
+ * 
+ */
+export type seed_patch = Prisma.seed_patchModel

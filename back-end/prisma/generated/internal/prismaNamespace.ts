@@ -390,7 +390,8 @@ export const ModelName = {
   items: 'items',
   inventory_lots: 'inventory_lots',
   transactions: 'transactions',
-  inventory_lot_transactions: 'inventory_lot_transactions'
+  inventory_lot_transactions: 'inventory_lot_transactions',
+  seed_patch: 'seed_patch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -406,7 +407,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "item_categories" | "item_types" | "items" | "inventory_lots" | "transactions" | "inventory_lot_transactions"
+    modelProps: "user" | "item_categories" | "item_types" | "items" | "inventory_lots" | "transactions" | "inventory_lot_transactions" | "seed_patch"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -928,6 +929,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    seed_patch: {
+      payload: Prisma.$seed_patchPayload<ExtArgs>
+      fields: Prisma.seed_patchFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.seed_patchFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.seed_patchFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        findFirst: {
+          args: Prisma.seed_patchFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.seed_patchFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        findMany: {
+          args: Prisma.seed_patchFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>[]
+        }
+        create: {
+          args: Prisma.seed_patchCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        createMany: {
+          args: Prisma.seed_patchCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.seed_patchCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>[]
+        }
+        delete: {
+          args: Prisma.seed_patchDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        update: {
+          args: Prisma.seed_patchUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        deleteMany: {
+          args: Prisma.seed_patchDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.seed_patchUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.seed_patchUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>[]
+        }
+        upsert: {
+          args: Prisma.seed_patchUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$seed_patchPayload>
+        }
+        aggregate: {
+          args: Prisma.Seed_patchAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateSeed_patch>
+        }
+        groupBy: {
+          args: Prisma.seed_patchGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Seed_patchGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.seed_patchCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.Seed_patchCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1059,6 +1134,15 @@ export const Inventory_lot_transactionsScalarFieldEnum = {
 } as const
 
 export type Inventory_lot_transactionsScalarFieldEnum = (typeof Inventory_lot_transactionsScalarFieldEnum)[keyof typeof Inventory_lot_transactionsScalarFieldEnum]
+
+
+export const Seed_patchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  patch_date: 'patch_date'
+} as const
+
+export type Seed_patchScalarFieldEnum = (typeof Seed_patchScalarFieldEnum)[keyof typeof Seed_patchScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1197,6 +1281,20 @@ export type ListEnumTransactionStatusFieldRefInput<$PrismaModel> = FieldRefInput
 
 
 /**
+ * Reference to a field of type 'DateTime'
+ */
+export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
+    
+
+
+/**
+ * Reference to a field of type 'DateTime[]'
+ */
+export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
+    
+
+
+/**
  * Reference to a field of type 'Float'
  */
 export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -1295,6 +1393,7 @@ export type GlobalOmitConfig = {
   inventory_lots?: Prisma.inventory_lotsOmit
   transactions?: Prisma.transactionsOmit
   inventory_lot_transactions?: Prisma.inventory_lot_transactionsOmit
+  seed_patch?: Prisma.seed_patchOmit
 }
 
 /* Types for Logging */

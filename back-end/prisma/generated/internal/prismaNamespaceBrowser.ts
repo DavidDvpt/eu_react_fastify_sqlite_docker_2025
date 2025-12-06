@@ -57,7 +57,8 @@ export const ModelName = {
   items: 'items',
   inventory_lots: 'inventory_lots',
   transactions: 'transactions',
-  inventory_lot_transactions: 'inventory_lot_transactions'
+  inventory_lot_transactions: 'inventory_lot_transactions',
+  seed_patch: 'seed_patch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -168,6 +169,15 @@ export const Inventory_lot_transactionsScalarFieldEnum = {
 } as const
 
 export type Inventory_lot_transactionsScalarFieldEnum = (typeof Inventory_lot_transactionsScalarFieldEnum)[keyof typeof Inventory_lot_transactionsScalarFieldEnum]
+
+
+export const Seed_patchScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  patch_date: 'patch_date'
+} as const
+
+export type Seed_patchScalarFieldEnum = (typeof Seed_patchScalarFieldEnum)[keyof typeof Seed_patchScalarFieldEnum]
 
 
 export const SortOrder = {

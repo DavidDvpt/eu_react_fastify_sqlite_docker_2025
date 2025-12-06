@@ -136,3 +136,9 @@ model inventory_lot_transactions {
 
   @@id([inventory_lot_id, transaction_id])
 }
+
+model seed_patch {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  patch_date DateTime @default(now())
+}
