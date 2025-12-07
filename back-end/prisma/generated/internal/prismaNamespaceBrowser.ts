@@ -51,14 +51,14 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-  user: 'user',
-  item_categories: 'item_categories',
-  item_types: 'item_types',
-  items: 'items',
-  inventory_lots: 'inventory_lots',
-  transactions: 'transactions',
-  inventory_lot_transactions: 'inventory_lot_transactions',
-  seed_patch: 'seed_patch'
+  User: 'User',
+  ItemCategory: 'ItemCategory',
+  ItemType: 'ItemType',
+  Item: 'Item',
+  InventoryLot: 'InventoryLot',
+  Transaction: 'Transaction',
+  InventoryLotTransaction: 'InventoryLotTransaction',
+  SeedPatch: 'SeedPatch'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -92,7 +92,7 @@ export const UserScalarFieldEnum = {
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
-export const Item_categoriesScalarFieldEnum = {
+export const ItemCategoryScalarFieldEnum = {
   id: 'id',
   date_created: 'date_created',
   date_updated: 'date_updated',
@@ -100,10 +100,10 @@ export const Item_categoriesScalarFieldEnum = {
   name: 'name'
 } as const
 
-export type Item_categoriesScalarFieldEnum = (typeof Item_categoriesScalarFieldEnum)[keyof typeof Item_categoriesScalarFieldEnum]
+export type ItemCategoryScalarFieldEnum = (typeof ItemCategoryScalarFieldEnum)[keyof typeof ItemCategoryScalarFieldEnum]
 
 
-export const Item_typesScalarFieldEnum = {
+export const ItemTypeScalarFieldEnum = {
   id: 'id',
   category_id: 'category_id',
   date_created: 'date_created',
@@ -112,10 +112,10 @@ export const Item_typesScalarFieldEnum = {
   name: 'name'
 } as const
 
-export type Item_typesScalarFieldEnum = (typeof Item_typesScalarFieldEnum)[keyof typeof Item_typesScalarFieldEnum]
+export type ItemTypeScalarFieldEnum = (typeof ItemTypeScalarFieldEnum)[keyof typeof ItemTypeScalarFieldEnum]
 
 
-export const ItemsScalarFieldEnum = {
+export const ItemScalarFieldEnum = {
   id: 'id',
   image_url_id: 'image_url_id',
   value: 'value',
@@ -127,10 +127,10 @@ export const ItemsScalarFieldEnum = {
   name: 'name'
 } as const
 
-export type ItemsScalarFieldEnum = (typeof ItemsScalarFieldEnum)[keyof typeof ItemsScalarFieldEnum]
+export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
 
 
-export const Inventory_lotsScalarFieldEnum = {
+export const InventoryLotScalarFieldEnum = {
   id: 'id',
   quantity_remaining: 'quantity_remaining',
   quantity_exported: 'quantity_exported',
@@ -142,10 +142,10 @@ export const Inventory_lotsScalarFieldEnum = {
   is_active: 'is_active'
 } as const
 
-export type Inventory_lotsScalarFieldEnum = (typeof Inventory_lotsScalarFieldEnum)[keyof typeof Inventory_lotsScalarFieldEnum]
+export type InventoryLotScalarFieldEnum = (typeof InventoryLotScalarFieldEnum)[keyof typeof InventoryLotScalarFieldEnum]
 
 
-export const TransactionsScalarFieldEnum = {
+export const TransactionScalarFieldEnum = {
   id: 'id',
   transaction_type: 'transaction_type',
   sell_status: 'sell_status',
@@ -159,25 +159,25 @@ export const TransactionsScalarFieldEnum = {
   item_id: 'item_id'
 } as const
 
-export type TransactionsScalarFieldEnum = (typeof TransactionsScalarFieldEnum)[keyof typeof TransactionsScalarFieldEnum]
+export type TransactionScalarFieldEnum = (typeof TransactionScalarFieldEnum)[keyof typeof TransactionScalarFieldEnum]
 
 
-export const Inventory_lot_transactionsScalarFieldEnum = {
+export const InventoryLotTransactionScalarFieldEnum = {
   inventory_lot_id: 'inventory_lot_id',
   transaction_id: 'transaction_id',
   quantity: 'quantity'
 } as const
 
-export type Inventory_lot_transactionsScalarFieldEnum = (typeof Inventory_lot_transactionsScalarFieldEnum)[keyof typeof Inventory_lot_transactionsScalarFieldEnum]
+export type InventoryLotTransactionScalarFieldEnum = (typeof InventoryLotTransactionScalarFieldEnum)[keyof typeof InventoryLotTransactionScalarFieldEnum]
 
 
-export const Seed_patchScalarFieldEnum = {
+export const SeedPatchScalarFieldEnum = {
   id: 'id',
   name: 'name',
   patch_date: 'patch_date'
 } as const
 
-export type Seed_patchScalarFieldEnum = (typeof Seed_patchScalarFieldEnum)[keyof typeof Seed_patchScalarFieldEnum]
+export type SeedPatchScalarFieldEnum = (typeof SeedPatchScalarFieldEnum)[keyof typeof SeedPatchScalarFieldEnum]
 
 
 export const SortOrder = {

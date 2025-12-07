@@ -1,11 +1,14 @@
-import { PrismaCrudRepository, PrismaModelClient } from "./prismaCrudRepository.js";
+import {
+  PrismaCrudRepository,
+  PrismaModelClient,
+} from "./prismaCrudRepository.js";
 
-type TransactionClient = PrismaModelClient<"transactions">;
+type TransactionClient = PrismaModelClient<"Transaction">;
 
 export class TransactionRepository extends PrismaCrudRepository<
-  TransactionClient["transactions"]
+  TransactionClient["transaction"]
 > {
   constructor(client: TransactionClient) {
-    super(client.transactions);
+    super(client.transaction);
   }
 }

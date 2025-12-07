@@ -20,7 +20,7 @@ const config: runtime.GetPrismaClientConfig = {
   "clientVersion": "7.0.1",
   "engineVersion": "f09f2815f091dbba658cdcd2264306d88bb5bda6",
   "activeProvider": "postgresql",
-  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nenum LotType {\n  SESSION_LINE\n  TRANSACTION\n  LOT\n}\n\nenum TransactionType {\n  PURCHASE\n  FOUND\n  GIFT\n  EXISTING_STOCK\n  LOST\n  GIVEN\n}\n\nenum TransactionStatus {\n  SOLDED\n  RETURNED\n  RUNNING\n}\n\nenum TransactionLineType {\n  GAIN\n  LOST\n}\n\nmodel user {\n  id            String  @id @default(uuid())\n  firstname     String\n  lastname      String\n  pseudo        String  @unique\n  password_hash String\n  role          Role\n  date_created  String\n  date_updated  String?\n  is_active     Boolean\n}\n\nmodel item_categories {\n  id           String  @id @default(uuid())\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  item_types item_types[]\n}\n\nmodel item_types {\n  id           String  @id @default(uuid())\n  category_id  String\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  category item_categories @relation(fields: [category_id], references: [id], onDelete: Cascade)\n  items    items[]\n}\n\nmodel items {\n  id           String  @id @default(uuid())\n  image_url_id String\n  value        Decimal\n  is_limited   Boolean\n  item_type_id String\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  item_type      item_types       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)\n  inventory_lots inventory_lots[]\n  transactions   transactions[]\n}\n\nmodel inventory_lots {\n  id                 String  @id @default(uuid())\n  quantity_remaining Int\n  quantity_exported  Int\n  price_remaining    String\n  item_id            String\n  lot_type           LotType\n  date_created       String\n  date_updated       String?\n  is_active          Boolean\n\n  item  items                        @relation(fields: [item_id], references: [id], onDelete: Cascade)\n  links inventory_lot_transactions[]\n}\n\nmodel transactions {\n  id               String             @id @default(uuid())\n  transaction_type TransactionType\n  sell_status      TransactionStatus?\n  quantity         Int\n  tt_value         Decimal\n  ttc_value        Decimal\n  fee              Decimal?\n  date_created     String\n  date_updated     String?\n  is_active        Boolean\n  item_id          String\n\n  item items                        @relation(fields: [item_id], references: [id], onDelete: Cascade)\n  lots inventory_lot_transactions[]\n}\n\nmodel inventory_lot_transactions {\n  inventory_lot_id String\n  transaction_id   String\n  quantity         Int\n\n  inventory_lot inventory_lots @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)\n  transaction   transactions   @relation(fields: [transaction_id], references: [id], onDelete: Restrict)\n\n  @@id([inventory_lot_id, transaction_id])\n}\n\nmodel seed_patch {\n  id         String   @id @default(uuid())\n  name       String   @unique\n  patch_date DateTime @default(now())\n}\n",
+  "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"./generated\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n}\n\nenum Role {\n  ADMIN\n  USER\n}\n\nenum LotType {\n  SESSION_LINE\n  TRANSACTION\n  LOT\n}\n\nenum TransactionType {\n  PURCHASE\n  FOUND\n  GIFT\n  EXISTING_STOCK\n  LOST\n  GIVEN\n}\n\nenum TransactionStatus {\n  SOLDED\n  RETURNED\n  RUNNING\n}\n\nenum TransactionLineType {\n  GAIN\n  LOST\n}\n\nmodel User {\n  id            String  @id @default(uuid())\n  firstname     String\n  lastname      String\n  pseudo        String  @unique\n  password_hash String\n  role          Role\n  date_created  String\n  date_updated  String?\n  is_active     Boolean\n\n  @@map(\"user\")\n}\n\nmodel ItemCategory {\n  id           String  @id @default(uuid())\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  item_types ItemType[]\n\n  @@map(\"item_category\")\n}\n\nmodel ItemType {\n  id           String  @id @default(uuid())\n  category_id  String\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  category ItemCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)\n  items    Item[]\n\n  @@map(\"item_type\")\n}\n\nmodel Item {\n  id           String  @id @default(uuid())\n  image_url_id String\n  value        Decimal\n  is_limited   Boolean\n  item_type_id String\n  date_created String\n  date_updated String?\n  is_active    Boolean\n  name         String  @unique\n\n  item_type      ItemType       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)\n  inventory_lots InventoryLot[]\n  transactions   Transaction[]\n\n  @@map(\"item\")\n}\n\nmodel InventoryLot {\n  id                 String  @id @default(uuid())\n  quantity_remaining Int\n  quantity_exported  Int\n  price_remaining    String\n  item_id            String\n  lot_type           LotType\n  date_created       String\n  date_updated       String?\n  is_active          Boolean\n\n  item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)\n  links InventoryLotTransaction[]\n\n  @@map(\"inventory_lot\")\n}\n\nmodel Transaction {\n  id               String             @id @default(uuid())\n  transaction_type TransactionType\n  sell_status      TransactionStatus?\n  quantity         Int\n  tt_value         Decimal\n  ttc_value        Decimal\n  fee              Decimal?\n  date_created     String\n  date_updated     String?\n  is_active        Boolean\n  item_id          String\n\n  item Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)\n  lots InventoryLotTransaction[]\n\n  @@map(\"transaction\")\n}\n\nmodel InventoryLotTransaction {\n  inventory_lot_id String\n  transaction_id   String\n  quantity         Int\n\n  inventory_lot InventoryLot @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)\n  transaction   Transaction  @relation(fields: [transaction_id], references: [id], onDelete: Restrict)\n\n  @@id([inventory_lot_id, transaction_id])\n  @@map(\"inventory_lot_transaction\")\n}\n\nmodel SeedPatch {\n  id         String   @id @default(uuid())\n  name       String   @unique\n  patch_date DateTime @default(now())\n\n  @@map(\"seed_patch\")\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pseudo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":null},\"item_categories\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_types\",\"kind\":\"object\",\"type\":\"item_types\",\"relationName\":\"item_categoriesToitem_types\"}],\"dbName\":null},\"item_types\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"item_categories\",\"relationName\":\"item_categoriesToitem_types\"},{\"name\":\"items\",\"kind\":\"object\",\"type\":\"items\",\"relationName\":\"item_typesToitems\"}],\"dbName\":null},\"items\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image_url_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"is_limited\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item_type_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_type\",\"kind\":\"object\",\"type\":\"item_types\",\"relationName\":\"item_typesToitems\"},{\"name\":\"inventory_lots\",\"kind\":\"object\",\"type\":\"inventory_lots\",\"relationName\":\"inventory_lotsToitems\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"transactions\",\"relationName\":\"itemsTotransactions\"}],\"dbName\":null},\"inventory_lots\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"quantity_remaining\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"quantity_exported\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"price_remaining\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lot_type\",\"kind\":\"enum\",\"type\":\"LotType\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"items\",\"relationName\":\"inventory_lotsToitems\"},{\"name\":\"links\",\"kind\":\"object\",\"type\":\"inventory_lot_transactions\",\"relationName\":\"inventory_lot_transactionsToinventory_lots\"}],\"dbName\":null},\"transactions\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"sell_status\",\"kind\":\"enum\",\"type\":\"TransactionStatus\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"tt_value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"ttc_value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"fee\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"items\",\"relationName\":\"itemsTotransactions\"},{\"name\":\"lots\",\"kind\":\"object\",\"type\":\"inventory_lot_transactions\",\"relationName\":\"inventory_lot_transactionsTotransactions\"}],\"dbName\":null},\"inventory_lot_transactions\":{\"fields\":[{\"name\":\"inventory_lot_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"inventory_lot\",\"kind\":\"object\",\"type\":\"inventory_lots\",\"relationName\":\"inventory_lot_transactionsToinventory_lots\"},{\"name\":\"transaction\",\"kind\":\"object\",\"type\":\"transactions\",\"relationName\":\"inventory_lot_transactionsTotransactions\"}],\"dbName\":null},\"seed_patch\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"patch_date\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"firstname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lastname\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"pseudo\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password_hash\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"role\",\"kind\":\"enum\",\"type\":\"Role\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"}],\"dbName\":\"user\"},\"ItemCategory\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_types\",\"kind\":\"object\",\"type\":\"ItemType\",\"relationName\":\"ItemCategoryToItemType\"}],\"dbName\":\"item_category\"},\"ItemType\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"ItemCategory\",\"relationName\":\"ItemCategoryToItemType\"},{\"name\":\"items\",\"kind\":\"object\",\"type\":\"Item\",\"relationName\":\"ItemToItemType\"}],\"dbName\":\"item_type\"},\"Item\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"image_url_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"is_limited\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item_type_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_type\",\"kind\":\"object\",\"type\":\"ItemType\",\"relationName\":\"ItemToItemType\"},{\"name\":\"inventory_lots\",\"kind\":\"object\",\"type\":\"InventoryLot\",\"relationName\":\"InventoryLotToItem\"},{\"name\":\"transactions\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"ItemToTransaction\"}],\"dbName\":\"item\"},\"InventoryLot\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"quantity_remaining\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"quantity_exported\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"price_remaining\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lot_type\",\"kind\":\"enum\",\"type\":\"LotType\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"Item\",\"relationName\":\"InventoryLotToItem\"},{\"name\":\"links\",\"kind\":\"object\",\"type\":\"InventoryLotTransaction\",\"relationName\":\"InventoryLotToInventoryLotTransaction\"}],\"dbName\":\"inventory_lot\"},\"Transaction\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_type\",\"kind\":\"enum\",\"type\":\"TransactionType\"},{\"name\":\"sell_status\",\"kind\":\"enum\",\"type\":\"TransactionStatus\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"tt_value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"ttc_value\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"fee\",\"kind\":\"scalar\",\"type\":\"Decimal\"},{\"name\":\"date_created\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"date_updated\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"is_active\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"item_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"item\",\"kind\":\"object\",\"type\":\"Item\",\"relationName\":\"ItemToTransaction\"},{\"name\":\"lots\",\"kind\":\"object\",\"type\":\"InventoryLotTransaction\",\"relationName\":\"InventoryLotTransactionToTransaction\"}],\"dbName\":\"transaction\"},\"InventoryLotTransaction\":{\"fields\":[{\"name\":\"inventory_lot_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"transaction_id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"quantity\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"inventory_lot\",\"kind\":\"object\",\"type\":\"InventoryLot\",\"relationName\":\"InventoryLotToInventoryLotTransaction\"},{\"name\":\"transaction\",\"kind\":\"object\",\"type\":\"Transaction\",\"relationName\":\"InventoryLotTransactionToTransaction\"}],\"dbName\":\"inventory_lot_transaction\"},\"SeedPatch\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"patch_date\",\"kind\":\"scalar\",\"type\":\"DateTime\"}],\"dbName\":\"seed_patch\"}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -175,84 +175,84 @@ export interface PrismaClient<
   }>>
 
       /**
-   * `prisma.user`: Exposes CRUD operations for the **user** model.
+   * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Users
     * const users = await prisma.user.findMany()
     * ```
     */
-  get user(): Prisma.userDelegate<ExtArgs, { omit: OmitOpts }>;
+  get user(): Prisma.UserDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.item_categories`: Exposes CRUD operations for the **item_categories** model.
+   * `prisma.itemCategory`: Exposes CRUD operations for the **ItemCategory** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Item_categories
-    * const item_categories = await prisma.item_categories.findMany()
+    * // Fetch zero or more ItemCategories
+    * const itemCategories = await prisma.itemCategory.findMany()
     * ```
     */
-  get item_categories(): Prisma.item_categoriesDelegate<ExtArgs, { omit: OmitOpts }>;
+  get itemCategory(): Prisma.ItemCategoryDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.item_types`: Exposes CRUD operations for the **item_types** model.
+   * `prisma.itemType`: Exposes CRUD operations for the **ItemType** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Item_types
-    * const item_types = await prisma.item_types.findMany()
+    * // Fetch zero or more ItemTypes
+    * const itemTypes = await prisma.itemType.findMany()
     * ```
     */
-  get item_types(): Prisma.item_typesDelegate<ExtArgs, { omit: OmitOpts }>;
+  get itemType(): Prisma.ItemTypeDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.items`: Exposes CRUD operations for the **items** model.
+   * `prisma.item`: Exposes CRUD operations for the **Item** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Items
-    * const items = await prisma.items.findMany()
+    * const items = await prisma.item.findMany()
     * ```
     */
-  get items(): Prisma.itemsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get item(): Prisma.ItemDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.inventory_lots`: Exposes CRUD operations for the **inventory_lots** model.
+   * `prisma.inventoryLot`: Exposes CRUD operations for the **InventoryLot** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Inventory_lots
-    * const inventory_lots = await prisma.inventory_lots.findMany()
+    * // Fetch zero or more InventoryLots
+    * const inventoryLots = await prisma.inventoryLot.findMany()
     * ```
     */
-  get inventory_lots(): Prisma.inventory_lotsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get inventoryLot(): Prisma.InventoryLotDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.transactions`: Exposes CRUD operations for the **transactions** model.
+   * `prisma.transaction`: Exposes CRUD operations for the **Transaction** model.
     * Example usage:
     * ```ts
     * // Fetch zero or more Transactions
-    * const transactions = await prisma.transactions.findMany()
+    * const transactions = await prisma.transaction.findMany()
     * ```
     */
-  get transactions(): Prisma.transactionsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get transaction(): Prisma.TransactionDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.inventory_lot_transactions`: Exposes CRUD operations for the **inventory_lot_transactions** model.
+   * `prisma.inventoryLotTransaction`: Exposes CRUD operations for the **InventoryLotTransaction** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Inventory_lot_transactions
-    * const inventory_lot_transactions = await prisma.inventory_lot_transactions.findMany()
+    * // Fetch zero or more InventoryLotTransactions
+    * const inventoryLotTransactions = await prisma.inventoryLotTransaction.findMany()
     * ```
     */
-  get inventory_lot_transactions(): Prisma.inventory_lot_transactionsDelegate<ExtArgs, { omit: OmitOpts }>;
+  get inventoryLotTransaction(): Prisma.InventoryLotTransactionDelegate<ExtArgs, { omit: OmitOpts }>;
 
   /**
-   * `prisma.seed_patch`: Exposes CRUD operations for the **seed_patch** model.
+   * `prisma.seedPatch`: Exposes CRUD operations for the **SeedPatch** model.
     * Example usage:
     * ```ts
-    * // Fetch zero or more Seed_patches
-    * const seed_patches = await prisma.seed_patch.findMany()
+    * // Fetch zero or more SeedPatches
+    * const seedPatches = await prisma.seedPatch.findMany()
     * ```
     */
-  get seed_patch(): Prisma.seed_patchDelegate<ExtArgs, { omit: OmitOpts }>;
+  get seedPatch(): Prisma.SeedPatchDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

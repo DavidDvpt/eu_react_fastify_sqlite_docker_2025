@@ -16,7 +16,8 @@
     "test:all": "npm run test:db:migrate && npm run test",
     "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
     "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
-    "sql:extract": "tsx tools/sql-to-ts.ts"
+    "sql:extract": "tsx tools/sql-to-ts.ts",
+    "test:bdd": "dotenv -e .env.test -- vitest --config vitest.bdd.config.ts"
   },
   "keywords": [],
   "author": "",

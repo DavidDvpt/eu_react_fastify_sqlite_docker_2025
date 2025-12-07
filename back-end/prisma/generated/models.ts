@@ -8,12 +8,12 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/user.js'
-export type * from './models/item_categories.js'
-export type * from './models/item_types.js'
-export type * from './models/items.js'
-export type * from './models/inventory_lots.js'
-export type * from './models/transactions.js'
-export type * from './models/inventory_lot_transactions.js'
-export type * from './models/seed_patch.js'
+export type * from './models/User.js'
+export type * from './models/ItemCategory.js'
+export type * from './models/ItemType.js'
+export type * from './models/Item.js'
+export type * from './models/InventoryLot.js'
+export type * from './models/Transaction.js'
+export type * from './models/InventoryLotTransaction.js'
+export type * from './models/SeedPatch.js'
 export type * from './commonInputTypes.js'

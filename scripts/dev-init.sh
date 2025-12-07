@@ -16,7 +16,7 @@ if docker ps --format '{{.Names}}' | grep -q "$DB_CONTAINER"; then
   echo "🐘 PostgreSQL container already running."
 else
   echo "🔄 Starting Docker (PostgreSQL dev)..."
-  docker compose -f docker/docker-compose.dev.yml up -d
+  docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d
 fi
 
 echo "⏳ Waiting for PostgreSQL on port $DB_PORT..."

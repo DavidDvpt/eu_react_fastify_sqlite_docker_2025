@@ -40,42 +40,42 @@ export type PrismaClient<LogOpts extends Prisma.LogLevel = never, OmitOpts exten
 export { Prisma }
 
 /**
- * Model user
+ * Model User
  * 
  */
-export type user = Prisma.userModel
+export type User = Prisma.UserModel
 /**
- * Model item_categories
+ * Model ItemCategory
  * 
  */
-export type item_categories = Prisma.item_categoriesModel
+export type ItemCategory = Prisma.ItemCategoryModel
 /**
- * Model item_types
+ * Model ItemType
  * 
  */
-export type item_types = Prisma.item_typesModel
+export type ItemType = Prisma.ItemTypeModel
 /**
- * Model items
+ * Model Item
  * 
  */
-export type items = Prisma.itemsModel
+export type Item = Prisma.ItemModel
 /**
- * Model inventory_lots
+ * Model InventoryLot
  * 
  */
-export type inventory_lots = Prisma.inventory_lotsModel
+export type InventoryLot = Prisma.InventoryLotModel
 /**
- * Model transactions
+ * Model Transaction
  * 
  */
-export type transactions = Prisma.transactionsModel
+export type Transaction = Prisma.TransactionModel
 /**
- * Model inventory_lot_transactions
+ * Model InventoryLotTransaction
  * 
  */
-export type inventory_lot_transactions = Prisma.inventory_lot_transactionsModel
+export type InventoryLotTransaction = Prisma.InventoryLotTransactionModel
 /**
- * Model seed_patch
+ * Model SeedPatch
  * 
  */
-export type seed_patch = Prisma.seed_patchModel
+export type SeedPatch = Prisma.SeedPatchModel

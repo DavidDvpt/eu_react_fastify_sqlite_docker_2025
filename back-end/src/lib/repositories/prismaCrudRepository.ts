@@ -2,21 +2,21 @@ import type { Prisma, PrismaClient } from "../../../prisma/generated/client.js";
 
 // Keep compatibility between the root Prisma client and transaction-scoped clients.
 export type PrismaModelClient<DelegateKey extends Prisma.ModelName> =
-  | Pick<PrismaClient, DelegateKey>
-  | Pick<Prisma.TransactionClient, DelegateKey>;
+  | Pick<PrismaClient, Uncapitalize<DelegateKey>>
+  | Pick<Prisma.TransactionClient, Uncapitalize<DelegateKey>>;
 
-// Extract the argument type of a Prisma delegate method.
+// Extract the argument type of a Prisma delegate method (handles generics/overloads).
 type MethodArgs<Delegate, K extends keyof Delegate> = Delegate[K] extends (
-  args?: infer A
+  ...args: infer P
 ) => any
-  ? NonNullable<A>
+  ? NonNullable<P[0]>
   : never;
 
 // Extract the resolved return type of a Prisma delegate method.
 type MethodResult<Delegate, K extends keyof Delegate> = Delegate[K] extends (
-  args?: any
-) => Promise<infer R>
-  ? R
+  ...args: any[]
+) => infer R
+  ? Awaited<R>
   : never;
 
 // Minimum shape a delegate must expose to be wrapped by this repository.
