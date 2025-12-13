@@ -4,13 +4,11 @@
   "main": "index.js",
   "scripts": {
     "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
-    "dev:backend": "cd back-end && npm run dev",
-    "dev:frontend": "cd front-end && npm run dev",
-    "wait:api": "wait-port 8020",
+    "be:test": "cd back-end && dotenv -e .env.test -- vitest",
     "dev:start": "sh ./scripts/dev-init.sh",
     "dev:stop": "sh ./scripts/dev-stop.sh",
     "db:reset": "sh ./scripts/reset-db.sh",
-    "test": "sh ./scripts/test-all.sh",
+    "test:all": "sh ./scripts/test-all.sh",
     "test:docker": "docker compose -p app_eu_test -f docker/docker-compose.test.yml up -d"
   },
   "keywords": [],
