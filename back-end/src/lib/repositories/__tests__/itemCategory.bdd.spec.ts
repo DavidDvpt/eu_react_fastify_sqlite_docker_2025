@@ -34,10 +34,12 @@ describe("ItemCategoryRepository CRUD", () => {
 
   it("deletes a itemCategory", async () => {
     const created = await repo.create({ data: itemCategoriesMock()[0] });
-    await repo.delete({ where: { id: created.id } });
+
+    const deleted = await repo.delete({ where: { id: created.id } });
     const found = await repo.findUnique({ where: { id: created!.id } });
 
     expect(found).toBeNull();
+    expect(deleted.id).toBe(created.id);
   });
 
   it("lists categories", async () => {

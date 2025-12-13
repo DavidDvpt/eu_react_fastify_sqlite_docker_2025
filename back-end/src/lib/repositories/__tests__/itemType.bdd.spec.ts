@@ -15,7 +15,9 @@ afterAll(async () => {
 
 describe("ItemTypeRepository CRUD", () => {
   it("creates and reads an itemType", async () => {
-    const category = await categoryRepo.create({ data: itemCategoriesMock()[0] });
+    const category = await categoryRepo.create({
+      data: itemCategoriesMock()[0],
+    });
     const [type] = itemTypesMock(category.id);
     const created = await repo.create({ data: type });
     const found = await repo.findUnique({ where: { id: created.id } });
@@ -26,7 +28,9 @@ describe("ItemTypeRepository CRUD", () => {
   });
 
   it("updates an itemType", async () => {
-    const category = await categoryRepo.create({ data: itemCategoriesMock()[0] });
+    const category = await categoryRepo.create({
+      data: itemCategoriesMock()[0],
+    });
     const [type] = itemTypesMock(category.id);
     const created = await repo.create({ data: type });
     const updatedAt = new Date().toISOString();
@@ -40,17 +44,23 @@ describe("ItemTypeRepository CRUD", () => {
   });
 
   it("deletes an itemType", async () => {
-    const category = await categoryRepo.create({ data: itemCategoriesMock()[0] });
+    const category = await categoryRepo.create({
+      data: itemCategoriesMock()[0],
+    });
     const [type] = itemTypesMock(category.id);
     const created = await repo.create({ data: type });
-    await repo.delete({ where: { id: created.id } });
+
+    const deleted = await repo.delete({ where: { id: created.id } });
     const found = await repo.findUnique({ where: { id: created.id } });
 
     expect(found).toBeNull();
+    expect(deleted.id).toBe(created.id);
   });
 
   it("lists itemTypes", async () => {
-    const category = await categoryRepo.create({ data: itemCategoriesMock()[0] });
+    const category = await categoryRepo.create({
+      data: itemCategoriesMock()[0],
+    });
     const [typeA, typeB] = itemTypesMock(category.id);
     await repo.create({ data: typeA });
     await repo.create({ data: typeB });

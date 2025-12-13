@@ -56,4 +56,31 @@ const itemTypesMock = (categoryId: string) => {
   ];
 };
 
-export { itemCategoriesMock, itemTypesMock, usersMock };
+const itemMock = (typeId: string) => [
+  {
+    item_type_id: typeId,
+    date_created: new Date().toISOString(),
+    date_updated: null,
+    is_active: true,
+    is_limited: true,
+    name: `Item-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
+    value: 1.23,
+    image_url_id: `ItemImage-${Date.now()}-${Math.random()
+      .toString(16)
+      .slice(2, 6)}`,
+  },
+  {
+    item_type_id: typeId,
+    date_created: new Date().toISOString(),
+    date_updated: null,
+    is_active: true,
+    is_limited: true,
+    name: `Item-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
+    value: 2.34,
+    image_url_id: `ItemImage-${Date.now()}-${Math.random()
+      .toString(16)
+      .slice(2, 6)}`,
+  },
+];
+
+export { itemCategoriesMock, itemMock, itemTypesMock, usersMock };
