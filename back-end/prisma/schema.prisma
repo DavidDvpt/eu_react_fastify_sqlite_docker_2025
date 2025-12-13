@@ -58,7 +58,6 @@ model User {
   @@map("user")
 }
 
-
 model ItemCategory {
   id           String  @id @default(uuid())
   date_created String
@@ -96,7 +95,7 @@ model Item {
   is_active    Boolean
   name         String  @unique
 
-  item_type    ItemType @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  item_type      ItemType       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
   inventory_lots InventoryLot[]
   transactions   Transaction[]
 
@@ -114,14 +113,14 @@ model InventoryLot {
   date_updated       String?
   is_active          Boolean
 
-  item  Item @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
   links InventoryLotTransaction[]
 
   @@map("inventory_lot")
 }
 
 model Transaction {
-  id               String @id @default(uuid())
+  id               String             @id @default(uuid())
   transaction_type TransactionType
   sell_status      TransactionStatus?
   quantity         Int
@@ -133,7 +132,7 @@ model Transaction {
   is_active        Boolean
   item_id          String
 
-  item            Item @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  item Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
   lots InventoryLotTransaction[]
 
   @@map("transaction")
@@ -144,11 +143,10 @@ model InventoryLotTransaction {
   transaction_id   String
   quantity         Int
 
-  inventory_lot    InventoryLot @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)
+  inventory_lot InventoryLot @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)
   transaction   Transaction  @relation(fields: [transaction_id], references: [id], onDelete: Restrict)
 
   @@id([inventory_lot_id, transaction_id])
-
   @@map("inventory_lot_transaction")
 }
 
