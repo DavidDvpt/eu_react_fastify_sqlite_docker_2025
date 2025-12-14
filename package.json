@@ -10,7 +10,8 @@
     "db:reset": "sh ./scripts/reset-db.sh",
     "test:all": "sh ./scripts/test-all.sh",
     "test:db": "sh ./scripts/test-db.sh",
-    "test:docker": "docker compose -p app_eu_test -f docker/docker-compose.test.yml up -d"
+    "test:docker": "docker compose -p app_eu_test -f docker/docker-compose.test.yml up -d",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,8 @@
   "description": "",
   "devDependencies": {
     "concurrently": "^9.2.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
     "wait-port": "^1.1.0"
   }
 }
