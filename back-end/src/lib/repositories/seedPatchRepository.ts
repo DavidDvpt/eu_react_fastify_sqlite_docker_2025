@@ -1,13 +1,8 @@
-import {
-  PrismaCrudRepository,
-  PrismaModelClient,
-} from "./prismaCrudRepository.js";
+import { PrismaCrudRepository, PrismaModelClient } from './prismaCrudRepository.js';
 
-type SeedPatchClient = PrismaModelClient<"SeedPatch">;
+type SeedPatchClient = PrismaModelClient<'SeedPatch'>;
 
-export class SeedPatchRepository extends PrismaCrudRepository<
-  SeedPatchClient["seedPatch"]
-> {
+export class SeedPatchRepository extends PrismaCrudRepository<SeedPatchClient['seedPatch']> {
   constructor(client: SeedPatchClient) {
     super(client.seedPatch);
   }

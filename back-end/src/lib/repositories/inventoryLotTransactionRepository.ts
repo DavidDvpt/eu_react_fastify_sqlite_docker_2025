@@ -1,13 +1,9 @@
-import {
-  PrismaCrudRepository,
-  PrismaModelClient,
-} from "./prismaCrudRepository.js";
+import { PrismaCrudRepository, PrismaModelClient } from './prismaCrudRepository.js';
 
-type InventoryLotTransactionClient =
-  PrismaModelClient<"InventoryLotTransaction">;
+type InventoryLotTransactionClient = PrismaModelClient<'InventoryLotTransaction'>;
 
 export class InventoryLotTransactionRepository extends PrismaCrudRepository<
-  InventoryLotTransactionClient["inventoryLotTransaction"]
+  InventoryLotTransactionClient['inventoryLotTransaction']
 > {
   constructor(client: InventoryLotTransactionClient) {
     super(client.inventoryLotTransaction);

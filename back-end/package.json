@@ -17,7 +17,11 @@
     "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
     "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
     "sql:extract": "tsx tools/sql-to-ts.ts",
-    "test:bdd": "dotenv -e .env.test -- vitest --config vitest.bdd.config.ts"
+    "test:bdd": "dotenv -e .env.test -- vitest --config vitest.bdd.config.ts",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier \"src/**/*.{ts,tsx,js,json,md}\" --check",
+    "format:fix": "prettier \"src/**/*.{ts,tsx,js,json,md}\" --write"
   },
   "keywords": [],
   "author": "",
@@ -30,11 +34,21 @@
   },
   "devDependencies": {
     "@types/node": "^24.10.1",
+    "@typescript-eslint/eslint-plugin": "^8.49.0",
+    "@typescript-eslint/parser": "^8.49.0",
     "dotenv-cli": "^11.0.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.32.0",
+    "eslint-plugin-prettier": "^5.5.4",
+    "globals": "^16.5.0",
+    "prettier": "^3.7.4",
     "prisma": "^7.0.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
-    "vitest": "^4.0.13",
+    "typescript-eslint": "^8.49.0",
+    "vitest": "^4.0.15",
     "wait-on": "^9.0.3"
   }
 }

@@ -1,12 +1,12 @@
-import Fastify from "fastify";
+import Fastify from 'fastify';
 
 export function buildApp() {
   const app = Fastify({
     logger: true,
   });
 
-  app.get("/api/health", async () => {
-    return { status: "ok" };
+  app.get('/api/health', async () => {
+    return Promise.resolve({ status: 'ok' });
   });
 
   return app;

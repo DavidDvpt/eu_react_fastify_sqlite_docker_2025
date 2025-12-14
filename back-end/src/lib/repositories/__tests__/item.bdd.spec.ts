@@ -1,10 +1,11 @@
-import { afterAll, describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from 'vitest';
 
-import prismaClient from "../../../../prisma/prismaClient.js";
-import { ItemCategoryRepository } from "../itemCategoryRepository.js";
-import { ItemRepository } from "../itemRepository.js";
-import { ItemTypeRepository } from "../itemTypeRepository.js";
-import { itemCategoriesMock, itemMock, itemTypesMock } from "./mock.js";
+import prismaClient from '../../../../prisma/prismaClient.js';
+import { ItemCategoryRepository } from '../itemCategoryRepository.js';
+import { ItemRepository } from '../itemRepository.js';
+import { ItemTypeRepository } from '../itemTypeRepository.js';
+
+import { itemCategoriesMock, itemMock, itemTypesMock } from './mock.js';
 
 const prisma = prismaClient;
 
@@ -16,8 +17,8 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-describe("ItemRepository CRUD", () => {
-  it("creates and reads an item", async () => {
+describe('ItemRepository CRUD', () => {
+  it('creates and reads an item', async () => {
     const category = await categoryRepo.create({
       data: itemCategoriesMock()[0],
     });
@@ -31,7 +32,7 @@ describe("ItemRepository CRUD", () => {
     expect(found?.item_type_id).toBe(type.id);
   });
 
-  it("updates an item", async () => {
+  it('updates an item', async () => {
     const category = await categoryRepo.create({
       data: itemCategoriesMock()[0],
     });
@@ -40,7 +41,7 @@ describe("ItemRepository CRUD", () => {
 
     const updated = await repo.update({
       where: { id: created.id },
-      data: { name: "Updated", date_updated: new Date().toDateString() },
+      data: { name: 'Updated', date_updated: new Date().toDateString() },
     });
     const found = await repo.findUnique({ where: { id: updated.id } });
 
@@ -49,7 +50,7 @@ describe("ItemRepository CRUD", () => {
     expect(found?.item_type_id).toBe(type.id);
   });
 
-  it("delete an item", async () => {
+  it('delete an item', async () => {
     const category = await categoryRepo.create({
       data: itemCategoriesMock()[0],
     });
@@ -60,13 +61,13 @@ describe("ItemRepository CRUD", () => {
       where: { id: created.id },
     });
 
-    const found = await repo.findUnique({ where: { id: created!.id } });
+    const found = await repo.findUnique({ where: { id: created.id } });
 
     expect(deleted?.id).toBe(created.id);
     expect(found).toBeNull();
   });
 
-  it("lists items", async () => {
+  it('lists items', async () => {
     const category = await categoryRepo.create({
       data: itemCategoriesMock()[0],
     });
