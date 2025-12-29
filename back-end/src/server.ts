@@ -1,11 +1,15 @@
-import { buildApp } from './buildApp.js'; // extension OBLIGATOIRE en NodeNext
+import 'dotenv/config';
+
+const PORT = Number(process.env.PORT ?? 8020);
+
+import { buildApp } from './app.js';
 
 async function start() {
   const app = buildApp();
 
   try {
     await app.listen({
-      port: 8020,
+      port: PORT,
       host: '0.0.0.0',
     });
 
