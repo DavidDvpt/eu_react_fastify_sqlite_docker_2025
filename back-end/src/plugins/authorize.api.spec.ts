@@ -15,12 +15,20 @@ describe('Authorize plugin', () => {
 
   it('bloque si role absent dans le token', async () => {
     const app = buildApp();
+
+    app.register((scope, _opts, done) => {
+      app.get(
+        '/admin-only',
+        { preHandler: [scope.authenticate, app.authorize(['admin'])] },
+        () => ({
+          ok: true,
+        })
+      );
+
+      done();
+    });
+
     await app.ready();
-
-    app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
-      ok: true,
-    }));
-
     const token = app.jwt.sign({ sub: 'user-1' });
     const res = await app.inject({
       method: 'GET',
@@ -35,11 +43,20 @@ describe('Authorize plugin', () => {
 
   it('bloque si role incorrect', async () => {
     const app = buildApp();
-    await app.ready();
 
-    app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
-      ok: true,
-    }));
+    app.register((scope, _opts, done) => {
+      app.get(
+        '/admin-only',
+        { preHandler: [scope.authenticate, app.authorize(['admin'])] },
+        () => ({
+          ok: true,
+        })
+      );
+
+      done();
+    });
+
+    await app.ready();
 
     const token = app.jwt.sign({ sub: 'user-1', role: 'user' });
     const res = await app.inject({
@@ -55,11 +72,16 @@ describe('Authorize plugin', () => {
 
   it('autorise si role ok', async () => {
     const app = buildApp();
-    await app.ready();
 
-    app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
-      ok: true,
-    }));
+    app.register((scope, _opts, done) => {
+      app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
+        ok: true,
+      }));
+
+      done();
+    });
+
+    await app.ready();
 
     const token = app.jwt.sign({ sub: 'admin-1', role: 'admin' });
     const res = await app.inject({

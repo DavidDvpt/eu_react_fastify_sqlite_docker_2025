@@ -21,12 +21,12 @@ describe('JWT plugin', () => {
 
   it('bloque sans token', async () => {
     const app = buildApp();
-    await app.ready();
 
-    // Exemple de route protégée pour test
-    app.get('/private', { preHandler: [app.authenticate] }, async () =>
-      Promise.resolve({ ok: true })
-    );
+    app.register((scope, _opts, done) => {
+      scope.get('/private', { preHandler: [scope.authenticate] }, () => ({ ok: true }));
+      done();
+    });
+    await app.ready();
 
     const res = await app.inject({ method: 'GET', url: '/private' });
     expect(res.statusCode).toBe(401);
