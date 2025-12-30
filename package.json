@@ -22,5 +22,8 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "wait-port": "^1.1.0"
+  },
+  "dependencies": {
+    "argon2": "^0.44.0"
   }
 }
