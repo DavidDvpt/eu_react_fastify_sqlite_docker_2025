@@ -5,7 +5,7 @@ import { buildApp } from '../app.js';
 
 describe('Authorize plugin', () => {
   it('enregistre authorize', async () => {
-    const app = buildApp();
+    const app = buildApp({ logger: false });
     await app.ready();
 
     expect(typeof app.authorize).toBe('function');
@@ -14,7 +14,7 @@ describe('Authorize plugin', () => {
   });
 
   it('bloque si role absent dans le token', async () => {
-    const app = buildApp();
+    const app = buildApp({ logger: false });
 
     app.register((scope, _opts, done) => {
       app.get(
@@ -42,7 +42,7 @@ describe('Authorize plugin', () => {
   });
 
   it('bloque si role incorrect', async () => {
-    const app = buildApp();
+    const app = buildApp({ logger: false });
 
     app.register((scope, _opts, done) => {
       app.get(
@@ -71,7 +71,7 @@ describe('Authorize plugin', () => {
   });
 
   it('autorise si role ok', async () => {
-    const app = buildApp();
+    const app = buildApp({ logger: false });
 
     app.register((scope, _opts, done) => {
       app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
