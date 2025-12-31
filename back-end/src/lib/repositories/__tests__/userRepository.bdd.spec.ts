@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeEach, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
 import { UserRepository } from '../userRepository.js';
@@ -7,6 +7,11 @@ import { usersMock } from './mock.js';
 
 const prisma = prismaClient;
 const repo = new UserRepository(prisma);
+
+beforeEach(async () => {
+  // If User has relations, you may need to delete children first or use a transaction.
+  await prisma.user.deleteMany();
+});
 
 afterAll(async () => {
   await prisma.$disconnect();
