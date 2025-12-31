@@ -46,14 +46,15 @@ enum TransactionLineType {
 
 model User {
   id            String  @id @default(uuid())
-  firstname     String
-  lastname      String
+  firstname     String? 
+  lastname      String? 
   pseudo        String  @unique
+  email         String  @unique
   password_hash String
   role          Role
   date_created  String
   date_updated  String?
-  is_active     Boolean
+  is_active     Boolean @default(true)
 
   @@map("user")
 }
@@ -62,7 +63,7 @@ model ItemCategory {
   id           String  @id @default(uuid())
   date_created String
   date_updated String?
-  is_active    Boolean
+  is_active    Boolean @default(true)
   name         String  @unique
 
   item_types ItemType[]
@@ -75,7 +76,7 @@ model ItemType {
   category_id  String
   date_created String
   date_updated String?
-  is_active    Boolean
+  is_active    Boolean @default(true)
   name         String  @unique
 
   category ItemCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
@@ -92,7 +93,7 @@ model Item {
   item_type_id String
   date_created String
   date_updated String?
-  is_active    Boolean
+  is_active    Boolean @default(true)
   name         String  @unique
 
   item_type      ItemType       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
@@ -111,7 +112,7 @@ model InventoryLot {
   lot_type           LotType
   date_created       String
   date_updated       String?
-  is_active          Boolean
+  is_active          Boolean @default(true)
 
   item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
   links InventoryLotTransaction[]

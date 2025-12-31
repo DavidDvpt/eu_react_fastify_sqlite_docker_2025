@@ -5,7 +5,7 @@ import { buildApp } from '../app.js';
 
 describe('JWT plugin', () => {
   it('enregistre jwt et authenticate', async () => {
-    const app = buildApp({ logger: false });
+    const app = buildApp({ logger: false, registerRoutes: false });
     await app.ready();
 
     expect(typeof app.authenticate).toBe('function');
@@ -20,7 +20,7 @@ describe('JWT plugin', () => {
   });
 
   it('bloque sans token', async () => {
-    const app = buildApp({ logger: false });
+    const app = buildApp({ logger: false, registerRoutes: false });
 
     app.register((scope, _opts, done) => {
       scope.get('/private', { preHandler: [scope.authenticate] }, () => ({ ok: true }));

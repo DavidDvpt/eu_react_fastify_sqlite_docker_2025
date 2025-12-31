@@ -232,7 +232,7 @@ export type ItemCategoryCreateInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   item_types?: Prisma.ItemTypeCreateNestedManyWithoutCategoryInput
 }
@@ -241,7 +241,7 @@ export type ItemCategoryUncheckedCreateInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   item_types?: Prisma.ItemTypeUncheckedCreateNestedManyWithoutCategoryInput
 }
@@ -268,7 +268,7 @@ export type ItemCategoryCreateManyInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
@@ -335,7 +335,7 @@ export type ItemCategoryCreateWithoutItem_typesInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
@@ -343,7 +343,7 @@ export type ItemCategoryUncheckedCreateWithoutItem_typesInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 

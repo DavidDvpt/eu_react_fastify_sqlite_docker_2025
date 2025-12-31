@@ -4,7 +4,7 @@ import { buildApp } from '../app.js';
 
 describe('Prisma plugin', () => {
   it('enregistre prisma sur fastify', async () => {
-    const app = buildApp({ logger: false });
+    const app = buildApp({ logger: false, registerRoutes: false });
     await app.ready();
 
     expect(app.prisma).toBeDefined();

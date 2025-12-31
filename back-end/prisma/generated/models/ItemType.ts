@@ -247,7 +247,7 @@ export type ItemTypeCreateInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   category: Prisma.ItemCategoryCreateNestedOneWithoutItem_typesInput
   items?: Prisma.ItemCreateNestedManyWithoutItem_typeInput
@@ -258,7 +258,7 @@ export type ItemTypeUncheckedCreateInput = {
   category_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutItem_typeInput
 }
@@ -288,7 +288,7 @@ export type ItemTypeCreateManyInput = {
   category_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
@@ -411,7 +411,7 @@ export type ItemTypeCreateWithoutCategoryInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   items?: Prisma.ItemCreateNestedManyWithoutItem_typeInput
 }
@@ -420,7 +420,7 @@ export type ItemTypeUncheckedCreateWithoutCategoryInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   items?: Prisma.ItemUncheckedCreateNestedManyWithoutItem_typeInput
 }
@@ -467,7 +467,7 @@ export type ItemTypeCreateWithoutItemsInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   category: Prisma.ItemCategoryCreateNestedOneWithoutItem_typesInput
 }
@@ -477,7 +477,7 @@ export type ItemTypeUncheckedCreateWithoutItemsInput = {
   category_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
@@ -519,7 +519,7 @@ export type ItemTypeCreateManyCategoryInput = {
   id?: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 

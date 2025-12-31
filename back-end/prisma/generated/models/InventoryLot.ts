@@ -327,7 +327,7 @@ export type InventoryLotCreateInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   item: Prisma.ItemCreateNestedOneWithoutInventory_lotsInput
   links?: Prisma.InventoryLotTransactionCreateNestedManyWithoutInventory_lotInput
 }
@@ -341,7 +341,7 @@ export type InventoryLotUncheckedCreateInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   links?: Prisma.InventoryLotTransactionUncheckedCreateNestedManyWithoutInventory_lotInput
 }
 
@@ -380,7 +380,7 @@ export type InventoryLotCreateManyInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
 }
 
 export type InventoryLotUpdateManyMutationInput = {
@@ -543,7 +543,7 @@ export type InventoryLotCreateWithoutItemInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   links?: Prisma.InventoryLotTransactionCreateNestedManyWithoutInventory_lotInput
 }
 
@@ -555,7 +555,7 @@ export type InventoryLotUncheckedCreateWithoutItemInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   links?: Prisma.InventoryLotTransactionUncheckedCreateNestedManyWithoutInventory_lotInput
 }
 
@@ -608,7 +608,7 @@ export type InventoryLotCreateWithoutLinksInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   item: Prisma.ItemCreateNestedOneWithoutInventory_lotsInput
 }
 
@@ -621,7 +621,7 @@ export type InventoryLotUncheckedCreateWithoutLinksInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
 }
 
 export type InventoryLotCreateOrConnectWithoutLinksInput = {
@@ -672,7 +672,7 @@ export type InventoryLotCreateManyItemInput = {
   lot_type: $Enums.LotType
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
 }
 
 export type InventoryLotUpdateWithoutItemInput = {

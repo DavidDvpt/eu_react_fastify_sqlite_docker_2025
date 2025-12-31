@@ -325,7 +325,7 @@ export type ItemCreateInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   item_type: Prisma.ItemTypeCreateNestedOneWithoutItemsInput
   inventory_lots?: Prisma.InventoryLotCreateNestedManyWithoutItemInput
@@ -340,7 +340,7 @@ export type ItemUncheckedCreateInput = {
   item_type_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   inventory_lots?: Prisma.InventoryLotUncheckedCreateNestedManyWithoutItemInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutItemInput
@@ -382,7 +382,7 @@ export type ItemCreateManyInput = {
   item_type_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
@@ -553,7 +553,7 @@ export type ItemCreateWithoutItem_typeInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   inventory_lots?: Prisma.InventoryLotCreateNestedManyWithoutItemInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutItemInput
@@ -566,7 +566,7 @@ export type ItemUncheckedCreateWithoutItem_typeInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   inventory_lots?: Prisma.InventoryLotUncheckedCreateNestedManyWithoutItemInput
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutItemInput
@@ -620,7 +620,7 @@ export type ItemCreateWithoutInventory_lotsInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   item_type: Prisma.ItemTypeCreateNestedOneWithoutItemsInput
   transactions?: Prisma.TransactionCreateNestedManyWithoutItemInput
@@ -634,7 +634,7 @@ export type ItemUncheckedCreateWithoutInventory_lotsInput = {
   item_type_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   transactions?: Prisma.TransactionUncheckedCreateNestedManyWithoutItemInput
 }
@@ -688,7 +688,7 @@ export type ItemCreateWithoutTransactionsInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   item_type: Prisma.ItemTypeCreateNestedOneWithoutItemsInput
   inventory_lots?: Prisma.InventoryLotCreateNestedManyWithoutItemInput
@@ -702,7 +702,7 @@ export type ItemUncheckedCreateWithoutTransactionsInput = {
   item_type_id: string
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
   inventory_lots?: Prisma.InventoryLotUncheckedCreateNestedManyWithoutItemInput
 }
@@ -756,7 +756,7 @@ export type ItemCreateManyItem_typeInput = {
   is_limited: boolean
   date_created: string
   date_updated?: string | null
-  is_active: boolean
+  is_active?: boolean
   name: string
 }
 
