@@ -17,19 +17,19 @@ describe('Authorize plugin', () => {
     const app = buildApp({ logger: false, registerRoutes: false });
 
     app.register((scope, _opts, done) => {
-      app.get(
+      scope.get(
         '/admin-only',
-        { preHandler: [scope.authenticate, app.authorize(['admin'])] },
-        () => ({
-          ok: true,
-        })
+        { preHandler: [scope.authenticate, scope.authorize(['ADMIN'])] },
+        () => ({ ok: true })
       );
 
       done();
     });
 
     await app.ready();
-    const token = app.jwt.sign({ sub: 'user-1' });
+
+    const token = app.jwt.access.sign({ sub: 'user-1' });
+
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',
@@ -45,9 +45,9 @@ describe('Authorize plugin', () => {
     const app = buildApp({ logger: false, registerRoutes: false });
 
     app.register((scope, _opts, done) => {
-      app.get(
+      scope.get(
         '/admin-only',
-        { preHandler: [scope.authenticate, app.authorize(['admin'])] },
+        { preHandler: [scope.authenticate, scope.authorize(['ADMIN'])] },
         () => ({
           ok: true,
         })
@@ -58,7 +58,8 @@ describe('Authorize plugin', () => {
 
     await app.ready();
 
-    const token = app.jwt.sign({ sub: 'user-1', role: 'user' });
+    const token = app.jwt.access.sign({ sub: 'user-1', role: 'USER' });
+
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',
@@ -74,16 +75,18 @@ describe('Authorize plugin', () => {
     const app = buildApp({ logger: false, registerRoutes: false });
 
     app.register((scope, _opts, done) => {
-      app.get('/admin-only', { preHandler: [app.authenticate, app.authorize(['admin'])] }, () => ({
-        ok: true,
-      }));
+      scope.get(
+        '/admin-only',
+        { preHandler: [scope.authenticate, scope.authorize(['ADMIN'])] },
+        () => ({ ok: true })
+      );
 
       done();
     });
 
     await app.ready();
+    const token = app.jwt.access.sign({ sub: 'admin-1', role: 'ADMIN' });
 
-    const token = app.jwt.sign({ sub: 'admin-1', role: 'admin' });
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',

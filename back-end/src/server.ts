@@ -5,7 +5,7 @@ const PORT = Number(process.env.PORT ?? 8020);
 import { buildApp } from './app.js';
 
 async function start() {
-  const app = buildApp();
+  const app = buildApp({});
 
   try {
     await app.listen({

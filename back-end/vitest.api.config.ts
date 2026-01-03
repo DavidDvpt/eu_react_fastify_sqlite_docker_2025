@@ -7,7 +7,7 @@ export default defineConfig({
     dir: 'src',
     include: ['**/*.api.spec.ts'],
     reporters: 'default',
-    setupFiles: [], // ex: ['./tests/setup-api.ts']
+    setupFiles: ['./vitest.api.setup.ts'],
     clearMocks: true,
     coverage: {
       reporter: ['text', 'lcov'],

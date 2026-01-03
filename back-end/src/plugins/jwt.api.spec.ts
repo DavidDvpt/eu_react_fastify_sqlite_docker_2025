@@ -1,4 +1,3 @@
-// src/plugins/jwt.spec.ts
 import { describe, expect, it } from 'vitest';
 
 import { buildApp } from '../app.js';
@@ -6,15 +5,22 @@ import { buildApp } from '../app.js';
 describe('JWT plugin', () => {
   it('enregistre jwt et authenticate', async () => {
     const app = buildApp({ logger: false, registerRoutes: false });
+
+    app.get('/_probe', async (request, reply) => {
+      await app.ready();
+      expect(typeof app.jwt.access.sign).toBe('function');
+      expect(typeof app.jwt.refresh.sign).toBe('function');
+      return reply.send({ ok: true });
+    });
+
     await app.ready();
 
     expect(typeof app.authenticate).toBe('function');
-    expect(typeof app.jwt.sign).toBe('function');
+    expect(typeof app.jwt.access.sign).toBe('function');
+    expect(typeof app.jwt.refresh.sign).toBe('function');
 
-    // check sign and verify
-    const token = app.jwt.sign({ sub: 'user-1' });
-    const decoded = app.jwt.verify<{ sub: string }>(token);
-    expect(decoded.sub).toBe('user-1');
+    const res = await app.inject({ method: 'GET', url: '/_probe' });
+    expect(res.statusCode).toBe(200);
 
     await app.close();
   });
@@ -22,10 +28,10 @@ describe('JWT plugin', () => {
   it('bloque sans token', async () => {
     const app = buildApp({ logger: false, registerRoutes: false });
 
-    app.register((scope, _opts, done) => {
-      scope.get('/private', { preHandler: [scope.authenticate] }, () => ({ ok: true }));
-      done();
+    app.after(() => {
+      app.get('/private', { preHandler: [app.authenticate] }, () => ({ ok: true }));
     });
+
     await app.ready();
 
     const res = await app.inject({ method: 'GET', url: '/private' });

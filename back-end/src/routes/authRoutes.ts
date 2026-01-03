@@ -1,6 +1,8 @@
 import argon2 from 'argon2';
 import { FastifyPluginCallback } from 'fastify';
 
+import HashTools from '../lib/security/HashTools.js';
+import { signinBodySchema } from '../lib/validations/signin.Validation.js';
 import { signupBodySchema } from '../lib/validations/signup.Validation.js';
 
 const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
@@ -25,7 +27,6 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
       if (existing) {
         return reply.code(409).send({ message: 'Email already in use' });
       }
-
       // 2) hash
       const hash = await argon2.hash(password);
 
@@ -51,6 +52,53 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
         user,
         token,
       });
+    }
+  );
+  app.post(
+    '/signin',
+    {
+      schema: {
+        body: signinBodySchema,
+      },
+    },
+    async (request, reply) => {
+      const { password, pseudo } = request.body as { password: string; pseudo: string };
+
+      const user = await app.repos.users.findUnique({ where: { pseudo } });
+
+      if (!user) {
+        return reply.code(401).send({ message: 'Identifiants invalides' });
+      }
+      const passOk = await HashTools.verifyPassword(user.password_hash, password);
+      if (!passOk) {
+        return reply.code(401).send({ message: 'Identifiants invalides' });
+      }
+
+      const accessToken = request.server.accessJwtSign({
+        userId: user.id,
+        role: user.role,
+        pseudo: user.pseudo,
+      });
+
+      const refreshToken = request.server.refreshJwtSign({
+        userId: user.id,
+      });
+
+      reply
+        .setCookie('access_token', accessToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'lax',
+          path: '/',
+          // maxAge: 60 * 15, // optionnel, sinon c'est géré par l'exp du JWT
+        })
+        .setCookie('refresh_token', refreshToken, {
+          httpOnly: true,
+          secure: false,
+          sameSite: 'lax',
+          path: '/auth/refresh', // classique: limiter l’envoi du refresh token
+          // maxAge: 60 * 60 * 24 * 7,
+        });
     }
   );
   done();

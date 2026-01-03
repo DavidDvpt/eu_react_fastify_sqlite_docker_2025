@@ -1,23 +1,17 @@
 import '@fastify/jwt';
 
+type JwtNs = {
+  sign: (payload: object) => string;
+  verify: <T = unknown>(token: string) => T;
+};
+
 declare module '@fastify/jwt' {
+  interface JWT {
+    access: JwtNs;
+    refresh: JwtNs;
+  }
   interface FastifyJWT {
     payload: { sub: string; role?: string };
     user: { sub: string; role?: string };
-  }
-}
-
-declare module 'fastify' {
-  interface FastifyInstance {
-    authenticate: (
-      request: import('fastify').FastifyRequest,
-      reply: import('fastify').FastifyReply
-    ) => Promise<void>;
-    authorize: (
-      allowedRoles: string[]
-    ) => (
-      request: import('fastify').FastifyRequest,
-      reply: import('fastify').FastifyReply
-    ) => Promise<void>;
   }
 }
