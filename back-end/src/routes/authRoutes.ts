@@ -74,13 +74,13 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
         return reply.code(401).send({ message: 'Identifiants invalides' });
       }
 
-      const accessToken = request.server.accessJwtSign({
+      const accessToken = request.server.jwt.access.sign({
         userId: user.id,
         role: user.role,
         pseudo: user.pseudo,
       });
 
-      const refreshToken = request.server.refreshJwtSign({
+      const refreshToken = request.server.jwt.refresh.sign({
         userId: user.id,
       });
 
