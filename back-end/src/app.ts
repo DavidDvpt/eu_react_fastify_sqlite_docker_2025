@@ -2,7 +2,7 @@ import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
 import 'dotenv/config';
 import Fastify from 'fastify';
-import { ZodTypeProvider } from 'fastify-type-provider-zod';
+import { ZodTypeProvider, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
 import authorizePlugin from './plugins/authorize.js';
 import jwtPlugin from './plugins/jwt.js';
@@ -33,6 +33,9 @@ export function buildApp({
     },
     credentials: true,
   });
+
+  app.setValidatorCompiler(validatorCompiler);
+  app.setSerializerCompiler(serializerCompiler);
 
   app.register(jwtPlugin);
   app.register(authorizePlugin);

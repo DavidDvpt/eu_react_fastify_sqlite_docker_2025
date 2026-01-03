@@ -1,64 +1,35 @@
-import { PrismaPg } from "@prisma/adapter-pg";
-import "dotenv/config";
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
-import { PrismaClient } from "./generated/client.js";
+import { ItemCategoryRepository } from '../src/lib/repositories/itemCategoryRepository.js';
+import { ItemRepository } from '../src/lib/repositories/itemRepository.js';
+import { ItemTypeRepository } from '../src/lib/repositories/itemTypeRepository.js';
+import prismaClient from './prismaClient.js';
+import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
+import { ITEM_TYPES } from './seedDatas/item_types.js';
+import { ITEMS } from './seedDatas/items.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const itemCategoryRepository = new ItemCategoryRepository(prismaClient);
+const itemTypesRepository = new ItemTypeRepository(prismaClient);
+const itemRepository = new ItemRepository(prismaClient);
 
-// Fichier SQL
-const sqlPath = join(__dirname, "seed", "datas.sql");
-const rawSql = readFileSync(sqlPath, "utf8");
+const itemCategories = await itemCategoryRepository.findMany();
 
-// Découper tous les statements en un tableau
-let statements = rawSql
-  .split(";")
-  .map((s) => s.trim())
-  .filter((s) => s.length > 0)
-  .map((s) => s + ";"); // remettre le ;
-
-console.log(`📄 Loaded ${statements.length} SQL statements`);
-
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
-const prisma = new PrismaClient({ adapter });
-
-// BATCH de 200
-const BATCH_SIZE = 200;
-
-async function executeBatch(batch: any, index: any) {
-  for (const stmt of batch) {
-    try {
-      await prisma.$executeRawUnsafe(stmt);
-    } catch (err) {
-      console.error(`❌ Error at batch ${index}, statement:`);
-      console.error(stmt.slice(0, 200));
-      throw err;
-    }
-  }
-  console.log(`✓ Batch ${index} executed (${batch.length} statements)`);
-}
-
-async function main() {
-  console.log(`🌱 Starting SQL seed with batch size ${BATCH_SIZE}...`);
-
-  let batchIndex = 1;
-  for (let i = 0; i < statements.length; i += BATCH_SIZE) {
-    const batch = statements.slice(i, i + BATCH_SIZE);
-    await executeBatch(batch, batchIndex++);
-  }
-
-  console.log("🌱 Seed completed successfully!");
-}
-
-main()
-  .catch((err) => {
-    console.error("❌ Seed error:", err);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
+if (!itemCategories.length) {
+  ITEM_CATEGORIES.forEach(async (e) => {
+    await itemCategoryRepository.create({ data: e });
   });
+}
+
+const itemTypes = await itemTypesRepository.findMany();
+
+if (!itemTypes.length) {
+  ITEM_TYPES.forEach(async (e) => {
+    await itemTypesRepository.create({ data: e });
+  });
+}
+
+const items = await itemRepository.findMany();
+
+if (!items.length) {
+  ITEMS.forEach(async (e) => {
+    await itemRepository.create({ data: e });
+  });
+}
