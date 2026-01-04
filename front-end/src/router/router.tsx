@@ -4,13 +4,18 @@ import AppLayout from "../layouts/AppLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import RootLayout from "../layouts/RootLayout";
 import HomePage from "../pages/HomePage";
+import LoginPage from "../pages/auth/LoginPage";
 
 const appRouter = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
     children: [
-      { path: "auth", element: <AuthLayout />, children: [] },
+      {
+        path: "auth",
+        element: <AuthLayout />,
+        children: [{ path: "login", element: <LoginPage />, children: [] }],
+      },
       { path: "admin", element: <AdminLayout />, children: [] },
       {
         element: <AppLayout />,
