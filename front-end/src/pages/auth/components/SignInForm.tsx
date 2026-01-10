@@ -7,7 +7,10 @@ import {
   type LoginOutput,
 } from "../validations";
 
-function LoginForm() {
+interface ILoginFormProps {
+  className?: string;
+}
+function LoginForm({ className }: ILoginFormProps) {
   const handleSubmit = (values: LoginOutput) => {
     console.log(values);
   };
@@ -17,16 +20,25 @@ function LoginForm() {
       schema={loginSchema}
       defaultValues={loginDefaultValues}
       onSubmit={handleSubmit}
-      className="w-full flex flex-col items-center justify-center"
+      className={`flex flex-col items-stretch justify-center ${className}`}
     >
-      <TextField name="pseudo" label="Pseudo" type="text" />
+      <TextField
+        name="pseudo"
+        label="Pseudo"
+        type="text"
+        inputClassName="py-2 mt-1"
+      />
       <TextField
         name="password"
         label="Mot de passe"
         type="password"
         autoComplete="current-password"
+        inputClassName="pt-4 mt-1"
+        className="pt-2"
       />
-      <Button type="submit">Se connecter</Button>
+      <Button type="submit" className="mt-4" variant="link">
+        Se connecter
+      </Button>
     </GenericForm>
   );
 }

@@ -4,7 +4,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
+} from "@/components/form/form";
 import { Input } from "@/components/ui/input";
 import { useFormContext } from "react-hook-form";
 
@@ -14,6 +14,9 @@ type TextFieldProps = {
   type?: string;
   placeholder?: string;
   autoComplete?: string;
+  inputClassName?: string;
+  labelClassName?: string;
+  className?: string;
 };
 
 export function TextField({
@@ -22,6 +25,9 @@ export function TextField({
   type = "text",
   placeholder,
   autoComplete,
+  inputClassName,
+  labelClassName,
+  className,
 }: TextFieldProps) {
   const { control } = useFormContext();
 
@@ -30,14 +36,15 @@ export function TextField({
       control={control}
       name={name as never}
       render={({ field }) => (
-        <FormItem>
-          <FormLabel>{label}</FormLabel>
+        <FormItem className={className}>
+          <FormLabel className={labelClassName}>{label}</FormLabel>
           <FormControl>
             <Input
               {...field}
               type={type}
               placeholder={placeholder}
               autoComplete={autoComplete}
+              className={inputClassName}
             />
           </FormControl>
           <FormMessage />

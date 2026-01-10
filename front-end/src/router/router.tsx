@@ -1,10 +1,11 @@
+import SignUpPage from "@/pages/auth/SignUpPage";
 import { createBrowserRouter } from "react-router-dom";
 import AdminLayout from "../layouts/AdminLayout";
 import AppLayout from "../layouts/AppLayout";
 import AuthLayout from "../layouts/AuthLayout";
 import RootLayout from "../layouts/RootLayout";
 import HomePage from "../pages/HomePage";
-import LoginPage from "../pages/auth/LoginPage";
+import SignIngPage from "../pages/auth/SignInPage";
 
 const appRouter = createBrowserRouter([
   {
@@ -14,7 +15,10 @@ const appRouter = createBrowserRouter([
       {
         path: "auth",
         element: <AuthLayout />,
-        children: [{ path: "login", element: <LoginPage />, children: [] }],
+        children: [
+          { path: "signin", element: <SignIngPage />, children: [] },
+          { path: "signup", element: <SignUpPage />, children: [] },
+        ],
       },
       { path: "admin", element: <AdminLayout />, children: [] },
       {
