@@ -9,17 +9,14 @@ import {
 
 interface ILoginFormProps {
   className?: string;
+  onSubmit: (values: LoginOutput) => void | Promise<void>;
 }
-function LoginForm({ className }: ILoginFormProps) {
-  const handleSubmit = (values: LoginOutput) => {
-    console.log(values);
-  };
-
+function SignInForm({ className, onSubmit }: ILoginFormProps) {
   return (
     <GenericForm
       schema={loginSchema}
       defaultValues={loginDefaultValues}
-      onSubmit={handleSubmit}
+      onSubmit={onSubmit}
       className={`flex flex-col items-stretch justify-center ${className}`}
     >
       <TextField
@@ -43,4 +40,4 @@ function LoginForm({ className }: ILoginFormProps) {
   );
 }
 
-export default LoginForm;
+export default SignInForm;
