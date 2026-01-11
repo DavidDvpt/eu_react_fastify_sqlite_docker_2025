@@ -5,6 +5,17 @@
 @tailwind utilities;
 
 @theme inline {
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
   /* spacing (Tailwind v4) */
   --spacing-0: 0rem;
   --spacing-1: 0.25rem; /* 4px */
@@ -85,6 +96,16 @@
   --primary-foreground: oklch(0.984 0.003 247.858);
   --secondary: oklch(0.968 0.007 247.896);
   --secondary-foreground: oklch(0.208 0.042 265.755);
+
+  --info: oklch(0.62 0.14 250);
+  --info-foreground: oklch(0.98 0 0);
+  --success: oklch(0.6 0.12 145);
+  --success-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.7 0.14 60);
+  --warning-foreground: oklch(0.2 0 0);
+  --error: oklch(0.58 0.16 25);
+  --error-foreground: oklch(0.98 0 0);
+
   --muted: oklch(0.968 0.007 247.896);
   --muted-foreground: oklch(0.554 0.046 257.417);
   --accent: oklch(0.968 0.007 247.896);
@@ -119,6 +140,16 @@
   --primary-foreground: oklch(0.208 0.042 265.755);
   --secondary: oklch(0.279 0.041 260.031);
   --secondary-foreground: oklch(0.984 0.003 247.858);
+
+  --info: oklch(0.62 0.14 250);
+  --info-foreground: oklch(0.98 0 0);
+  --success: oklch(0.6 0.12 145);
+  --success-foreground: oklch(0.98 0 0);
+  --warning: oklch(0.7 0.14 60);
+  --warning-foreground: oklch(0.2 0 0);
+  --error: oklch(0.58 0.16 25);
+  --error-foreground: oklch(0.98 0 0);
+
   --muted: oklch(0.279 0.041 260.031);
   --muted-foreground: oklch(0.704 0.04 256.788);
   --accent: oklch(0.279 0.041 260.031);

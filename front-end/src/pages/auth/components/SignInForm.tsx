@@ -36,7 +36,7 @@ function LoginForm({ className }: ILoginFormProps) {
         inputClassName="pt-4 mt-1"
         className="pt-2"
       />
-      <Button type="submit" className="mt-4" variant="link">
+      <Button type="submit" className="mt-4" variant="info">
         Se connecter
       </Button>
     </GenericForm>

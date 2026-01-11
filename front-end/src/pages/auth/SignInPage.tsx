@@ -6,7 +6,6 @@ function SignInPage() {
   return (
     <ModalGeneric noClose dialogType="form" title={{ value: "Connexion" }}>
       <SignInForm className="p-16 w-[300px]" />
-
       <Link to="/auth/signup">S’inscrire</Link>
     </ModalGeneric>
   );
