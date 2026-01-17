@@ -1,11 +1,16 @@
 import ModalGeneric from "@/components/common/ModalGeneric";
+import signinRequest from "@/lib/network/auth/signin";
 import { Link } from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import type { LoginOutput } from "./validations";
 
 function SignInPage() {
-  const handleSubmit = (values: LoginOutput) => {
-    console.log(values);
+  const handleSubmit = async (values: LoginOutput) => {
+    try {
+      const response = await signinRequest(values);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
