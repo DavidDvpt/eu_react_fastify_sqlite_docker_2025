@@ -3,7 +3,7 @@ import { axiosInstance, axiosPublicInstance } from "../instances";
 
 describe("axios instances", () => {
   it("should have the same base config", () => {
-    expect(axiosInstance.defaults.baseURL).toBe(import.meta.env.VITE_API_URL);
+    expect(axiosInstance().defaults.baseURL).toBe(import.meta.env.VITE_API_URL);
 
     const r = import.meta.env.VITE_API_URL;
     console.log(r);
@@ -11,12 +11,12 @@ describe("axios instances", () => {
       import.meta.env.VITE_API_URL
     );
 
-    expect(axiosInstance.defaults.timeout).toBe(20_000);
+    expect(axiosInstance().defaults.timeout).toBe(20_000);
     expect(axiosPublicInstance.defaults.timeout).toBe(20_000);
   });
 
   it("should set withCredentials only on private instance", () => {
-    expect(axiosInstance.defaults.withCredentials).toBe(true);
+    expect(axiosInstance().defaults.withCredentials).toBe(true);
     expect(axiosPublicInstance.defaults.withCredentials).toBeUndefined();
   });
 
