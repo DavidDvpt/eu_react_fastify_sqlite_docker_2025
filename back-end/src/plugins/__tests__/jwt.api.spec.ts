@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildApp } from '../app.js';
+import { buildApp } from '../../app.js';
 
 describe('JWT plugin', () => {
   it('enregistre jwt et authenticate', async () => {

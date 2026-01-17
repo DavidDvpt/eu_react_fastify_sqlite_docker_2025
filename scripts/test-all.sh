@@ -1,16 +1,26 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-export SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 
-export DB_SERVICE="db"
-export DB_PORT_HOST=5434
-export DB_URL="postgresql://postgres:postgres@localhost:${DB_PORT_HOST}/app_test"
+echo "***********************"
+echo "🧪 Running BDD tests..."
+echo "***********************"
+sh "$ROOT_DIR/back-end/scripts/test-db.sh"
 
-sh "$SCRIPT_DIR/test-db.sh"
+echo "***********************"
+echo "🧪 Running API tests..."
+echo "***********************"
+(
+  cd "$ROOT_DIR/back-end"
+  npm run test:api
+)
 
-echo "🧪 Running API tests (ex: e2e)..."
-DATABASE_URL="$DB_URL" npm --prefix back-end run test:api
-
+echo "***********************"
 echo "🧪 Running frontend tests..."
-# npm --prefix front-end test
+echo "***********************"
+(
+  cd "$ROOT_DIR/front-end"
+  npm run test:front
+)

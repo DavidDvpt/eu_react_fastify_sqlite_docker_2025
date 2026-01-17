@@ -8,9 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "vitest",
     "test:watch": "vitest --watch",
-    "test:run": "vitest run"
+    "test:front": "vitest run"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

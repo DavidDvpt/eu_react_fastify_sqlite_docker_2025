@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { buildApp } from '../app.js'; // ajuste le chemin si besoin
+import { buildApp } from '../../app.js'; // ajuste le chemin si besoin
 
 describe('Repositories plugin', () => {
   it('expose les repositories sur fastify', async () => {

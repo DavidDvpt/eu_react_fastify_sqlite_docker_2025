@@ -1,7 +1,7 @@
 // src/plugins/authorize.spec.ts
 import { describe, expect, it } from 'vitest';
 
-import { buildApp } from '../app.js';
+import { buildApp } from '../../app.js';
 
 describe('Authorize plugin', () => {
   it('enregistre authorize', async () => {
