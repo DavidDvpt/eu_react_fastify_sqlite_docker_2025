@@ -6,6 +6,8 @@ import AuthLayout from "../layouts/AuthLayout";
 import RootLayout from "../layouts/RootLayout";
 import HomePage from "../pages/HomePage";
 import SignIngPage from "../pages/auth/SignInPage";
+import GuestOnly from "./GuestOnly";
+import RequireAuth from "./RequireAuth";
 
 const appRouter = createBrowserRouter([
   {
@@ -13,17 +15,27 @@ const appRouter = createBrowserRouter([
     element: <RootLayout />,
     children: [
       {
-        path: "auth",
-        element: <AuthLayout />,
+        element: <GuestOnly />,
         children: [
-          { path: "signin", element: <SignIngPage />, children: [] },
-          { path: "signup", element: <SignUpPage />, children: [] },
+          {
+            path: "auth",
+            element: <AuthLayout />,
+            children: [
+              { path: "signin", element: <SignIngPage /> },
+              { path: "signup", element: <SignUpPage /> },
+            ],
+          },
         ],
       },
       { path: "admin", element: <AdminLayout />, children: [] },
       {
-        element: <AppLayout />,
-        children: [{ index: true, element: <HomePage /> }],
+        element: <RequireAuth />,
+        children: [
+          {
+            element: <AppLayout />,
+            children: [{ index: true, element: <HomePage /> }],
+          },
+        ],
       },
     ],
   },

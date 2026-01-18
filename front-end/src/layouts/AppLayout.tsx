@@ -1,9 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { isAuthenticated } from "../router/guards";
+import { Outlet } from "react-router-dom";
 
 function AppLayout() {
-  if (!isAuthenticated()) return <Navigate to="/auth/signin" replace />;
-
   return (
     <div>
       <Outlet />

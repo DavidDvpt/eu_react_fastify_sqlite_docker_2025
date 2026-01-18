@@ -1,9 +1,6 @@
-import { Navigate, Outlet } from "react-router-dom";
-import { isAuthenticated } from "../router/guards";
+import { Outlet } from "react-router-dom";
 
 function AuthLayout() {
-  if (isAuthenticated()) return <Navigate to="/" replace />;
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* Container centré */}

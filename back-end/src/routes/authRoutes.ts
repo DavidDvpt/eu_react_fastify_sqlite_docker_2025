@@ -98,7 +98,8 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
           sameSite: 'lax',
           path: '/auth/refresh', // classique: limiter l’envoi du refresh token
           // maxAge: 60 * 60 * 24 * 7,
-        });
+        })
+        .send({ message: 'Success' });
     }
   );
   done();
