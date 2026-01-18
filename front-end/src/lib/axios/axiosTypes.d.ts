@@ -13,3 +13,9 @@ type ApiError = {
 type BackendErrorBody = {
   message: string;
 };
+
+type ApiState<T, E> = {
+  status: ApiStatusType;
+  result: T | null;
+  error: E | null;
+};

@@ -1,13 +1,21 @@
 import ModalGeneric from "@/components/common/ModalGeneric";
-import signinRequest from "@/lib/network/auth/signin";
+import { authMeThunk } from "@/modules/auth";
+import signinRequest from "@/modules/auth/services/network/signin";
+import { useAppDispatch } from "@/store/hooks";
 import { Link } from "react-router-dom";
 import SignInForm from "./components/SignInForm";
 import type { LoginOutput } from "./validations";
 
 function SignInPage() {
+  const dispatch = useAppDispatch();
+
   const handleSubmit = async (values: LoginOutput) => {
     try {
       const response = await signinRequest(values);
+
+      if (response.message === "Success") {
+        dispatch(authMeThunk());
+      }
     } catch (error) {
       console.log(error);
     }

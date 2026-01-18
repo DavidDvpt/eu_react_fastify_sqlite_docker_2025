@@ -10,12 +10,12 @@ async function signinRequest(credentials: LoginOutput) {
     if (!credentials.pseudo) throw new Error("Pseudo is undefined");
     if (!credentials.password) throw new Error("Password is undefined");
 
-    const response = await axiosCrud(axiosInstance()).post(
-      `${API_URL}/auth/signin`,
-      credentials
-    );
+    const response = await axiosCrud(axiosInstance()).post<
+      { message: string },
+      LoginOutput
+    >(`${API_URL}/auth/signin`, credentials);
 
-    console.log(response);
+    return response;
   } catch (error) {
     return Promise.reject(error);
   }

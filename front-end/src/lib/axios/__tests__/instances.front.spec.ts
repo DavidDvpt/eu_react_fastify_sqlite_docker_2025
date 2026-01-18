@@ -5,8 +5,6 @@ describe("axios instances", () => {
   it("should have the same base config", () => {
     expect(axiosInstance().defaults.baseURL).toBe(import.meta.env.VITE_API_URL);
 
-    const r = import.meta.env.VITE_API_URL;
-    console.log(r);
     expect(axiosPublicInstance.defaults.baseURL).toBe(
       import.meta.env.VITE_API_URL
     );
