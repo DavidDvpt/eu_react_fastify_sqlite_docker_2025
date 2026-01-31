@@ -1,6 +1,6 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import { userParser } from "../parsers/userParser";
+import { meParser } from "../../authParser";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,7 +10,7 @@ async function meApi() {
       `${API_URL}/auth/me`,
     );
 
-    const parsed = await userParser(response);
+    const parsed = await meParser(response);
 
     return parsed;
   } catch (error) {

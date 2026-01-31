@@ -12,7 +12,13 @@ type UserApi = {
   is_active: boolean;
 };
 
-type User = {
+type AuthMe = {
+  id: string;
+  pseudo: string;
+  role: UserRoleType;
+  isActive: boolean;
+};
+interface User extends AuthMe {
   id: string;
   firstname?: string | null;
   lastname?: string | null;
@@ -22,10 +28,10 @@ type User = {
   createdAt: string;
   updatedAt?: string | null;
   isActive: boolean;
-};
+}
 
 type AuthType = {
   isLoggued: boolean;
   role: UserRoleType;
-  user: ApiState<User, import("@reduxjs/toolkit").SerializedError>;
+  user: ApiState<AuthMe, import("@reduxjs/toolkit").SerializedError>;
 };

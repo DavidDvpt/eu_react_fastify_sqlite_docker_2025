@@ -72,7 +72,13 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       if (!user) {
         return reply.code(401).send({ message: 'Identifiants invalides' });
       }
+
+      if (!user.is_active) {
+        return reply.code(401).send({ message: 'utilisateur desactivé' });
+      }
+
       const passOk = await HashTools.verifyPassword(user.password_hash, password);
+
       if (!passOk) {
         return reply.code(401).send({ message: 'Identifiants invalides' });
       }

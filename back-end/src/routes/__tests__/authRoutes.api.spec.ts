@@ -15,6 +15,7 @@ import { Role } from '../../../prisma/generated/enums.js';
 import type { UserForToken } from '../../types/fastify.js';
 import HashTools from '../../lib/security/HashTools.js';
 import authPlugin from '../../plugins/authPlugin.js';
+import repositoryPlugin from '../../plugins/repositories.js';
 
 const meUserMock: UserForToken = {
   id: 'user-1',
@@ -25,6 +26,7 @@ const meUserMock: UserForToken = {
 const loginMock = {
   ...meUserMock,
   password_hash: 'stored-hash',
+  is_active: true,
 };
 
 const createdUserMock = {
@@ -40,7 +42,7 @@ vi.mock('argon2', () => ({
 
 describe('authRoutes', () => {
   beforeEach(() => {
-    vi.clearAllMocks();
+    vi.restoreAllMocks();
   });
 
   function createBaseApp() {
@@ -61,7 +63,7 @@ describe('authRoutes', () => {
       refresh: { sign: vi.fn(() => 'refresh.jwt') },
     };
     app.decorate('jwt', jwt as any);
-
+    // app.register(repositoryPlugin);
     // eslint-disable-next-line @typescript-eslint/require-await
     app.decorate('authenticate', async (request: any) => {
       request.user = { id: 'user-1', role: Role.USER, pseudo: 'test' };
@@ -176,8 +178,31 @@ describe('authRoutes', () => {
       },
     });
 
-    console.log(res.statusCode, res.body);
     expect(res.statusCode).toBe(200);
+
+    await app.close();
+  });
+  it('POST /auth/signin -> user desactivated, return 401', async () => {
+    const { app, usersRepo } = buildSigninApp();
+
+    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce({
+      ...loginMock,
+      is_active: false,
+    } as any);
+
+    await app.ready();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/auth/signin',
+      payload: {
+        pseudo: 'test',
+        password: 'password123',
+      },
+    });
+
+    expect(res.statusCode).toBe(401);
+    expect(res.statusMessage).toBe('Unauthorized');
 
     await app.close();
   });
@@ -202,12 +227,12 @@ describe('authRoutes', () => {
     await app.close();
   });
   it('POST /auth/signin -> password invalid return 401', async () => {
-    const { app, usersRepo } = buildSigninApp();
-
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(loginMock as any);
-    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(false as any);
+    const { app } = buildSigninApp();
 
     await app.ready();
+
+    vi.spyOn(app.repos.users, 'findUnique').mockResolvedValueOnce(loginMock as any);
+    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(false as any);
 
     const res = await app.inject({
       method: 'POST',

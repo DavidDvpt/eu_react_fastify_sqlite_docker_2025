@@ -6,13 +6,12 @@ function attachPrivateRequestInterceptor(request: AxiosInstance) {
     (config) => {
       return config;
     },
-    (error) => Promise.reject(error)
+    (error) => Promise.reject(error),
   );
 }
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 function responseResult(res: AxiosResponse<any, any, {}>) {
-  console.log("res", res);
   return res;
 }
 
