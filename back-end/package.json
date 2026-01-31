@@ -16,6 +16,7 @@
     "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
     "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
     "sql:extract": "tsx tools/sql-to-ts.ts",
+    "test": "vitest --config vitest.api.config.ts",
     "test:api": "vitest run --config vitest.api.config.ts",
     "test:bdd": "vitest run --config vitest.bdd.config.ts",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",

@@ -20,7 +20,10 @@ module.exports = [
         sourceType: 'module',
         ecmaVersion: 'latest',
       },
-      globals: globals.node,
+      globals: {
+        ...globals.node,
+        __dirname: 'readonly',
+      },
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
@@ -56,6 +59,7 @@ module.exports = [
         'warn',
         { argsIgnorePattern: '^_', varsIgnorePattern: '^_' },
       ],
+      '@typescript-eslint/no-misused-promises': ['error', { checksVoidReturn: false }],
     },
   },
 ];
