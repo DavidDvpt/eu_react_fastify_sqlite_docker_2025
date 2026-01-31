@@ -7,7 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 async function meApi() {
   try {
     const response = await axiosCrud(axiosInstance()).get<UserApi>(
-      `${API_URL}/me`
+      `${API_URL}/auth/me`,
     );
 
     const parsed = await userParser(response);

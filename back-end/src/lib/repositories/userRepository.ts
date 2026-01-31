@@ -1,4 +1,6 @@
-import { PrismaCrudRepository, PrismaModelClient } from './prismaCrudRepository.js';
+import { PrismaCrudRepository } from './prismaCrudRepository.js';
+
+import type { PrismaModelClient } from './prismaCrudRepository.js';
 
 type UserClient = PrismaModelClient<'User'>;
 
