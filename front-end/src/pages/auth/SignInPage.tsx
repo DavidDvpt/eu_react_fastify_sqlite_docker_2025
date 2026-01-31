@@ -1,6 +1,6 @@
 import ModalGeneric from "@/components/common/ModalGeneric";
 import { authMeThunk } from "@/modules/auth";
-import signinRequest from "@/modules/auth/services/network/signin";
+import signinApi from "@/modules/auth/services/network/signinApi";
 import { useAppDispatch } from "@/store/hooks";
 import { Link } from "react-router-dom";
 import SignInForm from "./components/SignInForm";
@@ -11,7 +11,7 @@ function SignInPage() {
 
   const handleSubmit = async (values: LoginOutput) => {
     try {
-      const response = await signinRequest(values);
+      const response = await signinApi(values);
 
       if (response.message === "Success") {
         dispatch(authMeThunk());

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import me from "./services/network/me";
+import meApi from "./services/network/meApi";
 
 const authMeThunk = createAsyncThunk("auth/authMeThunk", async () => {
-  const response = await me();
+  const response = await meApi();
 
   return response;
 });

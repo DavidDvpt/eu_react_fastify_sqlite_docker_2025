@@ -1,15 +1,14 @@
+import AdminLayout from "@/layouts/AdminLayout";
+import AppLayout from "@/layouts/AppLayout";
+import AuthLayout from "@/layouts/AuthLayout";
+import RootLayout from "@/layouts/RootLayout";
+import GuestOnly from "@/modules/auth/guards/GuestOnly";
+import RequireAuth from "@/modules/auth/guards/RequireAuth";
+import HomePage from "@/pages/HomePage";
+import SignInPage from "@/pages/auth/SignInPage";
 import SignUpPage from "@/pages/auth/SignUpPage";
-import { createBrowserRouter } from "react-router-dom";
-import AdminLayout from "../layouts/AdminLayout";
-import AppLayout from "../layouts/AppLayout";
-import AuthLayout from "../layouts/AuthLayout";
-import RootLayout from "../layouts/RootLayout";
-import HomePage from "../pages/HomePage";
-import SignIngPage from "../pages/auth/SignInPage";
-import GuestOnly from "./GuestOnly";
-import RequireAuth from "./RequireAuth";
 
-const appRouter = createBrowserRouter([
+const routes = [
   {
     path: "/",
     element: <RootLayout />,
@@ -21,7 +20,7 @@ const appRouter = createBrowserRouter([
             path: "auth",
             element: <AuthLayout />,
             children: [
-              { path: "signin", element: <SignIngPage /> },
+              { path: "signin", element: <SignInPage /> },
               { path: "signup", element: <SignUpPage /> },
             ],
           },
@@ -39,6 +38,6 @@ const appRouter = createBrowserRouter([
       },
     ],
   },
-]);
+];
 
-export default appRouter;
+export default routes;

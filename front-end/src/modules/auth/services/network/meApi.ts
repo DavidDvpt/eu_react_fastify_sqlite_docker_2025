@@ -4,7 +4,7 @@ import { userParser } from "../parsers/userParser";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function me() {
+async function meApi() {
   try {
     const response = await axiosCrud(axiosInstance()).get<UserApi>(
       `${API_URL}/me`
@@ -18,4 +18,4 @@ async function me() {
   }
 }
 
-export default me;
+export default meApi;

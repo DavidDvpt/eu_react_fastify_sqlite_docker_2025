@@ -23,6 +23,8 @@ const authSlice = createSlice({
         state.user.status = ApiStatus.FULFILLED;
         state.user.result = action.payload;
         state.user.error = null;
+        state.isLoggued = true;
+        state.role = action.payload.role;
       })
       .addCase(authMeThunk.rejected, (state, action) => {
         state.user.status = ApiStatus.REJECTED;

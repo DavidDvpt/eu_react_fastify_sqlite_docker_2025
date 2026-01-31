@@ -4,7 +4,7 @@ import type { LoginOutput } from "@/pages/auth/validations";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-async function signinRequest(credentials: LoginOutput) {
+async function signinApi(credentials: LoginOutput) {
   try {
     if (!credentials) throw new Error("Params not found");
     if (!credentials.pseudo) throw new Error("Pseudo is undefined");
@@ -21,4 +21,4 @@ async function signinRequest(credentials: LoginOutput) {
   }
 }
 
-export default signinRequest;
+export default signinApi;
