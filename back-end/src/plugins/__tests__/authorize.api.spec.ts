@@ -33,7 +33,9 @@ describe('Authorize plugin', () => {
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',
-      headers: { authorization: `Bearer ${token}` },
+      cookies: {
+        access_token: token,
+      },
     });
 
     expect(res.statusCode).toBe(403);
@@ -63,7 +65,9 @@ describe('Authorize plugin', () => {
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',
-      headers: { authorization: `Bearer ${token}` },
+      cookies: {
+        access_token: token,
+      },
     });
 
     expect(res.statusCode).toBe(403);
@@ -90,7 +94,9 @@ describe('Authorize plugin', () => {
     const res = await app.inject({
       method: 'GET',
       url: '/admin-only',
-      headers: { authorization: `Bearer ${token}` },
+      cookies: {
+        access_token: token,
+      },
     });
 
     expect(res.statusCode).toBe(200);

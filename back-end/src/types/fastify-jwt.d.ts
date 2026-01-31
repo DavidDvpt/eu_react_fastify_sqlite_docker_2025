@@ -1,17 +1,20 @@
 import '@fastify/jwt';
+import type { UserForToken } from './fastify.js';
 
-type JwtNs = {
-  sign: (payload: object) => string;
+type JwtNamespace = {
+  sign: (payload: { sub: string; role?: string; pseudo?: string }) => string;
   verify: <T = unknown>(token: string) => T;
 };
 
+type JwtPayload = { sub: string; role?: string; pseudo?: string };
+
 declare module '@fastify/jwt' {
   interface JWT {
-    access: JwtNs;
-    refresh: JwtNs;
+    access: JwtNamespace;
+    refresh: JwtNamespace;
   }
   interface FastifyJWT {
-    payload: { sub: string; role?: string };
-    user: { sub: string; role?: string };
+    payload: JwtPayload;
+    user: UserForToken;
   }
 }

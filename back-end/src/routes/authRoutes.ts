@@ -1,11 +1,13 @@
 import argon2 from 'argon2';
-import { FastifyPluginCallback } from 'fastify';
 
 import HashTools from '../lib/security/HashTools.js';
 import { signinBodySchema } from '../lib/validations/signin.Validation.js';
 import { signupBodySchema } from '../lib/validations/signup.Validation.js';
 
-const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
+import type { FastifyPluginAsync } from 'fastify';
+
+// eslint-disable-next-line @typescript-eslint/require-await
+const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   app.post(
     '/signup',
     {
@@ -54,6 +56,7 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
       });
     }
   );
+  //signin
   app.post(
     '/signin',
     {
@@ -75,13 +78,13 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
       }
 
       const accessToken = request.server.jwt.access.sign({
-        userId: user.id,
+        sub: user.id,
         role: user.role,
         pseudo: user.pseudo,
       });
 
       const refreshToken = request.server.jwt.refresh.sign({
-        userId: user.id,
+        sub: user.id,
       });
 
       reply
@@ -102,7 +105,24 @@ const authRoutes: FastifyPluginCallback = (app, _opts, done) => {
         .send({ message: 'Success' });
     }
   );
-  done();
+
+  // protected routes
+  app.register((protectedApp) => {
+    protectedApp.protect();
+
+    protectedApp.get('/me', async (request, reply) => {
+      try {
+        const id = request.user.id;
+        const user = await protectedApp.repos.users.findUnique({ where: { id } });
+
+        if (!user) return reply.code(401).send('Unauthorized');
+
+        return reply.code(200).send({ id: user.id, role: user.role, pseudo: user.pseudo });
+      } catch {
+        return reply.code(401).send('Unauthorized');
+      }
+    });
+  });
 };
 
 export default authRoutes;

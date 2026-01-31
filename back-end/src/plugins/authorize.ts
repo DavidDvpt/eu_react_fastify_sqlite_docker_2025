@@ -1,12 +1,18 @@
 import fp from 'fastify-plugin';
 
-import type { FastifyPluginCallback, FastifyReply, FastifyRequest } from 'fastify';
+import type {
+  FastifyPluginAsync,
+  FastifyPluginCallback,
+  FastifyReply,
+  FastifyRequest,
+} from 'fastify';
 
 export type AuthorizeFn = (
   allowedRoles: string[]
 ) => (request: FastifyRequest, reply: FastifyReply) => void | Promise<void>;
 
-const authorizePlugin: FastifyPluginCallback = (app, _opts, done) => {
+// eslint-disable-next-line @typescript-eslint/require-await
+const authorizePlugin: FastifyPluginAsync = async (app, _opts) => {
   const authorize: AuthorizeFn = (allowedRoles) => {
     return async (request, reply) => {
       const user = request.user as { role?: string } | undefined;
@@ -20,8 +26,17 @@ const authorizePlugin: FastifyPluginCallback = (app, _opts, done) => {
   };
 
   app.decorate('authorize', authorize);
-
-  done();
 };
+// const authorizePlugin = async (app) => {
+//   app.decorate('authorize', (allowedRoles) => {
+//     return async (request, reply) => {
+//       const role = request.user?.role;
+
+//       if (!role || !allowedRoles.includes(role)) {
+//         return reply.code(403).send({ message: 'Forbidden' });
+//       }
+//     };
+//   });
+// };
 
 export default fp(authorizePlugin);

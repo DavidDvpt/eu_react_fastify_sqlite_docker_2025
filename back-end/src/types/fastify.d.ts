@@ -1,38 +1,40 @@
-import { FastifyJwtVerifyOptions } from '@fastify/jwt';
-import 'fastify';
+import type { preHandlerHookHandler, preHandlerAsyncHookHandler, FastifyReply } from 'fastify';
 
 type PrismaClientType = typeof import('../../prisma/prismaClient.js').default;
+
+export type UserForToken = {
+  id: string;
+  role: string;
+  pseudo: string;
+};
+
+type JwtVerifyOpts = {
+  onlyCookie?: boolean;
+  cookieName?: string;
+  onlyHeader?: boolean;
+};
 
 declare module 'fastify' {
   interface FastifyInstance {
     prisma: PrismaClientType;
 
-    jwt: {
-      access: {
-        sign: (payload: object) => string;
-        verify: <T = unknown>(token: string) => T;
-      };
-      refresh: {
-        sign: (payload: object) => string;
-        verify: <T = unknown>(token: string) => T;
-      };
-    };
+    authenticate: preHandlerAsyncHookHandler;
+    authenticateRefresh: preHandlerAsyncHookHandler;
+    protect: (this: FastifyInstance) => void;
 
-    authenticate: (request: FastifyRequest, reply: import('fastify').FastifyReply) => Promise<void>;
-    authenticateRefresh: (
-      request: FastifyRequest,
-      reply: import('fastify').FastifyReply
-    ) => Promise<void>;
+    authorize: (allowedRoles: string[]) => preHandlerHookHandler;
 
-    authorize: (
-      allowedRoles: string[]
-    ) => (request: FastifyRequest, reply: import('fastify').FastifyReply) => void;
+    // jwt helpers (sign)
+    accessSign: (user: UserForToken) => string;
+    refreshSign: (user: UserForToken) => string;
+
+    // cookies helpers
+    setAuthCookies: (reply: FastifyReply, user: UserForToken) => void;
+    clearAuthCookies: (reply: FastifyReply) => void;
   }
 
   interface FastifyRequest {
-    user: unknown;
-    jwtVerify: (
-      opts?: FastifyJwtVerifyOptions & { namespace?: 'access' | 'refresh' }
-    ) => Promise<void>;
+    accessJwtVerify: (options?: JwtVerifyOpts) => Promise<void>;
+    refreshVerify: (options?: JwtVerifyOpts) => Promise<void>;
   }
 }
