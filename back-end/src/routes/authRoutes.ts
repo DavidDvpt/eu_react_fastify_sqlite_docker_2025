@@ -99,14 +99,12 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
           secure: false,
           sameSite: 'lax',
           path: '/',
-          // maxAge: 60 * 15, // optionnel, sinon c'est géré par l'exp du JWT
         })
         .setCookie('refresh_token', refreshToken, {
           httpOnly: true,
           secure: false,
           sameSite: 'lax',
-          path: '/auth/refresh', // classique: limiter l’envoi du refresh token
-          // maxAge: 60 * 60 * 24 * 7,
+          path: '/auth/refresh',
         })
         .send({ message: 'Success' });
     }
