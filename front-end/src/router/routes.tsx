@@ -5,6 +5,7 @@ import RootLayout from "@/layouts/RootLayout";
 import GuestOnly from "@/modules/auth/guards/GuestOnly";
 import RequireAuth from "@/modules/auth/guards/RequireAuth";
 import HomePage from "@/pages/HomePage";
+import NotFoundPage from "@/pages/NotFoundPage";
 import SignInPage from "@/pages/auth/SignInPage";
 import SignUpPage from "@/pages/auth/SignUpPage";
 
@@ -32,10 +33,14 @@ const routes = [
         children: [
           {
             element: <AppLayout />,
-            children: [{ index: true, element: <HomePage /> }],
+            children: [
+              { index: true, element: <HomePage /> },
+              { path: "*", element: <NotFoundPage />, children: [] },
+            ],
           },
         ],
       },
+      { path: "*", element: <NotFoundPage />, children: [] },
     ],
   },
 ];
