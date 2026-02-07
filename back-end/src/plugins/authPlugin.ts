@@ -1,8 +1,7 @@
 import jwt from '@fastify/jwt'; // ton module .env/.envSchema
-import 'dotenv/config';
 import fp from 'fastify-plugin';
 
-import type { FastifyInstance, FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
+import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || '';
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || '';
@@ -19,14 +18,14 @@ const authPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
       cookieName: 'access_token',
       signed: false,
     },
-    sign: { expiresIn: ACCESS_EXPIRES_IN ?? '15m' },
+    sign: { expiresIn: ACCESS_EXPIRES_IN },
   });
 
   // REFRESH
   await app.register(jwt, {
     secret: REFRESH_SECRET,
     namespace: 'refresh',
-    sign: { expiresIn: REFRESH_EXPIRES_IN ?? '7d' },
+    sign: { expiresIn: REFRESH_EXPIRES_IN },
   });
 
   app.decorate('authenticate', async (request, reply) => {

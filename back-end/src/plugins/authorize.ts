@@ -27,16 +27,5 @@ const authorizePlugin: FastifyPluginAsync = async (app, _opts) => {
 
   app.decorate('authorize', authorize);
 };
-// const authorizePlugin = async (app) => {
-//   app.decorate('authorize', (allowedRoles) => {
-//     return async (request, reply) => {
-//       const role = request.user?.role;
-
-//       if (!role || !allowedRoles.includes(role)) {
-//         return reply.code(403).send({ message: 'Forbidden' });
-//       }
-//     };
-//   });
-// };
 
 export default fp(authorizePlugin);

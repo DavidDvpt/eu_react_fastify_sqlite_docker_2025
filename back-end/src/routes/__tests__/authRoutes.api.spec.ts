@@ -134,12 +134,12 @@ describe('authRoutes', () => {
     // ✅ argon2 mock propre (pas de any)
     expect((argon2 as any).default.hash).toHaveBeenCalledWith('password123');
 
-    expect(jwt.sign).toHaveBeenCalledWith({ sub: 'user-1', role: 'USER' });
+    expect(jwt.access.sign).toHaveBeenCalledWith({ sub: 'user-1', role: 'USER' });
 
     await app.close();
   });
   it('POST /auth/signup -> allready exists => 409', async () => {
-    const { app, usersRepo, jwt } = buildSignupApp();
+    const { app, usersRepo } = buildSignupApp();
 
     vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(meUserMock as any);
     vi.mocked(usersRepo.create).mockResolvedValueOnce(createdUserMock as any);

@@ -48,7 +48,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       });
 
       // 4) issue JWT (optional but common)
-      const token = app.jwt.sign({ sub: user.id, role: user.role });
+      const token = app.jwt.access.sign({ sub: user.id, role: user.role });
 
       return reply.code(201).send({
         user,
@@ -104,7 +104,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
           httpOnly: true,
           secure: false,
           sameSite: 'lax',
-          path: '/auth/refresh',
+          path: '/auth',
         })
         .send({ message: 'Success' });
     }

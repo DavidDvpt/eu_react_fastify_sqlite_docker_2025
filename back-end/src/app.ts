@@ -1,6 +1,6 @@
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
-import 'dotenv/config';
+import './config/env.js';
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
