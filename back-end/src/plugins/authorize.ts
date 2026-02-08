@@ -1,11 +1,6 @@
 import fp from 'fastify-plugin';
 
-import type {
-  FastifyPluginAsync,
-  FastifyPluginCallback,
-  FastifyReply,
-  FastifyRequest,
-} from 'fastify';
+import type { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify';
 
 export type AuthorizeFn = (
   allowedRoles: string[]

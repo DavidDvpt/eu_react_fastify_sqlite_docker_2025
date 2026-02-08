@@ -3,13 +3,13 @@ import fp from 'fastify-plugin';
 
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
-const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || '';
-const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || '';
-
-const ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN || '15m';
-const REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
-
 const authPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
+  const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || '';
+  const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || '';
+
+  const ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN || '15m';
+  const REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+
   // ACCESS
   await app.register(jwt, {
     secret: ACCESS_SECRET,
