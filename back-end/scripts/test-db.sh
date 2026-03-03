@@ -45,4 +45,4 @@ echo "🧪 Running DB migrations/seed if needed..."
 DATABASE_URL="$DB_URL" npm run prisma:deploy
 
 echo "🧪 Running repositories and bdd tests..."
-DATABASE_URL="$DB_URL" npm run test:bdd -- --run
+DATABASE_URL="$DB_URL" npm run test:bdd:raw -- --run
