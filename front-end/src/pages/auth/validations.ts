@@ -6,11 +6,7 @@ const signUpDefaultValues = {
   firstname: "",
   lastname: "",
   email: "",
-};
-
-const signUpDefaultValuesAdmin = {
-  ...signUpDefaultValues,
-  is_active: true,
+  password: "",
 };
 
 const loginSchema = z.object({
@@ -21,24 +17,33 @@ const loginSchema = z.object({
 });
 
 const signUpSchema = z.object({
-  pseudo: z.string().min(8),
-  firstname: z.string().min(8).nullable(),
-  lastname: z.string().min(8).nullable(),
-  email: z.email(),
-});
-
-const signUpSchemaAdmin = signUpSchema.extend({
-  isActive: z.boolean(),
+  pseudo: z.string().min(4, "Le pseudo doit contenir au moins 4 caracteres"),
+  firstname: z
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(""))
+    .transform((value) => (value ? value : undefined)),
+  lastname: z
+    .string()
+    .trim()
+    .optional()
+    .or(z.literal(""))
+    .transform((value) => (value ? value : undefined)),
+  email: z.email("Email invalide"),
+  password: z
+    .string()
+    .min(8, "Le mot de passe doit etre de 8 caracteres minimum"),
 });
 
 export {
   loginDefaultValues,
   loginSchema,
   signUpDefaultValues,
-  signUpDefaultValuesAdmin,
   signUpSchema,
-  signUpSchemaAdmin,
 };
 
 export type LoginInput = z.input<typeof loginSchema>;
 export type LoginOutput = z.output<typeof loginSchema>;
+export type SignUpInput = z.input<typeof signUpSchema>;
+export type SignUpOutput = z.output<typeof signUpSchema>;

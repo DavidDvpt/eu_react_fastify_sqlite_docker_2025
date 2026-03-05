@@ -1,5 +1,5 @@
-// src/features/auth/schemas/signInSchema.test.ts
 import { describe, expect, it } from "vitest";
+
 import { loginSchema } from "../../validations";
 
 describe("signInSchema", () => {
