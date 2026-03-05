@@ -13,7 +13,7 @@ function NavButton(props: NavbarType) {
           "w-24 px-3 py-2 transition-colors no-underline",
           "text-sm font-medium text-foreground",
           "hover:text-foreground hover:bg-info",
-          isActive && "border-b-2 border-danger",
+          isActive && "border-b-2 border-danger font-bold",
         )
       }
     >
