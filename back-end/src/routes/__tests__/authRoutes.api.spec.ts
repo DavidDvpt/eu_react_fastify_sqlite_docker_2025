@@ -130,11 +130,14 @@ describe('authRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
+    expect(res.json()).toEqual({
+      message: 'User created',
+    });
 
     // ✅ argon2 mock propre (pas de any)
     expect((argon2 as any).default.hash).toHaveBeenCalledWith('password123');
 
-    expect(jwt.access.sign).toHaveBeenCalledWith({ sub: 'user-1', role: 'USER' });
+    expect(jwt.access.sign).not.toHaveBeenCalled();
 
     await app.close();
   });

@@ -20,8 +20,8 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
         email: string;
         password: string;
         pseudo: string;
-        firstname: string;
-        lastname: string;
+        firstname?: string;
+        lastname?: string;
       };
 
       // 1) check existing user
@@ -33,7 +33,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       const hash = await argon2.hash(password);
 
       // 3) create (role forced)
-      const user = await app.repos.users.create({
+      await app.repos.users.create({
         data: {
           email,
           pseudo,
@@ -47,12 +47,8 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
         select: { id: true, email: true, role: true },
       });
 
-      // 4) issue JWT (optional but common)
-      const token = app.jwt.access.sign({ sub: user.id, role: user.role });
-
       return reply.code(201).send({
-        user,
-        token,
+        message: 'User created',
       });
     }
   );
