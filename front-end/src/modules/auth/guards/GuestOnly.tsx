@@ -6,7 +6,7 @@ function GuestOnly() {
   const isLoggued = useAppSelector(selectIsLoggued);
 
   if (isLoggued) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/home" replace />;
   }
 
   return <Outlet />;

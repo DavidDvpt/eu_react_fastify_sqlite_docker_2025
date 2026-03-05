@@ -93,7 +93,7 @@ describe("routes (real)", () => {
     expect(await screen.findByText("HOME")).toBeInTheDocument();
   });
 
-  it("GET /auth/signin -> redirects to / when logged (GuestOnly)", async () => {
+  it("GET /auth/signin -> redirects to /home when logged (GuestOnly)", async () => {
     const store = makeStore({ isLoggued: true });
 
     const router = createMemoryRouter(routes as any, {

@@ -8,6 +8,7 @@ import HomePage from "@/pages/HomePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import SignInPage from "@/pages/auth/SignInPage";
 import SignUpPage from "@/pages/auth/SignUpPage";
+import { Navigate } from "react-router-dom";
 
 const routes = [
   {
@@ -34,7 +35,8 @@ const routes = [
           {
             element: <AppLayout />,
             children: [
-              { index: true, element: <HomePage /> },
+              { index: true, element: <Navigate to="/home" replace /> },
+              { path: "home", element: <HomePage /> },
               { path: "*", element: <NotFoundPage />, children: [] },
             ],
           },
