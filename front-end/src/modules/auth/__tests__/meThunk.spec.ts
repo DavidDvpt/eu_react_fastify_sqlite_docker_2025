@@ -48,7 +48,6 @@ describe("authMeThunk", () => {
     const store = makeStore();
 
     const promise = store.dispatch(authMeThunk());
-
     expect(store.getState().auth.user.status).toBe(ApiStatus.PENDING);
 
     await promise;

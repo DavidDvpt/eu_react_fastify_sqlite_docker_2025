@@ -17,21 +17,20 @@ function SignInForm({ className, onSubmit }: ILoginFormProps) {
       schema={loginSchema}
       defaultValues={loginDefaultValues}
       onSubmit={onSubmit}
-      className={`flex flex-col items-stretch justify-center ${className}`}
+      className={`flex flex-col items-stretch justify-center space-y-3 ${className}`}
     >
       <TextField
         name="pseudo"
         label="Pseudo"
         type="text"
-        inputClassName="py-2 mt-1"
+        inputClassName="py-2"
       />
       <TextField
         name="password"
         label="Mot de passe"
         type="password"
         autoComplete="current-password"
-        inputClassName="pt-4 mt-1"
-        className="pt-2"
+        inputClassName="py-2"
       />
       <Button type="submit" className="mt-4" variant="info">
         Se connecter

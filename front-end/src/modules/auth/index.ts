@@ -1,7 +1,6 @@
 import { selectIsLoggued } from "./authSelectors";
 import authReducer, { authActions, getauthState } from "./authSlice";
 import { authMeThunk } from "./authThunks";
-import { userParser } from "./authParser";
 
 export {
   authActions,
@@ -9,5 +8,4 @@ export {
   authReducer,
   getauthState,
   selectIsLoggued,
-  userParser,
 };
