@@ -12,7 +12,13 @@ const initialState: AuthType = {
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout(state) {
+      state.isLoggued = false;
+      state.role = null;
+      state.user = { result: null, error: null, status: ApiStatus.IDLE };
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(authMeThunk.pending, (state) => {

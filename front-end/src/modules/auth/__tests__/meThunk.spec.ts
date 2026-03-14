@@ -3,7 +3,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ApiStatus } from "@/lib/axios/ApiStatus";
-import authReducer from "@/modules/auth/authSlice";
+import authReducer, { authActions } from "@/modules/auth/authSlice";
 import { authMeThunk } from "@/modules/auth/authThunks";
 
 // ⚠️ adapte le chemin EXACT
@@ -85,5 +85,26 @@ describe("authMeThunk", () => {
     expect(state.user.result).toBeNull();
     expect(state.user.error?.message).toBe("Unauthorized");
     expect(state.isLoggued).toBe(false);
+  });
+
+  it("dispatching logout resets auth state", () => {
+    const store = makeStore({
+      isLoggued: true,
+      role: "ADMIN",
+      user: {
+        status: ApiStatus.FULFILLED,
+        result: { id: "1", pseudo: "test", role: "ADMIN", isActive: true },
+        error: null,
+      },
+    });
+
+    store.dispatch(authActions.logout());
+
+    const state = store.getState().auth;
+    expect(state.isLoggued).toBe(false);
+    expect(state.role).toBeNull();
+    expect(state.user.status).toBe(ApiStatus.IDLE);
+    expect(state.user.result).toBeNull();
+    expect(state.user.error).toBeNull();
   });
 });
