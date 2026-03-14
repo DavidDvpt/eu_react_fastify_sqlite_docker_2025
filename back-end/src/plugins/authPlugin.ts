@@ -1,14 +1,20 @@
 import jwt from '@fastify/jwt'; // ton module .env/.envSchema
 import fp from 'fastify-plugin';
 
+import { parseDurationToSeconds } from '../lib/auth/tokenDuration.js';
+
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
 const authPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
   const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET || '';
   const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || '';
 
-  const ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN || '15m';
+  const ACCESS_EXPIRES_IN = process.env.JWT_ACCESS_EXPIRES_IN || '24h';
   const REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+
+  // Validate env values at startup so JWT signing and cookie TTL stay aligned.
+  parseDurationToSeconds(ACCESS_EXPIRES_IN);
+  parseDurationToSeconds(REFRESH_EXPIRES_IN);
 
   // ACCESS
   await app.register(jwt, {

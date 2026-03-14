@@ -1,5 +1,6 @@
 import argon2 from 'argon2';
 
+import { parseDurationToSeconds } from '../lib/auth/tokenDuration.js';
 import HashTools from '../lib/security/HashTools.js';
 import { signinBodySchema } from '../lib/validations/signin.Validation.js';
 import { signupBodySchema } from '../lib/validations/signup.Validation.js';
@@ -8,6 +9,9 @@ import type { FastifyPluginAsync } from 'fastify';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
+  const accessTokenMaxAge = parseDurationToSeconds(process.env.JWT_ACCESS_EXPIRES_IN || '24h');
+  const refreshTokenMaxAge = parseDurationToSeconds(process.env.JWT_REFRESH_EXPIRES_IN || '7d');
+
   app.post(
     '/signup',
     {
@@ -92,12 +96,14 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       reply
         .setCookie('access_token', accessToken, {
           httpOnly: true,
+          maxAge: accessTokenMaxAge,
           secure: false,
           sameSite: 'lax',
           path: '/',
         })
         .setCookie('refresh_token', refreshToken, {
           httpOnly: true,
+          maxAge: refreshTokenMaxAge,
           secure: false,
           sameSite: 'lax',
           path: '/auth',

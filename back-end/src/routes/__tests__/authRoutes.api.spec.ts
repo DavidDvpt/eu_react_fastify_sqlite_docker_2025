@@ -182,6 +182,24 @@ describe('authRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
+    expect(res.cookies).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'access_token',
+          value: 'access.jwt',
+          maxAge: 24 * 60 * 60,
+          path: '/',
+          httpOnly: true,
+        }),
+        expect.objectContaining({
+          name: 'refresh_token',
+          value: 'refresh.jwt',
+          maxAge: 7 * 24 * 60 * 60,
+          path: '/auth',
+          httpOnly: true,
+        }),
+      ])
+    );
 
     await app.close();
   });
