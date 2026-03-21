@@ -1,9 +1,20 @@
-import { selectIsLoggued } from "@/modules/auth";
+import { selectIsAuthResolving, selectIsLoggued } from "@/modules/auth";
+import { CapsuleLoader } from "@/shared/components";
 import { useAppSelector } from "@/store/hooks";
 import { Navigate, Outlet } from "react-router-dom";
 
 function GuestOnly() {
   const isLoggued = useAppSelector(selectIsLoggued);
+  const isAuthResolving = useAppSelector(selectIsAuthResolving);
+
+  if (isAuthResolving) {
+    return (
+      <CapsuleLoader
+        title="Verification de la session"
+        subtitle="Reconnexion en cours avant affichage de l'application."
+      />
+    );
+  }
 
   if (isLoggued) {
     return <Navigate to="/home" replace />;

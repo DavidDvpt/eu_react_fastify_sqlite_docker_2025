@@ -6,6 +6,7 @@ import { RouterProvider, createMemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
 
 import routes from "@/router/routes";
+import { ApiStatus } from "@/lib/axios/ApiStatus";
 
 // ✅ adapte l'import du reducer auth
 import authReducer from "@/modules/auth/authSlice";
@@ -60,9 +61,23 @@ function makeStore(preloadedAuth: any) {
   });
 }
 
+function makeAuthState(isLoggued: boolean, status: ApiStatus) {
+  return {
+    isLoggued,
+    role: isLoggued ? "USER" : null,
+    user: {
+      result: isLoggued
+        ? { id: "1", pseudo: "demo", role: "USER", isActive: true }
+        : null,
+      error: null,
+      status,
+    },
+  };
+}
+
 describe("routes (real)", () => {
   it("GET / -> redirects to /auth/signin when NOT logged", async () => {
-    const store = makeStore({ isLoggued: false });
+    const store = makeStore(makeAuthState(false, ApiStatus.REJECTED));
 
     const router = createMemoryRouter(routes as any, {
       initialEntries: ["/"],
@@ -78,7 +93,7 @@ describe("routes (real)", () => {
   });
 
   it("GET / -> shows HOME when logged", async () => {
-    const store = makeStore({ isLoggued: true });
+    const store = makeStore(makeAuthState(true, ApiStatus.FULFILLED));
 
     const router = createMemoryRouter(routes as any, {
       initialEntries: ["/"],
@@ -94,7 +109,7 @@ describe("routes (real)", () => {
   });
 
   it("GET /auth/signin -> redirects to /home when logged (GuestOnly)", async () => {
-    const store = makeStore({ isLoggued: true });
+    const store = makeStore(makeAuthState(true, ApiStatus.FULFILLED));
 
     const router = createMemoryRouter(routes as any, {
       initialEntries: ["/auth/signin"],
@@ -110,7 +125,7 @@ describe("routes (real)", () => {
   });
 
   it("GET /auth/signin -> stays on SIGNIN when NOT logged", async () => {
-    const store = makeStore({ isLoggued: false });
+    const store = makeStore(makeAuthState(false, ApiStatus.REJECTED));
 
     const router = createMemoryRouter(routes as any, {
       initialEntries: ["/auth/signin"],
@@ -123,5 +138,47 @@ describe("routes (real)", () => {
     );
 
     expect(await screen.findByText("SIGNIN")).toBeInTheDocument();
+  });
+
+  it("GET / -> shows session loader while auth is resolving", async () => {
+    const store = makeStore(makeAuthState(false, ApiStatus.PENDING));
+
+    const router = createMemoryRouter(routes as any, {
+      initialEntries: ["/"],
+    });
+
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+
+    expect(
+      await screen.findByRole("status", { name: "Verification de la session" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Reconnexion en cours avant affichage de l'application.")
+    ).toBeInTheDocument();
+  });
+
+  it("GET /auth/signin -> shows session loader while auth is resolving", async () => {
+    const store = makeStore(makeAuthState(false, ApiStatus.IDLE));
+
+    const router = createMemoryRouter(routes as any, {
+      initialEntries: ["/auth/signin"],
+    });
+
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+
+    expect(
+      await screen.findByRole("status", { name: "Verification de la session" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText("Reconnexion en cours avant affichage de l'application.")
+    ).toBeInTheDocument();
   });
 });

@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+import { ApiStatus } from "@/lib/axios/ApiStatus";
 import { getauthState } from "./authSlice";
 
 const selectIsLoggued = createSelector(
@@ -6,4 +7,13 @@ const selectIsLoggued = createSelector(
   (auth) => auth.isLoggued
 );
 
-export { selectIsLoggued };
+const selectAuthStatus = createSelector(
+  [getauthState],
+  (auth) => auth.user.status
+);
+
+const selectIsAuthResolving = createSelector([selectAuthStatus], (status) =>
+  status === ApiStatus.IDLE || status === ApiStatus.PENDING
+);
+
+export { selectAuthStatus, selectIsAuthResolving, selectIsLoggued };
