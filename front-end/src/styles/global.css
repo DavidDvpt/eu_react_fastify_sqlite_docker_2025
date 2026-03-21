@@ -15,6 +15,27 @@
   --color-warning-foreground: var(--warning-foreground);
   --color-danger: var(--danger);
   --color-danger-foreground: var(--danger-foreground);
+  --color-primary-100: var(--primary-100);
+  --color-primary-300: var(--primary-300);
+  --color-primary-500: var(--primary-500);
+  --color-primary-700: var(--primary-700);
+  --color-success-100: var(--success-100);
+  --color-success-300: var(--success-300);
+  --color-success-500: var(--success-500);
+  --color-success-700: var(--success-700);
+  --color-warning-100: var(--warning-100);
+  --color-warning-300: var(--warning-300);
+  --color-warning-500: var(--warning-500);
+  --color-warning-700: var(--warning-700);
+  --color-destructive-100: var(--destructive-100);
+  --color-destructive-300: var(--destructive-300);
+  --color-destructive-500: var(--destructive-500);
+  --color-destructive-700: var(--destructive-700);
+  --color-button-warning-bg: var(--button-warning-bg);
+  --color-button-warning-fg: var(--button-warning-fg);
+  --color-button-warning-border: var(--button-warning-border);
+  --color-button-warning-hover: var(--button-warning-hover);
+  --color-button-warning-active: var(--button-warning-active);
 
   /* navbar */
 
@@ -102,8 +123,8 @@
 
 :root {
   --font-sans:
-    "Comic Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
+    "Comic Neue", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
 
   --radius: 0.25rem;
   --background: oklch(1 0 0);
@@ -150,6 +171,37 @@
   --warning-foreground: oklch(0.2 0 0);
   --danger: oklch(0.58 0.16 25);
   --danger-foreground: oklch(0.98 0 0);
+
+  /* blue */
+  --blue-100: oklch(0.91 0.035 250);
+  --blue-300: oklch(0.82 0.08 250);
+  --blue-500: oklch(0.62 0.14 250);
+  --blue-700: oklch(0.48 0.16 250);
+
+  /* green */
+  --green-100: oklch(0.92 0.04 145);
+  --green-300: oklch(0.81 0.08 145);
+  --green-500: oklch(0.6 0.12 145);
+  --green-700: oklch(0.46 0.13 145);
+
+  /* orange */
+  --orange-100: oklch(0.94 0.05 82);
+  --orange-300: oklch(0.83 0.1 78);
+  --orange-500: oklch(0.72 0.15 74);
+  --orange-700: oklch(0.58 0.16 70);
+
+  /* red */
+  --red-100: oklch(0.89 0.04 25);
+  --red-300: oklch(0.8 0.08 25);
+  --red-500: oklch(0.58 0.16 25);
+  --red-700: oklch(0.44 0.17 25);
+
+  /* button warning */
+  --button-warning-bg: var(--orange-500);
+  --button-warning-fg: oklch(0.2 0 0);
+  --button-warning-border: var(--orange-700);
+  --button-warning-hover: var(--orange-300);
+  --button-warning-active: var(--orange-700);
 }
 
 .dark {
@@ -172,6 +224,37 @@
   --warning-foreground: oklch(0.2 0 0);
   --danger: oklch(0.58 0.16 25);
   --danger-foreground: oklch(0.98 0 0);
+
+  /* blue */
+  --blue-100: oklch(0.91 0.035 250);
+  --blue-300: oklch(0.82 0.08 250);
+  --blue-500: oklch(0.62 0.14 250);
+  --blue-700: oklch(0.48 0.16 250);
+
+  /* green */
+  --green-100: oklch(0.92 0.04 145);
+  --green-300: oklch(0.81 0.08 145);
+  --green-500: oklch(0.6 0.12 145);
+  --green-700: oklch(0.46 0.13 145);
+
+  /* orange */
+  --orange-100: oklch(0.94 0.05 82);
+  --orange-300: oklch(0.83 0.1 78);
+  --orange-500: oklch(0.72 0.15 74);
+  --orange-700: oklch(0.58 0.16 70);
+
+  /* red */
+  --red-100: oklch(0.89 0.04 25);
+  --red-300: oklch(0.8 0.08 25);
+  --red-500: oklch(0.58 0.16 25);
+  --red-700: oklch(0.44 0.17 25);
+
+  /* button warning */
+  --button-warning-bg: var(--orange-500);
+  --button-warning-fg: oklch(0.2 0 0);
+  --button-warning-border: var(--orange-700);
+  --button-warning-hover: var(--orange-300);
+  --button-warning-active: var(--orange-700);
 
   --muted: oklch(0.279 0.041 260.031);
   --muted-foreground: oklch(0.704 0.04 256.788);
