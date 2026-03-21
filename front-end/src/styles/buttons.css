@@ -203,27 +203,27 @@
 
 :root {
   /* button primary */
-  --button-primary-bg: var(--blue-500);
+  --button-primary-bg: var(--primary-500);
   --button-primary-text: var(--white);
-  --button-primary-border: var(--blue-500);
-  --button-primary-hover-bg: var(--blue-300);
-  --button-primary-hover-text: var(--blue-700);
-  --button-primary-hover-border: var(--blue-300);
-  --button-primary-active-bg: var(--blue-500);
+  --button-primary-border: var(--primary-500);
+  --button-primary-hover-bg: var(--primary-300);
+  --button-primary-hover-text: var(--primary-700);
+  --button-primary-hover-border: var(--primary-300);
+  --button-primary-active-bg: var(--primary-500);
   --button-primary-active-text: var(--white);
-  --button-primary-active-border: var(--blue-500);
-  --button-primary-disabled-bg: var(--blue-300);
-  --button-primary-disabled-border: var(--blue-300);
+  --button-primary-active-border: var(--primary-500);
+  --button-primary-disabled-bg: var(--primary-300);
+  --button-primary-disabled-border: var(--primary-300);
   --button-primary-outline-bg: var(--white);
-  --button-primary-outline-text: var(--blue-500);
-  --button-primary-outline-hover-bg: var(--blue-300);
-  --button-primary-outline-hover-border: var(--blue-300);
+  --button-primary-outline-text: var(--primary-500);
+  --button-primary-outline-hover-bg: var(--primary-300);
+  --button-primary-outline-hover-border: var(--primary-300);
   --button-primary-outline-active-bg: var(--white);
-  --button-primary-outline-active-text: var(--blue-500);
-  --button-primary-outline-active-border: var(--blue-500);
-  --button-primary-outline-border: var(--blue-500);
-  --button-primary-outline-disabled-border: var(--blue-300);
-  --button-primary-outline-disabled-text: var(--blue-300);
+  --button-primary-outline-active-text: var(--primary-500);
+  --button-primary-outline-active-border: var(--primary-500);
+  --button-primary-outline-border: var(--primary-500);
+  --button-primary-outline-disabled-border: var(--primary-300);
+  --button-primary-outline-disabled-text: var(--primary-300);
 
   /* button success */
   --button-success-bg: var(--green-500);
@@ -324,27 +324,27 @@
 
 :dark {
   /* button primary */
-  --button-primary-bg: var(--blue-500);
+  --button-primary-bg: var(--primary-500);
   --button-primary-text: var(--white);
-  --button-primary-border: var(--blue-500);
-  --button-primary-hover-bg: var(--blue-300);
-  --button-primary-hover-text: var(--blue-700);
-  --button-primary-hover-border: var(--blue-300);
-  --button-primary-active-bg: var(--blue-500);
+  --button-primary-border: var(--primary-500);
+  --button-primary-hover-bg: var(--primary-300);
+  --button-primary-hover-text: var(--primary-700);
+  --button-primary-hover-border: var(--primary-300);
+  --button-primary-active-bg: var(--primary-500);
   --button-primary-active-text: var(--white);
-  --button-primary-active-border: var(--blue-500);
-  --button-primary-disabled-bg: var(--blue-300);
-  --button-primary-disabled-border: var(--blue-300);
+  --button-primary-active-border: var(--primary-500);
+  --button-primary-disabled-bg: var(--primary-300);
+  --button-primary-disabled-border: var(--primary-300);
   --button-primary-outline-bg: var(--white);
-  --button-primary-outline-text: var(--blue-500);
-  --button-primary-outline-hover-bg: var(--blue-300);
-  --button-primary-outline-hover-border: var(--blue-300);
+  --button-primary-outline-text: var(--primary-500);
+  --button-primary-outline-hover-bg: var(--primary-300);
+  --button-primary-outline-hover-border: var(--primary-300);
   --button-primary-outline-active-bg: var(--white);
-  --button-primary-outline-active-text: var(--blue-500);
-  --button-primary-outline-active-border: var(--blue-500);
-  --button-primary-outline-border: var(--blue-500);
-  --button-primary-outline-disabled-border: var(--blue-300);
-  --button-primary-outline-disabled-text: var(--blue-300);
+  --button-primary-outline-active-text: var(--primary-500);
+  --button-primary-outline-active-border: var(--primary-500);
+  --button-primary-outline-border: var(--primary-500);
+  --button-primary-outline-disabled-border: var(--primary-300);
+  --button-primary-outline-disabled-text: var(--primary-300);
 
   /* button success */
   --button-success-bg: var(--green-500);

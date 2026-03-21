@@ -7,10 +7,11 @@ const cardVariants = cva("rounded-xl bg-card text-card-foreground", {
   variants: {
     variant: {
       default: "border-0 shadow-ambient-lg",
-      info: "blgd",
-      success: "border-[3px] border-success shadow-ambient-lg",
-      warning: "border-[3px] border-warning shadow-ambient-lg",
-      danger: "border-[3px] border-danger shadow-ambient-lg",
+      primary: "border-[3px] border-primary-500 shadow-ambient-lg",
+      neutral: "border-[3px] border-neutral-500 shadow-ambient-lg",
+      success: "border-[3px] border-success-500 shadow-ambient-lg",
+      warning: "border-[3px] border-warning-500 shadow-ambient-lg",
+      danger: "border-[3px] border-destructive-500 shadow-ambient-lg",
     },
   },
   defaultVariants: {

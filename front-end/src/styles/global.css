@@ -169,10 +169,10 @@
   --danger-foreground: oklch(0.98 0 0);
 
   /* blue */
-  --blue-100: oklch(0.91 0.035 250);
-  --blue-300: oklch(0.82 0.08 250);
-  --blue-500: oklch(0.62 0.14 250);
-  --blue-700: oklch(0.48 0.16 250);
+  --primary-100: oklch(0.91 0.035 250);
+  --primary-300: oklch(0.82 0.08 250);
+  --primary-500: oklch(0.62 0.14 250);
+  --primary-700: oklch(0.48 0.16 250);
 
   /* green */
   --green-100: oklch(0.94 0.05 135);

@@ -1,1 +1,6 @@
-export type AppCardVariant = "info" | "warning" | "danger" | "success";
+export type AppCardVariant =
+  | "primary"
+  | "warning"
+  | "danger"
+  | "success"
+  | "neutral";
