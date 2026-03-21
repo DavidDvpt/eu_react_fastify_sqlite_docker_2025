@@ -32,7 +32,7 @@ function SignInForm({ className, onSubmit }: ILoginFormProps) {
         autoComplete="current-password"
         inputClassName="py-2"
       />
-      <Button type="submit" className="mt-4" variant="info">
+      <Button type="submit" className="mt-4" variant="primary">
         Se connecter
       </Button>
     </GenericForm>
