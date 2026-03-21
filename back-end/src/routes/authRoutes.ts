@@ -112,6 +112,18 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     }
   );
 
+  app.post('/logout', async (_request, reply) => {
+    return reply
+      .clearCookie('access_token', {
+        path: '/',
+      })
+      .clearCookie('refresh_token', {
+        path: '/auth',
+      })
+      .code(200)
+      .send({ message: 'Logged out' });
+  });
+
   // protected routes
   app.register((protectedApp) => {
     protectedApp.protect();

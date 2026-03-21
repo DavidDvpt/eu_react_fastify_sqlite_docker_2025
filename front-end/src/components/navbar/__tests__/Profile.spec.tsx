@@ -1,5 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
@@ -9,38 +9,47 @@ import { ApiStatus } from "@/lib/axios/ApiStatus";
 import authReducer from "@/modules/auth/authSlice";
 import Profile from "../Profile";
 
-const mockNavigate = vi.fn();
+const mockLogoutApi = vi.fn();
+const mockAuthMeThunk = vi.fn();
 
-vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>(
-    "react-router-dom"
+vi.mock("@/modules/auth/services/network/logoutApi", () => ({
+  default: () => mockLogoutApi(),
+}));
+
+vi.mock("@/modules/auth", async () => {
+  const actual = await vi.importActual<typeof import("@/modules/auth")>(
+    "@/modules/auth"
   );
 
   return {
     ...actual,
-    useNavigate: () => mockNavigate,
+    authMeThunk: () => mockAuthMeThunk(),
   };
 });
 
 function renderProfile(preloadedAuth?: Partial<AuthType>) {
+  const baseAuthState: AuthType = {
+    isLoggued: true,
+    role: "USER",
+    user: {
+      status: ApiStatus.FULFILLED,
+      result: {
+        id: "1",
+        pseudo: "David",
+        role: "USER",
+        isActive: true,
+      },
+      error: null,
+    },
+  };
+
   const store = configureStore({
     reducer: { auth: authReducer },
     preloadedState: {
       auth: {
-        isLoggued: true,
-        role: "USER",
-        user: {
-          status: ApiStatus.FULFILLED,
-          result: {
-            id: "1",
-            pseudo: "David",
-            role: "USER",
-            isActive: true,
-          },
-          error: null,
-        },
+        ...baseAuthState,
         ...preloadedAuth,
-      },
+      } satisfies AuthType,
     },
   });
 
@@ -60,22 +69,18 @@ describe("Profile", () => {
     vi.clearAllMocks();
   });
 
-  it("logs out the user and redirects to signin", async () => {
+  it("calls logout api then refreshes auth state", async () => {
     const user = userEvent.setup();
-    const store = renderProfile();
+    renderProfile();
+    mockLogoutApi.mockResolvedValueOnce({ message: "Logged out" });
+    mockAuthMeThunk.mockReturnValueOnce({ type: "auth/me" });
 
     await user.click(screen.getByRole("button", { name: "D" }));
     await user.click(screen.getByRole("button", { name: "Logout" }));
 
-    expect(store.getState().auth).toEqual({
-      isLoggued: false,
-      role: null,
-      user: {
-        status: ApiStatus.IDLE,
-        result: null,
-        error: null,
-      },
+    await waitFor(() => {
+      expect(mockLogoutApi).toHaveBeenCalledOnce();
+      expect(mockAuthMeThunk).toHaveBeenCalledOnce();
     });
-    expect(mockNavigate).toHaveBeenCalledWith("/auth/signin", { replace: true });
   });
 });

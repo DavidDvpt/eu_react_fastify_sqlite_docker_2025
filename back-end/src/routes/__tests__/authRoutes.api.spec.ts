@@ -98,6 +98,12 @@ describe('authRoutes', () => {
     return { app, usersRepo, jwt };
   }
 
+  function buildLogoutApp() {
+    const { app, usersRepo, jwt } = createBaseApp();
+    app.register(authRoutes, { prefix: '/auth' });
+    return { app, usersRepo, jwt };
+  }
+
   function buildMeIntegrationApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
@@ -224,6 +230,36 @@ describe('authRoutes', () => {
 
     expect(res.statusCode).toBe(401);
     expect(res.statusMessage).toBe('Unauthorized');
+
+    await app.close();
+  });
+
+  it('POST /auth/logout -> clears auth cookies and returns 200', async () => {
+    const { app } = buildLogoutApp();
+
+    await app.ready();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/auth/logout',
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.json()).toEqual({ message: 'Logged out' });
+    expect(res.cookies).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          name: 'access_token',
+          value: '',
+          path: '/',
+        }),
+        expect.objectContaining({
+          name: 'refresh_token',
+          value: '',
+          path: '/auth',
+        }),
+      ])
+    );
 
     await app.close();
   });

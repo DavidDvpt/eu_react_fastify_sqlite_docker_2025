@@ -1,6 +1,7 @@
 import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { authActions } from "@/modules/auth";
+import { authMeThunk } from "@/modules/auth";
+import logoutApi from "@/modules/auth/services/network/logoutApi";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useNavigate } from "react-router-dom";
 
@@ -38,10 +39,10 @@ function Profile() {
     navigate("/profile");
   };
 
-  const handleLogout = () => {
-    dispatch(authActions.logout());
+  const handleLogout = async () => {
     setIsOpen(false);
-    navigate("/auth/signin", { replace: true });
+    await logoutApi();
+    void dispatch(authMeThunk());
   };
 
   return (
