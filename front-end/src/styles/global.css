@@ -206,8 +206,17 @@
     font-optical-sizing: auto;
     font-size: 16px;
   }
+
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
+    margin: 0;
+    overflow: hidden;
   }
 
   body,
