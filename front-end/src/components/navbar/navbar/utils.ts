@@ -5,7 +5,7 @@ const navbarValues = [
   { label: "Craft", route: "/crafting", selected: false, adminOnly: false },
   { label: "Stock", route: "/stock", selected: false, adminOnly: false },
   { label: "Stats", route: "/stats", selected: false, adminOnly: false },
-  { label: "manage", route: "/stats", selected: false, adminOnly: true },
+  { label: "manage", route: "/manage", selected: false, adminOnly: true },
 ];
 
 export { navbarValues };
