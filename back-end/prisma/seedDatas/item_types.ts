@@ -1,7 +1,7 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
 
-export const ITEM_TYPES: Prisma.item_typesCreateManyInput[] = [
+export const ITEM_TYPES: Prisma.ItemTypeCreateManyInput[] = [
   {
     "id": "25F61687-F547-4712-8B91-786889BA6CF1",
     "category_id": "88B86318-0F7B-4D68-B095-D0DC313324A5",

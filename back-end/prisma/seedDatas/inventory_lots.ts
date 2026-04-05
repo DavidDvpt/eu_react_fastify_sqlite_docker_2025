@@ -1,7 +1,7 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
 
-export const INVENTORY_LOTS: Prisma.inventory_lotsCreateManyInput[] = [
+export const INVENTORY_LOTS: Prisma.InventoryLotCreateManyInput[] = [
   {
     "id": "02192452-AEE6-4E8E-B3E6-5B191C2A4E10",
     "quantity_remaining": 0,

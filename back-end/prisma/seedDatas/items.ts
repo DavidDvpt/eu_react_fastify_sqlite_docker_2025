@@ -1,7 +1,7 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
 
-export const ITEMS: Prisma.itemsCreateManyInput[] = [
+export const ITEMS: Prisma.ItemCreateManyInput[] = [
   {
     "id": "05236E1E-2D20-49CD-A0EB-090B2D91C582",
     "image_url_id": "",

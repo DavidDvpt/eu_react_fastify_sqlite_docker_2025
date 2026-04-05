@@ -1,7 +1,7 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
 
-export const TRANSACTIONS: Prisma.transactionsCreateManyInput[] = [
+export const TRANSACTIONS: Prisma.TransactionCreateManyInput[] = [
   {
     "id": "0016DFFB-E880-472A-A83A-6132C9965865",
     "transaction_type": "LOST",
