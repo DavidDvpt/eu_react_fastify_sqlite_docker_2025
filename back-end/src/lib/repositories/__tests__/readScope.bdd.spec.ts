@@ -506,4 +506,186 @@ describe('Read scope by repository', () => {
     );
     expect(blocked).toBeNull();
   });
+
+  it('ItemCategory: update/delete allowed only for owner, global rows are read-only', async () => {
+    const userA = await createUser('userA-category-mutation');
+    const userB = await createUser('userB-category-mutation');
+
+    const globalCategory = await categoryRepo.create({
+      data: {
+        name: `global-category-mutation-${suffix()}`,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    });
+    const categoryA = await categoryRepo.create({
+      data: {
+        name: `category-owner-a-${suffix()}`,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+        user_id: userA.id,
+      },
+    });
+    const categoryB = await categoryRepo.create({
+      data: {
+        name: `category-owner-b-${suffix()}`,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+        user_id: userB.id,
+      },
+    });
+
+    await expect(
+      categoryRepo.update(
+        {
+          where: { id: globalCategory.id },
+          data: { name: `forbidden-global-update-${suffix()}` },
+        },
+        userA.id
+      )
+    ).rejects.toThrow('Forbidden mutation');
+
+    await expect(
+      categoryRepo.update(
+        {
+          where: { id: categoryB.id },
+          data: { name: `forbidden-other-user-update-${suffix()}` },
+        },
+        userA.id
+      )
+    ).rejects.toThrow('Forbidden mutation');
+
+    const updatedByOwner = await categoryRepo.update(
+      {
+        where: { id: categoryA.id },
+        data: { name: `owner-update-${suffix()}` },
+      },
+      userA.id
+    );
+    expect(updatedByOwner.id).toBe(categoryA.id);
+
+    await expect(categoryRepo.delete({ where: { id: globalCategory.id } }, userA.id)).rejects.toThrow(
+      'Forbidden mutation'
+    );
+    await expect(categoryRepo.delete({ where: { id: categoryB.id } }, userA.id)).rejects.toThrow(
+      'Forbidden mutation'
+    );
+
+    const deletedByOwner = await categoryRepo.delete({ where: { id: categoryA.id } }, userA.id);
+    expect(deletedByOwner.id).toBe(categoryA.id);
+  });
+
+  it('InventoryLot: update/delete allowed only for owner, global rows are read-only', async () => {
+    const userA = await createUser('userA-lot-mutation');
+    const userB = await createUser('userB-lot-mutation');
+    const category = await categoryRepo.create({
+      data: {
+        name: `lot-mutation-category-${suffix()}`,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    });
+    const type = await typeRepo.create({
+      data: {
+        name: `lot-mutation-type-${suffix()}`,
+        category_id: category.id,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    });
+    const item = await itemRepo.create({
+      data: {
+        name: `lot-mutation-item-${suffix()}`,
+        image_url_id: `img-${suffix()}`,
+        value: 8,
+        is_limited: false,
+        item_type_id: type.id,
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    });
+
+    const lotA = await lotRepo.create({
+      data: {
+        quantity_remaining: 7,
+        quantity_exported: 0,
+        price_remaining: '70',
+        item_id: item.id,
+        lot_type: 'LOT',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+        user_id: userA.id,
+      },
+    });
+    const lotB = await lotRepo.create({
+      data: {
+        quantity_remaining: 8,
+        quantity_exported: 0,
+        price_remaining: '80',
+        item_id: item.id,
+        lot_type: 'LOT',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+        user_id: userB.id,
+      },
+    });
+    const lotGlobal = await lotRepo.create({
+      data: {
+        quantity_remaining: 9,
+        quantity_exported: 0,
+        price_remaining: '90',
+        item_id: item.id,
+        lot_type: 'LOT',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    });
+
+    await expect(
+      lotRepo.update(
+        {
+          where: { id: lotGlobal.id },
+          data: { quantity_remaining: 99 },
+        },
+        userA.id
+      )
+    ).rejects.toThrow('Forbidden mutation');
+    await expect(
+      lotRepo.update(
+        {
+          where: { id: lotB.id },
+          data: { quantity_remaining: 99 },
+        },
+        userA.id
+      )
+    ).rejects.toThrow('Forbidden mutation');
+
+    const updatedByOwner = await lotRepo.update(
+      {
+        where: { id: lotA.id },
+        data: { quantity_remaining: 42 },
+      },
+      userA.id
+    );
+    expect(updatedByOwner.quantity_remaining).toBe(42);
+
+    await expect(lotRepo.delete({ where: { id: lotGlobal.id } }, userA.id)).rejects.toThrow(
+      'Forbidden mutation'
+    );
+    await expect(lotRepo.delete({ where: { id: lotB.id } }, userA.id)).rejects.toThrow(
+      'Forbidden mutation'
+    );
+
+    const deletedByOwner = await lotRepo.delete({ where: { id: lotA.id } }, userA.id);
+    expect(deletedByOwner.id).toBe(lotA.id);
+  });
 });

@@ -70,6 +70,20 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
     };
   }
 
+  // Mutations are owner-only: global rows (user_id = null) are read-only.
+  protected async canMutateForUser(where: unknown, userId: string): Promise<boolean> {
+    const record = (await this.delegate.findUnique({
+      where,
+    } as unknown as MethodArgs<Delegate, 'findUnique'>)) as unknown;
+
+    if (!record || typeof record !== 'object') {
+      return false;
+    }
+
+    const ownerId = (record as Record<string, unknown>)[this.userField];
+    return typeof ownerId === 'string' && ownerId === userId;
+  }
+
   findMany(
     args?: MethodArgs<Delegate, 'findMany'>,
     userId?: string
@@ -78,6 +92,7 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
       return this.delegate.findMany(args as MethodArgs<Delegate, 'findMany'>);
     }
 
+    // Read scope is enforced at query level for list endpoints.
     const baseArgs = (args ?? {}) as Record<string, unknown>;
     const where = this.mergeWhereWithUserScope(baseArgs.where, userId);
 
@@ -95,7 +110,8 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
       return this.delegate.findUnique(args);
     }
 
-    return this.delegate.findUnique(args).then((record) => {
+    // For unique reads, we fetch first then apply ownership/global visibility checks.
+    return this.delegate.findUnique(args).then((record: unknown) => {
       if (!record) {
         return record;
       }
@@ -113,11 +129,35 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
     return this.delegate.create(args);
   }
 
-  update(args: MethodArgs<Delegate, 'update'>): Promise<MethodResult<Delegate, 'update'>> {
-    return this.delegate.update(args);
+  async update(
+    args: MethodArgs<Delegate, 'update'>,
+    userId?: string
+  ): Promise<MethodResult<Delegate, 'update'>> {
+    if (userId && this.readScope !== 'none') {
+      const baseArgs = args as Record<string, unknown>;
+      const allowed = await this.canMutateForUser(baseArgs.where, userId);
+      if (!allowed) {
+        // Hide row existence details; caller gets a generic forbidden mutation error.
+        throw new Error('Forbidden mutation: only the owner can update this row');
+      }
+    }
+
+    return (await this.delegate.update(args)) as MethodResult<Delegate, 'update'>;
   }
 
-  delete(args: MethodArgs<Delegate, 'delete'>): Promise<MethodResult<Delegate, 'delete'>> {
-    return this.delegate.delete(args);
+  async delete(
+    args: MethodArgs<Delegate, 'delete'>,
+    userId?: string
+  ): Promise<MethodResult<Delegate, 'delete'>> {
+    if (userId && this.readScope !== 'none') {
+      const baseArgs = args as Record<string, unknown>;
+      const allowed = await this.canMutateForUser(baseArgs.where, userId);
+      if (!allowed) {
+        // Same policy as update: owner-only, global rows cannot be deleted.
+        throw new Error('Forbidden mutation: only the owner can delete this row');
+      }
+    }
+
+    return (await this.delegate.delete(args)) as MethodResult<Delegate, 'delete'>;
   }
 }
