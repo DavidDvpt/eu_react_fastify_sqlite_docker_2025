@@ -6,6 +6,6 @@ type ItemTypeClient = PrismaModelClient<'ItemType'>;
 
 export class ItemTypeRepository extends PrismaCrudRepository<ItemTypeClient['itemType']> {
   constructor(client: ItemTypeClient) {
-    super(client.itemType);
+    super(client.itemType, { readScope: 'global-and-user' });
   }
 }

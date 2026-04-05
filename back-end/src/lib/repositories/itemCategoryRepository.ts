@@ -8,6 +8,6 @@ export class ItemCategoryRepository extends PrismaCrudRepository<
   ItemCategoryClient['itemCategory']
 > {
   constructor(client: ItemCategoryClient) {
-    super(client.itemCategory);
+    super(client.itemCategory, { readScope: 'global-and-user' });
   }
 }

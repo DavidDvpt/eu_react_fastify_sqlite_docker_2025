@@ -8,6 +8,6 @@ export class InventoryLotRepository extends PrismaCrudRepository<
   InventoryLotClient['inventoryLot']
 > {
   constructor(client: InventoryLotClient) {
-    super(client.inventoryLot);
+    super(client.inventoryLot, { readScope: 'user-only' });
   }
 }

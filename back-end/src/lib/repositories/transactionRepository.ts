@@ -6,6 +6,6 @@ type TransactionClient = PrismaModelClient<'Transaction'>;
 
 export class TransactionRepository extends PrismaCrudRepository<TransactionClient['transaction']> {
   constructor(client: TransactionClient) {
-    super(client.transaction);
+    super(client.transaction, { readScope: 'user-only' });
   }
 }

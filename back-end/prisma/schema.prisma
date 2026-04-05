@@ -45,16 +45,22 @@ enum TransactionLineType {
 }
 
 model User {
-  id            String  @id @default(uuid())
-  firstname     String? 
-  lastname      String? 
-  pseudo        String  @unique
-  email         String  @unique
-  password_hash String
-  role          Role
-  date_created  String
-  date_updated  String?
-  is_active     Boolean @default(true)
+  id                       String                    @id @default(uuid())
+  firstname                String?
+  lastname                 String?
+  pseudo                   String                    @unique
+  email                    String                    @unique
+  password_hash            String
+  role                     Role
+  date_created             String
+  date_updated             String?
+  is_active                Boolean                   @default(true)
+  itemCategories           ItemCategory[]
+  itemTypes                ItemType[]
+  items                    Item[]
+  transactions             Transaction[]
+  inventoryLots            InventoryLot[]
+  inventoryLotTransactions InventoryLotTransaction[]
 
   @@map("user")
 }
@@ -65,6 +71,9 @@ model ItemCategory {
   date_updated String?
   is_active    Boolean @default(true)
   name         String  @unique
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   item_types ItemType[]
 
@@ -80,7 +89,11 @@ model ItemType {
   name         String  @unique
 
   category ItemCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
-  items    Item[]
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  items Item[]
 
   @@map("item_type")
 }
@@ -96,9 +109,14 @@ model Item {
   is_active    Boolean @default(true)
   name         String  @unique
 
-  item_type      ItemType       @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  item_type ItemType @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   inventory_lots InventoryLot[]
-  transactions   Transaction[]
+
+  transactions Transaction[]
 
   @@map("item")
 }
@@ -113,6 +131,9 @@ model InventoryLot {
   date_created       String
   date_updated       String?
   is_active          Boolean @default(true)
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
   links InventoryLotTransaction[]
@@ -133,7 +154,11 @@ model Transaction {
   is_active        Boolean
   item_id          String
 
-  item Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  item Item @relation(fields: [item_id], references: [id], onDelete: Cascade)
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
   lots InventoryLotTransaction[]
 
   @@map("transaction")
@@ -145,7 +170,11 @@ model InventoryLotTransaction {
   quantity         Int
 
   inventory_lot InventoryLot @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)
-  transaction   Transaction  @relation(fields: [transaction_id], references: [id], onDelete: Restrict)
+
+  user_id String?
+  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  transaction Transaction @relation(fields: [transaction_id], references: [id], onDelete: Restrict)
 
   @@id([inventory_lot_id, transaction_id])
   @@map("inventory_lot_transaction")

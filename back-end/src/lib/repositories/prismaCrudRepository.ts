@@ -22,24 +22,91 @@ type MethodResult<Delegate, K extends keyof Delegate> = Delegate[K] extends (
 // Minimum shape a delegate must expose to be wrapped by this repository.
 type CrudDelegate = {
   findMany(_args?: any): Promise<any>;
+  findFirst(_args?: any): Promise<any>;
   findUnique(_args: any): Promise<any>;
   create(_args: any): Promise<any>;
   update(_args: any): Promise<any>;
   delete(_args: any): Promise<any>;
 };
 
+type ReadScope = 'none' | 'user-only' | 'global-and-user';
+
+type CrudRepositoryOptions = {
+  readScope?: ReadScope;
+  userField?: string;
+};
+
 // Thin wrapper that forwards Prisma delegate calls while preserving types.
 export class PrismaCrudRepository<Delegate extends CrudDelegate> {
-  constructor(protected readonly delegate: Delegate) {}
+  protected readonly readScope: ReadScope;
+  protected readonly userField: string;
 
-  findMany(args?: MethodArgs<Delegate, 'findMany'>): Promise<MethodResult<Delegate, 'findMany'>> {
-    return this.delegate.findMany(args as MethodArgs<Delegate, 'findMany'>);
+  constructor(
+    protected readonly delegate: Delegate,
+    options?: CrudRepositoryOptions
+  ) {
+    this.readScope = options?.readScope ?? 'none';
+    this.userField = options?.userField ?? 'user_id';
+  }
+
+  protected mergeWhereWithUserScope(where: unknown, userId?: string): unknown {
+    if (!userId || this.readScope === 'none') {
+      return where;
+    }
+
+    if (this.readScope === 'global-and-user') {
+      return {
+        AND: [
+          (where as Record<string, unknown>) ?? {},
+          {
+            OR: [{ [this.userField]: null }, { [this.userField]: userId }],
+          },
+        ],
+      };
+    }
+
+    return {
+      AND: [(where as Record<string, unknown>) ?? {}, { [this.userField]: userId }],
+    };
+  }
+
+  findMany(
+    args?: MethodArgs<Delegate, 'findMany'>,
+    userId?: string
+  ): Promise<MethodResult<Delegate, 'findMany'>> {
+    if (!userId || this.readScope === 'none') {
+      return this.delegate.findMany(args as MethodArgs<Delegate, 'findMany'>);
+    }
+
+    const baseArgs = (args ?? {}) as Record<string, unknown>;
+    const where = this.mergeWhereWithUserScope(baseArgs.where, userId);
+
+    return this.delegate.findMany({
+      ...baseArgs,
+      where,
+    } as unknown as MethodArgs<Delegate, 'findMany'>);
   }
 
   findUnique(
-    args: MethodArgs<Delegate, 'findUnique'>
+    args: MethodArgs<Delegate, 'findUnique'>,
+    userId?: string
   ): Promise<MethodResult<Delegate, 'findUnique'>> {
-    return this.delegate.findUnique(args);
+    if (!userId || this.readScope === 'none') {
+      return this.delegate.findUnique(args);
+    }
+
+    return this.delegate.findUnique(args).then((record) => {
+      if (!record) {
+        return record;
+      }
+
+      const ownerId = (record as Record<string, unknown>)[this.userField];
+      if (this.readScope === 'global-and-user') {
+        return ownerId === null || ownerId === userId ? record : null;
+      }
+
+      return ownerId === userId ? record : null;
+    }) as Promise<MethodResult<Delegate, 'findUnique'>>;
   }
 
   create(args: MethodArgs<Delegate, 'create'>): Promise<MethodResult<Delegate, 'create'>> {
