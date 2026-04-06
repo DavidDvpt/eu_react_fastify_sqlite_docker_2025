@@ -1,18 +1,42 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import ManagePage from "../ManagePage";
 
+vi.mock("@/modules/manage", async () => {
+  const actual = await vi.importActual<typeof import("@/modules/manage")>(
+    "@/modules/manage"
+  );
+
+  return {
+    ...actual,
+    CATEGORIES_ROUTE: "http://api.test/categories",
+    getCategories: vi.fn().mockResolvedValue([
+      { id: "cat-1", name: "Material", userId: null },
+      { id: "cat-2", name: "Custom Cat", userId: "user-1" },
+    ]),
+  };
+});
+
 function renderAt(path: string) {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
+
   return render(
-    <MemoryRouter initialEntries={[path]}>
-      <Routes>
-        <Route path="/manage/:tab" element={<ManagePage />} />
-        <Route path="/manage/:tab/create" element={<ManagePage />} />
-        <Route path="/manage/:tab/:id/edit" element={<ManagePage />} />
-      </Routes>
-    </MemoryRouter>
+    <QueryClientProvider client={queryClient}>
+      <MemoryRouter initialEntries={[path]}>
+        <Routes>
+          <Route path="/manage/:tab" element={<ManagePage />} />
+          <Route path="/manage/:tab/create" element={<ManagePage />} />
+          <Route path="/manage/:tab/:id/edit" element={<ManagePage />} />
+        </Routes>
+      </MemoryRouter>
+    </QueryClientProvider>
   );
 }
 
@@ -25,11 +49,16 @@ describe("ManagePage", () => {
     expect(screen.getByRole("link", { name: "Creer" })).toHaveAttribute("href", "/manage/type/create");
   });
 
-  it("renders create mode from route segment", () => {
+  it("renders categories table for category tab", async () => {
     renderAt("/manage/category/create");
 
     expect(screen.getByRole("heading", { name: "Categories" })).toBeInTheDocument();
-    expect(screen.getByText('Mode creation pour "category".')).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: "Material" })).toHaveAttribute(
+      "href",
+      "/manage/category/cat-1/edit"
+    );
+    expect(screen.getByText("Global")).toBeInTheDocument();
+    expect(screen.getByText("Custom")).toBeInTheDocument();
   });
 
   it("renders edit mode from route segment", () => {
