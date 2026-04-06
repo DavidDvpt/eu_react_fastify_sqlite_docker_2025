@@ -2,6 +2,8 @@
 
 ## FRONT-END
 - Creer un generic filter pour `manage`, reutilisable partout dans l'application.
+- Refacto la page manage afin de creer une table generique.
+- Creer les formulaires de creation pour le manage.
 
 ## BACK-END
 - A definir (pas de point note pour le moment).
