@@ -13,9 +13,17 @@ vi.mock("@/modules/manage", async () => {
   return {
     ...actual,
     CATEGORIES_ROUTE: "http://api.test/categories",
+    TYPES_ROUTE: "http://api.test/types",
+    ITEMS_ROUTE: "http://api.test/items",
     getCategories: vi.fn().mockResolvedValue([
       { id: "cat-1", name: "Material", userId: null },
       { id: "cat-2", name: "Custom Cat", userId: "user-1" },
+    ]),
+    getTypes: vi.fn().mockResolvedValue([
+      { id: "type-1", name: "Ore", categoryId: "cat-1", userId: null },
+    ]),
+    getItems: vi.fn().mockResolvedValue([
+      { id: "item-1", name: "Oil", itemTypeId: "type-1", value: 10, isLimited: false, userId: null },
     ]),
   };
 });
@@ -41,12 +49,15 @@ function renderAt(path: string) {
 }
 
 describe("ManagePage", () => {
-  it("renders list mode for a tab", () => {
+  it("renders types table for type tab", async () => {
     renderAt("/manage/type");
 
     expect(screen.getByRole("heading", { name: "Types" })).toBeInTheDocument();
-    expect(screen.getByText('Mode liste pour "type" (table + lignes cliquables).')).toBeInTheDocument();
     expect(screen.getByRole("link", { name: "Creer" })).toHaveAttribute("href", "/manage/type/create");
+    expect(await screen.findByRole("link", { name: "Ore" })).toHaveAttribute(
+      "href",
+      "/manage/type/type-1/edit"
+    );
   });
 
   it("renders categories table for category tab", async () => {
@@ -61,10 +72,13 @@ describe("ManagePage", () => {
     expect(screen.getByText("Custom")).toBeInTheDocument();
   });
 
-  it("renders edit mode from route segment", () => {
+  it("renders items table for item tab", async () => {
     renderAt("/manage/item/42/edit");
 
     expect(screen.getByRole("heading", { name: "Items" })).toBeInTheDocument();
-    expect(screen.getByText('Mode edition pour "item" (id: 42).')).toBeInTheDocument();
+    expect(await screen.findByRole("link", { name: "Oil" })).toHaveAttribute(
+      "href",
+      "/manage/item/item-1/edit"
+    );
   });
 });

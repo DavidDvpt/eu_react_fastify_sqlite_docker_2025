@@ -42,6 +42,27 @@ const itemUpdateSchema = z.object({
   is_active: z.boolean().optional(),
 });
 
+const includeQuerySchema = z.object({
+  include: z.string().optional(),
+});
+
+function shouldIncludeParent(query: unknown): boolean {
+  const parsed = includeQuerySchema.safeParse(query);
+  if (!parsed.success) {
+    return false;
+  }
+
+  const include = parsed.data.include;
+  if (!include) {
+    return false;
+  }
+
+  return include
+    .split(',')
+    .map((value) => value.trim().toLowerCase())
+    .includes('parent');
+}
+
 const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.protect();
 
@@ -98,7 +119,22 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.get('/types', async (request, reply) => {
-    const rows = await app.repos.itemTypes.findMany(undefined, request.user.id);
+    const includeParent = shouldIncludeParent(request.query);
+    const rows = await app.repos.itemTypes.findMany(
+      includeParent
+        ? {
+            include: {
+              category: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          }
+        : undefined,
+      request.user.id
+    );
     return reply.code(200).send(rows);
   });
 
@@ -148,7 +184,22 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.get('/items', async (request, reply) => {
-    const rows = await app.repos.items.findMany(undefined, request.user.id);
+    const includeParent = shouldIncludeParent(request.query);
+    const rows = await app.repos.items.findMany(
+      includeParent
+        ? {
+            include: {
+              item_type: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          }
+        : undefined,
+      request.user.id
+    );
     return reply.code(200).send(rows);
   });
 
