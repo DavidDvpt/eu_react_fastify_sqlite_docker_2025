@@ -1,5 +1,6 @@
 import argon2 from 'argon2';
 
+import { AUTH_API_PREFIX } from '../config/routes.js';
 import { parseDurationToSeconds } from '../lib/auth/tokenDuration.js';
 import HashTools from '../lib/security/HashTools.js';
 import { signinBodySchema } from '../lib/validations/signin.Validation.js';
@@ -106,7 +107,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
           maxAge: refreshTokenMaxAge,
           secure: false,
           sameSite: 'lax',
-          path: '/auth',
+          path: AUTH_API_PREFIX,
         })
         .send({ message: 'Success' });
     }
@@ -118,7 +119,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
         path: '/',
       })
       .clearCookie('refresh_token', {
-        path: '/auth',
+        path: AUTH_API_PREFIX,
       })
       .code(200)
       .send({ message: 'Logged out' });

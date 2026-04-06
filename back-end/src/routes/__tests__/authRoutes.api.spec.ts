@@ -16,6 +16,7 @@ import type { UserForToken } from '../../types/fastify.js';
 import HashTools from '../../lib/security/HashTools.js';
 import authPlugin from '../../plugins/authPlugin.js';
 import repositoryPlugin from '../../plugins/repositories.js';
+import { AUTH_API_PREFIX, AUTH_PREFIX } from '../../config/routes.js';
 
 const meUserMock: UserForToken = {
   id: 'user-1',
@@ -81,26 +82,26 @@ describe('authRoutes', () => {
 
   function buildSignupApp() {
     const { app, usersRepo, jwt } = createBaseApp();
-    app.register(authRoutes, { prefix: '/auth' });
+    app.register(authRoutes, { prefix: AUTH_PREFIX });
     return { app, usersRepo, jwt };
   }
 
   function buildSigninApp() {
     const { app, usersRepo, jwt } = createBaseApp();
-    app.register(authRoutes, { prefix: '/auth' });
+    app.register(authRoutes, { prefix: AUTH_PREFIX });
     return { app, usersRepo, jwt };
   }
 
   function buildMeApp() {
     const { app, usersRepo, jwt } = createBaseApp();
 
-    app.register(authRoutes, { prefix: '/auth' });
+    app.register(authRoutes, { prefix: AUTH_PREFIX });
     return { app, usersRepo, jwt };
   }
 
   function buildLogoutApp() {
     const { app, usersRepo, jwt } = createBaseApp();
-    app.register(authRoutes, { prefix: '/auth' });
+    app.register(authRoutes, { prefix: AUTH_PREFIX });
     return { app, usersRepo, jwt };
   }
 
@@ -112,7 +113,7 @@ describe('authRoutes', () => {
     app.register(cookie);
 
     app.register(authPlugin); // <-- celui qui decorate protect + jwtVerify
-    app.register(authRoutes, { prefix: '/auth' });
+    app.register(authRoutes, { prefix: AUTH_PREFIX });
 
     return { app };
   }
@@ -127,7 +128,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signup',
+      url: `${AUTH_PREFIX}/signup`,
       payload: {
         pseudo: 'test',
         email: 'test@example.com',
@@ -157,7 +158,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signup',
+      url: `${AUTH_PREFIX}/signup`,
       payload: {
         pseudo: 'test',
         email: 'test@example.com',
@@ -180,7 +181,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signin',
+      url: `${AUTH_PREFIX}/signin`,
       payload: {
         pseudo: 'test',
         password: 'password123',
@@ -201,7 +202,7 @@ describe('authRoutes', () => {
           name: 'refresh_token',
           value: 'refresh.jwt',
           maxAge: 7 * 24 * 60 * 60,
-          path: '/auth',
+          path: AUTH_API_PREFIX,
           httpOnly: true,
         }),
       ])
@@ -221,7 +222,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signin',
+      url: `${AUTH_PREFIX}/signin`,
       payload: {
         pseudo: 'test',
         password: 'password123',
@@ -241,7 +242,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/logout',
+      url: `${AUTH_PREFIX}/logout`,
     });
 
     expect(res.statusCode).toBe(200);
@@ -256,7 +257,7 @@ describe('authRoutes', () => {
         expect.objectContaining({
           name: 'refresh_token',
           value: '',
-          path: '/auth',
+          path: AUTH_API_PREFIX,
         }),
       ])
     );
@@ -272,7 +273,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signin',
+      url: `${AUTH_PREFIX}/signin`,
       payload: {
         pseudo: 'test',
         password: 'password123',
@@ -293,7 +294,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'POST',
-      url: '/auth/signin',
+      url: `${AUTH_PREFIX}/signin`,
       payload: {
         pseudo: 'test',
         password: 'password123',
@@ -314,7 +315,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'GET',
-      url: '/auth/me',
+      url: `${AUTH_PREFIX}/me`,
     });
 
     expect(res.statusCode).toBe(200);
@@ -338,7 +339,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'GET',
-      url: '/auth/me',
+      url: `${AUTH_PREFIX}/me`,
     });
 
     expect(res.statusCode).toBe(401);
@@ -353,7 +354,7 @@ describe('authRoutes', () => {
 
     const res = await app.inject({
       method: 'GET',
-      url: '/auth/me',
+      url: `${AUTH_PREFIX}/me`,
       headers: {
         cookie: 'access_token=not-a-jwt',
       },
