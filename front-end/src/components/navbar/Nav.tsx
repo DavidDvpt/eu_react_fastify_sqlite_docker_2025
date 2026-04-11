@@ -5,7 +5,7 @@ function Nav() {
   return (
     <div className="flex w-full">
       {navbarValues.map((m) => {
-        return <NavButton {...m} />;
+        return <NavButton key={m.route} {...m} />;
       })}
     </div>
   );

@@ -56,6 +56,7 @@ type ItemFilterModelItem = {
   itemTypeName?: string;
   isActive?: boolean;
   isLimited: boolean;
+  isStackable?: boolean;
 };
 
 function createItemFilterModel<
@@ -111,7 +112,7 @@ function createItemFilterModel<
         kind: "boolean",
         trueLabel: "Stackable",
         falseLabel: "Non stackable",
-        getValue: (item) => typeById[item.itemTypeId]?.isStackable ?? false,
+        getValue: (item) => item.isStackable ?? false,
       },
       {
         key: "search",

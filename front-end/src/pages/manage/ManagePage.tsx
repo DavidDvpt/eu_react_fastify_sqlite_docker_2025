@@ -43,6 +43,20 @@ function TableMessageCell({
   );
 }
 
+function TableBodyCell({
+  children,
+  tone = "default",
+}: {
+  children: ReactNode;
+  tone?: "default" | "muted";
+}) {
+  return (
+    <td className={`px-4 py-3 ${tone === "muted" ? "text-muted-foreground" : ""}`}>
+      {children}
+    </td>
+  );
+}
+
 function formatToFiveDecimals(value: unknown): string {
   const numericValue = typeof value === "number" ? value : Number(value);
   if (!Number.isFinite(numericValue)) {
@@ -130,6 +144,14 @@ function ManagePage() {
     initialState: { isActive: true },
   });
 
+  const selectedItemTypeId =
+    typeof itemFilter.filterState.type === "string"
+      ? itemFilter.filterState.type
+      : null;
+  const selectedItemType = selectedItemTypeId ? typeById[selectedItemTypeId] : null;
+  const hasLimitedForSelectedType =
+    !selectedItemType || selectedItemType.supportsLimited !== false;
+
   return (
     <div className="space-y-6">
       <header className="space-y-2">
@@ -176,17 +198,17 @@ function ManagePage() {
                     key={category.id}
                     className="border-b border-border last:border-b-0 hover:bg-muted/30"
                   >
-                    <td className="px-4 py-3">
+                    <TableBodyCell>
                       <Link
                         to={`/manage/category/${category.id}/edit`}
                         className="font-medium text-foreground no-underline"
                       >
                         {category.name}
                       </Link>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
+                    </TableBodyCell>
+                    <TableBodyCell tone="muted">
                       {category.userId ? "Custom" : "Global"}
-                    </td>
+                    </TableBodyCell>
                   </tr>
                 ))
               )}
@@ -226,20 +248,20 @@ function ManagePage() {
                 ) : (
                   typeFilter.filteredItems.map((type) => (
                     <tr key={type.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
-                      <td className="px-4 py-3">
+                      <TableBodyCell>
                         <Link
                           to={`/manage/type/${type.id}/edit`}
                           className="font-medium text-foreground no-underline"
                         >
                           {type.name}
                         </Link>
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">
                         {type.categoryName ?? type.categoryId}
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">
                         {type.userId ? "Custom" : "Global"}
-                      </td>
+                      </TableBodyCell>
                     </tr>
                   ))
                 )}
@@ -250,7 +272,12 @@ function ManagePage() {
       ) : activeTab === "item" ? (
         <div className="space-y-4">
           {!itemsPending && !itemsError && items.length > 0 ? (
-            <GenericFilter model={itemFilterModel} filter={itemFilter} hasInput />
+            <GenericFilter
+              model={itemFilterModel}
+              filter={itemFilter}
+              hasInput
+              hasIsLimited={hasLimitedForSelectedType}
+            />
           ) : null}
 
           <section className="overflow-hidden rounded-md border border-border bg-background">
@@ -261,45 +288,49 @@ function ManagePage() {
                   <TableHeadCell>Type</TableHeadCell>
                   <TableHeadCell>Valeur</TableHeadCell>
                   <TableHeadCell>Limite</TableHeadCell>
+                  <TableHeadCell>Stackable</TableHeadCell>
                   <TableHeadCell>Scope</TableHeadCell>
                 </tr>
               </thead>
               <tbody>
                 {itemsPending ? (
                   <tr>
-                    <TableMessageCell colSpan={5}>Chargement des items...</TableMessageCell>
+                    <TableMessageCell colSpan={6}>Chargement des items...</TableMessageCell>
                   </tr>
                 ) : itemsError ? (
                   <tr>
-                    <TableMessageCell colSpan={5} tone="danger">
+                    <TableMessageCell colSpan={6} tone="danger">
                       Impossible de charger les items (endpoint attendu: {ITEMS_ROUTE}).
                     </TableMessageCell>
                   </tr>
                 ) : itemFilter.filteredItems.length === 0 ? (
                   <tr>
-                    <TableMessageCell colSpan={5}>Aucun item.</TableMessageCell>
+                    <TableMessageCell colSpan={6}>Aucun item.</TableMessageCell>
                   </tr>
                 ) : (
                   itemFilter.filteredItems.map((item) => (
                     <tr key={item.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
-                      <td className="px-4 py-3">
+                      <TableBodyCell>
                         <Link
                           to={`/manage/item/${item.id}/edit`}
                           className="font-medium text-foreground no-underline"
                         >
                           {item.name}
                         </Link>
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">
                         {item.itemTypeName ?? item.itemTypeId}
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">
                         {formatToFiveDecimals(item.value)}
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">{item.isLimited ? "Oui" : "Non"}</td>
-                      <td className="px-4 py-3 text-muted-foreground">
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">{item.isLimited ? "Oui" : "Non"}</TableBodyCell>
+                      <TableBodyCell tone="muted">
+                        {item.isStackable ? "Oui" : "Non"}
+                      </TableBodyCell>
+                      <TableBodyCell tone="muted">
                         {item.userId ? "Custom" : "Global"}
-                      </td>
+                      </TableBodyCell>
                     </tr>
                   ))
                 )}
