@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { type ReactNode, useMemo } from "react";
 import {
   CATEGORIES_ROUTE,
   ITEMS_ROUTE,
@@ -11,6 +12,36 @@ import {
 } from "@/modules/manage";
 import { Link, useLocation, useParams } from "react-router-dom";
 import type { ManageTab } from "@/modules/manage";
+import {
+  createItemFilterModel,
+  createTypeFilterModel,
+  GenericFilter,
+  useGenericObjectFilter,
+} from "@/components/common/GenericFilter";
+import type { GenericFilterModel } from "@/components/common/GenericFilter";
+import type { Item, Type } from "@/modules/manage";
+
+const TYPE_FILTER_MODEL = createTypeFilterModel<Type>();
+
+function TableHeadCell({ children }: { children: ReactNode }) {
+  return <th className="px-4 py-3 font-semibold text-foreground">{children}</th>;
+}
+
+function TableMessageCell({
+  children,
+  colSpan,
+  tone = "muted",
+}: {
+  children: ReactNode;
+  colSpan: number;
+  tone?: "muted" | "danger";
+}) {
+  return (
+    <td className={`px-4 py-4 ${tone === "danger" ? "text-danger" : "text-muted-foreground"}`} colSpan={colSpan}>
+      {children}
+    </td>
+  );
+}
 
 function formatToFiveDecimals(value: unknown): string {
   const numericValue = typeof value === "number" ? value : Number(value);
@@ -18,6 +49,14 @@ function formatToFiveDecimals(value: unknown): string {
     return "0.00000";
   }
   return numericValue.toFixed(5);
+}
+
+function sortByName<T extends { name?: string }>(items: T[]): T[] {
+  return [...items].sort((left, right) =>
+    (left.name ?? "").localeCompare(right.name ?? "", "fr", {
+      sensitivity: "base",
+    })
+  );
 }
 
 function ManagePage() {
@@ -39,6 +78,8 @@ function ManagePage() {
     queryFn: getCategories,
     enabled: activeTab === "category",
   });
+  const sortedCategories = useMemo(() => sortByName(categories), [categories]);
+
   const {
     data: types = [],
     isPending: typesPending,
@@ -46,8 +87,10 @@ function ManagePage() {
   } = useQuery({
     queryKey: ["manage", "types"],
     queryFn: getTypes,
-    enabled: activeTab === "type",
+    enabled: activeTab === "type" || activeTab === "item",
   });
+  const sortedTypes = useMemo(() => sortByName(types), [types]);
+
   const {
     data: items = [],
     isPending: itemsPending,
@@ -56,6 +99,35 @@ function ManagePage() {
     queryKey: ["manage", "items"],
     queryFn: getItems,
     enabled: activeTab === "item",
+  });
+  const sortedItems = useMemo(() => sortByName(items), [items]);
+
+  const typeFilterModel = TYPE_FILTER_MODEL;
+
+  const typeFilter = useGenericObjectFilter<Type>({
+    items: sortedTypes,
+    model: typeFilterModel,
+    initialState: { isActive: true },
+  });
+
+  const typeById = useMemo(
+    () =>
+      sortedTypes.reduce<Record<string, Type>>((acc, type) => {
+        acc[type.id] = type;
+        return acc;
+      }, {}),
+    [sortedTypes]
+  );
+
+  const itemFilterModel = useMemo<GenericFilterModel<Item>>(
+    () => createItemFilterModel<Item, Type>(typeById),
+    [typeById]
+  );
+
+  const itemFilter = useGenericObjectFilter<Item>({
+    items: sortedItems,
+    model: itemFilterModel,
+    initialState: { isActive: true },
   });
 
   return (
@@ -79,31 +151,27 @@ function ManagePage() {
           <table className="w-full border-collapse text-sm">
             <thead>
               <tr className="border-b border-border bg-muted/40 text-left">
-                <th className="px-4 py-3 font-semibold text-foreground">Nom</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Scope</th>
+                <TableHeadCell>Nom</TableHeadCell>
+                <TableHeadCell>Scope</TableHeadCell>
               </tr>
             </thead>
             <tbody>
               {categoriesPending ? (
                 <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={2}>
-                    Chargement des categories...
-                  </td>
+                  <TableMessageCell colSpan={2}>Chargement des categories...</TableMessageCell>
                 </tr>
               ) : categoriesError ? (
                 <tr>
-                  <td className="px-4 py-4 text-danger" colSpan={2}>
+                  <TableMessageCell colSpan={2} tone="danger">
                     Impossible de charger les categories (endpoint attendu: {CATEGORIES_ROUTE}).
-                  </td>
+                  </TableMessageCell>
                 </tr>
               ) : categories.length === 0 ? (
                 <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={2}>
-                    Aucune categorie.
-                  </td>
+                  <TableMessageCell colSpan={2}>Aucune categorie.</TableMessageCell>
                 </tr>
               ) : (
-                categories.map((category) => (
+                sortedCategories.map((category) => (
                   <tr
                     key={category.id}
                     className="border-b border-border last:border-b-0 hover:bg-muted/30"
@@ -126,115 +194,119 @@ function ManagePage() {
           </table>
         </section>
       ) : activeTab === "type" ? (
-        <section className="overflow-hidden rounded-md border border-border bg-background">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/40 text-left">
-                <th className="px-4 py-3 font-semibold text-foreground">Nom</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Categorie</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Scope</th>
-              </tr>
-            </thead>
-            <tbody>
-              {typesPending ? (
-                <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={3}>
-                    Chargement des types...
-                  </td>
+        <div className="space-y-4">
+          {!typesPending && !typesError && types.length > 0 ? (
+            <GenericFilter model={typeFilterModel} filter={typeFilter} hasInput />
+          ) : null}
+
+          <section className="overflow-hidden rounded-md border border-border bg-background">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/40 text-left">
+                  <TableHeadCell>Nom</TableHeadCell>
+                  <TableHeadCell>Categorie</TableHeadCell>
+                  <TableHeadCell>Scope</TableHeadCell>
                 </tr>
-              ) : typesError ? (
-                <tr>
-                  <td className="px-4 py-4 text-danger" colSpan={3}>
-                    Impossible de charger les types (endpoint attendu: {TYPES_ROUTE}).
-                  </td>
-                </tr>
-              ) : types.length === 0 ? (
-                <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={3}>
-                    Aucun type.
-                  </td>
-                </tr>
-              ) : (
-                types.map((type) => (
-                  <tr key={type.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
-                    <td className="px-4 py-3">
-                      <Link
-                        to={`/manage/type/${type.id}/edit`}
-                        className="font-medium text-foreground no-underline"
-                      >
-                        {type.name}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {type.categoryName ?? type.categoryId}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {type.userId ? "Custom" : "Global"}
-                    </td>
+              </thead>
+              <tbody>
+                {typesPending ? (
+                  <tr>
+                    <TableMessageCell colSpan={3}>Chargement des types...</TableMessageCell>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </section>
+                ) : typesError ? (
+                  <tr>
+                    <TableMessageCell colSpan={3} tone="danger">
+                      Impossible de charger les types (endpoint attendu: {TYPES_ROUTE}).
+                    </TableMessageCell>
+                  </tr>
+                ) : typeFilter.filteredItems.length === 0 ? (
+                  <tr>
+                    <TableMessageCell colSpan={3}>Aucun type.</TableMessageCell>
+                  </tr>
+                ) : (
+                  typeFilter.filteredItems.map((type) => (
+                    <tr key={type.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
+                      <td className="px-4 py-3">
+                        <Link
+                          to={`/manage/type/${type.id}/edit`}
+                          className="font-medium text-foreground no-underline"
+                        >
+                          {type.name}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {type.categoryName ?? type.categoryId}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {type.userId ? "Custom" : "Global"}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </section>
+        </div>
       ) : activeTab === "item" ? (
-        <section className="overflow-hidden rounded-md border border-border bg-background">
-          <table className="w-full border-collapse text-sm">
-            <thead>
-              <tr className="border-b border-border bg-muted/40 text-left">
-                <th className="px-4 py-3 font-semibold text-foreground">Nom</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Type</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Valeur</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Limite</th>
-                <th className="px-4 py-3 font-semibold text-foreground">Scope</th>
-              </tr>
-            </thead>
-            <tbody>
-              {itemsPending ? (
-                <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={5}>
-                    Chargement des items...
-                  </td>
+        <div className="space-y-4">
+          {!itemsPending && !itemsError && items.length > 0 ? (
+            <GenericFilter model={itemFilterModel} filter={itemFilter} hasInput />
+          ) : null}
+
+          <section className="overflow-hidden rounded-md border border-border bg-background">
+            <table className="w-full border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-border bg-muted/40 text-left">
+                  <TableHeadCell>Nom</TableHeadCell>
+                  <TableHeadCell>Type</TableHeadCell>
+                  <TableHeadCell>Valeur</TableHeadCell>
+                  <TableHeadCell>Limite</TableHeadCell>
+                  <TableHeadCell>Scope</TableHeadCell>
                 </tr>
-              ) : itemsError ? (
-                <tr>
-                  <td className="px-4 py-4 text-danger" colSpan={5}>
-                    Impossible de charger les items (endpoint attendu: {ITEMS_ROUTE}).
-                  </td>
-                </tr>
-              ) : items.length === 0 ? (
-                <tr>
-                  <td className="px-4 py-4 text-muted-foreground" colSpan={5}>
-                    Aucun item.
-                  </td>
-                </tr>
-              ) : (
-                items.map((item) => (
-                  <tr key={item.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
-                    <td className="px-4 py-3">
-                      <Link
-                        to={`/manage/item/${item.id}/edit`}
-                        className="font-medium text-foreground no-underline"
-                      >
-                        {item.name}
-                      </Link>
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {item.itemTypeName ?? item.itemTypeId}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {formatToFiveDecimals(item.value)}
-                    </td>
-                    <td className="px-4 py-3 text-muted-foreground">{item.isLimited ? "Oui" : "Non"}</td>
-                    <td className="px-4 py-3 text-muted-foreground">
-                      {item.userId ? "Custom" : "Global"}
-                    </td>
+              </thead>
+              <tbody>
+                {itemsPending ? (
+                  <tr>
+                    <TableMessageCell colSpan={5}>Chargement des items...</TableMessageCell>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </section>
+                ) : itemsError ? (
+                  <tr>
+                    <TableMessageCell colSpan={5} tone="danger">
+                      Impossible de charger les items (endpoint attendu: {ITEMS_ROUTE}).
+                    </TableMessageCell>
+                  </tr>
+                ) : itemFilter.filteredItems.length === 0 ? (
+                  <tr>
+                    <TableMessageCell colSpan={5}>Aucun item.</TableMessageCell>
+                  </tr>
+                ) : (
+                  itemFilter.filteredItems.map((item) => (
+                    <tr key={item.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
+                      <td className="px-4 py-3">
+                        <Link
+                          to={`/manage/item/${item.id}/edit`}
+                          className="font-medium text-foreground no-underline"
+                        >
+                          {item.name}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {item.itemTypeName ?? item.itemTypeId}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {formatToFiveDecimals(item.value)}
+                      </td>
+                      <td className="px-4 py-3 text-muted-foreground">{item.isLimited ? "Oui" : "Non"}</td>
+                      <td className="px-4 py-3 text-muted-foreground">
+                        {item.userId ? "Custom" : "Global"}
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </section>
+        </div>
       ) : (
         <section className="rounded-md border border-dashed border-border bg-background p-4 text-sm text-muted-foreground">
           {isCreate

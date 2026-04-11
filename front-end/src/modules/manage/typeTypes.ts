@@ -7,6 +7,8 @@ type TypeApi = {
     name: string;
   };
   is_active: boolean;
+  supports_limited?: boolean;
+  is_stackable?: boolean;
   user_id?: string | null;
   date_created: string;
   date_updated?: string | null;
@@ -18,6 +20,8 @@ type Type = {
   categoryId: string;
   categoryName?: string;
   isActive: boolean;
+  supportsLimited?: boolean;
+  isStackable?: boolean;
   userId?: string | null;
   createdAt: string;
   updatedAt?: string | null;
