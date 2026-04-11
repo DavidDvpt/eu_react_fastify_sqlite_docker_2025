@@ -4,6 +4,7 @@ type ItemApi = {
   image_url_id: string;
   value: number | string;
   is_limited: boolean;
+  is_stackable?: boolean;
   item_type_id: string;
   item_type?: {
     id: string;
@@ -21,6 +22,7 @@ type Item = {
   imageUrlId: string;
   value: number;
   isLimited: boolean;
+  isStackable?: boolean;
   itemTypeId: string;
   itemTypeName?: string;
   isActive: boolean;

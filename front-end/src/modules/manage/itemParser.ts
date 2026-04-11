@@ -10,6 +10,7 @@ function parseItem(apiItem: ItemApi): Item {
     imageUrlId: apiItem.image_url_id,
     value: Number.isFinite(numericValue) ? numericValue : 0,
     isLimited: apiItem.is_limited,
+    isStackable: apiItem.is_stackable,
     itemTypeId: apiItem.item_type_id,
     itemTypeName: apiItem.item_type?.name,
     isActive: apiItem.is_active,
