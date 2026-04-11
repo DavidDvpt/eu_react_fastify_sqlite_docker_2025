@@ -16,12 +16,16 @@ const typeCreateSchema = z.object({
   name: z.string().min(1),
   category_id: z.string().min(1),
   is_active: z.boolean().optional(),
+  supports_limited: z.boolean().optional(),
+  is_stackable: z.boolean().optional(),
 });
 
 const typeUpdateSchema = z.object({
   name: z.string().min(1).optional(),
   category_id: z.string().min(1).optional(),
   is_active: z.boolean().optional(),
+  supports_limited: z.boolean().optional(),
+  is_stackable: z.boolean().optional(),
 });
 
 const itemCreateSchema = z.object({
@@ -29,6 +33,7 @@ const itemCreateSchema = z.object({
   image_url_id: z.string(),
   value: z.coerce.number(),
   is_limited: z.boolean(),
+  is_stackable: z.boolean().optional(),
   item_type_id: z.string().min(1),
   is_active: z.boolean().optional(),
 });
@@ -38,6 +43,7 @@ const itemUpdateSchema = z.object({
   image_url_id: z.string().optional(),
   value: z.coerce.number().optional(),
   is_limited: z.boolean().optional(),
+  is_stackable: z.boolean().optional(),
   item_type_id: z.string().min(1).optional(),
   is_active: z.boolean().optional(),
 });
@@ -155,6 +161,8 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
         name: body.name,
         category_id: body.category_id,
         is_active: body.is_active ?? true,
+        supports_limited: body.supports_limited ?? false,
+        is_stackable: body.is_stackable ?? false,
         date_created: now,
         date_updated: null,
         user_id: request.user.id,
@@ -221,6 +229,7 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
         image_url_id: body.image_url_id,
         value: body.value,
         is_limited: body.is_limited,
+        is_stackable: body.is_stackable ?? true,
         item_type_id: body.item_type_id,
         is_active: body.is_active ?? true,
         date_created: now,

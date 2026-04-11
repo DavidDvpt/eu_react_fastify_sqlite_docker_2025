@@ -81,12 +81,14 @@ model ItemCategory {
 }
 
 model ItemType {
-  id           String  @id @default(uuid())
-  category_id  String
-  date_created String
-  date_updated String?
-  is_active    Boolean @default(true)
-  name         String  @unique
+  id               String  @id @default(uuid())
+  category_id      String
+  date_created     String
+  date_updated     String?
+  is_active        Boolean @default(true)
+  is_stackable     Boolean @default(false)
+  supports_limited Boolean @default(false)
+  name             String  @unique
 
   category ItemCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
@@ -107,6 +109,7 @@ model Item {
   date_created String
   date_updated String?
   is_active    Boolean @default(true)
+  is_stackable Boolean @default(true)
   name         String  @unique
 
   item_type ItemType @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
