@@ -79,7 +79,7 @@ function getItemImageUrl(imageUrlId: string): string | null {
   if (!normalizedApiUrl || !imageUrlId) {
     return null;
   }
-  return `${normalizedApiUrl}/storage/images/${encodeURIComponent(imageUrlId)}/micro`;
+  return `${normalizedApiUrl}/storage/images/${encodeURIComponent(imageUrlId)}/normal`;
 }
 
 function ManagePage() {

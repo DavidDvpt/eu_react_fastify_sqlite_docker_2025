@@ -18,6 +18,7 @@ const STORAGE_DIR = path.resolve(__dirname, '../../storage');
 const STORAGE_INDEX_PATH = getDefaultStorageIndexPath(STORAGE_DIR);
 
 let microImageIndexPromise: Promise<Map<string, string>> | null = null;
+let normalImageIndexPromise: Promise<Map<string, string>> | null = null;
 
 function toAbsoluteMicroIndexMap(micro: Record<string, string>): Map<string, string> {
   return new Map(
@@ -25,10 +26,22 @@ function toAbsoluteMicroIndexMap(micro: Record<string, string>): Map<string, str
   );
 }
 
+function toAbsoluteNormalIndexMap(normal: Record<string, string>): Map<string, string> {
+  return new Map(
+    Object.entries(normal).map(([id, relativePath]) => [id, path.join(STORAGE_DIR, relativePath)])
+  );
+}
+
 async function rebuildAndPersistMicroImageIndex(): Promise<Map<string, string>> {
   const built = await buildStorageImageIndex(STORAGE_DIR);
   await writeStorageImageIndex(STORAGE_DIR, built, STORAGE_INDEX_PATH);
   return toAbsoluteMicroIndexMap(built.micro);
+}
+
+async function rebuildAndPersistNormalImageIndex(): Promise<Map<string, string>> {
+  const built = await buildStorageImageIndex(STORAGE_DIR);
+  await writeStorageImageIndex(STORAGE_DIR, built, STORAGE_INDEX_PATH);
+  return toAbsoluteNormalIndexMap(built.normal);
 }
 
 async function loadMicroImageIndex(): Promise<Map<string, string>> {
@@ -40,11 +53,27 @@ async function loadMicroImageIndex(): Promise<Map<string, string>> {
   }
 }
 
+async function loadNormalImageIndex(): Promise<Map<string, string>> {
+  try {
+    const index = await loadStorageImageIndex(STORAGE_DIR, STORAGE_INDEX_PATH);
+    return toAbsoluteNormalIndexMap(index.normal);
+  } catch {
+    return rebuildAndPersistNormalImageIndex();
+  }
+}
+
 function getMicroImageIndex(): Promise<Map<string, string>> {
   if (!microImageIndexPromise) {
     microImageIndexPromise = loadMicroImageIndex();
   }
   return microImageIndexPromise;
+}
+
+function getNormalImageIndex(): Promise<Map<string, string>> {
+  if (!normalImageIndexPromise) {
+    normalImageIndexPromise = loadNormalImageIndex();
+  }
+  return normalImageIndexPromise;
 }
 
 const categoryCreateSchema = z.object({
@@ -127,6 +156,29 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
     if (!filePath) {
       microImageIndexPromise = rebuildAndPersistMicroImageIndex();
       imageIndex = await microImageIndexPromise;
+      filePath = imageIndex.get(params.id);
+    }
+
+    if (!filePath) {
+      return reply.code(404).send({ message: 'Image not found' });
+    }
+
+    const fileBuffer = await readFile(filePath);
+    return reply.type('image/jpeg').send(fileBuffer);
+  });
+
+  app.get('/storage/images/:id/normal', async (request, reply) => {
+    const params = request.params as { id: string };
+    if (!/^\d+$/.test(params.id)) {
+      return reply.code(400).send({ message: 'Invalid image id' });
+    }
+
+    let imageIndex = await getNormalImageIndex();
+    let filePath = imageIndex.get(params.id);
+
+    if (!filePath) {
+      normalImageIndexPromise = rebuildAndPersistNormalImageIndex();
+      imageIndex = await normalImageIndexPromise;
       filePath = imageIndex.get(params.id);
     }
 
