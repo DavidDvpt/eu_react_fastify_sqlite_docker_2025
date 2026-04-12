@@ -43,7 +43,7 @@ describe('manageRoutes', () => {
       items,
     } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
-      this.addHook('preHandler', (request) => {
+      this.addHook('preHandler', async (request) => {
         request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
       });
     });
