@@ -130,7 +130,6 @@ function ManagePage() {
   const typeFilter = useGenericObjectFilter<Type>({
     items: sortedTypes,
     model: typeFilterModel,
-    initialState: { isActive: true },
   });
 
   const typeById = useMemo(
@@ -150,7 +149,6 @@ function ManagePage() {
   const itemFilter = useGenericObjectFilter<Item>({
     items: sortedItems,
     model: itemFilterModel,
-    initialState: { isActive: true },
   });
 
   const selectedItemTypeId =

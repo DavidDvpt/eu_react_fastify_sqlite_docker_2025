@@ -5,8 +5,6 @@ type TypeFilterModelItem = {
   name: string;
   categoryId: string;
   categoryName?: string;
-  isActive?: boolean;
-  isStackable?: boolean;
 };
 
 function createTypeFilterModel<T extends TypeFilterModelItem>(): GenericFilterModel<T> {
@@ -17,30 +15,13 @@ function createTypeFilterModel<T extends TypeFilterModelItem>(): GenericFilterMo
         label: "Categorie",
         kind: "select",
         allLabel: "Toutes les categories",
-        dependsOn: ["isActive", "search"],
+        dependsOn: ["search"],
         getValue: (type) => type.categoryId,
         getLabel: (type) => type.categoryName ?? type.categoryId,
       },
       {
-        key: "isActive",
-        label: "Actif",
-        kind: "boolean",
-        allLabel: "Tous",
-        trueLabel: "Actif",
-        falseLabel: "Inactif",
-        getValue: (type) => type.isActive ?? true,
-      },
-      {
-        key: "stackable",
-        label: "Stackable",
-        kind: "boolean",
-        trueLabel: "Stackable",
-        falseLabel: "Non stackable",
-        getValue: (type) => type.isStackable ?? false,
-      },
-      {
         key: "search",
-        label: "Nom (autocomplete)",
+        label: "Nom",
         kind: "autocomplete",
         placeholder: "Ex: Ore",
         getValue: (type) => type.name,
@@ -54,9 +35,7 @@ type ItemFilterModelItem = {
   name: string;
   itemTypeId: string;
   itemTypeName?: string;
-  isActive?: boolean;
   isLimited: boolean;
-  isStackable?: boolean;
 };
 
 function createItemFilterModel<
@@ -70,7 +49,7 @@ function createItemFilterModel<
         label: "Categorie",
         kind: "select",
         allLabel: "Toutes les categories",
-        dependsOn: ["isActive", "limited", "stackable", "search"],
+        dependsOn: ["limited", "search"],
         getValue: (item) => typeById[item.itemTypeId]?.categoryId ?? null,
         getLabel: (item) => {
           const linkedType = typeById[item.itemTypeId];
@@ -83,19 +62,10 @@ function createItemFilterModel<
         label: "Type",
         kind: "select",
         allLabel: "Tous les types",
-        dependsOn: ["category", "isActive", "limited", "stackable", "search"],
+        dependsOn: ["category", "limited", "search"],
         getValue: (item) => item.itemTypeId,
         getLabel: (item) =>
           item.itemTypeName ?? typeById[item.itemTypeId]?.name ?? item.itemTypeId,
-      },
-      {
-        key: "isActive",
-        label: "Actif",
-        kind: "boolean",
-        allLabel: "Tous",
-        trueLabel: "Actif",
-        falseLabel: "Inactif",
-        getValue: (item) => item.isActive ?? true,
       },
       {
         key: "limited",
@@ -107,16 +77,8 @@ function createItemFilterModel<
         getValue: (item) => item.isLimited,
       },
       {
-        key: "stackable",
-        label: "Stackable",
-        kind: "boolean",
-        trueLabel: "Stackable",
-        falseLabel: "Non stackable",
-        getValue: (item) => item.isStackable ?? false,
-      },
-      {
         key: "search",
-        label: "Nom (autocomplete)",
+        label: "Nom",
         kind: "autocomplete",
         placeholder: "Ex: Oil",
         getValue: (item) => item.name,

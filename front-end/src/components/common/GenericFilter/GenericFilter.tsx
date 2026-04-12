@@ -84,7 +84,7 @@ function GenericFilter<T>({
               const datalistId = datalistIdByKey[field.key];
 
               return (
-                <div key={field.key} className={cn("w-full", field.className)}>
+                <div key={field.key} className={cn("w-1/2", field.className)}>
                   <Label htmlFor={id}>{field.label}</Label>
                   {hasInput ? (
                     <>
@@ -135,7 +135,7 @@ function GenericFilter<T>({
         ) : null}
 
         {selectFields.length > 0 ? (
-          <div className="flex flex-nowrap items-end justify-between gap-4 overflow-x-auto">
+          <div className="flex flex-nowrap items-end justify-start gap-[20px] overflow-x-auto">
             {selectFields.map((field) => {
               const currentValue = filter.filterState[field.key];
               const id = `generic-filter-${field.key}`;
