@@ -16,6 +16,10 @@ database/data/*.db
 # Logs
 *.log
 
+# macOS
+.DS_Store
+**/.DS_Store
+
 # Docker volumes (si jamais)
 docker-volumes/
 

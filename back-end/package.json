@@ -16,6 +16,7 @@
     "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
     "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
     "sql:extract": "tsx tools/sql-to-ts.ts",
+    "storage:index": "tsx scripts/build-storage-image-index.ts",
     "test": "vitest --config vitest.api.config.ts",
     "test:api": "vitest run --config vitest.api.config.ts",
     "test:bdd": "bash ./scripts/test-db.sh",

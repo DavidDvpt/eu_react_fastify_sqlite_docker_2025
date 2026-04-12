@@ -6,6 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const STORAGE_DIR = path.resolve(__dirname, "../storage");
+const GLOBAL_JSONS_DIR = path.join(STORAGE_DIR, "jsons");
 const BASE_URL = "http://www.entropiawiki.com/images/gallery";
 const SIZES = ["Micro", "Normal"] as const;
 const DEFAULT_DELAY_MS = 1500;
@@ -53,51 +54,68 @@ async function exists(targetPath: string): Promise<boolean> {
   }
 }
 
-async function getCollectionDirs(root: string, collection?: string): Promise<string[]> {
-  if (collection) {
-    return [path.join(root, collection)];
+type GlobalJsonEntry = {
+  collection: string;
+  jsonPath: string;
+};
+
+async function getGlobalJsonFiles(globalJsonsDir: string, collection?: string): Promise<GlobalJsonEntry[]> {
+  if (!(await exists(globalJsonsDir))) {
+    return [];
   }
 
-  const entries = await readdir(root, { withFileTypes: true });
-  return entries
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => path.join(root, entry.name));
+  const entries = await readdir(globalJsonsDir, { withFileTypes: true });
+  const globals = entries
+    .filter((entry) => entry.isFile() && entry.name.endsWith("_global.json"))
+    .map((entry) => {
+      const collectionName = entry.name.replace(/_global\.json$/, "");
+      return {
+        collection: collectionName,
+        jsonPath: path.join(globalJsonsDir, entry.name),
+      };
+    });
+
+  if (!collection) {
+    return globals;
+  }
+
+  return globals.filter((entry) => entry.collection === collection);
 }
 
-async function collectIdsFromJsonsDir(jsonsDir: string): Promise<Set<number>> {
-  const ids = new Set<number>();
-  const entries = await readdir(jsonsDir, { withFileTypes: true });
-  const jsonFiles = entries.filter(
-    (entry) =>
-      entry.isFile() &&
-      entry.name.endsWith(".json") &&
-      !entry.name.startsWith("failed_downloads")
-  );
+type GlobalValueEntry = {
+  key: string;
+  id: number;
+};
 
-  for (const jsonFile of jsonFiles) {
-    const fullPath = path.join(jsonsDir, jsonFile.name);
-    const content = await readFile(fullPath, "utf8");
-    const parsed = JSON.parse(content) as Record<string, unknown>;
+async function collectEntriesFromGlobalJson(globalJsonPath: string): Promise<GlobalValueEntry[]> {
+  const idsWithKeys = new Map<number, string>();
+  const content = await readFile(globalJsonPath, "utf8");
+  const parsed = JSON.parse(content) as Record<string, unknown>;
 
-    Object.values(parsed).forEach((value) => {
-      const id = Number(value);
-      if (Number.isInteger(id) && id > 0) {
-        ids.add(id);
+  Object.entries(parsed).forEach(([key, value]) => {
+    const id = Number(value);
+    if (Number.isInteger(id) && id > 0) {
+      if (!idsWithKeys.has(id)) {
+        idsWithKeys.set(id, key);
       }
-    });
-  }
+    }
+  });
 
-  console.log(`[scan] ${path.basename(path.dirname(jsonsDir))}: json files=${jsonFiles.length}, ids=${ids.size}`);
-  return ids;
+  const entries = [...idsWithKeys.entries()].map(([id, key]) => ({ id, key }));
+  const label = path.basename(globalJsonPath);
+  console.log(`[scan] ${label}: ids=${entries.length}`);
+  return entries;
 }
 
 type DownloadJob = {
+  key: string;
   id: number;
   size: (typeof SIZES)[number];
   targetFile: string;
 };
 
 type FailedDownload = {
+  key: string;
   id: number;
   size: (typeof SIZES)[number];
   url: string;
@@ -131,10 +149,11 @@ async function downloadAndWrite(job: DownloadJob): Promise<"ok" | "missing" | "e
 }
 
 async function writeFailedDownloadsReport(
-  jsonsDir: string,
+  globalJsonPath: string,
+  collectionName: string,
   failures: FailedDownload[]
 ): Promise<void> {
-  const targetPath = path.join(jsonsDir, "failed_downloads.json");
+  const targetPath = path.join(path.dirname(globalJsonPath), `${collectionName}_failed_downloads.json`);
   const payload = {
     generatedAt: new Date().toISOString(),
     count: failures.length,
@@ -143,31 +162,28 @@ async function writeFailedDownloadsReport(
   await writeFile(targetPath, JSON.stringify(payload, null, 2), "utf8");
 }
 
-async function processCollection(collectionDir: string, options: CliOptions): Promise<void> {
-  const jsonsDir = path.join(collectionDir, "jsons");
-  const collectionName = path.basename(collectionDir);
+async function processCollection(entry: GlobalJsonEntry, options: CliOptions): Promise<void> {
+  const collectionName = entry.collection;
+  const collectionDir = path.join(STORAGE_DIR, collectionName);
 
-  if (!(await exists(jsonsDir))) {
-    console.log(`[skip] ${collectionName}: no jsons directory`);
-    return;
-  }
-
-  const ids = await collectIdsFromJsonsDir(jsonsDir);
-  if (ids.size === 0) {
-    console.log(`[skip] ${collectionName}: no ids found in json files`);
+  const sourceEntries = await collectEntriesFromGlobalJson(entry.jsonPath);
+  if (sourceEntries.length === 0) {
+    console.log(`[skip] ${collectionName}: no ids found in ${path.basename(entry.jsonPath)}`);
     return;
   }
 
   await mkdir(collectionDir, { recursive: true });
 
   const jobs: DownloadJob[] = [];
-  for (const id of ids) {
+  let alreadyPresent = 0;
+  for (const sourceEntry of sourceEntries) {
     for (const size of SIZES) {
-      const targetFile = path.join(collectionDir, `${id}${size}.jpg`);
+      const targetFile = path.join(collectionDir, `${sourceEntry.id}${size}.jpg`);
       if (!options.overwrite && (await exists(targetFile))) {
+        alreadyPresent += 1;
         continue;
       }
-      jobs.push({ id, size, targetFile });
+      jobs.push({ key: sourceEntry.key, id: sourceEntry.id, size, targetFile });
     }
   }
 
@@ -177,7 +193,9 @@ async function processCollection(collectionDir: string, options: CliOptions): Pr
   const failures: FailedDownload[] = [];
   const totalJobs = jobs.length;
 
-  console.log(`[start] ${collectionName}: downloading ${totalJobs} images (delay=${options.delayMs}ms)`);
+  console.log(
+    `[start] ${collectionName}: ids=${sourceEntries.length}, existing=${alreadyPresent}, queued=${totalJobs}, delay=${options.delayMs}ms`
+  );
 
   for (let index = 0; index < jobs.length; index += 1) {
     const job = jobs[index];
@@ -186,6 +204,7 @@ async function processCollection(collectionDir: string, options: CliOptions): Pr
     if (result === "missing") {
       missing += 1;
       failures.push({
+        key: job.key,
         id: job.id,
         size: job.size,
         url: `${BASE_URL}/${job.id}${job.size}.jpg`,
@@ -195,6 +214,7 @@ async function processCollection(collectionDir: string, options: CliOptions): Pr
     if (result === "error") {
       error += 1;
       failures.push({
+        key: job.key,
         id: job.id,
         size: job.size,
         url: `${BASE_URL}/${job.id}${job.size}.jpg`,
@@ -212,25 +232,29 @@ async function processCollection(collectionDir: string, options: CliOptions): Pr
     }
   }
 
-  await writeFailedDownloadsReport(jsonsDir, failures);
+  await writeFailedDownloadsReport(entry.jsonPath, collectionName, failures);
 
   console.log(
-    `[done] ${collectionName}: ids=${ids.size}, queued=${jobs.length}, downloaded=${ok}, missing=${missing}, errors=${error}`
+    `[done] ${collectionName}: ids=${sourceEntries.length}, existing=${alreadyPresent}, queued=${jobs.length}, downloaded=${ok}, missing=${missing}, errors=${error}`
   );
-  console.log(`[report] ${collectionName}: ${path.join(jsonsDir, "failed_downloads.json")}`);
+  console.log(
+    `[report] ${collectionName}: ${path.join(path.dirname(entry.jsonPath), `${collectionName}_failed_downloads.json`)}`
+  );
 }
 
 async function main() {
   const options = parseArgs(process.argv.slice(2));
-  const collectionDirs = await getCollectionDirs(STORAGE_DIR, options.collection);
+  const globalJsonEntries = await getGlobalJsonFiles(GLOBAL_JSONS_DIR, options.collection);
 
-  if (collectionDirs.length === 0) {
-    console.log("[info] no collection directory found");
+  if (globalJsonEntries.length === 0) {
+    console.log(
+      `[info] no *_global.json found in ${GLOBAL_JSONS_DIR}${options.collection ? ` for collection=${options.collection}` : ""}`
+    );
     return;
   }
 
-  for (const collectionDir of collectionDirs) {
-    await processCollection(collectionDir, options);
+  for (const entry of globalJsonEntries) {
+    await processCollection(entry, options);
   }
 }
 

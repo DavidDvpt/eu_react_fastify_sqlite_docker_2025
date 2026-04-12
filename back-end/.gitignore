@@ -7,3 +7,5 @@ node_modules
 prisma/generated/**
 
 storage/**/*.jpg
+.DS_Store
+**/.DS_Store

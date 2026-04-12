@@ -22,6 +22,7 @@ import type { GenericFilterModel } from "@/components/common/GenericFilter";
 import type { Item, Type } from "@/modules/manage";
 
 const TYPE_FILTER_MODEL = createTypeFilterModel<Type>();
+const API_URL = import.meta.env.VITE_API_URL ?? "";
 
 function TableHeadCell({ children }: { children: ReactNode }) {
   return <th className="px-4 py-3 font-semibold text-foreground">{children}</th>;
@@ -51,7 +52,7 @@ function TableBodyCell({
   tone?: "default" | "muted";
 }) {
   return (
-    <td className={`px-4 py-3 ${tone === "muted" ? "text-muted-foreground" : ""}`}>
+    <td className={`px-4 py-1.5 ${tone === "muted" ? "text-muted-foreground" : ""}`}>
       {children}
     </td>
   );
@@ -71,6 +72,14 @@ function sortByName<T extends { name?: string }>(items: T[]): T[] {
       sensitivity: "base",
     })
   );
+}
+
+function getItemImageUrl(imageUrlId: string): string | null {
+  const normalizedApiUrl = API_URL.replace(/\/+$/, "");
+  if (!normalizedApiUrl || !imageUrlId) {
+    return null;
+  }
+  return `${normalizedApiUrl}/storage/images/${encodeURIComponent(imageUrlId)}/micro`;
 }
 
 function ManagePage() {
@@ -284,10 +293,11 @@ function ManagePage() {
             <table className="w-full border-collapse text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/40 text-left">
+                  <TableHeadCell>Image</TableHeadCell>
                   <TableHeadCell>Nom</TableHeadCell>
                   <TableHeadCell>Type</TableHeadCell>
                   <TableHeadCell>Valeur</TableHeadCell>
-                  <TableHeadCell>Limite</TableHeadCell>
+                  <TableHeadCell>Limited</TableHeadCell>
                   <TableHeadCell>Stackable</TableHeadCell>
                   <TableHeadCell>Scope</TableHeadCell>
                 </tr>
@@ -295,21 +305,33 @@ function ManagePage() {
               <tbody>
                 {itemsPending ? (
                   <tr>
-                    <TableMessageCell colSpan={6}>Chargement des items...</TableMessageCell>
+                    <TableMessageCell colSpan={7}>Chargement des items...</TableMessageCell>
                   </tr>
                 ) : itemsError ? (
                   <tr>
-                    <TableMessageCell colSpan={6} tone="danger">
+                    <TableMessageCell colSpan={7} tone="danger">
                       Impossible de charger les items (endpoint attendu: {ITEMS_ROUTE}).
                     </TableMessageCell>
                   </tr>
                 ) : itemFilter.filteredItems.length === 0 ? (
                   <tr>
-                    <TableMessageCell colSpan={6}>Aucun item.</TableMessageCell>
+                    <TableMessageCell colSpan={7}>Aucun item.</TableMessageCell>
                   </tr>
                 ) : (
                   itemFilter.filteredItems.map((item) => (
                     <tr key={item.id} className="border-b border-border last:border-b-0 hover:bg-muted/30">
+                      <TableBodyCell tone="muted">
+                        {getItemImageUrl(item.imageUrlId) ? (
+                          <img
+                            src={getItemImageUrl(item.imageUrlId) ?? ""}
+                            alt={item.name}
+                            className="h-8 w-8 rounded object-contain"
+                            loading="lazy"
+                          />
+                        ) : (
+                          "-"
+                        )}
+                      </TableBodyCell>
                       <TableBodyCell>
                         <Link
                           to={`/manage/item/${item.id}/edit`}

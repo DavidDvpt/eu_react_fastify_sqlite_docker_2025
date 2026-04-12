@@ -4,7 +4,7 @@ import type { Prisma } from "../generated/client.js";
 export const ITEMS: Prisma.ItemCreateManyInput[] = [
   {
     "id": "05236E1E-2D20-49CD-A0EB-090B2D91C582",
-    "image_url_id": "",
+    "image_url_id": "6327",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -16,7 +16,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "08089F5D-13A7-46F2-86E7-A221DB4EB972",
-    "image_url_id": "",
+    "image_url_id": "1817",
     "value": 5.6,
     "is_limited": false,
     "is_stackable": true,
@@ -28,7 +28,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0BEF111A-A38E-4529-BD00-B86D18C938FD",
-    "image_url_id": "",
+    "image_url_id": "1552",
     "value": 0.9,
     "is_limited": false,
     "is_stackable": true,
@@ -40,7 +40,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0E9ADD66-EDC2-47C0-9908-06D42E053462",
-    "image_url_id": "",
+    "image_url_id": "3231",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -52,7 +52,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "11472AF5-CC49-473A-ACB1-3E1930DC2583",
-    "image_url_id": "",
+    "image_url_id": "1546",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -64,7 +64,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "12F8067A-C0A1-472D-9D3F-831A7734E82A",
-    "image_url_id": "",
+    "image_url_id": "1273",
     "value": 0.22,
     "is_limited": false,
     "is_stackable": true,
@@ -76,7 +76,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "19BA7D8C-971E-465D-8EB8-C02404B3B773",
-    "image_url_id": "",
+    "image_url_id": "1548",
     "value": 0.8,
     "is_limited": false,
     "is_stackable": true,
@@ -88,7 +88,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1A2308A8-1458-4A1C-9B95-5C9EC72E316F",
-    "image_url_id": "",
+    "image_url_id": "6056",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -100,7 +100,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1A8C6CAD-B42D-43C6-99D1-CD9E1D729CAC",
-    "image_url_id": "",
+    "image_url_id": "2696",
     "value": 2.5,
     "is_limited": false,
     "is_stackable": true,
@@ -112,7 +112,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1CA31D72-3D1A-4684-ACCA-6E8D9F747746",
-    "image_url_id": "",
+    "image_url_id": "4682",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -124,7 +124,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1E8BA50F-DCE2-479C-A746-D770C2AE4A5E",
-    "image_url_id": "",
+    "image_url_id": "1554",
     "value": 0.16,
     "is_limited": false,
     "is_stackable": true,
@@ -136,7 +136,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1F654E37-2EA7-43CD-8F3F-5A1F672C6296",
-    "image_url_id": "",
+    "image_url_id": "3235",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -148,7 +148,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "231C9890-3095-44FA-81C3-8E8925D322EE",
-    "image_url_id": "",
+    "image_url_id": "6648",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -160,7 +160,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2DCDE8FC-E90F-4EDC-BE3B-8BDE7DBDCD27",
-    "image_url_id": "",
+    "image_url_id": "1636",
     "value": 0.4,
     "is_limited": false,
     "is_stackable": true,
@@ -172,7 +172,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "37387EA1-A516-4118-9396-3C412D464761",
-    "image_url_id": "",
+    "image_url_id": "6233",
     "value": 0.07,
     "is_limited": false,
     "is_stackable": true,
@@ -184,7 +184,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3A41CD77-4ECB-4664-8B34-125F77DDB112",
-    "image_url_id": "",
+    "image_url_id": "3736",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -196,7 +196,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3B82064E-2B4B-4FA5-873C-6C6C90358CE1",
-    "image_url_id": "",
+    "image_url_id": "2567",
     "value": 4,
     "is_limited": false,
     "is_stackable": true,
@@ -220,7 +220,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4313D9F2-C22F-4E8A-BE77-3D07D479EC47",
-    "image_url_id": "",
+    "image_url_id": "6167",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -232,7 +232,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "46025621-0547-435A-8DCF-D88494DF738D",
-    "image_url_id": "",
+    "image_url_id": "929",
     "value": 2.5,
     "is_limited": false,
     "is_stackable": true,
@@ -244,7 +244,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "494AA0C1-34A8-4A1C-A29B-716E3D613D7B",
-    "image_url_id": "",
+    "image_url_id": "1556",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -256,7 +256,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4996D19A-4C2F-4F8F-BC2B-EA5AC9164494",
-    "image_url_id": "",
+    "image_url_id": "1547",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -268,7 +268,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4B60F593-DDFB-4892-BC3B-F22084F49577",
-    "image_url_id": "",
+    "image_url_id": "1381",
     "value": 1.2,
     "is_limited": false,
     "is_stackable": true,
@@ -280,7 +280,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4C69AD5E-A956-4FF9-830F-32413D542291",
-    "image_url_id": "",
+    "image_url_id": "1637",
     "value": 0.95,
     "is_limited": false,
     "is_stackable": true,
@@ -292,7 +292,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4E057008-4D4A-4543-B8C7-EF74EABA5768",
-    "image_url_id": "",
+    "image_url_id": "1256",
     "value": 1.79,
     "is_limited": false,
     "is_stackable": true,
@@ -304,7 +304,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4F8F51E1-210A-488A-AB6C-93D0C1014961",
-    "image_url_id": "",
+    "image_url_id": "6039",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -316,7 +316,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "50439E88-90B2-463C-9B30-A66859C7AFB8",
-    "image_url_id": "",
+    "image_url_id": "1640",
     "value": 6,
     "is_limited": false,
     "is_stackable": true,
@@ -328,7 +328,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "536A71DF-5562-4F18-8853-E067ABC243FA",
-    "image_url_id": "",
+    "image_url_id": "5460",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -340,7 +340,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "53FEBD37-B41B-4B57-8155-3713D90536F4",
-    "image_url_id": "",
+    "image_url_id": "6180",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -352,7 +352,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "54DD6AD0-D688-40E2-B455-AC268D9AD24B",
-    "image_url_id": "",
+    "image_url_id": "6189",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -364,7 +364,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "573C1C62-9020-4844-BBCF-27A55D55D48F",
-    "image_url_id": "",
+    "image_url_id": "6078",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -376,7 +376,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5A362C03-9FC3-420A-805F-05F33EC4F967",
-    "image_url_id": "",
+    "image_url_id": "6231",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -388,7 +388,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5AA0F493-164D-42CA-A144-9DF9DFFC7F85",
-    "image_url_id": "",
+    "image_url_id": "1257",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -400,7 +400,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5BC77B0E-AD34-42D6-BD93-AED70CEF3E1B",
-    "image_url_id": "",
+    "image_url_id": "1540",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -412,7 +412,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5D51E890-B6C3-49D7-ADBA-373D3332F272",
-    "image_url_id": "",
+    "image_url_id": "3732",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -424,7 +424,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5E345B13-F5C2-4EA5-AD7F-89CF331CA6DE",
-    "image_url_id": "",
+    "image_url_id": "4645",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -436,7 +436,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "63791301-01E7-4C18-A9CF-10BE14F9DB00",
-    "image_url_id": "",
+    "image_url_id": "2308",
     "value": 0.142,
     "is_limited": false,
     "is_stackable": true,
@@ -448,7 +448,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "65716B49-1C2F-49F8-9F08-7DB5AB2E6D74",
-    "image_url_id": "",
+    "image_url_id": "1950",
     "value": 3,
     "is_limited": false,
     "is_stackable": true,
@@ -460,7 +460,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "661941A0-A756-4314-83CB-5C6DF7B2FD89",
-    "image_url_id": "",
+    "image_url_id": "4681",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -472,7 +472,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6629A4D5-E1C3-4936-9A41-5BBB54C3847C",
-    "image_url_id": "",
+    "image_url_id": "6402",
     "value": 0.25,
     "is_limited": false,
     "is_stackable": true,
@@ -484,7 +484,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "66C129F0-5C9E-49C9-A994-B4183646AA3E",
-    "image_url_id": "",
+    "image_url_id": "1719",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -496,7 +496,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "691881F2-D58D-47D1-B6BA-006E64488A57",
-    "image_url_id": "",
+    "image_url_id": "2655",
     "value": 2,
     "is_limited": false,
     "is_stackable": true,
@@ -508,7 +508,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6AAE1029-48B6-48A9-BCA1-29762CB05AE6",
-    "image_url_id": "",
+    "image_url_id": "5996",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -520,7 +520,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6BD43DA5-A231-4EE8-91E4-54887D3D62B0",
-    "image_url_id": "",
+    "image_url_id": "6290",
     "value": 0.09,
     "is_limited": false,
     "is_stackable": true,
@@ -532,7 +532,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6C3AFD69-BC49-49EB-BBB1-DBA3C22CE61A",
-    "image_url_id": "",
+    "image_url_id": "3233",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -544,7 +544,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6D012744-6519-4CBC-BA50-DC75295A20DA",
-    "image_url_id": "",
+    "image_url_id": "3734",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -556,7 +556,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6E4282AE-5AB4-427D-AFAF-2CDA0D716344",
-    "image_url_id": "",
+    "image_url_id": "1553",
     "value": 1,
     "is_limited": false,
     "is_stackable": true,
@@ -568,7 +568,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6FFEC8DC-6BDB-4FBC-8969-8579AA69AC2D",
-    "image_url_id": "",
+    "image_url_id": "6380",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -580,7 +580,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "773A053D-1128-4494-8444-9055FA939D5E",
-    "image_url_id": "",
+    "image_url_id": "3737",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -592,7 +592,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "775F1871-3257-4AD4-A2EA-D97B7F1D2B8A",
-    "image_url_id": "",
+    "image_url_id": "4659",
     "value": 1.5,
     "is_limited": false,
     "is_stackable": true,
@@ -604,7 +604,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7E9929F9-DC19-4132-9998-FCEAB70224FA",
-    "image_url_id": "",
+    "image_url_id": "6645",
     "value": 0.13,
     "is_limited": false,
     "is_stackable": true,
@@ -616,7 +616,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "80984225-2C56-423D-BCE9-1B7A936EEB54",
-    "image_url_id": "",
+    "image_url_id": "3739",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -628,7 +628,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "822B3530-7913-47BC-AD9D-74840308213F",
-    "image_url_id": "",
+    "image_url_id": "1639",
     "value": 1.5,
     "is_limited": false,
     "is_stackable": true,
@@ -640,7 +640,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8243BF7A-2ECA-4041-A401-64B21B6E085F",
-    "image_url_id": "",
+    "image_url_id": "4687",
     "value": 0.14,
     "is_limited": false,
     "is_stackable": true,
@@ -652,7 +652,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8267B6A6-3B60-490F-918F-2555A3702F32",
-    "image_url_id": "",
+    "image_url_id": "2848",
     "value": 2.2,
     "is_limited": false,
     "is_stackable": true,
@@ -664,7 +664,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "876B2C09-C69B-4495-BB20-9D9A4AE5D56E",
-    "image_url_id": "",
+    "image_url_id": "5994",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -676,7 +676,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "891181C5-EEBA-4457-8A69-318E1A5912F9",
-    "image_url_id": "",
+    "image_url_id": "4660",
     "value": 0.25,
     "is_limited": false,
     "is_stackable": true,
@@ -688,7 +688,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8B286BA0-87BF-40D7-AEEC-162BDA982C76",
-    "image_url_id": "",
+    "image_url_id": "3744",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -700,7 +700,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8D1C7E33-65E7-4E3B-BA68-AE1D74C5162E",
-    "image_url_id": "",
+    "image_url_id": "1549",
     "value": 0.7,
     "is_limited": false,
     "is_stackable": true,
@@ -712,7 +712,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8DF560D8-F5C7-4122-BFA8-9CEF164C6AB6",
-    "image_url_id": "",
+    "image_url_id": "3743",
     "value": 0.07,
     "is_limited": false,
     "is_stackable": true,
@@ -724,7 +724,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "901AB6B6-5653-4C3F-A9E2-35FD2ABA0BE7",
-    "image_url_id": "",
+    "image_url_id": "1555",
     "value": 1.1,
     "is_limited": false,
     "is_stackable": true,
@@ -736,7 +736,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "968D3F09-DDFE-4E80-863E-955FBA506F94",
-    "image_url_id": "",
+    "image_url_id": "2397",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -748,7 +748,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9725697A-4AC9-4831-AD95-D6083234AE9F",
-    "image_url_id": "",
+    "image_url_id": "1551",
     "value": 0.65,
     "is_limited": false,
     "is_stackable": true,
@@ -760,7 +760,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9A37DD5C-314F-4D6A-9648-AEBDB303706D",
-    "image_url_id": "",
+    "image_url_id": "4658",
     "value": 0.65,
     "is_limited": false,
     "is_stackable": true,
@@ -772,7 +772,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9BAC891F-FA2A-4554-9E17-E4D9360ED006",
-    "image_url_id": "",
+    "image_url_id": "3745",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -784,7 +784,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A0A2CDAA-BD9A-48F7-8BD4-D5B5069B4F85",
-    "image_url_id": "",
+    "image_url_id": "6004",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -796,7 +796,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A0E7C90D-A362-42EC-B50E-3C0CE95F9F64",
-    "image_url_id": "",
+    "image_url_id": "7755",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -808,7 +808,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A6CC6C94-3DCE-4943-B855-CEC45A47A8D6",
-    "image_url_id": "",
+    "image_url_id": "1545",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -820,7 +820,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AC932DF8-3C43-4249-B557-9782C344DD07",
-    "image_url_id": "",
+    "image_url_id": "1541",
     "value": 0.13,
     "is_limited": false,
     "is_stackable": true,
@@ -832,7 +832,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B37BFF22-E96C-4D13-A4DC-2A3651D45127",
-    "image_url_id": "",
+    "image_url_id": "8041",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -844,7 +844,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B68847C8-FC70-4BE3-BE1B-CCE5D4B35E9C",
-    "image_url_id": "",
+    "image_url_id": "1818",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -856,7 +856,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B8BD258A-BBBA-4773-8B99-C904BD591893",
-    "image_url_id": "",
+    "image_url_id": "6635",
     "value": 0.11,
     "is_limited": false,
     "is_stackable": true,
@@ -868,7 +868,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BA216ADD-FA45-4BF8-91FA-7276454A043D",
-    "image_url_id": "",
+    "image_url_id": "6077",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -880,7 +880,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BD7E95C4-EFE3-40DB-AE02-1BA2DCE129A0",
-    "image_url_id": "",
+    "image_url_id": "1550",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -892,7 +892,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BE7CA1FB-3C1D-45DB-AEB1-1FE4C2451A91",
-    "image_url_id": "",
+    "image_url_id": "1952",
     "value": 1.25,
     "is_limited": false,
     "is_stackable": true,
@@ -904,7 +904,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BFDDB345-3A7F-4935-8812-2BBCEE783173",
-    "image_url_id": "",
+    "image_url_id": "3733",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -916,7 +916,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C16E1B2C-0AE6-4BAC-A3DD-E9D8C4C28FBE",
-    "image_url_id": "",
+    "image_url_id": "1638",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -928,7 +928,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C6214782-1B5F-4011-9E84-8A5D5B74D520",
-    "image_url_id": "",
+    "image_url_id": "4686",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -952,7 +952,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CB408A05-CA4D-46D6-94E7-7CDD6268EEFA",
-    "image_url_id": "",
+    "image_url_id": "1966",
     "value": 0.83,
     "is_limited": false,
     "is_stackable": true,
@@ -964,7 +964,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CE9231F3-8745-4E79-A0CE-B88CFB701862",
-    "image_url_id": "",
+    "image_url_id": "1951",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -976,7 +976,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D3015061-DFDD-4A83-81A9-6516B3B2ED63",
-    "image_url_id": "",
+    "image_url_id": "4654",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -988,7 +988,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DAC558F9-5840-4240-B7F2-D3201D675EA4",
-    "image_url_id": "",
+    "image_url_id": "1539",
     "value": 1.05,
     "is_limited": false,
     "is_stackable": true,
@@ -1000,7 +1000,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E223EB20-9279-4349-9CA1-4278920E7AC3",
-    "image_url_id": "",
+    "image_url_id": "6633",
     "value": 0.13,
     "is_limited": false,
     "is_stackable": true,
@@ -1012,7 +1012,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E5C1CAB0-0F34-4680-B705-3B54D9AA6AB1",
-    "image_url_id": "",
+    "image_url_id": "1544",
     "value": 0.25,
     "is_limited": false,
     "is_stackable": true,
@@ -1024,7 +1024,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "EFE299B3-A8BD-481A-96D8-835B3E11A5C5",
-    "image_url_id": "",
+    "image_url_id": "1542",
     "value": 0.18,
     "is_limited": false,
     "is_stackable": true,
@@ -1036,7 +1036,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F0BEEEED-435C-418B-BA16-CB75149F37EA",
-    "image_url_id": "",
+    "image_url_id": "3735",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -1048,7 +1048,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F42D0199-0BF6-4B68-82AD-9E65E00A4F79",
-    "image_url_id": "",
+    "image_url_id": "2844",
     "value": 1.8,
     "is_limited": false,
     "is_stackable": true,
@@ -1060,7 +1060,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F962CB8B-3C1C-496C-9407-774DDE6E17EF",
-    "image_url_id": "",
+    "image_url_id": "1543",
     "value": 0.17,
     "is_limited": false,
     "is_stackable": true,
@@ -1072,7 +1072,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FA12D746-3303-47E0-BBE5-A86A4DD9E8A1",
-    "image_url_id": "",
+    "image_url_id": "5610",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -1084,7 +1084,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FAFCC069-2E51-41FE-B831-476E1CA03C70",
-    "image_url_id": "",
+    "image_url_id": "4657",
     "value": 0.17,
     "is_limited": false,
     "is_stackable": true,
@@ -1096,7 +1096,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FF09B1FD-1A37-4B99-91CE-9DB264BCC868",
-    "image_url_id": "",
+    "image_url_id": "5499",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -1108,7 +1108,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "060A7793-A5A3-4FD6-90F6-981FD0A46A03",
-    "image_url_id": "",
+    "image_url_id": "1967",
     "value": 2.49,
     "is_limited": false,
     "is_stackable": true,
@@ -1120,7 +1120,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "068243F2-2551-46E6-A33F-E343985A5028",
-    "image_url_id": "",
+    "image_url_id": "1521",
     "value": 0.66,
     "is_limited": false,
     "is_stackable": true,
@@ -1132,7 +1132,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "073B21A4-A51E-4D10-A255-0C7F133012B9",
-    "image_url_id": "",
+    "image_url_id": "2846",
     "value": 6.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1144,7 +1144,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0BB2C5EB-2D45-40A9-A33B-47DB47B8F85A",
-    "image_url_id": "",
+    "image_url_id": "1519",
     "value": 16.8,
     "is_limited": false,
     "is_stackable": true,
@@ -1156,7 +1156,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1631AF74-6832-493B-AC35-18213100C543",
-    "image_url_id": "",
+    "image_url_id": "1909",
     "value": 12,
     "is_limited": false,
     "is_stackable": true,
@@ -1168,7 +1168,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
-    "image_url_id": "",
+    "image_url_id": "1514",
     "value": 0.75,
     "is_limited": false,
     "is_stackable": true,
@@ -1180,7 +1180,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1A0B8CE1-3704-42CD-914D-059B1635ACFA",
-    "image_url_id": "",
+    "image_url_id": "5712",
     "value": 8.09,
     "is_limited": false,
     "is_stackable": true,
@@ -1204,7 +1204,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "228423E6-D4B6-4EE6-A2A1-70F1F3669C31",
-    "image_url_id": "",
+    "image_url_id": "1504",
     "value": 0.51,
     "is_limited": false,
     "is_stackable": true,
@@ -1216,7 +1216,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "231CE41A-EBC0-472C-842F-3ACB56A6C1CB",
-    "image_url_id": "",
+    "image_url_id": "6644",
     "value": 0.52,
     "is_limited": false,
     "is_stackable": true,
@@ -1228,7 +1228,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "247413A0-1CA1-43FA-88EF-BA33CD3E03E3",
-    "image_url_id": "",
+    "image_url_id": "1517",
     "value": 0.39,
     "is_limited": false,
     "is_stackable": true,
@@ -1240,7 +1240,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "25F76211-8FC6-4E7A-B27B-B527E35F1C3A",
-    "image_url_id": "",
+    "image_url_id": "5711",
     "value": 2.001,
     "is_limited": false,
     "is_stackable": true,
@@ -1252,7 +1252,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "28296B31-E178-4AD8-8943-41590BAE11AC",
-    "image_url_id": "",
+    "image_url_id": "4636",
     "value": 0.18,
     "is_limited": false,
     "is_stackable": true,
@@ -1264,7 +1264,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2B897E98-2235-4227-ACE4-D429BD172A7A",
-    "image_url_id": "",
+    "image_url_id": "1503",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -1276,7 +1276,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2CA9B999-905E-4D47-BFC8-A63132C1EC12",
-    "image_url_id": "",
+    "image_url_id": "1528",
     "value": 1.8,
     "is_limited": false,
     "is_stackable": true,
@@ -1288,7 +1288,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2E825F3E-78C0-4EEF-9149-EF34971387AD",
-    "image_url_id": "",
+    "image_url_id": "1523",
     "value": 3.15,
     "is_limited": false,
     "is_stackable": true,
@@ -1300,7 +1300,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3022DAF3-2D71-48F9-A156-8DCB01BB05F0",
-    "image_url_id": "",
+    "image_url_id": "1518",
     "value": 7.5,
     "is_limited": false,
     "is_stackable": true,
@@ -1312,7 +1312,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3778025B-B6F8-4309-9254-13D7C7029E95",
-    "image_url_id": "",
+    "image_url_id": "5461",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -1324,7 +1324,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "39E70583-067C-4459-BFD4-1C50DB0A9BF0",
-    "image_url_id": "",
+    "image_url_id": "1525",
     "value": 0.24,
     "is_limited": false,
     "is_stackable": true,
@@ -1336,7 +1336,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3E0B9FC3-0DB8-42FD-A3A1-5E6DCC0A31BB",
-    "image_url_id": "",
+    "image_url_id": "1526",
     "value": 1.95,
     "is_limited": false,
     "is_stackable": true,
@@ -1348,7 +1348,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3F3A2A21-FA95-4802-A5DC-333C6784EB94",
-    "image_url_id": "",
+    "image_url_id": "1529",
     "value": 4.5,
     "is_limited": false,
     "is_stackable": true,
@@ -1360,7 +1360,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "406BA548-7F2D-49BC-B62A-9FFC05305053",
-    "image_url_id": "",
+    "image_url_id": "1501",
     "value": 3.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1372,7 +1372,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4098004F-3540-47D1-B732-DE933BCA79AF",
-    "image_url_id": "",
+    "image_url_id": "3236",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1384,7 +1384,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "45607222-2EA8-4F25-A1BE-695CB7D56CD6",
-    "image_url_id": "",
+    "image_url_id": "6218",
     "value": 0.21,
     "is_limited": false,
     "is_stackable": true,
@@ -1408,7 +1408,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "459D33D2-816F-4575-8AAE-3A04C5C962CC",
-    "image_url_id": "",
+    "image_url_id": "5977",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1420,7 +1420,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "498338DF-9751-4792-913D-110B87121C98",
-    "image_url_id": "",
+    "image_url_id": "5611",
     "value": 0.45,
     "is_limited": false,
     "is_stackable": true,
@@ -1444,7 +1444,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "51F71C73-3B5B-4387-921E-A785B58DF0E7",
-    "image_url_id": "",
+    "image_url_id": "6634",
     "value": 0.77,
     "is_limited": false,
     "is_stackable": true,
@@ -1456,7 +1456,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "539219E3-4CC3-4DC5-B254-5690C36A606F",
-    "image_url_id": "",
+    "image_url_id": "6038",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -1468,7 +1468,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "53E19DF5-03F2-47D5-A165-5FF324000A5E",
-    "image_url_id": "",
+    "image_url_id": "1506",
     "value": 0.48,
     "is_limited": false,
     "is_stackable": true,
@@ -1480,7 +1480,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "557547E3-DE3E-43F2-97BC-6B7A63AE62A1",
-    "image_url_id": "",
+    "image_url_id": "7977",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -1492,7 +1492,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "59D8B2C8-199D-4DF3-9D01-348929C31D83",
-    "image_url_id": "",
+    "image_url_id": "4098",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -1504,7 +1504,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5AEE49C9-95F7-49AD-8976-846B23F2F6D6",
-    "image_url_id": "",
+    "image_url_id": "1949",
     "value": 0.426,
     "is_limited": false,
     "is_stackable": true,
@@ -1516,7 +1516,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5B3BC2AF-FE58-4531-9BEC-C0623BFE82CE",
-    "image_url_id": "",
+    "image_url_id": "6632",
     "value": 0.65,
     "is_limited": false,
     "is_stackable": true,
@@ -1528,7 +1528,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5E12CECD-8701-4158-BDB9-EBFE7DB33DF9",
-    "image_url_id": "",
+    "image_url_id": "6397",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -1540,7 +1540,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5EAC7A45-FF2C-4365-AC9F-E5299360C2DA",
-    "image_url_id": "",
+    "image_url_id": "5713",
     "value": 6.3625,
     "is_limited": false,
     "is_stackable": true,
@@ -1552,7 +1552,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5FCF47E8-FA8A-444E-92A5-4DE8A6923AAB",
-    "image_url_id": "",
+    "image_url_id": "7756",
     "value": 1.5,
     "is_limited": false,
     "is_stackable": true,
@@ -1564,7 +1564,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "611AA541-CD29-465E-B5A9-2D3798EA9549",
-    "image_url_id": "",
+    "image_url_id": "4644",
     "value": 0.75,
     "is_limited": false,
     "is_stackable": true,
@@ -1576,7 +1576,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6544954C-4A8C-4AE1-8C33-C745831BC80C",
-    "image_url_id": "",
+    "image_url_id": "7776",
     "value": 0.27,
     "is_limited": false,
     "is_stackable": true,
@@ -1588,7 +1588,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "65F345DB-1343-4404-AB8F-4B06C3B16269",
-    "image_url_id": "",
+    "image_url_id": "1512",
     "value": 0.36,
     "is_limited": false,
     "is_stackable": true,
@@ -1600,7 +1600,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "67A3307D-7248-4945-BDCA-6A1ECBC5F696",
-    "image_url_id": "",
+    "image_url_id": "1509",
     "value": 3.75,
     "is_limited": false,
     "is_stackable": true,
@@ -1612,7 +1612,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6AB04E3E-9E39-48B6-9287-D22ADF359DC4",
-    "image_url_id": "",
+    "image_url_id": "1524",
     "value": 0.54,
     "is_limited": false,
     "is_stackable": true,
@@ -1624,7 +1624,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6AE71662-D4AD-4158-BA75-2AD0E0720E56",
-    "image_url_id": "",
+    "image_url_id": "4635",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -1636,7 +1636,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6B954C90-A027-477B-B950-5D2930B4E2CF",
-    "image_url_id": "",
+    "image_url_id": "1505",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1648,7 +1648,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6D6FCA0C-6D81-422D-81A4-764B41AFEF2D",
-    "image_url_id": "",
+    "image_url_id": "4092",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -1660,7 +1660,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7022345A-9496-4DBA-855C-3D143C7F3536",
-    "image_url_id": "",
+    "image_url_id": "1515",
     "value": 3,
     "is_limited": false,
     "is_stackable": true,
@@ -1672,7 +1672,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "77337411-85A0-41CB-97F4-E197BBF9C48C",
-    "image_url_id": "",
+    "image_url_id": "1513",
     "value": 0.36,
     "is_limited": false,
     "is_stackable": true,
@@ -1684,7 +1684,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "784C383A-CB68-47E4-ADDD-1FF48D84325C",
-    "image_url_id": "",
+    "image_url_id": "5976",
     "value": 0.9,
     "is_limited": false,
     "is_stackable": true,
@@ -1696,7 +1696,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7C3A0EC5-3FAF-4C33-97A4-9EFFBC763EE9",
-    "image_url_id": "",
+    "image_url_id": "1527",
     "value": 5.37,
     "is_limited": false,
     "is_stackable": true,
@@ -1708,7 +1708,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "810A7791-5EA0-4989-9FE5-E2C9247382D0",
-    "image_url_id": "",
+    "image_url_id": "1520",
     "value": 2.7,
     "is_limited": false,
     "is_stackable": true,
@@ -1720,7 +1720,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "88E50467-C0B5-4E15-827A-D954086C9D91",
-    "image_url_id": "",
+    "image_url_id": "1507",
     "value": 0.45,
     "is_limited": false,
     "is_stackable": true,
@@ -1732,7 +1732,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8905EF01-5475-4B54-8BFA-57FE3825DE80",
-    "image_url_id": "",
+    "image_url_id": "4641",
     "value": 0.42,
     "is_limited": false,
     "is_stackable": true,
@@ -1744,7 +1744,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8BCE90F3-9296-496F-98ED-A5458B4375A0",
-    "image_url_id": "",
+    "image_url_id": "6005",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -1756,7 +1756,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8BE3D162-7DDB-4C4D-82DC-B750A992CBC0",
-    "image_url_id": "",
+    "image_url_id": "2309",
     "value": 6,
     "is_limited": false,
     "is_stackable": true,
@@ -1768,7 +1768,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8F13AC45-E28D-497C-8E3C-8EF5D2F7A260",
-    "image_url_id": "",
+    "image_url_id": "5713",
     "value": 14.7353,
     "is_limited": false,
     "is_stackable": true,
@@ -1780,7 +1780,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "932D7A3F-603A-4A87-BA3B-45D99B3D3CAD",
-    "image_url_id": "",
+    "image_url_id": "4093",
     "value": 0.18,
     "is_limited": false,
     "is_stackable": true,
@@ -1792,7 +1792,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9395F3F0-A8A0-43C7-A1EF-6BDD2A009A63",
-    "image_url_id": "",
+    "image_url_id": "1531",
     "value": 18,
     "is_limited": false,
     "is_stackable": true,
@@ -1804,7 +1804,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "968240F9-706D-4FA0-AB07-CBF27600E547",
-    "image_url_id": "",
+    "image_url_id": "6401",
     "value": 0.75,
     "is_limited": false,
     "is_stackable": true,
@@ -1816,7 +1816,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "989EC0C3-E9F2-4C99-BEDB-6A2454B0D449",
-    "image_url_id": "",
+    "image_url_id": "1511",
     "value": 1.2,
     "is_limited": false,
     "is_stackable": true,
@@ -1828,7 +1828,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9CA6C4A3-A47B-4BD6-B174-D36408C57840",
-    "image_url_id": "",
+    "image_url_id": "5987",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -1840,7 +1840,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9D80404E-23D2-4F6B-A88E-04112090B098",
-    "image_url_id": "",
+    "image_url_id": "4640",
     "value": 1.5,
     "is_limited": false,
     "is_stackable": true,
@@ -1852,7 +1852,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9DEB8C35-9672-49D8-8948-D602B31498B1",
-    "image_url_id": "",
+    "image_url_id": "8038",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -1864,7 +1864,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A211F9EB-DDB4-4B6D-A3E6-DAFE2B524B14",
-    "image_url_id": "",
+    "image_url_id": "4638",
     "value": 1.95,
     "is_limited": false,
     "is_stackable": true,
@@ -1876,7 +1876,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A498AAFB-8816-45C0-A3FB-8A21DBE80DFD",
-    "image_url_id": "",
+    "image_url_id": "1908",
     "value": 9,
     "is_limited": false,
     "is_stackable": true,
@@ -1888,7 +1888,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A7155EA8-FC54-48AE-A59A-2091F9CB5D45",
-    "image_url_id": "",
+    "image_url_id": "7783",
     "value": 0.9,
     "is_limited": false,
     "is_stackable": true,
@@ -1900,7 +1900,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A80C74C4-DD21-428D-84E3-216CB95BACFA",
-    "image_url_id": "",
+    "image_url_id": "6189",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -1912,7 +1912,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AA89AB4C-FC51-4E97-9C3A-0175EF7368F8",
-    "image_url_id": "",
+    "image_url_id": "1731",
     "value": 1.8,
     "is_limited": false,
     "is_stackable": true,
@@ -1924,7 +1924,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AF9B2E75-87CF-4C34-8F39-1D1E7DFA0943",
-    "image_url_id": "",
+    "image_url_id": "3232",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -1936,7 +1936,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B558F739-2CF6-4192-AD44-38949B0D2BF0",
-    "image_url_id": "",
+    "image_url_id": "4389",
     "value": 0.21,
     "is_limited": false,
     "is_stackable": true,
@@ -1948,7 +1948,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B9D4527F-31B5-4358-9BD3-D5EEC91580FE",
-    "image_url_id": "",
+    "image_url_id": "4639",
     "value": 4.5,
     "is_limited": false,
     "is_stackable": true,
@@ -1960,7 +1960,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BC156242-D925-45CA-AF6B-3ED79A2B061C",
-    "image_url_id": "",
+    "image_url_id": "8042",
     "value": 0.09,
     "is_limited": false,
     "is_stackable": true,
@@ -1972,7 +1972,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BE699706-0DD8-4425-AC7A-E895D2F4A5C1",
-    "image_url_id": "",
+    "image_url_id": "4634",
     "value": 0.51,
     "is_limited": false,
     "is_stackable": true,
@@ -1984,7 +1984,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BED917B2-C893-4388-BF3E-F01D3CB950EC",
-    "image_url_id": "",
+    "image_url_id": "5988",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -1996,7 +1996,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C2CE6D91-5AF4-45E2-AEA0-7847409008FA",
-    "image_url_id": "",
+    "image_url_id": "5709",
     "value": 3.59,
     "is_limited": false,
     "is_stackable": true,
@@ -2008,7 +2008,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C3A0D051-5D22-40CC-8202-3F4DE7F1C071",
-    "image_url_id": "",
+    "image_url_id": "1500",
     "value": 2.85,
     "is_limited": false,
     "is_stackable": true,
@@ -2020,7 +2020,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C648E596-4FD0-4616-833F-F64C35CA1863",
-    "image_url_id": "",
+    "image_url_id": "6179",
     "value": 0.36,
     "is_limited": false,
     "is_stackable": true,
@@ -2044,7 +2044,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CBB34A5B-348B-4C02-90CF-42DD971E075B",
-    "image_url_id": "",
+    "image_url_id": "4095",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -2056,7 +2056,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CBCC68E4-A5F5-46DD-BAA1-0831B1A1347C",
-    "image_url_id": "",
+    "image_url_id": "4642",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -2068,7 +2068,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CDBD2D07-FB6C-4B56-ADC6-8A71674A7FAC",
-    "image_url_id": "",
+    "image_url_id": "4096",
     "value": 0.09,
     "is_limited": false,
     "is_stackable": true,
@@ -2080,7 +2080,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D1B5BB68-8C02-43E0-A6F4-7067FDA4F80D",
-    "image_url_id": "",
+    "image_url_id": "5500",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -2092,7 +2092,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D569765F-15C9-4A3B-87CC-D2D08F6E16F0",
-    "image_url_id": "",
+    "image_url_id": "4094",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -2104,7 +2104,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D5E8AF3D-5734-413C-BFAA-C08F2EBEDEA3",
-    "image_url_id": "",
+    "image_url_id": "1720",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -2116,7 +2116,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D5FAF809-1B4B-4E7F-9042-0533E9F17056",
-    "image_url_id": "",
+    "image_url_id": "1532",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2128,7 +2128,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D85008CD-8B41-407F-8AE3-5228FED5F151",
-    "image_url_id": "",
+    "image_url_id": "5707",
     "value": 2.601,
     "is_limited": false,
     "is_stackable": true,
@@ -2140,7 +2140,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DDDC0572-F8D3-4254-A446-8316C0047087",
-    "image_url_id": "",
+    "image_url_id": "1510",
     "value": 2.4,
     "is_limited": false,
     "is_stackable": true,
@@ -2152,7 +2152,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DEF41526-C01C-49EF-89B4-4692731C5801",
-    "image_url_id": "",
+    "image_url_id": "1530",
     "value": 3.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2164,7 +2164,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DF420A44-2709-4DCC-8217-B4D9A0D3F133",
-    "image_url_id": "",
+    "image_url_id": "1516",
     "value": 2.1,
     "is_limited": false,
     "is_stackable": true,
@@ -2176,7 +2176,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E1EA01AF-33D6-446E-B5E8-19403725ED09",
-    "image_url_id": "",
+    "image_url_id": "2845",
     "value": 5.4,
     "is_limited": false,
     "is_stackable": true,
@@ -2188,7 +2188,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E502B056-C4FA-405F-930F-BC3E96F98FF4",
-    "image_url_id": "",
+    "image_url_id": "4097",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -2200,7 +2200,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E8A9E9DD-3C47-437E-A458-F9C100598295",
-    "image_url_id": "",
+    "image_url_id": "5708",
     "value": 3.4405,
     "is_limited": false,
     "is_stackable": true,
@@ -2212,7 +2212,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E97F492E-8430-4E5C-B1E3-AD582665CF8B",
-    "image_url_id": "",
+    "image_url_id": "4421",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2224,7 +2224,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "EB0CEE6A-D049-487A-AF27-55DA9C0AEC18",
-    "image_url_id": "",
+    "image_url_id": "3050",
     "value": 7.5,
     "is_limited": false,
     "is_stackable": true,
@@ -2236,7 +2236,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "EB0D516B-185D-4891-BA82-0EA36ED9896C",
-    "image_url_id": "",
+    "image_url_id": "4637",
     "value": 0.24,
     "is_limited": false,
     "is_stackable": true,
@@ -2248,7 +2248,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "ED9F9E49-6929-430F-BDAF-F451B282FEC2",
-    "image_url_id": "",
+    "image_url_id": "1502",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -2260,7 +2260,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F6B9B29B-8079-44FB-AC84-4C8245A75E8E",
-    "image_url_id": "",
+    "image_url_id": "4017",
     "value": 0.24,
     "is_limited": false,
     "is_stackable": true,
@@ -2272,7 +2272,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F92D1F64-BD9B-4D22-A18B-0765F75793B3",
-    "image_url_id": "",
+    "image_url_id": "3234",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -2284,7 +2284,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F9A28E31-AA19-419F-B2FD-02C3882EF13C",
-    "image_url_id": "",
+    "image_url_id": "1522",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -2296,7 +2296,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FB6748A6-EB49-4124-8E48-7FED583D5A34",
-    "image_url_id": "",
+    "image_url_id": "6649",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2308,7 +2308,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "03B89D02-D93A-4EEF-A17A-77A5EF46C2FB",
-    "image_url_id": "",
+    "image_url_id": "3203",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2320,7 +2320,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0AB8FE1C-05FC-47FF-9360-BAB8BA283591",
-    "image_url_id": "",
+    "image_url_id": "4293",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -2332,7 +2332,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0EA3DFA7-A97B-454C-B8C8-2EC4EF9EC505",
-    "image_url_id": "",
+    "image_url_id": "707",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -2344,7 +2344,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "108B9D9D-D43E-4B2A-9C1E-B9BC25B87B14",
-    "image_url_id": "",
+    "image_url_id": "706",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -2368,7 +2368,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1E703D83-9848-41D2-9C0E-9CE909F43801",
-    "image_url_id": "",
+    "image_url_id": "1255",
     "value": 0.96,
     "is_limited": false,
     "is_stackable": true,
@@ -2380,7 +2380,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1F355933-9483-4ECC-AC0E-EB7B4642C822",
-    "image_url_id": "",
+    "image_url_id": "6134",
     "value": 0.4,
     "is_limited": false,
     "is_stackable": true,
@@ -2392,7 +2392,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2034EC79-65AF-4914-8973-6A24D8EFE255",
-    "image_url_id": "",
+    "image_url_id": "5597",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -2404,7 +2404,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "25267B5E-386D-44AA-B1D2-054BED2F3EC9",
-    "image_url_id": "",
+    "image_url_id": "3740",
     "value": 0.015,
     "is_limited": false,
     "is_stackable": true,
@@ -2416,7 +2416,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2AB88B6A-A374-4DEF-AFCF-621C3EC23D5E",
-    "image_url_id": "",
+    "image_url_id": "4425",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -2428,7 +2428,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "319AD745-AE09-4AE3-8060-31DBE5FEB938",
-    "image_url_id": "",
+    "image_url_id": "699",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -2440,7 +2440,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3232A92B-AD28-42F6-AC4F-11613CAB525E",
-    "image_url_id": "",
+    "image_url_id": "949",
     "value": 0.19,
     "is_limited": false,
     "is_stackable": true,
@@ -2452,7 +2452,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "33866F8B-0651-403B-8E4E-799196B636D4",
-    "image_url_id": "",
+    "image_url_id": "4319",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -2464,7 +2464,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "34E67746-E72C-4456-AE7C-5994E6BE37D6",
-    "image_url_id": "",
+    "image_url_id": "1258",
     "value": 0.47,
     "is_limited": false,
     "is_stackable": true,
@@ -2476,7 +2476,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "35CC1CCF-CD1B-4B68-9AFA-6D3097ED1A0E",
-    "image_url_id": "",
+    "image_url_id": "6281",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -2488,7 +2488,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "37EA2DB8-353D-4490-896B-062593639384",
-    "image_url_id": "",
+    "image_url_id": "3995",
     "value": 0.07,
     "is_limited": false,
     "is_stackable": true,
@@ -2500,7 +2500,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "399996C0-7E17-4E26-9D90-91C306010978",
-    "image_url_id": "",
+    "image_url_id": "5981",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -2512,7 +2512,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4869453D-73C1-40FD-B653-2509D8078650",
-    "image_url_id": "",
+    "image_url_id": "4000",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -2524,7 +2524,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "496DD63D-4535-437D-80EE-90F5A571A806",
-    "image_url_id": "",
+    "image_url_id": "1820",
     "value": 0.09,
     "is_limited": false,
     "is_stackable": true,
@@ -2536,7 +2536,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "49E93EB1-E798-4D3A-822F-52B61ABA74F5",
-    "image_url_id": "",
+    "image_url_id": "4677",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -2548,7 +2548,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "49ED5722-86D9-4358-B59D-77AAEE5617AB",
-    "image_url_id": "",
+    "image_url_id": "4390",
     "value": 0.075,
     "is_limited": false,
     "is_stackable": true,
@@ -2560,7 +2560,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4A7DF8E9-10C6-4D53-A79D-E41F83614ECD",
-    "image_url_id": "",
+    "image_url_id": "4351",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -2572,7 +2572,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4B3C08DD-7FF1-429A-9F7E-B20448F6DF2B",
-    "image_url_id": "",
+    "image_url_id": "4396",
     "value": 0.085,
     "is_limited": false,
     "is_stackable": true,
@@ -2584,7 +2584,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4E1A37DD-8ED4-4EDB-8913-32CD0C5FE759",
-    "image_url_id": "",
+    "image_url_id": "4627",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -2596,7 +2596,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5423C7F1-3965-41BE-BC7B-F64C50855EA7",
-    "image_url_id": "",
+    "image_url_id": "6191",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -2608,7 +2608,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "54D911B3-1296-402D-BBCC-C75847EBD04A",
-    "image_url_id": "",
+    "image_url_id": "3202",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2620,7 +2620,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5C56FA9F-308D-4C36-BD7F-3055322769CC",
-    "image_url_id": "",
+    "image_url_id": "4684",
     "value": 0.39,
     "is_limited": false,
     "is_stackable": true,
@@ -2632,7 +2632,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5E590D43-8ECE-48B7-9891-F45507FC8E1B",
-    "image_url_id": "",
+    "image_url_id": "4628",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -2644,7 +2644,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "63694005-C499-4167-B9C3-4B9BA11E5D96",
-    "image_url_id": "",
+    "image_url_id": "1254",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -2656,7 +2656,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "63A4CEA0-D79E-49E0-8C5F-6B4BD4EA489D",
-    "image_url_id": "",
+    "image_url_id": "1965",
     "value": 1,
     "is_limited": false,
     "is_stackable": true,
@@ -2668,7 +2668,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6D03C132-F9FF-4E09-8EA9-125FFB73D87A",
-    "image_url_id": "",
+    "image_url_id": "4675",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -2680,7 +2680,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6DA65536-6BBC-444D-8A1F-E26CFB761BBA",
-    "image_url_id": "",
+    "image_url_id": "2697",
     "value": 0.63,
     "is_limited": false,
     "is_stackable": true,
@@ -2692,7 +2692,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6F3DA4F6-172C-435B-BD08-524985AEF9D8",
-    "image_url_id": "",
+    "image_url_id": "4625",
     "value": 0.27,
     "is_limited": false,
     "is_stackable": true,
@@ -2704,7 +2704,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7390CDC8-E582-4A75-8C98-C749B4FCF921",
-    "image_url_id": "",
+    "image_url_id": "395",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2716,7 +2716,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "79957C0A-8CFD-4F57-BCC2-4FEF5CD7DCB2",
-    "image_url_id": "",
+    "image_url_id": "1270",
     "value": 0.39,
     "is_limited": false,
     "is_stackable": true,
@@ -2728,7 +2728,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7A07DE34-6791-496C-A042-94F3153B68A3",
-    "image_url_id": "",
+    "image_url_id": "708",
     "value": 0.26,
     "is_limited": false,
     "is_stackable": true,
@@ -2740,7 +2740,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7AA2B355-AE91-40E1-9DC0-C446F8B2CF67",
-    "image_url_id": "",
+    "image_url_id": "3738",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2752,7 +2752,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7D80D9DA-E18F-4589-8B4C-BAAFB6BE14A1",
-    "image_url_id": "",
+    "image_url_id": "4646",
     "value": 0.13,
     "is_limited": false,
     "is_stackable": true,
@@ -2764,7 +2764,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7E5312ED-E805-42F5-9113-3FFA1A4CCFF4",
-    "image_url_id": "",
+    "image_url_id": "368",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -2776,7 +2776,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8024B192-17FC-4DB2-835B-625000EBB561",
-    "image_url_id": "",
+    "image_url_id": "4647",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -2788,7 +2788,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "80F1B5EC-488B-4B8D-A759-C119374A56D1",
-    "image_url_id": "",
+    "image_url_id": "4629",
     "value": 0.25,
     "is_limited": false,
     "is_stackable": true,
@@ -2800,7 +2800,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8995639F-8E2B-463D-9998-D5AD6A928FCA",
-    "image_url_id": "",
+    "image_url_id": "525",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2812,7 +2812,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8CA70C9A-1EBD-4F0E-A719-750E4A04D46D",
-    "image_url_id": "",
+    "image_url_id": "5883",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2824,7 +2824,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8E297297-0D23-44DC-B7F6-309F934A07C2",
-    "image_url_id": "",
+    "image_url_id": "6255",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -2836,7 +2836,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9033E982-18A4-4ABD-8968-6FD2783AC7F1",
-    "image_url_id": "",
+    "image_url_id": "6173",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -2848,7 +2848,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "915A8A68-F689-4386-8B2D-D19BC21EB884",
-    "image_url_id": "",
+    "image_url_id": "1729",
     "value": 0.47,
     "is_limited": false,
     "is_stackable": true,
@@ -2872,7 +2872,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "9BB98621-8E0C-4F2D-8CB8-822A39E6FED7",
-    "image_url_id": "",
+    "image_url_id": "5982",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -2884,7 +2884,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A9CAE7CA-E19E-4C92-9FBF-9EF39F4AD1D2",
-    "image_url_id": "",
+    "image_url_id": "6227",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2896,7 +2896,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AAA1E043-CBDE-469E-9BAD-DD87C531126B",
-    "image_url_id": "",
+    "image_url_id": "4655",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -2908,7 +2908,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B7B2102E-6805-458D-BB1D-6F26E4184916",
-    "image_url_id": "",
+    "image_url_id": "5462",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2920,7 +2920,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BA8AC4F9-2D9B-4D75-A767-8AC9120131CF",
-    "image_url_id": "",
+    "image_url_id": "7983",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2932,7 +2932,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BAF5A32F-0CED-49F6-8FD8-241BBEDC6A53",
-    "image_url_id": "",
+    "image_url_id": "8039",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -2944,7 +2944,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BB15856C-EEF3-4433-AD80-66E9756E9F58",
-    "image_url_id": "",
+    "image_url_id": "2307",
     "value": 0.4,
     "is_limited": false,
     "is_stackable": true,
@@ -2956,7 +2956,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BC62C95D-1B50-4917-800E-BC81FA38615B",
-    "image_url_id": "",
+    "image_url_id": "1271",
     "value": 0.32,
     "is_limited": false,
     "is_stackable": true,
@@ -2968,7 +2968,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BEB4D76B-CCB0-427C-9ED3-0284893D3C46",
-    "image_url_id": "",
+    "image_url_id": "6271",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -2980,7 +2980,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C44F97A4-8A32-4831-8018-FB882BA5F8BE",
-    "image_url_id": "",
+    "image_url_id": "372",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -2992,7 +2992,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "C964F05F-5187-4101-A62E-6564CA9E03D3",
-    "image_url_id": "",
+    "image_url_id": "3741",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3004,7 +3004,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "CDDA8327-3249-49E6-B76C-F36CA76C1E53",
-    "image_url_id": "",
+    "image_url_id": "1900",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -3016,7 +3016,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D336DB79-4DF7-4D17-AE07-375D2E922473",
-    "image_url_id": "",
+    "image_url_id": "3742",
     "value": 0.025,
     "is_limited": false,
     "is_stackable": true,
@@ -3028,7 +3028,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D7E828E6-5D80-45D9-AFDC-A94FD2555B6F",
-    "image_url_id": "",
+    "image_url_id": "6342",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3040,7 +3040,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DDB6D78E-67A6-4B0C-8F80-3003F3B33F08",
-    "image_url_id": "",
+    "image_url_id": "3230",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -3052,7 +3052,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DED6ABFE-1F78-437B-9613-4A70EA6EE40D",
-    "image_url_id": "",
+    "image_url_id": "1488",
     "value": 0.42,
     "is_limited": false,
     "is_stackable": true,
@@ -3064,7 +3064,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E1494CC9-D8AA-45C4-9C8F-3CAFF4CA92B2",
-    "image_url_id": "",
+    "image_url_id": "6412",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -3076,7 +3076,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E567C496-8F7E-42AA-B635-45D6BCEAE911",
-    "image_url_id": "",
+    "image_url_id": "6132",
     "value": 0.16,
     "is_limited": false,
     "is_stackable": true,
@@ -3088,7 +3088,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E84A5242-C7AC-4A47-BA82-91B7B3BAD34C",
-    "image_url_id": "",
+    "image_url_id": "5477",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -3100,7 +3100,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "EF04ACF6-9E49-4AB7-97F5-C5E283CE7249",
-    "image_url_id": "",
+    "image_url_id": "2044",
     "value": 0.78,
     "is_limited": false,
     "is_stackable": true,
@@ -3112,7 +3112,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F0D22C44-8552-4EEE-AD42-318FE13BBB5B",
-    "image_url_id": "",
+    "image_url_id": "3526",
     "value": 0.55,
     "is_limited": false,
     "is_stackable": true,
@@ -3124,7 +3124,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FB0BEBAC-5822-4EAB-B94B-4FD799463687",
-    "image_url_id": "",
+    "image_url_id": "1392",
     "value": 0.75,
     "is_limited": false,
     "is_stackable": true,
@@ -3136,7 +3136,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "FE2A906A-E33D-4B9C-AC3F-174EB285E2F0",
-    "image_url_id": "",
+    "image_url_id": "526",
     "value": 0.25,
     "is_limited": false,
     "is_stackable": true,
@@ -3148,7 +3148,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "04345FE3-365B-4F83-823A-0B065961C54D",
-    "image_url_id": "",
+    "image_url_id": "6260",
     "value": 0.17,
     "is_limited": false,
     "is_stackable": true,
@@ -3160,7 +3160,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "068C9188-821C-4E74-9A54-F6C03C07333F",
-    "image_url_id": "",
+    "image_url_id": "1904",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3196,7 +3196,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "0B085800-5BEC-44C1-9E61-784346EAE3F7",
-    "image_url_id": "",
+    "image_url_id": "3204",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -3220,7 +3220,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1671D506-2572-4B0F-9492-F43F90091A3E",
-    "image_url_id": "",
+    "image_url_id": "1656",
     "value": 1.1,
     "is_limited": false,
     "is_stackable": true,
@@ -3232,7 +3232,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1A9C2D04-64B1-4213-A43C-79E05DF90274",
-    "image_url_id": "",
+    "image_url_id": "4648",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -3244,7 +3244,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "1E3B388B-E58A-450B-AB0A-C8DC8AA76161",
-    "image_url_id": "",
+    "image_url_id": "6222",
     "value": 0.14,
     "is_limited": false,
     "is_stackable": true,
@@ -3256,7 +3256,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2822B98F-6CF7-402B-9DCE-C99D554993F6",
-    "image_url_id": "",
+    "image_url_id": "4655",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3268,7 +3268,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "2DB32016-24BE-41BE-8F90-3502F4912A58",
-    "image_url_id": "",
+    "image_url_id": "4020",
     "value": 0.05,
     "is_limited": false,
     "is_stackable": true,
@@ -3280,7 +3280,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "31E5BC77-F0A9-4415-88AF-1738F439876B",
-    "image_url_id": "",
+    "image_url_id": "1902",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3292,7 +3292,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "39BB4371-D4E7-4080-B12B-8F5415EE027C",
-    "image_url_id": "",
+    "image_url_id": "5710",
     "value": 4.24,
     "is_limited": false,
     "is_stackable": true,
@@ -3304,7 +3304,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3AEA510E-4416-4EC2-8C5B-DB1CFC5BD9AC",
-    "image_url_id": "",
+    "image_url_id": "6190",
     "value": 0.16,
     "is_limited": false,
     "is_stackable": true,
@@ -3316,7 +3316,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "3D869176-06A5-4399-B37F-82E229E1522E",
-    "image_url_id": "",
+    "image_url_id": "1660",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -3328,7 +3328,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "42963146-5158-4666-8EE8-A71925481958",
-    "image_url_id": "",
+    "image_url_id": "1662",
     "value": 0.3,
     "is_limited": false,
     "is_stackable": true,
@@ -3340,7 +3340,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "45D00F11-6461-4ADB-8A58-4CE8A7A066C7",
-    "image_url_id": "",
+    "image_url_id": "1901",
     "value": 0.8,
     "is_limited": false,
     "is_stackable": true,
@@ -3352,7 +3352,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4AEB6789-A763-4818-9A01-1E5AF5E3B9EE",
-    "image_url_id": "",
+    "image_url_id": "4651",
     "value": 0.26,
     "is_limited": false,
     "is_stackable": true,
@@ -3376,7 +3376,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4E4F11B9-FCE3-4122-9505-EEFFBB49C2C4",
-    "image_url_id": "",
+    "image_url_id": "371",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3388,7 +3388,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "4F0ED61A-ADD3-4342-84ED-A26D6F93ABF1",
-    "image_url_id": "",
+    "image_url_id": "7211",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3412,7 +3412,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "54297389-8B7C-46F7-B51C-E3EC767878B6",
-    "image_url_id": "",
+    "image_url_id": "1252",
     "value": 1.92,
     "is_limited": false,
     "is_stackable": true,
@@ -3424,7 +3424,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "54314990-48E6-4B2F-89DE-5828803BD828",
-    "image_url_id": "",
+    "image_url_id": "4170",
     "value": 0.03,
     "is_limited": false,
     "is_stackable": true,
@@ -3436,7 +3436,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5630DB11-34E0-4B1A-B633-A7087B884AB3",
-    "image_url_id": "",
+    "image_url_id": "6228",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3448,7 +3448,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5AA9B3A7-9B85-46E7-9D0F-4C980B996089",
-    "image_url_id": "",
+    "image_url_id": "6321",
     "value": 0.15,
     "is_limited": false,
     "is_stackable": true,
@@ -3460,7 +3460,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5E0842B2-BE93-478B-ABA9-21D1D4E4E66D",
-    "image_url_id": "",
+    "image_url_id": "1227",
     "value": 0.2,
     "is_limited": false,
     "is_stackable": true,
@@ -3484,7 +3484,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "5FD0DE31-33A5-49F1-86D9-4E9C5945335A",
-    "image_url_id": "",
+    "image_url_id": "1819",
     "value": 0.18,
     "is_limited": false,
     "is_stackable": true,
@@ -3496,7 +3496,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "604EFB1A-8EBA-4431-BD57-78CDF798DB42",
-    "image_url_id": "",
+    "image_url_id": "4626",
     "value": 0.4,
     "is_limited": false,
     "is_stackable": true,
@@ -3508,7 +3508,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6694CCAB-9436-4601-AE80-748BC106A8CA",
-    "image_url_id": "",
+    "image_url_id": "4426",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3520,7 +3520,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "676CFDAF-DE91-4157-A085-C3237E90C9AF",
-    "image_url_id": "",
+    "image_url_id": "4653",
     "value": 1,
     "is_limited": false,
     "is_stackable": true,
@@ -3532,7 +3532,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "69AC0300-9336-4B13-8F6A-1C8FFFF6D993",
-    "image_url_id": "",
+    "image_url_id": "1657",
     "value": 0.47,
     "is_limited": false,
     "is_stackable": true,
@@ -3544,7 +3544,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6C7B421B-766D-42C0-BD47-0FFEE94758BC",
-    "image_url_id": "",
+    "image_url_id": "3205",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -3556,7 +3556,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "6DB46272-9508-475F-A50B-A182CE815E08",
-    "image_url_id": "",
+    "image_url_id": "4430",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -3568,7 +3568,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "700D4388-38B8-4D63-8D54-1F25FB8E111E",
-    "image_url_id": "",
+    "image_url_id": "4171",
     "value": 0.04,
     "is_limited": false,
     "is_stackable": true,
@@ -3580,7 +3580,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "74DAE58F-1612-4B69-AD88-BF9DC15F8C6E",
-    "image_url_id": "",
+    "image_url_id": "8040",
     "value": 0.12,
     "is_limited": false,
     "is_stackable": true,
@@ -3592,7 +3592,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "76AD9387-3FBB-4D3B-831F-E51069D79F53",
-    "image_url_id": "",
+    "image_url_id": "4019",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3616,7 +3616,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7B9A816A-55A8-426F-A912-E0CF7D442AB4",
-    "image_url_id": "",
+    "image_url_id": "5463",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3628,7 +3628,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "7CF22A88-8B6B-48A1-8E76-5F6F68526F60",
-    "image_url_id": "",
+    "image_url_id": "4656",
     "value": 0.78,
     "is_limited": false,
     "is_stackable": true,
@@ -3640,7 +3640,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "804492ED-4C5D-4665-8D03-3D8D045587F3",
-    "image_url_id": "",
+    "image_url_id": "4649",
     "value": 0.16,
     "is_limited": false,
     "is_stackable": true,
@@ -3652,7 +3652,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "80E65225-F713-4E15-894C-6D716A9B285C",
-    "image_url_id": "",
+    "image_url_id": "364",
     "value": 1,
     "is_limited": false,
     "is_stackable": true,
@@ -3664,7 +3664,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "83370024-706A-4D90-96C0-BCA1AD285C0B",
-    "image_url_id": "",
+    "image_url_id": "8032",
     "value": 0.02,
     "is_limited": false,
     "is_stackable": true,
@@ -3676,7 +3676,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "881DD354-E2F0-4F45-A58B-57D0AAF376F1",
-    "image_url_id": "",
+    "image_url_id": "5476",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -3688,7 +3688,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8E73CFA4-B01F-43AE-9006-F523E0FEB932",
-    "image_url_id": "",
+    "image_url_id": "6172",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
@@ -3700,7 +3700,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8ED5BDEA-4B2D-4475-93EA-A3CF656647D4",
-    "image_url_id": "",
+    "image_url_id": "6021",
     "value": 0.8,
     "is_limited": false,
     "is_stackable": true,
@@ -3712,7 +3712,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "8F63BB56-4C0E-4172-9628-1FD0CC8D9C09",
-    "image_url_id": "",
+    "image_url_id": "8033",
     "value": 0.021,
     "is_limited": false,
     "is_stackable": true,
@@ -3724,7 +3724,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "940C1BF1-56DB-42E5-900E-929D16E85891",
-    "image_url_id": "",
+    "image_url_id": "6272",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -3748,7 +3748,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A0B326B3-E0F8-4B20-9A4D-D6558BDA597A",
-    "image_url_id": "",
+    "image_url_id": "2693",
     "value": 1.26,
     "is_limited": false,
     "is_stackable": true,
@@ -3760,7 +3760,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A272505B-AA2E-4479-B47C-588AE86EDE99",
-    "image_url_id": "",
+    "image_url_id": "6341",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -3772,7 +3772,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A372CAAF-0030-493F-BE46-5AA3D5193C6B",
-    "image_url_id": "",
+    "image_url_id": "1275",
     "value": 1.56,
     "is_limited": false,
     "is_stackable": true,
@@ -3784,7 +3784,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A3D03363-7C95-4586-9449-DC3AFC6772CB",
-    "image_url_id": "",
+    "image_url_id": "1277",
     "value": 0.78,
     "is_limited": false,
     "is_stackable": true,
@@ -3796,7 +3796,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A59B30CE-743E-405F-B9AF-72F8CEF86E77",
-    "image_url_id": "",
+    "image_url_id": "6282",
     "value": 0.01,
     "is_limited": false,
     "is_stackable": true,
@@ -3808,7 +3808,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "A91CA5E9-EE02-4453-92C1-3A836FF9F10E",
-    "image_url_id": "",
+    "image_url_id": "6152",
     "value": 0.16,
     "is_limited": false,
     "is_stackable": true,
@@ -3820,7 +3820,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AE9550E3-253D-45D5-9EE0-49516F56A2C2",
-    "image_url_id": "",
+    "image_url_id": "4624",
     "value": 0.54,
     "is_limited": false,
     "is_stackable": true,
@@ -3832,7 +3832,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "AEB8CB99-D0D6-4A61-AA51-FBDBB523B35E",
-    "image_url_id": "",
+    "image_url_id": "3206",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -3844,7 +3844,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B23D1056-B89E-4050-8D90-7B6C0CB022FF",
-    "image_url_id": "",
+    "image_url_id": "4631",
     "value": 0.08,
     "is_limited": false,
     "is_stackable": true,
@@ -3856,7 +3856,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "B4103CA8-A486-481F-9930-4035CE6AD87C",
-    "image_url_id": "",
+    "image_url_id": "4630",
     "value": 0.5,
     "is_limited": false,
     "is_stackable": true,
@@ -3868,7 +3868,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "BF1C4E7C-35FC-49BB-A87C-F27E4006DBF7",
-    "image_url_id": "",
+    "image_url_id": "1498",
     "value": 0.84,
     "is_limited": false,
     "is_stackable": true,
@@ -3880,7 +3880,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D2A37B8B-17F5-4A30-BF07-C75398D72011",
-    "image_url_id": "",
+    "image_url_id": "6174",
     "value": 0.6,
     "is_limited": false,
     "is_stackable": true,
@@ -3904,7 +3904,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "D928A001-5B14-4185-A79C-BE5BE7BC7601",
-    "image_url_id": "",
+    "image_url_id": "950",
     "value": 0.38,
     "is_limited": false,
     "is_stackable": true,
@@ -3916,7 +3916,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DBE1A9BC-39B7-4139-8DF0-07DB14156978",
-    "image_url_id": "",
+    "image_url_id": "1903",
     "value": 2,
     "is_limited": false,
     "is_stackable": true,
@@ -3928,7 +3928,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "DDC14C9B-BC1D-428A-BF5F-DD58EBB209FC",
-    "image_url_id": "",
+    "image_url_id": "6131",
     "value": 0.32,
     "is_limited": false,
     "is_stackable": true,
@@ -3940,7 +3940,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E1F378FA-2756-4A60-AA88-E667E581FE87",
-    "image_url_id": "",
+    "image_url_id": "1177",
     "value": 1.5,
     "is_limited": false,
     "is_stackable": true,
@@ -3952,7 +3952,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "E25C1B6B-E1E9-4835-A8EF-64DBB093FADF",
-    "image_url_id": "",
+    "image_url_id": "6075",
     "value": 0.06,
     "is_limited": false,
     "is_stackable": true,
@@ -3964,7 +3964,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F1D4CD79-3570-4731-8700-12762DB79BC8",
-    "image_url_id": "",
+    "image_url_id": "1375",
     "value": 0.52,
     "is_limited": false,
     "is_stackable": true,
@@ -3976,7 +3976,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F3514BF5-D79A-4185-B720-985F454560F4",
-    "image_url_id": "",
+    "image_url_id": "5980",
     "value": 0.4,
     "is_limited": false,
     "is_stackable": true,
@@ -3988,7 +3988,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F5A6CCC2-B5D8-4065-B8BE-D145CC30AEF4",
-    "image_url_id": "",
+    "image_url_id": "1276",
     "value": 0.64,
     "is_limited": false,
     "is_stackable": true,
@@ -4000,7 +4000,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F77C5759-5557-47A8-91FD-B5EF8EF06555",
-    "image_url_id": "",
+    "image_url_id": "1730",
     "value": 0.94,
     "is_limited": false,
     "is_stackable": true,
@@ -4012,7 +4012,7 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
   },
   {
     "id": "F85D331F-07D0-4C8B-99C0-F1FC003D67B8",
-    "image_url_id": "",
+    "image_url_id": "1373",
     "value": 0.1,
     "is_limited": false,
     "is_stackable": true,
