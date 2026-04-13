@@ -3,6 +3,34 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { API_PREFIX } from '../../config/routes.js';
 
+const { readFileMock, loadStorageImageIndexMock, buildStorageImageIndexMock, writeStorageImageIndexMock } =
+  vi.hoisted(() => ({
+    readFileMock: vi.fn(),
+    loadStorageImageIndexMock: vi.fn(),
+    buildStorageImageIndexMock: vi.fn(),
+    writeStorageImageIndexMock: vi.fn(),
+  }));
+
+vi.mock('node:fs/promises', async () => {
+  const actual = await vi.importActual<typeof import('node:fs/promises')>('node:fs/promises');
+  return {
+    ...actual,
+    readFile: readFileMock,
+  };
+});
+
+vi.mock('../../lib/storageImageIndex.js', async () => {
+  const actual = await vi.importActual<typeof import('../../lib/storageImageIndex.js')>(
+    '../../lib/storageImageIndex.js'
+  );
+  return {
+    ...actual,
+    loadStorageImageIndex: loadStorageImageIndexMock,
+    buildStorageImageIndex: buildStorageImageIndexMock,
+    writeStorageImageIndex: writeStorageImageIndexMock,
+  };
+});
+
 import manageRoutes from '../manageRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
@@ -11,6 +39,18 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 describe('manageRoutes', () => {
   beforeEach(() => {
     vi.restoreAllMocks();
+    loadStorageImageIndexMock.mockResolvedValue({
+      generatedAt: new Date().toISOString(),
+      micro: { '123': 'materials/123Micro.jpg' },
+      normal: { '123': 'materials/123Normal.jpg' },
+    });
+    readFileMock.mockResolvedValue(Buffer.from('fake-jpeg'));
+    buildStorageImageIndexMock.mockResolvedValue({
+      generatedAt: new Date().toISOString(),
+      micro: { '123': 'materials/123Micro.jpg' },
+      normal: { '123': 'materials/123Normal.jpg' },
+    });
+    writeStorageImageIndexMock.mockResolvedValue(undefined);
   });
 
   function buildApp() {
@@ -62,6 +102,52 @@ describe('manageRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(itemCategories.findMany).toHaveBeenCalledWith(undefined, 'user-1');
+    await app.close();
+  });
+
+  it('GET /api/v1/storage/images/:id/micro returns 400 for invalid image id', async () => {
+    const { app } = buildApp();
+
+    await app.ready();
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/abc/micro` });
+
+    expect(res.statusCode).toBe(400);
+    expect(readFileMock).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('GET /api/v1/storage/images/:id/micro returns 404 when image is missing', async () => {
+    const { app } = buildApp();
+
+    await app.ready();
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/999/micro` });
+
+    expect(res.statusCode).toBe(404);
+    expect(readFileMock).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('GET /api/v1/storage/images/:id/micro returns image/jpeg when found', async () => {
+    const { app } = buildApp();
+
+    await app.ready();
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/123/micro` });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['content-type']).toContain('image/jpeg');
+    expect(readFileMock).toHaveBeenCalledTimes(1);
+    await app.close();
+  });
+
+  it('GET /api/v1/storage/images/:id/normal returns image/jpeg when found', async () => {
+    const { app } = buildApp();
+
+    await app.ready();
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/123/normal` });
+
+    expect(res.statusCode).toBe(200);
+    expect(res.headers['content-type']).toContain('image/jpeg');
+    expect(readFileMock).toHaveBeenCalledTimes(1);
     await app.close();
   });
 
