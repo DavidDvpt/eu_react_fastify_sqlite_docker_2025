@@ -15,16 +15,28 @@ vi.mock("@/modules/manage", async () => {
     CATEGORIES_ROUTE: "http://api.test/categories",
     TYPES_ROUTE: "http://api.test/types",
     ITEMS_ROUTE: "http://api.test/items",
-    getCategories: vi.fn().mockResolvedValue([
-      { id: "cat-1", name: "Material", userId: null },
-      { id: "cat-2", name: "Custom Cat", userId: "user-1" },
-    ]),
-    getTypes: vi.fn().mockResolvedValue([
-      { id: "type-1", name: "Ore", categoryId: "cat-1", userId: null },
-    ]),
-    getItems: vi.fn().mockResolvedValue([
-      { id: "item-1", name: "Oil", itemTypeId: "type-1", value: 10, isLimited: false, userId: null },
-    ]),
+    useCategories: vi.fn(() => ({
+      data: [
+        { id: "cat-1", name: "Material", userId: null },
+        { id: "cat-2", name: "Custom Cat", userId: "user-1" },
+      ],
+      isPending: false,
+      isError: false,
+    })),
+    useTypes: vi.fn(() => ({
+      data: [
+        { id: "type-1", name: "Ore", categoryId: "cat-1", userId: null },
+      ],
+      isPending: false,
+      isError: false,
+    })),
+    useItems: vi.fn(() => ({
+      data: [
+        { id: "item-1", name: "Oil", itemTypeId: "type-1", value: 10, isLimited: false, userId: null },
+      ],
+      isPending: false,
+      isError: false,
+    })),
   };
 });
 
