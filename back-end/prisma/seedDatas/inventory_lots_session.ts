@@ -1,10 +1,5 @@
 import type { Prisma } from '../generated/client.js';
 
-/**
- * Lots existants enrichis avec session_line_id.
- * Mapping: inventory_lot_transactions.transaction_id -> session_line.id
- * (session_line.id = transaction.id pour les lignes IN trade)
- */
 export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
   {
     "id": "02192452-AEE6-4E8E-B3E6-5B191C2A4E10",
@@ -15,8 +10,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "F07825BC-0577-4962-8A1B-243CCDBC1CC4"
+    "is_active": true
   },
   {
     "id": "035EDE3E-2DBE-4377-AAA0-5B0FDB947209",
@@ -27,8 +21,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
     "date_updated": "2025-10-21 13:37:17.716",
-    "is_active": true,
-    "session_line_id": "3D971897-9A7A-442E-94FB-B841C5050632"
+    "is_active": true
   },
   {
     "id": "04B63E54-81C1-4541-AC03-21CFA6845FC4",
@@ -39,8 +32,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.676",
     "date_updated": "2025-10-21 13:37:17.676",
-    "is_active": true,
-    "session_line_id": "7E30A44C-A1F1-4E5D-99D5-633F0DE2C91B"
+    "is_active": true
   },
   {
     "id": "056BDFA6-5CD0-411D-BB73-4B8DB18385E1",
@@ -51,8 +43,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
     "date_updated": "2025-10-21 13:37:17.646",
-    "is_active": true,
-    "session_line_id": "5B753A3C-EF1A-4B30-AA70-F79BBD4A5181"
+    "is_active": true
   },
   {
     "id": "065B9A88-F899-4400-9AC6-6950C2E9ACEB",
@@ -63,8 +54,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.683",
     "date_updated": "2025-10-21 13:37:17.683",
-    "is_active": true,
-    "session_line_id": "BEA8B979-C4EE-42F0-9319-313558FC341F"
+    "is_active": true
   },
   {
     "id": "074A71AA-4782-4B5B-83AB-F3F2C48A3F17",
@@ -75,8 +65,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.636",
     "date_updated": "2025-10-21 13:37:17.636",
-    "is_active": true,
-    "session_line_id": "244A5EBE-3AA8-451F-8205-58EEF5720FFB"
+    "is_active": true
   },
   {
     "id": "085A10BE-F4C6-4821-AACE-F8A4812FE199",
@@ -87,8 +76,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "35512F87-46F9-47B5-91C0-9CCA0EEC771B"
+    "is_active": true
   },
   {
     "id": "0A7F33BC-91C4-45C0-A1DD-B1AFCF54FCE6",
@@ -99,8 +87,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "6A1D4DCD-2A5F-463F-A507-79419DD8D76A"
+    "is_active": true
   },
   {
     "id": "0CE80B67-D8C7-4719-AD7B-4BF4431FB537",
@@ -111,8 +98,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.633",
     "date_updated": "2025-10-21 13:37:17.633",
-    "is_active": true,
-    "session_line_id": "7663B7E5-6DC6-469B-9E21-FD63062F18A8"
+    "is_active": true
   },
   {
     "id": "0E17D651-C65A-40CA-A907-3770C636FF28",
@@ -123,8 +109,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "BB05DE25-603D-4F7F-8090-EEAAED62C76D"
+    "is_active": true
   },
   {
     "id": "0EF8B95F-9207-461D-B783-8686A0233A49",
@@ -135,8 +120,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "E0340D08-1F9B-4472-91CC-89EF94B3C908"
+    "is_active": true
   },
   {
     "id": "1123575E-41A8-410B-80FF-B810BAF10E4D",
@@ -147,8 +131,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "B24FFC00-FC3B-49B6-933D-C2EF23534A4A"
+    "is_active": true
   },
   {
     "id": "11D4CA63-87A2-4AFA-AB95-40AFB936D000",
@@ -159,8 +142,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.676",
     "date_updated": "2025-10-21 13:37:17.676",
-    "is_active": true,
-    "session_line_id": "3E5BCFD9-9E17-4004-889B-B91ADA401DC1"
+    "is_active": true
   },
   {
     "id": "13C0E189-D20B-4A43-AF84-355D8C92A7AC",
@@ -171,8 +153,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "51407BFD-8F59-4141-A939-70F13A613BF4"
+    "is_active": true
   },
   {
     "id": "14F6DC9F-CED4-4334-A925-9DDCF1FCFE6E",
@@ -183,8 +164,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "C5CE02AB-0C41-40E3-A7E4-BDDA73FCD7F5"
+    "is_active": true
   },
   {
     "id": "17DD9348-6E79-4B77-8986-A702F15AA16E",
@@ -195,8 +175,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.683",
     "date_updated": "2025-10-21 13:37:17.683",
-    "is_active": true,
-    "session_line_id": "68869110-CC4D-41F1-B231-FC8B750D8239"
+    "is_active": true
   },
   {
     "id": "18B5C6EA-CB4A-4CF7-8DE4-7E15A6E1A43A",
@@ -207,8 +186,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "65DC3A1B-1583-4A88-8E82-AE930DDA338A"
+    "is_active": true
   },
   {
     "id": "1BDFEC59-1960-470A-AFD4-385756B531EB",
@@ -219,8 +197,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "1B366308-8827-426D-A523-567BBFC8EF11"
+    "is_active": true
   },
   {
     "id": "1CC95847-0276-4E3D-9C71-EB1F583C442C",
@@ -231,8 +208,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "2EA05D8E-5AFD-4515-B63D-AA8CABD0D167"
+    "is_active": true
   },
   {
     "id": "1D67A612-A424-4937-9C18-88165A4E2AAB",
@@ -243,8 +219,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "DFE06F00-08DC-4691-BAE7-C12BB3EFBDEA"
+    "is_active": true
   },
   {
     "id": "1DB5715E-2E10-441C-99B9-EE228F094E5A",
@@ -255,8 +230,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "E6C91992-7B63-4C71-9AFB-6488E3896554"
+    "is_active": true
   },
   {
     "id": "1DEE6D57-1CC3-49EE-AC72-081A049BC78E",
@@ -267,8 +241,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.656",
     "date_updated": "2025-10-21 13:37:17.656",
-    "is_active": true,
-    "session_line_id": "BAB14ADD-9F9A-484A-8B1C-65657FC03DDF"
+    "is_active": true
   },
   {
     "id": "1F382FCA-4400-4B16-AF76-C9E52397F448",
@@ -279,8 +252,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "B5FF599C-CDE3-4AD8-8AAA-02B5E2AEEBFC"
+    "is_active": true
   },
   {
     "id": "20A9B011-6527-4C7A-B122-04E148B93B89",
@@ -291,8 +263,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "E0C36729-E724-4ABB-915F-365F97256D49"
+    "is_active": true
   },
   {
     "id": "24376E62-4C30-4198-AC9F-B23E32AD758F",
@@ -303,8 +274,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
     "date_updated": "2025-10-21 13:37:17.703",
-    "is_active": true,
-    "session_line_id": "97B9D74B-8AAC-435C-AEBC-CAB359A7A12F"
+    "is_active": true
   },
   {
     "id": "25122907-BD5A-41ED-AEC6-83BDB8CBD697",
@@ -315,8 +285,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.683",
     "date_updated": "2025-10-21 13:37:17.683",
-    "is_active": true,
-    "session_line_id": "756B6FF2-AA19-4271-9C56-AAE72D492241"
+    "is_active": true
   },
   {
     "id": "25566E04-229C-478A-B3D3-9C1573F97158",
@@ -327,8 +296,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "AC4236B6-C97E-4BE0-B7CF-D73C9B9052F9"
+    "is_active": true
   },
   {
     "id": "27AEC3FA-2736-4C0F-901A-4E3BC5498B67",
@@ -339,8 +307,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.656",
     "date_updated": "2025-10-21 13:37:17.656",
-    "is_active": true,
-    "session_line_id": "C3085ADD-8224-4E1C-ADE6-5E30B34666E1"
+    "is_active": true
   },
   {
     "id": "28FB8C5E-C709-4279-A267-EC7F016AEB63",
@@ -351,8 +318,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "4522BCEC-6E43-47D1-9B0A-F5C1BF42F626"
+    "is_active": true
   },
   {
     "id": "2E15A5F2-17EF-479E-9BA9-3A68BE9E5443",
@@ -363,8 +329,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "18595DB5-457E-4D20-8B01-5567F07962D4"
+    "is_active": true
   },
   {
     "id": "2F21C92A-65F2-4C48-A06D-928EB07C4748",
@@ -375,8 +340,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "4EC9DA4D-94FF-4EEB-99AC-A0CA05920D53"
+    "is_active": true
   },
   {
     "id": "32AD3EB5-D6CC-4EF8-A5DF-5B6121A6B437",
@@ -387,8 +351,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
     "date_updated": "2025-10-21 13:37:17.716",
-    "is_active": true,
-    "session_line_id": "D0DE1095-3802-497F-A3F7-5A59195ED3E9"
+    "is_active": true
   },
   {
     "id": "337A9735-D25E-4B13-B45B-C6A96F30F8BA",
@@ -399,8 +362,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
     "date_updated": "2025-10-21 13:37:17.703",
-    "is_active": true,
-    "session_line_id": "C5534B34-6704-4277-A91C-934EF8BB5676"
+    "is_active": true
   },
   {
     "id": "34F0CD6F-7F5C-441B-9C23-D6C11FBEB843",
@@ -411,8 +373,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "E834107B-9F2B-4D81-BEB7-23378C3584BB"
+    "is_active": true
   },
   {
     "id": "37D97392-4F8C-4FC4-80D2-E6E5A38DACDE",
@@ -423,8 +384,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "209BDCA3-D8DC-4D28-BC1D-7DEDA786511D"
+    "is_active": true
   },
   {
     "id": "393400DC-A56E-4483-B983-030BF6FF8324",
@@ -435,8 +395,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "57B9B9FC-A30D-45ED-89F9-B651D2266627"
+    "is_active": true
   },
   {
     "id": "3A438F8F-8F84-4A85-A222-2BB9ECC1EC29",
@@ -447,8 +406,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "262D78DF-E5C4-4BFD-A77B-8B254DC2E959"
+    "is_active": true
   },
   {
     "id": "3B3B9EA9-D73B-468B-8CAB-9E00C9D02C41",
@@ -459,8 +417,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "01C53A1C-9346-46CA-848B-04E8A325DB61"
+    "is_active": true
   },
   {
     "id": "3B54069E-ECC8-42A1-BCBD-F393A98C71BD",
@@ -471,8 +428,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "1BDAB59B-5CEF-4B9F-94B9-D1DD94252FA4"
+    "is_active": true
   },
   {
     "id": "3BCB1B70-40B0-42E0-A1E9-CF52DF849B54",
@@ -483,8 +439,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "5265AFFC-8A65-45D7-96FB-EBFFD60DEEAD"
+    "is_active": true
   },
   {
     "id": "3BF32B47-3086-4213-9AA3-F7EC4B44CB9C",
@@ -495,8 +450,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "812ED00C-26E1-46F4-ADC9-19516621484F"
+    "is_active": true
   },
   {
     "id": "3C81BEBC-F1CB-4B7D-9FED-91894469655C",
@@ -507,8 +461,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "96880736-71E6-4E33-B426-00343D832E4B"
+    "is_active": true
   },
   {
     "id": "3E8F2C53-DF7E-4903-B099-7205D7E3EBA4",
@@ -519,8 +472,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.683",
     "date_updated": "2025-10-21 13:37:17.683",
-    "is_active": true,
-    "session_line_id": "9ADFE32F-6660-497E-878E-51892853FA3F"
+    "is_active": true
   },
   {
     "id": "3EA4312B-6838-43EE-AE13-95145CB6B999",
@@ -531,8 +483,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "3B0A3AE2-61F7-4664-A40A-84A601838C37"
+    "is_active": true
   },
   {
     "id": "40287579-4A2C-4F41-9932-429BB9621C58",
@@ -543,8 +494,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
     "date_updated": "2025-10-21 13:37:17.703",
-    "is_active": true,
-    "session_line_id": "84160E50-178C-40EC-BB34-F34C471F5BEA"
+    "is_active": true
   },
   {
     "id": "408A8E64-5C08-4989-B14C-9A1FBF1555C8",
@@ -555,8 +505,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "E79B87F4-6B08-45D0-A0F0-85FCC2EF0DF1"
+    "is_active": true
   },
   {
     "id": "41AEEA04-A8DA-4619-8E18-32DB167E0FB4",
@@ -567,8 +516,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "B5D8C81B-B4B5-4B5B-9193-55D025C4F112"
+    "is_active": true
   },
   {
     "id": "429BD523-C628-4B1E-9AB3-5544E5EB9D66",
@@ -579,8 +527,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "428FAA80-F33C-4C42-8A8E-FB52B8DED07D"
+    "is_active": true
   },
   {
     "id": "42EF6E8D-FE84-42F1-867B-58F30052E956",
@@ -591,8 +538,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "D08EAAB5-41FE-483F-9327-62CDBF987832"
+    "is_active": true
   },
   {
     "id": "44695F79-A3EB-4109-AAFB-EF709026F971",
@@ -603,8 +549,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.636",
     "date_updated": "2025-10-21 13:37:17.636",
-    "is_active": true,
-    "session_line_id": "849260FD-F03F-459D-8AD0-328D41F8474E"
+    "is_active": true
   },
   {
     "id": "46912296-561A-4893-BDBB-BDA9C93365CD",
@@ -615,8 +560,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "55A395ED-DEA7-40D5-807C-D54C18DB45EA"
+    "is_active": true
   },
   {
     "id": "46D95ACE-B0ED-43DC-9E76-533C2197797C",
@@ -627,8 +571,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "0F3A5947-1F00-4139-91C2-459DCE1EE20A"
+    "is_active": true
   },
   {
     "id": "472ADF07-F464-4419-B5A6-EF76EEE5EB67",
@@ -639,8 +582,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "2236C201-6044-4E0E-83D2-2F482CE5AAB4"
+    "is_active": true
   },
   {
     "id": "4733AAC3-E7F2-47E4-8EA3-494021DADB60",
@@ -651,8 +593,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
     "date_updated": "2025-10-21 13:37:17.716",
-    "is_active": true,
-    "session_line_id": "5C2BED50-23ED-452D-9EF2-9AC4F7060750"
+    "is_active": true
   },
   {
     "id": "489CE33F-5152-43EB-B3FF-51048C26750B",
@@ -663,8 +604,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "7E9B7CC1-B709-4A60-88ED-6500700CD75C"
+    "is_active": true
   },
   {
     "id": "49E25FA6-C120-4F4F-B283-B99AA1943EBE",
@@ -675,8 +615,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "F3EB5C67-D5D0-4198-BC89-4410851AE4ED"
+    "is_active": true
   },
   {
     "id": "4A20AB46-7D86-4C56-A27F-0F87E55147D1",
@@ -687,8 +626,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "04FADB88-BA86-4F0C-A02F-785A82D58F82"
+    "is_active": true
   },
   {
     "id": "4B77BAD9-CD6C-48E2-8216-F8A78C0D02B5",
@@ -699,8 +637,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "B00EC948-D814-4E24-9AB2-D6FBE80A4B1D"
+    "is_active": true
   },
   {
     "id": "4C0A274C-885F-42E2-976D-3A2A6DA5A5B0",
@@ -711,8 +648,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "01429DE0-80B3-4EAF-8FCB-8490604C4BDE"
+    "is_active": true
   },
   {
     "id": "4C2BC3E5-60ED-4AA3-9D71-AE03ACD3D190",
@@ -723,8 +659,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "60F72CB8-C1D7-48BF-A483-2F3AA01BE0E5"
+    "is_active": true
   },
   {
     "id": "5117C718-E2F0-42E9-B99B-AE7599D43DF0",
@@ -735,8 +670,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "707452CA-E62D-4C35-88A8-023ACFB96CB5"
+    "is_active": true
   },
   {
     "id": "51885219-7B67-4455-BF6D-A854DEDEBE1C",
@@ -747,8 +681,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.663",
     "date_updated": "2025-10-21 13:37:17.663",
-    "is_active": true,
-    "session_line_id": "542BD67D-05F6-4D70-9B40-4625A77A53CC"
+    "is_active": true
   },
   {
     "id": "5313A37C-AF17-467B-9459-F95329033C90",
@@ -759,8 +692,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "59759ACC-16A6-4195-AEEC-811DA6F79C60"
+    "is_active": true
   },
   {
     "id": "54216053-5ED0-4A51-83FB-FABC57FDBDA3",
@@ -771,8 +703,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "249EB1D0-6140-498A-A1B5-C33B130A9F39"
+    "is_active": true
   },
   {
     "id": "56DE65BC-3498-43D8-A1E6-6725274B180A",
@@ -783,8 +714,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
     "date_updated": "2025-10-21 13:37:17.703",
-    "is_active": true,
-    "session_line_id": "298BAE66-08D3-4C8E-A9C1-BFFFC80BAD56"
+    "is_active": true
   },
   {
     "id": "5B58724D-B4AA-481B-8089-79901AE7DA4A",
@@ -795,8 +725,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "2CAFAABE-0B15-4034-BAD8-29AFEE8791E6"
+    "is_active": true
   },
   {
     "id": "5C21CED0-144B-42F9-A315-8F9B23358496",
@@ -807,8 +736,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "39DE0A6E-8C4F-447C-AE7C-5ACCA96C8A0A"
+    "is_active": true
   },
   {
     "id": "6082B42D-0310-423E-9EF2-6DE48BCDC3B1",
@@ -819,8 +747,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "34D157C9-20CD-49EA-8697-53B237857092"
+    "is_active": true
   },
   {
     "id": "61F16C52-99D7-4272-AE7B-B4386C31036F",
@@ -831,8 +758,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "F647EB1E-31C4-4495-80F1-78244D223931"
+    "is_active": true
   },
   {
     "id": "6450F238-E629-44CE-B718-97F4884A008F",
@@ -843,8 +769,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "B22C8ABC-4B04-402A-A5B7-06FD2624273F"
+    "is_active": true
   },
   {
     "id": "64F05190-A006-4FC3-9310-EB712B6E67A6",
@@ -855,8 +780,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "EB6CCC48-A10B-4DFF-BABA-78D5E3FA2F7F"
+    "is_active": true
   },
   {
     "id": "66444EE6-6211-4921-8BD0-EE194602ACA0",
@@ -867,8 +791,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "DB665143-D83F-452C-8B8A-6FC4EAEE4040"
+    "is_active": true
   },
   {
     "id": "67B72688-3A57-4BD2-8A72-B66E9A79BD99",
@@ -879,8 +802,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "A09F5F77-3006-41AE-91A2-1A43BA974206"
+    "is_active": true
   },
   {
     "id": "67F1725F-D75E-4D8A-BFEE-3E3E531FC191",
@@ -891,8 +813,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "736EC6F4-2AF9-4092-801D-91A7DAB264F7"
+    "is_active": true
   },
   {
     "id": "6A378FD3-4E4D-4638-B5FC-AD34999D4EF7",
@@ -903,8 +824,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "179625C2-7129-430B-B988-CAF66E5B93A8"
+    "is_active": true
   },
   {
     "id": "6A80628F-FB37-4D51-9828-4B0261BB0AB4",
@@ -915,8 +835,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "678A1FF9-8F98-43A4-B4B8-C195B075DF19"
+    "is_active": true
   },
   {
     "id": "6B074A93-4945-4E70-BFCD-94B05F142922",
@@ -927,8 +846,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "0ECFE29A-72DB-4172-9BD1-483711734AB3"
+    "is_active": true
   },
   {
     "id": "6B32FF15-0F0B-4198-94AA-CF603DFDC95C",
@@ -939,8 +857,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "0EF76CD2-EE2B-4059-B981-47950B7D4CEF"
+    "is_active": true
   },
   {
     "id": "6BC268EF-B802-4C8E-9043-E6CE9970BA2B",
@@ -951,8 +868,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.676",
     "date_updated": "2025-10-21 13:37:17.676",
-    "is_active": true,
-    "session_line_id": "6ADEE89E-83BB-4044-A153-B288099A5CA8"
+    "is_active": true
   },
   {
     "id": "71646ED8-7AE9-4927-AB9D-45644C9547D7",
@@ -963,8 +879,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "2D0CEDAC-DC88-4934-93E7-883351C29E06"
+    "is_active": true
   },
   {
     "id": "72B9B52B-2507-45F8-8C15-AE750E941B10",
@@ -975,8 +890,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "CEA57EB1-66B9-4CFE-BA00-1070707D3DB9"
+    "is_active": true
   },
   {
     "id": "7665D9B5-4228-4360-B032-D82108EC1D0C",
@@ -987,8 +901,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "F6454A84-D7A2-4173-8E63-1DE761A5E1D2"
+    "is_active": true
   },
   {
     "id": "7822F4B5-DD33-429B-8078-BB480D4DAAFF",
@@ -999,8 +912,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
     "date_updated": "2025-10-21 13:37:17.646",
-    "is_active": true,
-    "session_line_id": "4ADF2933-B439-44DE-B1EA-C14D21206B98"
+    "is_active": true
   },
   {
     "id": "79937CAA-98FB-471E-9F9E-FD0EBD3E3988",
@@ -1011,8 +923,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "BE1DF500-A749-474A-AF96-9BC2AD48676A"
+    "is_active": true
   },
   {
     "id": "7A03D089-FF14-421F-B491-8F63013C54B8",
@@ -1023,8 +934,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "D03937C9-38A6-4977-A1C2-DC20CAF0F435"
+    "is_active": true
   },
   {
     "id": "7D777695-142F-41BF-9714-2C393E6E56A5",
@@ -1035,8 +945,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.636",
     "date_updated": "2025-10-21 13:37:17.636",
-    "is_active": true,
-    "session_line_id": "48C1420C-DE35-4DD9-B8E1-54E784C10EFC"
+    "is_active": true
   },
   {
     "id": "80A7EFC5-4754-427E-909E-4681BB209160",
@@ -1047,8 +956,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.663",
     "date_updated": "2025-10-21 13:37:17.663",
-    "is_active": true,
-    "session_line_id": "56383396-3DC1-49C2-A27D-97D2AB0B4B09"
+    "is_active": true
   },
   {
     "id": "81D44800-4B9C-4B2F-8DCB-BB7230EAB328",
@@ -1059,8 +967,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.683",
     "date_updated": "2025-10-21 13:37:17.683",
-    "is_active": true,
-    "session_line_id": "3C4A02BF-699B-4FEC-9D96-0E7B7197BD3B"
+    "is_active": true
   },
   {
     "id": "82798F01-DDA5-424A-BA97-6F32085D3CB8",
@@ -1071,8 +978,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "1DC4E511-F4D1-4EDF-9B04-3573B04D3846"
+    "is_active": true
   },
   {
     "id": "8327C242-3A1B-4856-B1F5-03182004DC17",
@@ -1083,8 +989,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
     "date_updated": "2025-10-21 13:37:17.716",
-    "is_active": true,
-    "session_line_id": "D0D821BE-1607-4555-9AAA-AC0476C0D949"
+    "is_active": true
   },
   {
     "id": "86247834-2DFD-45AC-9675-9430E10BE140",
@@ -1095,8 +1000,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "6D9F4FAD-B08B-4FA0-93E7-4ED832CC3F7A"
+    "is_active": true
   },
   {
     "id": "8662AA28-694D-4880-906C-9B0910FD0C27",
@@ -1107,8 +1011,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "85F438AE-BE24-47BD-BAE7-C3CAF995FE5E"
+    "is_active": true
   },
   {
     "id": "888F5932-7E84-4B06-8509-8FE4DFC220EB",
@@ -1119,8 +1022,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "1C2E5D70-29AB-495C-B601-CCD795840D52"
+    "is_active": true
   },
   {
     "id": "8C6A8FAF-ED68-4936-87E9-7AF6D4B529EC",
@@ -1131,8 +1033,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.656",
     "date_updated": "2025-10-21 13:37:17.656",
-    "is_active": true,
-    "session_line_id": "6ADD559E-66B0-42FB-BA4A-019BB9AAC536"
+    "is_active": true
   },
   {
     "id": "8CAE5692-ED71-471C-9107-FFE32FD5E45C",
@@ -1143,8 +1044,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.663",
     "date_updated": "2025-10-21 13:37:17.663",
-    "is_active": true,
-    "session_line_id": "1F023044-5BDA-4641-B903-CB76CD38DB9A"
+    "is_active": true
   },
   {
     "id": "8CC2AB78-6426-459D-9326-BBCB594AD3D8",
@@ -1155,8 +1055,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "8CD646B8-08EF-485E-A4F7-7D657EB5561F"
+    "is_active": true
   },
   {
     "id": "8D67DC3E-0F93-4A85-BA85-4A2C3ED91D9E",
@@ -1167,8 +1066,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "42BE78BE-1ED2-42E2-B41F-61084D807370"
+    "is_active": true
   },
   {
     "id": "8F157E86-91EE-40B4-9C7D-2BF86CE79525",
@@ -1179,8 +1077,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "8459D41C-BB97-49F1-9F8A-B156811D6C17"
+    "is_active": true
   },
   {
     "id": "8FA05151-145E-4B8C-8045-2CE5D0878086",
@@ -1191,8 +1088,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "6B6E8C58-0B43-46F0-9A00-EDC174E1BF8D"
+    "is_active": true
   },
   {
     "id": "906C9638-F3BC-43D7-970F-CC270E304699",
@@ -1203,8 +1099,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "C6AA709C-D13A-4E61-B738-0DF3F7AB3649"
+    "is_active": true
   },
   {
     "id": "90A33411-26F2-4F10-8377-62D0E497A55E",
@@ -1215,8 +1110,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.666",
     "date_updated": "2025-10-21 13:37:17.666",
-    "is_active": true,
-    "session_line_id": "733D475F-6AE2-48A2-A511-8CED5B89C6D2"
+    "is_active": true
   },
   {
     "id": "90BF8C5F-9A62-49E0-8422-0483DBBFFF96",
@@ -1227,8 +1121,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "7CD6A14A-D61D-4404-8BAD-7112C28A2354"
+    "is_active": true
   },
   {
     "id": "913CEE7F-4EDC-4C63-9E74-D274583A22E2",
@@ -1239,8 +1132,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
     "date_updated": "2025-10-21 13:37:17.646",
-    "is_active": true,
-    "session_line_id": "B0AB23BE-CE14-4FB7-994D-8B2E1B4F5E93"
+    "is_active": true
   },
   {
     "id": "92CF56D6-A4E1-4C94-A6D1-95865D13B99F",
@@ -1251,8 +1143,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "40CBF9E6-D761-4209-935F-CDA9C3A321E8"
+    "is_active": true
   },
   {
     "id": "94E9D84C-71D3-4153-8070-784942E6FCD1",
@@ -1263,8 +1154,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "3FA44FC1-9A7D-4EE8-8F40-FC536682E33D"
+    "is_active": true
   },
   {
     "id": "95879A16-9045-41F9-9AC1-23AD49502513",
@@ -1275,8 +1165,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "A00EDBBC-BD17-4814-9BA3-00550BA6E084"
+    "is_active": true
   },
   {
     "id": "95894E2F-6E2D-4234-A391-0FB711AEB13C",
@@ -1287,8 +1176,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "71F0D2B8-AE92-4DB8-A797-8194DF380058"
+    "is_active": true
   },
   {
     "id": "975EA1A5-18D1-4351-A8C8-234A2BC26D0B",
@@ -1299,8 +1187,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "9E265CB4-D147-452B-A5C3-060F624FB096"
+    "is_active": true
   },
   {
     "id": "979844CA-27DA-42FA-BE4D-BAE3C0AE09A6",
@@ -1311,8 +1198,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "358FCD41-476F-4431-8917-53A4DD699171"
+    "is_active": true
   },
   {
     "id": "992A309F-8748-498E-9B70-C4CB07B0D973",
@@ -1323,8 +1209,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "1CA77553-2D03-473E-B060-1EBA7A5D84B1"
+    "is_active": true
   },
   {
     "id": "99D571A1-A8E3-436C-A193-B60BAED774BC",
@@ -1335,8 +1220,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "A4F6CB35-AFA4-484E-B40D-FB08AB0B7CE1"
+    "is_active": true
   },
   {
     "id": "9C73AD4F-7E88-4E49-B0FF-99CC5032AF8F",
@@ -1347,8 +1231,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.706",
     "date_updated": "2025-10-21 13:37:17.706",
-    "is_active": true,
-    "session_line_id": "A0B7C8FE-79D6-405A-B3E9-342C0B346AD6"
+    "is_active": true
   },
   {
     "id": "9C931A70-C4FA-45DF-A6FF-BF8C7879FA24",
@@ -1359,8 +1242,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "13F7F41E-284C-4284-B7D0-C12453378F41"
+    "is_active": true
   },
   {
     "id": "9DBFF552-7E49-4A77-BC20-787689D2838F",
@@ -1371,8 +1253,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "F5305BA3-CEEF-477D-A1DC-412756D9F5C7"
+    "is_active": true
   },
   {
     "id": "9EAA0835-D9CD-49E6-AC64-97141AFF3C73",
@@ -1383,8 +1264,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.676",
     "date_updated": "2025-10-21 13:37:17.676",
-    "is_active": true,
-    "session_line_id": "C8A1B43D-7B46-4E56-95BB-59F2F0C2E674"
+    "is_active": true
   },
   {
     "id": "9FC8DD6A-E103-46FE-8829-ED140A006699",
@@ -1395,8 +1275,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "ED411212-038F-47D1-9F82-25FC9AE1A115"
+    "is_active": true
   },
   {
     "id": "A14C847D-214E-44D0-A7FF-311A3A7046C7",
@@ -1407,8 +1286,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "337E833B-3634-4D5B-9ECF-28210F754D00"
+    "is_active": true
   },
   {
     "id": "A30D6ABF-AF56-4F4F-9616-9859C09886C7",
@@ -1419,8 +1297,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.7",
     "date_updated": "2025-10-21 13:37:17.7",
-    "is_active": true,
-    "session_line_id": "2178C25B-47E1-424C-B011-95C7D1135A27"
+    "is_active": true
   },
   {
     "id": "A446054C-0D76-4554-8E4D-3A2123C9CA67",
@@ -1431,8 +1308,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "3A44D4E4-B520-4D50-BBD9-95C34448034E"
+    "is_active": true
   },
   {
     "id": "A5DD11AA-B06F-4BA9-BBA6-7EAD7D5C31C1",
@@ -1443,8 +1319,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "68F3D5D4-10AC-433C-A38B-70592D7D234D"
+    "is_active": true
   },
   {
     "id": "A7E5606C-686F-4E76-9C65-9FA8BB8C9C38",
@@ -1455,8 +1330,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "7127F844-27A5-4353-AE52-5799CC035653"
+    "is_active": true
   },
   {
     "id": "ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA",
@@ -1467,8 +1341,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
     "date_updated": "2025-10-21 13:37:17.72",
-    "is_active": true,
-    "session_line_id": "8F9B3A1B-3DE1-463F-B313-D15DAAE02E19"
+    "is_active": true
   },
   {
     "id": "B0ADBD7F-99FA-4DCF-A655-A8A1F64DED6F",
@@ -1479,8 +1352,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "9872372B-C8F1-4BED-83FB-DC32E6FDB2A7"
+    "is_active": true
   },
   {
     "id": "B403DEE5-133A-455B-9CB6-D0F0CA9D1B43",
@@ -1491,8 +1363,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
     "date_updated": "2025-10-21 13:37:17.703",
-    "is_active": true,
-    "session_line_id": "1650D9ED-4911-44B6-A9D2-F26A8154D591"
+    "is_active": true
   },
   {
     "id": "B522FE97-E039-4238-80E6-7A7FAF14EFA4",
@@ -1503,8 +1374,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "A246F925-9892-42EA-822B-46A214FC25FA"
+    "is_active": true
   },
   {
     "id": "B8C1D68B-DE20-4FCD-B2F7-B8C505936E96",
@@ -1515,8 +1385,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "9DE3C0AA-F649-49B0-91B0-549E2D3E4D97"
+    "is_active": true
   },
   {
     "id": "B94C4858-A500-4E2D-BBF1-A5056FB8A14F",
@@ -1527,8 +1396,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
     "date_updated": "2025-10-21 13:37:17.646",
-    "is_active": true,
-    "session_line_id": "251F7A33-4D77-4307-BD35-4FA0F7E7D826"
+    "is_active": true
   },
   {
     "id": "BB608DEB-A8FB-40FF-AF3D-93A5902CDA41",
@@ -1539,8 +1407,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "17AE3029-BAF7-42DE-BCAB-4FB5D61E70E3"
+    "is_active": true
   },
   {
     "id": "BD33C859-BB90-4769-A5CA-E589ECC09E1D",
@@ -1551,8 +1418,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
     "date_updated": "2025-10-21 13:37:17.71",
-    "is_active": true,
-    "session_line_id": "DCB32439-29D8-4A3F-8AEE-64D3E77C4EAA"
+    "is_active": true
   },
   {
     "id": "BED31B78-6255-4FAC-90BB-C4FEA090A8DE",
@@ -1563,8 +1429,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.653",
     "date_updated": "2025-10-21 13:37:17.653",
-    "is_active": true,
-    "session_line_id": "CEE9E26C-BB32-4DB2-8FD3-3932720E85FD"
+    "is_active": true
   },
   {
     "id": "C0BAB6CC-B124-4721-9E1D-1A25169F82CD",
@@ -1575,8 +1440,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "519D6F41-4C27-425F-8D58-0887283B7F9F"
+    "is_active": true
   },
   {
     "id": "C0BAF6DA-9161-4F62-ACD3-086E55119BE2",
@@ -1587,8 +1451,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "65F7BFD1-A159-46E8-B041-15E2A0661CBE"
+    "is_active": true
   },
   {
     "id": "C0EC9374-D244-49F3-BF8D-03EE64706059",
@@ -1599,8 +1462,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "AB88FE70-A48A-48A2-85D7-5182B526A3E6"
+    "is_active": true
   },
   {
     "id": "C15DA412-BA81-4897-859A-881903122869",
@@ -1611,8 +1473,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "3D5D18A7-5B78-489C-BD2D-80ADF5DC0335"
+    "is_active": true
   },
   {
     "id": "C2EF3EBA-0A2C-44B6-8CEC-0F2D0B17D050",
@@ -1623,8 +1484,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "A2B62532-39F8-4C28-9870-08A4226AEE4F"
+    "is_active": true
   },
   {
     "id": "C3916D9A-DB91-43AE-9196-81A2E2D169F1",
@@ -1635,8 +1495,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
     "date_updated": "2025-10-21 13:37:17.696",
-    "is_active": true,
-    "session_line_id": "E812D509-04E3-4B5A-923F-1BACF34E1FA4"
+    "is_active": true
   },
   {
     "id": "C5FC9CE1-6347-482F-8457-07D513A8DFF8",
@@ -1647,8 +1506,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "E3655393-10F5-4006-B73D-E6F9A342C60A"
+    "is_active": true
   },
   {
     "id": "C984C8D4-CA98-46F3-84EA-D519E79D8870",
@@ -1659,8 +1517,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.663",
     "date_updated": "2025-10-21 13:37:17.663",
-    "is_active": true,
-    "session_line_id": "AF27A8F9-34E5-424D-8043-D008713CC09B"
+    "is_active": true
   },
   {
     "id": "CC03AB21-BE05-45C7-9B23-C18B5FD9FF41",
@@ -1671,8 +1528,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "C7D9293D-99DE-4828-9E40-53D22EB816F6"
+    "is_active": true
   },
   {
     "id": "CC135D00-0BC9-486F-B3FC-76FB471A9F90",
@@ -1683,8 +1539,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "507C4A98-0658-48E9-A5E1-7DAFECB308A2"
+    "is_active": true
   },
   {
     "id": "CD563C76-1196-4166-BB91-38316A9A9A91",
@@ -1695,8 +1550,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.643",
     "date_updated": "2025-10-21 13:37:17.643",
-    "is_active": true,
-    "session_line_id": "29745B36-1E54-4900-B3A0-576C59230EBB"
+    "is_active": true
   },
   {
     "id": "CEBAEE83-F17A-4BFF-972C-3E6729B39076",
@@ -1707,8 +1561,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.663",
     "date_updated": "2025-10-21 13:37:17.663",
-    "is_active": true,
-    "session_line_id": "F84B6659-6E50-4240-9139-FA798D915626"
+    "is_active": true
   },
   {
     "id": "D1363E9E-C8B2-41EB-9B49-6A3D7356DDA3",
@@ -1719,8 +1572,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.656",
     "date_updated": "2025-10-21 13:37:17.656",
-    "is_active": true,
-    "session_line_id": "6D12737F-1DC4-4BFF-BABF-6C2AE394F84B"
+    "is_active": true
   },
   {
     "id": "D1D5EF91-2EDA-46FE-A46C-A5D2779182C1",
@@ -1731,8 +1583,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.686",
     "date_updated": "2025-10-21 13:37:17.686",
-    "is_active": true,
-    "session_line_id": "09635B44-B2FA-403B-A3E4-4FB57B37DF37"
+    "is_active": true
   },
   {
     "id": "D292EA47-8EB4-419C-A712-A4F1573D7B3B",
@@ -1743,8 +1594,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
     "date_updated": "2025-10-21 13:37:17.716",
-    "is_active": true,
-    "session_line_id": "07BA1843-6302-4F6F-A3AE-754E9279E2DF"
+    "is_active": true
   },
   {
     "id": "D4D3F574-B72F-4C48-80E5-1B0DF40E1E65",
@@ -1755,8 +1605,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "DABF6FF2-166C-4125-8EA4-68F93B882A82"
+    "is_active": true
   },
   {
     "id": "D5F85603-F84A-4920-AF21-978E1376F1A1",
@@ -1767,8 +1616,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.636",
     "date_updated": "2025-10-21 13:37:17.636",
-    "is_active": true,
-    "session_line_id": "FDC52186-59E9-4C85-B4AE-96BB88A22337"
+    "is_active": true
   },
   {
     "id": "D661395A-3435-4378-AE31-D004F1153715",
@@ -1779,8 +1627,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "92E19FFE-D85A-494D-8882-D16769CC9A1E"
+    "is_active": true
   },
   {
     "id": "D71EEE70-333D-4977-B600-87890522DEFA",
@@ -1791,8 +1638,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.693",
     "date_updated": "2025-10-21 13:37:17.693",
-    "is_active": true,
-    "session_line_id": "969A8609-B7C9-4AD3-98F6-0D46DDCE7410"
+    "is_active": true
   },
   {
     "id": "DA34DE2E-13BD-47E3-AF0B-8EB2C91E2AB2",
@@ -1803,8 +1649,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.676",
     "date_updated": "2025-10-21 13:37:17.676",
-    "is_active": true,
-    "session_line_id": "E5EE219D-FCD9-4839-819A-9F16825346F3"
+    "is_active": true
   },
   {
     "id": "DA461F0B-1D38-4D00-80EA-6A0AC680927F",
@@ -1815,8 +1660,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.68",
     "date_updated": "2025-10-21 13:37:17.68",
-    "is_active": true,
-    "session_line_id": "0B3F0AC8-E5E3-40EF-9C6E-25175EAE54EC"
+    "is_active": true
   },
   {
     "id": "DAEA1F12-AECE-4965-AE10-847D3F92BC4B",
@@ -1827,8 +1671,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "7B6955E2-39FD-45EA-90BF-FFC03BDAFDB8"
+    "is_active": true
   },
   {
     "id": "DB8DA73A-498A-4CF3-B628-D528E9005B49",
@@ -1839,8 +1682,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.673",
     "date_updated": "2025-10-21 13:37:17.673",
-    "is_active": true,
-    "session_line_id": "75AC72A9-1A38-42A3-8C0A-99DCCFBA8542"
+    "is_active": true
   },
   {
     "id": "E15F21A0-37E5-469C-8578-50382B3BFE87",
@@ -1851,8 +1693,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.67",
     "date_updated": "2025-10-21 13:37:17.67",
-    "is_active": true,
-    "session_line_id": "1E68975F-0B0C-4A51-BE73-B1267B0B76E1"
+    "is_active": true
   },
   {
     "id": "E402A2B9-DF04-466C-886D-E38BE53FB1B7",
@@ -1863,8 +1704,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.66",
     "date_updated": "2025-10-21 13:37:17.66",
-    "is_active": true,
-    "session_line_id": "B5529357-6DE2-4361-B086-8E96D58C5407"
+    "is_active": true
   },
   {
     "id": "E51AAA43-323F-49EB-A801-37A2F62D2951",
@@ -1875,8 +1715,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
     "date_updated": "2025-10-21 13:37:17.69",
-    "is_active": true,
-    "session_line_id": "2A87F748-4B94-49CB-9850-B9DD417BB0DE"
+    "is_active": true
   },
   {
     "id": "E789AB8B-701B-44CE-83AA-4D0923AA39A4",
@@ -1887,8 +1726,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.64",
     "date_updated": "2025-10-21 13:37:17.64",
-    "is_active": true,
-    "session_line_id": "DE9D4B92-F135-48A3-8111-57EE906C9296"
+    "is_active": true
   },
   {
     "id": "F3549ED7-7943-48D2-AF26-8C5B34F7249C",
@@ -1899,8 +1737,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.65",
     "date_updated": "2025-10-21 13:37:17.65",
-    "is_active": true,
-    "session_line_id": "E8FE2A9F-D6AC-49EC-B611-771ECDC690E5"
+    "is_active": true
   },
   {
     "id": "F5F7C71D-67BF-49DD-9839-E9836C9F3B11",
@@ -1911,8 +1748,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.656",
     "date_updated": "2025-10-21 13:37:17.656",
-    "is_active": true,
-    "session_line_id": "BD2CEE6D-6BE6-4342-810A-1EEBF43BAE6F"
+    "is_active": true
   },
   {
     "id": "F6519BEE-3B5C-4188-8EE8-797A8FE55973",
@@ -1923,8 +1759,7 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
     "date_updated": "2025-10-21 13:37:17.713",
-    "is_active": true,
-    "session_line_id": "72A345A4-A799-45AC-B4EF-A7F45104D333"
+    "is_active": true
   },
   {
     "id": "FDC6D9AC-4FFD-45BD-B9FC-079BC98BDED5",
@@ -1935,7 +1770,6 @@ export const INVENTORY_LOTS_SESSION: Prisma.InventoryLotCreateManyInput[] = [
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
     "date_updated": "2025-10-21 13:37:17.646",
-    "is_active": true,
-    "session_line_id": "450743BC-90F5-4162-B445-D1C02102FD91"
+    "is_active": true
   }
 ];

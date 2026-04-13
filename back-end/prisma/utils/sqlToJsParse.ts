@@ -25,7 +25,7 @@ const TRANSACTION_TYPE_MAP: EnumMap = {
   1: "FOUND",
   2: "GIFT",
   3: "EXISTING_STOCK",
-  4: "LOST",
+  4: "SELL",
   5: "GIVEN",
 } as const;
 

@@ -7,6 +7,7 @@ import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
 import { INVENTORY_LOTS_SESSION } from './seedDatas/inventory_lots_session.js';
+import { SESSIONS_SELL, SESSION_SELL_LINES } from './seedDatas/session_sell.js';
 import { SESSIONS_TRADE, SESSION_TRADE_LINES } from './seedDatas/session_trade.js';
 import { USERS } from './seedDatas/user.js';
 
@@ -25,39 +26,32 @@ if (!users.length) {
 const itemCategories = await itemCategoryRepository.findMany();
 
 if (!itemCategories.length) {
-  ITEM_CATEGORIES.forEach(async (e) => {
+  for (const e of ITEM_CATEGORIES) {
     await itemCategoryRepository.create({ data: e });
-  });
+  }
 }
 
 const itemTypes = await itemTypesRepository.findMany();
 
 if (!itemTypes.length) {
-  ITEM_TYPES.forEach(async (e) => {
+  for (const e of ITEM_TYPES) {
     await itemTypesRepository.create({ data: e });
-  });
+  }
 }
 
 const items = await itemRepository.findMany();
 
 if (!items.length) {
-  ITEMS.forEach(async (e) => {
+  for (const e of ITEMS) {
     await itemRepository.create({ data: e });
-  });
+  }
 }
 
 const sessionsCount = await prismaClient.session.count();
 if (!sessionsCount) {
+  const sessionsData = [...SESSIONS_TRADE, ...SESSIONS_SELL];
   await prismaClient.session.createMany({
-    data: SESSIONS_TRADE,
-    skipDuplicates: true,
-  });
-}
-
-const sessionLinesCount = await prismaClient.sessionLine.count();
-if (!sessionLinesCount) {
-  await prismaClient.sessionLine.createMany({
-    data: SESSION_TRADE_LINES,
+    data: sessionsData,
     skipDuplicates: true,
   });
 }
@@ -66,6 +60,15 @@ const inventoryLotsCount = await prismaClient.inventoryLot.count();
 if (!inventoryLotsCount) {
   await prismaClient.inventoryLot.createMany({
     data: INVENTORY_LOTS_SESSION,
+    skipDuplicates: true,
+  });
+}
+
+const sessionLinesCount = await prismaClient.sessionLine.count();
+if (!sessionLinesCount) {
+  const sessionLinesData = [...SESSION_TRADE_LINES, ...SESSION_SELL_LINES];
+  await prismaClient.sessionLine.createMany({
+    data: sessionLinesData,
     skipDuplicates: true,
   });
 }
