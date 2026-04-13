@@ -1,5 +1,6 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
+import { SYSTEM_USER_ID } from "./systemUser.js";
 
 export const ITEM_CATEGORIES: Prisma.ItemCategoryCreateManyInput[] = [
   {
@@ -8,5 +9,6 @@ export const ITEM_CATEGORIES: Prisma.ItemCategoryCreateManyInput[] = [
     date_updated: null,
     is_active: true,
     name: "Material",
+    user_id: SYSTEM_USER_ID,
   },
 ] as const;

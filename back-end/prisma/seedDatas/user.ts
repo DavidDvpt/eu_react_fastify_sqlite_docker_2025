@@ -1,8 +1,26 @@
 // Auto-generated from datas.sql
 import HashTools from '../../src/lib/security/HashTools.js';
 import type { Prisma } from '../generated/client.js';
+import {
+  SYSTEM_USER_EMAIL,
+  SYSTEM_USER_ID,
+  SYSTEM_USER_PASSWORD,
+  SYSTEM_USER_PSEUDO,
+} from './systemUser.js';
 
 export const USERS: Prisma.UserCreateManyInput[] = [
+  {
+    id: SYSTEM_USER_ID,
+    firstname: 'System',
+    lastname: 'User',
+    pseudo: SYSTEM_USER_PSEUDO,
+    email: SYSTEM_USER_EMAIL,
+    password_hash: await HashTools.hashPassword(SYSTEM_USER_PASSWORD),
+    role: 'ADMIN',
+    date_created: '2026-04-13 00:00:00.000',
+    date_updated: null,
+    is_active: true,
+  },
   {
     id: '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E',
     firstname: 'Lucien',

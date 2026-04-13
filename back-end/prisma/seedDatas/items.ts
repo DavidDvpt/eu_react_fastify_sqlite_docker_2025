@@ -1,7 +1,8 @@
 // Auto-generated from datas.sql
 import type { Prisma } from "../generated/client.js";
+import { SYSTEM_USER_ID } from "./systemUser.js";
 
-export const ITEMS: Prisma.ItemCreateManyInput[] = [
+const RAW_ITEMS: Omit<Prisma.ItemCreateManyInput, "user_id">[] = [
   {
     "id": "05236E1E-2D20-49CD-A0EB-090B2D91C582",
     "image_url_id": "6327",
@@ -4023,3 +4024,8 @@ export const ITEMS: Prisma.ItemCreateManyInput[] = [
     "name": "Alicenies Gel"
   }
 ] as const;
+
+export const ITEMS: Prisma.ItemCreateManyInput[] = RAW_ITEMS.map((item) => ({
+  ...item,
+  user_id: SYSTEM_USER_ID,
+}));
