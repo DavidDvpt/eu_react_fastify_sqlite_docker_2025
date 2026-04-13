@@ -4,7 +4,7 @@ import LeftNavContentLayout from "./LeftNavContentLayout";
 
 function MainContentLayout() {
   return (
-    <LeftNavContentLayout sectionLabel="Manage" links={[...MANAGE_NAV_LINKS]}>
+    <LeftNavContentLayout links={[...MANAGE_NAV_LINKS]}>
       <div className="h-full min-h-0">
         <Outlet />
       </div>

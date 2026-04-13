@@ -37,12 +37,17 @@ const buttonVariants = cva(
           "border border-button-neutral-border bg-button-neutral-bg text-button-neutral-text shadow hover:border-button-neutral-hover-border hover:bg-button-neutral-hover-bg hover:text-button-neutral-hover-text active:border-button-neutral-active-border active:bg-button-neutral-active-bg active:text-button-neutral-active-text disabled:border-button-neutral-disabled-border disabled:bg-button-neutral-disabled-bg disabled:opacity-100",
         warning:
           "border border-button-warning-border bg-button-warning-bg text-button-warning-text shadow hover:border-button-warning-hover-border hover:bg-button-warning-hover-bg hover:text-button-warning-hover-text active:border-button-warning-active-border active:bg-button-warning-active-bg active:text-button-warning-active-text disabled:border-button-warning-disabled-border disabled:bg-button-warning-disabled-bg disabled:opacity-100",
+        navVertical:
+          "w-full justify-center border border-border bg-background text-center text-sm text-foreground no-underline hover:bg-muted data-[active=true]:font-bold data-[active=true]:shadow-ambient-md",
+        navHorizontal:
+          "inline-flex items-center justify-center w-24 px-3 py-2 text-m font-medium text-foreground no-underline transition-colors hover:text-foreground hover:bg-[var(--gray-300)] data-[active=true]:font-bold",
       },
       size: {
         default: "h-10 px-6 w-28",
         sm: "h-8 rounded-md px-3 text-xs",
         lg: "h-10 rounded-md px-8",
         icon: "h-9 w-9",
+        nav: "h-auto px-3 py-6 text-lg",
       },
     },
     defaultVariants: {

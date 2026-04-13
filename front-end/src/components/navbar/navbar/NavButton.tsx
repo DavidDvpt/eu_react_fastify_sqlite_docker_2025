@@ -1,24 +1,16 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import type { NavbarType } from "../navbarType";
-import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 function NavButton(props: NavbarType) {
+  const { pathname } = useLocation();
+  const isActive =
+    pathname === props.route || pathname.startsWith(`${props.route}/`);
+
   return (
-    <NavLink
-      key={props.label}
-      to={props.route}
-      className={({ isActive }) =>
-        cn(
-          "inline-flex items-center justify-center",
-          "w-24 px-3 py-2 transition-colors no-underline",
-          "text-sm font-medium text-foreground",
-          "hover:text-foreground hover:bg-info",
-          isActive && "border-b-2 border-danger font-bold",
-        )
-      }
-    >
-      {props.label}
-    </NavLink>
+    <Button asChild variant="navHorizontal" data-active={isActive}>
+      <NavLink to={props.route}>{props.label}</NavLink>
+    </Button>
   );
 }
 
