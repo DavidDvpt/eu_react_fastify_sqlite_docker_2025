@@ -62,24 +62,22 @@ enum SessionLineType {
 }
 
 model User {
-  id                       String                    @id @default(uuid())
-  firstname                String?
-  lastname                 String?
-  pseudo                   String                    @unique
-  email                    String                    @unique
-  password_hash            String
-  role                     Role
-  date_created             String
-  date_updated             String?
-  is_active                Boolean                   @default(true)
-  itemCategories           ItemCategory[]
-  itemTypes                ItemType[]
-  items                    Item[]
-  transactions             Transaction[]
-  inventoryLots            InventoryLot[]
-  inventoryLotTransactions InventoryLotTransaction[]
-  sessions                 Session[]
-  sessionLines             SessionLine[]
+  id             String         @id @default(uuid())
+  firstname      String?
+  lastname       String?
+  pseudo         String         @unique
+  email          String         @unique
+  password_hash  String
+  role           Role
+  date_created   String
+  date_updated   String?
+  is_active      Boolean        @default(true)
+  itemCategories ItemCategory[]
+  itemTypes      ItemType[]
+  items          Item[]
+  lots           Lot[]
+  sessions       Session[]
+  sessionLines   SessionLine[]
 
   @@map("user")
 }
@@ -118,7 +116,7 @@ model SessionLine {
 
   session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
   item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  lot     InventoryLot? @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
+  lot     Lot?    @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
   user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   @@index([session_id])
@@ -180,15 +178,14 @@ model Item {
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  inventory_lots InventoryLot[]
+  lots Lot[]
 
-  transactions Transaction[]
   session_lines SessionLine[]
 
   @@map("item")
 }
 
-model InventoryLot {
+model Lot {
   id                 String  @id @default(uuid())
   quantity_remaining Int
   quantity_exported  Int
@@ -202,50 +199,10 @@ model InventoryLot {
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  item  Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
   line  SessionLine[]
-  links InventoryLotTransaction[]
 
-  @@map("inventory_lot")
-}
-
-model Transaction {
-  id               String             @id @default(uuid())
-  transaction_type TransactionType
-  sell_status      TransactionStatus?
-  quantity         Int
-  tt_value         Decimal
-  ttc_value        Decimal
-  fee              Decimal?
-  date_created     String
-  date_updated     String?
-  is_active        Boolean
-  item_id          String
-
-  item Item @relation(fields: [item_id], references: [id], onDelete: Cascade)
-
-  user_id String?
-  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  lots InventoryLotTransaction[]
-
-  @@map("transaction")
-}
-
-model InventoryLotTransaction {
-  inventory_lot_id String
-  transaction_id   String
-  quantity         Int
-
-  inventory_lot InventoryLot @relation(fields: [inventory_lot_id], references: [id], onDelete: Restrict)
-
-  user_id String?
-  user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  transaction Transaction @relation(fields: [transaction_id], references: [id], onDelete: Restrict)
-
-  @@id([inventory_lot_id, transaction_id])
-  @@map("inventory_lot_transaction")
+  @@map("lot")
 }
 
 model SeedPatch {

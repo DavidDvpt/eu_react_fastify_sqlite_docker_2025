@@ -10,6 +10,9 @@
 
 */
 -- AlterTable
+ALTER TABLE "lot" RENAME CONSTRAINT "inventory_lot_pkey" TO "lot_pkey";
+
+-- AlterTable
 ALTER TABLE "session" ALTER COLUMN "cost_tt" SET DATA TYPE DECIMAL(65,30),
 ALTER COLUMN "cost_ttc" SET DATA TYPE DECIMAL(65,30),
 ALTER COLUMN "win_tt" SET DATA TYPE DECIMAL(65,30),
@@ -18,3 +21,9 @@ ALTER COLUMN "win_ttc" SET DATA TYPE DECIMAL(65,30);
 -- AlterTable
 ALTER TABLE "session_line" ALTER COLUMN "tt" SET DATA TYPE DECIMAL(65,30),
 ALTER COLUMN "ttc" SET DATA TYPE DECIMAL(65,30);
+
+-- RenameForeignKey
+ALTER TABLE "lot" RENAME CONSTRAINT "inventory_lot_item_id_fkey" TO "lot_item_id_fkey";
+
+-- RenameForeignKey
+ALTER TABLE "lot" RENAME CONSTRAINT "inventory_lot_user_id_fkey" TO "lot_user_id_fkey";

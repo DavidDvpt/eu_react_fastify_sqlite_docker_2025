@@ -1,10 +1,8 @@
-import { InventoryLotRepository } from './inventoryLotRepository.js';
-import { InventoryLotTransactionRepository } from './inventoryLotTransactionRepository.js';
+import { LotRepository } from './lotRepository.js';
 import { ItemCategoryRepository } from './itemCategoryRepository.js';
 import { ItemRepository } from './itemRepository.js';
 import { ItemTypeRepository } from './itemTypeRepository.js';
 import { SeedPatchRepository } from './seedPatchRepository.js';
-import { TransactionRepository } from './transactionRepository.js';
 import { UserRepository } from './userRepository.js';
 
 import type { PrismaModelClient } from './prismaCrudRepository.js';
@@ -14,9 +12,7 @@ export type RepositoryClient = PrismaModelClient<'User'> &
   PrismaModelClient<'ItemCategory'> &
   PrismaModelClient<'ItemType'> &
   PrismaModelClient<'Item'> &
-  PrismaModelClient<'InventoryLot'> &
-  PrismaModelClient<'Transaction'> &
-  PrismaModelClient<'InventoryLotTransaction'> &
+  PrismaModelClient<'Lot'> &
   PrismaModelClient<'SeedPatch'>;
 
 // Helper to create every repository from a single Prisma client instance.
@@ -25,19 +21,15 @@ export const createRepositories = (client: RepositoryClient) => ({
   itemCategory: new ItemCategoryRepository(client),
   itemType: new ItemTypeRepository(client),
   item: new ItemRepository(client),
-  inventoryLot: new InventoryLotRepository(client),
-  transaction: new TransactionRepository(client),
-  inventoryLotTransaction: new InventoryLotTransactionRepository(client),
+  lot: new LotRepository(client),
   seedPatch: new SeedPatchRepository(client),
 });
 
 export {
-  InventoryLotRepository,
-  InventoryLotTransactionRepository,
+  LotRepository,
   ItemCategoryRepository,
   ItemRepository,
   ItemTypeRepository,
   SeedPatchRepository,
-  TransactionRepository,
   UserRepository,
 };

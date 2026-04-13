@@ -2,12 +2,10 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
 import {
-  InventoryLotRepository,
-  InventoryLotTransactionRepository,
+  LotRepository,
   ItemCategoryRepository,
   ItemRepository,
   ItemTypeRepository,
-  TransactionRepository,
 } from '../index.js';
 
 const prisma = prismaClient;
@@ -15,9 +13,7 @@ const prisma = prismaClient;
 const categoryRepo = new ItemCategoryRepository(prisma);
 const typeRepo = new ItemTypeRepository(prisma);
 const itemRepo = new ItemRepository(prisma);
-const lotRepo = new InventoryLotRepository(prisma);
-const transactionRepo = new TransactionRepository(prisma);
-const lotTransactionRepo = new InventoryLotTransactionRepository(prisma);
+const lotRepo = new LotRepository(prisma);
 const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
 const USER_A_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 const USER_B_ID = '1947DAFD-0CA4-4673-8F25-EB4702265ACA';
@@ -240,7 +236,7 @@ describe('Read scope by repository', () => {
     expect(blocked).toBeNull();
   });
 
-  it('InventoryLot: reads current user only', async () => {
+  it('Lot: reads current user only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({
@@ -324,233 +320,6 @@ describe('Read scope by repository', () => {
     expect(blocked).toBeNull();
   });
 
-  it('Transaction: reads current user only', async () => {
-    const userA = { id: USER_A_ID };
-    const userB = { id: USER_B_ID };
-    const category = await categoryRepo.create({
-      data: {
-        name: `transaction-category-${suffix()}`,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-    const type = await typeRepo.create({
-      data: {
-        name: `transaction-type-${suffix()}`,
-        category_id: category.id,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-    const item = await itemRepo.create({
-      data: {
-        name: `transaction-item-${suffix()}`,
-        image_url_id: `img-${suffix()}`,
-        value: 5,
-        is_limited: false,
-        item_type_id: type.id,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-
-    const txA = await transactionRepo.create({
-      data: {
-        transaction_type: 'PURCHASE',
-        sell_status: 'RUNNING',
-        quantity: 2,
-        tt_value: 10,
-        ttc_value: 12,
-        fee: 2,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        item_id: item.id,
-        user_id: userA.id,
-      },
-    });
-    const txB = await transactionRepo.create({
-      data: {
-        transaction_type: 'GIFT',
-        sell_status: 'RUNNING',
-        quantity: 2,
-        tt_value: 10,
-        ttc_value: 12,
-        fee: 2,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        item_id: item.id,
-        user_id: userB.id,
-      },
-    });
-    const txGlobal = await transactionRepo.create({
-      data: {
-        transaction_type: 'FOUND',
-        sell_status: 'RUNNING',
-        quantity: 2,
-        tt_value: 10,
-        ttc_value: 12,
-        fee: 2,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        item_id: item.id,
-      },
-    });
-
-    const forA = await transactionRepo.findMany(undefined, userA.id);
-    expect(forA.map((t: { id: string }) => t.id)).toContain(txA.id);
-    expect(forA.map((t: { id: string }) => t.id)).not.toContain(txB.id);
-    expect(forA.map((t: { id: string }) => t.id)).not.toContain(txGlobal.id);
-
-    const blocked = await transactionRepo.findUnique({ where: { id: txB.id } }, userA.id);
-    expect(blocked).toBeNull();
-  });
-
-  it('InventoryLotTransaction: reads current user only', async () => {
-    const userA = { id: USER_A_ID };
-    const userB = { id: USER_B_ID };
-    const category = await categoryRepo.create({
-      data: {
-        name: `link-category-${suffix()}`,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-    const type = await typeRepo.create({
-      data: {
-        name: `link-type-${suffix()}`,
-        category_id: category.id,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-    const item = await itemRepo.create({
-      data: {
-        name: `link-item-${suffix()}`,
-        image_url_id: `img-${suffix()}`,
-        value: 5,
-        is_limited: false,
-        item_type_id: type.id,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-
-    const lotA = await lotRepo.create({
-      data: {
-        quantity_remaining: 10,
-        quantity_exported: 0,
-        price_remaining: '50',
-        item_id: item.id,
-        lot_type: 'LOT',
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userA.id,
-      },
-    });
-    const lotB = await lotRepo.create({
-      data: {
-        quantity_remaining: 10,
-        quantity_exported: 0,
-        price_remaining: '50',
-        item_id: item.id,
-        lot_type: 'LOT',
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        user_id: userB.id,
-      },
-    });
-
-    const txA = await transactionRepo.create({
-      data: {
-        transaction_type: 'PURCHASE',
-        sell_status: 'RUNNING',
-        quantity: 1,
-        tt_value: 10,
-        ttc_value: 12,
-        fee: 2,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        item_id: item.id,
-        user_id: userA.id,
-      },
-    });
-    const txB = await transactionRepo.create({
-      data: {
-        transaction_type: 'GIFT',
-        sell_status: 'RUNNING',
-        quantity: 1,
-        tt_value: 10,
-        ttc_value: 12,
-        fee: 2,
-        date_created: now(),
-        date_updated: null,
-        is_active: true,
-        item_id: item.id,
-        user_id: userB.id,
-      },
-    });
-
-    const linkA = await lotTransactionRepo.create({
-      data: {
-        inventory_lot_id: lotA.id,
-        transaction_id: txA.id,
-        quantity: 1,
-        user_id: userA.id,
-      },
-    });
-    const linkB = await lotTransactionRepo.create({
-      data: {
-        inventory_lot_id: lotB.id,
-        transaction_id: txB.id,
-        quantity: 1,
-        user_id: userB.id,
-      },
-    });
-
-    const forA = await lotTransactionRepo.findMany(undefined, userA.id);
-    expect(
-      forA.map((l: { inventory_lot_id: string; transaction_id: string }) => `${l.inventory_lot_id}-${l.transaction_id}`)
-    ).toContain(
-      `${linkA.inventory_lot_id}-${linkA.transaction_id}`
-    );
-    expect(
-      forA.map((l: { inventory_lot_id: string; transaction_id: string }) => `${l.inventory_lot_id}-${l.transaction_id}`)
-    ).not.toContain(
-      `${linkB.inventory_lot_id}-${linkB.transaction_id}`
-    );
-
-    const blocked = await lotTransactionRepo.findUnique(
-      {
-        where: {
-          inventory_lot_id_transaction_id: {
-            inventory_lot_id: linkB.inventory_lot_id,
-            transaction_id: linkB.transaction_id,
-          },
-        },
-      },
-      userA.id
-    );
-    expect(blocked).toBeNull();
-  });
-
   it('ItemCategory: update/delete allowed only for owner, global rows are read-only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
@@ -623,7 +392,7 @@ describe('Read scope by repository', () => {
     expect(deletedByOwner.id).toBe(categoryA.id);
   });
 
-  it('InventoryLot: update/delete allowed only for owner, global rows are read-only', async () => {
+  it('Lot: update/delete allowed only for owner, global rows are read-only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({

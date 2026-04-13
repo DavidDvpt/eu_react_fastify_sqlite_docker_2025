@@ -1,15 +1,7 @@
 import type { Prisma } from '../generated/client.js';
 import { SYSTEM_USER_ID } from './systemUser.js';
 
-const SELL_SOURCE: Array<{
-  id: string;
-  quantity: number;
-  tt_value: number;
-  ttc_value: number;
-  sell_status: 'RUNNING' | 'SOLDED' | 'RETURNED' | null;
-  item_id: string;
-  user_id: string | null;
-}> = [
+const SELL_SOURCE = [
   {
     "id": "0016DFFB-E880-472A-A83A-6132C9965865",
     "quantity": 10,
@@ -20026,21 +20018,9 @@ const SELL_SOURCE: Array<{
     "item_id": "F1D4CD79-3570-4731-8700-12762DB79BC8",
     "user_id": null
   }
-];
+] as const;
 
-const SELL_LINE_SPLIT_SOURCE: Array<{
-  id: string;
-  session_id: string;
-  item_id: string;
-  inventory_lot_id: string | null;
-  quantity: number;
-  line_type: 'OUT';
-  line_status: 'OPENNED' | 'ARCHIVED';
-  sale_status: 'RUNNING' | 'SOLDED' | 'RETURNED' | null;
-  tt: number;
-  ttc: number;
-  user_id: string | null;
-}> = [
+const SELL_LINE_SPLIT_SOURCE = [
   {
     "id": "0016DFFB-E880-472A-A83A-6132C9965865",
     "session_id": "TRADE-0016DFFB-E880-472A-A83A-6132C9965865",
@@ -50383,7 +50363,7 @@ const SELL_LINE_SPLIT_SOURCE: Array<{
     "ttc": 30,
     "user_id": null
   }
-];
+] as const;
 
 export const SESSIONS_SELL: Prisma.SessionCreateManyInput[] = SELL_SOURCE.map((tx) => ({
   id: `TRADE-${tx.id}`,
@@ -50393,7 +50373,7 @@ export const SESSIONS_SELL: Prisma.SessionCreateManyInput[] = SELL_SOURCE.map((t
   win_ttc: tx.ttc_value,
   session_type: 'TRADE',
   clics: 0,
-  status: tx.sell_status === 'RUNNING' ? 'OPENNED' : 'ARCHIVED',
+  status: (tx.sell_status as string | null) === 'RUNNING' ? 'OPENNED' : 'ARCHIVED',
   user_id: tx.user_id ?? SYSTEM_USER_ID,
 }));
 

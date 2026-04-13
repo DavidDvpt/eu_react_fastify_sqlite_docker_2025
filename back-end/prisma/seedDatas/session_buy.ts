@@ -1,16 +1,7 @@
 import type { Prisma } from '../generated/client.js';
 import { SYSTEM_USER_ID } from './systemUser.js';
 
-const TRADE_IN_SOURCE: Array<{
-  id: string;
-  transaction_type: 'PURCHASE' | 'EXISTING_STOCK' | 'FOUND' | 'GIFT' | 'GIVEN';
-  quantity: number;
-  tt_value: number;
-  ttc_value: number;
-  item_id: string;
-  inventory_lot_id: string | null;
-  user_id: string | null;
-}> = [
+const TRADE_IN_SOURCE = [
   {
     "id": "01429DE0-80B3-4EAF-8FCB-8490604C4BDE",
     "transaction_type": "PURCHASE",
@@ -1621,9 +1612,9 @@ const TRADE_IN_SOURCE: Array<{
     "inventory_lot_id": "D5F85603-F84A-4920-AF21-978E1376F1A1",
     "user_id": null
   }
-];
+] as const;
 
-export const SESSIONS_TRADE: Prisma.SessionCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
+export const SESSIONS_BUY: Prisma.SessionCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
   id: `TRADE-${tx.id}`,
   cost_tt: tx.tt_value,
   cost_ttc: tx.ttc_value,
@@ -1635,7 +1626,7 @@ export const SESSIONS_TRADE: Prisma.SessionCreateManyInput[] = TRADE_IN_SOURCE.m
   user_id: tx.user_id ?? SYSTEM_USER_ID,
 }));
 
-export const SESSION_TRADE_LINES: Prisma.SessionLineCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
+export const SESSION_BUY_LINES: Prisma.SessionLineCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
   id: tx.id,
   session_id: `TRADE-${tx.id}`,
   item_id: tx.item_id,
