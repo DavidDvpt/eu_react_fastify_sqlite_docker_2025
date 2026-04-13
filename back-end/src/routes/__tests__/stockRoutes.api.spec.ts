@@ -21,7 +21,8 @@ describe('stockRoutes', () => {
 
     app.decorate('repos', { lotStats } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
-      this.addHook('preHandler', (request) => {
+      // eslint-disable-next-line @typescript-eslint/require-await
+      this.addHook('preHandler', async (request) => {
         request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
       });
     });
