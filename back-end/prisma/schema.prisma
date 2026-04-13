@@ -118,6 +118,7 @@ model SessionLine {
   session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
   item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  lots    InventoryLot[]
 
   @@index([session_id])
   @@index([item_id])
@@ -191,6 +192,7 @@ model InventoryLot {
   quantity_exported  Int
   price_remaining    String
   item_id            String
+  session_line_id    String?
   lot_type           LotType
   date_created       String
   date_updated       String?
@@ -199,9 +201,11 @@ model InventoryLot {
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  item  Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  links InventoryLotTransaction[]
+  item         Item                      @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  session_line SessionLine?              @relation(fields: [session_line_id], references: [id], onDelete: SetNull)
+  links        InventoryLotTransaction[]
 
+  @@index([session_line_id])
   @@map("inventory_lot")
 }
 
