@@ -1,5 +1,3 @@
-import { Boxes, Package, Tags } from "lucide-react";
-
 const MANAGE_TAB_META = {
   category: {
     title: "Categories",
@@ -19,9 +17,9 @@ const MANAGE_TAB_META = {
 type ManageTab = keyof typeof MANAGE_TAB_META;
 
 const MANAGE_NAV_LINKS = [
-  { label: "Categorie", to: "/manage/category", Icon: Tags, tab: "category" },
-  { label: "Type", to: "/manage/type", Icon: Boxes, tab: "type" },
-  { label: "Item", to: "/manage/item", Icon: Package, tab: "item" },
+  { label: "Categorie", to: "/manage/category", tab: "category" },
+  { label: "Type", to: "/manage/type", tab: "type" },
+  { label: "Item", to: "/manage/item", tab: "item" },
 ] as const;
 
 function isManageTab(value: string | undefined): value is ManageTab {

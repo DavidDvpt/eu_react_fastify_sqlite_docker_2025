@@ -25,3 +25,7 @@ export {
   getItemRouteById,
   getItems,
 } from "./services/itemsApi";
+
+export { useCategories } from "@/shared/hooks/useCategories";
+export { useTypes } from "@/shared/hooks/useTypes";
+export { useItems } from "@/shared/hooks/useItems";
