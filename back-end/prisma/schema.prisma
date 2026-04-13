@@ -44,6 +44,23 @@ enum TransactionLineType {
   LOST
 }
 
+enum SessionType {
+  TRADE
+  MINING
+  CRAFTING
+}
+
+enum SessionStatus {
+  OPENNED
+  CLOSED
+  ARCHIVED
+}
+
+enum SessionLineType {
+  IN
+  OUT
+}
+
 model User {
   id                       String                    @id @default(uuid())
   firstname                String?
@@ -61,8 +78,51 @@ model User {
   transactions             Transaction[]
   inventoryLots            InventoryLot[]
   inventoryLotTransactions InventoryLotTransaction[]
+  sessions                 Session[]
+  sessionLines             SessionLine[]
 
   @@map("user")
+}
+
+model Session {
+  id           String        @id @default(uuid())
+  cost_tt      Decimal       @default(0)
+  cost_ttc     Decimal       @default(0)
+  win_tt       Decimal       @default(0)
+  win_ttc      Decimal       @default(0)
+  session_type SessionType
+  clics        Int           @default(0)
+  status       SessionStatus @default(OPENNED)
+  user_id      String
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  lines SessionLine[]
+
+  @@index([user_id])
+  @@map("session")
+}
+
+model SessionLine {
+  id          String             @id @default(uuid())
+  session_id  String
+  item_id     String
+  quantity    Int
+  line_type   SessionLineType
+  line_status SessionStatus      @default(OPENNED)
+  sale_status TransactionStatus?
+  tt          Decimal            @default(0)
+  ttc         Decimal            @default(0)
+  user_id     String
+
+  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
+  item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([session_id])
+  @@index([item_id])
+  @@index([user_id])
+  @@map("session_line")
 }
 
 model ItemCategory {
@@ -120,6 +180,7 @@ model Item {
   inventory_lots InventoryLot[]
 
   transactions Transaction[]
+  session_lines SessionLine[]
 
   @@map("item")
 }

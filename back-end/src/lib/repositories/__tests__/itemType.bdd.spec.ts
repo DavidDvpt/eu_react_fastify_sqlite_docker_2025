@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
 import { ItemCategoryRepository } from '../itemCategoryRepository.js';
@@ -9,17 +9,43 @@ import { itemCategoriesMock, itemTypesMock } from './mock.js';
 const prisma = prismaClient;
 const categoryRepo = new ItemCategoryRepository(prisma);
 const repo = new ItemTypeRepository(prisma);
+const DEFAULT_OWNER_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
+
+beforeAll(async () => {
+  await prisma.user.createMany({
+    data: [
+      {
+        id: DEFAULT_OWNER_ID,
+        firstname: 'BDD',
+        lastname: 'Owner',
+        pseudo: `bdd-owner-${DEFAULT_OWNER_ID.toLowerCase()}`,
+        email: `bdd-owner-${DEFAULT_OWNER_ID.toLowerCase()}@test.local`,
+        password_hash: 'hashed',
+        role: 'USER',
+        date_created: new Date().toISOString(),
+        date_updated: null,
+        is_active: true,
+      },
+    ],
+    skipDuplicates: true,
+  });
+});
 
 afterAll(async () => {
   await prisma.$disconnect();
 });
 
 describe('ItemTypeRepository CRUD', () => {
+  function createOwnerUserId() {
+    return DEFAULT_OWNER_ID;
+  }
+
   it('creates and reads an itemType', async () => {
+    const ownerId = createOwnerUserId();
     const category = await categoryRepo.create({
-      data: itemCategoriesMock()[0],
+      data: itemCategoriesMock(ownerId)[0],
     });
-    const [type] = itemTypesMock(category.id);
+    const [type] = itemTypesMock(category.id, ownerId);
     const created = await repo.create({ data: type });
     const found = await repo.findUnique({ where: { id: created.id } });
 
@@ -29,10 +55,11 @@ describe('ItemTypeRepository CRUD', () => {
   });
 
   it('updates an itemType', async () => {
+    const ownerId = createOwnerUserId();
     const category = await categoryRepo.create({
-      data: itemCategoriesMock()[0],
+      data: itemCategoriesMock(ownerId)[0],
     });
-    const [type] = itemTypesMock(category.id);
+    const [type] = itemTypesMock(category.id, ownerId);
     const created = await repo.create({ data: type });
     const updatedAt = new Date().toISOString();
     const updated = await repo.update({
@@ -45,10 +72,11 @@ describe('ItemTypeRepository CRUD', () => {
   });
 
   it('deletes an itemType', async () => {
+    const ownerId = createOwnerUserId();
     const category = await categoryRepo.create({
-      data: itemCategoriesMock()[0],
+      data: itemCategoriesMock(ownerId)[0],
     });
-    const [type] = itemTypesMock(category.id);
+    const [type] = itemTypesMock(category.id, ownerId);
     const created = await repo.create({ data: type });
 
     const deleted = await repo.delete({ where: { id: created.id } });
@@ -59,10 +87,11 @@ describe('ItemTypeRepository CRUD', () => {
   });
 
   it('lists itemTypes', async () => {
+    const ownerId = createOwnerUserId();
     const category = await categoryRepo.create({
-      data: itemCategoriesMock()[0],
+      data: itemCategoriesMock(ownerId)[0],
     });
-    const [typeA, typeB] = itemTypesMock(category.id);
+    const [typeA, typeB] = itemTypesMock(category.id, ownerId);
     await repo.create({ data: typeA });
     await repo.create({ data: typeB });
 

@@ -23,22 +23,24 @@ const usersMock = () => [
   },
 ];
 
-const itemCategoriesMock = () => [
+const itemCategoriesMock = (userId: string) => [
   {
     date_created: new Date().toISOString(),
     date_updated: null,
     is_active: true,
+    user_id: userId,
     name: `Material-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
   },
   {
     date_created: new Date().toISOString(),
     date_updated: null,
     is_active: true,
+    user_id: userId,
     name: `Tools-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
   },
 ];
 
-const itemTypesMock = (categoryId: string) => {
+const itemTypesMock = (categoryId: string, userId: string) => {
   const base = `${Date.now()}-${Math.random().toString(16).slice(2, 6)}`;
   return [
     {
@@ -46,6 +48,7 @@ const itemTypesMock = (categoryId: string) => {
       date_created: new Date().toISOString(),
       date_updated: null,
       is_active: true,
+      user_id: userId,
       name: `Type-${base}-a`,
     },
     {
@@ -53,17 +56,19 @@ const itemTypesMock = (categoryId: string) => {
       date_created: new Date().toISOString(),
       date_updated: null,
       is_active: true,
+      user_id: userId,
       name: `Type-${base}-b`,
     },
   ];
 };
 
-const itemMock = (typeId: string) => [
+const itemMock = (typeId: string, userId: string) => [
   {
     item_type_id: typeId,
     date_created: new Date().toISOString(),
     date_updated: null,
     is_active: true,
+    user_id: userId,
     is_limited: true,
     name: `Item-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
     value: 1.23,
@@ -74,6 +79,7 @@ const itemMock = (typeId: string) => [
     date_created: new Date().toISOString(),
     date_updated: null,
     is_active: true,
+    user_id: userId,
     is_limited: true,
     name: `Item-${Date.now()}-${Math.random().toString(16).slice(2, 6)}`,
     value: 2.34,

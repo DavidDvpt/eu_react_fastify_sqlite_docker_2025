@@ -36,6 +36,8 @@ type CrudRepositoryOptions = {
   userField?: string;
 };
 
+const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID;
+
 // Thin wrapper that forwards Prisma delegate calls while preserving types.
 export class PrismaCrudRepository<Delegate extends CrudDelegate> {
   protected readonly readScope: ReadScope;
@@ -55,11 +57,17 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
     }
 
     if (this.readScope === 'global-and-user') {
+      const globalScopes: Record<string, unknown>[] = [];
+      if (SYSTEM_USER_ID) {
+        globalScopes.push({ [this.userField]: SYSTEM_USER_ID });
+      }
+      globalScopes.push({ [this.userField]: userId });
+
       return {
         AND: [
           (where as Record<string, unknown>) ?? {},
           {
-            OR: [{ [this.userField]: null }, { [this.userField]: userId }],
+            OR: globalScopes,
           },
         ],
       };
@@ -118,7 +126,7 @@ export class PrismaCrudRepository<Delegate extends CrudDelegate> {
 
       const ownerId = (record as Record<string, unknown>)[this.userField];
       if (this.readScope === 'global-and-user') {
-        return ownerId === null || ownerId === userId ? record : null;
+        return ownerId === SYSTEM_USER_ID || ownerId === userId ? record : null;
       }
 
       return ownerId === userId ? record : null;

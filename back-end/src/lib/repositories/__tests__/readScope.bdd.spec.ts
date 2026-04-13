@@ -1,4 +1,4 @@
-import { afterAll, describe, expect, it } from 'vitest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
 import {
@@ -8,37 +8,66 @@ import {
   ItemRepository,
   ItemTypeRepository,
   TransactionRepository,
-  UserRepository,
 } from '../index.js';
 
 const prisma = prismaClient;
 
-const userRepo = new UserRepository(prisma);
 const categoryRepo = new ItemCategoryRepository(prisma);
 const typeRepo = new ItemTypeRepository(prisma);
 const itemRepo = new ItemRepository(prisma);
 const lotRepo = new InventoryLotRepository(prisma);
 const transactionRepo = new TransactionRepository(prisma);
 const lotTransactionRepo = new InventoryLotTransactionRepository(prisma);
+const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
+const USER_A_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
+const USER_B_ID = '1947DAFD-0CA4-4673-8F25-EB4702265ACA';
 
 const now = () => new Date().toISOString();
 const suffix = () => `${Date.now()}-${Math.random().toString(16).slice(2, 8)}`;
 
-async function createUser(tag: string) {
-  return userRepo.create({
-    data: {
-      firstname: tag,
-      lastname: 'Scope',
-      pseudo: `${tag}-${suffix()}`,
-      email: `${tag}-${suffix()}@test.local`,
-      password_hash: 'hashed',
-      role: 'USER',
-      date_created: now(),
-      date_updated: null,
-      is_active: true,
-    },
+beforeAll(async () => {
+  await prisma.user.createMany({
+    data: [
+      {
+        id: SYSTEM_USER_ID,
+        firstname: 'System',
+        lastname: 'User',
+        pseudo: `system-${SYSTEM_USER_ID.toLowerCase()}`,
+        email: `system-${SYSTEM_USER_ID.toLowerCase()}@test.local`,
+        password_hash: 'hashed',
+        role: 'ADMIN',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+      {
+        id: USER_A_ID,
+        firstname: 'User',
+        lastname: 'A',
+        pseudo: `user-a-${USER_A_ID.toLowerCase()}`,
+        email: `user-a-${USER_A_ID.toLowerCase()}@test.local`,
+        password_hash: 'hashed',
+        role: 'USER',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+      {
+        id: USER_B_ID,
+        firstname: 'User',
+        lastname: 'B',
+        pseudo: `user-b-${USER_B_ID.toLowerCase()}`,
+        email: `user-b-${USER_B_ID.toLowerCase()}@test.local`,
+        password_hash: 'hashed',
+        role: 'USER',
+        date_created: now(),
+        date_updated: null,
+        is_active: true,
+      },
+    ],
+    skipDuplicates: true,
   });
-}
+});
 
 afterAll(async () => {
   await prisma.$disconnect();
@@ -46,8 +75,8 @@ afterAll(async () => {
 
 describe('Read scope by repository', () => {
   it('ItemCategory: reads global + current user only', async () => {
-    const userA = await createUser('userA-category');
-    const userB = await createUser('userB-category');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
 
     const globalCategory = await categoryRepo.create({
       data: {
@@ -55,6 +84,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
     const categoryA = await categoryRepo.create({
@@ -86,14 +116,15 @@ describe('Read scope by repository', () => {
   });
 
   it('ItemType: reads global + current user only', async () => {
-    const userA = await createUser('userA-type');
-    const userB = await createUser('userB-type');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const baseCategory = await categoryRepo.create({
       data: {
         name: `type-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
 
@@ -104,6 +135,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
     const typeA = await typeRepo.create({
@@ -137,14 +169,15 @@ describe('Read scope by repository', () => {
   });
 
   it('Item: reads global + current user only', async () => {
-    const userA = await createUser('userA-item');
-    const userB = await createUser('userB-item');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const baseCategory = await categoryRepo.create({
       data: {
         name: `item-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
     const baseType = await typeRepo.create({
@@ -154,6 +187,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
 
@@ -167,6 +201,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
     const itemA = await itemRepo.create({
@@ -206,14 +241,15 @@ describe('Read scope by repository', () => {
   });
 
   it('InventoryLot: reads current user only', async () => {
-    const userA = await createUser('userA-lot');
-    const userB = await createUser('userB-lot');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({
       data: {
         name: `lot-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const type = await typeRepo.create({
@@ -223,6 +259,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const item = await itemRepo.create({
@@ -235,6 +272,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
 
@@ -287,14 +325,15 @@ describe('Read scope by repository', () => {
   });
 
   it('Transaction: reads current user only', async () => {
-    const userA = await createUser('userA-transaction');
-    const userB = await createUser('userB-transaction');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({
       data: {
         name: `transaction-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const type = await typeRepo.create({
@@ -304,6 +343,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const item = await itemRepo.create({
@@ -316,6 +356,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
 
@@ -374,14 +415,15 @@ describe('Read scope by repository', () => {
   });
 
   it('InventoryLotTransaction: reads current user only', async () => {
-    const userA = await createUser('userA-link');
-    const userB = await createUser('userB-link');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({
       data: {
         name: `link-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const type = await typeRepo.create({
@@ -391,6 +433,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const item = await itemRepo.create({
@@ -403,6 +446,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
 
@@ -508,8 +552,8 @@ describe('Read scope by repository', () => {
   });
 
   it('ItemCategory: update/delete allowed only for owner, global rows are read-only', async () => {
-    const userA = await createUser('userA-category-mutation');
-    const userB = await createUser('userB-category-mutation');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
 
     const globalCategory = await categoryRepo.create({
       data: {
@@ -517,6 +561,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: SYSTEM_USER_ID,
       },
     });
     const categoryA = await categoryRepo.create({
@@ -579,14 +624,15 @@ describe('Read scope by repository', () => {
   });
 
   it('InventoryLot: update/delete allowed only for owner, global rows are read-only', async () => {
-    const userA = await createUser('userA-lot-mutation');
-    const userB = await createUser('userB-lot-mutation');
+    const userA = { id: USER_A_ID };
+    const userB = { id: USER_B_ID };
     const category = await categoryRepo.create({
       data: {
         name: `lot-mutation-category-${suffix()}`,
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const type = await typeRepo.create({
@@ -596,6 +642,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
     const item = await itemRepo.create({
@@ -608,6 +655,7 @@ describe('Read scope by repository', () => {
         date_created: now(),
         date_updated: null,
         is_active: true,
+        user_id: userA.id,
       },
     });
 
