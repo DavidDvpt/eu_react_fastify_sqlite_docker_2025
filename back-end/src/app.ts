@@ -10,7 +10,10 @@ import authPlugin from './plugins/authPlugin.js';
 import prismaPlugin from './plugins/prisma.js';
 import repositoryPlugin from './plugins/repositories.js';
 import authRoutes from './routes/authRoutes.js';
+import imageRoutes from './routes/imageRoutes.js';
 import manageRoutes from './routes/manageRoutes.js';
+import sessionRoutes from './routes/sessionRoutes.js';
+import stockRoutes from './routes/stockRoutes.js';
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
@@ -48,7 +51,10 @@ export function buildApp({
 
   if (registerRoutes !== false) {
     app.register(authRoutes, { prefix: `${API_PREFIX}${AUTH_PREFIX}` });
+    app.register(imageRoutes, { prefix: API_PREFIX });
     app.register(manageRoutes, { prefix: API_PREFIX });
+    app.register(stockRoutes, { prefix: API_PREFIX });
+    app.register(sessionRoutes, { prefix: API_PREFIX });
   }
 
   return app;

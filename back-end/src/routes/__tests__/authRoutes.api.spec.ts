@@ -71,8 +71,7 @@ describe('authRoutes', () => {
     });
 
     app.decorate('protect', function (this: FastifyInstance) {
-      // eslint-disable-next-line @typescript-eslint/require-await
-      this.addHook('preHandler', async (request) => {
+      this.addHook('preHandler', (request) => {
         request.user = { id: 'user-1', role: Role.USER, pseudo: 'test' };
       });
     });
