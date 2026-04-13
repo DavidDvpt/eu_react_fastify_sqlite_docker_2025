@@ -7,9 +7,10 @@ class ImageService {
     if (!normalizedApiUrl || !imageUrlId) {
       return null;
     }
-    return `${normalizedApiUrl}/storage/images/${encodeURIComponent(
-      imageUrlId
-    )}?size=${size}`;
+    const encodedImageId = encodeURIComponent(imageUrlId);
+    const sizeQuery = size === "micro" ? "?size=micro" : "";
+
+    return `${normalizedApiUrl}/storage/images/${encodedImageId}${sizeQuery}`;
   }
 }
 

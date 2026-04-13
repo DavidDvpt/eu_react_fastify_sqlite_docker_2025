@@ -17,7 +17,7 @@ describe("ImageService", () => {
     }
 
     expect(result).toBe(
-      `${normalizedApiUrl}/storage/images/${encodeURIComponent("A B")}?size=normal`
+      `${normalizedApiUrl}/storage/images/${encodeURIComponent("A B")}`
     );
   });
 
