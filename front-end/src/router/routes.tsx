@@ -8,6 +8,7 @@ import RequireAuth from "@/modules/auth/guards/RequireAuth";
 import HomePage from "@/pages/HomePage";
 import ManagePage from "@/pages/manage/ManagePage";
 import NotFoundPage from "@/pages/NotFoundPage";
+import StockPage from "@/pages/stock/StockPage";
 import SignInPage from "@/pages/auth/SignInPage";
 import SignUpPage from "@/pages/auth/SignUpPage";
 import { Navigate } from "react-router-dom";
@@ -39,6 +40,7 @@ const routes = [
             children: [
               { index: true, element: <Navigate to="/home" replace /> },
               { path: "home", element: <HomePage /> },
+              { path: "stock", element: <StockPage /> },
               {
                 path: "manage",
                 element: <MainContentLayout />,

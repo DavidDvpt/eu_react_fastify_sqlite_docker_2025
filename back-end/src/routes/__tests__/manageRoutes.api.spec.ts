@@ -32,7 +32,7 @@ describe('manageRoutes', () => {
       create: vi.fn(),
       update: vi.fn(),
     };
-    const lotStats = { getStock: vi.fn(), getStockByItemId: vi.fn() };
+    const lotStock = { getStock: vi.fn(), getStockByItemId: vi.fn() };
     const sessionStats = { getSellSessions: vi.fn() };
     const images = { getImageBufferById: vi.fn() };
 
@@ -41,7 +41,7 @@ describe('manageRoutes', () => {
       itemCategories,
       itemTypes,
       items,
-      lotStats,
+      lotStock,
       sessionStats,
     } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
@@ -53,7 +53,7 @@ describe('manageRoutes', () => {
 
     app.register(manageRoutes, { prefix: API_PREFIX });
 
-    return { app, itemCategories, itemTypes, items, lotStats, sessionStats, images };
+    return { app, itemCategories, itemTypes, items, lotStock, sessionStats, images };
   }
 
   it('GET /api/v1/categories returns category list with readScope user context', async () => {

@@ -2,7 +2,7 @@ import type { ImageRepository } from '../lib/repositories/imageRepository.js';
 import type { ItemCategoryRepository } from '../lib/repositories/itemCategoryRepository.js';
 import type { ItemRepository } from '../lib/repositories/itemRepository.js';
 import type { ItemTypeRepository } from '../lib/repositories/itemTypeRepository.js';
-import type { LotStatsRepository } from '../lib/repositories/lotStatsRepository.js';
+import type { LotStockRepository } from '../lib/repositories/lotStockRepository.js';
 import type { SessionStatsRepository } from '../lib/repositories/sessionStatsRepository.js';
 import type { UserRepository } from '../lib/repositories/userRepository.js';
 import type { preHandlerHookHandler, preHandlerAsyncHookHandler, FastifyReply } from 'fastify';
@@ -29,7 +29,7 @@ declare module 'fastify' {
       itemCategories: ItemCategoryRepository;
       itemTypes: ItemTypeRepository;
       items: ItemRepository;
-      lotStats: LotStatsRepository;
+      lotStock: LotStockRepository;
       sessionStats: SessionStatsRepository;
     };
 

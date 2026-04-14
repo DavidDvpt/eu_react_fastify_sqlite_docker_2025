@@ -14,12 +14,12 @@ describe('stockRoutes', () => {
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
-    const lotStats = {
+    const lotStock = {
       getStock: vi.fn(),
       getStockByItemId: vi.fn(),
     };
 
-    app.decorate('repos', { lotStats } as unknown as FastifyInstance['repos']);
+    app.decorate('repos', { lotStock } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
@@ -29,30 +29,43 @@ describe('stockRoutes', () => {
 
     app.register(stockRoutes, { prefix: API_PREFIX });
 
-    return { app, lotStats };
+    return { app, lotStock };
   }
 
   it('GET /api/v1/stock returns stock list for authenticated user', async () => {
-    const { app, lotStats } = buildApp();
-    vi.mocked(lotStats.getStock).mockResolvedValueOnce([
-      { itemId: 'item-1', name: 'Oil', quantity: 250, totalPrice: 1250 },
+    const { app, lotStock } = buildApp();
+    vi.mocked(lotStock.getStock).mockResolvedValueOnce([
+      {
+        itemId: 'item-1',
+        imageUrlId: '123',
+        name: 'Oil',
+        quantity: 250,
+        totalPrice: 1250,
+      },
     ]);
 
     await app.ready();
     const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock` });
 
     expect(res.statusCode).toBe(200);
-    expect(lotStats.getStock).toHaveBeenCalledWith('user-1');
+    expect(lotStock.getStock).toHaveBeenCalledWith('user-1');
     expect(res.json()).toEqual([
-      { itemId: 'item-1', name: 'Oil', quantity: 250, totalPrice: 1250 },
+      {
+        itemId: 'item-1',
+        imageUrlId: '123',
+        name: 'Oil',
+        quantity: 250,
+        totalPrice: 1250,
+      },
     ]);
     await app.close();
   });
 
   it('GET /api/v1/stock/:id returns item stock for authenticated user', async () => {
-    const { app, lotStats } = buildApp();
-    vi.mocked(lotStats.getStockByItemId).mockResolvedValueOnce({
+    const { app, lotStock } = buildApp();
+    vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce({
       itemId: 'item-1',
+      imageUrlId: '123',
       name: 'Oil',
       quantity: 250,
       totalPrice: 1250,
@@ -62,14 +75,20 @@ describe('stockRoutes', () => {
     const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock/item-1` });
 
     expect(res.statusCode).toBe(200);
-    expect(lotStats.getStockByItemId).toHaveBeenCalledWith('user-1', 'item-1');
-    expect(res.json()).toEqual({ itemId: 'item-1', name: 'Oil', quantity: 250, totalPrice: 1250 });
+    expect(lotStock.getStockByItemId).toHaveBeenCalledWith('user-1', 'item-1');
+    expect(res.json()).toEqual({
+      itemId: 'item-1',
+      imageUrlId: '123',
+      name: 'Oil',
+      quantity: 250,
+      totalPrice: 1250,
+    });
     await app.close();
   });
 
   it('GET /api/v1/stock/:id returns 404 when item stock is not found', async () => {
-    const { app, lotStats } = buildApp();
-    vi.mocked(lotStats.getStockByItemId).mockResolvedValueOnce(null);
+    const { app, lotStock } = buildApp();
+    vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce(null);
 
     await app.ready();
     const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock/item-x` });

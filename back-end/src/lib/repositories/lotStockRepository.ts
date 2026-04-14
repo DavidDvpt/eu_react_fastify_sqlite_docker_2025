@@ -6,18 +6,20 @@ type PrismaLikeClient = PrismaClient | Prisma.TransactionClient;
 
 export type StockByItemRow = {
   itemId: string;
+  imageUrlId: string;
   name: string;
   quantity: number;
   totalPrice: number;
 };
 
-export class LotStatsRepository {
+export class LotStockRepository {
   constructor(private readonly client: PrismaLikeClient) {}
 
   async getStock(userId: string): Promise<StockByItemRow[]> {
     const rows = await this.client.$queryRaw<
       Array<{
         item_id: string;
+        image_url_id: string;
         name: string;
         quantity: Prisma.Decimal | number;
         total_price: Prisma.Decimal | number;
@@ -26,6 +28,7 @@ export class LotStatsRepository {
       Prisma.sql`
         SELECT
           i.id AS item_id,
+          i.image_url_id,
           i.name,
           COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
           COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
@@ -33,13 +36,14 @@ export class LotStatsRepository {
         JOIN lot l ON l.item_id = i.id AND l.is_active = true
         WHERE l.user_id = ${userId}
           AND l.quantity_remaining > 0
-        GROUP BY i.id, i.name
+        GROUP BY i.id, i.image_url_id, i.name
         ORDER BY i.name
       `
     );
 
     return rows.map((row) => ({
       itemId: row.item_id,
+      imageUrlId: row.image_url_id,
       name: row.name,
       quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
       totalPrice:
@@ -51,6 +55,7 @@ export class LotStatsRepository {
     const rows = await this.client.$queryRaw<
       Array<{
         item_id: string;
+        image_url_id: string;
         name: string;
         quantity: Prisma.Decimal | number;
         total_price: Prisma.Decimal | number;
@@ -59,6 +64,7 @@ export class LotStatsRepository {
       Prisma.sql`
         SELECT
           i.id AS item_id,
+          i.image_url_id,
           i.name,
           COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
           COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
@@ -67,7 +73,7 @@ export class LotStatsRepository {
         WHERE l.user_id = ${userId}
           AND i.id = ${itemId}
           AND l.quantity_remaining > 0
-        GROUP BY i.id, i.name
+        GROUP BY i.id, i.image_url_id, i.name
       `
     );
 
@@ -78,6 +84,7 @@ export class LotStatsRepository {
 
     return {
       itemId: row.item_id,
+      imageUrlId: row.image_url_id,
       name: row.name,
       quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
       totalPrice:
