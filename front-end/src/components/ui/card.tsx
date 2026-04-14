@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 const cardVariants = cva("rounded-xl bg-card text-card-foreground", {
   variants: {
     variant: {
-      default: "border-0 shadow-ambient-lg",
+      default: "text-text bg-card shadow-card border border-card-border",
       primary: "border-[3px] border-primary-500 shadow-ambient-lg",
       neutral: "border-[3px] border-neutral-500 shadow-ambient-lg",
       success: "border-[3px] border-success-500 shadow-ambient-lg",
@@ -37,7 +37,7 @@ const CardHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    className={cn("flex flex-col space-y-1.5 p-6", className)}
+    className={cn("flex flex-col space-y-1.5 p-6 text-card-title", className)}
     {...props}
   />
 ));

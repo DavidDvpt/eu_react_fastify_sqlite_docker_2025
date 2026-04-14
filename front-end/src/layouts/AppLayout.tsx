@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 function AppLayout() {
   return (
     <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
-      <header className="h-[80px] shrink-0 bg-layout-app-bg text-layout-app-fg rounded-md">
+      <header className="h-[80px] shrink-0 rounded-md">
         <Navbar />
       </header>
       <main className="flex-1 min-h-0 overflow-hidden bg-layout-app-bg text-layout-app-fg rounded-md">

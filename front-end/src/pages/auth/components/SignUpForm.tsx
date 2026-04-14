@@ -54,7 +54,7 @@ function SignUpForm({ className, onSubmit }: ISignUpFormProps) {
         autoComplete="new-password"
         inputClassName="py-2"
       />
-      <Button type="submit" className="mt-4" variant="success">
+      <Button type="submit" className="mt-4" variant="primary">
         S&apos;inscrire
       </Button>
     </GenericForm>

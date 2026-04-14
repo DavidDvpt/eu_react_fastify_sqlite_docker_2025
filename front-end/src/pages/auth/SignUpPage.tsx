@@ -1,9 +1,10 @@
 import AppCard from "@/components/common/AppCard";
 import signupApi from "@/modules/auth/services/network/signupApi";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignUpForm from "./components/SignUpForm";
 import type { SignUpOutput } from "./validations";
 import styles from "./styles/signup.module.css";
+import { AppLink } from "@/components/common/AppLink";
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -26,12 +27,13 @@ function SignUpPage() {
         <div className="space-y-4">
           <SignUpForm onSubmit={handleSubmit} />
           <div className="flex justify-center text-sm">
-            <Link
+            <AppLink
               to="/auth/signin"
               className="text-sm font-medium text-info underline-offset-4 transition-colors hover:text-info/80 hover:underline"
+              content="Deja inscrit ? Connexion"
             >
               Deja inscrit ? Connexion
-            </Link>
+            </AppLink>
           </div>
         </div>
       }
