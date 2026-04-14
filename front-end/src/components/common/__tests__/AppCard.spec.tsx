@@ -35,8 +35,9 @@ describe("AppCard", () => {
     );
 
     const root = container.firstElementChild as HTMLElement;
-    expect(root).toHaveClass("border-0");
-    expect(root).toHaveClass("shadow-ambient-lg");
+    expect(root).toHaveClass("border");
+    expect(root).toHaveClass("border-card-border");
+    expect(root).toHaveClass("shadow-card");
   });
 
   it("applies danger variant classes", () => {

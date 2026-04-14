@@ -12,7 +12,7 @@ describe("Button variants", () => {
     expect(button.className).toContain("text-button-primary-text");
     expect(button.className).toContain("border-button-primary-border");
     expect(button.className).toContain("hover:bg-button-primary-hover-bg");
-    expect(button.className).toContain("active:bg-button-primary-active-bg");
+    expect(button.className).toContain("active:bg-button-primary-bg");
   });
 
   it("applies warning variant classes", () => {
