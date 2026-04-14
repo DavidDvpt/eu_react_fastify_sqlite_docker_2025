@@ -14,6 +14,7 @@ type GenericTableProps<T> = {
   columns: GenericTableColumn<T>[];
   rows: T[];
   getRowKey: (row: T) => string;
+  onRowClick?: (row: T) => void;
   isLoading?: boolean;
   isError?: boolean;
   loadingMessage?: string;
@@ -38,6 +39,7 @@ function GenericTable<T>({
   columns,
   rows,
   getRowKey,
+  onRowClick,
   isLoading = false,
   isError = false,
   loadingMessage = "Chargement...",
@@ -83,6 +85,7 @@ function GenericTable<T>({
             <tr
               key={getRowKey(row)}
               className={typeof rowClassName === "function" ? rowClassName(row) : rowClassName}
+              onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
               {columns.map((column) => {
                 const content =

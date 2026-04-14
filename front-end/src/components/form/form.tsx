@@ -20,7 +20,7 @@ const Form = FormProvider;
 
 const FormField = <
   TFieldValues extends FieldValues = FieldValues,
-  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
+  TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
 >({
   ...props
 }: ControllerProps<TFieldValues, TName>) => {
@@ -54,7 +54,11 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && "text-danger", className)}
+      className={cn(
+        "text-input-label",
+        error && "text-destructive-300",
+        className,
+      )}
       htmlFor={formItemId}
       {...props}
     />
@@ -118,8 +122,8 @@ const FormMessage = React.forwardRef<
       ref={ref}
       id={formMessageId}
       className={cn(
-        "text-[0.8rem] italic mt-0 font-medium text-danger",
-        className
+        "text-[0.8rem] italic mt-0 font-medium text-destructive-300",
+        className,
       )}
       {...props}
     >
