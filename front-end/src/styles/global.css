@@ -6,8 +6,8 @@
 @tailwind utilities;
 
 @theme inline {
-  --color-white: car(--white);
-  --color-black: car(--black);
+  --color-white: var(--white);
+  --color-black: var(--black);
   --color-bg: var(--background);
   --color-text: var(--text);
 
@@ -40,6 +40,9 @@
   --color-button-tertiary-text: var(--button-tertiary-text);
   --color-button-tertiary-hover-text: var(--button-tertiary-hover-text);
   --color-button-tertiary-active-text: var(--button-tertiary-active-text);
+
+  --color-h-navbar-hover: var(--h-navbar-hover);
+  --color-h-navbar-text: var(--h-navbar-text);
 
   --color-info: var(--info);
 
@@ -251,6 +254,10 @@
   --button-tertiary-text: var(--L2C2);
   --button-tertiary-hover-text: var(--L2C1);
   --button-tertiary-active-text: var(--L2C3);
+
+  --h-navbar-hover: var(--L4C6);
+  --h-navbar-text: var(--L1C1);
+  --h-navbar-text: var(--L1C1);
 
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
