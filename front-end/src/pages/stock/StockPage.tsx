@@ -6,13 +6,12 @@ import StockPanel from "./components/StockPanel";
 function StockPage() {
   const { data: stockRows = [], isPending, isError } = useStock();
   const [selectedItemId, setSelectedItemId] = useState<string | null>(null);
-
   const {
     data: stockDetails = null,
     isPending: detailsPending,
     isError: detailsError,
   } = useStockDetails(selectedItemId);
-
+  const isDetailsLoading = Boolean(selectedItemId) && detailsPending;
   return (
     <div className="mx-auto flex h-full min-h-0 w-full max-w-[1280px] max-h-[100%] items-stretch justify-between overflow-hidden px-4 py-4">
       <StockPanel
@@ -26,7 +25,7 @@ function StockPage() {
       <StockDetailsPanel
         className="w-[49%] min-h-0 overflow-hidden max-lg:hidden"
         details={stockDetails}
-        isLoading={detailsPending}
+        isLoading={isDetailsLoading}
         isError={detailsError}
       />
     </div>

@@ -27,7 +27,7 @@ type GenericTableProps<T> = {
 const DEFAULT_HEADER_CLASS =
   "px-4 py-3 font-semibold text-table-head-text bg-table-head-bg";
 const DEFAULT_CELL_CLASS = "px-4 py-1.5 h-10 text-table-body-text";
-const IMAGE_COLUMN_SIZE_CLASS = "w-[30px] min-w-[30px] max-w-[30px] px-0";
+const IMAGE_COLUMN_SIZE_CLASS = "w-[32px] min-w-[32px] max-w-[32px] px-0";
 const DEFAULT_ROW_CLASS =
   "border-b border-table-border text-table-head-text last:border-b-0 odd:bg-table-row-odd-bg even:bg-table-row-even-bg hover:bg-table-row-hover-bg cursor-pointer";
 const DEFAULT_FOOTER_CLASS =

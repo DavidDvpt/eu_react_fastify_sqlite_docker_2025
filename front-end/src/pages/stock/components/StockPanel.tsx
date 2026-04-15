@@ -1,5 +1,12 @@
+import { useMemo } from "react";
 import { GenericTable } from "@/shared/components";
 import { STOCK_ROUTE, type StockRow } from "@/modules/stock";
+import {
+  GenericFilter,
+  useGenericObjectFilter,
+  type GenericFilterModel,
+} from "@/components/common/GenericFilter";
+import { useItems, useTypes } from "@/modules/manage";
 
 import { stockColumns } from "./stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
@@ -13,6 +20,43 @@ type StockPanelProps = {
   className?: string;
 };
 
+type StockFilterRow = StockRow & {
+  itemTypeId: string | null;
+  itemTypeName: string | null;
+  categoryId: string | null;
+  categoryName: string | null;
+};
+
+const STOCK_FILTER_MODEL: GenericFilterModel<StockFilterRow> = {
+  fields: [
+    {
+      key: "category",
+      label: "Categorie",
+      kind: "select",
+      allLabel: "Toutes les categories",
+      dependsOn: ["type", "search"],
+      getValue: (row) => row.categoryId,
+      getLabel: (row) => row.categoryName ?? row.categoryId,
+    },
+    {
+      key: "type",
+      label: "Type",
+      kind: "select",
+      allLabel: "Tous les types",
+      dependsOn: ["category", "search"],
+      getValue: (row) => row.itemTypeId,
+      getLabel: (row) => row.itemTypeName ?? row.itemTypeId,
+    },
+    {
+      key: "search",
+      label: "Nom",
+      kind: "autocomplete",
+      placeholder: "Ex: Oil",
+      getValue: (row) => row.name,
+    },
+  ],
+};
+
 function StockPanel({
   rows,
   isLoading,
@@ -21,28 +65,74 @@ function StockPanel({
   onSelectItem,
   className,
 }: StockPanelProps) {
-  const totalPrice = rows.reduce((acc, row) => acc + row.totalPrice, 0);
+  const { data: items = [] } = useItems();
+  const { data: types = [] } = useTypes();
+
+  const typeById = useMemo(
+    () =>
+      types.reduce<Record<string, (typeof types)[number]>>((acc, type) => {
+        acc[type.id] = type;
+        return acc;
+      }, {}),
+    [types],
+  );
+
+  const itemById = useMemo(
+    () =>
+      items.reduce<Record<string, (typeof items)[number]>>((acc, item) => {
+        acc[item.id] = item;
+        return acc;
+      }, {}),
+    [items],
+  );
+
+  const filterRows = useMemo<StockFilterRow[]>(
+    () =>
+      rows.map((row) => {
+        const item = itemById[row.itemId];
+        const itemType = item ? typeById[item.itemTypeId] : undefined;
+        return {
+          ...row,
+          itemTypeId: item?.itemTypeId ?? null,
+          itemTypeName: item?.itemTypeName ?? itemType?.name ?? null,
+          categoryId: itemType?.categoryId ?? null,
+          categoryName: itemType?.categoryName ?? null,
+        };
+      }),
+    [itemById, rows, typeById],
+  );
+
+  const stockFilter = useGenericObjectFilter<StockFilterRow>({
+    items: filterRows,
+    model: STOCK_FILTER_MODEL,
+  });
+  const filteredRows = stockFilter.filteredItems;
+  const totalPrice = filteredRows.reduce((acc, row) => acc + row.totalPrice, 0);
 
   return (
-    <GenericTable<StockRow>
-      columns={stockColumns}
-      rows={rows}
-      getRowKey={(row) => row.itemId}
-      onRowClick={(row) => onSelectItem(row.itemId)}
-      isLoading={isLoading}
-      isError={isError}
-      loadingMessage="Chargement du stock..."
-      errorMessage={`Impossible de charger le stock (endpoint attendu: ${STOCK_ROUTE}).`}
-      emptyMessage="Aucun item en stock."
-      className={className}
-      rowClassName={(row) =>
-        [
-          "hover:bg-muted/30 cursor-pointer",
-          selectedItemId === row.itemId ? "bg-muted/40" : "",
-        ].join(" ")
-      }
-      footer={`Total: ${FormatTools.pedFormat().format(totalPrice)} Peds`}
-    />
+    <div className={`flex h-full min-h-0 flex-col gap-2 ${className ?? ""}`}>
+      <GenericFilter model={STOCK_FILTER_MODEL} filter={stockFilter} hasInput />
+
+      <GenericTable<StockRow>
+        columns={stockColumns}
+        rows={filteredRows}
+        getRowKey={(row) => row.itemId}
+        onRowClick={(row) => onSelectItem(row.itemId)}
+        isLoading={isLoading}
+        isError={isError}
+        loadingMessage="Chargement du stock..."
+        errorMessage={`Impossible de charger le stock (endpoint attendu: ${STOCK_ROUTE}).`}
+        emptyMessage="Aucun item en stock."
+        className="flex-1 min-h-0"
+        rowClassName={(row) =>
+          [
+            "hover:bg-muted/30 cursor-pointer",
+            selectedItemId === row.itemId ? "bg-muted/40" : "",
+          ].join(" ")
+        }
+        footer={`Total: ${FormatTools.pedFormat().format(totalPrice)} Peds`}
+      />
+    </div>
   );
 }
 

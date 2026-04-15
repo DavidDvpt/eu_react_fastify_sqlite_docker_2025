@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -22,6 +22,11 @@ function GenericFilter<T>({
   hasIsLimited = true,
   className,
 }: GenericFilterProps<T>) {
+  const leftColumnRef = useRef<HTMLDivElement | null>(null);
+  const rightColumnRef = useRef<HTMLDivElement | null>(null);
+  const [isLeftCompact, setIsLeftCompact] = useState(false);
+  const [isRightCompact, setIsRightCompact] = useState(false);
+
   const visibleFields = useMemo(
     () =>
       model.fields.filter((field) => {
@@ -63,6 +68,31 @@ function GenericFilter<T>({
     }
   }, [filter, hasIsLimited]);
 
+  useEffect(() => {
+    const leftElement = leftColumnRef.current;
+    const rightElement = rightColumnRef.current;
+    if (!leftElement || !rightElement) return;
+
+    if (typeof ResizeObserver === "undefined") {
+      setIsLeftCompact(leftElement.clientWidth < 300);
+      setIsRightCompact(rightElement.clientWidth < 300);
+      return;
+    }
+
+    const observer = new ResizeObserver(() => {
+      setIsLeftCompact(leftElement.clientWidth < 300);
+      setIsRightCompact(rightElement.clientWidth < 300);
+    });
+
+    observer.observe(leftElement);
+    observer.observe(rightElement);
+
+    setIsLeftCompact(leftElement.clientWidth < 300);
+    setIsRightCompact(rightElement.clientWidth < 300);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
     <section
       className={cn(
@@ -71,8 +101,8 @@ function GenericFilter<T>({
       )}
       aria-label="Filtres"
     >
-      <div className="flex flex-wrap">
-        <div className="flex flex-col w-[49%]">
+      <div className="flex flex-nowrap justify-between">
+        <div ref={leftColumnRef} className="flex min-w-0 flex-col w-[49%]">
           {selectFields.length > 0 ? (
             <div className="flex flex-col gap-2">
               {selectFields.map((field) => {
@@ -88,7 +118,9 @@ function GenericFilter<T>({
                   <div
                     key={field.key}
                     className={cn(
-                      "min-w-[100px] max-w-[60%] shrink-0",
+                      isLeftCompact
+                        ? "w-full min-w-0"
+                        : "min-w-[100px] max-w-[60%] shrink-0",
                       field.className,
                     )}
                   >
@@ -135,7 +167,10 @@ function GenericFilter<T>({
             </div>
           ) : null}
         </div>
-        <div className="flex flex-col w-[49%] gap-4">
+        <div
+          ref={rightColumnRef}
+          className="flex min-w-0 flex-col w-[49%] gap-4"
+        >
           {autocompleteFields.length > 0 &&
             autocompleteFields.map((field) => {
               const currentValue = filter.filterState[field.key];
@@ -146,7 +181,12 @@ function GenericFilter<T>({
               return (
                 <div
                   key={field.key}
-                  className={cn("min-w-[100px] max-w-[80%] ", field.className)}
+                  className={cn(
+                    isRightCompact
+                      ? "w-full min-w-0"
+                      : "min-w-[100px] max-w-[80%]",
+                    field.className,
+                  )}
                 >
                   <Label htmlFor={id}>{field.label}</Label>
                   {hasInput ? (
@@ -162,7 +202,7 @@ function GenericFilter<T>({
                           updateValue(field.key, event.target.value)
                         }
                         disabled={field.disabled}
-                        className="mt-2"
+                        className="mt-2 h-9"
                       />
                       <datalist id={datalistId}>
                         {options.map((option) => (

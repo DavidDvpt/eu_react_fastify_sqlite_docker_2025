@@ -105,6 +105,7 @@ describe('stockRoutes', () => {
           id: 'lot-1',
           lotType: 'SESSION_LINE',
           quantityRemaining: 200,
+          quantityInitial: 250,
           quantityExported: 50,
           priceRemaining: 40,
           dateCreated: '2025-10-21 13:37:17.68',
@@ -112,6 +113,7 @@ describe('stockRoutes', () => {
       ],
       lotsOut: [
         {
+          id: 'line-1',
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
           tt: 20,
@@ -138,6 +140,7 @@ describe('stockRoutes', () => {
           id: 'lot-1',
           lotType: 'SESSION_LINE',
           quantityRemaining: 200,
+          quantityInitial: 250,
           quantityExported: 50,
           priceRemaining: 40,
           dateCreated: '2025-10-21 13:37:17.68',
@@ -145,6 +148,7 @@ describe('stockRoutes', () => {
       ],
       lotsOut: [
         {
+          id: 'line-1',
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
           tt: 20,

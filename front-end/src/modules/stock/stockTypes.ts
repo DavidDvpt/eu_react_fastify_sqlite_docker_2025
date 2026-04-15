@@ -23,6 +23,7 @@ type StockLotInApi = {
   id: string;
   lotType: string;
   quantityRemaining: number | string;
+  quantityInitial: number | string;
   quantityExported: number | string;
   priceRemaining: number | string;
   dateCreated: string;
@@ -32,12 +33,14 @@ type StockLotIn = {
   id: string;
   lotType: string;
   quantityRemaining: number;
+  quantityInitial: number;
   quantityExported: number;
   priceRemaining: number;
   dateCreated: string;
 };
 
 type StockLotOutApi = {
+  id: string;
   dateCreated: string;
   quantity: number | string;
   tt: number | string;
@@ -46,6 +49,7 @@ type StockLotOutApi = {
 };
 
 type StockLotOut = {
+  id: string;
   dateCreated: string;
   quantity: number;
   tt: number;

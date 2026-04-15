@@ -15,6 +15,10 @@
   --color-card-border: var(--card-border-color);
   --color-card-title: var(--card-title-color);
   --shadow-card: 0 10px 30px var(--card-shadow-color);
+  --color-card-inner: var(--card-inner-bg);
+  --color-card-inner-border: var(--card-inner-border-color);
+  --color-card-inner-title: var(--card-inner-title-color);
+  --shadow-card-inner: 0 0 10px var(--card-inner-shadow-color);
 
   --color-input-label: var(--input-label-color);
   --color-input-bg: var(--input-bg-color);
@@ -243,6 +247,10 @@
   --card-title-color: var(--L1C1);
   --card-border-color: var(--L4C10);
   --card-shadow-color: var(--L4C12);
+  --card-inner-bg: var(--L4C4);
+  --card-inner-title-color: var(--L1C2);
+  --card-inner-border-color: var(--L4C3);
+  --card-inner-shadow-color: var(--L3C2);
   --radius: 0.25rem;
 
   --input-label-color: var(--L1C3);

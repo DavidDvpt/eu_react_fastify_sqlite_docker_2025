@@ -37,11 +37,13 @@ function parseStockDetails(details: StockDetailsApi): StockDetails {
       id: lot.id,
       lotType: lot.lotType,
       quantityRemaining: toNumber(lot.quantityRemaining),
+      quantityInitial: toNumber(lot.quantityInitial),
       quantityExported: toNumber(lot.quantityExported),
       priceRemaining: toNumber(lot.priceRemaining),
       dateCreated: lot.dateCreated,
     })),
     lotsOut: details.lotsOut.map((line) => ({
+      id: line.id,
       dateCreated: line.dateCreated,
       quantity: toNumber(line.quantity),
       tt: toNumber(line.tt),

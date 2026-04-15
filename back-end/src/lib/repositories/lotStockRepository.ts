@@ -17,12 +17,14 @@ export type StockLotInRow = {
   id: string;
   lotType: string;
   quantityRemaining: number;
+  quantityInitial: number;
   quantityExported: number;
   priceRemaining: number;
   dateCreated: string;
 };
 
 export type StockLotOutRow = {
+  id: string;
   dateCreated: string;
   quantity: number;
   tt: number;
@@ -138,6 +140,7 @@ export class LotStockRepository {
         id: string;
         lot_type: string;
         quantity_remaining: number;
+        quantity_initial: number;
         quantity_exported: number;
         price_remaining: string;
         date_created: string;
@@ -148,10 +151,21 @@ export class LotStockRepository {
           l.id,
           l.lot_type,
           l.quantity_remaining,
+          COALESCE(sl_in.quantity, l.quantity_remaining + l.quantity_exported) AS quantity_initial,
           l.quantity_exported,
           l.price_remaining,
           l.date_created
         FROM lot l
+        LEFT JOIN LATERAL (
+          SELECT sl.quantity
+          FROM session_line sl
+          WHERE sl.inventory_lot_id = l.id
+            AND sl.user_id = ${userId}
+            AND sl.item_id = ${itemId}
+            AND sl.line_type = 'IN'
+          ORDER BY sl.id ASC
+          LIMIT 1
+        ) sl_in ON TRUE
         WHERE l.user_id = ${userId}
           AND l.item_id = ${itemId}
           AND l.is_active = true
@@ -161,6 +175,7 @@ export class LotStockRepository {
 
     const lotsOutRows = await this.client.$queryRaw<
       Array<{
+        id: string;
         date_created: string | null;
         quantity: number;
         tt: Prisma.Decimal | number;
@@ -170,6 +185,7 @@ export class LotStockRepository {
     >(
       Prisma.sql`
         SELECT
+          sl.id,
           l.date_created,
           sl.quantity,
           sl.tt,
@@ -180,7 +196,7 @@ export class LotStockRepository {
         WHERE sl.user_id = ${userId}
           AND sl.item_id = ${itemId}
           AND sl.line_type = 'OUT'
-        ORDER BY l.date_created DESC NULLS LAST
+        ORDER BY sl.id DESC
       `
     );
 
@@ -190,11 +206,13 @@ export class LotStockRepository {
         id: row.id,
         lotType: row.lot_type,
         quantityRemaining: row.quantity_remaining,
+        quantityInitial: row.quantity_initial,
         quantityExported: row.quantity_exported,
         priceRemaining: Number(row.price_remaining),
         dateCreated: row.date_created,
       })),
       lotsOut: lotsOutRows.map((row) => ({
+        id: row.id,
         dateCreated: row.date_created ?? '',
         quantity: row.quantity,
         tt: typeof row.tt === 'number' ? row.tt : Number(row.tt.toString()),
