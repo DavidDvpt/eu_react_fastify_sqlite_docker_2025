@@ -20,11 +20,15 @@ describe("GenericTable", () => {
         columns={columns}
         rows={[{ id: "1", name: "", qty: 3 }]}
         getRowKey={(row) => row.id}
-      />
+      />,
     );
 
-    expect(screen.getByRole("columnheader", { name: "Nom" })).toBeInTheDocument();
-    expect(screen.getByRole("columnheader", { name: "Qty" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("columnheader", { name: "Nom" }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole("columnheader", { name: "Qty" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("-")).toBeInTheDocument();
     expect(screen.getByText("3u")).toBeInTheDocument();
   });
@@ -37,7 +41,7 @@ describe("GenericTable", () => {
         getRowKey={(row) => row.id}
         isLoading
         loadingMessage="Loading rows..."
-      />
+      />,
     );
     expect(screen.getByText("Loading rows...")).toBeInTheDocument();
 
@@ -48,7 +52,7 @@ describe("GenericTable", () => {
         getRowKey={(row) => row.id}
         isError
         errorMessage="Oops"
-      />
+      />,
     );
     expect(screen.getByText("Oops")).toBeInTheDocument();
 
@@ -58,7 +62,7 @@ describe("GenericTable", () => {
         rows={[]}
         getRowKey={(row) => row.id}
         emptyMessage="No rows"
-      />
+      />,
     );
     expect(screen.getByText("No rows")).toBeInTheDocument();
   });
@@ -79,7 +83,11 @@ describe("GenericTable", () => {
 
     fireEvent.click(screen.getByText("Item 1"));
     expect(onRowClick).toHaveBeenCalledTimes(1);
-    expect(onRowClick).toHaveBeenCalledWith({ id: "1", name: "Item 1", qty: 3 });
+    expect(onRowClick).toHaveBeenCalledWith({
+      id: "1",
+      name: "Item 1",
+      qty: 3,
+    });
   });
 
   it("applies a fixed width on image columns", () => {
@@ -99,14 +107,14 @@ describe("GenericTable", () => {
     ).not.toBeInTheDocument();
 
     const imageHeader = screen.getAllByRole("columnheader")[0];
-    expect(imageHeader.className).toContain("w-[30px]");
-    expect(imageHeader.className).toContain("min-w-[30px]");
-    expect(imageHeader.className).toContain("max-w-[30px]");
+    expect(imageHeader.className).toContain("w-[32px]");
+    expect(imageHeader.className).toContain("min-w-[32px]");
+    expect(imageHeader.className).toContain("max-w-[32px]");
 
     const imageCell = screen.getByText("img").closest("td");
-    expect(imageCell?.className).toContain("w-[30px]");
-    expect(imageCell?.className).toContain("min-w-[30px]");
-    expect(imageCell?.className).toContain("max-w-[30px]");
+    expect(imageCell?.className).toContain("w-[32px]");
+    expect(imageCell?.className).toContain("min-w-[32px]");
+    expect(imageCell?.className).toContain("max-w-[32px]");
   });
 
   it("renders footer when provided", () => {
