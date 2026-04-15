@@ -12,4 +12,5 @@ export type {
   GenericFilterState,
   GenericFilterStateValue,
   UseGenericObjectFilterResult,
+  ItemFilterModelItem,
 } from "./types";

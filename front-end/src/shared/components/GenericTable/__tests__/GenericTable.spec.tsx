@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { describe, expect, it, vi } from "vitest";
 import { GenericTable } from "../GenericTable";
 
 type Row = {
@@ -61,5 +61,64 @@ describe("GenericTable", () => {
       />
     );
     expect(screen.getByText("No rows")).toBeInTheDocument();
+  });
+
+  it("calls onRowClick only when a row is clicked", () => {
+    const onRowClick = vi.fn();
+
+    render(
+      <GenericTable<Row>
+        columns={columns}
+        rows={[{ id: "1", name: "Item 1", qty: 3 }]}
+        getRowKey={(row) => row.id}
+        onRowClick={onRowClick}
+      />,
+    );
+
+    expect(onRowClick).not.toHaveBeenCalled();
+
+    fireEvent.click(screen.getByText("Item 1"));
+    expect(onRowClick).toHaveBeenCalledTimes(1);
+    expect(onRowClick).toHaveBeenCalledWith({ id: "1", name: "Item 1", qty: 3 });
+  });
+
+  it("applies a fixed width on image columns", () => {
+    render(
+      <GenericTable<Row>
+        columns={[
+          { key: "image", header: "Image", render: () => <span>img</span> },
+          ...columns,
+        ]}
+        rows={[{ id: "1", name: "Item 1", qty: 3 }]}
+        getRowKey={(row) => row.id}
+      />,
+    );
+
+    expect(
+      screen.queryByRole("columnheader", { name: "Image" }),
+    ).not.toBeInTheDocument();
+
+    const imageHeader = screen.getAllByRole("columnheader")[0];
+    expect(imageHeader.className).toContain("w-[30px]");
+    expect(imageHeader.className).toContain("min-w-[30px]");
+    expect(imageHeader.className).toContain("max-w-[30px]");
+
+    const imageCell = screen.getByText("img").closest("td");
+    expect(imageCell?.className).toContain("w-[30px]");
+    expect(imageCell?.className).toContain("min-w-[30px]");
+    expect(imageCell?.className).toContain("max-w-[30px]");
+  });
+
+  it("renders footer when provided", () => {
+    render(
+      <GenericTable<Row>
+        columns={columns}
+        rows={[{ id: "1", name: "Item 1", qty: 3 }]}
+        getRowKey={(row) => row.id}
+        footer="Total: 3"
+      />,
+    );
+
+    expect(screen.getByText("Total: 3")).toBeInTheDocument();
   });
 });

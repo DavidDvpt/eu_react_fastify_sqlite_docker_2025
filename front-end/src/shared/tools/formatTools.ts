@@ -4,7 +4,16 @@ class FormatTools {
     if (!Number.isFinite(numericValue)) {
       return "0.00000";
     }
+
     return numericValue.toFixed(5);
+  }
+
+  static pedFormat() {
+    return new Intl.NumberFormat("fr-FR", {
+      style: "decimal",
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
   }
 }
 

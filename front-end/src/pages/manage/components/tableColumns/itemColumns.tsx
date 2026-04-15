@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import type { Item } from "@/modules/manage";
 import type { GenericTableColumn } from "@/shared/components/GenericTable";
 import { formatToFiveDecimals, getItemImageUrl } from "../../utils";
@@ -7,7 +6,7 @@ const itemColumns: GenericTableColumn<Item>[] = [
   {
     key: "image",
     header: "Image",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "bg-table-image-bg border border-table-image-border",
     render: (item) =>
       getItemImageUrl(item.imageUrlId) ? (
         <img
@@ -23,43 +22,36 @@ const itemColumns: GenericTableColumn<Item>[] = [
   {
     key: "name",
     header: "Nom",
-    render: (item) => (
-      <Link
-        to={`/manage/item/${item.id}/edit`}
-        className="font-medium text-foreground no-underline"
-      >
-        {item.name}
-      </Link>
-    ),
+    render: (item) => item.name ?? "Unknown",
   },
   {
     key: "type",
     header: "Type",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "",
     render: (item) => item.itemTypeName ?? item.itemTypeId,
   },
   {
     key: "value",
     header: "Valeur",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "",
     render: (item) => formatToFiveDecimals(item.value),
   },
   {
     key: "limited",
     header: "Limited",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "",
     render: (item) => (item.isLimited ? "Oui" : "Non"),
   },
   {
     key: "stackable",
     header: "Stackable",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "",
     render: (item) => (item.isStackable ? "Oui" : "Non"),
   },
   {
     key: "scope",
     header: "Scope",
-    cellClassName: "text-muted-foreground",
+    cellClassName: "",
     render: (item) => (item.userId ? "Custom" : "Global"),
   },
 ];

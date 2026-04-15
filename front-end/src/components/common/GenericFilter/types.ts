@@ -19,6 +19,21 @@ type GenericFilterBaseField<T> = {
   getValue: (item: T) => string | boolean | null | undefined;
 };
 
+type TypeFilterModelItem = {
+  id: string;
+  name: string;
+  categoryId: string;
+  categoryName?: string;
+};
+
+type ItemFilterModelItem = {
+  id: string;
+  name: string;
+  itemTypeId: string;
+  itemTypeName?: string;
+  isLimited: boolean;
+};
+
 type GenericFilterSelectField<T> = GenericFilterBaseField<T> & {
   kind: "select";
   allLabel?: string;
@@ -85,4 +100,6 @@ export type {
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
+  ItemFilterModelItem,
+  TypeFilterModelItem,
 };

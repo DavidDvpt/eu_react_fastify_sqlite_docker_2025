@@ -38,7 +38,9 @@ function ManageFilter({
     if (isTypesPending || isTypesError || types.length === 0) {
       return null;
     }
-    return <GenericFilter model={typeFilterModel} filter={typeFilter} hasInput />;
+    return (
+      <GenericFilter model={typeFilterModel} filter={typeFilter} hasInput />
+    );
   }
 
   if (activeTab === "item") {

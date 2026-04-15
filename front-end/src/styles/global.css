@@ -20,6 +20,7 @@
   --color-input-bg: var(--input-bg-color);
   --color-input-text: var(--input-text-color);
   --color-input-border: var(--input-border-color);
+  --color-select-item-hover: var(--select-item-hover);
 
   --color-button-primary-bg: var(--button-primary-bg);
   --color-button-primary-border: var(--button-primary-border);
@@ -43,6 +44,20 @@
 
   --color-h-navbar-hover: var(--h-navbar-hover);
   --color-h-navbar-text: var(--h-navbar-text);
+
+  --color-table-bg: var(--table-bg);
+  --color-table-border: var(--table-border);
+  --shadow-table: 0 10px 30px var(--table-shadow-color);
+  --color-table-head-bg: var(--table-head-bg);
+  --color-table-head-text: var(--table-head-text);
+  --color-table-body-text: var(--table-body-text);
+  --color-table-row-even-bg: var(--table-row-even-bg);
+  --color-table-row-odd-bg: var(--table-row-odd-bg);
+  --color-table-row-hover-bg: var(--table-row-hover-bg);
+  --color-table-foot-bg: var(--table-foot-bg);
+  --color-table-foot-text: var(--table-foot-text);
+  --color-table-image-bg: var(--table-image-bg);
+  --color-table-image-border: var(--table-image-border);
 
   --color-info: var(--info);
 
@@ -234,6 +249,7 @@
   --input-bg-color: var(--L1C1);
   --input-text-color: var(--L4C8);
   --input-border-color: var(--L1C6);
+  --select-item-hover: var(--L1C3);
 
   --button-primary-bg: var(--L3C4);
   --button-primary-border: var(--L3C3);
@@ -258,6 +274,20 @@
   --h-navbar-hover: var(--L4C6);
   --h-navbar-text: var(--L1C1);
   --h-navbar-text: var(--L1C1);
+
+  --table-bg: transparent;
+  --table-shadow-color: var(--L4C12);
+  --table-border: var(--L4C4);
+  --table-head-bg: var(--L4C5);
+  --table-head-text: var(--L1C1);
+  --table-body-text: var(--L1C2);
+  --table-row-even-bg: transparent;
+  --table-row-odd-bg: var(--L4C5);
+  --table-row-hover-bg: var(--L4C4);
+  --table-foot-bg: var(--L4C5);
+  --table-foot-text: var(--L1C1);
+  --table-image-bg: var(--L1C1);
+  --table-image-border: var(--L1C6);
 
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.129 0.042 264.695);
@@ -321,12 +351,6 @@
   --red-300: oklch(0.8 0.08 25);
   --red-500: oklch(0.58 0.16 25);
   --red-700: oklch(0.44 0.17 25);
-
-  /* gray */
-  --gray-100: oklch(0.96 0.004 255);
-  --gray-300: oklch(0.84 0.008 255);
-  --gray-500: oklch(0.62 0.012 255);
-  --gray-700: oklch(0.34 0.01 255);
 }
 
 .dark {

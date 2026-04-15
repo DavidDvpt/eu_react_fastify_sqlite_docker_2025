@@ -31,7 +31,7 @@ function LeftNavContentLayout({ links, children }: LeftNavContentLayoutProps) {
         />
       </aside>
 
-      <article className="h-full min-h-0 overflow-x-hidden overflow-y-auto rounded-md border border-border bg-card p-4 md:p-6">
+      <article className="h-full min-h-0 overflow-x-hidden overflow-y-auto rounded-md p-4 pt-0 md:p-6">
         {children}
       </article>
     </section>

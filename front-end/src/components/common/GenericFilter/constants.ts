@@ -1,13 +1,12 @@
-import type { GenericFilterModel } from "./types";
+import type {
+  GenericFilterModel,
+  ItemFilterModelItem,
+  TypeFilterModelItem,
+} from "./types";
 
-type TypeFilterModelItem = {
-  id: string;
-  name: string;
-  categoryId: string;
-  categoryName?: string;
-};
-
-function createTypeFilterModel<T extends TypeFilterModelItem>(): GenericFilterModel<T> {
+function createTypeFilterModel<
+  T extends TypeFilterModelItem,
+>(): GenericFilterModel<T> {
   return {
     fields: [
       {
@@ -29,14 +28,6 @@ function createTypeFilterModel<T extends TypeFilterModelItem>(): GenericFilterMo
     ],
   };
 }
-
-type ItemFilterModelItem = {
-  id: string;
-  name: string;
-  itemTypeId: string;
-  itemTypeName?: string;
-  isLimited: boolean;
-};
 
 function createItemFilterModel<
   TItem extends ItemFilterModelItem,
@@ -65,7 +56,9 @@ function createItemFilterModel<
         dependsOn: ["category", "limited", "search"],
         getValue: (item) => item.itemTypeId,
         getLabel: (item) =>
-          item.itemTypeName ?? typeById[item.itemTypeId]?.name ?? item.itemTypeId,
+          item.itemTypeName ??
+          typeById[item.itemTypeId]?.name ??
+          item.itemTypeId,
       },
       {
         key: "limited",

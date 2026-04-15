@@ -1,16 +1,12 @@
 const MANAGE_TAB_META = {
   category: {
     title: "Categories",
-    description:
-      "Table des categories avec lignes cliquables (edition) et action de creation.",
   },
   type: {
     title: "Types",
-    description: "Table des types avec filtres relies a la categorie et actions CRUD.",
   },
   item: {
     title: "Items",
-    description: "Table des items avec filtres generiques et actions CRUD (create/edit).",
   },
 } as const;
 

@@ -61,12 +61,12 @@ function ManagePage() {
         acc[type.id] = type;
         return acc;
       }, {}),
-    [sortedTypes]
+    [sortedTypes],
   );
 
   const itemFilterModel = useMemo(
     () => createItemFilterModel<Item, Type>(typeById),
-    [typeById]
+    [typeById],
   );
 
   const itemFilter = useGenericObjectFilter<Item>({
@@ -78,25 +78,27 @@ function ManagePage() {
     typeof itemFilter.filterState.type === "string"
       ? itemFilter.filterState.type
       : null;
-  const selectedItemType = selectedItemTypeId ? typeById[selectedItemTypeId] : null;
+  const selectedItemType = selectedItemTypeId
+    ? typeById[selectedItemTypeId]
+    : null;
   const hasLimitedForSelectedType =
     !selectedItemType || selectedItemType.supportsLimited !== false;
 
   return (
-    <div className="space-y-6">
-      <header className="space-y-2">
-        <h1 className="text-2xl font-bold text-foreground">{meta.title}</h1>
-        <p className="text-sm text-muted-foreground">{meta.description}</p>
+    <div className="space-y-2">
+      <header className="space-y-2 flex flex-row justify-between items-center">
+        <h1 className="text-2xl font-bold text-card-title mt-0">
+          {meta.title}
+        </h1>
+        <div className="flex items-center gap-2">
+          <Link
+            to={`/manage/${activeTab}/create`}
+            className="rounded-md border border-button-primary-border bg-button-primary-bg px-3 py-2 text-sm font-medium text-button-primary-text no-underline w-[100px] text-center"
+          >
+            Créer
+          </Link>
+        </div>
       </header>
-
-      <div className="flex items-center gap-2">
-        <Link
-          to={`/manage/${activeTab}/create`}
-          className="rounded-md border border-primary-500 bg-primary-500 px-3 py-2 text-sm font-medium text-white"
-        >
-          Creer
-        </Link>
-      </div>
 
       <ManageFilter
         activeTab={activeTab}
@@ -113,7 +115,7 @@ function ManagePage() {
         hasLimitedForSelectedType={hasLimitedForSelectedType}
       />
 
-      <section className="overflow-hidden rounded-md border border-border bg-background">
+      <section className="">
         <ManageTable
           activeTab={activeTab}
           categories={sortedCategories}

@@ -13,10 +13,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-import type {
-  GenericFilterProps,
-  GenericFilterStateValue,
-} from "./types";
+import type { GenericFilterProps, GenericFilterStateValue } from "./types";
 
 function GenericFilter<T>({
   model,
@@ -32,19 +29,19 @@ function GenericFilter<T>({
         if (!hasIsLimited && field.key === "limited") return false;
         return true;
       }),
-    [hasIsLimited, model.fields]
+    [hasIsLimited, model.fields],
   );
   const autocompleteFields = useMemo(
     () => visibleFields.filter((field) => field.kind === "autocomplete"),
-    [visibleFields]
+    [visibleFields],
   );
   const selectFields = useMemo(
     () => visibleFields.filter((field) => field.kind === "select"),
-    [visibleFields]
+    [visibleFields],
   );
   const booleanFields = useMemo(
     () => visibleFields.filter((field) => field.kind === "boolean"),
-    [visibleFields]
+    [visibleFields],
   );
 
   const datalistIdByKey = useMemo(
@@ -53,7 +50,7 @@ function GenericFilter<T>({
         acc[field.key] = `generic-filter-list-${field.key}`;
         return acc;
       }, {}),
-    [model.fields]
+    [model.fields],
   );
 
   function updateValue(key: string, value: GenericFilterStateValue) {
@@ -69,31 +66,101 @@ function GenericFilter<T>({
   return (
     <section
       className={cn(
-        "rounded-md border border-border bg-muted/30 p-4",
-        className
+        "flex flex-col rounded-md border border-card-border bg-card shadow-card p-4 gap-4",
+        className,
       )}
       aria-label="Filtres"
     >
-      <div className="flex flex-col gap-4">
-        {autocompleteFields.length > 0 ? (
-          <div className="flex flex-wrap gap-4">
-            {autocompleteFields.map((field) => {
+      <div className="flex flex-wrap">
+        <div className="flex flex-col w-[49%]">
+          {selectFields.length > 0 ? (
+            <div className="flex flex-col gap-2">
+              {selectFields.map((field) => {
+                const currentValue = filter.filterState[field.key];
+                const id = `generic-filter-${field.key}`;
+                const options = filter.selectOptions[field.key] ?? [];
+                const normalizedValue =
+                  typeof currentValue === "string" && currentValue
+                    ? currentValue
+                    : "__all__";
+
+                return (
+                  <div
+                    key={field.key}
+                    className={cn(
+                      "min-w-[100px] max-w-[60%] shrink-0",
+                      field.className,
+                    )}
+                  >
+                    <Label htmlFor={id} className="text-input-label">
+                      {field.label}
+                    </Label>
+                    <Select
+                      value={normalizedValue}
+                      onValueChange={(value) =>
+                        updateValue(
+                          field.key,
+                          value === "__all__" ? null : value,
+                        )
+                      }
+                      disabled={field.disabled}
+                    >
+                      <SelectTrigger
+                        id={id}
+                        className="mt-2 bg-input-bg text-input-text border border-input-border"
+                      >
+                        <SelectValue placeholder={field.allLabel ?? "Tous"} />
+                      </SelectTrigger>
+                      <SelectContent className="bg-input-bg text-input-text">
+                        <SelectItem
+                          value="__all__"
+                          className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-input-text"
+                        >
+                          {field.allLabel ?? "Tous"}
+                        </SelectItem>
+                        {options.map((option) => (
+                          <SelectItem
+                            key={option.value}
+                            value={option.value}
+                            className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-input-text"
+                          >
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                );
+              })}
+            </div>
+          ) : null}
+        </div>
+        <div className="flex flex-col w-[49%] gap-4">
+          {autocompleteFields.length > 0 &&
+            autocompleteFields.map((field) => {
               const currentValue = filter.filterState[field.key];
               const id = `generic-filter-${field.key}`;
               const options = filter.autocompleteOptions[field.key] ?? [];
               const datalistId = datalistIdByKey[field.key];
 
               return (
-                <div key={field.key} className={cn("w-1/2", field.className)}>
+                <div
+                  key={field.key}
+                  className={cn("min-w-[100px] max-w-[80%] ", field.className)}
+                >
                   <Label htmlFor={id}>{field.label}</Label>
                   {hasInput ? (
                     <>
                       <Input
                         id={id}
                         list={datalistId}
-                        value={typeof currentValue === "string" ? currentValue : ""}
+                        value={
+                          typeof currentValue === "string" ? currentValue : ""
+                        }
                         placeholder={field.placeholder ?? "Rechercher..."}
-                        onChange={(event) => updateValue(field.key, event.target.value)}
+                        onChange={(event) =>
+                          updateValue(field.key, event.target.value)
+                        }
                         disabled={field.disabled}
                         className="mt-2"
                       />
@@ -116,7 +183,9 @@ function GenericFilter<T>({
                       disabled={field.disabled}
                     >
                       <SelectTrigger id={id} className="mt-2">
-                        <SelectValue placeholder={field.noOptionsLabel ?? "Tous"} />
+                        <SelectValue
+                          placeholder={field.noOptionsLabel ?? "Tous"}
+                        />
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="__all__">Tous</SelectItem>
@@ -131,92 +200,45 @@ function GenericFilter<T>({
                 </div>
               );
             })}
-          </div>
-        ) : null}
-
-        {selectFields.length > 0 ? (
-          <div className="flex flex-nowrap items-end justify-start gap-[20px] overflow-x-auto">
-            {selectFields.map((field) => {
+          <div className="flex flex-wrap items-center gap-6">
+            {booleanFields.map((field) => {
               const currentValue = filter.filterState[field.key];
               const id = `generic-filter-${field.key}`;
-              const options = filter.selectOptions[field.key] ?? [];
-              const normalizedValue =
-                typeof currentValue === "string" && currentValue
-                  ? currentValue
-                  : "__all__";
+              const isChecked = currentValue === true;
 
               return (
-                <div
+                <label
                   key={field.key}
                   className={cn(
-                    "w-[30%] min-w-[220px] shrink-0",
-                    field.className
+                    "inline-flex cursor-pointer items-center gap-2 text-sm text-foreground",
+                    field.className,
                   )}
                 >
-                  <Label htmlFor={id}>{field.label}</Label>
-                  <Select
-                    value={normalizedValue}
-                    onValueChange={(value) =>
-                      updateValue(field.key, value === "__all__" ? null : value)
+                  <Checkbox
+                    id={id}
+                    checked={isChecked}
+                    onCheckedChange={(checked) =>
+                      updateValue(field.key, checked === true)
                     }
                     disabled={field.disabled}
-                  >
-                    <SelectTrigger id={id} className="mt-2">
-                      <SelectValue placeholder={field.allLabel ?? "Tous"} />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="__all__">
-                        {field.allLabel ?? "Tous"}
-                      </SelectItem>
-                      {options.map((option) => (
-                        <SelectItem key={option.value} value={option.value}>
-                          {option.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
+                  />
+                  {field.label}
+                </label>
               );
             })}
           </div>
-        ) : null}
-
-        <div className="flex flex-wrap items-center gap-6">
-          {booleanFields.map((field) => {
-          const currentValue = filter.filterState[field.key];
-          const id = `generic-filter-${field.key}`;
-          const isChecked = currentValue === true;
-
-          return (
-            <label
-              key={field.key}
-              className={cn(
-                "inline-flex cursor-pointer items-center gap-2 text-sm text-foreground",
-                field.className
-              )}
-            >
-              <Checkbox
-                id={id}
-                checked={isChecked}
-                onCheckedChange={(checked) =>
-                  updateValue(field.key, checked === true)
-                }
-                disabled={field.disabled}
-              />
-              {field.label}
-            </label>
-          );
-          })}
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="ml-auto"
-            onClick={filter.resetFilters}
-          >
-            Reset
-          </Button>
         </div>
+      </div>
+      <div className="flex flex-end">
+        <Button
+          type="button"
+          variant="primary"
+          size="sm"
+          className="ml-auto w-[100px]"
+          onClick={filter.resetFilters}
+        >
+          Reset
+        </Button>
       </div>
     </section>
   );
