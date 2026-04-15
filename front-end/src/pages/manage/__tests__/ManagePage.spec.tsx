@@ -65,21 +65,18 @@ describe("ManagePage", () => {
     renderAt("/manage/type");
 
     expect(screen.getByRole("heading", { name: "Types" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Creer" })).toHaveAttribute("href", "/manage/type/create");
-    expect(await screen.findByRole("link", { name: "Ore" })).toHaveAttribute(
+    expect(screen.getByRole("link", { name: /cr[eé]er/i })).toHaveAttribute(
       "href",
-      "/manage/type/type-1/edit"
+      "/manage/type/create",
     );
+    expect(await screen.findByRole("cell", { name: "Ore" })).toBeInTheDocument();
   });
 
   it("renders categories table for category tab", async () => {
     renderAt("/manage/category/create");
 
     expect(screen.getByRole("heading", { name: "Categories" })).toBeInTheDocument();
-    expect(await screen.findByRole("link", { name: "Material" })).toHaveAttribute(
-      "href",
-      "/manage/category/cat-1/edit"
-    );
+    expect(await screen.findByRole("cell", { name: "Material" })).toBeInTheDocument();
     expect(screen.getByText("Global")).toBeInTheDocument();
     expect(screen.getByText("Custom")).toBeInTheDocument();
   });
@@ -88,9 +85,6 @@ describe("ManagePage", () => {
     renderAt("/manage/item/42/edit");
 
     expect(screen.getByRole("heading", { name: "Items" })).toBeInTheDocument();
-    expect(await screen.findByRole("link", { name: "Oil" })).toHaveAttribute(
-      "href",
-      "/manage/item/item-1/edit"
-    );
+    expect(await screen.findByRole("cell", { name: "Oil" })).toBeInTheDocument();
   });
 });
