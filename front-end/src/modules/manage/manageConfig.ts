@@ -1,3 +1,5 @@
+import type { ManageTab } from "@/pages/manage/manageTypes";
+
 const MANAGE_TAB_META = {
   category: {
     title: "Categories",
@@ -9,8 +11,6 @@ const MANAGE_TAB_META = {
     title: "Items",
   },
 } as const;
-
-type ManageTab = keyof typeof MANAGE_TAB_META;
 
 const MANAGE_NAV_LINKS = [
   { label: "Categorie", to: "/manage/category", tab: "category" },

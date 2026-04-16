@@ -11,17 +11,20 @@ import {
   useItems,
   useTypes,
 } from "@/modules/manage";
-import { Link, useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import type { Item, ManageTab, Type } from "@/modules/manage";
 import { sortByName } from "./utils";
 import { ManageFilter } from "./components/ManageFilter";
 import { ManageTable } from "./components/ManageTable";
+
+import { Button } from "@/components/ui/button";
 
 const TYPE_FILTER_MODEL = createTypeFilterModel<Type>();
 
 function ManagePage() {
   const { tab, id } = useParams();
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const activeTab: ManageTab = isManageTab(tab) ? tab : "category";
   const meta = MANAGE_TAB_META[activeTab];
@@ -34,6 +37,7 @@ function ManagePage() {
     isPending: categoriesPending,
     isError: categoriesError,
   } = useCategories({ enabled: activeTab === "category" });
+
   const sortedCategories = useMemo(() => sortByName(categories), [categories]);
 
   const {
@@ -91,12 +95,12 @@ function ManagePage() {
           {meta.title}
         </h1>
         <div className="flex items-center gap-2">
-          <Link
-            to={`/manage/${activeTab}/create`}
-            className="rounded-md border border-button-primary-border bg-button-primary-bg px-3 py-2 text-sm font-medium text-button-primary-text no-underline w-[100px] text-center"
+          <Button
+            variant="primary"
+            onClick={() => navigate(`/manage/${activeTab}/create`)}
           >
             Créer
-          </Link>
+          </Button>
         </div>
       </header>
 
@@ -115,20 +119,18 @@ function ManagePage() {
         hasLimitedForSelectedType={hasLimitedForSelectedType}
       />
 
-      <section className="">
-        <ManageTable
-          activeTab={activeTab}
-          categories={sortedCategories}
-          typesRows={typeFilter.filteredItems}
-          itemsRows={itemFilter.filteredItems}
-          isCategoriesPending={categoriesPending}
-          isCategoriesError={categoriesError}
-          isTypesPending={typesPending}
-          isTypesError={typesError}
-          isItemsPending={itemsPending}
-          isItemsError={itemsError}
-        />
-      </section>
+      <ManageTable
+        activeTab={activeTab}
+        categories={sortedCategories}
+        typesRows={typeFilter.filteredItems}
+        itemsRows={itemFilter.filteredItems}
+        isCategoriesPending={categoriesPending}
+        isCategoriesError={categoriesError}
+        isTypesPending={typesPending}
+        isTypesError={typesError}
+        isItemsPending={itemsPending}
+        isItemsError={itemsError}
+      />
 
       {isCreate || isEdit ? (
         <section className="rounded-md border border-dashed border-border bg-background p-4 text-sm text-muted-foreground">

@@ -1,24 +1,5 @@
 import { GenericFilter } from "@/shared/components/GenericFilter";
-import type {
-  GenericFilterModel,
-  UseGenericObjectFilterResult,
-} from "@/shared/components/GenericFilter";
-import type { Item, ManageTab, Type } from "@/modules/manage";
-
-type ManageFilterProps = {
-  activeTab: ManageTab;
-  types: Type[];
-  items: Item[];
-  isTypesPending: boolean;
-  isTypesError: boolean;
-  isItemsPending: boolean;
-  isItemsError: boolean;
-  typeFilterModel: GenericFilterModel<Type>;
-  typeFilter: UseGenericObjectFilterResult<Type>;
-  itemFilterModel: GenericFilterModel<Item>;
-  itemFilter: UseGenericObjectFilterResult<Item>;
-  hasLimitedForSelectedType: boolean;
-};
+import type { ManageFilterProps } from "../manageTypes";
 
 function ManageFilter({
   activeTab,

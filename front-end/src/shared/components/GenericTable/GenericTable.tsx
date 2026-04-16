@@ -64,7 +64,7 @@ function GenericTable<T>({
   const colSpan = columns.length;
 
   return (
-    <div
+    <section
       className={cn(
         "flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-table-border shadow-table",
         className,
@@ -172,7 +172,7 @@ function GenericTable<T>({
           ) : null}
         </table>
       </div>
-    </div>
+    </section>
   );
 }
 
