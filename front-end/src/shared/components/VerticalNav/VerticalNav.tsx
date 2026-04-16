@@ -1,62 +1,30 @@
-import type { ReactNode } from "react";
-import { NavLink, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useLocation } from "react-router-dom";
+import { NavButton } from "@/components/Navbar";
+import type { VerticalNavProps } from "@/@types/navbarTypes";
 
-type VerticalNavItem = {
-  key: string;
-  content: ReactNode;
-  to?: string;
-  onClick?: () => void;
-  isActive?: boolean;
-  disabled?: boolean;
-};
-
-type VerticalNavProps = {
-  items: VerticalNavItem[];
-  className?: string;
-};
-
-function VerticalNav({ items, className }: VerticalNavProps) {
+function VerticalNav({ items }: VerticalNavProps) {
   const { pathname } = useLocation();
 
   const isRouteActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);
 
   return (
-    <nav className={className ?? "space-y-2"}>
+    <aside className={"flex flex-col space-y-2"}>
       {items.map((item) => {
-        if (item.to) {
-          const isActive = isRouteActive(item.to);
-          return (
-            <Button
-              key={item.key}
-              asChild
-              variant="navVertical"
-              size="nav"
-              data-active={isActive}
-            >
-              <NavLink to={item.to}>{item.content}</NavLink>
-            </Button>
-          );
-        }
+        const isActive = isRouteActive(item.route);
 
         return (
-          <Button
+          <NavButton
             key={item.key}
-            type="button"
-            onClick={item.onClick}
-            disabled={item.disabled}
-            variant="navVertical"
-            size="nav"
-            data-active={item.isActive}
-          >
-            {item.content}
-          </Button>
+            variant={item.variant}
+            data-active={isActive}
+            content={item.content}
+            route={item.route}
+          ></NavButton>
         );
       })}
-    </nav>
+    </aside>
   );
 }
 
 export { VerticalNav };
-export type { VerticalNavItem };

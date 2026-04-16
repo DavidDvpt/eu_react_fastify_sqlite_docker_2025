@@ -1,5 +1,8 @@
-import type { ReactNode } from "react";
+import type { PropsWithChildren, ReactNode } from "react";
 import { VerticalNav } from "@/shared/components";
+import { useLocation } from "react-router-dom";
+import { MANAGE_NAV_LINKS } from "@/modules/manage";
+import type { NavbarButtonType } from "@/@types/navbarTypes";
 
 type LeftNavLink = {
   key?: string;
@@ -10,26 +13,23 @@ type LeftNavLink = {
   disabled?: boolean;
 };
 
-type LeftNavContentLayoutProps = {
-  links: LeftNavLink[];
-  children: ReactNode;
-};
+function LeftNavContentLayout({ children }: PropsWithChildren) {
+  const { pathname } = useLocation();
 
-function LeftNavContentLayout({ links, children }: LeftNavContentLayoutProps) {
+  let links: NavbarButtonType[] = [];
+
+  if (pathname.startsWith("/manage")) links = [...MANAGE_NAV_LINKS];
+
   return (
-    <section className="grid h-full min-h-0 grid-cols-[220px_minmax(0,1fr)] gap-3">
-      <aside className="min-h-0 bg-transparent p-3 pt-0">
-        <VerticalNav
-          items={links.map((link, index) => ({
-            key: link.key ?? link.to ?? `left-nav-link-${index}`,
-            content: link.label,
-            to: link.to,
-            onClick: link.onClick,
-            isActive: link.isActive,
-            disabled: link.disabled,
-          }))}
-        />
-      </aside>
+    <section className="grid h-full min-h-0 px-3 grid-cols-[220px_minmax(0,1fr)] gap-1">
+      <VerticalNav
+        items={links.map((link) => ({
+          key: `left-nav-link-${link.key}`,
+          content: link.content,
+          route: link.route,
+          variant: "navVertical",
+        }))}
+      />
 
       <article className="h-full min-h-0 overflow-x-hidden overflow-y-auto rounded-md p-4 pt-0 md:p-6">
         {children}

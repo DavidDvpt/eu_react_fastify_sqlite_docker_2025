@@ -2,11 +2,9 @@ import { Outlet } from "react-router-dom";
 
 function AuthLayout() {
   return (
-    <div className="flex-1 min-h-0 flex flex-col overflow-hidden bg-background text-foreground">
-      <main className="flex flex-1 min-h-0 overflow-auto">
-        <div className="mx-auto flex flex-1 w-full max-w-[1100px] items-center justify-center px-4 py-10">
-          <Outlet />
-        </div>
+    <div className="flex-1 min-h-0 flex flex-col overflow-hidden">
+      <main className="flex flex-1 w-full max-w-[1100px] items-center justify-center">
+        <Outlet />
       </main>
     </div>
   );

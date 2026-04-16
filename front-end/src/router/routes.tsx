@@ -1,7 +1,7 @@
-import AdminLayout from "@/layouts/AdminLayout";
+import Layout from "@/layouts/Layout";
 import AppLayout from "@/layouts/AppLayout";
 import AuthLayout from "@/layouts/AuthLayout";
-import MainContentLayout from "@/layouts/MainContentLayout";
+import LeftMenuLayout from "@/layouts/LeftMenuLayout";
 import RootLayout from "@/layouts/RootLayout";
 import GuestOnly from "@/modules/auth/guards/GuestOnly";
 import RequireAuth from "@/modules/auth/guards/RequireAuth";
@@ -32,7 +32,7 @@ const routes = [
           },
         ],
       },
-      { path: "admin", element: <AdminLayout />, children: [] },
+      { path: "admin", element: <Layout />, children: [] },
       {
         element: <RequireAuth />,
         children: [
@@ -47,18 +47,23 @@ const routes = [
               { path: "trade/:id/:action", element: <TradePage /> },
               { path: "stock", element: <StockPage /> },
               {
-                path: "manage",
-                element: <MainContentLayout />,
+                element: <LeftMenuLayout />,
                 children: [
                   {
-                    index: true,
-                    element: <Navigate to="/manage/category" replace />,
+                    path: "manage",
+                    children: [
+                      {
+                        index: true,
+                        element: <Navigate to="/manage/category" replace />,
+                      },
+                      { path: ":tab", element: <ManagePage /> },
+                      { path: ":tab/create", element: <ManagePage /> },
+                      { path: ":tab/:id/edit", element: <ManagePage /> },
+                    ],
                   },
-                  { path: ":tab", element: <ManagePage /> },
-                  { path: ":tab/create", element: <ManagePage /> },
-                  { path: ":tab/:id/edit", element: <ManagePage /> },
                 ],
               },
+
               { path: "*", element: <NotFoundPage />, children: [] },
             ],
           },

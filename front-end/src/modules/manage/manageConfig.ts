@@ -1,3 +1,4 @@
+import type { NavbarButtonType } from "@/@types/navbarTypes";
 import type { ManageTab } from "@/pages/manage/manageTypes";
 
 const MANAGE_TAB_META = {
@@ -12,10 +13,25 @@ const MANAGE_TAB_META = {
   },
 } as const;
 
-const MANAGE_NAV_LINKS = [
-  { label: "Categorie", to: "/manage/category", tab: "category" },
-  { label: "Type", to: "/manage/type", tab: "type" },
-  { label: "Item", to: "/manage/item", tab: "item" },
+const MANAGE_NAV_LINKS: NavbarButtonType[] = [
+  {
+    key: "Categorie",
+    content: "Categorie",
+    route: "/manage/category",
+    variant: "navVertical",
+  },
+  {
+    key: "Type",
+    content: "Type",
+    route: "/manage/type",
+    variant: "navVertical",
+  },
+  {
+    key: "Item",
+    content: "Item",
+    route: "/manage/item",
+    variant: "navVertical",
+  },
 ] as const;
 
 function isManageTab(value: string | undefined): value is ManageTab {
