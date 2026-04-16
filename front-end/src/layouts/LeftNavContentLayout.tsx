@@ -1,7 +1,7 @@
 import type { PropsWithChildren, ReactNode } from "react";
 import { VerticalNav } from "@/shared/components";
 import { useLocation } from "react-router-dom";
-import { MANAGE_NAV_LINKS } from "@/modules/manage";
+import { MANAGE_NAV_LINKS } from "@/pages/manage";
 import type { NavbarButtonType } from "@/@types/navbarTypes";
 
 type LeftNavLink = {

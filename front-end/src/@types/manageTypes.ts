@@ -1,4 +1,4 @@
-import type { Item, MANAGE_TAB_META, Type } from "@/modules/manage";
+import type { Item, MANAGE_TAB_META, Type } from "@/pages/manage";
 import type {
   GenericFilterModel,
   UseGenericObjectFilterResult,

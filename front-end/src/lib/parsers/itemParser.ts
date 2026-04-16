@@ -1,4 +1,4 @@
-import type { Item, ItemApi, ItemApis, Items } from "./itemTypes";
+import type { Item, ItemApi, ItemApis, Items } from "../../@types/itemTypes";
 
 function parseItem(apiItem: ItemApi): Item {
   const numericValue =

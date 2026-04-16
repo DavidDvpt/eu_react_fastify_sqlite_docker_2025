@@ -1,4 +1,9 @@
-import type { Category, CategoryApi, Categories, CategoryApis } from "./categoryTypes";
+import type {
+  Category,
+  CategoryApi,
+  Categories,
+  CategoryApis,
+} from "../../@types/categoryTypes";
 
 async function parseCategory(data: CategoryApi): Promise<Category> {
   try {
@@ -9,7 +14,11 @@ async function parseCategory(data: CategoryApi): Promise<Category> {
       throw new Error("No valid category id found");
     }
 
-    if (!("name" in data) || typeof data.name !== "string" || !data.name.trim()) {
+    if (
+      !("name" in data) ||
+      typeof data.name !== "string" ||
+      !data.name.trim()
+    ) {
       throw new Error("No valid category name found");
     }
 
@@ -58,7 +67,8 @@ async function parseCategory(data: CategoryApi): Promise<Category> {
 
 async function parseCategories(data: CategoryApis): Promise<Categories> {
   try {
-    if (!Array.isArray(data)) throw new Error("Categories payload is not an array");
+    if (!Array.isArray(data))
+      throw new Error("Categories payload is not an array");
 
     const parsed = await Promise.all(data.map((item) => parseCategory(item)));
     return parsed;

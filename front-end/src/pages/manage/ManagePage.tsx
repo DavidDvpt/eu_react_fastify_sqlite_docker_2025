@@ -10,14 +10,15 @@ import {
   useCategories,
   useItems,
   useTypes,
-} from "@/modules/manage";
+} from "@/pages/manage";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Item, ManageTab, Type } from "@/modules/manage";
+import type { Item, ManageTab, Type } from "@/pages/manage";
 import { sortByName } from "./utils";
 import { ManageFilter } from "./components/ManageFilter";
 import { ManageTable } from "./components/ManageTable";
 
 import { Button } from "@/components/ui/button";
+import { Panel } from "@/shared/components/Containers";
 
 const TYPE_FILTER_MODEL = createTypeFilterModel<Type>();
 
@@ -89,7 +90,7 @@ function ManagePage() {
     !selectedItemType || selectedItemType.supportsLimited !== false;
 
   return (
-    <div className="space-y-2">
+    <Panel>
       <header className="space-y-2 flex flex-row justify-between items-center">
         <h1 className="text-2xl font-bold text-card-title mt-0">
           {meta.title}
@@ -139,7 +140,7 @@ function ManagePage() {
             : `Mode edition pour "${activeTab}" (id: ${id}).`}
         </section>
       ) : null}
-    </div>
+    </Panel>
   );
 }
 

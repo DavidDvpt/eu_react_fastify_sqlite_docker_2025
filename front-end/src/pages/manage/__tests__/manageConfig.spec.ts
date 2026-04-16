@@ -1,6 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { MANAGE_NAV_LINKS, MANAGE_TAB_META, isManageTab } from "../manageConfig";
+import {
+  MANAGE_NAV_LINKS,
+  MANAGE_TAB_META,
+  isManageTab,
+} from "../manageConfig";
 
 describe("manageConfig", () => {
   it("exposes the expected tabs metadata", () => {

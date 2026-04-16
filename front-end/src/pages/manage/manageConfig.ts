@@ -1,5 +1,5 @@
+import type { ManageTab } from "@/@types";
 import type { NavbarButtonType } from "@/@types/navbarTypes";
-import type { ManageTab } from "@/pages/manage/manageTypes";
 
 const MANAGE_TAB_META = {
   category: {
@@ -39,4 +39,3 @@ function isManageTab(value: string | undefined): value is ManageTab {
 }
 
 export { MANAGE_NAV_LINKS, MANAGE_TAB_META, isManageTab };
-export type { ManageTab };

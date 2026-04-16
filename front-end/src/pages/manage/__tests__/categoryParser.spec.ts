@@ -1,6 +1,9 @@
 import { describe, expect, it } from "vitest";
 
-import { parseCategories, parseCategory } from "../categoryParser";
+import {
+  parseCategories,
+  parseCategory,
+} from "../../../lib/parsers/categoryParser";
 
 describe("categoryParser", () => {
   it("parses one category from snake_case to camelCase", async () => {
@@ -56,7 +59,7 @@ describe("categoryParser", () => {
         user_id: null,
         date_created: "2026-04-06T00:00:00.000Z",
         date_updated: null,
-      })
+      }),
     ).rejects.toThrow("No valid category id found");
   });
 });
