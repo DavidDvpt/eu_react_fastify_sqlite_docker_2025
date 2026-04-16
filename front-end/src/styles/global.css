@@ -11,14 +11,14 @@
   --color-bg: var(--background);
   --color-text: var(--text);
 
-  --color-card: var(--card-bg);
-  --color-card-border: var(--card-border-color);
-  --color-card-title: var(--card-title-color);
-  --shadow-card: 0 10px 30px var(--card-shadow-color);
-  --color-card-inner: var(--card-inner-bg);
-  --color-card-inner-border: var(--card-inner-border-color);
-  --color-card-inner-title: var(--card-inner-title-color);
-  --shadow-card-inner: 0 0 10px var(--card-inner-shadow-color);
+  --color-panel-bg: var(--panel-bg);
+  --color-panel-border: var(--panel-border-color);
+  --color-panel-text: var(--panel-text-color);
+  --shadow-panel: 0 10px 30px var(--panel-shadow-color);
+  --color-section: var(--section-bg);
+  --color-section-border: var(--section-border-color);
+  --color-section-title: var(--section-text-color);
+  --shadow-section: 0 0 5px var(--section-shadow-color);
 
   --color-input-label: var(--input-label-color);
   --color-input-bg: var(--input-bg-color);
@@ -139,9 +139,7 @@
   --radius-2xl: calc(var(--radius) + 8px);
   --radius-3xl: calc(var(--radius) + 12px);
   --radius-4xl: calc(var(--radius) + 16px);
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-foreground-on-dark: var(--foreground-on-dark);
+
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
@@ -242,15 +240,16 @@
   --background: var(--L4C8);
   --text: var(--white);
 
-  --card-bg: var(--L4C6);
-  --card-title-color: var(--L1C1);
-  --card-title-color: var(--L1C1);
-  --card-border-color: var(--L4C10);
-  --card-shadow-color: var(--L4C12);
-  --card-inner-bg: var(--L4C4);
-  --card-inner-title-color: var(--L1C2);
-  --card-inner-border-color: var(--L4C3);
-  --card-inner-shadow-color: var(--L3C2);
+  --panel-bg: var(--L4C6);
+  --panel-text-color: var(--L1C1);
+  --panel-border-color: var(--L4C10);
+  --panel-shadow-color: var(--L4C12);
+
+  --section-bg: var(--L4C4);
+  --section-text-color: var(--L1C2);
+  --section-border-color: var(--L4C3);
+  --section-shadow-color: var(--L3C2);
+
   --radius: 0.25rem;
 
   --input-label-color: var(--L1C3);
@@ -364,8 +363,8 @@
 .dark {
   --background: oklch(0.129 0.042 264.695);
   --foreground: oklch(0.984 0.003 247.858);
-  --card: oklch(0.208 0.042 265.755);
-  --card-foreground: oklch(0.984 0.003 247.858);
+  --panel: oklch(0.208 0.042 265.755);
+  --panel-foreground: oklch(0.984 0.003 247.858);
   --popover: oklch(0.208 0.042 265.755);
   --popover-foreground: oklch(0.984 0.003 247.858);
   --primary: oklch(0.929 0.013 255.508);

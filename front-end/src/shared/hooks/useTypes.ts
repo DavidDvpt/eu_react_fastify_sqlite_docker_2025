@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTypes } from "@/modules/manage/services/typesApi";
+import { getTypes } from "@/pages/manage/services/typesApi";
 
 type UseTypesParams = {
   enabled?: boolean;
@@ -17,7 +17,7 @@ function useTypes({ enabled = true }: UseTypesParams = {}) {
 
   const invalidateTypes = useCallback(
     () => queryClient.invalidateQueries({ queryKey: ["types"] }),
-    [queryClient]
+    [queryClient],
   );
 
   return {

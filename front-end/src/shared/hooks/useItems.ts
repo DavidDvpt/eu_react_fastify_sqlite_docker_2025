@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getItems } from "@/modules/manage/services/itemsApi";
+import { getItems } from "@/pages/manage/services/itemsApi";
 
 type UseItemsParams = {
   enabled?: boolean;
@@ -17,7 +17,7 @@ function useItems({ enabled = true }: UseItemsParams = {}) {
 
   const invalidateItems = useCallback(
     () => queryClient.invalidateQueries({ queryKey: ["items"] }),
-    [queryClient]
+    [queryClient],
   );
 
   return {
