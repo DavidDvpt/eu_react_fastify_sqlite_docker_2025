@@ -1,8 +1,8 @@
-import { GenericFilter } from "@/components/common/GenericFilter";
+import { GenericFilter } from "@/shared/components/GenericFilter";
 import type {
   GenericFilterModel,
   UseGenericObjectFilterResult,
-} from "@/components/common/GenericFilter";
+} from "@/shared/components/GenericFilter";
 import type { Item, ManageTab, Type } from "@/modules/manage";
 
 type ManageFilterProps = {

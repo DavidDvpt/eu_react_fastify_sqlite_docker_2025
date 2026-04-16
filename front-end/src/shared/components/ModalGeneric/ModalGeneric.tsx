@@ -1,5 +1,5 @@
 import { type PropsWithChildren } from "react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -9,7 +9,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "../ui/dialog";
+} from "@/components/ui/dialog";
 
 interface IModalGenericProps extends PropsWithChildren {
   dialogType: "form" | "info" | "confirm";

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   GenericFilter,
   useGenericObjectFilter,
-} from "@/components/common/GenericFilter";
+} from "@/shared/components/GenericFilter";
 import { useItems, useTypes } from "@/modules/manage";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";

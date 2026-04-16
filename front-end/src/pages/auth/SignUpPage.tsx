@@ -1,10 +1,10 @@
-import AppCard from "@/components/common/AppCard";
+import AppCard from "@/shared/components/AppCard";
 import signupApi from "@/modules/auth/services/network/signupApi";
 import { useNavigate } from "react-router-dom";
 import SignUpForm from "./components/SignUpForm";
 import type { SignUpOutput } from "./validations";
 import styles from "./styles/signup.module.css";
-import { AppLink } from "@/components/common/AppLink";
+import { AppLink } from "@/shared/components/AppLink";
 
 function SignUpPage() {
   const navigate = useNavigate();

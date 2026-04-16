@@ -3,7 +3,7 @@ import {
   createItemFilterModel,
   createTypeFilterModel,
   useGenericObjectFilter,
-} from "@/components/common/GenericFilter";
+} from "@/shared/components/GenericFilter";
 import {
   MANAGE_TAB_META,
   isManageTab,

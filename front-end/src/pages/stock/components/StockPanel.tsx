@@ -5,7 +5,7 @@ import {
   GenericFilter,
   useGenericObjectFilter,
   type GenericFilterModel,
-} from "@/components/common/GenericFilter";
+} from "@/shared/components/GenericFilter";
 import { useItems, useTypes } from "@/modules/manage";
 
 import { stockColumns } from "./stockColumns";

@@ -1,4 +1,4 @@
-import AppCard from "@/components/common/AppCard";
+import AppCard from "@/shared/components/AppCard";
 import type { StockDetails } from "@/modules/stock";
 import { cn } from "@/lib/utils";
 import StockMessages from "./StockMessages";
