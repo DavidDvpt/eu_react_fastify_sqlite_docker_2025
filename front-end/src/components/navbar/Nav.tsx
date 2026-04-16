@@ -1,9 +1,9 @@
-import { navbarValues } from "./navbar/utils";
-import NavButton from "./navbar/NavButton";
+import { navbarValues } from "./utils";
+import NavButton from "./NavButton";
 
 function Nav() {
   return (
-    <div className="flex h-full w-full items-center">
+    <div className="flex flex-1 items-center justify-start">
       {navbarValues.map((m) => {
         return <NavButton key={m.route} {...m} />;
       })}

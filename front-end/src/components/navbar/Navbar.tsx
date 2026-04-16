@@ -1,15 +1,15 @@
-import Brand from "./Brand";
-import Nav from "./Nav";
-import Profile from "./Profile";
+import Brand from "@/components/Navbar/Brand";
+import Nav from "@/components/Navbar/Nav";
+import Profile from "@/components/Navbar/Profile";
 
-function Navbar() {
+function NavBar() {
   return (
-    <div className="flex h-full">
+    <header className="h-[80px] flex">
       <Brand />
       <Nav />
       <Profile />
-    </div>
+    </header>
   );
 }
 
-export default Navbar;
+export default NavBar;

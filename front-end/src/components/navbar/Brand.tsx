@@ -1,15 +1,15 @@
-import { useNavigate } from "react-router-dom";
+import NavButton from "./NavButton";
 
 function Brand() {
-  const navigate = useNavigate();
-
   return (
-    <div
-      className="w-[200px] flex items-center p-2 cursor-pointer"
-      onClick={() => navigate("/home")}
-    >
-      Entropia Manager
-    </div>
+    <NavButton
+      label="Entropia Manager"
+      route="/home"
+      isBrand
+      selected={false}
+      adminOnly={false}
+      className="h-full"
+    ></NavButton>
   );
 }
 

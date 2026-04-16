@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import NavButton from "../navbar/NavButton";
+import NavButton from "../Navbar/NavButton";
 
 describe("NavButton", () => {
   it("is bold when the current route is active", () => {
@@ -13,12 +13,12 @@ describe("NavButton", () => {
           selected={false}
           adminOnly={true}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByRole("link", { name: "Manage" })).toHaveAttribute(
       "data-active",
-      "true"
+      "true",
     );
   });
 
@@ -31,12 +31,12 @@ describe("NavButton", () => {
           selected={false}
           adminOnly={true}
         />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByRole("link", { name: "Manage" })).toHaveAttribute(
       "data-active",
-      "false"
+      "false",
     );
   });
 });
