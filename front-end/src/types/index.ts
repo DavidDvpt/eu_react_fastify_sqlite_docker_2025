@@ -51,6 +51,8 @@ import type {
   StockRowApi,
   StockPanelProps,
   StockFilterRow,
+  GenericTableProps,
+  GenericTableColumn,
 } from "./stockTypes";
 
 import type { TradeFilterRow } from "./tradeTypes";
@@ -124,4 +126,6 @@ export type {
   GenericListProps,
   GenericListRowClassName,
   GenericListViewMode,
+  GenericTableProps,
+  GenericTableColumn,
 };

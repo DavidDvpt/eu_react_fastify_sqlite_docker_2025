@@ -1,3 +1,5 @@
+import type { ReactNode } from "react";
+
 type StockRowApi = {
   itemId: string;
   imageUrlId: string;
@@ -83,6 +85,31 @@ type StockFilterRow = StockRow & {
   categoryName: string | null;
   isLimited: boolean;
 };
+
+type GenericTableColumn<T> = {
+  key: string;
+  header: string;
+  accessor?: keyof T;
+  render?: (row: T) => ReactNode;
+  headerClassName?: string;
+  cellClassName?: string;
+};
+
+type GenericTableProps<T> = {
+  columns: GenericTableColumn<T>[];
+  rows: T[];
+  getRowKey: (row: T) => string;
+  onRowClick?: (row: T) => void;
+  isLoading?: boolean;
+  isError?: boolean;
+  loadingMessage?: string;
+  errorMessage?: string;
+  emptyMessage?: string;
+  className?: string;
+  rowClassName?: string | ((row: T) => string);
+  footer?: ReactNode;
+};
+
 export type {
   Stock,
   StockApi,
@@ -96,4 +123,6 @@ export type {
   StockRowApi,
   StockPanelProps,
   StockFilterRow,
+  GenericTableProps,
+  GenericTableColumn,
 };
