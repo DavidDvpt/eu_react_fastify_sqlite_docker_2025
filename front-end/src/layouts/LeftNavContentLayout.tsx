@@ -10,6 +10,7 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
   let links: NavbarButtonType[] = [];
 
   if (pathname.startsWith("/manage")) links = [...MANAGE_NAV_LINKS];
+  const isManageRoute = pathname.startsWith("/manage");
 
   return (
     <section className="grid h-full min-h-0 px-3 grid-cols-[220px_minmax(0,1fr)] gap-1">
@@ -22,7 +23,11 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
         }))}
       />
 
-      <article className="h-full min-h-0 overflow-x-hidden overflow-y-auto rounded-md p-4 pt-0 md:p-6">
+      <article
+        className={`h-full min-h-0 overflow-x-hidden rounded-md p-4 pt-0 md:p-6 ${
+          isManageRoute ? "overflow-y-hidden" : "overflow-y-auto"
+        }`}
+      >
         {children}
       </article>
     </section>

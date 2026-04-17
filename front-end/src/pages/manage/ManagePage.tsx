@@ -30,7 +30,7 @@ function ManagePage() {
     selectedTab === "item";
 
   return (
-    <Panel>
+    <Panel className="flex h-full min-h-0 flex-col">
       {showFilter ? (
         <GenericFilter
           model={model}
@@ -52,7 +52,7 @@ function ManagePage() {
         </div>
       ) : null}
 
-      <div>
+      <div className="flex-1 min-h-0">
         <ManageTable
           activeTab={selectedTab ?? "category"}
           categories={categories}

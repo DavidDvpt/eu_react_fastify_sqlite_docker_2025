@@ -12,22 +12,39 @@ function StockPage() {
     isError: detailsError,
   } = useStockDetails(selectedItemId);
   const isDetailsLoading = Boolean(selectedItemId) && detailsPending;
+  const hasSelectedItem = Boolean(selectedItemId);
+
   return (
-    <div className="mx-auto flex h-full min-h-0 w-full max-w-[1280px] max-h-[100%] items-stretch justify-between overflow-hidden px-4 py-4">
+    <div className="mx-auto flex h-full min-h-0 max-h-[100%] w-full max-w items-stretch gap-4 overflow-hidden px-4 py-4">
       <StockPanel
-        className="w-[49%] min-h-0 overflow-hidden max-lg:w-full"
+        className={[
+          "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
+          hasSelectedItem ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
+          "max-lg:basis-full max-lg:max-w-full",
+        ].join(" ")}
         rows={stockRows}
         isLoading={isPending}
         isError={isError}
         selectedItemId={selectedItemId}
         onSelectItem={setSelectedItemId}
       />
-      <StockDetailsPanel
-        className="w-[49%] min-h-0 overflow-hidden max-lg:hidden"
-        details={stockDetails}
-        isLoading={isDetailsLoading}
-        isError={detailsError}
-      />
+      <div
+        className={[
+          "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
+          hasSelectedItem
+            ? "basis-1/2 max-w-[50%] opacity-100"
+            : "pointer-events-none basis-0 max-w-0 opacity-0",
+          "max-lg:hidden",
+        ].join(" ")}
+      >
+        <StockDetailsPanel
+          className="h-full min-h-0 w-full overflow-hidden"
+          details={stockDetails}
+          isLoading={isDetailsLoading}
+          isError={detailsError}
+          onClose={() => setSelectedItemId(null)}
+        />
+      </div>
     </div>
   );
 }

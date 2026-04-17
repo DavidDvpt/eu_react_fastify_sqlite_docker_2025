@@ -29,7 +29,7 @@ function GenericListBody<T>({
           <div
             key={getRowKey(row)}
             className={cn(
-              "rounded-md border border-table-border bg-card p-3 shadow-sm",
+              "rounded-md border border-table-border bg-table-bg p-3 text-table-body-text shadow-table hover:bg-table-row-hover-bg",
               onRowClick ? "cursor-pointer" : "",
               resolveRowClassName(row, rowClassName),
             )}

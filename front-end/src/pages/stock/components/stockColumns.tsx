@@ -1,12 +1,13 @@
-import type { StockRow } from "@/modules/stock";
-import type { GenericTableColumn } from "@/shared/components/GenericTable";
+import type { GenericListColumn, StockRow } from "@/types";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 
-const stockColumns: GenericTableColumn<StockRow>[] = [
+const stockColumns: GenericListColumn<StockRow>[] = [
   {
     key: "image",
-    header: "Image",
+    label: "Image",
+    kind: "image",
+    width: "48px",
     cellClassName: "bg-table-image-bg border border-table-image-border",
     render: (item) => {
       const imageUrl = ImageService.getItemImageUrl(item.imageUrlId, "micro");
@@ -26,18 +27,22 @@ const stockColumns: GenericTableColumn<StockRow>[] = [
   },
   {
     key: "name",
-    header: "Item",
+    label: "Item",
+    width: "minmax(240px, 2fr)",
     accessor: "name",
     cellClassName: "font-medium",
   },
   {
     key: "quantity",
-    header: "Quantite",
+    label: "Quantite",
+    width: "minmax(120px, 1fr)",
     render: (item) => item.quantity,
   },
   {
     key: "totalPrice",
-    header: "Prix total",
+    label: "Prix total",
+    width: "minmax(160px, 1fr)",
+    align: "right",
     render: (item) => `${FormatTools.pedFormat().format(item.totalPrice)} PED`,
     cellClassName: "text-right",
     headerClassName: "text-right",

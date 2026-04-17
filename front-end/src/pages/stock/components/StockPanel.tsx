@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { GenericTable } from "@/shared/components";
+import { GenericList } from "@/shared/components";
 
 import { GenericFilter } from "@/shared/components/GenericFilter";
 
@@ -130,7 +130,7 @@ function StockPanel({
         />
       ) : null}
 
-      <GenericTable<StockRow>
+      <GenericList<StockRow>
         columns={stockColumns}
         rows={filteredRows}
         getRowKey={(row) => row.itemId}
