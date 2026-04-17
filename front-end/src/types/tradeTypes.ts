@@ -1,4 +1,4 @@
-import type { StockRow } from "@/modules/stock";
+import type { StockRow } from "./stockTypes";
 
 type TradeFilterRow = StockRow & {
   itemTypeId: string | null;

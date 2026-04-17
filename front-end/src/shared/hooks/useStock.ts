@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getStock } from "@/modules/stock/services/stockApi";
+import { getStock } from "../services";
 
 function useStock() {
   const queryClient = useQueryClient();

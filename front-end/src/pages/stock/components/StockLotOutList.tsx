@@ -1,5 +1,5 @@
-import type { StockLotOut } from "@/modules/stock";
 import { FormatTools } from "@/shared/tools/formatTools";
+import type { StockLotOut } from "@/types";
 
 interface StockLotOutListProps {
   lotList: StockLotOut[] | null;

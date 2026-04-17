@@ -1,25 +1,13 @@
 import { useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { useGenericObjectFilter } from "./useGenericObjectFilter";
 
 import type {
   GenericFilterState,
   UseGenericFilterParams,
   UseGenericFilterResult,
-} from "../../../../types/genericFilterType";
-
-function toQueryString(value: unknown): string | null {
-  if (value === null || value === undefined) return null;
-  if (typeof value === "boolean") return value ? "true" : "false";
-  const text = String(value).trim();
-  return text.length > 0 ? text : null;
-}
-
-function parseBool(value: string | null): boolean | null {
-  if (value === "true") return true;
-  if (value === "false") return false;
-  return null;
-}
+} from "../../types/genericFilterType";
+import { parseBool, toQueryString } from "../components/GenericFilter/utils";
+import useGenericObjectFilter from "./useGenericObjectFilter";
 
 function useGenericFilter<T>({
   items,
@@ -128,4 +116,4 @@ function useGenericFilter<T>({
   };
 }
 
-export { useGenericFilter };
+export default useGenericFilter;

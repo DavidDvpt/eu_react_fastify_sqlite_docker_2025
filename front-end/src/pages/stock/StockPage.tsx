@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useStock, useStockDetails } from "@/modules/stock";
 import StockDetailsPanel from "./components/StockDetailsPanel";
 import StockPanel from "./components/StockPanel";
+import { useStock, useStockDetails } from "@/shared/hooks";
 
 function StockPage() {
   const { data: stockRows = [], isPending, isError } = useStock();

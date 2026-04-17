@@ -1,30 +1,23 @@
 import { useMemo } from "react";
 import { GenericTable } from "@/shared/components";
-import { STOCK_ROUTE } from "@/modules/stock";
+
 import { GenericFilter } from "@/shared/components/GenericFilter";
 
 import { stockColumns } from "./stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { GenericFilterModel, StockRow } from "@/types";
-import { useCategories, useItems, useTypes } from "@/shared/hooks";
-import { useGenericFilter } from "@/shared/components/GenericFilter/hooks/useGenericFilter";
-
-type StockPanelProps = {
-  rows: StockRow[];
-  isLoading: boolean;
-  isError: boolean;
-  selectedItemId: string | null;
-  onSelectItem: (itemId: string) => void;
-  className?: string;
-};
-
-type StockFilterRow = StockRow & {
-  itemTypeId: string | null;
-  itemTypeName: string | null;
-  categoryId: string | null;
-  categoryName: string | null;
-  isLimited: boolean;
-};
+import type {
+  GenericFilterModel,
+  StockFilterRow,
+  StockPanelProps,
+  StockRow,
+} from "@/types";
+import {
+  useCategories,
+  useGenericFilter,
+  useItems,
+  useTypes,
+} from "@/shared/hooks";
+import { STOCK_ROUTE } from "@/shared/services";
 
 const STOCK_FILTER_MODEL: GenericFilterModel<StockFilterRow> = {
   fields: [

@@ -67,6 +67,22 @@ type StockDetails = StockRow & {
   lotsOut: StockLotOut[];
 };
 
+type StockPanelProps = {
+  rows: StockRow[];
+  isLoading: boolean;
+  isError: boolean;
+  selectedItemId: string | null;
+  onSelectItem: (itemId: string) => void;
+  className?: string;
+};
+
+type StockFilterRow = StockRow & {
+  itemTypeId: string | null;
+  itemTypeName: string | null;
+  categoryId: string | null;
+  categoryName: string | null;
+  isLimited: boolean;
+};
 export type {
   Stock,
   StockApi,
@@ -78,4 +94,6 @@ export type {
   StockLotOutApi,
   StockRow,
   StockRowApi,
+  StockPanelProps,
+  StockFilterRow,
 };

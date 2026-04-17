@@ -49,7 +49,11 @@ import type {
   StockLotOutApi,
   StockRow,
   StockRowApi,
+  StockPanelProps,
+  StockFilterRow,
 } from "./stockTypes";
+
+import type { TradeFilterRow } from "./tradeTypes";
 
 export type {
   Categories,
@@ -96,5 +100,8 @@ export type {
   StockLotOutApi,
   StockRow,
   StockRowApi,
+  StockPanelProps,
+  StockFilterRow,
   GenericFilterModelItem,
+  TradeFilterRow,
 };

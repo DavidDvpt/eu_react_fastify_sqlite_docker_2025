@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getStockDetails } from "@/modules/stock/services/stockApi";
+import { getStockDetails } from "../services";
 
 function useStockDetails(itemId: string | null) {
   return useQuery({

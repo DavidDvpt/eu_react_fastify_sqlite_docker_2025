@@ -1,17 +1,19 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import {
-  GenericFilter,
-  useGenericObjectFilter,
-} from "@/shared/components/GenericFilter";
+import { GenericFilter } from "@/shared/components/GenericFilter";
 
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 
-import type { TradeFilterRow } from "./tradeTypes";
+import type { TradeFilterRow } from "@/types";
 import { TRADE_ITEM_FILTER_MODEL } from "./contants";
-import { useItems, useStock, useTypes } from "@/shared/hooks";
+import {
+  useGenericObjectFilter,
+  useItems,
+  useStock,
+  useTypes,
+} from "@/shared/hooks";
 
 function TradePage() {
   const navigate = useNavigate();

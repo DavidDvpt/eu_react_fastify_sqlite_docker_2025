@@ -1,6 +1,6 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import { parseStock, parseStockDetails } from "../stockParser";
+import { parseStock, parseStockDetails } from "@/lib/parsers";
 
 import type { Stock, StockApi, StockDetails, StockDetailsApi } from "@/types";
 

@@ -1,8 +1,8 @@
-import type { StockDetails } from "@/modules/stock";
 import StockMessages from "./StockMessages";
 import DetailsItem from "./DetailsItem";
 import StockLotInList from "./StockLotList";
 import { Container } from "@/shared/components/Containers";
+import type { StockDetails } from "@/types";
 
 type StockDetailsPanelProps = {
   details: StockDetails | null;

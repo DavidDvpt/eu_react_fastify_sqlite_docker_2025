@@ -2,7 +2,6 @@ import { useMemo } from "react";
 import {
   createGenericFilterModel,
   GenericFilter,
-  useGenericFilter,
 } from "@/shared/components/GenericFilter";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ManageTable } from "./components/ManageTable";
@@ -12,7 +11,12 @@ import { Panel } from "@/shared/components/Containers";
 import { enabledFields } from "@/shared/components/GenericFilter/constants";
 
 import type { FieldType, Item, ManageFilterRow, Type } from "@/types";
-import { useCategories, useItems, useTypes } from "@/shared/hooks";
+import {
+  useCategories,
+  useGenericFilter,
+  useItems,
+  useTypes,
+} from "@/shared/hooks";
 
 const MANAGE_FILTER_MODEL = createGenericFilterModel<ManageFilterRow>();
 
