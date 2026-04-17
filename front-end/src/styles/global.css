@@ -46,6 +46,10 @@
   --color-button-tertiary-hover-text: var(--button-tertiary-hover-text);
   --color-button-tertiary-active-text: var(--button-tertiary-active-text);
 
+  --color-switch-bg-unselected: var(--switch-bg-unselected);
+  --color-switch-bg-selected: var(--switch-bg-selected);
+  --color-switch-btn: var(--switch-btn);
+
   --color-h-navbar-hover: var(--h-navbar-hover);
   --color-h-navbar-text: var(--h-navbar-text);
 
@@ -257,6 +261,10 @@
   --input-text-color: var(--L4C8);
   --input-border-color: var(--L1C6);
   --select-item-hover: var(--L1C3);
+
+  --switch-bg-unselected: var(--L1C3);
+  --switch-bg-selected: var(--L1C1);
+  --switch-btn: var(--L3C2);
 
   --button-primary-bg: var(--L3C4);
   --button-primary-border: var(--L3C3);
