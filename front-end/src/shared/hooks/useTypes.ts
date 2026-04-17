@@ -26,4 +26,4 @@ function useTypes({ enabled = true }: UseTypesParams = {}) {
   };
 }
 
-export { useTypes };
+export default useTypes;

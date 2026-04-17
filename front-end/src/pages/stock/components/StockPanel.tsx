@@ -1,15 +1,13 @@
 import { useMemo } from "react";
 import { GenericTable } from "@/shared/components";
-import { STOCK_ROUTE, type StockRow } from "@/modules/stock";
-import {
-  GenericFilter,
-  useGenericObjectFilter,
-  type GenericFilterModel,
-} from "@/shared/components/GenericFilter";
-import { useItems, useTypes } from "@/pages/manage";
+import { STOCK_ROUTE } from "@/modules/stock";
+import { GenericFilter } from "@/shared/components/GenericFilter";
 
 import { stockColumns } from "./stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
+import type { GenericFilterModel, StockRow } from "@/types";
+import { useCategories, useItems, useTypes } from "@/shared/hooks";
+import { useGenericFilter } from "@/shared/components/GenericFilter/hooks/useGenericFilter";
 
 type StockPanelProps = {
   rows: StockRow[];
@@ -25,6 +23,7 @@ type StockFilterRow = StockRow & {
   itemTypeName: string | null;
   categoryId: string | null;
   categoryName: string | null;
+  isLimited: boolean;
 };
 
 const STOCK_FILTER_MODEL: GenericFilterModel<StockFilterRow> = {
@@ -48,6 +47,15 @@ const STOCK_FILTER_MODEL: GenericFilterModel<StockFilterRow> = {
       getLabel: (row) => row.itemTypeName ?? row.itemTypeId,
     },
     {
+      key: "limited",
+      label: "Limited",
+      kind: "boolean",
+      allLabel: "Tous",
+      trueLabel: "Limite",
+      falseLabel: "Illimite",
+      getValue: (row) => row.isLimited,
+    },
+    {
       key: "search",
       label: "Nom",
       kind: "autocomplete",
@@ -65,8 +73,21 @@ function StockPanel({
   onSelectItem,
   className,
 }: StockPanelProps) {
-  const { data: items = [] } = useItems();
-  const { data: types = [] } = useTypes();
+  const {
+    data: categories = [],
+    isPending: categoriesPending,
+    isError: categoriesError,
+  } = useCategories();
+  const {
+    data: items = [],
+    isPending: itemsPending,
+    isError: itemsError,
+  } = useItems();
+  const {
+    data: types = [],
+    isPending: typesPending,
+    isError: typesError,
+  } = useTypes();
 
   const typeById = useMemo(
     () =>
@@ -97,21 +118,50 @@ function StockPanel({
           itemTypeName: item?.itemTypeName ?? itemType?.name ?? null,
           categoryId: itemType?.categoryId ?? null,
           categoryName: itemType?.categoryName ?? null,
+          isLimited: item?.isLimited ?? false,
         };
       }),
     [itemById, rows, typeById],
   );
 
-  const stockFilter = useGenericObjectFilter<StockFilterRow>({
+  const availability = [
+    {
+      isPending: categoriesPending,
+      isError: categoriesError,
+      count: categories.length,
+    },
+    { isPending: typesPending, isError: typesError, count: types.length },
+    { isPending: itemsPending, isError: itemsError, count: items.length },
+  ];
+
+  const {
+    filter: stockFilter,
+    filteredItems: filteredRows,
+    showFilter,
+    hasIsLimited,
+  } = useGenericFilter<StockFilterRow>({
     items: filterRows,
     model: STOCK_FILTER_MODEL,
+    allowedFields: ["category", "type", "search", "limited"],
+    mode: "filter",
+    hasIsLimited: true,
+    typeById,
+    availability,
   });
-  const filteredRows = stockFilter.filteredItems;
+
   const totalPrice = filteredRows.reduce((acc, row) => acc + row.totalPrice, 0);
 
   return (
     <div className={`flex h-full min-h-0 flex-col gap-2 ${className ?? ""}`}>
-      <GenericFilter model={STOCK_FILTER_MODEL} filter={stockFilter} hasInput />
+      {showFilter ? (
+        <GenericFilter
+          model={STOCK_FILTER_MODEL}
+          filter={stockFilter}
+          allowedFields={["category", "type", "search", "limited"]}
+          hasAutocomplete
+          hasIsLimited={hasIsLimited}
+        />
+      ) : null}
 
       <GenericTable<StockRow>
         columns={stockColumns}

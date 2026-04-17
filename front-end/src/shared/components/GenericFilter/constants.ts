@@ -1,9 +1,8 @@
 import type {
   FieldType,
   GenericFilterModel,
-  ItemFilterModelItem,
-  TypeFilterModelItem,
-} from "@/@types";
+  GenericFilterModelItem,
+} from "@/types";
 
 function enabledFields(tab: FieldType) {
   let values: FieldType[] = [];
@@ -24,9 +23,9 @@ function enabledFields(tab: FieldType) {
   return values;
 }
 
-function createTypeFilterModel<
-  T extends TypeFilterModelItem,
->(): GenericFilterModel<T> {
+function createGenericFilterModel<
+  TItem extends GenericFilterModelItem,
+>(): GenericFilterModel<TItem> {
   return {
     fields: [
       {
@@ -34,51 +33,27 @@ function createTypeFilterModel<
         label: "Categorie",
         kind: "select",
         allLabel: "Toutes les categories",
-        dependsOn: ["search"],
-        getValue: (type) => type.categoryId,
-        getLabel: (type) => type.categoryName ?? type.categoryId,
-      },
-      {
-        key: "search",
-        label: "Nom",
-        kind: "autocomplete",
-        placeholder: "Ex: Ore",
-        getValue: (type) => type.name,
-      },
-    ],
-  };
-}
-
-function createItemFilterModel<
-  TItem extends ItemFilterModelItem,
-  TType extends TypeFilterModelItem,
->(typeById: Record<string, TType>): GenericFilterModel<TItem> {
-  return {
-    fields: [
-      {
-        key: "category",
-        label: "Categorie",
-        kind: "select",
-        allLabel: "Toutes les categories",
-        dependsOn: ["limited", "search"],
-        getValue: (item) => typeById[item.itemTypeId]?.categoryId ?? null,
-        getLabel: (item) => {
-          const linkedType = typeById[item.itemTypeId];
-          if (!linkedType) return "Type introuvable";
-          return linkedType.categoryName ?? linkedType.categoryId;
-        },
+        dependsOn: ["type", "item", "limited", "search"],
+        getValue: (item) => item.categoryId ?? null,
+        getLabel: (item) => item.categoryName ?? item.categoryId ?? null,
       },
       {
         key: "type",
         label: "Type",
         kind: "select",
         allLabel: "Tous les types",
-        dependsOn: ["category", "limited", "search"],
-        getValue: (item) => item.itemTypeId,
-        getLabel: (item) =>
-          item.itemTypeName ??
-          typeById[item.itemTypeId]?.name ??
-          item.itemTypeId,
+        dependsOn: ["category", "item", "limited", "search"],
+        getValue: (item) => item.itemTypeId ?? null,
+        getLabel: (item) => item.itemTypeName ?? item.itemTypeId ?? null,
+      },
+      {
+        key: "item",
+        label: "Item",
+        kind: "select",
+        allLabel: "Selectionner un item",
+        dependsOn: ["category", "type", "limited", "search"],
+        getValue: (item) => item.itemId ?? null,
+        getLabel: (item) => item.name ?? item.itemId ?? null,
       },
       {
         key: "limited",
@@ -87,17 +62,17 @@ function createItemFilterModel<
         allLabel: "Tous",
         trueLabel: "Limite",
         falseLabel: "Illimite",
-        getValue: (item) => item.isLimited,
+        getValue: (item) => item.isLimited ?? false,
       },
       {
         key: "search",
         label: "Nom",
         kind: "autocomplete",
         placeholder: "Ex: Oil",
-        getValue: (item) => item.name,
+        getValue: (item) => item.name ?? "",
       },
     ],
   };
 }
 
-export { createItemFilterModel, createTypeFilterModel, enabledFields };
+export { createGenericFilterModel, enabledFields };

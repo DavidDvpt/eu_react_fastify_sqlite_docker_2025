@@ -5,12 +5,13 @@ import {
   GenericFilter,
   useGenericObjectFilter,
 } from "@/shared/components/GenericFilter";
-import { useItems, useTypes } from "@/pages/manage";
+
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
-import { useStock } from "@/modules/stock";
+
 import type { TradeFilterRow } from "./tradeTypes";
 import { TRADE_ITEM_FILTER_MODEL } from "./contants";
+import { useItems, useStock, useTypes } from "@/shared/hooks";
 
 function TradePage() {
   const navigate = useNavigate();
@@ -109,7 +110,7 @@ function TradePage() {
         <GenericFilter
           model={TRADE_ITEM_FILTER_MODEL}
           filter={itemFilter}
-          hasInput={true}
+          hasAutocomplete={true}
           hasIsLimited={false}
         />
       ) : (

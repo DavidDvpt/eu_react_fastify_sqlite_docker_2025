@@ -3,7 +3,7 @@ import type {
   ContainerProps,
   ContainerBaseProps,
   ContainerType,
-} from "../../../@types/containerTypes";
+} from "@/types";
 
 export const Panel = (props: ContainerBaseProps) => (
   <Container type="Panel" {...props} />

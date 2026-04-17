@@ -1,3 +1,3 @@
 export { GenericFilter } from "./GenericFilter";
-export { useGenericObjectFilter } from "./useGenericObjectFilter";
-export { createItemFilterModel, createTypeFilterModel } from "./constants";
+export { useGenericObjectFilter } from "./hooks/useGenericObjectFilter";
+export { createGenericFilterModel } from "./constants";

@@ -1,9 +1,16 @@
-import { CATEGORIES_ROUTE, ITEMS_ROUTE, TYPES_ROUTE } from "@/pages/manage";
+import {
+  CATEGORIES_ROUTE,
+  getCategoryEditRoute,
+  getItemEditRoute,
+  getTypeEditRoute,
+  ITEMS_ROUTE,
+  TYPES_ROUTE,
+} from "@/pages/manage";
 import { GenericTable } from "@/shared/components";
 
 import { categoryColumns, itemColumns, typeColumns } from "./tableColumns";
 import { useNavigate } from "react-router-dom";
-import type { Category, Item, ManageTableProps, Type } from "@/@types";
+import type { Category, Item, ManageTableProps, Type } from "@/types";
 
 function ManageTable({
   activeTab,
@@ -19,8 +26,6 @@ function ManageTable({
 }: ManageTableProps) {
   const navigate = useNavigate();
 
-  const rowClick = () => navigate("/home");
-
   if (activeTab === "category") {
     return (
       <GenericTable<Category>
@@ -32,7 +37,7 @@ function ManageTable({
         loadingMessage="Chargement des categories..."
         errorMessage={`Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`}
         emptyMessage="Aucune categorie."
-        onRowClick={rowClick}
+        onRowClick={(row) => navigate(getCategoryEditRoute(row.id))}
       />
     );
   }
@@ -45,6 +50,7 @@ function ManageTable({
         getRowKey={(row) => row.id}
         isLoading={isTypesPending}
         isError={isTypesError}
+        onRowClick={(row) => navigate(getTypeEditRoute(row.id))}
         loadingMessage="Chargement des types..."
         errorMessage={`Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`}
         emptyMessage="Aucun type."
@@ -59,7 +65,7 @@ function ManageTable({
       getRowKey={(row) => row.id}
       isLoading={isItemsPending}
       isError={isItemsError}
-      onRowClick={rowClick}
+      onRowClick={(row) => navigate(getItemEditRoute(row.id))}
       loadingMessage="Chargement des items..."
       errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}
       emptyMessage="Aucun item."

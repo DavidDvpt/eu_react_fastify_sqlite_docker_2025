@@ -13,31 +13,37 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-import type {
-  GenericFilterProps,
-  GenericFilterStateValue,
-} from "../../../@types/genericFilterType";
+import type { GenericFilterProps, GenericFilterStateValue } from "@/types";
 
 function GenericFilter<T>({
   model,
   filter,
-  hasInput = true,
+  allowedFields,
+  hasAutocomplete,
+  hasInput,
   hasIsLimited = false,
   className,
 }: GenericFilterProps<T>) {
+  const showAutocompleteInput = hasAutocomplete ?? hasInput ?? true;
   const leftColumnRef = useRef<HTMLDivElement | null>(null);
   const rightColumnRef = useRef<HTMLDivElement | null>(null);
   const [isLeftCompact, setIsLeftCompact] = useState(false);
   const [isRightCompact, setIsRightCompact] = useState(false);
 
+  const allowedFieldSet = useMemo(
+    () => new Set(allowedFields ?? model.fields.map((field) => field.key)),
+    [allowedFields, model.fields],
+  );
+
   const visibleFields = useMemo(
     () =>
       model.fields.filter((field) => {
+        if (!allowedFieldSet.has(field.key)) return false;
         if (field.hidden) return false;
         if (!hasIsLimited && field.key === "limited") return false;
         return true;
       }),
-    [hasIsLimited, model.fields],
+    [allowedFieldSet, hasIsLimited, model.fields],
   );
   const autocompleteFields = useMemo(
     () => visibleFields.filter((field) => field.kind === "autocomplete"),
@@ -192,7 +198,7 @@ function GenericFilter<T>({
                   )}
                 >
                   <Label htmlFor={id}>{field.label}</Label>
-                  {hasInput ? (
+                  {showAutocompleteInput ? (
                     <>
                       <Input
                         id={id}

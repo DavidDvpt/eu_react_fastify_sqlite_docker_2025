@@ -26,4 +26,4 @@ function useItems({ enabled = true }: UseItemsParams = {}) {
   };
 }
 
-export { useItems };
+export default useItems;

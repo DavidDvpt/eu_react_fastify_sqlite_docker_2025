@@ -26,4 +26,4 @@ function useCategories({ enabled = true }: UseCategoriesParams = {}) {
   };
 }
 
-export { useCategories };
+export default useCategories;

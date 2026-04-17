@@ -1,6 +1,6 @@
-import type { StockDetails } from "@/modules/stock";
+import type { StockDetails } from "@/types";
 import { Container } from "@/shared/components/Containers";
-import type { ContainerType } from "@/@types/containerTypes";
+import type { ContainerType } from "@/types/containerTypes";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 

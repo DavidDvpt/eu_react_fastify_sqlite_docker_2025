@@ -12,7 +12,7 @@ function useStock() {
 
   const invalidateStock = useCallback(
     () => queryClient.invalidateQueries({ queryKey: ["stock"] }),
-    [queryClient]
+    [queryClient],
   );
 
   return {
@@ -21,4 +21,4 @@ function useStock() {
   };
 }
 
-export { useStock };
+export default useStock;

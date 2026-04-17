@@ -2,7 +2,7 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseTypes } from "../../../lib/parsers/typeParser";
 
-import type { TypeApis, Types } from "../../../@types/typeTypes";
+import type { TypeApis, Types } from "@/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const TYPES_ROUTE = `${API_URL}/types`;

@@ -26,7 +26,3 @@ export {
   getItems,
   ITEMS_ROUTE,
 } from "./services";
-
-export { useCategories } from "@/shared/hooks/useCategories";
-export { useTypes } from "@/shared/hooks/useTypes";
-export { useItems } from "@/shared/hooks/useItems";

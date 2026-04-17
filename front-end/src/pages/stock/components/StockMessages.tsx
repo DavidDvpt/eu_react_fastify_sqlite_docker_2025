@@ -1,5 +1,3 @@
-import React from "react";
-
 interface StockMessagesProps {
   isLoading: boolean;
   isError: boolean;

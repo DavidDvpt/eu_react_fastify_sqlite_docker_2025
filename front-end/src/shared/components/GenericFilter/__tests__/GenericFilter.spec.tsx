@@ -1,10 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { GenericFilter } from "../GenericFilter";
-import type {
-  GenericFilterModel,
-  UseGenericObjectFilterResult,
-} from "../../../../@types/genericFilterType";
+import type { GenericFilterModel, UseGenericObjectFilterResult } from "@/types";
 
 type ItemLike = {
   id: string;
@@ -65,7 +62,7 @@ describe("GenericFilter", () => {
     expect(filter.resetFilters).toHaveBeenCalledTimes(1);
   });
 
-  it("renders autocomplete as select when hasInput is false", () => {
+  it("renders autocomplete as select when hasAutocomplete is false", () => {
     const model: GenericFilterModel<ItemLike> = {
       fields: [
         {
@@ -78,7 +75,9 @@ describe("GenericFilter", () => {
     };
     const filter = createFilterMock({ search: "" });
 
-    render(<GenericFilter model={model} filter={filter} hasInput={false} />);
+    render(
+      <GenericFilter model={model} filter={filter} hasAutocomplete={false} />,
+    );
 
     expect(
       screen.queryByRole("textbox", { name: "Nom" }),

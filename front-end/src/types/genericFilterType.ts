@@ -20,19 +20,14 @@ type GenericFilterBaseField<T> = {
   getValue: (item: T) => string | boolean | null | undefined;
 };
 
-type TypeFilterModelItem = {
-  id: string;
-  name: string;
-  categoryId: string;
-  categoryName?: string;
-};
-
-type ItemFilterModelItem = {
-  id: string;
-  name: string;
-  itemTypeId: string;
-  itemTypeName?: string;
-  isLimited: boolean;
+type GenericFilterModelItem = {
+  categoryId?: string | null;
+  categoryName?: string | null;
+  itemTypeId?: string | null;
+  itemTypeName?: string | null;
+  itemId?: string | null;
+  name?: string | null;
+  isLimited?: boolean;
 };
 
 type GenericFilterSelectField<T> = GenericFilterBaseField<T> & {
@@ -67,10 +62,14 @@ type GenericFilterModel<T> = {
 type GenericFilterProps<T> = {
   model: GenericFilterModel<T>;
   filter: UseGenericObjectFilterResult<T>;
+  allowedFields?: string[];
+  hasAutocomplete?: boolean;
   hasInput?: boolean;
   hasIsLimited?: boolean;
   className?: string;
 };
+
+type GenericFilterMode = "filter" | "choice";
 
 type UseGenericObjectFilterParams<T> = {
   items: T[];
@@ -87,21 +86,43 @@ type UseGenericObjectFilterResult<T> = {
   autocompleteOptions: GenericFilterAutocompleteOptions;
 };
 
+type GenericFilterAvailability = {
+  isPending: boolean;
+  isError: boolean;
+  count: number;
+};
+
+type UseGenericFilterParams<T> = {
+  items: T[];
+  model: GenericFilterModel<T>;
+  allowedFields: string[];
+  mode?: GenericFilterMode;
+  hasIsLimited?: boolean;
+  typeById?: Record<string, { supportsLimited?: boolean }>;
+  availability?: GenericFilterAvailability[];
+};
+
+type UseGenericFilterResult<T> = {
+  filter: UseGenericObjectFilterResult<T>;
+  filteredItems: T[];
+  selectedItemId: string | null;
+  showFilter: boolean;
+  hasIsLimited: boolean;
+};
+
 export type {
   GenericFilterProps,
-  GenericFilterAutocompleteField,
-  GenericFilterAutocompleteOptions,
-  GenericFilterBooleanField,
+  GenericFilterMode,
   GenericFilterField,
   GenericFilterModel,
-  GenericFilterSelectField,
   GenericFilterSelectOption,
-  GenericFilterSelectOptions,
   GenericFilterState,
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-  ItemFilterModelItem,
-  TypeFilterModelItem,
+  GenericFilterAvailability,
+  UseGenericFilterParams,
+  UseGenericFilterResult,
   FieldType,
+  GenericFilterModelItem,
 };

@@ -10,4 +10,4 @@ function useStockDetails(itemId: string | null) {
   });
 }
 
-export { useStockDetails };
+export default useStockDetails;

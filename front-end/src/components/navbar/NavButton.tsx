@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from "react-router-dom";
 
 import { Button } from "@/components/ui/button";
-import type { NavbarButtonType } from "@/@types/navbarTypes";
+import type { NavbarButtonType } from "@/types";
 
 function NavButton(props: NavbarButtonType) {
   const { pathname } = useLocation();

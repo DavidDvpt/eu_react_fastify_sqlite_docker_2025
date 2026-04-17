@@ -2,7 +2,7 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseCategories } from "../../../lib/parsers/categoryParser";
 
-import type { Categories, CategoryApis } from "../../../@types/categoryTypes";
+import type { Categories, CategoryApis } from "@/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const CATEGORIES_ROUTE = `${API_URL}/categories`;

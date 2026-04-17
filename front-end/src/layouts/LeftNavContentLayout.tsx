@@ -1,17 +1,8 @@
-import type { PropsWithChildren, ReactNode } from "react";
+import type { PropsWithChildren } from "react";
 import { VerticalNav } from "@/shared/components";
 import { useLocation } from "react-router-dom";
 import { MANAGE_NAV_LINKS } from "@/pages/manage";
-import type { NavbarButtonType } from "@/@types/navbarTypes";
-
-type LeftNavLink = {
-  key?: string;
-  label: ReactNode;
-  to?: string;
-  onClick?: () => void;
-  isActive?: boolean;
-  disabled?: boolean;
-};
+import type { NavbarButtonType } from "@/types";
 
 function LeftNavContentLayout({ children }: PropsWithChildren) {
   const { pathname } = useLocation();
@@ -38,5 +29,4 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
   );
 }
 
-export type { LeftNavLink };
 export default LeftNavContentLayout;

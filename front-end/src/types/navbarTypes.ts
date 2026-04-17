@@ -14,9 +14,18 @@ type NavbarButtonType = {
   variant: "navVertical" | "navHorizontal";
 };
 
+type LeftNavLink = {
+  key?: string;
+  label: ReactNode;
+  to?: string;
+  onClick?: () => void;
+  isActive?: boolean;
+  disabled?: boolean;
+};
+
 type VerticalNavProps = {
   items: NavbarButtonType[];
   className?: string;
 };
 
-export type { NavbarButtonType, VerticalNavProps };
+export type { NavbarButtonType, VerticalNavProps, LeftNavLink };

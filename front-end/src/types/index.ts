@@ -6,11 +6,15 @@ import type {
 } from "./categoryTypes";
 import type { Type, TypeApi, TypeApis, Types } from "./typeTypes";
 import type { Item, ItemApi, ItemApis, Items } from "./itemTypes";
-import type { NavbarButtonType, VerticalNavProps } from "./navbarTypes";
 import type {
-  ManageFilterProps,
+  NavbarButtonType,
+  VerticalNavProps,
+  LeftNavLink,
+} from "./navbarTypes";
+import type {
   ManageTab,
   ManageTableProps,
+  ManageFilterRow,
 } from "./manageTypes";
 import type {
   ContainerType,
@@ -19,22 +23,33 @@ import type {
 } from "./containerTypes";
 import type {
   GenericFilterProps,
-  GenericFilterAutocompleteField,
-  GenericFilterAutocompleteOptions,
-  GenericFilterBooleanField,
   GenericFilterField,
   GenericFilterModel,
-  GenericFilterSelectField,
   GenericFilterSelectOption,
-  GenericFilterSelectOptions,
   GenericFilterState,
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-  ItemFilterModelItem,
-  TypeFilterModelItem,
+  GenericFilterMode,
+  GenericFilterAvailability,
+  UseGenericFilterParams,
+  UseGenericFilterResult,
   FieldType,
+  GenericFilterModelItem,
 } from "./genericFilterType";
+
+import type {
+  Stock,
+  StockApi,
+  StockDetails,
+  StockDetailsApi,
+  StockLotIn,
+  StockLotInApi,
+  StockLotOut,
+  StockLotOutApi,
+  StockRow,
+  StockRowApi,
+} from "./stockTypes";
 
 export type {
   Categories,
@@ -50,27 +65,36 @@ export type {
   ItemApis,
   Items,
   NavbarButtonType,
+  LeftNavLink,
   VerticalNavProps,
-  ManageFilterProps,
   ManageTab,
+  ManageFilterRow,
   ContainerType,
   ContainerProps,
   ContainerBaseProps,
   GenericFilterProps,
-  GenericFilterAutocompleteField,
-  GenericFilterAutocompleteOptions,
-  GenericFilterBooleanField,
   GenericFilterField,
   GenericFilterModel,
-  GenericFilterSelectField,
   GenericFilterSelectOption,
-  GenericFilterSelectOptions,
   GenericFilterState,
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-  ItemFilterModelItem,
-  TypeFilterModelItem,
+  GenericFilterMode,
+  GenericFilterAvailability,
+  UseGenericFilterParams,
+  UseGenericFilterResult,
   ManageTableProps,
   FieldType,
+  Stock,
+  StockApi,
+  StockDetails,
+  StockDetailsApi,
+  StockLotIn,
+  StockLotInApi,
+  StockLotOut,
+  StockLotOutApi,
+  StockRow,
+  StockRowApi,
+  GenericFilterModelItem,
 };

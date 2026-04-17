@@ -1,9 +1,4 @@
-import type {
-  Category,
-  CategoryApi,
-  Categories,
-  CategoryApis,
-} from "../../@types/categoryTypes";
+import type { Category, CategoryApi, Categories, CategoryApis } from "@/types";
 
 async function parseCategory(data: CategoryApi): Promise<Category> {
   try {

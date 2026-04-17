@@ -15,7 +15,7 @@ describe("manageConfig", () => {
   });
 
   it("exposes left nav links for manage routes", () => {
-    expect(MANAGE_NAV_LINKS.map((link) => link.to)).toEqual([
+    expect(MANAGE_NAV_LINKS.map((link) => link.route)).toEqual([
       "/manage/category",
       "/manage/type",
       "/manage/item",

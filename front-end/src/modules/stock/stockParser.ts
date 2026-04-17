@@ -5,7 +5,7 @@ import type {
   StockDetailsApi,
   StockRow,
   StockRowApi,
-} from "./stockTypes";
+} from "@/types";
 
 function toNumber(value: number | string): number {
   const parsed = Number(value);

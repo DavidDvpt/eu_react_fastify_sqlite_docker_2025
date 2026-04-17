@@ -1,5 +1,4 @@
-import type { ManageTab } from "@/@types";
-import type { NavbarButtonType } from "@/@types/navbarTypes";
+import type { ManageTab, NavbarButtonType } from "@/types";
 
 const MANAGE_TAB_META = {
   category: {

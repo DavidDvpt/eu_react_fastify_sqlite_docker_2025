@@ -8,7 +8,7 @@ import type {
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-} from "../../../@types/genericFilterType";
+} from "@/types";
 
 function normalizeString(value: string | null | undefined): string {
   return (value ?? "").trim().toLowerCase();
