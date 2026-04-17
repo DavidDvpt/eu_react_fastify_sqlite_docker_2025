@@ -32,6 +32,8 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/categories', async (request, reply) => {
     const rows = await app.repos.itemCategories.findMany(undefined, request.user.id);
+    console.log(rows);
+    rows.sort((a, b) => a.name.localeCompare(b.name));
     return reply.code(200).send(rows);
   });
 
@@ -99,6 +101,7 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
         : undefined,
       request.user.id
     );
+    rows.sort((a, b) => a.name.localeCompare(b.name));
     return reply.code(200).send(rows);
   });
 
@@ -166,6 +169,7 @@ const manageRoutes: FastifyPluginCallback = (app, _opts, done) => {
         : undefined,
       request.user.id
     );
+    rows.sort((a, b) => a.name.localeCompare(b.name));
     return reply.code(200).send(rows);
   });
 
