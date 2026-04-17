@@ -35,13 +35,13 @@ const stockColumns: GenericListColumn<StockRow>[] = [
   {
     key: "quantity",
     label: "Quantite",
-    width: "minmax(120px, 1fr)",
+    width: "minmax(80px, 1fr)",
     render: (item) => item.quantity,
   },
   {
     key: "totalPrice",
     label: "Prix total",
-    width: "minmax(160px, 1fr)",
+    width: "minmax(120px, 1fr)",
     align: "right",
     render: (item) => `${FormatTools.pedFormat().format(item.totalPrice)} PED`,
     cellClassName: "text-right",
