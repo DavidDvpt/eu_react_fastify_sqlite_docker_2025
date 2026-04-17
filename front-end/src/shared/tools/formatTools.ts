@@ -8,6 +8,15 @@ class FormatTools {
     return numericValue.toFixed(5);
   }
 
+  static formatToThreeDecimals(value: unknown): string {
+    const numericValue = typeof value === "number" ? value : Number(value);
+    if (!Number.isFinite(numericValue)) {
+      return "0.000";
+    }
+
+    return numericValue.toFixed(3);
+  }
+
   static pedFormat() {
     return new Intl.NumberFormat("fr-FR", {
       style: "decimal",

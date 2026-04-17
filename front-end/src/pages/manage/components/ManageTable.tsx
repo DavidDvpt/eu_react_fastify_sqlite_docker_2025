@@ -6,11 +6,16 @@ import {
   ITEMS_ROUTE,
   TYPES_ROUTE,
 } from "@/pages/manage";
-import { GenericTable } from "@/shared/components";
+import { GenericList } from "@/shared/components";
 
-import { categoryColumns, itemColumns, typeColumns } from "./tableColumns";
+import {
+  categoryColumns,
+  itemColumns,
+  typeColumns,
+} from "../../../shared/components/GenericList/columnConfig";
 import { useNavigate } from "react-router-dom";
-import type { Category, Item, ManageTableProps, Type } from "@/types";
+import type { Category, ManageTableProps, Type } from "@/types";
+import { ManageItemsList } from "./ManageItemsList";
 
 function ManageTable({
   activeTab,
@@ -30,7 +35,7 @@ function ManageTable({
 
   if (activeTab === "category") {
     return (
-      <GenericTable<Category>
+      <GenericList<Category>
         columns={categoryColumns}
         rows={categories}
         getRowKey={(row) => row.id}
@@ -46,7 +51,7 @@ function ManageTable({
 
   if (activeTab === "type") {
     return (
-      <GenericTable<Type>
+      <GenericList<Type>
         columns={typeColumns}
         rows={typesRows}
         getRowKey={(row) => row.id}
@@ -61,16 +66,15 @@ function ManageTable({
   }
 
   return (
-    <GenericTable<Item>
+    <ManageItemsList
       columns={itemColumns}
       rows={itemsRows}
-      getRowKey={(row) => row.id}
       isLoading={status?.isPending ?? false}
       isError={status?.isError ?? false}
-      onRowClick={(row) => navigate(getItemEditRoute(row.id))}
       loadingMessage="Chargement des items..."
       errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}
       emptyMessage="Aucun item."
+      onRowClick={(row) => navigate(getItemEditRoute(row.id))}
     />
   );
 }

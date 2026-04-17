@@ -1,11 +1,15 @@
-import type { Item } from "@/pages/manage";
-import type { GenericTableColumn } from "@/shared/components/GenericTable";
-import { formatToFiveDecimals, getItemImageUrl } from "../../utils";
+import type { GenericListColumn, Item } from "@/types";
+import {
+  formatToFiveDecimals,
+  getItemImageUrl,
+} from "../../../../pages/manage/utils";
 
-const itemColumns: GenericTableColumn<Item>[] = [
+const itemColumns: GenericListColumn<Item>[] = [
   {
     key: "image",
-    header: "Image",
+    label: "Image",
+    width: "32px",
+    kind: "image",
     cellClassName: "bg-table-image-bg border border-table-image-border",
     render: (item) =>
       getItemImageUrl(item.imageUrlId) ? (
@@ -21,36 +25,43 @@ const itemColumns: GenericTableColumn<Item>[] = [
   },
   {
     key: "name",
-    header: "Nom",
+    label: "Nom",
+    width: "minmax(220px, 2fr)",
     render: (item) => item.name ?? "Unknown",
   },
   {
     key: "type",
-    header: "Type",
+    label: "Type",
+    width: "minmax(160px, 1.4fr)",
     cellClassName: "",
     render: (item) => item.itemTypeName ?? item.itemTypeId,
   },
   {
     key: "value",
-    header: "Valeur",
+    label: "Valeur",
+    width: "minmax(120px, 1fr)",
+    align: "right",
     cellClassName: "",
     render: (item) => formatToFiveDecimals(item.value),
   },
   {
     key: "limited",
-    header: "Limited",
+    label: "Limited",
+    width: "minmax(110px, 1fr)",
     cellClassName: "",
     render: (item) => (item.isLimited ? "Oui" : "Non"),
   },
   {
     key: "stackable",
-    header: "Stackable",
+    label: "Stackable",
+    width: "minmax(120px, 1fr)",
     cellClassName: "",
     render: (item) => (item.isStackable ? "Oui" : "Non"),
   },
   {
     key: "scope",
-    header: "Scope",
+    label: "Scope",
+    width: "minmax(120px, 1fr)",
     cellClassName: "",
     render: (item) => (item.userId ? "Custom" : "Global"),
   },

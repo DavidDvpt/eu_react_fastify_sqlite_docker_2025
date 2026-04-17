@@ -22,6 +22,7 @@ type Item = {
   imageUrlId: string;
   value: number;
   isLimited: boolean;
+  supportsLimited?: boolean;
   isStackable?: boolean;
   itemTypeId: string;
   itemTypeName?: string;

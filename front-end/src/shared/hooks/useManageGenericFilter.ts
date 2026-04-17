@@ -45,10 +45,16 @@ function useManageGenericFilter(
   const itemById = useMemo(
     () =>
       items.reduce<Record<string, Item>>((acc, item) => {
-        acc[item.id] = item;
+        const linkedType = typeById[item.itemTypeId];
+        acc[item.id] = {
+          ...item,
+          supportsLimited: linkedType?.supportsLimited,
+          itemTypeName:
+            item.itemTypeName ?? linkedType?.name ?? item.itemTypeName,
+        };
         return acc;
       }, {}),
-    [items],
+    [items, typeById],
   );
 
   const typeFilterRows = useMemo<ManageFilterRow[]>(

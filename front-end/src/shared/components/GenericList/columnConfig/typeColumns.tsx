@@ -1,20 +1,22 @@
-import type { Type } from "@/pages/manage";
-import type { GenericTableColumn } from "@/shared/components/GenericTable";
+import type { GenericListColumn, Type } from "@/types";
 
-const typeColumns: GenericTableColumn<Type>[] = [
+const typeColumns: GenericListColumn<Type>[] = [
   {
     key: "name",
-    header: "Nom",
+    label: "Nom",
+    width: "minmax(220px, 2fr)",
     render: (type) => type.name ?? "Unknown",
   },
   {
     key: "category",
-    header: "Categorie",
+    label: "Categorie",
+    width: "minmax(220px, 2fr)",
     render: (type) => type.categoryName ?? type.categoryId,
   },
   {
     key: "scope",
-    header: "Scope",
+    label: "Scope",
+    width: "minmax(140px, 1fr)",
     render: (type) => (type.userId ? "Custom" : "Global"),
   },
 ];

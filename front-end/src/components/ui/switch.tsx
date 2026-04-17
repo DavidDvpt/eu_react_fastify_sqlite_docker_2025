@@ -8,6 +8,8 @@ const Switch = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof SwitchPrimitives.Root>
 >(({ className, ...props }, ref) => (
   <SwitchPrimitives.Root
+    ref={ref}
+    {...props}
     className={cn(
       "peer inline-flex h-[20px] w-[44px] shrink-0 items-center rounded-full border-2 border-transparent p-[2px] transition-colors",
       "data-[state=checked]:bg-switch-bg-selected",

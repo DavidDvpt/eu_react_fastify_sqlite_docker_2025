@@ -1,16 +1,17 @@
-import type { Category } from "@/pages/manage";
-import type { GenericTableColumn } from "@/shared/components/GenericTable";
+import type { Category, GenericListColumn } from "@/types";
 
-const categoryColumns: GenericTableColumn<Category>[] = [
+const categoryColumns: GenericListColumn<Category>[] = [
   {
     key: "name",
-    header: "Nom",
+    label: "Nom",
+    width: "minmax(240px, 2fr)",
     cellClassName: "text-table-body-text",
     render: (category) => category.name ?? "Unknow",
   },
   {
     key: "scope",
-    header: "Scope",
+    label: "Scope",
+    width: "minmax(140px, 1fr)",
     cellClassName: "text-table-body-text",
     render: (category) => (category.userId ? "Custom" : "Global"),
   },

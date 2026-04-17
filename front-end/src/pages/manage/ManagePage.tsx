@@ -1,20 +1,17 @@
-import { useState } from "react";
 import { GenericFilter } from "@/shared/components/GenericFilter";
 import { useNavigate, useParams } from "react-router-dom";
 import { ManageTable } from "./components/ManageTable";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/shared/components/Containers";
-import { Switch } from "@/components/ui/switch";
 
-import type { FieldType } from "@/types";
+import type { ManageTab } from "@/types";
 import { useManageGenericFilter } from "@/shared/hooks";
 
 function ManagePage() {
   const { tab } = useParams();
   const navigate = useNavigate();
-  const [isCardView, setIsCardView] = useState(false);
 
-  const selectedTab = tab as FieldType | undefined;
+  const selectedTab = tab as ManageTab | undefined;
   const {
     model,
     categories,
@@ -31,7 +28,6 @@ function ManagePage() {
     selectedTab === "category" ||
     selectedTab === "type" ||
     selectedTab === "item";
-  const showViewSwitch = selectedTab === "item";
 
   return (
     <Panel>
@@ -46,22 +42,7 @@ function ManagePage() {
       ) : null}
 
       {canCreate ? (
-        <div
-          className={`flex items-center py-2 ${
-            showViewSwitch ? "justify-between" : "justify-end"
-          }`}
-        >
-          {showViewSwitch ? (
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-text">Ligne</span>
-              <Switch
-                checked={isCardView}
-                onCheckedChange={setIsCardView}
-                aria-label="Basculer entre affichage ligne et carte"
-              />
-              <span className="text-sm text-text">Carte</span>
-            </div>
-          ) : null}
+        <div className="flex items-center justify-end py-2">
           <Button
             variant="primary"
             onClick={() => navigate(`/manage/${selectedTab}/create`)}
@@ -71,7 +52,7 @@ function ManagePage() {
         </div>
       ) : null}
 
-      <div data-view={isCardView ? "card" : "row"}>
+      <div>
         <ManageTable
           activeTab={selectedTab ?? "category"}
           categories={categories}
