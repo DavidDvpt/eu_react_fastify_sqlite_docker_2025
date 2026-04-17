@@ -8,7 +8,7 @@ import type {
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-} from "./types";
+} from "../../../@types/genericFilterType";
 
 function normalizeString(value: string | null | undefined): string {
   return (value ?? "").trim().toLowerCase();
@@ -34,7 +34,7 @@ function getDefaultState<T>(model: GenericFilterModel<T>): GenericFilterState {
 
 function buildInitialState<T>(
   model: GenericFilterModel<T>,
-  initialState?: GenericFilterState
+  initialState?: GenericFilterState,
 ): GenericFilterState {
   return { ...getDefaultState(model), ...initialState };
 }
@@ -49,7 +49,7 @@ function getStateSignature(state?: GenericFilterState): string {
 
 function areFilterStatesEqual(
   current: GenericFilterState,
-  next: GenericFilterState
+  next: GenericFilterState,
 ): boolean {
   const currentKeys = Object.keys(current);
   const nextKeys = Object.keys(next);
@@ -61,10 +61,12 @@ function areFilterStatesEqual(
 function matchesField<T>(
   item: T,
   field: GenericFilterField<T>,
-  stateValue: GenericFilterStateValue
+  stateValue: GenericFilterStateValue,
 ): boolean {
   if (field.kind === "autocomplete") {
-    const query = normalizeString(typeof stateValue === "string" ? stateValue : "");
+    const query = normalizeString(
+      typeof stateValue === "string" ? stateValue : "",
+    );
     if (!query) return true;
 
     const itemValue = normalizeString(String(field.getValue(item) ?? ""));
@@ -87,14 +89,14 @@ function filterItemsExcludingField<T>(
   items: T[],
   fields: GenericFilterField<T>[],
   state: GenericFilterState,
-  excludedFieldKey?: string
+  excludedFieldKey?: string,
 ): T[] {
   return items.filter((item) =>
     fields.every((field) => {
       if (field.key === excludedFieldKey) return true;
       const fieldValue = state[field.key] ?? null;
       return matchesField(item, field, fieldValue);
-    })
+    }),
   );
 }
 
@@ -102,14 +104,14 @@ function filterItemsByFieldDependencies<T>(
   items: T[],
   fields: GenericFilterField<T>[],
   state: GenericFilterState,
-  field: GenericFilterField<T>
+  field: GenericFilterField<T>,
 ): T[] {
   const fieldByKey = fields.reduce<Record<string, GenericFilterField<T>>>(
     (acc, currentField) => {
       acc[currentField.key] = currentField;
       return acc;
     },
-    {}
+    {},
   );
 
   const dependencyKeys =
@@ -124,14 +126,14 @@ function filterItemsByFieldDependencies<T>(
       if (!dependencyField) return true;
       const dependencyValue = state[dependencyField.key] ?? null;
       return matchesField(item, dependencyField, dependencyValue);
-    })
+    }),
   );
 }
 
 function buildSelectOptions<T>(
   items: T[],
   fields: GenericFilterField<T>[],
-  state: GenericFilterState
+  state: GenericFilterState,
 ): Record<string, GenericFilterSelectOption[]> {
   const result: Record<string, GenericFilterSelectOption[]> = {};
 
@@ -142,7 +144,7 @@ function buildSelectOptions<T>(
       items,
       fields,
       state,
-      field
+      field,
     );
 
     const optionByValue = new Map<string, string>();
@@ -150,7 +152,7 @@ function buildSelectOptions<T>(
     filteredByDependencies.forEach((item) => {
       const value = field.getValue(item);
       const comparableValue = toComparableValue(
-        typeof value === "string" ? value : null
+        typeof value === "string" ? value : null,
       );
       if (!comparableValue) return;
 
@@ -170,7 +172,7 @@ function buildSelectOptions<T>(
 function buildAutocompleteOptions<T>(
   items: T[],
   fields: GenericFilterField<T>[],
-  state: GenericFilterState
+  state: GenericFilterState,
 ): Record<string, string[]> {
   const result: Record<string, string[]> = {};
 
@@ -181,10 +183,10 @@ function buildAutocompleteOptions<T>(
       items,
       fields,
       state,
-      field
+      field,
     );
     const currentQuery = normalizeString(
-      typeof state[field.key] === "string" ? String(state[field.key]) : ""
+      typeof state[field.key] === "string" ? String(state[field.key]) : "",
     );
 
     const uniqueValues = new Set<string>();
@@ -193,12 +195,13 @@ function buildAutocompleteOptions<T>(
       if (typeof rawValue !== "string") return;
       const value = rawValue.trim();
       if (!value) return;
-      if (currentQuery && !normalizeString(value).includes(currentQuery)) return;
+      if (currentQuery && !normalizeString(value).includes(currentQuery))
+        return;
       uniqueValues.add(value);
     });
 
     const sortedValues = [...uniqueValues].sort((a, b) =>
-      a.localeCompare(b, "fr")
+      a.localeCompare(b, "fr"),
     );
     const limit = field.maxSuggestions ?? 20;
     result[field.key] = sortedValues.slice(0, limit);
@@ -221,14 +224,11 @@ function useGenericObjectFilter<T>({
     stableInitialStateSignatureRef.current = initialStateSignature;
   }
 
-  const computedInitialState = useMemo(
-    () => {
-      const signature = initialStateSignature;
-      void signature;
-      return buildInitialState(model, stableInitialStateRef.current);
-    },
-    [initialStateSignature, model]
-  );
+  const computedInitialState = useMemo(() => {
+    const signature = initialStateSignature;
+    void signature;
+    return buildInitialState(model, stableInitialStateRef.current);
+  }, [initialStateSignature, model]);
   const [filterState, setFilterState] =
     useState<GenericFilterState>(computedInitialState);
 
@@ -236,23 +236,23 @@ function useGenericObjectFilter<T>({
     setFilterState((currentState) =>
       areFilterStatesEqual(currentState, computedInitialState)
         ? currentState
-        : computedInitialState
+        : computedInitialState,
     );
   }, [computedInitialState]);
 
   const filteredItems = useMemo(
     () => filterItemsExcludingField(items, model.fields, filterState),
-    [filterState, items, model.fields]
+    [filterState, items, model.fields],
   );
 
   const selectOptions = useMemo(
     () => buildSelectOptions(items, model.fields, filterState),
-    [filterState, items, model.fields]
+    [filterState, items, model.fields],
   );
 
   const autocompleteOptions = useMemo(
     () => buildAutocompleteOptions(items, model.fields, filterState),
-    [filterState, items, model.fields]
+    [filterState, items, model.fields],
   );
 
   useEffect(() => {
@@ -265,7 +265,7 @@ function useGenericObjectFilter<T>({
       if (currentValue === null || currentValue === "") return;
       const fieldOptions = selectOptions[field.key] ?? [];
       const hasCurrentValue = fieldOptions.some(
-        (option) => option.value === toComparableValue(String(currentValue))
+        (option) => option.value === toComparableValue(String(currentValue)),
       );
 
       if (!hasCurrentValue) {

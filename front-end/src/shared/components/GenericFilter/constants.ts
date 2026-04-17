@@ -1,8 +1,28 @@
 import type {
+  FieldType,
   GenericFilterModel,
   ItemFilterModelItem,
   TypeFilterModelItem,
-} from "./types";
+} from "@/@types";
+
+function enabledFields(tab: FieldType) {
+  let values: FieldType[] = [];
+  switch (tab) {
+    case "category":
+      values = ["category"];
+      break;
+    case "type":
+      values = ["category", "type"];
+      break;
+    case "item":
+      values = ["category", "type", "item"];
+      break;
+    default:
+      break;
+  }
+
+  return values;
+}
 
 function createTypeFilterModel<
   T extends TypeFilterModelItem,
@@ -80,4 +100,4 @@ function createItemFilterModel<
   };
 }
 
-export { createItemFilterModel, createTypeFilterModel };
+export { createItemFilterModel, createTypeFilterModel, enabledFields };

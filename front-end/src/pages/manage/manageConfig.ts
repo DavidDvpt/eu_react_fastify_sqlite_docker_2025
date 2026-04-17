@@ -2,7 +2,7 @@ import type { ManageTab } from "@/@types";
 import type { NavbarButtonType } from "@/@types/navbarTypes";
 
 const MANAGE_TAB_META = {
-  categorie: {
+  category: {
     title: "Categories",
   },
   type: {

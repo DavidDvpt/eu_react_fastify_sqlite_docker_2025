@@ -8,8 +8,6 @@ function Container({ children, className, type }: ContainerProps) {
   return (
     <section
       className={cn(
-        type === "Panel" &&
-          `${styleBase} bg-panel-bg border border-panel-border text-panel-text`,
         type === "Section" &&
           `${styleBase} bg-section-bg border border-section-border text-section-text shadow-section`,
         type === "SubSection" && "",

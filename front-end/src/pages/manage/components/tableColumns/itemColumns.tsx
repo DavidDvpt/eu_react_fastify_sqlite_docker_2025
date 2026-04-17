@@ -1,4 +1,4 @@
-import type { Item } from "@/modules/manage";
+import type { Item } from "@/pages/manage";
 import type { GenericTableColumn } from "@/shared/components/GenericTable";
 import { formatToFiveDecimals, getItemImageUrl } from "../../utils";
 

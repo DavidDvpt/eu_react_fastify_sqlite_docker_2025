@@ -1,5 +1,5 @@
 import { GenericFilter } from "@/shared/components/GenericFilter";
-import type { ManageFilterProps } from "../manageTypes";
+import type { ManageFilterProps } from "../../../@types/manageTypes";
 
 function ManageFilter({
   activeTab,
@@ -28,6 +28,7 @@ function ManageFilter({
     if (isItemsPending || isItemsError || items.length === 0) {
       return null;
     }
+
     return (
       <GenericFilter
         model={itemFilterModel}

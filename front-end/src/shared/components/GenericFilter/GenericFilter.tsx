@@ -13,13 +13,16 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 
-import type { GenericFilterProps, GenericFilterStateValue } from "./types";
+import type {
+  GenericFilterProps,
+  GenericFilterStateValue,
+} from "../../../@types/genericFilterType";
 
 function GenericFilter<T>({
   model,
   filter,
   hasInput = true,
-  hasIsLimited = true,
+  hasIsLimited = false,
   className,
 }: GenericFilterProps<T>) {
   const leftColumnRef = useRef<HTMLDivElement | null>(null);

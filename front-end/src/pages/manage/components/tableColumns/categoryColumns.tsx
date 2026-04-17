@@ -1,4 +1,4 @@
-import type { Category } from "@/modules/manage";
+import type { Category } from "@/pages/manage";
 import type { GenericTableColumn } from "@/shared/components/GenericTable";
 
 const categoryColumns: GenericTableColumn<Category>[] = [

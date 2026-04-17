@@ -1,18 +1,21 @@
 import type { StockDetails } from "@/modules/stock";
+import { Container } from "@/shared/components/Containers";
+import type { ContainerType } from "@/@types/containerTypes";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 interface DetailsItemProps {
   details: StockDetails | null;
+  containerType: ContainerType;
 }
 
-function DetailsItem({ details }: DetailsItemProps) {
+function DetailsItem({ details, containerType }: DetailsItemProps) {
   if (!details) return null;
 
   const image = ImageService.getItemImageUrl(details.imageUrlId, "normal");
   const price = FormatTools.pedFormat().format(details.unitPrice);
   return (
-    <section className="shadow-card-inner rounded-md border border-card-inner-border bg-card-inner rounded-md flex flex-row p-3">
+    <Container type={containerType} className="flex flex-row">
       <div className="w-[40%]">
         {image ? (
           <img
@@ -34,7 +37,7 @@ function DetailsItem({ details }: DetailsItemProps) {
           <dd>{details.quantity}</dd>
         </dl>
       </div>
-    </section>
+    </Container>
   );
 }
 

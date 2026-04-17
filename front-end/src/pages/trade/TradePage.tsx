@@ -5,7 +5,7 @@ import {
   GenericFilter,
   useGenericObjectFilter,
 } from "@/shared/components/GenericFilter";
-import { useItems, useTypes } from "@/modules/manage";
+import { useItems, useTypes } from "@/pages/manage";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 import { useStock } from "@/modules/stock";

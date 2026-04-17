@@ -1,7 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { GenericFilter } from "../GenericFilter";
-import type { GenericFilterModel, UseGenericObjectFilterResult } from "../types";
+import type {
+  GenericFilterModel,
+  UseGenericObjectFilterResult,
+} from "../../../../@types/genericFilterType";
 
 type ItemLike = {
   id: string;
@@ -11,7 +14,7 @@ type ItemLike = {
 };
 
 function createFilterMock(
-  filterState: Record<string, string | boolean | null>
+  filterState: Record<string, string | boolean | null>,
 ): UseGenericObjectFilterResult<ItemLike> {
   return {
     filteredItems: [],
@@ -48,7 +51,9 @@ describe("GenericFilter", () => {
 
     const filter = createFilterMock({ category: null, limited: true });
 
-    render(<GenericFilter model={model} filter={filter} hasIsLimited={false} />);
+    render(
+      <GenericFilter model={model} filter={filter} hasIsLimited={false} />,
+    );
 
     expect(screen.queryByText("Limited")).not.toBeInTheDocument();
 
@@ -75,7 +80,9 @@ describe("GenericFilter", () => {
 
     render(<GenericFilter model={model} filter={filter} hasInput={false} />);
 
-    expect(screen.queryByRole("textbox", { name: "Nom" })).not.toBeInTheDocument();
+    expect(
+      screen.queryByRole("textbox", { name: "Nom" }),
+    ).not.toBeInTheDocument();
     expect(screen.getByRole("combobox", { name: "Nom" })).toBeInTheDocument();
   });
 });

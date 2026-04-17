@@ -6,7 +6,7 @@ import {
   useGenericObjectFilter,
   type GenericFilterModel,
 } from "@/shared/components/GenericFilter";
-import { useItems, useTypes } from "@/modules/manage";
+import { useItems, useTypes } from "@/pages/manage";
 
 import { stockColumns } from "./stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";

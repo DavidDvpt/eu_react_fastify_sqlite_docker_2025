@@ -1,17 +1,22 @@
 import type { StockLotIn } from "@/modules/stock";
+import { Container, Panel, Section } from "@/shared/components/Containers";
+import type { ContainerType } from "@/@types/containerTypes";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 interface StockLotInListProps {
   lotList: StockLotIn[] | null;
+  containerType: ContainerType;
 }
 
 function StockLotInList({ lotList }: StockLotInListProps) {
   if (!lotList) return null;
   const visibleLots = lotList.filter((lot) => lot.quantityRemaining > 0);
-  const soldOutLotsCount = lotList.filter((lot) => lot.quantityRemaining === 0).length;
+  const soldOutLotsCount = lotList.filter(
+    (lot) => lot.quantityRemaining === 0,
+  ).length;
 
   return (
-    <section className="flex min-h-0 flex-1 flex-col overflow-hidden rounded-md border border-card-inner-border bg-card-inner p-3 shadow-card-inner">
+    <Section className="flex min-h-0 flex-1 flex-col overflow-hidden ">
       <h4 className="mb-2 text-sm font-semibold text-card-inner-title">
         Lots IN
       </h4>
@@ -45,7 +50,7 @@ function StockLotInList({ lotList }: StockLotInListProps) {
           </>
         )}
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -4,21 +4,16 @@ import {
   createTypeFilterModel,
   useGenericObjectFilter,
 } from "@/shared/components/GenericFilter";
-import {
-  MANAGE_TAB_META,
-  isManageTab,
-  useCategories,
-  useItems,
-  useTypes,
-} from "@/pages/manage";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import type { Item, ManageTab, Type } from "@/pages/manage";
-import { sortByName } from "./utils";
+
 import { ManageFilter } from "./components/ManageFilter";
 import { ManageTable } from "./components/ManageTable";
-
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/shared/components/Containers";
+
+import type { FieldType, Item, Type } from "@/@types";
+import { enabledFields } from "@/shared/components/GenericFilter/constants";
+import { useGenericFilter } from "@/shared/components/GenericFilter/hooks/useGenericFilter";
 
 const TYPE_FILTER_MODEL = createTypeFilterModel<Type>();
 
@@ -27,46 +22,37 @@ function ManagePage() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const activeTab: ManageTab = isManageTab(tab) ? tab : "category";
-  const meta = MANAGE_TAB_META[activeTab];
+  const selectedTab = tab as FieldType | undefined;
+  const enabled = selectedTab ? enabledFields(selectedTab) : [];
+  const displayAllowed = selectedTab && enabled.includes(selectedTab);
+
+  const {
+    categories,
+    categoriesPending,
+    categoriesError,
+    types,
+    typesPending,
+    typesError,
+    items,
+    itemsPending,
+    itemsError,
+  } = useGenericFilter({ enabled });
 
   const isCreate = pathname.endsWith("/create");
   const isEdit = pathname.endsWith("/edit") && Boolean(id);
 
-  const {
-    data: categories = [],
-    isPending: categoriesPending,
-    isError: categoriesError,
-  } = useCategories({ enabled: activeTab === "category" });
-
-  const sortedCategories = useMemo(() => sortByName(categories), [categories]);
-
-  const {
-    data: types = [],
-    isPending: typesPending,
-    isError: typesError,
-  } = useTypes({ enabled: activeTab === "type" || activeTab === "item" });
-  const sortedTypes = useMemo(() => sortByName(types), [types]);
-
-  const {
-    data: items = [],
-    isPending: itemsPending,
-    isError: itemsError,
-  } = useItems({ enabled: activeTab === "item" });
-  const sortedItems = useMemo(() => sortByName(items), [items]);
-
   const typeFilter = useGenericObjectFilter<Type>({
-    items: sortedTypes,
+    items: types,
     model: TYPE_FILTER_MODEL,
   });
 
   const typeById = useMemo(
     () =>
-      sortedTypes.reduce<Record<string, Type>>((acc, type) => {
+      types.reduce<Record<string, Type>>((acc, type) => {
         acc[type.id] = type;
         return acc;
       }, {}),
-    [sortedTypes],
+    [types],
   );
 
   const itemFilterModel = useMemo(
@@ -75,7 +61,7 @@ function ManagePage() {
   );
 
   const itemFilter = useGenericObjectFilter<Item>({
-    items: sortedItems,
+    items: items,
     model: itemFilterModel,
   });
 
@@ -91,38 +77,37 @@ function ManagePage() {
 
   return (
     <Panel>
-      <header className="space-y-2 flex flex-row justify-between items-center">
-        <h1 className="text-2xl font-bold text-card-title mt-0">
-          {meta.title}
-        </h1>
-        <div className="flex items-center gap-2">
+      {displayAllowed && (
+        <div className="flex justify-end items-center py-2">
           <Button
             variant="primary"
-            onClick={() => navigate(`/manage/${activeTab}/create`)}
+            onClick={() => navigate(`/manage/${tab}/create`)}
           >
             Créer
           </Button>
         </div>
-      </header>
+      )}
 
-      <ManageFilter
-        activeTab={activeTab}
-        types={types}
-        items={items}
-        isTypesPending={typesPending}
-        isTypesError={typesError}
-        isItemsPending={itemsPending}
-        isItemsError={itemsError}
-        typeFilterModel={TYPE_FILTER_MODEL}
-        typeFilter={typeFilter}
-        itemFilterModel={itemFilterModel}
-        itemFilter={itemFilter}
-        hasLimitedForSelectedType={hasLimitedForSelectedType}
-      />
+      {displayAllowed && (
+        <ManageFilter
+          activeTab={tab as FieldType}
+          types={types}
+          items={items}
+          isTypesPending={typesPending}
+          isTypesError={typesError}
+          isItemsPending={itemsPending}
+          isItemsError={itemsError}
+          typeFilterModel={TYPE_FILTER_MODEL}
+          typeFilter={typeFilter}
+          itemFilterModel={itemFilterModel}
+          itemFilter={itemFilter}
+          hasLimitedForSelectedType={hasLimitedForSelectedType}
+        />
+      )}
 
       <ManageTable
-        activeTab={activeTab}
-        categories={sortedCategories}
+        activeTab={(tab as FieldType) ?? "category"}
+        categories={categories}
         typesRows={typeFilter.filteredItems}
         itemsRows={itemFilter.filteredItems}
         isCategoriesPending={categoriesPending}
@@ -136,8 +121,8 @@ function ManagePage() {
       {isCreate || isEdit ? (
         <section className="rounded-md border border-dashed border-border bg-background p-4 text-sm text-muted-foreground">
           {isCreate
-            ? `Mode creation pour "${activeTab}".`
-            : `Mode edition pour "${activeTab}" (id: ${id}).`}
+            ? `Mode creation pour "${tab}".`
+            : `Mode edition pour "${tab}" (id: ${id}).`}
         </section>
       ) : null}
     </Panel>

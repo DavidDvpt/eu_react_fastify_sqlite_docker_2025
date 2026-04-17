@@ -1,21 +1,9 @@
-import { CATEGORIES_ROUTE, ITEMS_ROUTE, TYPES_ROUTE } from "@/modules/manage";
+import { CATEGORIES_ROUTE, ITEMS_ROUTE, TYPES_ROUTE } from "@/pages/manage";
 import { GenericTable } from "@/shared/components";
-import type { Category, Item, ManageTab, Type } from "@/modules/manage";
+
 import { categoryColumns, itemColumns, typeColumns } from "./tableColumns";
 import { useNavigate } from "react-router-dom";
-
-type ManageTableProps = {
-  activeTab: ManageTab;
-  categories: Category[];
-  typesRows: Type[];
-  itemsRows: Item[];
-  isCategoriesPending: boolean;
-  isCategoriesError: boolean;
-  isTypesPending: boolean;
-  isTypesError: boolean;
-  isItemsPending: boolean;
-  isItemsError: boolean;
-};
+import type { Category, Item, ManageTableProps, Type } from "@/@types";
 
 function ManageTable({
   activeTab,
