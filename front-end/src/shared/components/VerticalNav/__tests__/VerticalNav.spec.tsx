@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { VerticalNav } from "../VerticalNav";
 
 describe("VerticalNav", () => {
@@ -9,8 +9,8 @@ describe("VerticalNav", () => {
       <MemoryRouter initialEntries={["/manage/item/42/edit"]}>
         <VerticalNav
           items={[
-            { key: "cat", content: "Categorie", to: "/manage/category" },
-            { key: "item", content: "Item", to: "/manage/item" },
+            { key: "cat", content: "Categorie", route: "/manage/category" },
+            { key: "item", content: "Item", route: "/manage/item" },
           ]}
         />
       </MemoryRouter>
@@ -23,16 +23,18 @@ describe("VerticalNav", () => {
     expect(categoryLink).toHaveAttribute("data-active", "false");
   });
 
-  it("supports action-only items", () => {
-    const onClick = vi.fn();
-
+  it("renders route items as links", () => {
     render(
       <MemoryRouter>
-        <VerticalNav items={[{ key: "refresh", content: "Refresh", onClick }]} />
+        <VerticalNav
+          items={[{ key: "refresh", content: "Refresh", route: "/manage/refresh" }]}
+        />
       </MemoryRouter>
     );
 
-    fireEvent.click(screen.getByRole("button", { name: "Refresh" }));
-    expect(onClick).toHaveBeenCalledTimes(1);
+    expect(screen.getByRole("link", { name: "Refresh" })).toHaveAttribute(
+      "href",
+      "/manage/refresh"
+    );
   });
 });

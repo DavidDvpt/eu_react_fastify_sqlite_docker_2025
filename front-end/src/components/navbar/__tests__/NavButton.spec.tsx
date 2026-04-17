@@ -1,17 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { describe, expect, it } from "vitest";
-import NavButton from "../Navbar/NavButton";
+import NavButton from "../NavButton";
 
 describe("NavButton", () => {
   it("is bold when the current route is active", () => {
     render(
       <MemoryRouter initialEntries={["/manage/type"]}>
         <NavButton
-          label="Manage"
+          content="Manage"
           route="/manage"
-          selected={false}
-          adminOnly={true}
+          variant="navVertical"
         />
       </MemoryRouter>,
     );
@@ -26,10 +25,9 @@ describe("NavButton", () => {
     render(
       <MemoryRouter initialEntries={["/home"]}>
         <NavButton
-          label="Manage"
+          content="Manage"
           route="/manage"
-          selected={false}
-          adminOnly={true}
+          variant="navVertical"
         />
       </MemoryRouter>,
     );

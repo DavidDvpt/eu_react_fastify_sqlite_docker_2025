@@ -2,9 +2,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { useCategories } from "../useCategories";
-import { useTypes } from "../useTypes";
-import { useItems } from "../useItems";
+import useCategories from "../useCategories";
+import useTypes from "../useTypes";
+import useItems from "../useItems";
 
 const {
   getCategoriesMock,
@@ -16,15 +16,15 @@ const {
   getItemsMock: vi.fn(),
 }));
 
-vi.mock("@/modules/manage/services/categoriesApi", () => ({
+vi.mock("@/pages/manage/services/categoriesApi", () => ({
   getCategories: getCategoriesMock,
 }));
 
-vi.mock("@/modules/manage/services/typesApi", () => ({
+vi.mock("@/pages/manage/services/typesApi", () => ({
   getTypes: getTypesMock,
 }));
 
-vi.mock("@/modules/manage/services/itemsApi", () => ({
+vi.mock("@/pages/manage/services/itemsApi", () => ({
   getItems: getItemsMock,
 }));
 
