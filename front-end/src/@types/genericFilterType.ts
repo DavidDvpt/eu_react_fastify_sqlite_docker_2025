@@ -6,6 +6,7 @@ type GenericFilterSelectOption = {
   label: string;
 };
 
+type FieldType = "category" | "type" | "item";
 type GenericFilterSelectOptions = Record<string, GenericFilterSelectOption[]>;
 type GenericFilterAutocompleteOptions = Record<string, string[]>;
 
@@ -102,4 +103,5 @@ export type {
   UseGenericObjectFilterResult,
   ItemFilterModelItem,
   TypeFilterModelItem,
+  FieldType,
 };

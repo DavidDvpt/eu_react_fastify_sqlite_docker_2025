@@ -7,7 +7,11 @@ import type {
 import type { Type, TypeApi, TypeApis, Types } from "./typeTypes";
 import type { Item, ItemApi, ItemApis, Items } from "./itemTypes";
 import type { NavbarButtonType, VerticalNavProps } from "./navbarTypes";
-import type { ManageFilterProps, ManageTab } from "./manageTypes";
+import type {
+  ManageFilterProps,
+  ManageTab,
+  ManageTableProps,
+} from "./manageTypes";
 import type {
   ContainerType,
   ContainerProps,
@@ -29,6 +33,7 @@ import type {
   UseGenericObjectFilterResult,
   ItemFilterModelItem,
   TypeFilterModelItem,
+  FieldType,
 } from "./genericFilterType";
 
 export type {
@@ -66,4 +71,6 @@ export type {
   UseGenericObjectFilterResult,
   ItemFilterModelItem,
   TypeFilterModelItem,
+  ManageTableProps,
+  FieldType,
 };
