@@ -1,4 +1,4 @@
-export { MANAGE_NAV_LINKS, MANAGE_TAB_META, isManageTab } from "./manageConfig";
+export { MANAGE_NAV_LINKS, isManageTab } from "./manageConfig";
 
 export {
   parseCategories,

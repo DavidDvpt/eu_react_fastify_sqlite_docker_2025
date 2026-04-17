@@ -17,14 +17,16 @@ function ManageTable({
   categories,
   typesRows,
   itemsRows,
-  isCategoriesPending,
-  isCategoriesError,
-  isTypesPending,
-  isTypesError,
-  isItemsPending,
-  isItemsError,
+  availability,
 }: ManageTableProps) {
   const navigate = useNavigate();
+  const [categoriesStatus, typesStatus, itemsStatus] = availability;
+  const status =
+    activeTab === "category"
+      ? categoriesStatus
+      : activeTab === "type"
+        ? typesStatus
+        : itemsStatus;
 
   if (activeTab === "category") {
     return (
@@ -32,8 +34,8 @@ function ManageTable({
         columns={categoryColumns}
         rows={categories}
         getRowKey={(row) => row.id}
-        isLoading={isCategoriesPending}
-        isError={isCategoriesError}
+        isLoading={status?.isPending ?? false}
+        isError={status?.isError ?? false}
         loadingMessage="Chargement des categories..."
         errorMessage={`Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`}
         emptyMessage="Aucune categorie."
@@ -48,8 +50,8 @@ function ManageTable({
         columns={typeColumns}
         rows={typesRows}
         getRowKey={(row) => row.id}
-        isLoading={isTypesPending}
-        isError={isTypesError}
+        isLoading={status?.isPending ?? false}
+        isError={status?.isError ?? false}
         onRowClick={(row) => navigate(getTypeEditRoute(row.id))}
         loadingMessage="Chargement des types..."
         errorMessage={`Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`}
@@ -63,8 +65,8 @@ function ManageTable({
       columns={itemColumns}
       rows={itemsRows}
       getRowKey={(row) => row.id}
-      isLoading={isItemsPending}
-      isError={isItemsError}
+      isLoading={status?.isPending ?? false}
+      isError={status?.isError ?? false}
       onRowClick={(row) => navigate(getItemEditRoute(row.id))}
       loadingMessage="Chargement des items..."
       errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}

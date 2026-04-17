@@ -6,7 +6,7 @@ type GenericFilterSelectOption = {
   label: string;
 };
 
-type FieldType = "category" | "type" | "item";
+type FieldType = "category" | "type" | "item" | "search" | "limited";
 type GenericFilterSelectOptions = Record<string, GenericFilterSelectOption[]>;
 type GenericFilterAutocompleteOptions = Record<string, string[]>;
 

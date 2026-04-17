@@ -133,9 +133,6 @@ function GenericFilter<T>({
                       field.className,
                     )}
                   >
-                    <Label htmlFor={id} className="text-input-label">
-                      {field.label}
-                    </Label>
                     <Select
                       value={normalizedValue}
                       onValueChange={(value) =>
@@ -197,7 +194,6 @@ function GenericFilter<T>({
                     field.className,
                   )}
                 >
-                  <Label htmlFor={id}>{field.label}</Label>
                   {showAutocompleteInput ? (
                     <>
                       <Input

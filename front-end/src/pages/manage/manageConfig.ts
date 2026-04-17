@@ -1,17 +1,5 @@
 import type { ManageTab, NavbarButtonType } from "@/types";
 
-const MANAGE_TAB_META = {
-  category: {
-    title: "Categories",
-  },
-  type: {
-    title: "Types",
-  },
-  item: {
-    title: "Items",
-  },
-} as const;
-
 const MANAGE_NAV_LINKS: NavbarButtonType[] = [
   {
     key: "Categorie",
@@ -37,4 +25,4 @@ function isManageTab(value: string | undefined): value is ManageTab {
   return value === "category" || value === "type" || value === "item";
 }
 
-export { MANAGE_NAV_LINKS, MANAGE_TAB_META, isManageTab };
+export { MANAGE_NAV_LINKS, isManageTab };

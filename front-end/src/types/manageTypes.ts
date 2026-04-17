@@ -1,21 +1,16 @@
-import type { MANAGE_TAB_META } from "@/pages/manage";
 import type { Items } from "./itemTypes";
 import type { Types } from "./typeTypes";
 import type { Categories } from "./categoryTypes";
+import type { GenericFilterAvailability } from "./genericFilterType";
 
-type ManageTab = keyof typeof MANAGE_TAB_META;
+type ManageTab = "category" | "type" | "item";
 
 type ManageTableProps = {
   activeTab: ManageTab;
   categories: Categories;
   typesRows: Types;
   itemsRows: Items;
-  isCategoriesPending: boolean;
-  isCategoriesError: boolean;
-  isTypesPending: boolean;
-  isTypesError: boolean;
-  isItemsPending: boolean;
-  isItemsError: boolean;
+  availability: GenericFilterAvailability[];
 };
 
 type ManageFilterRow = {

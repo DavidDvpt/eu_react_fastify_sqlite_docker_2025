@@ -105,7 +105,7 @@ function useGenericFilter<T>({
         (source) =>
           !source.isPending && !source.isError && Number(source.count) > 0,
       )
-    : true;
+    : false;
 
   return {
     filter,

@@ -7,14 +7,11 @@ import type {
 function enabledFields(tab: FieldType) {
   let values: FieldType[] = [];
   switch (tab) {
-    case "category":
-      values = ["category"];
-      break;
     case "type":
-      values = ["category", "type"];
+      values = ["category", "search"];
       break;
     case "item":
-      values = ["category", "type", "item"];
+      values = ["category", "type", "search", "limited"];
       break;
     default:
       break;
