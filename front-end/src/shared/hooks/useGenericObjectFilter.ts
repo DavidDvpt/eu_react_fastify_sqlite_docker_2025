@@ -21,6 +21,7 @@ function useGenericObjectFilter<T>({
   model,
   initialState,
 }: UseGenericObjectFilterParams<T>): UseGenericObjectFilterResult<T> {
+  const skipNextInitialSyncRef = useRef(false);
   const initialStateSignature = getStateSignature(initialState);
   const stableInitialStateRef = useRef(initialState);
   const stableInitialStateSignatureRef = useRef(initialStateSignature);
@@ -39,6 +40,11 @@ function useGenericObjectFilter<T>({
     useState<GenericFilterState>(computedInitialState);
 
   useEffect(() => {
+    if (skipNextInitialSyncRef.current) {
+      skipNextInitialSyncRef.current = false;
+      return;
+    }
+
     setFilterState((currentState) =>
       areFilterStatesEqual(currentState, computedInitialState)
         ? currentState
@@ -90,7 +96,8 @@ function useGenericObjectFilter<T>({
   }
 
   function resetFilters() {
-    setFilterState(computedInitialState);
+    skipNextInitialSyncRef.current = true;
+    setFilterState(buildInitialState(model));
   }
 
   return {

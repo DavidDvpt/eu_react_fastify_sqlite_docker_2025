@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import {
   Select,
   SelectContent,
@@ -105,7 +105,7 @@ function GenericFilter<T>({
   return (
     <section
       className={cn(
-        "flex flex-col rounded-md border border-card-border bg-card shadow-card p-4 gap-4",
+        "flex flex-col rounded-md border border-section-border bg-section shadow-section p-4 gap-4",
         className,
       )}
       aria-label="Filtres"
