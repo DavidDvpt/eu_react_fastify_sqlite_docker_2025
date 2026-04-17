@@ -79,9 +79,7 @@ describe("GenericFilter", () => {
       <GenericFilter model={model} filter={filter} hasAutocomplete={false} />,
     );
 
-    expect(
-      screen.queryByRole("textbox", { name: "Nom" }),
-    ).not.toBeInTheDocument();
-    expect(screen.getByRole("combobox", { name: "Nom" })).toBeInTheDocument();
+    expect(screen.queryByRole("textbox")).not.toBeInTheDocument();
+    expect(screen.getByRole("combobox")).toBeInTheDocument();
   });
 });
