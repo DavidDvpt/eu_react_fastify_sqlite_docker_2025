@@ -14,6 +14,12 @@ import {
   useStock,
   useTypes,
 } from "@/shared/hooks";
+import {
+  filterRowsFunc,
+  itemByIdFunc,
+  sortedRowsFunc,
+  typeByIdFunc,
+} from "./utils";
 
 function TradePage() {
   const navigate = useNavigate();
@@ -26,42 +32,14 @@ function TradePage() {
   const { data: items = [] } = useItems();
   const { data: types = [] } = useTypes();
 
-  const sortedRows = useMemo(
-    () => [...stockRows].sort((a, b) => a.name.localeCompare(b.name, "fr")),
-    [stockRows],
-  );
+  const sortedRows = useMemo(() => sortedRowsFunc(stockRows), [stockRows]);
 
-  const typeById = useMemo(
-    () =>
-      types.reduce<Record<string, (typeof types)[number]>>((acc, type) => {
-        acc[type.id] = type;
-        return acc;
-      }, {}),
-    [types],
-  );
+  const typeById = useMemo(() => typeByIdFunc(types), [types]);
 
-  const itemById = useMemo(
-    () =>
-      items.reduce<Record<string, (typeof items)[number]>>((acc, item) => {
-        acc[item.id] = item;
-        return acc;
-      }, {}),
-    [items],
-  );
+  const itemById = useMemo(() => itemByIdFunc(items), [items]);
 
   const filterRows = useMemo<TradeFilterRow[]>(
-    () =>
-      sortedRows.map((row) => {
-        const item = itemById[row.itemId];
-        const itemType = item ? typeById[item.itemTypeId] : undefined;
-        return {
-          ...row,
-          itemTypeId: item?.itemTypeId ?? null,
-          itemTypeName: item?.itemTypeName ?? itemType?.name ?? null,
-          categoryId: itemType?.categoryId ?? null,
-          categoryName: itemType?.categoryName ?? null,
-        };
-      }),
+    () => filterRowsFunc(sortedRows, typeById, itemById),
     [itemById, sortedRows, typeById],
   );
 
