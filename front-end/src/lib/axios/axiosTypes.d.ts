@@ -1,5 +1,6 @@
-type JsonPrimitive = string | number | boolean;
-type JsonBody = Record<string, JsonPrimitive>;
+type JsonPrimitive = string | number | boolean | null;
+type JsonValue = JsonPrimitive | JsonValue[] | { [key: string]: JsonValue };
+type JsonBody = Record<string, JsonValue>;
 
 type QueryPrimitive = string | number | boolean;
 type QueryParams = Record<string, QueryPrimitive | undefined>;

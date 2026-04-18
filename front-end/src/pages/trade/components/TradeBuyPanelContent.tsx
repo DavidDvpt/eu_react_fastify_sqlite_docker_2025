@@ -1,0 +1,209 @@
+import { useMemo } from "react";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useFormContext, useWatch } from "react-hook-form";
+import { z } from "zod";
+
+import { GenericForm } from "@/components/form/Genericform";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Section } from "@/shared/components/Containers";
+import { FormatTools } from "@/shared/tools";
+import { purchaseTrade } from "../services/tradeApi";
+
+import type { TradeBuyFormValues, TradeFilterRow } from "@/types";
+
+const buyFormSchema = z.object({
+  quantity: z.coerce
+    .number()
+    .int()
+    .positive("La quantite doit etre superieure a 0."),
+  fee: z.preprocess((value) => {
+    if (value === "" || value === undefined || value === null) {
+      return 0;
+    }
+    return value;
+  }, z.coerce.number().nonnegative("Le fee doit etre positif ou nul.")),
+  buyPrice: z.coerce
+    .number()
+    .positive("Le prix d'achat doit etre superieur a 0."),
+});
+
+type TradeBuyPanelContentProps = {
+  item: TradeFilterRow;
+  onBack: () => void;
+};
+
+type TradeBuyFormFieldsProps = {
+  item: TradeFilterRow;
+};
+
+function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
+  const form = useFormContext<TradeBuyFormValues>();
+  const quantity = useWatch({ control: form.control, name: "quantity" });
+  const fee = useWatch({ control: form.control, name: "fee" });
+  const buyPrice = useWatch({ control: form.control, name: "buyPrice" });
+  const quantityValue = Number.isFinite(quantity) ? quantity : 0;
+  const feeValue = Number.isFinite(fee) ? fee : 0;
+  const buyPriceValue = Number.isFinite(buyPrice) ? buyPrice : 0;
+
+  const unitReferenceTotal = useMemo(
+    () => quantityValue * item.unitPrice,
+    [item.unitPrice, quantityValue],
+  );
+  const buyMarkupRatio = useMemo(
+    () =>
+      unitReferenceTotal > 0 ? (buyPriceValue / unitReferenceTotal) * 100 : 0,
+    [buyPriceValue, unitReferenceTotal],
+  );
+  const markupCost = useMemo(
+    () => buyPriceValue - feeValue - unitReferenceTotal,
+    [buyPriceValue, feeValue, unitReferenceTotal],
+  );
+
+  return (
+    <>
+      <div className="flex items-start justify-between gap-3">
+        <div className="w-[30%] min-w-0 space-y-1">
+          <label
+            className="text-sm text-input-label"
+            htmlFor="trade-buy-quantity"
+          >
+            Quantite
+          </label>
+          <Input
+            id="trade-buy-quantity"
+            type="number"
+            min={1}
+            step={1}
+            {...form.register("quantity", { valueAsNumber: true })}
+          />
+          {form.formState.errors.quantity ? (
+            <p className="m-0 text-[0.8rem] italic text-destructive-300">
+              {form.formState.errors.quantity.message}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="w-[30%] min-w-0 space-y-1">
+          <label className="text-sm text-input-label" htmlFor="trade-buy-fee">
+            Fee (optionnel)
+          </label>
+          <Input
+            id="trade-buy-fee"
+            type="number"
+            min={0}
+            step="0.01"
+            {...form.register("fee", { valueAsNumber: true })}
+          />
+          {form.formState.errors.fee ? (
+            <p className="m-0 text-[0.8rem] italic text-destructive-300">
+              {form.formState.errors.fee.message}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="w-[30%] min-w-0 space-y-1">
+          <label className="text-sm text-input-label" htmlFor="trade-buy-price">
+            Achat
+          </label>
+          <Input
+            id="trade-buy-price"
+            type="number"
+            min={0.01}
+            step="0.01"
+            {...form.register("buyPrice", { valueAsNumber: true })}
+          />
+          {form.formState.errors.buyPrice ? (
+            <p className="m-0 text-[0.8rem] italic text-destructive-300">
+              {form.formState.errors.buyPrice.message}
+            </p>
+          ) : null}
+        </div>
+      </div>
+
+      <div className="space-y-1 text-sm text-card-inner-title">
+        <p className="m-0">
+          Cout TT : {FormatTools.pedFormat().format(unitReferenceTotal)} PED
+        </p>
+        <p className="m-0">Marlup : {buyMarkupRatio.toFixed(2)}%</p>
+        <p
+          className={`m-0 ${markupCost < 0 ? "font-bold text-destructive-700" : ""}`}
+        >
+          Cout markup : {FormatTools.pedFormat().format(markupCost)} PED
+        </p>
+      </div>
+    </>
+  );
+}
+
+function TradeBuyPanelContent({ item, onBack }: TradeBuyPanelContentProps) {
+  const queryClient = useQueryClient();
+
+  const purchaseMutation = useMutation({
+    mutationFn: async (values: TradeBuyFormValues) =>
+      purchaseTrade({
+        lines: [
+          {
+            itemId: item.itemId,
+            quantity: values.quantity,
+            ttc: values.buyPrice,
+          },
+        ],
+      }),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ["stock"] }),
+        queryClient.invalidateQueries({
+          queryKey: ["stock", "details", item.itemId],
+        }),
+      ]);
+      onBack();
+    },
+  });
+
+  return (
+    <Section className="space-y-4">
+      <header>
+        <h3 className="m-0 text-lg font-semibold text-card-inner-title">
+          Achat
+        </h3>
+      </header>
+
+      <GenericForm
+        key={item.itemId}
+        schema={buyFormSchema}
+        defaultValues={{ quantity: 1, fee: 0, buyPrice: item.unitPrice }}
+        className="space-y-4"
+        onSubmit={(values) => purchaseMutation.mutate(values)}
+      >
+        <TradeBuyFormFields item={item} />
+
+        {purchaseMutation.isError ? (
+          <p className="m-0 text-sm text-destructive-300">
+            Impossible de valider l&apos;achat.
+          </p>
+        ) : null}
+
+        <div className="flex justify-end gap-2">
+          <Button
+            type="button"
+            variant="secondary"
+            onClick={onBack}
+            disabled={purchaseMutation.isPending}
+          >
+            Retour
+          </Button>
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={purchaseMutation.isPending}
+          >
+            Acheter
+          </Button>
+        </div>
+      </GenericForm>
+    </Section>
+  );
+}
+
+export default TradeBuyPanelContent;

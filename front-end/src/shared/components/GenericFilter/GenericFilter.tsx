@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 
 import type { GenericFilterProps, GenericFilterStateValue } from "@/types";
+import { Section } from "../Containers";
 
 function GenericFilter<T>({
   model,
@@ -103,11 +104,8 @@ function GenericFilter<T>({
   }, []);
 
   return (
-    <section
-      className={cn(
-        "flex flex-col rounded-md border border-section-border bg-section shadow-section p-4 gap-4",
-        className,
-      )}
+    <Section
+      className={cn("flex flex-col p-4 gap-4", className)}
       aria-label="Filtres"
     >
       <div className="flex flex-nowrap justify-between">
@@ -285,7 +283,7 @@ function GenericFilter<T>({
           Reset
         </Button>
       </div>
-    </section>
+    </Section>
   );
 }
 

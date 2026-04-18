@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { GenericFilter } from "@/shared/components/GenericFilter";
-import { TradeActions } from "@/shared/components";
+import { GenericFilter, TradeItemDetails } from "@/shared/components";
+import { Panel, Section } from "@/shared/components/Containers";
+import { Button } from "@/components/ui/button";
 
-import { ImageService } from "@/shared/services/imageService";
-import { FormatTools, ArrayTools } from "@/shared/tools";
+import { ArrayTools } from "@/shared/tools";
 
 import type { TradeFilterRow } from "@/types";
 import { TRADE_ITEM_FILTER_MODEL } from "./contants";
@@ -16,6 +16,7 @@ import {
   useTypes,
 } from "@/shared/hooks";
 import { filterRowsFunc } from "./utils";
+import TradeBuyPanelContent from "./components/TradeBuyPanelContent";
 
 function TradePage() {
   const navigate = useNavigate();
@@ -79,8 +80,16 @@ function TradePage() {
     navigate(`/trade/${selectedItemId}/buy`);
   }
 
+  function closeBuyModal() {
+    if (!selectedItemId) {
+      navigate("/trade");
+      return;
+    }
+    navigate(`/trade/${selectedItemId}`);
+  }
+
   return (
-    <div className="space-y-2">
+    <Panel className="flex h-full min-h-0 flex-col gap-2">
       <header className="space-y-2 flex flex-row justify-between items-center">
         <h1 className="text-2xl font-bold text-card-title mt-0">Trade</h1>
       </header>
@@ -93,7 +102,7 @@ function TradePage() {
           hasIsLimited={false}
         />
       ) : (
-        <section className="shadow-card-inner rounded-md border border-card-inner-border bg-card-inner p-3">
+        <Section>
           {isPending ? (
             <p className="text-sm text-card-inner-title m-0">
               Chargement de l'item...
@@ -107,68 +116,49 @@ function TradePage() {
               <p className="text-sm text-card-inner-title m-0">
                 Item introuvable dans le stock courant.
               </p>
-              <button
+              <Button
                 type="button"
+                variant="primary"
                 onClick={resetTrade}
-                className="rounded-md border border-button-primary-border bg-button-primary-bg px-3 py-2 text-sm font-medium text-button-primary-text w-[100px] text-center"
+                className="w-[100px]"
               >
                 Retour
-              </button>
+              </Button>
             </div>
           ) : (
-            <div className="flex flex-row items-center justify-between gap-4">
-              <div className="flex flex-row items-center gap-4 min-w-0">
-                {ImageService.getItemImageUrl(
-                  selectedItem.imageUrlId,
-                  "normal",
-                ) ? (
-                  <img
-                    src={
-                      ImageService.getItemImageUrl(
-                        selectedItem.imageUrlId,
-                        "normal",
-                      ) ?? ""
-                    }
-                    alt={selectedItem.name}
-                    className="max-h-[120px] h-auto w-auto shrink-0 rounded object-contain"
-                  />
-                ) : null}
-                <div className="min-w-0">
-                  <h2 className="text-card-inner-title text-lg font-semibold m-0">
-                    {selectedItem.name}
-                  </h2>
-                  <p className="text-sm text-card-inner-title mt-2 mb-1">
-                    Prix:{" "}
-                    {FormatTools.pedFormat().format(selectedItem.unitPrice)} PED
-                  </p>
-                  <p className="text-sm text-card-inner-title m-0">
-                    Stock restant: {selectedItem.quantity}
-                  </p>
-                </div>
-              </div>
-              <TradeActions
-                direction="column"
-                buttonClassName="w-[100px]"
-                onBuy={goToBuy}
-                onSell={goToSell}
-                onBack={resetTrade}
-                disableSell={selectedItem.quantity <= 0}
-              />
-            </div>
+            <TradeItemDetails
+              itemName={selectedItem.name}
+              imageUrlId={selectedItem.imageUrlId}
+              unitPrice={selectedItem.unitPrice}
+              quantity={selectedItem.quantity}
+              onBuy={goToBuy}
+              onSell={goToSell}
+              onBack={resetTrade}
+              disableSell={selectedItem.quantity <= 0}
+              actionsDirection="column"
+              actionsPlacement="right"
+              buttonClassName="w-[100px]"
+            />
           )}
-        </section>
+        </Section>
       )}
 
-      <section className="rounded-md border border-dashed border-border bg-background p-4 text-sm text-muted-foreground">
-        {!selectedItemId
-          ? "Selectionne un item pour commencer un trade."
-          : action === "sell"
-            ? `Mode vente actif sur "${selectedItem?.name ?? selectedItemId}".`
-            : action === "buy"
-              ? `Mode achat actif sur "${selectedItem?.name ?? selectedItemId}".`
-              : `Mode trade actif sur l'item "${selectedItem?.name ?? selectedItemId}".`}
-      </section>
-    </div>
+      {selectedItem && action === "buy" ? (
+        <Panel>
+          <div className="flex gap-3 max-lg:flex-col">
+            <Panel className="w-1/2 max-lg:w-full">
+              <TradeBuyPanelContent
+                item={selectedItem}
+                onBack={closeBuyModal}
+              />
+            </Panel>
+            <Panel className="w-1/2 rounded-md border border-dashed border-border bg-background p-3 text-sm text-muted-foreground max-lg:w-full">
+              Zone reservee pour les details complementaires.
+            </Panel>
+          </div>
+        </Panel>
+      ) : null}
+    </Panel>
   );
 }
 

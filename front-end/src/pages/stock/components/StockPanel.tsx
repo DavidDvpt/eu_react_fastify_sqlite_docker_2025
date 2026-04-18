@@ -1,7 +1,6 @@
 import { useMemo } from "react";
-import { GenericList } from "@/shared/components";
-
-import { GenericFilter } from "@/shared/components/GenericFilter";
+import { GenericFilter, GenericList } from "@/shared/components";
+import { Panel } from "@/shared/components/Containers";
 
 import { stockColumns } from "./stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
@@ -119,7 +118,7 @@ function StockPanel({
   const totalPrice = filteredRows.reduce((acc, row) => acc + row.totalPrice, 0);
 
   return (
-    <div className={`flex h-full min-h-0 flex-col gap-2 ${className ?? ""}`}>
+    <Panel className={`flex h-full min-h-0 flex-col gap-2 ${className ?? ""}`}>
       {showFilter ? (
         <GenericFilter
           model={STOCK_FILTER_MODEL}
@@ -149,7 +148,7 @@ function StockPanel({
         }
         footer={`Total: ${FormatTools.pedFormat().format(totalPrice)} Peds`}
       />
-    </div>
+    </Panel>
   );
 }
 

@@ -17,4 +17,33 @@ type TradeActionsProps = {
   disableBuy?: boolean;
   disableSell?: boolean;
 };
-export type { TradeFilterRow, TradeActionsProps };
+
+type TradeItemDetailsProps = {
+  itemName: string;
+  imageUrlId: string;
+  unitPrice: number;
+  quantity: number;
+  onBuy: () => void;
+  onSell: () => void;
+  onBack: () => void;
+  disableBuy?: boolean;
+  disableSell?: boolean;
+  actionsDirection?: "row" | "column";
+  actionsPlacement?: "bottom" | "right";
+  className?: string;
+  actionsClassName?: string;
+  buttonClassName?: string;
+};
+
+type TradeBuyFormValues = {
+  quantity: number;
+  fee: number;
+  buyPrice: number;
+};
+
+export type {
+  TradeFilterRow,
+  TradeActionsProps,
+  TradeItemDetailsProps,
+  TradeBuyFormValues,
+};

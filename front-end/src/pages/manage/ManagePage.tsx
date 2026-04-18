@@ -1,4 +1,4 @@
-import { GenericFilter } from "@/shared/components/GenericFilter";
+import { GenericFilter } from "@/shared/components";
 import { useNavigate, useParams } from "react-router-dom";
 import { ManageTable } from "./components/ManageTable";
 import { Button } from "@/components/ui/button";
