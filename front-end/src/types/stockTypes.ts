@@ -59,6 +59,14 @@ type StockLotOut = {
   saleStatus: string | null;
 };
 
+type StockDetailsPanelProps = {
+  details: StockDetails | null;
+  isLoading: boolean;
+  isError: boolean;
+  onClose: () => void;
+  className?: string;
+};
+
 type StockDetailsApi = StockRowApi & {
   lotsIn: StockLotInApi[];
   lotsOut: StockLotOutApi[];
@@ -125,4 +133,5 @@ export type {
   StockFilterRow,
   GenericTableProps,
   GenericTableColumn,
+  StockDetailsPanelProps,
 };

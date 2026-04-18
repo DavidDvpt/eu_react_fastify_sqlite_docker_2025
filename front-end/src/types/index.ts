@@ -53,9 +53,10 @@ import type {
   StockFilterRow,
   GenericTableProps,
   GenericTableColumn,
+  StockDetailsPanelProps,
 } from "./stockTypes";
 
-import type { TradeFilterRow } from "./tradeTypes";
+import type { TradeFilterRow, TradeActionsProps } from "./tradeTypes";
 import type {
   GenericListAlign,
   GenericListBodyProps,
@@ -128,4 +129,6 @@ export type {
   GenericListViewMode,
   GenericTableProps,
   GenericTableColumn,
+  TradeActionsProps,
+  StockDetailsPanelProps,
 };

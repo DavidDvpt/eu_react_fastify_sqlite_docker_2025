@@ -2,17 +2,7 @@ import StockMessages from "./StockMessages";
 import DetailsItem from "./DetailsItem";
 import StockLotInList from "./StockLotList";
 import { Panel } from "@/shared/components/Containers";
-import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
-import type { StockDetails } from "@/types";
-
-type StockDetailsPanelProps = {
-  details: StockDetails | null;
-  isLoading: boolean;
-  isError: boolean;
-  onClose: () => void;
-  className?: string;
-};
+import type { StockDetailsPanelProps } from "@/types";
 
 function StockDetailsPanel({
   details,
@@ -23,18 +13,7 @@ function StockDetailsPanel({
 }: StockDetailsPanelProps) {
   return (
     <Panel className={`relative ${className ?? ""}`}>
-      <Button
-        type="button"
-        variant="tertiary"
-        size="icon"
-        className="absolute right-1 top-1 z-10"
-        onClick={onClose}
-        aria-label="Fermer le panneau de details"
-      >
-        <X />
-      </Button>
-
-      <div className="flex h-full min-h-0 flex-col gap-4 pt-1 pr-1">
+      <div className="flex h-full min-h-0 flex-col gap-4 pt-1">
         <StockMessages
           isError={isError}
           isLoading={isLoading}
@@ -43,7 +22,11 @@ function StockDetailsPanel({
 
         {details && (
           <>
-            <DetailsItem details={details} containerType="Section" />
+            <DetailsItem
+              details={details}
+              containerType="Section"
+              onBack={onClose}
+            />
             <StockLotInList lotList={details.lotsIn} containerType="Section" />
           </>
         )}

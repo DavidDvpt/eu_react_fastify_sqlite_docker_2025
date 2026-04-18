@@ -7,4 +7,14 @@ type TradeFilterRow = StockRow & {
   categoryName: string | null;
 };
 
-export type { TradeFilterRow };
+type TradeActionsProps = {
+  onBuy: () => void;
+  onSell: () => void;
+  onBack: () => void;
+  direction?: "row" | "column";
+  className?: string;
+  buttonClassName?: string;
+  disableBuy?: boolean;
+  disableSell?: boolean;
+};
+export type { TradeFilterRow, TradeActionsProps };
