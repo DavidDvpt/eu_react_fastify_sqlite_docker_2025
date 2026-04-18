@@ -1,24 +1,20 @@
 import { z } from 'zod';
 
+import { StocksService } from '../modules/stocks/index.js';
+
 import { stockByItemParamsSchema, stockByItemQuerySchema } from './stockRoutes.schema.js';
+import { getRequestUserId } from './utils.js';
 
 import type { StockByItemRow, StockItemDetails } from '../types/index.js';
-import type { FastifyPluginCallback, FastifyRequest } from 'fastify';
-
-const requestUserSchema = z.object({
-  id: z.string().min(1),
-});
-
-function getRequestUserId(request: FastifyRequest): string {
-  return requestUserSchema.parse(request.user as unknown).id;
-}
+import type { FastifyPluginCallback } from 'fastify';
 
 const stockRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const stocksService = new StocksService(app.repos.lotStock);
   app.protect();
 
   app.get('/stock', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const rows: StockByItemRow[] = await app.repos.lotStock.getStock(userId);
+    const rows: StockByItemRow[] = await stocksService.list(userId);
     return reply.code(200).send(rows);
   });
 
@@ -31,7 +27,7 @@ const stockRoutes: FastifyPluginCallback = (app, _opts, done) => {
     }
 
     if (parsedQuery.data.include === 'details') {
-      const details: StockItemDetails | null = await app.repos.lotStock.getStockDetailsByItemId(
+      const details: StockItemDetails | null = await stocksService.getDetailsByItemId(
         userId,
         params.id
       );
@@ -41,7 +37,7 @@ const stockRoutes: FastifyPluginCallback = (app, _opts, done) => {
       return reply.code(200).send(details);
     }
 
-    const row: StockByItemRow | null = await app.repos.lotStock.getStockByItemId(userId, params.id);
+    const row: StockByItemRow | null = await stocksService.getByItemId(userId, params.id);
     if (!row) {
       return reply.code(404).send({ message: 'Stock not found for item' });
     }

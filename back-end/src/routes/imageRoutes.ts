@@ -1,17 +1,11 @@
+import { ImagesService } from '../modules/images/index.js';
+
 import { imageIdParamsSchema, imageQuerySchema } from './imageRoutes.schema.js';
 
-import type { ImageRepository } from '../lib/repositories/index.js';
-import type { FastifyInstance, FastifyPluginCallback } from 'fastify';
-
-type AppWithImageRepo = FastifyInstance & {
-  repos: {
-    images: ImageRepository;
-  };
-};
+import type { FastifyPluginCallback } from 'fastify';
 
 const imageRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const imageApp = app as AppWithImageRepo;
-  const imagesRepo = imageApp.repos.images;
+  const imagesService = new ImagesService(app.repos.images);
 
   app.get('/storage/images/:id', async (request, reply) => {
     const parsed = imageIdParamsSchema.safeParse(request.params);
@@ -24,7 +18,7 @@ const imageRoutes: FastifyPluginCallback = (app, _opts, done) => {
       return reply.code(400).send({ message: 'Invalid image size' });
     }
 
-    const imageBuffer = await imagesRepo.getImageBufferById(parsed.data.id, parsedQuery.data.size);
+    const imageBuffer = await imagesService.getBufferById(parsed.data.id, parsedQuery.data.size);
     if (!imageBuffer) {
       return reply.code(404).send({ message: 'Image not found' });
     }

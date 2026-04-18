@@ -4,6 +4,7 @@ import { AUTH_API_PREFIX } from '../config/index.js';
 import { parseDurationToSeconds } from '../lib/auth/index.js';
 import { HashTools } from '../lib/security/index.js';
 import { signinBodySchema, signupBodySchema } from '../lib/validations/index.js';
+import { UsersService } from '../modules/users/index.js';
 
 import type { FastifyPluginAsync } from 'fastify';
 
@@ -11,6 +12,7 @@ import type { FastifyPluginAsync } from 'fastify';
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   const accessTokenMaxAge = parseDurationToSeconds(process.env.JWT_ACCESS_EXPIRES_IN || '24h');
   const refreshTokenMaxAge = parseDurationToSeconds(process.env.JWT_REFRESH_EXPIRES_IN || '7d');
+  const usersService = () => new UsersService(app.repos.users);
 
   app.post(
     '/signup',
@@ -29,7 +31,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       };
 
       // 1) check existing user
-      const existing = await app.repos.users.findUnique({ where: { email } });
+      const existing = await usersService().getByEmail(email);
       if (existing) {
         return reply.code(409).send({ message: 'Email already in use' });
       }
@@ -37,18 +39,12 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       const hash = await argon2.hash(password);
 
       // 3) create (role forced)
-      await app.repos.users.create({
-        data: {
-          email,
-          pseudo,
-          firstname,
-          lastname,
-          password_hash: hash,
-          role: 'USER',
-          is_active: true,
-          date_created: new Date().toISOString(),
-        },
-        select: { id: true, email: true, role: true },
+      await usersService().createAuthUser({
+        email,
+        pseudo,
+        firstname,
+        lastname,
+        passwordHash: hash,
       });
 
       return reply.code(201).send({
@@ -67,7 +63,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     async (request, reply) => {
       const { password, pseudo } = request.body as { password: string; pseudo: string };
 
-      const user = await app.repos.users.findUnique({ where: { pseudo } });
+      const user = await usersService().getByPseudo(pseudo);
 
       if (!user) {
         return reply.code(401).send({ message: 'Identifiants invalides' });
@@ -131,7 +127,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     protectedApp.get('/me', async (request, reply) => {
       try {
         const id = request.user.id;
-        const user = await protectedApp.repos.users.findUnique({ where: { id } });
+        const user = await usersService().getById(id);
 
         if (!user) return reply.code(401).send('Unauthorized');
 
