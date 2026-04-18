@@ -82,17 +82,25 @@ describe('tradeRoutes', () => {
 
     expect(res.statusCode).toBe(201);
     expect(tx.session.create).toHaveBeenCalledTimes(1);
+    const purchaseSessionCreateCall = vi.mocked(tx.session.create).mock.calls[0]?.[0] as {
+      data: {
+        status: string;
+      };
+    };
+    expect(purchaseSessionCreateCall.data.status).toBe('CLOSED');
     const purchaseLineCreateCall = vi.mocked(tx.sessionLine.create).mock.calls[0]?.[0] as {
       data: {
         item_id: string;
         quantity: number;
         line_type: string;
+        line_status: string;
         sale_status: string | null;
       };
     };
     expect(purchaseLineCreateCall.data.item_id).toBe('item-1');
     expect(purchaseLineCreateCall.data.quantity).toBe(2);
     expect(purchaseLineCreateCall.data.line_type).toBe('IN');
+    expect(purchaseLineCreateCall.data.line_status).toBe('CLOSED');
     expect(purchaseLineCreateCall.data.sale_status).toBeNull();
     await app.close();
   });

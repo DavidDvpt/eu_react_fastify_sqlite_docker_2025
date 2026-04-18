@@ -71,7 +71,7 @@ class TradeService {
       const session = await tx.session.create({
         data: {
           session_type: 'TRADE',
-          status: 'OPENNED',
+          status: 'CLOSED',
           user_id: userId,
           cost_tt: purchaseCostTt,
           cost_ttc: purchaseCostTtc,
@@ -113,7 +113,7 @@ class TradeService {
             inventory_lot_id: lot.id,
             quantity: line.quantity,
             line_type: 'IN',
-            line_status: 'OPENNED',
+            line_status: 'CLOSED',
             sale_status: null,
             tt: lineTt,
             ttc: lineTtc,
