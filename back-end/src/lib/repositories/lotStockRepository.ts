@@ -1,7 +1,21 @@
-import { Prisma } from '../../../prisma/generated/client.js';
+import {
+  getAvailableLotsFifoByItemIdSql,
+  getAvailableStockByItemIdsSql,
+  getLotsInByItemIdSql,
+  getLotsOutByItemIdSql,
+  getSellableLotByIdSql,
+  getStockByItemIdSql,
+  getStockSql,
+} from './lotStockRepository.sqlraw.js';
 
-import type { PrismaLikeClient } from '../../types/index.js';
-import type { StockByItemRow, StockItemDetails } from '../../types/prismaTypes.js';
+import type { Prisma } from '../../../prisma/generated/client.js';
+import type {
+  PrismaLikeClient,
+  SellableLotRow,
+  StockAvailabilityRow,
+  StockByItemRow,
+  StockItemDetails,
+} from '../../types/index.js';
 
 export class LotStockRepository {
   constructor(private readonly client: PrismaLikeClient) {}
@@ -16,23 +30,7 @@ export class LotStockRepository {
         quantity: Prisma.Decimal | number;
         total_price: Prisma.Decimal | number;
       }>
-    >(
-      Prisma.sql`
-        SELECT
-          i.id AS item_id,
-          i.image_url_id,
-          i.name,
-          i.value AS unit_price,
-          COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
-          COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
-        FROM item i
-        JOIN lot l ON l.item_id = i.id AND l.is_active = true
-        WHERE l.user_id = ${userId}
-          AND l.quantity_remaining > 0
-        GROUP BY i.id, i.image_url_id, i.name, i.value
-        ORDER BY i.name
-      `
-    );
+    >(getStockSql(userId));
 
     return rows.map((row) => ({
       itemId: row.item_id,
@@ -56,23 +54,7 @@ export class LotStockRepository {
         quantity: Prisma.Decimal | number;
         total_price: Prisma.Decimal | number;
       }>
-    >(
-      Prisma.sql`
-        SELECT
-          i.id AS item_id,
-          i.image_url_id,
-          i.name,
-          i.value AS unit_price,
-          COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
-          COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
-        FROM item i
-        JOIN lot l ON l.item_id = i.id AND l.is_active = true
-        WHERE l.user_id = ${userId}
-          AND i.id = ${itemId}
-          AND l.quantity_remaining > 0
-        GROUP BY i.id, i.image_url_id, i.name, i.value
-      `
-    );
+    >(getStockByItemIdSql(userId, itemId));
 
     const row = rows[0];
     if (!row) {
@@ -107,33 +89,7 @@ export class LotStockRepository {
         price_remaining: string;
         date_created: string;
       }>
-    >(
-      Prisma.sql`
-        SELECT
-          l.id,
-          l.lot_type,
-          l.quantity_remaining,
-          COALESCE(sl_in.quantity, l.quantity_remaining + l.quantity_exported) AS quantity_initial,
-          l.quantity_exported,
-          l.price_remaining,
-          l.date_created
-        FROM lot l
-        LEFT JOIN LATERAL (
-          SELECT sl.quantity
-          FROM session_line sl
-          WHERE sl.inventory_lot_id = l.id
-            AND sl.user_id = ${userId}
-            AND sl.item_id = ${itemId}
-            AND sl.line_type = 'IN'
-          ORDER BY sl.id ASC
-          LIMIT 1
-        ) sl_in ON TRUE
-        WHERE l.user_id = ${userId}
-          AND l.item_id = ${itemId}
-          AND l.is_active = true
-        ORDER BY l.date_created DESC
-      `
-    );
+    >(getLotsInByItemIdSql(userId, itemId));
 
     const lotsOutRows = await this.client.$queryRaw<
       Array<{
@@ -144,23 +100,7 @@ export class LotStockRepository {
         ttc: Prisma.Decimal | number;
         sale_status: string | null;
       }>
-    >(
-      Prisma.sql`
-        SELECT
-          sl.id,
-          l.date_created,
-          sl.quantity,
-          sl.tt,
-          sl.ttc,
-          sl.sale_status
-        FROM session_line sl
-        LEFT JOIN lot l ON l.id = sl.inventory_lot_id
-        WHERE sl.user_id = ${userId}
-          AND sl.item_id = ${itemId}
-          AND sl.line_type = 'OUT'
-        ORDER BY sl.id DESC
-      `
-    );
+    >(getLotsOutByItemIdSql(userId, itemId));
 
     return {
       ...stockRow,
@@ -181,6 +121,79 @@ export class LotStockRepository {
         ttc: typeof row.ttc === 'number' ? row.ttc : Number(row.ttc.toString()),
         saleStatus: row.sale_status,
       })),
+    };
+  }
+
+  async getAvailableStockByItemIds(
+    userId: string,
+    itemIds: string[]
+  ): Promise<StockAvailabilityRow[]> {
+    if (!itemIds.length) {
+      return [];
+    }
+
+    const rows = await this.client.$queryRaw<
+      Array<{
+        item_id: string;
+        available_quantity: Prisma.Decimal | number;
+      }>
+    >(getAvailableStockByItemIdsSql(userId, itemIds));
+
+    return rows.map((row) => ({
+      itemId: row.item_id,
+      availableQuantity:
+        typeof row.available_quantity === 'number'
+          ? row.available_quantity
+          : Number(row.available_quantity.toString()),
+    }));
+  }
+
+  async getAvailableLotsFifoByItemId(userId: string, itemId: string): Promise<SellableLotRow[]> {
+    const rows = await this.client.$queryRaw<
+      Array<{
+        id: string;
+        item_id: string;
+        quantity_remaining: number;
+        quantity_exported: number;
+        price_remaining: string;
+        date_created: string;
+      }>
+    >(getAvailableLotsFifoByItemIdSql(userId, itemId));
+
+    return rows.map((row) => ({
+      id: row.id,
+      itemId: row.item_id,
+      quantityRemaining: row.quantity_remaining,
+      quantityExported: row.quantity_exported,
+      priceRemaining: Number(row.price_remaining),
+      dateCreated: row.date_created,
+    }));
+  }
+
+  async getSellableLotById(userId: string, lotId: string): Promise<SellableLotRow | null> {
+    const rows = await this.client.$queryRaw<
+      Array<{
+        id: string;
+        item_id: string;
+        quantity_remaining: number;
+        quantity_exported: number;
+        price_remaining: string;
+        date_created: string;
+      }>
+    >(getSellableLotByIdSql(userId, lotId));
+
+    const row = rows[0];
+    if (!row) {
+      return null;
+    }
+
+    return {
+      id: row.id,
+      itemId: row.item_id,
+      quantityRemaining: row.quantity_remaining,
+      quantityExported: row.quantity_exported,
+      priceRemaining: Number(row.price_remaining),
+      dateCreated: row.date_created,
     };
   }
 }

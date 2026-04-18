@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import type { Prisma, PrismaClient, TransactionStatus } from '../../prisma/generated/client.js';
+import type { Prisma, PrismaClient } from '../../prisma/generated/client.js';
 
 // Keep compatibility between the root Prisma client and transaction-scoped clients.
 type PrismaModelClient<DelegateKey extends Prisma.ModelName> =
@@ -42,54 +42,6 @@ type RepositoryClient = PrismaModelClient<'User'> &
   PrismaModelClient<'Lot'> &
   PrismaModelClient<'SeedPatch'>;
 
-export type StockByItemRow = {
-  itemId: string;
-  imageUrlId: string;
-  name: string;
-  unitPrice: number;
-  quantity: number;
-  totalPrice: number;
-};
-
-type StockLotInRow = {
-  id: string;
-  lotType: string;
-  quantityRemaining: number;
-  quantityInitial: number;
-  quantityExported: number;
-  priceRemaining: number;
-  dateCreated: string;
-};
-
-type StockLotOutRow = {
-  id: string;
-  dateCreated: string;
-  quantity: number;
-  tt: number;
-  ttc: number;
-  saleStatus: string | null;
-};
-
-type StockItemDetails = {
-  itemId: string;
-  imageUrlId: string;
-  name: string;
-  unitPrice: number;
-  quantity: number;
-  totalPrice: number;
-  lotsIn: StockLotInRow[];
-  lotsOut: StockLotOutRow[];
-};
-
-type SellSessionRow = {
-  sessionId: string;
-  name: string;
-  quantity: number;
-  totalPrice: number;
-  linesTotal: number;
-  saleStatus: TransactionStatus | null;
-};
-
 type LotClient = PrismaModelClient<'Lot'>;
 type SeedPatchClient = PrismaModelClient<'SeedPatch'>;
 type PrismaLikeClient = PrismaClient | Prisma.TransactionClient;
@@ -108,11 +60,7 @@ export type {
   RepositoryClient,
   LotClient,
   PrismaLikeClient,
-  StockLotInRow,
-  StockLotOutRow,
-  StockItemDetails,
   SeedPatchClient,
-  SellSessionRow,
   TypeClient,
   UserClient,
   ItemClient,
