@@ -1,29 +1,11 @@
-import type { Item, Items, Stock, StockRow, Type, Types } from "@/types";
-
-function sortedRowsFunc(stockRows: Stock) {
-  return [...stockRows].sort((a, b) => a.name.localeCompare(b.name, "fr"));
-}
-
-function typeByIdFunc(types: Types) {
-  return types.reduce<Record<string, (typeof types)[number]>>((acc, type) => {
-    acc[type.id] = type;
-    return acc;
-  }, {});
-}
-
-function itemByIdFunc(items: Items) {
-  return items.reduce<Record<string, (typeof items)[number]>>((acc, item) => {
-    acc[item.id] = item;
-    return acc;
-  }, {});
-}
+import type { Item, StockRow, Type } from "@/types";
 
 function filterRowsFunc(
-  sortedRows: StockRow[],
+  rows: StockRow[],
   typeById: Record<string, Type>,
   itemById: Record<string, Item>,
 ) {
-  return sortedRows.map((row) => {
+  return rows.map((row) => {
     const item = itemById[row.itemId];
     const itemType = item ? typeById[item.itemTypeId] : undefined;
     return {
@@ -36,4 +18,4 @@ function filterRowsFunc(
   });
 }
 
-export { sortedRowsFunc, typeByIdFunc, itemByIdFunc, filterRowsFunc };
+export { filterRowsFunc };

@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { GenericFilter } from "@/shared/components/GenericFilter";
 
 import { ImageService } from "@/shared/services/imageService";
-import { FormatTools } from "@/shared/tools/formatTools";
+import { FormatTools, ArrayTools } from "@/shared/tools";
 
 import type { TradeFilterRow } from "@/types";
 import { TRADE_ITEM_FILTER_MODEL } from "./contants";
@@ -14,12 +14,7 @@ import {
   useStock,
   useTypes,
 } from "@/shared/hooks";
-import {
-  filterRowsFunc,
-  itemByIdFunc,
-  sortedRowsFunc,
-  typeByIdFunc,
-} from "./utils";
+import { filterRowsFunc } from "./utils";
 
 function TradePage() {
   const navigate = useNavigate();
@@ -32,11 +27,14 @@ function TradePage() {
   const { data: items = [] } = useItems();
   const { data: types = [] } = useTypes();
 
-  const sortedRows = useMemo(() => sortedRowsFunc(stockRows), [stockRows]);
+  const sortedRows = useMemo(
+    () => ArrayTools.sortByName(stockRows),
+    [stockRows],
+  );
 
-  const typeById = useMemo(() => typeByIdFunc(types), [types]);
+  const typeById = useMemo(() => ArrayTools.indexById(types), [types]);
 
-  const itemById = useMemo(() => itemByIdFunc(items), [items]);
+  const itemById = useMemo(() => ArrayTools.indexById(items), [items]);
 
   const filterRows = useMemo<TradeFilterRow[]>(
     () => filterRowsFunc(sortedRows, typeById, itemById),
