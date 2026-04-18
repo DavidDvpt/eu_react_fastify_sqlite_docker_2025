@@ -1,17 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
-import {
-  LotRepository,
-  ItemCategoryRepository,
-  ItemRepository,
-  ItemTypeRepository,
-} from '../index.js';
+import { LotRepository, CategoryRepository, ItemRepository, TypeRepository } from '../index.js';
 
 const prisma = prismaClient;
 
-const categoryRepo = new ItemCategoryRepository(prisma);
-const typeRepo = new ItemTypeRepository(prisma);
+const categoryRepo = new CategoryRepository(prisma);
+const typeRepo = new TypeRepository(prisma);
 const itemRepo = new ItemRepository(prisma);
 const lotRepo = new LotRepository(prisma);
 const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
@@ -381,9 +376,9 @@ describe('Read scope by repository', () => {
     );
     expect(updatedByOwner.id).toBe(categoryA.id);
 
-    await expect(categoryRepo.delete({ where: { id: globalCategory.id } }, userA.id)).rejects.toThrow(
-      'Forbidden mutation'
-    );
+    await expect(
+      categoryRepo.delete({ where: { id: globalCategory.id } }, userA.id)
+    ).rejects.toThrow('Forbidden mutation');
     await expect(categoryRepo.delete({ where: { id: categoryB.id } }, userA.id)).rejects.toThrow(
       'Forbidden mutation'
     );

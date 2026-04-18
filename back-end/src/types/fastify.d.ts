@@ -1,9 +1,9 @@
+import type { CategoryRepository } from '../lib/repositories/categoryRepository.ts';
 import type { ImageRepository } from '../lib/repositories/imageRepository.js';
-import type { ItemCategoryRepository } from '../lib/repositories/itemCategoryRepository.js';
 import type { ItemRepository } from '../lib/repositories/itemRepository.js';
-import type { ItemTypeRepository } from '../lib/repositories/itemTypeRepository.js';
 import type { LotStockRepository } from '../lib/repositories/lotStockRepository.js';
 import type { SessionStatsRepository } from '../lib/repositories/sessionStatsRepository.js';
+import type { TypeRepository } from '../lib/repositories/typeRepository.ts';
 import type { UserRepository } from '../lib/repositories/userRepository.js';
 import type { preHandlerHookHandler, preHandlerAsyncHookHandler, FastifyReply } from 'fastify';
 type PrismaClientType = typeof import('../../prisma/prismaClient.js').default;
@@ -26,8 +26,8 @@ declare module 'fastify' {
     repos: {
       images: ImageRepository;
       users: UserRepository;
-      itemCategories: ItemCategoryRepository;
-      itemTypes: ItemTypeRepository;
+      itemCategories: CategoryRepository;
+      itemTypes: TypeRepository;
       items: ItemRepository;
       lotStock: LotStockRepository;
       sessionStats: SessionStatsRepository;

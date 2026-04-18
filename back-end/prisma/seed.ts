@@ -1,6 +1,6 @@
-import { ItemCategoryRepository } from '../src/lib/repositories/itemCategoryRepository.js';
+import { CategoryRepository } from '../src/lib/repositories/categoryRepository.js';
 import { ItemRepository } from '../src/lib/repositories/itemRepository.js';
-import { ItemTypeRepository } from '../src/lib/repositories/itemTypeRepository.js';
+import { TypeRepository } from '../src/lib/repositories/typeRepository.js';
 import { UserRepository } from '../src/lib/repositories/userRepository.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
@@ -13,14 +13,12 @@ import { SYSTEM_USER_ID } from './seedDatas/systemUser.js';
 import { USERS } from './seedDatas/user.js';
 
 const userRepository = new UserRepository(prismaClient);
-const itemCategoryRepository = new ItemCategoryRepository(prismaClient);
-const itemTypesRepository = new ItemTypeRepository(prismaClient);
+const itemCategoryRepository = new CategoryRepository(prismaClient);
+const itemTypesRepository = new TypeRepository(prismaClient);
 const itemRepository = new ItemRepository(prismaClient);
 const DEFAULT_DATA_USER_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 
-const systemUser = SYSTEM_USER_ID
-  ? USERS.find((user) => user.id === SYSTEM_USER_ID)
-  : undefined;
+const systemUser = SYSTEM_USER_ID ? USERS.find((user) => user.id === SYSTEM_USER_ID) : undefined;
 const defaultDataUser = USERS.find((user) => user.id === DEFAULT_DATA_USER_ID);
 
 if (systemUser) {

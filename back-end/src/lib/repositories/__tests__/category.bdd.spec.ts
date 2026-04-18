@@ -1,12 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
-import { ItemCategoryRepository } from '../itemCategoryRepository.js';
+import { CategoryRepository } from '../categoryRepository.js';
 
 import { itemCategoriesMock } from './mock.js';
 
 const prisma = prismaClient;
-const repo = new ItemCategoryRepository(prisma);
+const repo = new CategoryRepository(prisma);
 const DEFAULT_OWNER_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 
 beforeAll(async () => {

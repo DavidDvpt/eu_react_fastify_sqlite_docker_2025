@@ -62,18 +62,18 @@ enum SessionLineType {
 }
 
 model User {
-  id             String         @id @default(uuid())
+  id             String        @id @default(uuid())
   firstname      String?
   lastname       String?
-  pseudo         String         @unique
-  email          String         @unique
+  pseudo         String        @unique
+  email          String        @unique
   password_hash  String
   role           Role
   date_created   String
   date_updated   String?
-  is_active      Boolean        @default(true)
-  itemCategories ItemCategory[]
-  itemTypes      ItemType[]
+  is_active      Boolean       @default(true)
+  itemCategories Category[]
+  itemTypes      Type[]
   items          Item[]
   lots           Lot[]
   sessions       Session[]
@@ -126,7 +126,7 @@ model SessionLine {
   @@map("session_line")
 }
 
-model ItemCategory {
+model Category {
   id           String  @id @default(uuid())
   date_created String
   date_updated String?
@@ -136,12 +136,12 @@ model ItemCategory {
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  item_types ItemType[]
+  item_types Type[]
 
   @@map("item_category")
 }
 
-model ItemType {
+model Type {
   id               String  @id @default(uuid())
   category_id      String
   date_created     String
@@ -152,7 +152,7 @@ model ItemType {
   user_id          String
   name             String  @unique
 
-  category ItemCategory @relation(fields: [category_id], references: [id], onDelete: Cascade)
+  category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -174,7 +174,7 @@ model Item {
   is_stackable Boolean @default(true)
   name         String  @unique
 
-  item_type ItemType @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  item_type Type @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
@@ -199,8 +199,8 @@ model Lot {
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  item  Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  line  SessionLine[]
+  item Item          @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  line SessionLine[]
 
   @@map("lot")
 }
