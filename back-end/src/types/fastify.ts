@@ -29,8 +29,8 @@ declare module 'fastify' {
     repos: {
       images: ImageRepository;
       users: UserRepository;
-      itemCategories: CategoryRepository;
-      itemTypes: TypeRepository;
+      categories: CategoryRepository;
+      types: TypeRepository;
       items: ItemRepository;
       lotStock: LotStockRepository;
       sessionStats: SessionStatsRepository;

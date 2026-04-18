@@ -16,8 +16,8 @@ const repositoriesPlugin: FastifyPluginCallback = (app, _opts, done) => {
   app.decorate('repos', {
     images: new ImageRepository(),
     users: new UserRepository(app.prisma),
-    itemCategories: new CategoryRepository(app.prisma),
-    itemTypes: new TypeRepository(app.prisma),
+    categories: new CategoryRepository(app.prisma),
+    types: new TypeRepository(app.prisma),
     items: new ItemRepository(app.prisma),
     lotStock: new LotStockRepository(app.prisma),
     sessionStats: new SessionStatsRepository(app.prisma),
