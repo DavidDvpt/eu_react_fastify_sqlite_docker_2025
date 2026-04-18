@@ -43,4 +43,5 @@ class FormatTools {
   }
 }
 
+export { FormatTools };
 export default FormatTools;
