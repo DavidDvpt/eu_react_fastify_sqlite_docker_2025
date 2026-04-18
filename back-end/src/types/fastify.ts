@@ -1,14 +1,17 @@
-import type { CategoryRepository } from '../lib/repositories/categoryRepository.ts';
-import type { ImageRepository } from '../lib/repositories/imageRepository.js';
-import type { ItemRepository } from '../lib/repositories/itemRepository.js';
-import type { LotStockRepository } from '../lib/repositories/lotStockRepository.js';
-import type { SessionStatsRepository } from '../lib/repositories/sessionStatsRepository.js';
-import type { TypeRepository } from '../lib/repositories/typeRepository.ts';
-import type { UserRepository } from '../lib/repositories/userRepository.js';
+import type {
+  CategoryRepository,
+  ImageRepository,
+  ItemRepository,
+  LotStockRepository,
+  SessionStatsRepository,
+  TypeRepository,
+  UserRepository,
+} from '../lib/repositories/index.js';
 import type { preHandlerHookHandler, preHandlerAsyncHookHandler, FastifyReply } from 'fastify';
+
 type PrismaClientType = typeof import('../../prisma/prismaClient.js').default;
 
-export type UserForToken = {
+type UserForToken = {
   id: string;
   role: string;
   pseudo: string;
@@ -53,3 +56,5 @@ declare module 'fastify' {
     refreshVerify: (options?: JwtVerifyOpts) => Promise<void>;
   }
 }
+
+export type { PrismaClientType, UserForToken, JwtVerifyOpts };

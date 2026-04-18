@@ -1,7 +1,9 @@
-import { CategoryRepository } from '../src/lib/repositories/categoryRepository.js';
-import { ItemRepository } from '../src/lib/repositories/itemRepository.js';
-import { TypeRepository } from '../src/lib/repositories/typeRepository.js';
-import { UserRepository } from '../src/lib/repositories/userRepository.js';
+import {
+  CategoryRepository,
+  ItemRepository,
+  TypeRepository,
+  UserRepository,
+} from '../src/lib/repositories/index.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';

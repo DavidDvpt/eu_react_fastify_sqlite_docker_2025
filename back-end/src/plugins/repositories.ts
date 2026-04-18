@@ -1,12 +1,14 @@
 import fp from 'fastify-plugin';
 
-import { CategoryRepository } from '../lib/repositories/categoryRepository.js';
-import { ImageRepository } from '../lib/repositories/imageRepository.js';
-import { ItemRepository } from '../lib/repositories/itemRepository.js';
-import { LotStockRepository } from '../lib/repositories/lotStockRepository.js';
-import { SessionStatsRepository } from '../lib/repositories/sessionStatsRepository.js';
-import { TypeRepository } from '../lib/repositories/typeRepository.js';
-import { UserRepository } from '../lib/repositories/userRepository.js';
+import {
+  CategoryRepository,
+  ImageRepository,
+  ItemRepository,
+  LotStockRepository,
+  SessionStatsRepository,
+  TypeRepository,
+  UserRepository,
+} from '../lib/repositories/index.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 

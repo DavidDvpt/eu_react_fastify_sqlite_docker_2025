@@ -1,13 +1,7 @@
 import { sellSessionsQuerySchema } from './sessionRoutes.schema.js';
 
-import type { SessionStatsRepository } from '../lib/repositories/sessionStatsRepository.js';
-import type { FastifyInstance, FastifyPluginCallback, FastifyRequest } from 'fastify';
-
-type AppWithSessionStatsRepo = FastifyInstance & {
-  repos: {
-    sessionStats: SessionStatsRepository;
-  };
-};
+import type { AppWithSessionStatsRepo } from '../types/routes.js';
+import type { FastifyPluginCallback, FastifyRequest } from 'fastify';
 
 function getRequestUserId(request: FastifyRequest): string {
   const user = request.user as { id?: string } | undefined;

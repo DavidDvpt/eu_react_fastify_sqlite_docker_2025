@@ -1,6 +1,6 @@
 import { imageIdParamsSchema, imageQuerySchema } from './imageRoutes.schema.js';
 
-import type { ImageRepository } from '../lib/repositories/imageRepository.js';
+import type { ImageRepository } from '../lib/repositories/index.js';
 import type { FastifyInstance, FastifyPluginCallback } from 'fastify';
 
 type AppWithImageRepo = FastifyInstance & {

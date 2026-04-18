@@ -2,7 +2,7 @@ import { z } from 'zod';
 
 import { stockByItemParamsSchema, stockByItemQuerySchema } from './stockRoutes.schema.js';
 
-import type { StockByItemRow, StockItemDetails } from '../lib/repositories/lotStockRepository.js';
+import type { StockByItemRow, StockItemDetails } from '../types/index.js';
 import type { FastifyPluginCallback, FastifyRequest } from 'fastify';
 
 const requestUserSchema = z.object({

@@ -1,10 +1,9 @@
 import argon2 from 'argon2';
 
-import { AUTH_API_PREFIX } from '../config/routes.js';
-import { parseDurationToSeconds } from '../lib/auth/tokenDuration.js';
-import HashTools from '../lib/security/HashTools.js';
-import { signinBodySchema } from '../lib/validations/signin.Validation.js';
-import { signupBodySchema } from '../lib/validations/signup.Validation.js';
+import { AUTH_API_PREFIX } from '../config/index.js';
+import { parseDurationToSeconds } from '../lib/auth/index.js';
+import { HashTools } from '../lib/security/index.js';
+import { signinBodySchema, signupBodySchema } from '../lib/validations/index.js';
 
 import type { FastifyPluginAsync } from 'fastify';
 

@@ -18,3 +18,5 @@ declare module '@fastify/jwt' {
     user: UserForToken;
   }
 }
+
+export type { JwtNamespace, JwtPayload };

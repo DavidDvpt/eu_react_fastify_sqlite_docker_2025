@@ -1,7 +1,7 @@
 import jwt from '@fastify/jwt'; // ton module .env/.envSchema
 import fp from 'fastify-plugin';
 
-import { parseDurationToSeconds } from '../lib/auth/tokenDuration.js';
+import { parseDurationToSeconds } from '../lib/auth/index.js';
 
 import type { FastifyInstance, FastifyPluginAsync } from 'fastify';
 
