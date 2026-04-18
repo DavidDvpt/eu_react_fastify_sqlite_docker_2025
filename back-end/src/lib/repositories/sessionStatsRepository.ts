@@ -1,17 +1,7 @@
 import { Prisma } from '../../../prisma/generated/client.js';
 
-import type { PrismaClient, TransactionStatus } from '../../../prisma/generated/client.js';
-
-type PrismaLikeClient = PrismaClient | Prisma.TransactionClient;
-
-export type SellSessionRow = {
-  sessionId: string;
-  name: string;
-  quantity: number;
-  totalPrice: number;
-  linesTotal: number;
-  saleStatus: TransactionStatus | null;
-};
+import type { TransactionStatus } from '../../../prisma/generated/client.js';
+import type { PrismaLikeClient, SellSessionRow } from '../../types/index.js';
 
 export class SessionStatsRepository {
   constructor(private readonly client: PrismaLikeClient) {}

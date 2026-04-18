@@ -1,47 +1,7 @@
 import { Prisma } from '../../../prisma/generated/client.js';
 
-import type { PrismaClient } from '../../../prisma/generated/client.js';
-
-type PrismaLikeClient = PrismaClient | Prisma.TransactionClient;
-
-export type StockByItemRow = {
-  itemId: string;
-  imageUrlId: string;
-  name: string;
-  unitPrice: number;
-  quantity: number;
-  totalPrice: number;
-};
-
-export type StockLotInRow = {
-  id: string;
-  lotType: string;
-  quantityRemaining: number;
-  quantityInitial: number;
-  quantityExported: number;
-  priceRemaining: number;
-  dateCreated: string;
-};
-
-export type StockLotOutRow = {
-  id: string;
-  dateCreated: string;
-  quantity: number;
-  tt: number;
-  ttc: number;
-  saleStatus: string | null;
-};
-
-export type StockItemDetails = {
-  itemId: string;
-  imageUrlId: string;
-  name: string;
-  unitPrice: number;
-  quantity: number;
-  totalPrice: number;
-  lotsIn: StockLotInRow[];
-  lotsOut: StockLotOutRow[];
-};
+import type { PrismaLikeClient } from '../../types/index.js';
+import type { StockByItemRow, StockItemDetails } from '../../types/prismaTypes.js';
 
 export class LotStockRepository {
   constructor(private readonly client: PrismaLikeClient) {}
@@ -78,7 +38,8 @@ export class LotStockRepository {
       itemId: row.item_id,
       imageUrlId: row.image_url_id,
       name: row.name,
-      unitPrice: typeof row.unit_price === 'number' ? row.unit_price : Number(row.unit_price.toString()),
+      unitPrice:
+        typeof row.unit_price === 'number' ? row.unit_price : Number(row.unit_price.toString()),
       quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
       totalPrice:
         typeof row.total_price === 'number' ? row.total_price : Number(row.total_price.toString()),
@@ -122,7 +83,8 @@ export class LotStockRepository {
       itemId: row.item_id,
       imageUrlId: row.image_url_id,
       name: row.name,
-      unitPrice: typeof row.unit_price === 'number' ? row.unit_price : Number(row.unit_price.toString()),
+      unitPrice:
+        typeof row.unit_price === 'number' ? row.unit_price : Number(row.unit_price.toString()),
       quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
       totalPrice:
         typeof row.total_price === 'number' ? row.total_price : Number(row.total_price.toString()),

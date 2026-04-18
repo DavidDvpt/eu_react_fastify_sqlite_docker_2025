@@ -5,15 +5,9 @@ import { SeedPatchRepository } from './seedPatchRepository.js';
 import { TypeRepository } from './typeRepository.js';
 import { UserRepository } from './userRepository.js';
 
-import type { PrismaModelClient } from './prismaCrudRepository.js';
+import type { RepositoryClient } from '../../types/index.js';
 
 // Aggregate the delegates we need to build all repositories (works with PrismaClient or TransactionClient).
-export type RepositoryClient = PrismaModelClient<'User'> &
-  PrismaModelClient<'Category'> &
-  PrismaModelClient<'Type'> &
-  PrismaModelClient<'Item'> &
-  PrismaModelClient<'Lot'> &
-  PrismaModelClient<'SeedPatch'>;
 
 // Helper to create every repository from a single Prisma client instance.
 export const createRepositories = (client: RepositoryClient) => ({

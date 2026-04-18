@@ -1,8 +1,6 @@
-import { PrismaCrudRepository } from './prismaCrudRepository.js';
+import PrismaCrudRepository from './prismaCrudRepository.js';
 
-import type { PrismaModelClient } from './prismaCrudRepository.js';
-
-type CategoryClient = PrismaModelClient<'Category'>;
+import type { CategoryClient } from '../../types/index.js';
 
 export class CategoryRepository extends PrismaCrudRepository<CategoryClient['category']> {
   constructor(client: CategoryClient) {
