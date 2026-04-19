@@ -12,6 +12,18 @@ type PurchaseTradeBody = {
   lines: PurchaseTradeLineInput[];
 };
 
+type SellTradeLineInput = {
+  itemId: string;
+  quantity: number;
+  inventoryLotId?: string;
+  tt?: number;
+  ttc: number;
+};
+
+type SellTradeBody = {
+  lines: SellTradeLineInput[];
+};
+
 type TradeProcessedItem = {
   itemId: string;
   quantity: number;
@@ -41,10 +53,19 @@ async function purchaseTrade(body: PurchaseTradeBody): Promise<TradeExecutionRes
   );
 }
 
-export { purchaseTrade, TRADE_ROUTE };
+async function sellTrade(body: SellTradeBody): Promise<TradeExecutionResult> {
+  return axiosCrud(axiosInstance()).post<TradeExecutionResult, SellTradeBody>(
+    `${TRADE_ROUTE}/sell`,
+    body,
+  );
+}
+
+export { purchaseTrade, sellTrade, TRADE_ROUTE };
 export type {
   PurchaseTradeBody,
   PurchaseTradeLineInput,
+  SellTradeBody,
+  SellTradeLineInput,
   TradeExecutionResult,
   TradeProcessedItem,
   TradeRejectedItem,

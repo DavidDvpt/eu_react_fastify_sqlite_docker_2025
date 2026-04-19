@@ -17,6 +17,7 @@ import {
 } from "@/shared/hooks";
 import { filterRowsFunc } from "./utils";
 import TradeBuyPanelContent from "./components/TradeBuyPanelContent";
+import TradeSellPanelContent from "./components/TradeSellPanelContent";
 
 function TradePage() {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ function TradePage() {
     navigate(`/trade/${selectedItemId}/buy`);
   }
 
-  function closeBuyModal() {
+  function closeActionPanel() {
     if (!selectedItemId) {
       navigate("/trade");
       return;
@@ -143,14 +144,21 @@ function TradePage() {
         </Section>
       )}
 
-      {selectedItem && action === "buy" ? (
+      {selectedItem && (action === "buy" || action === "sell") ? (
         <Panel>
           <div className="flex gap-3 max-lg:flex-col">
             <Panel className="w-1/2 max-lg:w-full">
-              <TradeBuyPanelContent
-                item={selectedItem}
-                onBack={closeBuyModal}
-              />
+              {action === "buy" ? (
+                <TradeBuyPanelContent
+                  item={selectedItem}
+                  onBack={closeActionPanel}
+                />
+              ) : (
+                <TradeSellPanelContent
+                  item={selectedItem}
+                  onBack={closeActionPanel}
+                />
+              )}
             </Panel>
             <Panel className="w-1/2 rounded-md border border-dashed border-border bg-background p-3 text-sm text-muted-foreground max-lg:w-full">
               Zone reservee pour les details complementaires.

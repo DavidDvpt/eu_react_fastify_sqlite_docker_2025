@@ -41,9 +41,15 @@ type TradeBuyFormValues = {
   buyPrice: number;
 };
 
+type TradeSellFormValues = {
+  quantity: number;
+  ttc: number;
+};
+
 export type {
   TradeFilterRow,
   TradeActionsProps,
   TradeItemDetailsProps,
   TradeBuyFormValues,
+  TradeSellFormValues,
 };

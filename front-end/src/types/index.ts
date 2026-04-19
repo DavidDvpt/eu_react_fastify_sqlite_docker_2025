@@ -61,6 +61,7 @@ import type {
   TradeActionsProps,
   TradeItemDetailsProps,
   TradeBuyFormValues,
+  TradeSellFormValues,
 } from "./tradeTypes";
 import type {
   GenericListAlign,
@@ -137,5 +138,6 @@ export type {
   TradeActionsProps,
   TradeItemDetailsProps,
   TradeBuyFormValues,
+  TradeSellFormValues,
   StockDetailsPanelProps,
 };
