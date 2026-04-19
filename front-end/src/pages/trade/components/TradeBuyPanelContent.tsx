@@ -39,6 +39,7 @@ type TradeBuyFormFieldsProps = {
 
 function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
   const form = useFormContext<TradeBuyFormValues>();
+  const buyPriceField = form.register("buyPrice", { valueAsNumber: true });
   const quantity = useWatch({ control: form.control, name: "quantity" });
   const fee = useWatch({ control: form.control, name: "fee" });
   const buyPrice = useWatch({ control: form.control, name: "buyPrice" });
@@ -49,6 +50,10 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
   const unitReferenceTotal = useMemo(
     () => quantityValue * item.unitPrice,
     [item.unitPrice, quantityValue],
+  );
+  const minimumBuyPrice = useMemo(
+    () => Math.ceil(unitReferenceTotal),
+    [unitReferenceTotal],
   );
   const buyMarkupRatio = useMemo(
     () =>
@@ -75,6 +80,7 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
             type="number"
             min={1}
             step={1}
+            onFocus={(event) => event.currentTarget.select()}
             {...form.register("quantity", { valueAsNumber: true })}
           />
           {form.formState.errors.quantity ? (
@@ -93,6 +99,7 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
             type="number"
             min={0}
             step="0.01"
+            onFocus={(event) => event.currentTarget.select()}
             {...form.register("fee", { valueAsNumber: true })}
           />
           {form.formState.errors.fee ? (
@@ -111,7 +118,20 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
             type="number"
             min={0.01}
             step="0.01"
-            {...form.register("buyPrice", { valueAsNumber: true })}
+            {...buyPriceField}
+            onFocus={(event) => event.currentTarget.select()}
+            onBlur={(event) => {
+              buyPriceField.onBlur(event);
+              const currentValue = Number(event.currentTarget.value);
+              if (
+                !Number.isFinite(currentValue) ||
+                currentValue < minimumBuyPrice
+              ) {
+                form.setValue("buyPrice", minimumBuyPrice, {
+                  shouldValidate: true,
+                });
+              }
+            }}
           />
           {form.formState.errors.buyPrice ? (
             <p className="m-0 text-[0.8rem] italic text-destructive-300">
