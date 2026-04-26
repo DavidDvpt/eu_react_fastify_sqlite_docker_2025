@@ -1,284 +1,98 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Section, SubSection } from "../Containers";
+import { useCategories, useItems, useTypes } from "@/shared/hooks";
+import AppSelect from "../form/Select/AppSelect";
+
 import { cn } from "@/lib/utils";
+import type { Item } from "@/shared/types";
 
-import type { GenericFilterProps, GenericFilterStateValue } from "@/types";
-import { Section } from "../Containers";
+interface GenericFilterProps {
+  hasAutocomplete?: boolean;
+  className?: string;
+  selectedItem?: Item;
+  onSelectedItem?: (item: string) => void;
+}
 
-function GenericFilter<T>({
-  model,
-  filter,
-  allowedFields,
-  hasAutocomplete,
-  hasInput,
-  hasIsLimited = false,
-  className,
-}: GenericFilterProps<T>) {
-  const showAutocompleteInput = hasAutocomplete ?? hasInput ?? true;
-  const leftColumnRef = useRef<HTMLDivElement | null>(null);
-  const rightColumnRef = useRef<HTMLDivElement | null>(null);
-  const [isLeftCompact, setIsLeftCompact] = useState(false);
-  const [isRightCompact, setIsRightCompact] = useState(false);
+type SelectedFilterValues = {
+  category: string;
+  type: string;
+  item: string;
+  pattern?: string;
+};
 
-  const allowedFieldSet = useMemo(
-    () => new Set(allowedFields ?? model.fields.map((field) => field.key)),
-    [allowedFields, model.fields],
-  );
+const allOptionValue = "__all__";
+const filterDefaultValues: SelectedFilterValues = {
+  category: allOptionValue,
+  type: allOptionValue,
+  item: allOptionValue,
+  pattern: "",
+};
 
-  const visibleFields = useMemo(
-    () =>
-      model.fields.filter((field) => {
-        if (!allowedFieldSet.has(field.key)) return false;
-        if (field.hidden) return false;
-        if (!hasIsLimited && field.key === "limited") return false;
-        return true;
-      }),
-    [allowedFieldSet, hasIsLimited, model.fields],
-  );
-  const autocompleteFields = useMemo(
-    () => visibleFields.filter((field) => field.kind === "autocomplete"),
-    [visibleFields],
-  );
-  const selectFields = useMemo(
-    () => visibleFields.filter((field) => field.kind === "select"),
-    [visibleFields],
-  );
-  const booleanFields = useMemo(
-    () => visibleFields.filter((field) => field.kind === "boolean"),
-    [visibleFields],
-  );
+function GenericFilter({ className, onSelectedItem }: GenericFilterProps) {
+  const [selected, setSelected] =
+    useState<SelectedFilterValues>(filterDefaultValues);
 
-  const datalistIdByKey = useMemo(
-    () =>
-      model.fields.reduce<Record<string, string>>((acc, field) => {
-        acc[field.key] = `generic-filter-list-${field.key}`;
-        return acc;
-      }, {}),
-    [model.fields],
-  );
+  const categories = useCategories();
+  const types = useTypes();
+  const items = useItems();
 
-  function updateValue(key: string, value: GenericFilterStateValue) {
-    filter.setFilterValue(key, value);
-  }
+  const updateValue = (key: string, value: string | null) => {
+    setSelected((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
 
-  useEffect(() => {
-    if (!hasIsLimited && filter.filterState.limited !== null) {
-      filter.setFilterValue("limited", null);
+    if (key === "item" && onSelectedItem && value) {
+      onSelectedItem(value);
     }
-  }, [filter, hasIsLimited]);
-
-  useEffect(() => {
-    const leftElement = leftColumnRef.current;
-    const rightElement = rightColumnRef.current;
-    if (!leftElement || !rightElement) return;
-
-    if (typeof ResizeObserver === "undefined") {
-      setIsLeftCompact(leftElement.clientWidth < 300);
-      setIsRightCompact(rightElement.clientWidth < 300);
-      return;
-    }
-
-    const observer = new ResizeObserver(() => {
-      setIsLeftCompact(leftElement.clientWidth < 300);
-      setIsRightCompact(rightElement.clientWidth < 300);
-    });
-
-    observer.observe(leftElement);
-    observer.observe(rightElement);
-
-    setIsLeftCompact(leftElement.clientWidth < 300);
-    setIsRightCompact(rightElement.clientWidth < 300);
-
-    return () => observer.disconnect();
-  }, []);
+  };
 
   return (
     <Section
-      className={cn("flex flex-col p-4 gap-4", className)}
+      className={cn("flex flex-col gap-4", className)}
       aria-label="Filtres"
     >
-      <div className="flex flex-nowrap justify-between">
-        <div ref={leftColumnRef} className="flex min-w-0 flex-col w-[49%]">
-          {selectFields.length > 0 ? (
-            <div className="flex flex-col gap-2">
-              {selectFields.map((field) => {
-                const currentValue = filter.filterState[field.key];
-                const id = `generic-filter-${field.key}`;
-                const options = filter.selectOptions[field.key] ?? [];
-                const normalizedValue =
-                  typeof currentValue === "string" && currentValue
-                    ? currentValue
-                    : "__all__";
+      <SubSection
+        className="flex flex-nowrap justify-between gap-4"
+        aria-label="Filtres de sélection"
+      >
+        <AppSelect
+          options={categories.categoriesForSelect}
+          onValueChange={(value) => updateValue("category", value)}
+          placeholder="Choisir une categorie ..."
+          value={
+            selected.category === allOptionValue ? undefined : selected.category
+          }
+        />
 
-                return (
-                  <div
-                    key={field.key}
-                    className={cn(
-                      isLeftCompact
-                        ? "w-full min-w-0"
-                        : "min-w-[100px] max-w-[60%] shrink-0",
-                      field.className,
-                    )}
-                  >
-                    <Select
-                      value={normalizedValue}
-                      onValueChange={(value) =>
-                        updateValue(
-                          field.key,
-                          value === "__all__" ? null : value,
-                        )
-                      }
-                      disabled={field.disabled}
-                    >
-                      <SelectTrigger
-                        id={id}
-                        className="mt-2 bg-input-bg text-input-text border border-input-border"
-                      >
-                        <SelectValue placeholder={field.allLabel ?? "Tous"} />
-                      </SelectTrigger>
-                      <SelectContent className="bg-input-bg text-input-text">
-                        <SelectItem
-                          value="__all__"
-                          className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-input-text"
-                        >
-                          {field.allLabel ?? "Tous"}
-                        </SelectItem>
-                        {options.map((option) => (
-                          <SelectItem
-                            key={option.value}
-                            value={option.value}
-                            className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-input-text"
-                          >
-                            {option.label}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-                );
-              })}
-            </div>
-          ) : null}
-        </div>
-        <div
-          ref={rightColumnRef}
-          className="flex min-w-0 flex-col w-[49%] gap-4"
-        >
-          {autocompleteFields.length > 0 &&
-            autocompleteFields.map((field) => {
-              const currentValue = filter.filterState[field.key];
-              const id = `generic-filter-${field.key}`;
-              const options = filter.autocompleteOptions[field.key] ?? [];
-              const datalistId = datalistIdByKey[field.key];
+        <AppSelect
+          options={types.typesForSelect(selected.category)}
+          onValueChange={(value) => updateValue("type", value)}
+          placeholder="Choisir un type ..."
+          value={selected.type === allOptionValue ? undefined : selected.type}
+        />
 
-              return (
-                <div
-                  key={field.key}
-                  className={cn(
-                    isRightCompact
-                      ? "w-full min-w-0"
-                      : "min-w-[100px] max-w-[80%]",
-                    field.className,
-                  )}
-                >
-                  {showAutocompleteInput ? (
-                    <>
-                      <Input
-                        id={id}
-                        list={datalistId}
-                        value={
-                          typeof currentValue === "string" ? currentValue : ""
-                        }
-                        placeholder={field.placeholder ?? "Rechercher..."}
-                        onChange={(event) =>
-                          updateValue(field.key, event.target.value)
-                        }
-                        disabled={field.disabled}
-                        className="mt-2 h-9"
-                      />
-                      <datalist id={datalistId}>
-                        {options.map((option) => (
-                          <option key={option} value={option} />
-                        ))}
-                      </datalist>
-                    </>
-                  ) : (
-                    <Select
-                      value={
-                        typeof currentValue === "string" && currentValue
-                          ? currentValue
-                          : "__all__"
-                      }
-                      onValueChange={(value) =>
-                        updateValue(field.key, value === "__all__" ? "" : value)
-                      }
-                      disabled={field.disabled}
-                    >
-                      <SelectTrigger id={id} className="mt-2">
-                        <SelectValue
-                          placeholder={field.noOptionsLabel ?? "Tous"}
-                        />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="__all__">Tous</SelectItem>
-                        {options.map((option) => (
-                          <SelectItem key={option} value={option}>
-                            {option}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  )}
-                </div>
-              );
-            })}
-          <div className="flex flex-wrap items-center gap-6">
-            {booleanFields.map((field) => {
-              const currentValue = filter.filterState[field.key];
-              const id = `generic-filter-${field.key}`;
-              const isChecked = currentValue === true;
-
-              return (
-                <label
-                  key={field.key}
-                  className={cn(
-                    "inline-flex cursor-pointer items-center gap-2 text-sm text-foreground",
-                    field.className,
-                  )}
-                >
-                  <Checkbox
-                    id={id}
-                    checked={isChecked}
-                    onCheckedChange={(checked) =>
-                      updateValue(field.key, checked === true)
-                    }
-                    disabled={field.disabled}
-                  />
-                  {field.label}
-                </label>
-              );
-            })}
-          </div>
-        </div>
-      </div>
+        <AppSelect
+          options={items.itemsForSelect({
+            typeId: selected.type,
+            pattern: selected.pattern,
+          })}
+          onValueChange={(value) => updateValue("item", value)}
+          placeholder="Choisir un item"
+          value={selected.item === allOptionValue ? undefined : selected.item}
+          hasAutocomplete
+        />
+      </SubSection>
       <div className="flex flex-end">
         <Button
           type="button"
           variant="primary"
           size="sm"
           className="ml-auto w-[100px]"
-          onClick={filter.resetFilters}
+          onClick={() => setSelected(filterDefaultValues)}
         >
           Reset
         </Button>

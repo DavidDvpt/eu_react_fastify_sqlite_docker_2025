@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListProps } from "@/types";
+import type { GenericListProps } from "@/shared/types";
 import { GenericListBody } from "./GenericListBody";
 import { GenericListFooter } from "./GenericListFooter";
 import { GenericListHeader } from "./GenericListHeader";

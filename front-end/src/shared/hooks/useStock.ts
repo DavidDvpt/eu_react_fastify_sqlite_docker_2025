@@ -18,6 +18,10 @@ function useStock() {
   return {
     ...query,
     invalidateStock,
+    getItemStock: (itemId: string) => {
+      const stock = query.data?.find((s) => s.itemId === itemId);
+      return stock ?? 0;
+    },
   };
 }
 

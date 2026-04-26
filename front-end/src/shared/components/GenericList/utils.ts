@@ -3,7 +3,7 @@ import type {
   GenericListColumn,
   GenericListRowClassName,
   GenericListViewMode,
-} from "@/types";
+} from "@/shared/types";
 import type { ReactNode } from "react";
 
 function buildGridTemplateColumns<T>(columns: GenericListColumn<T>[]): string {
@@ -28,7 +28,10 @@ function toDisplayValue(value: unknown): ReactNode {
   return value as ReactNode;
 }
 
-function resolveCellContent<T>(column: GenericListColumn<T>, row: T): ReactNode {
+function resolveCellContent<T>(
+  column: GenericListColumn<T>,
+  row: T,
+): ReactNode {
   if (column.render) return column.render(row);
   if (column.accessor) return toDisplayValue(row[column.accessor]);
   return toDisplayValue(row[column.key as keyof T]);

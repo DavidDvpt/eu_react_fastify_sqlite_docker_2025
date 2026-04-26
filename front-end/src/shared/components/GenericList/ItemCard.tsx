@@ -1,6 +1,6 @@
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { Item } from "@/types";
+import type { Item } from "@/shared/types";
 
 interface ItemCardProps {
   item: Item;

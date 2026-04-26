@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import type { TradeActionsProps } from "@/types";
+import type { TradeActionsProps } from "@/shared/types";
 
 function TradeActions({
   onBuy,

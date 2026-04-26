@@ -1,7 +1,10 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { GenericFilter } from "../GenericFilter";
-import type { GenericFilterModel, UseGenericObjectFilterResult } from "@/types";
+import type {
+  GenericFilterModel,
+  UseGenericObjectFilterResult,
+} from "@/shared/types";
 
 type ItemLike = {
   id: string;

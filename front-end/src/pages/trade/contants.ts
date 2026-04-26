@@ -1,4 +1,4 @@
-import type { GenericFilterModel, TradeFilterRow } from "@/types";
+import type { GenericFilterModel, TradeFilterRow } from "@/shared/types";
 
 const TRADE_ITEM_FILTER_MODEL: GenericFilterModel<TradeFilterRow> = {
   fields: [

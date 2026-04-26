@@ -2,7 +2,12 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseStock, parseStockDetails } from "@/lib/parsers";
 
-import type { Stock, StockApi, StockDetails, StockDetailsApi } from "@/types";
+import type {
+  Stock,
+  StockApi,
+  StockDetails,
+  StockDetailsApi,
+} from "@/shared/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const STOCK_ROUTE = `${API_URL}/stock`;

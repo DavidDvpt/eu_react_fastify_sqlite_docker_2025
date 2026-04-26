@@ -5,7 +5,7 @@ import type {
   Item,
   ManageFilterRow,
   Type,
-} from "@/types";
+} from "@/shared/types";
 import {
   createGenericFilterModel,
   enabledFields,

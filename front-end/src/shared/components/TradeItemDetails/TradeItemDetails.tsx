@@ -3,7 +3,7 @@ import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools";
 import { TradeActions } from "@/shared/components";
 
-import type { TradeItemDetailsProps } from "@/types";
+import type { TradeItemDetailsProps } from "@/shared/types";
 
 function TradeItemDetails({
   itemName,

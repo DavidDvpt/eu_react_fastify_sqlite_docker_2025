@@ -10,7 +10,7 @@ import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools";
 import { purchaseTrade } from "../services/tradeApi";
 
-import type { TradeBuyFormValues, TradeFilterRow } from "@/types";
+import type { TradeBuyFormValues, TradeFilterRow } from "@/shared/types";
 
 const buyFormSchema = z.object({
   quantity: z.coerce

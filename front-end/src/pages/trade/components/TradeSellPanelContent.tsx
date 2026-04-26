@@ -10,7 +10,7 @@ import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools";
 import { sellTrade } from "../services/tradeApi";
 
-import type { TradeFilterRow, TradeSellFormValues } from "@/types";
+import type { TradeFilterRow, TradeSellFormValues } from "@/shared/types";
 
 type TradeSellPanelContentProps = {
   item: TradeFilterRow;
@@ -73,10 +73,7 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
     () => quantityValue * item.unitPrice,
     [item.unitPrice, quantityValue],
   );
-  const minimumTtc = useMemo(
-    () => calculateMinimumTtc(costTt),
-    [costTt],
-  );
+  const minimumTtc = useMemo(() => calculateMinimumTtc(costTt), [costTt]);
 
   const ttcValue = Number.isFinite(ttc) ? ttc : 0;
   const feeValue = useMemo(
@@ -87,7 +84,10 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
   useEffect(() => {
     const currentTtc = form.getValues("ttc");
     if (!Number.isFinite(currentTtc) || currentTtc < minimumTtc) {
-      form.setValue("ttc", minimumTtc, { shouldValidate: true, shouldDirty: true });
+      form.setValue("ttc", minimumTtc, {
+        shouldValidate: true,
+        shouldDirty: true,
+      });
     }
   }, [form, minimumTtc]);
 
@@ -100,7 +100,10 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
     <>
       <div className="flex items-start justify-between gap-3">
         <div className="w-[30%] min-w-0 space-y-1">
-          <label className="text-sm text-input-label" htmlFor="trade-sell-quantity">
+          <label
+            className="text-sm text-input-label"
+            htmlFor="trade-sell-quantity"
+          >
             Quantite
           </label>
           <Input
@@ -161,13 +164,17 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
       </div>
 
       <div className="space-y-1 text-sm text-card-inner-title">
-        <p className="m-0">Cout TT : {FormatTools.pedFormat().format(costTt)} PED</p>
         <p className="m-0">
-          Benefice brut (TTC - TT) : {FormatTools.pedFormat().format(grossProfit)} PED (
+          Cout TT : {FormatTools.pedFormat().format(costTt)} PED
+        </p>
+        <p className="m-0">
+          Benefice brut (TTC - TT) :{" "}
+          {FormatTools.pedFormat().format(grossProfit)} PED (
           {grossPercent.toFixed(2)}%)
         </p>
         <p className={`m-0 ${netProfit < 0 ? "font-bold text-danger" : ""}`}>
-          Benefice net (TTC - fee - TT) : {FormatTools.pedFormat().format(netProfit)} PED (
+          Benefice net (TTC - fee - TT) :{" "}
+          {FormatTools.pedFormat().format(netProfit)} PED (
           {netPercent.toFixed(2)}%)
         </p>
       </div>
@@ -185,7 +192,10 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
           .number()
           .int()
           .positive("La quantite doit etre superieure a 0.")
-          .max(item.quantity, `La quantite doit etre inferieure ou egale a ${item.quantity}.`),
+          .max(
+            item.quantity,
+            `La quantite doit etre inferieure ou egale a ${item.quantity}.`,
+          ),
         ttc: z.coerce.number().positive("Le TTC doit etre superieur a 0."),
       }),
     [item.quantity],
@@ -217,7 +227,9 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
   return (
     <Section className="space-y-4">
       <header>
-        <h3 className="m-0 text-lg font-semibold text-card-inner-title">Vente</h3>
+        <h3 className="m-0 text-lg font-semibold text-card-inner-title">
+          Vente
+        </h3>
       </header>
 
       <GenericForm
@@ -244,7 +256,11 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
           >
             Retour
           </Button>
-          <Button type="submit" variant="primary" disabled={sellMutation.isPending}>
+          <Button
+            type="submit"
+            variant="primary"
+            disabled={sellMutation.isPending}
+          >
             Vendre
           </Button>
         </div>

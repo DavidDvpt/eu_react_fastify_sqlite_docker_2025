@@ -1,6 +1,6 @@
-import type { StockDetails } from "@/types";
+import type { StockDetails } from "@/shared/types";
 import { Container } from "@/shared/components/Containers";
-import type { ContainerType } from "@/types/containerTypes";
+import type { ContainerType } from "@/shared/types/containerTypes";
 import { TradeItemDetails } from "@/shared/components";
 import { useNavigate } from "react-router-dom";
 

@@ -1,4 +1,4 @@
-import type { Type, TypeApi, TypeApis, Types } from "@/types";
+import type { Type, TypeApi, TypeApis, Types } from "@/shared/types";
 
 function parseType(apiType: TypeApi): Type {
   return {

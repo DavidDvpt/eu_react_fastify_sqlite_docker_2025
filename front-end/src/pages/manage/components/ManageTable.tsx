@@ -14,7 +14,7 @@ import {
   typeColumns,
 } from "../../../shared/components/GenericList/columnConfig";
 import { useNavigate } from "react-router-dom";
-import type { Category, ManageTableProps, Type } from "@/types";
+import type { Category, ManageTableProps, Type } from "@/shared/types";
 import { ManageItemsList } from "./ManageItemsList";
 
 function ManageTable({

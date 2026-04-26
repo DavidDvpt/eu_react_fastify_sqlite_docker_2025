@@ -2,7 +2,7 @@ import StockMessages from "./StockMessages";
 import DetailsItem from "./DetailsItem";
 import StockLotInList from "./StockLotList";
 import { Panel } from "@/shared/components/Containers";
-import type { StockDetailsPanelProps } from "@/types";
+import type { StockDetailsPanelProps } from "@/shared/types";
 
 function StockDetailsPanel({
   details,

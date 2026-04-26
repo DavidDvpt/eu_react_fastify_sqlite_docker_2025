@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 import { VerticalNav } from "@/shared/components";
 import { useLocation } from "react-router-dom";
 import { MANAGE_NAV_LINKS } from "@/pages/manage";
-import type { NavbarButtonType } from "@/types";
+import type { NavbarButtonType } from "@/shared/types";
 
 function LeftNavContentLayout({ children }: PropsWithChildren) {
   const { pathname } = useLocation();

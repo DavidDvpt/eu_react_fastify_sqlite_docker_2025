@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
 
-import type { ContainerProps } from "@/types";
+import type { ContainerProps } from "@/shared/types";
 
 function Container({ children, className, type }: ContainerProps) {
   const styleBase = "rounded-md p-2";

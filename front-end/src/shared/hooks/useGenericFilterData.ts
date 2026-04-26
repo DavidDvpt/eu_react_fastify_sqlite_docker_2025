@@ -1,4 +1,4 @@
-import type { GenericFilterAvailability } from "@/types";
+import type { GenericFilterAvailability } from "@/shared/types";
 import useCategories from "./useCategories";
 import useItems from "./useItems";
 import useTypes from "./useTypes";

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListFooterProps } from "@/types";
+import type { GenericListFooterProps } from "@/shared/types";
 
 function GenericListFooter({
   footer,

@@ -20,9 +20,29 @@ function useItems({ enabled = true }: UseItemsParams = {}) {
     [queryClient],
   );
 
+  const itemsForSelect = (filter: { typeId?: string; pattern?: string }) => {
+    const list = query.data
+      ? query.data.filter((item) => {
+          const matchesType = filter.typeId
+            ? item.itemTypeId === filter.typeId
+            : false;
+          const matchesPattern = filter.pattern
+            ? item.name.toLowerCase().includes(filter.pattern.toLowerCase())
+            : false;
+          return matchesType || matchesPattern;
+        })
+      : [];
+
+    return list.map((item) => ({
+      id: item.id,
+      label: item.name,
+    }));
+  };
+
   return {
     ...query,
     invalidateItems,
+    itemsForSelect,
   };
 }
 

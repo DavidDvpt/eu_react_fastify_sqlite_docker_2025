@@ -5,7 +5,7 @@ import type {
   GenericFilterStateValue,
   UseGenericObjectFilterParams,
   UseGenericObjectFilterResult,
-} from "@/types";
+} from "@/shared/types";
 import {
   areFilterStatesEqual,
   buildAutocompleteOptions,

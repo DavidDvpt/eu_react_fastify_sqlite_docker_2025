@@ -4,7 +4,7 @@ import type {
   GenericFilterSelectOption,
   GenericFilterState,
   GenericFilterStateValue,
-} from "@/types";
+} from "@/shared/types";
 
 function toQueryString(value: unknown): string | null {
   if (value === null || value === undefined) return null;

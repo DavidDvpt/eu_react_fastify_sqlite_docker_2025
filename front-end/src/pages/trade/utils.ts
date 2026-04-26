@@ -1,4 +1,4 @@
-import type { Item, StockRow, Type } from "@/types";
+import type { Item, StockRow, Type } from "@/shared/types";
 
 function filterRowsFunc(
   rows: StockRow[],

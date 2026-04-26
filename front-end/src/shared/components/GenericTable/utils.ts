@@ -1,4 +1,4 @@
-import type { GenericTableColumn } from "@/types";
+import type { GenericTableColumn } from "@/shared/types";
 import type { ReactNode } from "react";
 
 const DEFAULT_HEADER_CLASS =

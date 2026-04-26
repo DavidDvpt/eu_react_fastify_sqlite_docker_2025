@@ -4,7 +4,7 @@ import { ManageTable } from "./components/ManageTable";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/shared/components/Containers";
 
-import type { ManageTab } from "@/types";
+import type { ManageTab } from "@/shared/types";
 import { useManageGenericFilter } from "@/shared/hooks";
 
 function ManagePage() {

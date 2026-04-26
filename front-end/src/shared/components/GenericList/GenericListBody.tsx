@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListBodyProps } from "@/types";
+import type { GenericListBodyProps } from "@/shared/types";
 import {
   resolveAlignClass,
   resolveCellContent,

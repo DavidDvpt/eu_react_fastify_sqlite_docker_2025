@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericTableProps } from "@/types";
+import type { GenericTableProps } from "@/shared/types";
 import {
   DEFAULT_CELL_CLASS,
   DEFAULT_FOOTER_CLASS,

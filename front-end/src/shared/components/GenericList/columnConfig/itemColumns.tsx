@@ -1,4 +1,4 @@
-import type { GenericListColumn, Item } from "@/types";
+import type { GenericListColumn, Item } from "@/shared/types";
 import {
   formatToFiveDecimals,
   getItemImageUrl,

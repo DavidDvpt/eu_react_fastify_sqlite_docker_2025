@@ -9,11 +9,8 @@ import type {
   StockFilterRow,
   StockPanelProps,
   StockRow,
-} from "@/types";
-import {
-  useGenericFilter,
-  useGenericFilterData,
-} from "@/shared/hooks";
+} from "@/shared/types";
+import { useGenericFilter, useGenericFilterData } from "@/shared/hooks";
 import { STOCK_ROUTE } from "@/shared/services";
 
 const STOCK_FILTER_MODEL: GenericFilterModel<StockFilterRow> = {

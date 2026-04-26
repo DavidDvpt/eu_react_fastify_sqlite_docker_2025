@@ -1,4 +1,9 @@
-import type { Category, CategoryApi, Categories, CategoryApis } from "@/types";
+import type {
+  Category,
+  CategoryApi,
+  Categories,
+  CategoryApis,
+} from "@/shared/types";
 
 async function parseCategory(data: CategoryApi): Promise<Category> {
   try {

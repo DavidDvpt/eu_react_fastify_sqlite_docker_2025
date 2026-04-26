@@ -1,4 +1,4 @@
-import type { GenericListColumn, StockRow } from "@/types";
+import type { GenericListColumn, StockRow } from "@/shared/types";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 

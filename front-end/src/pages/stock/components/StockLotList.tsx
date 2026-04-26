@@ -1,6 +1,6 @@
-import type { StockLotIn } from "@/types";
+import type { StockLotIn } from "@/shared/types";
 import { Section } from "@/shared/components/Containers";
-import type { ContainerType } from "@/types/containerTypes";
+import type { ContainerType } from "@/shared/types/containerTypes";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 interface StockLotInListProps {

@@ -1,4 +1,4 @@
-import type { GenericListColumn, Type } from "@/types";
+import type { GenericListColumn, Type } from "@/shared/types";
 
 const typeColumns: GenericListColumn<Type>[] = [
   {

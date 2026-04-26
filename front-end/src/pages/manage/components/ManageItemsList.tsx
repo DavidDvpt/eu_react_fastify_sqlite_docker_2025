@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Switch } from "@/components/ui/switch";
 import { GenericList } from "@/shared/components";
-import type { GenericListColumn, Item } from "@/types";
+import type { GenericListColumn, Item } from "@/shared/types";
 import ItemCard from "@/shared/components/GenericList/ItemCard";
 
 type ManageItemsListProps = {

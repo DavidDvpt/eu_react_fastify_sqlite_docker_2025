@@ -2,7 +2,7 @@ import type {
   FieldType,
   GenericFilterModel,
   GenericFilterModelItem,
-} from "@/types";
+} from "@/shared/types";
 
 function enabledFields(tab: FieldType) {
   let values: FieldType[] = [];

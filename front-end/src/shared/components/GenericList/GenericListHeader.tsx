@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListHeaderProps } from "@/types";
+import type { GenericListHeaderProps } from "@/shared/types";
 import { resolveAlignClass } from "./utils";
 
 function GenericListHeader<T>({

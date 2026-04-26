@@ -1,4 +1,4 @@
-import type { ManageTab, NavbarButtonType } from "@/types";
+import type { ManageTab, NavbarButtonType } from "@/shared/types";
 
 const MANAGE_NAV_LINKS: NavbarButtonType[] = [
   {

@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import { NavButton } from "@/components/Navbar";
-import type { VerticalNavProps } from "@/types";
+import type { VerticalNavProps } from "@/shared/types";
 
 function VerticalNav({ items }: VerticalNavProps) {
   const { pathname } = useLocation();
