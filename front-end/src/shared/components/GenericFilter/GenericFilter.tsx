@@ -1,53 +1,35 @@
-import { useState } from "react";
-
 import { Button } from "@/components/ui/button";
 
 import { Section, SubSection } from "../Containers";
-import { useCategories, useItems, useTypes } from "@/shared/hooks";
 import AppSelect from "../form/Select/AppSelect";
 
 import { cn } from "@/lib/utils";
-import type { Item } from "@/shared/types";
+import useGenericFilterParams from "@/shared/hooks/useGenericFilterParams";
+import { useLocation, useNavigate } from "react-router-dom";
+import type { FilterKeys, GenericFilterProps } from "@/shared/types";
+import { useGenericFilterData } from "@/shared/hooks/useGenericFilterData";
 
-interface GenericFilterProps {
-  hasAutocomplete?: boolean;
-  className?: string;
-  selectedItem?: Item;
-  onSelectedItem?: (item: string) => void;
-}
+function GenericFilter({ className }: GenericFilterProps) {
+  const { params, constructQuery } = useGenericFilterParams();
+  const { categoriesForSelect, typesForSelect, itemsForSelect } =
+    useGenericFilterData(params);
+  const location = useLocation();
+  const navigate = useNavigate();
 
-type SelectedFilterValues = {
-  category: string;
-  type: string;
-  item: string;
-  pattern?: string;
-};
+  const updateValue = (key: FilterKeys, value: string | undefined) => {
+    let q = "";
 
-const allOptionValue = "__all__";
-const filterDefaultValues: SelectedFilterValues = {
-  category: allOptionValue,
-  type: allOptionValue,
-  item: allOptionValue,
-  pattern: "",
-};
-
-function GenericFilter({ className, onSelectedItem }: GenericFilterProps) {
-  const [selected, setSelected] =
-    useState<SelectedFilterValues>(filterDefaultValues);
-
-  const categories = useCategories();
-  const types = useTypes();
-  const items = useItems();
-
-  const updateValue = (key: string, value: string | null) => {
-    setSelected((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-
-    if (key === "item" && onSelectedItem && value) {
-      onSelectedItem(value);
+    // On vérifie si ce n'est pas "reset" pour appeler constructQuery
+    if (key !== "reset") {
+      // Note : assurez-vous que constructQuery attend bien (key, value)
+      // Dans votre code original, il semblait prendre ces args.
+      q = constructQuery(key, value);
     }
+    console.log(key, q);
+    navigate({
+      pathname: location.pathname,
+      search: q,
+    });
   };
 
   return (
@@ -60,29 +42,24 @@ function GenericFilter({ className, onSelectedItem }: GenericFilterProps) {
         aria-label="Filtres de sélection"
       >
         <AppSelect
-          options={categories.categoriesForSelect}
+          options={categoriesForSelect}
           onValueChange={(value) => updateValue("category", value)}
           placeholder="Choisir une categorie ..."
-          value={
-            selected.category === allOptionValue ? undefined : selected.category
-          }
+          value={params.category}
         />
 
         <AppSelect
-          options={types.typesForSelect(selected.category)}
+          options={typesForSelect}
           onValueChange={(value) => updateValue("type", value)}
           placeholder="Choisir un type ..."
-          value={selected.type === allOptionValue ? undefined : selected.type}
+          value={params.type}
         />
 
         <AppSelect
-          options={items.itemsForSelect({
-            typeId: selected.type,
-            pattern: selected.pattern,
-          })}
+          options={itemsForSelect}
           onValueChange={(value) => updateValue("item", value)}
           placeholder="Choisir un item"
-          value={selected.item === allOptionValue ? undefined : selected.item}
+          value={params.item}
           hasAutocomplete
         />
       </SubSection>
@@ -92,7 +69,7 @@ function GenericFilter({ className, onSelectedItem }: GenericFilterProps) {
           variant="primary"
           size="sm"
           className="ml-auto w-[100px]"
-          onClick={() => setSelected(filterDefaultValues)}
+          onClick={() => updateValue("reset", undefined)}
         >
           Reset
         </Button>

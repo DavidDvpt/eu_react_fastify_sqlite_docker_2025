@@ -1,16 +1,21 @@
+import type { Item } from "./itemTypes";
+
 type GenericFilterStateValue = string | boolean | null;
 type GenericFilterState = Record<string, GenericFilterStateValue>;
 
-type GenericFilterSelectOption = {
+export type GenericFilterSelectOption = {
   value: string;
   label: string;
 };
 
-type FieldType = "category" | "type" | "item" | "search" | "limited";
-type GenericFilterSelectOptions = Record<string, GenericFilterSelectOption[]>;
+export type FieldType = "category" | "type" | "item" | "search" | "limited";
+export type GenericFilterSelectOptions = Record<
+  string,
+  GenericFilterSelectOption[]
+>;
 type GenericFilterAutocompleteOptions = Record<string, string[]>;
 
-type GenericFilterBaseField<T> = {
+export type GenericFilterBaseField<T> = {
   key: string;
   label: string;
   hidden?: boolean;
@@ -20,7 +25,7 @@ type GenericFilterBaseField<T> = {
   getValue: (item: T) => string | boolean | null | undefined;
 };
 
-type GenericFilterModelItem = {
+export type GenericFilterModelItem = {
   categoryId?: string | null;
   categoryName?: string | null;
   itemTypeId?: string | null;
@@ -30,54 +35,44 @@ type GenericFilterModelItem = {
   isLimited?: boolean;
 };
 
-type GenericFilterSelectField<T> = GenericFilterBaseField<T> & {
+export type GenericFilterSelectField<T> = GenericFilterBaseField<T> & {
   kind: "select";
   allLabel?: string;
   getLabel?: (item: T) => string | null | undefined;
 };
 
-type GenericFilterBooleanField<T> = GenericFilterBaseField<T> & {
+export type GenericFilterBooleanField<T> = GenericFilterBaseField<T> & {
   kind: "boolean";
   allLabel?: string;
   trueLabel?: string;
   falseLabel?: string;
 };
 
-type GenericFilterAutocompleteField<T> = GenericFilterBaseField<T> & {
+export type GenericFilterAutocompleteField<T> = GenericFilterBaseField<T> & {
   kind: "autocomplete";
   placeholder?: string;
   noOptionsLabel?: string;
   maxSuggestions?: number;
 };
 
-type GenericFilterField<T> =
+export type GenericFilterField<T> =
   | GenericFilterSelectField<T>
   | GenericFilterBooleanField<T>
   | GenericFilterAutocompleteField<T>;
 
-type GenericFilterModel<T> = {
+export type GenericFilterModel<T> = {
   fields: GenericFilterField<T>[];
 };
 
-type GenericFilterProps<T> = {
-  model: GenericFilterModel<T>;
-  filter: UseGenericObjectFilterResult<T>;
-  allowedFields?: string[];
-  hasAutocomplete?: boolean;
-  hasInput?: boolean;
-  hasIsLimited?: boolean;
-  className?: string;
-};
+export type GenericFilterMode = "filter" | "choice";
 
-type GenericFilterMode = "filter" | "choice";
-
-type UseGenericObjectFilterParams<T> = {
+export type UseGenericObjectFilterParams<T> = {
   items: T[];
   model: GenericFilterModel<T>;
   initialState?: GenericFilterState;
 };
 
-type UseGenericObjectFilterResult<T> = {
+export type UseGenericObjectFilterResult<T> = {
   filteredItems: T[];
   filterState: GenericFilterState;
   setFilterValue: (key: string, value: GenericFilterStateValue) => void;
@@ -86,13 +81,13 @@ type UseGenericObjectFilterResult<T> = {
   autocompleteOptions: GenericFilterAutocompleteOptions;
 };
 
-type GenericFilterAvailability = {
+export type GenericFilterAvailability = {
   isPending: boolean;
   isError: boolean;
   count: number;
 };
 
-type UseGenericFilterParams<T> = {
+export type UseGenericFilterParams<T> = {
   items: T[];
   model: GenericFilterModel<T>;
   allowedFields: string[];
@@ -102,7 +97,7 @@ type UseGenericFilterParams<T> = {
   availability?: GenericFilterAvailability[];
 };
 
-type UseGenericFilterResult<T> = {
+export type UseGenericFilterResult<T> = {
   filter: UseGenericObjectFilterResult<T>;
   filteredItems: T[];
   selectedItemId: string | null;
@@ -110,19 +105,17 @@ type UseGenericFilterResult<T> = {
   hasIsLimited: boolean;
 };
 
-export type {
-  GenericFilterProps,
-  GenericFilterMode,
-  GenericFilterField,
-  GenericFilterModel,
-  GenericFilterSelectOption,
-  GenericFilterState,
-  GenericFilterStateValue,
-  UseGenericObjectFilterParams,
-  UseGenericObjectFilterResult,
-  GenericFilterAvailability,
-  UseGenericFilterParams,
-  UseGenericFilterResult,
-  FieldType,
-  GenericFilterModelItem,
+export type SelectedFilterValues = {
+  category: string;
+  type: string;
+  item: string;
 };
+
+export interface GenericFilterProps {
+  className?: string;
+  selectedItem?: Item | null;
+  onSelectedItem?: (item: string) => void;
+  onSelectedType?: (type: string) => void;
+}
+
+export type FilterKeys = keyof SelectedFilterValues | "reset";

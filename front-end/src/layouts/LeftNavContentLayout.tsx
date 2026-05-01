@@ -5,7 +5,10 @@ import { MANAGE_NAV_LINKS } from "@/pages/manage";
 import type { NavbarButtonType } from "@/shared/types";
 
 function LeftNavContentLayout({ children }: PropsWithChildren) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+
+  // Sécurisez le résultat de useLocation
+  const pathname = location?.pathname || "/";
 
   let links: NavbarButtonType[] = [];
 

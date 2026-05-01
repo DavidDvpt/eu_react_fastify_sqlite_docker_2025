@@ -13,6 +13,12 @@ class ArrayTools {
       return acc;
     }, {});
   }
+  static getById<T extends { id: string | number }>(
+    id: string | number,
+    array: T[] | undefined = [],
+  ): T | undefined {
+    return array.find((item) => item.id === id);
+  }
 }
 
 export default ArrayTools;
