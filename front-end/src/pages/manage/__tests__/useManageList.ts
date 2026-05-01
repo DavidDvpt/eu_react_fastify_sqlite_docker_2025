@@ -1,7 +1,7 @@
 import { useMemo } from "react";
-import useCategories from "./useCategories";
-import useItems from "./useItems";
-import useTypes from "./useTypes";
+import useCategories from "../../../shared/hooks/useCategories";
+import useItems from "../../../shared/hooks/useItems";
+import useTypes from "../../../shared/hooks/useTypes";
 
 import {
   CATEGORIES_ROUTE,
@@ -12,12 +12,16 @@ import {
   TYPES_ROUTE,
 } from "@/pages/manage";
 
-import type { GenericListColumn, ManageListRow, ManageTab } from "../types";
+import type {
+  GenericListColumn,
+  ManageListRow,
+  ManageTab,
+} from "../../../shared/types";
 import {
   categoryColumns,
   itemColumns,
   typeColumns,
-} from "../components/GenericList/columnConfig";
+} from "../../../shared/components/GenericList/columnConfig";
 
 interface UseManageListData {
   activeTab: ManageTab;
