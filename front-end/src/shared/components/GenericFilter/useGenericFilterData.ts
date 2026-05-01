@@ -10,17 +10,17 @@ import { selectOptionsHelper } from "@/shared/helpers/select.helper";
  * Il ne gère plus l'URL, seulement le filtrage des listes.
  */
 export const useGenericFilterData = ({
-  category = allOptionValue,
-  type = allOptionValue,
+  params: { category = allOptionValue, type = allOptionValue },
+  prefillSelect = true,
 }: {
-  category?: string;
-  type?: string;
+  params: { category?: string; type?: string };
+  prefillSelect?: boolean;
 }) => {
   const {
     categoriesData,
     typesData: { filteredTypes },
     itemsData: { filteredItems },
-  } = useDataBase({ typeId: type, categoryId: category });
+  } = useDataBase({ typeId: type, categoryId: category, prefillSelect });
 
   // --- 3. Formatters ---
   const categoriesForSelect = useMemo(() => {

@@ -19,6 +19,7 @@ async function getTypes(): Promise<Types> {
   const response = await axiosCrud(axiosInstance()).get<TypeApis>(
     `${TYPES_ROUTE}?include=parent`,
   );
+
   return parseTypes(response);
 }
 

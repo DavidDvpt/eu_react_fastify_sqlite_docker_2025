@@ -1,4 +1,4 @@
-type TypeApi = {
+export type TypeApi = {
   id: string;
   name: string;
   category_id: string;
@@ -14,20 +14,23 @@ type TypeApi = {
   date_updated?: string | null;
 };
 
-type Type = {
+export type Type = {
   id: string;
   name: string;
   categoryId: string;
-  categoryName?: string;
+  categoryName: string;
   isActive: boolean;
-  supportsLimited?: boolean;
-  isStackable?: boolean;
-  userId?: string | null;
+  supportsLimited: boolean;
+  isStackable: boolean;
+  userId: string;
   createdAt: string;
   updatedAt?: string | null;
 };
 
-type TypeApis = TypeApi[];
-type Types = Type[];
+export interface TypeEnriched extends Type {
+  categoryName: string;
+}
 
-export type { Type, TypeApi, TypeApis, Types };
+export type TypeApis = TypeApi[];
+export type Types = Type[];
+export type TypesEnriched = TypeEnriched[];

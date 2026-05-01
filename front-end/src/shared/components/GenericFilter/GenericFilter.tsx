@@ -13,7 +13,7 @@ import { useGenericFilterData } from "./useGenericFilterData";
 function GenericFilter({ className, context }: GenericFilterProps) {
   const { params, constructQuery } = useGenericFilterParams();
   const { categoriesForSelect, typesForSelect, itemsForSelect } =
-    useGenericFilterData(params);
+    useGenericFilterData({ params });
 
   const displayedFields = useGenericFilterContext({ context });
   const location = useLocation();
@@ -22,10 +22,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
   const updateValue = (key: FilterKeys, value: string | undefined) => {
     let q = "";
 
-    // On vérifie si ce n'est pas "reset" pour appeler constructQuery
     if (key !== "reset") {
-      // Note : assurez-vous que constructQuery attend bien (key, value)
-      // Dans votre code original, il semblait prendre ces args.
       q = constructQuery(key, value);
     }
 

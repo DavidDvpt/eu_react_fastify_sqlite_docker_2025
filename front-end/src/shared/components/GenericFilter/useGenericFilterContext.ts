@@ -4,7 +4,7 @@ const contexts: Record<GenericFilterContext, DisplayedFields> = {
   manageCategory: { category: false, type: false, item: false },
   manageType: { category: true, type: false, item: false },
   manageItem: { category: true, type: true, item: false },
-  inventory: { category: false, type: false, item: false },
+  inventory: { category: true, type: true, item: false },
   trade: { category: true, type: true, item: true },
 };
 

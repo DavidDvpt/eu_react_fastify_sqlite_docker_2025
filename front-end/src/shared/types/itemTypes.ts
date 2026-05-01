@@ -1,4 +1,4 @@
-type ItemApi = {
+export type ItemApi = {
   id: string;
   name: string;
   image_url_id: string;
@@ -16,22 +16,22 @@ type ItemApi = {
   date_updated?: string | null;
 };
 
-type Item = {
+export type Item = {
   id: string;
   name: string;
   imageUrlId: string;
   value: number;
   isLimited: boolean;
-  supportsLimited?: boolean;
   isStackable?: boolean;
-  itemTypeId: string;
-  itemTypeName?: string;
+  typeId: string;
+  categoryId: string;
+  categoryName: string;
+  typeName?: string;
   isActive: boolean;
   userId?: string | null;
   createdAt: string;
   updatedAt?: string | null;
 };
-
 export interface ItemDetailProps {
   item: (Item & { quantity: number }) | null;
   onBack?: () => void;
@@ -40,7 +40,5 @@ export interface ItemDetailProps {
   variant?: "trade" | "stock" | "manage"; // Nouvelle prop pour la variante
 }
 
-type ItemApis = ItemApi[];
-type Items = Item[];
-
-export type { Item, ItemApi, ItemApis, Items };
+export type ItemApis = ItemApi[];
+export type Items = Item[];
