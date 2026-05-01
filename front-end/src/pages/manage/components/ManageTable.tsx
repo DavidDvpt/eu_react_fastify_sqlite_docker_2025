@@ -32,35 +32,6 @@ function ManageTable({ activeTab }: ManageTableProps) {
       onRowClick={(row) => navigate(editRoute(row.id))}
     />
   );
-
-  // if (activeTab === "type") {
-  //   return (
-  //     <GenericList<Type>
-  //       columns={typeColumns}
-  //       rows={typesRows}
-  //       getRowKey={(row) => row.id}
-  //       isLoading={status?.isPending ?? false}
-  //       isError={status?.isError ?? false}
-  //       onRowClick={(row) => navigate(getTypeEditRoute(row.id))}
-  //       loadingMessage="Chargement des types..."
-  //       errorMessage={`Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`}
-  //       emptyMessage="Aucun type."
-  //     />
-  //   );
-  // }
-
-  // return (
-  //   <ManageItemsList
-  //     columns={itemColumns}
-  //     rows={itemsRows}
-  //     isLoading={status?.isPending ?? false}
-  //     isError={status?.isError ?? false}
-  //     loadingMessage="Chargement des items..."
-  //     errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}
-  //     emptyMessage="Aucun item."
-  //     onRowClick={(row) => navigate(getItemEditRoute(row.id))}
-  //   />
-  // );
 }
 
 export { ManageTable };

@@ -3,8 +3,10 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/shared/components/Containers";
 
-import type { ManageTab } from "@/shared/types";
+import type { GenericFilterContext, ManageTab } from "@/shared/types";
 import { ManageTable } from "./components/ManageTable";
+import { MANAGE_TABS } from "./managePage.utils";
+import StringTools from "@/shared/tools/stringTools";
 
 function ManagePage() {
   const { tab } = useParams();
@@ -12,19 +14,18 @@ function ManagePage() {
 
   const selectedTab = (tab as ManageTab) ?? "category";
 
-  const canCreate =
-    selectedTab === "category" ||
-    selectedTab === "type" ||
-    selectedTab === "item";
-
+  const canCreate = MANAGE_TABS.includes(selectedTab);
+  const context =
+    `manage${StringTools.capitalizeFirstLetter(selectedTab)}` as GenericFilterContext;
   return (
     <Panel className="flex h-full min-h-0 flex-col">
-      {selectedTab !== "category" && <GenericFilter />}
+      {selectedTab !== "category" && <GenericFilter context={context} />}
 
       {canCreate ? (
         <div className="flex items-center justify-end py-2">
           <Button
             variant="primary"
+            size="sm"
             onClick={() => navigate(`/manage/${selectedTab}/create`)}
           >
             Créer

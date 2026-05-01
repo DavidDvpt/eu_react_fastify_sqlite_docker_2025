@@ -4,16 +4,17 @@ import { Section, SubSection } from "../Containers";
 import AppSelect from "../form/Select/AppSelect";
 
 import { cn } from "@/lib/utils";
-import useGenericFilterParams from "@/shared/hooks/useGenericFilterParams";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { FilterKeys, GenericFilterProps } from "@/shared/types";
-import { useGenericFilterData } from "@/shared/hooks/useGenericFilterData";
-import useGenericFilterContext from "./useFilterContext";
+import useGenericFilterContext from "./useGenericFilterContext";
+import useGenericFilterParams from "./useGenericFilterParams";
+import { useGenericFilterData } from "./useGenericFilterData";
 
 function GenericFilter({ className, context }: GenericFilterProps) {
   const { params, constructQuery } = useGenericFilterParams();
   const { categoriesForSelect, typesForSelect, itemsForSelect } =
     useGenericFilterData(params);
+
   const displayedFields = useGenericFilterContext({ context });
   const location = useLocation();
   const navigate = useNavigate();
@@ -27,13 +28,13 @@ function GenericFilter({ className, context }: GenericFilterProps) {
       // Dans votre code original, il semblait prendre ces args.
       q = constructQuery(key, value);
     }
-    console.log(key, q);
+
     navigate({
       pathname: location.pathname,
       search: q,
     });
   };
-
+  console.log(context, displayedFields);
   return (
     <Section
       className={cn("flex flex-col gap-4", className)}

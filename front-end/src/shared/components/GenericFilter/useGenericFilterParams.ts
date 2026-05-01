@@ -1,9 +1,10 @@
 // @shared/hooks/useQueryParams.tsx
 
+import type { SelectedFilterValues } from "@/shared/types";
 import { useMemo } from "react";
-import type { SelectedFilterValues } from "../types";
-import { allOptionValue } from "../components/GenericFilter/genericFilter.utils";
+
 import { useLocation } from "react-router-dom";
+import { allOptionValue } from "./genericFilter.utils";
 
 type QueryParamValues = string | number | boolean | undefined;
 

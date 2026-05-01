@@ -1,10 +1,8 @@
 // @shared/hooks/useGenericFilter.ts
 
 import { useMemo } from "react";
-import useCategories from "./useCategories";
-import useTypes from "./useTypes";
-import useItems from "./useItems";
-import { allOptionValue } from "../components/GenericFilter/genericFilter.utils";
+import { allOptionValue } from "./genericFilter.utils";
+import { useCategories, useItems, useTypes } from "@/shared/hooks";
 
 /**
  * Hook de gestion des données filtrées.
