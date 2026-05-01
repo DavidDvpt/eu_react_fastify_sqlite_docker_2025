@@ -1,7 +1,6 @@
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getCategories } from "@/pages/manage/services/categoriesApi";
-import { SelectOptionHelper } from "../components/form/Select/select.utils";
 
 type UseCategoriesParams = {
   enabled?: boolean;
@@ -21,17 +20,10 @@ function useCategories({ enabled = true }: UseCategoriesParams = {}) {
     [queryClient],
   );
 
-  const categoriesForSelect =
-    query.data?.map((category) =>
-      SelectOptionHelper({
-        id: category.id,
-        label: category.name,
-      }),
-    ) ?? [];
   return {
+    categories: query.data ?? [],
     ...query,
     invalidateCategories,
-    categoriesForSelect,
   };
 }
 

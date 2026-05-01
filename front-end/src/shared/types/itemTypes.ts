@@ -32,6 +32,14 @@ type Item = {
   updatedAt?: string | null;
 };
 
+export interface ItemDetailProps {
+  item: (Item & { quantity: number }) | null;
+  onBack?: () => void;
+  onBuy?: () => void;
+  onSell?: () => void;
+  variant?: "trade" | "stock" | "manage"; // Nouvelle prop pour la variante
+}
+
 type ItemApis = ItemApi[];
 type Items = Item[];
 

@@ -46,6 +46,7 @@ const routes = [
               { path: "trade/:id", element: <TradePage /> },
               { path: "trade/:id/:action", element: <TradePage /> },
               { path: "stock", element: <StockPage /> },
+              { path: "stock/:id", element: <StockPage /> },
               {
                 element: <LeftMenuLayout />,
                 children: [

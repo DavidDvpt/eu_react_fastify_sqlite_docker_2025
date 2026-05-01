@@ -3,7 +3,10 @@ import { NavButton } from "@/components/Navbar";
 import type { VerticalNavProps } from "@/shared/types";
 
 function VerticalNav({ items }: VerticalNavProps) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+
+  // Sécurisez le résultat de useLocation
+  const pathname = location?.pathname || "/";
 
   const isRouteActive = (to: string) =>
     pathname === to || pathname.startsWith(`${to}/`);

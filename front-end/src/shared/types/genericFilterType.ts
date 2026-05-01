@@ -106,9 +106,9 @@ export type UseGenericFilterResult<T> = {
 };
 
 export type SelectedFilterValues = {
-  category: string;
-  type: string;
-  item: string;
+  category?: string;
+  type?: string;
+  item?: string;
 };
 
 export interface GenericFilterProps {

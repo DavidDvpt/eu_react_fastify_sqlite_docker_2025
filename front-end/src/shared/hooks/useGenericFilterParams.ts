@@ -1,46 +1,29 @@
 // @shared/hooks/useQueryParams.tsx
 
-import { useEffect, useRef, useState } from "react";
+import { useMemo } from "react";
 import type { SelectedFilterValues } from "../types";
+import { allOptionValue } from "../components/GenericFilter/genericFilter.utils";
+import { useLocation } from "react-router-dom";
 
 type QueryParamValues = string | number | boolean | undefined;
 
 const useGenericFilterParams = () => {
-  const allOptionValue = "__all__";
-  const defaultValues = {
-    category: allOptionValue,
-    type: allOptionValue,
-    item: allOptionValue,
-  } as SelectedFilterValues;
-  const [params, setParams] = useState<SelectedFilterValues>(defaultValues);
-  const queryParamsRef = useRef<SelectedFilterValues | null>(null);
+  const location = useLocation();
 
-  useEffect(() => {
-    if (queryParamsRef.current) {
-      setParams(queryParamsRef.current);
-      queryParamsRef.current = null;
-    }
-  }, []);
+  const params = useMemo(() => {
+    const searchParams = new URLSearchParams(location.search);
 
-  useEffect(() => {
-    // Update the ref with new query parameters
-    const searchParams = new URLSearchParams(window.location.search);
-
-    const filterParams: SelectedFilterValues = {
-      category: searchParams.get("category") || allOptionValue,
-      type: searchParams.get("type") || allOptionValue,
-      item: searchParams.get("item") || allOptionValue,
+    const f: SelectedFilterValues = {
+      category: searchParams.get("category") || "",
+      type: searchParams.get("type") || "",
+      item: searchParams.get("item") || "",
     };
 
-    queryParamsRef.current = filterParams;
-
-    return () => {
-      // Cleanup if needed
-    };
-  }, [params]);
+    return f;
+  }, [location.search]);
 
   const constructQuery = (key: string, value: QueryParamValues): string => {
-    const searchParams = new URLSearchParams();
+    const searchParams = new URLSearchParams(location.search);
 
     if (key === undefined) return "";
 
