@@ -8,11 +8,13 @@ import useGenericFilterParams from "@/shared/hooks/useGenericFilterParams";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { FilterKeys, GenericFilterProps } from "@/shared/types";
 import { useGenericFilterData } from "@/shared/hooks/useGenericFilterData";
+import useGenericFilterContext from "./useFilterContext";
 
-function GenericFilter({ className }: GenericFilterProps) {
+function GenericFilter({ className, context }: GenericFilterProps) {
   const { params, constructQuery } = useGenericFilterParams();
   const { categoriesForSelect, typesForSelect, itemsForSelect } =
     useGenericFilterData(params);
+  const displayedFields = useGenericFilterContext({ context });
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -41,27 +43,33 @@ function GenericFilter({ className }: GenericFilterProps) {
         className="flex flex-nowrap justify-between gap-4"
         aria-label="Filtres de sélection"
       >
-        <AppSelect
-          options={categoriesForSelect}
-          onValueChange={(value) => updateValue("category", value)}
-          placeholder="Choisir une categorie ..."
-          value={params.category}
-        />
+        {displayedFields.category && (
+          <AppSelect
+            options={categoriesForSelect}
+            onValueChange={(value) => updateValue("category", value)}
+            placeholder="Choisir une categorie ..."
+            value={params.category}
+          />
+        )}
 
-        <AppSelect
-          options={typesForSelect}
-          onValueChange={(value) => updateValue("type", value)}
-          placeholder="Choisir un type ..."
-          value={params.type}
-        />
+        {displayedFields.type && (
+          <AppSelect
+            options={typesForSelect}
+            onValueChange={(value) => updateValue("type", value)}
+            placeholder="Choisir un type ..."
+            value={params.type}
+          />
+        )}
 
-        <AppSelect
-          options={itemsForSelect}
-          onValueChange={(value) => updateValue("item", value)}
-          placeholder="Choisir un item"
-          value={params.item}
-          hasAutocomplete
-        />
+        {displayedFields.item && (
+          <AppSelect
+            options={itemsForSelect}
+            onValueChange={(value) => updateValue("item", value)}
+            placeholder="Choisir un item"
+            value={params.item}
+            hasAutocomplete
+          />
+        )}
       </SubSection>
       <div className="flex flex-end">
         <Button

@@ -111,9 +111,22 @@ export type SelectedFilterValues = {
   item?: string;
 };
 
+export interface DisplayedFields {
+  category: boolean;
+  type: boolean;
+  item: boolean;
+}
+
+export type GenericFilterContext =
+  | "manageCategory"
+  | "manageType"
+  | "manageItem"
+  | "inventory"
+  | "trade";
 export interface GenericFilterProps {
   className?: string;
   selectedItem?: Item | null;
+  context?: GenericFilterContext;
   onSelectedItem?: (item: string) => void;
   onSelectedType?: (type: string) => void;
 }

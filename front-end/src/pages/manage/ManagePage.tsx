@@ -19,7 +19,7 @@ function ManagePage() {
 
   return (
     <Panel className="flex h-full min-h-0 flex-col">
-      <GenericFilter />
+      {selectedTab !== "category" && <GenericFilter />}
 
       {canCreate ? (
         <div className="flex items-center justify-end py-2">
