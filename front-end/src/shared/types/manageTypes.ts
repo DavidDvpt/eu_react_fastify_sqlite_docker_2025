@@ -1,9 +1,11 @@
-import type { Items } from "./itemTypes";
-import type { Types } from "./typeTypes";
-import type { Categories } from "./categoryTypes";
+import type { Item, Items } from "./itemTypes";
+import type { Type, Types } from "./typeTypes";
+import type { Categories, Category } from "./categoryTypes";
 import type { GenericFilterAvailability } from "./genericFilterType";
 
 type ManageTab = "category" | "type" | "item";
+
+export type ManageListRow = Category | Type | Item;
 
 type ManageTableProps = {
   activeTab: ManageTab;

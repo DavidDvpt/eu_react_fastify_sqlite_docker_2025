@@ -1,10 +1,10 @@
-import type { GenericListColumn, Item } from "@/shared/types";
+import type { GenericListColumn, ManageListRow } from "@/shared/types";
 import {
   formatToFiveDecimals,
   getItemImageUrl,
 } from "../../../../pages/manage/utils";
 
-const itemColumns: GenericListColumn<Item>[] = [
+const itemColumns: GenericListColumn<ManageListRow>[] = [
   {
     key: "image",
     label: "Image",
@@ -12,7 +12,7 @@ const itemColumns: GenericListColumn<Item>[] = [
     kind: "image",
     cellClassName: "bg-table-image-bg border border-table-image-border",
     render: (item) =>
-      getItemImageUrl(item.imageUrlId) ? (
+      "imageUrlId" in item && getItemImageUrl(item.imageUrlId) ? (
         <img
           src={getItemImageUrl(item.imageUrlId) ?? ""}
           alt={item.name}
@@ -34,7 +34,7 @@ const itemColumns: GenericListColumn<Item>[] = [
     label: "Type",
     width: "minmax(160px, 1.4fr)",
     cellClassName: "",
-    render: (item) => item.itemTypeName ?? item.itemTypeId,
+    render: (row) => ("itemTypeName" in row ? row.itemTypeName : "Unknown"),
   },
   {
     key: "value",
@@ -42,28 +42,31 @@ const itemColumns: GenericListColumn<Item>[] = [
     width: "minmax(120px, 1fr)",
     align: "right",
     cellClassName: "",
-    render: (item) => formatToFiveDecimals(item.value),
+    render: (row) => formatToFiveDecimals("value" in row ? row.value : 0),
   },
   {
     key: "limited",
     label: "Limited",
     width: "minmax(110px, 1fr)",
     cellClassName: "",
-    render: (item) => (item.isLimited ? "Oui" : "Non"),
+    render: (row) =>
+      "isLimited" in row ? (row.isLimited ? "Oui" : "Non") : "Non",
   },
   {
     key: "stackable",
     label: "Stackable",
     width: "minmax(120px, 1fr)",
     cellClassName: "",
-    render: (item) => (item.isStackable ? "Oui" : "Non"),
+    render: (row) =>
+      "isStackable" in row ? (row.isStackable ? "Oui" : "Non") : "Non",
   },
   {
     key: "scope",
     label: "Scope",
     width: "minmax(120px, 1fr)",
     cellClassName: "",
-    render: (item) => (item.userId ? "Custom" : "Global"),
+    render: (row) =>
+      "userId" in row ? (row.userId ? "Custom" : "Global") : "Global",
   },
 ];
 

@@ -1,10 +1,10 @@
 import type { ReactNode } from "react";
 
-type GenericListViewMode = "list" | "card";
-type GenericListAlign = "left" | "center" | "right";
-type GenericListColumnKind = "text" | "image" | "button" | "custom";
+export type GenericListViewMode = "list" | "card";
+export type GenericListAlign = "left" | "center" | "right";
+export type GenericListColumnKind = "text" | "image" | "button" | "custom";
 
-type GenericListColumn<T> = {
+export type GenericListColumn<T> = {
   key: string;
   label: string;
   width?: string;
@@ -16,23 +16,23 @@ type GenericListColumn<T> = {
   render?: (row: T) => ReactNode;
 };
 
-type GenericListRowClassName<T> = string | ((row: T) => string);
+export type GenericListRowClassName<T> = string | ((row: T) => string);
 
-type GenericListHeaderProps<T> = {
+export type GenericListHeaderProps<T> = {
   columns: GenericListColumn<T>[];
   gridTemplateColumns: string;
   headerHeight?: number;
   showColumns?: boolean;
 };
 
-type GenericListFooterProps = {
+export type GenericListFooterProps = {
   footer?: ReactNode;
   gridTemplateColumns: string;
   footerHeight?: number;
   showColumns?: boolean;
 };
 
-type GenericListBodyProps<T> = {
+export type GenericListBodyProps<T> = {
   columns: GenericListColumn<T>[];
   rows: T[];
   viewMode: GenericListViewMode;
@@ -46,7 +46,7 @@ type GenericListBodyProps<T> = {
   renderCard?: (row: T) => ReactNode;
 };
 
-type GenericListProps<T> = {
+export type GenericListProps<T> = {
   columns: GenericListColumn<T>[];
   rows: T[];
   getRowKey: (row: T) => string;
@@ -68,16 +68,4 @@ type GenericListProps<T> = {
   footer?: ReactNode;
   renderRow?: (row: T) => ReactNode;
   renderCard?: (row: T) => ReactNode;
-};
-
-export type {
-  GenericListAlign,
-  GenericListBodyProps,
-  GenericListColumn,
-  GenericListColumnKind,
-  GenericListFooterProps,
-  GenericListHeaderProps,
-  GenericListProps,
-  GenericListRowClassName,
-  GenericListViewMode,
 };

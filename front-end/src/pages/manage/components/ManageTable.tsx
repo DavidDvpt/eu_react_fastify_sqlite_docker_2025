@@ -1,82 +1,66 @@
-import {
-  CATEGORIES_ROUTE,
-  getCategoryEditRoute,
-  getItemEditRoute,
-  getTypeEditRoute,
-  ITEMS_ROUTE,
-  TYPES_ROUTE,
-} from "@/pages/manage";
 import { GenericList } from "@/shared/components";
 
-import {
-  categoryColumns,
-  itemColumns,
-  typeColumns,
-} from "../../../shared/components/GenericList/columnConfig";
 import { useNavigate } from "react-router-dom";
-import type { Category, ManageTableProps, Type } from "@/shared/types";
-import { ManageItemsList } from "./ManageItemsList";
+import type { ManageTab } from "@/shared/types";
 
-function ManageTable({
-  activeTab,
-  categories,
-  typesRows,
-  itemsRows,
-  availability,
-}: ManageTableProps) {
+import useManageListData from "@/shared/hooks/useManageList";
+
+interface ManageTableProps {
+  activeTab: ManageTab;
+}
+
+function ManageTable({ activeTab }: ManageTableProps) {
   const navigate = useNavigate();
-  const [categoriesStatus, typesStatus, itemsStatus] = availability;
-  const status =
-    activeTab === "category"
-      ? categoriesStatus
-      : activeTab === "type"
-        ? typesStatus
-        : itemsStatus;
 
-  if (activeTab === "category") {
-    return (
-      <GenericList<Category>
-        columns={categoryColumns}
-        rows={categories}
-        getRowKey={(row) => row.id}
-        isLoading={status?.isPending ?? false}
-        isError={status?.isError ?? false}
-        loadingMessage="Chargement des categories..."
-        errorMessage={`Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`}
-        emptyMessage="Aucune categorie."
-        onRowClick={(row) => navigate(getCategoryEditRoute(row.id))}
-      />
-    );
-  }
+  const { list, columns, errorMessage, isError, isPending, editRoute } =
+    useManageListData({
+      activeTab,
+    });
 
-  if (activeTab === "type") {
-    return (
-      <GenericList<Type>
-        columns={typeColumns}
-        rows={typesRows}
-        getRowKey={(row) => row.id}
-        isLoading={status?.isPending ?? false}
-        isError={status?.isError ?? false}
-        onRowClick={(row) => navigate(getTypeEditRoute(row.id))}
-        loadingMessage="Chargement des types..."
-        errorMessage={`Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`}
-        emptyMessage="Aucun type."
-      />
-    );
-  }
+  type GenericListType = typeof list;
 
   return (
-    <ManageItemsList
-      columns={itemColumns}
-      rows={itemsRows}
-      isLoading={status?.isPending ?? false}
-      isError={status?.isError ?? false}
-      loadingMessage="Chargement des items..."
-      errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}
-      emptyMessage="Aucun item."
-      onRowClick={(row) => navigate(getItemEditRoute(row.id))}
+    <GenericList<GenericListType[number]>
+      columns={columns}
+      rows={list}
+      getRowKey={(row) => row.id}
+      isLoading={isPending}
+      isError={isError}
+      loadingMessage="Chargement des categories..."
+      errorMessage={errorMessage}
+      emptyMessage="Aucune categorie."
+      onRowClick={(row) => navigate(editRoute(row.id))}
     />
   );
+
+  // if (activeTab === "type") {
+  //   return (
+  //     <GenericList<Type>
+  //       columns={typeColumns}
+  //       rows={typesRows}
+  //       getRowKey={(row) => row.id}
+  //       isLoading={status?.isPending ?? false}
+  //       isError={status?.isError ?? false}
+  //       onRowClick={(row) => navigate(getTypeEditRoute(row.id))}
+  //       loadingMessage="Chargement des types..."
+  //       errorMessage={`Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`}
+  //       emptyMessage="Aucun type."
+  //     />
+  //   );
+  // }
+
+  // return (
+  //   <ManageItemsList
+  //     columns={itemColumns}
+  //     rows={itemsRows}
+  //     isLoading={status?.isPending ?? false}
+  //     isError={status?.isError ?? false}
+  //     loadingMessage="Chargement des items..."
+  //     errorMessage={`Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`}
+  //     emptyMessage="Aucun item."
+  //     onRowClick={(row) => navigate(getItemEditRoute(row.id))}
+  //   />
+  // );
 }
 
 export { ManageTable };

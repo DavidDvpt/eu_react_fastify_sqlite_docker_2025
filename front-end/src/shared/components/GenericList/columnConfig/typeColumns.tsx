@@ -1,6 +1,6 @@
-import type { GenericListColumn, Type } from "@/shared/types";
+import type { GenericListColumn, ManageListRow } from "@/shared/types";
 
-const typeColumns: GenericListColumn<Type>[] = [
+const typeColumns: GenericListColumn<ManageListRow>[] = [
   {
     key: "name",
     label: "Nom",
@@ -11,7 +11,7 @@ const typeColumns: GenericListColumn<Type>[] = [
     key: "category",
     label: "Categorie",
     width: "minmax(220px, 2fr)",
-    render: (type) => type.categoryName ?? type.categoryId,
+    render: (row) => ("categoryName" in row ? row.categoryName : "unknown"),
   },
   {
     key: "scope",
