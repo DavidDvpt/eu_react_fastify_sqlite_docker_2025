@@ -2,7 +2,7 @@ export * from "./categoryTypes";
 export * from "./typeTypes";
 export * from "./itemTypes";
 export * from "./navbarTypes";
-export * from "./manageTypes";
+export * from "../../pages/manage/managePage.types";
 export * from "./containerTypes";
 export * from "./genericFilterType";
 export * from "./stockTypes";

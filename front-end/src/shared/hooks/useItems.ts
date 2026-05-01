@@ -1,12 +1,13 @@
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getItems } from "@/pages/manage/services/itemsApi";
 
 type UseItemsParams = {
   enabled?: boolean;
+  typeId?: string;
 };
 
-function useItems({ enabled = true }: UseItemsParams = {}) {
+function useItems({ enabled = true, typeId }: UseItemsParams = {}) {
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ["items"],
@@ -20,8 +21,14 @@ function useItems({ enabled = true }: UseItemsParams = {}) {
     [queryClient],
   );
 
+  const filteredItems = useMemo(
+    () => query.data?.filter((t) => t.typeId === typeId) ?? [],
+    [query.data, typeId],
+  );
+
   return {
     items: query.data ?? [],
+    filteredItems,
     ...query,
     invalidateItems,
   };

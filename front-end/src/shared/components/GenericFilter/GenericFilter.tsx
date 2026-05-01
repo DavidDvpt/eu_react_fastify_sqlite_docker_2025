@@ -34,7 +34,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
       search: q,
     });
   };
-  console.log(context, displayedFields);
+
   return (
     <Section
       className={cn("flex flex-col gap-4", className)}

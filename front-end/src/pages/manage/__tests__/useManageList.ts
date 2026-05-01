@@ -23,6 +23,8 @@ import {
   typeColumns,
 } from "../../../shared/components/GenericList/columnConfig";
 
+import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
+
 interface UseManageListData {
   activeTab: ManageTab;
 }
@@ -34,27 +36,29 @@ function useManageListData({ activeTab }: UseManageListData): {
   errorMessage: string;
   editRoute: (id: string) => string;
 } {
+  const { params } = useGenericFilterParams();
+
   const {
     categories,
     isPending: isCategoriesPending,
     isError: isCategoriesError,
   } = useCategories();
   const {
-    types,
+    filteredTypes,
     isPending: isTypesPending,
     isError: isTypesError,
-  } = useTypes();
+  } = useTypes({ categoryId: params.category });
   const {
-    items,
+    filteredItems,
     isPending: isItemsPending,
     isError: isItemsError,
-  } = useItems();
+  } = useItems({ typeId: params.type });
 
   const contentValues = useMemo(() => {
     switch (activeTab) {
       case "type":
         return {
-          list: types,
+          list: filteredTypes,
           isPending: isTypesPending,
           isError: isTypesError,
           columns: typeColumns,
@@ -63,7 +67,7 @@ function useManageListData({ activeTab }: UseManageListData): {
         };
       case "item":
         return {
-          list: items,
+          list: filteredItems,
           isPending: isItemsPending,
           isError: isItemsError,
           columns: itemColumns,
@@ -83,8 +87,8 @@ function useManageListData({ activeTab }: UseManageListData): {
     }
   }, [
     activeTab,
-    types,
-    items,
+    filteredTypes,
+    filteredItems,
     categories,
     isTypesPending,
     isItemsPending,

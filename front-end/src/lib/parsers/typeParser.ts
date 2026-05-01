@@ -5,7 +5,7 @@ function parseType(apiType: TypeApi): Type {
     id: apiType.id,
     name: apiType.name,
     categoryId: apiType.category_id,
-    categoryName: apiType.category?.name,
+
     isActive: apiType.is_active,
     supportsLimited: apiType.supports_limited,
     isStackable: apiType.is_stackable,

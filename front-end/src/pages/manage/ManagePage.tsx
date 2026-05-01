@@ -17,6 +17,7 @@ function ManagePage() {
   const canCreate = MANAGE_TABS.includes(selectedTab);
   const context =
     `manage${StringTools.capitalizeFirstLetter(selectedTab)}` as GenericFilterContext;
+
   return (
     <Panel className="flex h-full min-h-0 flex-col">
       {selectedTab !== "category" && <GenericFilter context={context} />}
