@@ -14,12 +14,41 @@ describe('stockRoutes', () => {
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
+    const tx = {
+      item: {
+        findMany: vi.fn(),
+      },
+      session: {
+        create: vi.fn(),
+        update: vi.fn(),
+        delete: vi.fn(),
+      },
+      lot: {
+        create: vi.fn(),
+        update: vi.fn(),
+      },
+      sessionLine: {
+        create: vi.fn(),
+      },
+    };
+
+    const prisma = {
+      item: {
+        findMany: vi.fn(),
+      },
+      $transaction: vi.fn((callback: (trx: typeof tx) => unknown) => Promise.resolve(callback(tx))),
+    };
+
     const lotStock = {
       getStock: vi.fn(),
       getStockByItemId: vi.fn(),
       getStockDetailsByItemId: vi.fn(),
+      getAvailableStockByItemIds: vi.fn(),
+      getAvailableLotsFifoByItemId: vi.fn(),
+      getSellableLotById: vi.fn(),
     };
 
+    app.decorate('prisma', prisma as unknown as FastifyInstance['prisma']);
     app.decorate('repos', { lotStock } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
@@ -30,10 +59,10 @@ describe('stockRoutes', () => {
 
     app.register(stockRoutes, { prefix: API_PREFIX });
 
-    return { app, lotStock };
+    return { app, lotStock, tx, prisma };
   }
 
-  it('GET /api/v1/stock returns stock list for authenticated user', async () => {
+  it('GET /api/v1/inventory returns stock list for authenticated user', async () => {
     const { app, lotStock } = buildApp();
     vi.mocked(lotStock.getStock).mockResolvedValueOnce([
       {
@@ -47,7 +76,7 @@ describe('stockRoutes', () => {
     ]);
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory` });
 
     expect(res.statusCode).toBe(200);
     expect(lotStock.getStock).toHaveBeenCalledWith('user-1');
@@ -64,7 +93,7 @@ describe('stockRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/stock/:id returns item stock for authenticated user', async () => {
+  it('GET /api/v1/inventory`/:id returns item stock for authenticated user', async () => {
     const { app, lotStock } = buildApp();
     vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce({
       itemId: 'item-1',
@@ -76,7 +105,7 @@ describe('stockRoutes', () => {
     });
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock/item-1` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory/item-1` });
 
     expect(res.statusCode).toBe(200);
     expect(lotStock.getStockByItemId).toHaveBeenCalledWith('user-1', 'item-1');
@@ -91,7 +120,7 @@ describe('stockRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/stock/:id?include=details returns stock details for item', async () => {
+  it('GET /api/v1/inventory/:id?include=details returns stock details for item', async () => {
     const { app, lotStock } = buildApp();
     vi.mocked(lotStock.getStockDetailsByItemId).mockResolvedValueOnce({
       itemId: 'item-1',
@@ -124,7 +153,10 @@ describe('stockRoutes', () => {
     });
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock/item-1?include=details` });
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/inventory/item-1?include=details`,
+    });
 
     expect(res.statusCode).toBe(200);
     expect(lotStock.getStockDetailsByItemId).toHaveBeenCalledWith('user-1', 'item-1');
@@ -160,14 +192,59 @@ describe('stockRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/stock/:id returns 404 when item stock is not found', async () => {
+  it('GET /api/v1/inventory/:id returns 404 when item stock is not found', async () => {
     const { app, lotStock } = buildApp();
     vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce(null);
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/stock/item-x` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory/item-x` });
 
     expect(res.statusCode).toBe(404);
+    await app.close();
+  });
+
+  it('POST /api/v1/inventory/transactions with type=buy creates session and IN line', async () => {
+    const { app, tx, prisma } = buildApp();
+
+    vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
+    vi.mocked(tx.session.create).mockResolvedValueOnce({ id: 'session-1' } as never);
+    vi.mocked(tx.lot.create).mockResolvedValueOnce({ id: 'lot-1' } as never);
+    vi.mocked(tx.sessionLine.create).mockResolvedValueOnce({ id: 'line-1' } as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/inventory/transactions`,
+      payload: {
+        type: 'buy',
+        lines: [{ itemId: 'item-1', quantity: 2, tt: 20, fee: 1, ttc: 25 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(201);
+    const buySessionCreateCall = vi.mocked(tx.session.create).mock.calls[0]?.[0] as {
+      data: {
+        status: string;
+      };
+    };
+    expect(buySessionCreateCall.data.status).toBe('CLOSED');
+    await app.close();
+  });
+
+  it('POST /api/v1/inventory/transactions with type=sell rejects when fee is missing', async () => {
+    const { app } = buildApp();
+    await app.ready();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/inventory/transactions`,
+      payload: {
+        type: 'sell',
+        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(500);
     await app.close();
   });
 });

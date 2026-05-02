@@ -8,21 +8,21 @@ import {
 
 import type { PrismaClient } from '../../../prisma/generated/client.js';
 import type {
-  PurchaseLineInput,
+  BuyLineInput,
   SellLineInput,
-  TradeExecutionResult,
-  TradeProcessedItem,
-  TradeRejectedItem,
+  TransactionExecutionResult,
+  TransactionProcessedItem,
+  TransactionRejectedItem,
 } from '../../types/index.js';
 import type { StocksService } from '../stocks/index.js';
 
-class TradeService {
+class TransactionService {
   constructor(
     private readonly prisma: PrismaClient,
     private readonly stocksService: StocksService
   ) {}
 
-  async purchase(userId: string, lines: PurchaseLineInput[]): Promise<TradeExecutionResult> {
+  async buy(userId: string, lines: BuyLineInput[]): Promise<TransactionExecutionResult> {
     const now = new Date().toISOString();
 
     // Load referenced items once to validate lines and compute fallback amounts.
@@ -36,7 +36,7 @@ class TradeService {
     // Split payload into processable lines and explicit rejections.
     const processable = lines.filter((line) => itemById.has(line.itemId));
 
-    const rejected: TradeRejectedItem[] = lines
+    const rejected: TransactionRejectedItem[] = lines
       .filter((line) => !itemById.has(line.itemId))
       .map((line) => ({
         itemId: line.itemId,
@@ -50,7 +50,7 @@ class TradeService {
     }
 
     // Compute purchase totals at session level.
-    const purchaseCostTt = processable.reduce((sum, line) => {
+    const buyCostTt = processable.reduce((sum, line) => {
       const item = itemById.get(line.itemId);
       if (!item) {
         return sum;
@@ -58,7 +58,7 @@ class TradeService {
       return sum + Number(item.value) * line.quantity;
     }, 0);
 
-    const purchaseCostTtc = processable.reduce((sum, line) => {
+    const buyCostTtc = processable.reduce((sum, line) => {
       const item = itemById.get(line.itemId);
       if (!item) {
         return sum;
@@ -73,15 +73,15 @@ class TradeService {
           session_type: 'TRADE',
           status: 'CLOSED',
           user_id: userId,
-          cost_tt: purchaseCostTt,
-          cost_ttc: purchaseCostTtc,
+          cost_tt: buyCostTt,
+          cost_ttc: buyCostTtc,
           win_tt: 0,
           win_ttc: 0,
         },
         select: { id: true },
       });
 
-      const processed: TradeProcessedItem[] = [];
+      const processed: TransactionProcessedItem[] = [];
 
       for (const line of processable) {
         const item = itemById.get(line.itemId);
@@ -89,8 +89,7 @@ class TradeService {
           continue;
         }
 
-        const defaultUnitPrice = Number(item.value);
-        const lineTt = line.tt ?? defaultUnitPrice * line.quantity;
+        const lineTt = line.tt;
         const lineTtc = line.ttc;
 
         const lot = await tx.lot.create({
@@ -132,7 +131,7 @@ class TradeService {
     });
   }
 
-  async sell(userId: string, lines: SellLineInput[]): Promise<TradeExecutionResult> {
+  async sell(userId: string, lines: SellLineInput[]): Promise<TransactionExecutionResult> {
     // Aggregate quantities by item and run a coarse stock availability check.
     const requestedByItem = buildRequestedByItem(lines);
     const availabilityRows = await this.stocksService.getAvailableStockByItemIds(
@@ -212,4 +211,4 @@ class TradeService {
   }
 }
 
-export { TradeService };
+export { TransactionService };

@@ -122,7 +122,7 @@ export type GenericFilterContext =
   | "manageType"
   | "manageItem"
   | "inventory"
-  | "trade";
+  | "transaction";
 export interface GenericFilterProps {
   className?: string;
   selectedItem?: Item | null;

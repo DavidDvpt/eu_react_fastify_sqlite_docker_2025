@@ -13,7 +13,7 @@ function ItemDetail({
 }: ItemDetailProps) {
   if (!item) return null;
 
-  const tradeButton = (
+  const buyButton = (
     <Button
       onClick={onBuy}
       disabled={!onBuy}
@@ -55,7 +55,7 @@ function ItemDetail({
         </div>
       </div>
       <div className="flex items-center justify-end gap-2">
-        {tradeButton}
+        {buyButton}
         {sellButton}
         {onBack && (
           <Button

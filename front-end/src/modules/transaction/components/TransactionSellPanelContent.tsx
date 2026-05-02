@@ -8,17 +8,17 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools";
-import { sellTrade } from "../../../lib/services/tradeApi";
+import { sellTransaction } from "../../../lib/services/transactionApi";
 
-import type { TradeFilterRow, TradeSellFormValues } from "@/shared/types";
+import type { TransactionFilterRow, TransactionSellFormValues } from "@/shared/types";
 
-type TradeSellPanelContentProps = {
-  item: TradeFilterRow;
+type TransactionSellPanelContentProps = {
+  item: TransactionFilterRow;
   onBack: () => void;
 };
 
-type TradeSellFormFieldsProps = {
-  item: TradeFilterRow;
+type TransactionSellFormFieldsProps = {
+  item: TransactionFilterRow;
 };
 
 /**
@@ -61,8 +61,8 @@ function calculateMinimumTtc(tt: number): number {
   return Math.ceil(tt);
 }
 
-function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
-  const form = useFormContext<TradeSellFormValues>();
+function TransactionSellFormFields({ item }: TransactionSellFormFieldsProps) {
+  const form = useFormContext<TransactionSellFormValues>();
   const quantity = useWatch({ control: form.control, name: "quantity" });
   const ttc = useWatch({ control: form.control, name: "ttc" });
   const quantityField = form.register("quantity", { valueAsNumber: true });
@@ -102,12 +102,12 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
         <div className="w-[30%] min-w-0 space-y-1">
           <label
             className="text-sm text-input-label"
-            htmlFor="trade-sell-quantity"
+            htmlFor="transaction-sell-quantity"
           >
             Quantite
           </label>
           <Input
-            id="trade-sell-quantity"
+            id="transaction-sell-quantity"
             type="number"
             min={1}
             step={1}
@@ -122,11 +122,11 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
         </div>
 
         <div className="w-[30%] min-w-0 space-y-1">
-          <label className="text-sm text-input-label" htmlFor="trade-sell-fee">
+          <label className="text-sm text-input-label" htmlFor="transaction-sell-fee">
             Fee
           </label>
           <Input
-            id="trade-sell-fee"
+            id="transaction-sell-fee"
             type="number"
             min={0}
             step="0.01"
@@ -137,11 +137,11 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
         </div>
 
         <div className="w-[30%] min-w-0 space-y-1">
-          <label className="text-sm text-input-label" htmlFor="trade-sell-ttc">
+          <label className="text-sm text-input-label" htmlFor="transaction-sell-ttc">
             TTC
           </label>
           <Input
-            id="trade-sell-ttc"
+            id="transaction-sell-ttc"
             type="number"
             min={minimumTtc}
             step="0.01"
@@ -182,7 +182,7 @@ function TradeSellFormFields({ item }: TradeSellFormFieldsProps) {
   );
 }
 
-function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
+function TransactionSellPanelContent({ item, onBack }: TransactionSellPanelContentProps) {
   const queryClient = useQueryClient();
 
   const sellFormSchema = useMemo(
@@ -202,20 +202,22 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
   );
 
   const sellMutation = useMutation({
-    mutationFn: async (values: TradeSellFormValues) =>
-      sellTrade({
+    mutationFn: async (values: TransactionSellFormValues) =>
+      sellTransaction({
+        type: "sell",
         lines: [
           {
             itemId: item.itemId,
             quantity: values.quantity,
             tt: values.quantity * item.unitPrice,
             ttc: values.ttc,
+            fee: feeCalculation(values.ttc - values.quantity * item.unitPrice),
           },
         ],
       }),
     onSuccess: async () => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["stock"] }),
+        queryClient.invalidateQueries({ queryKey: ["items-stock"] }),
         queryClient.invalidateQueries({
           queryKey: ["stock", "details", item.itemId],
         }),
@@ -239,7 +241,7 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
         className="space-y-4"
         onSubmit={(values) => sellMutation.mutate(values)}
       >
-        <TradeSellFormFields item={item} />
+        <TransactionSellFormFields item={item} />
 
         {sellMutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">
@@ -269,4 +271,4 @@ function TradeSellPanelContent({ item, onBack }: TradeSellPanelContentProps) {
   );
 }
 
-export default TradeSellPanelContent;
+export default TransactionSellPanelContent;

@@ -35,7 +35,7 @@ describe('sessionRoutes', () => {
     const { app, sessionStats } = buildApp();
     vi.mocked(sessionStats.getSellSessions).mockResolvedValueOnce([
       {
-        sessionId: 'TRADE-session-1',
+        sessionId: 'TRANSACTION-session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,
@@ -54,7 +54,7 @@ describe('sessionRoutes', () => {
     expect(sessionStats.getSellSessions).toHaveBeenCalledWith('user-1', 'RUNNING');
     expect(res.json()).toEqual([
       {
-        sessionId: 'TRADE-session-1',
+        sessionId: 'TRANSACTION-session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
-import type { TradeActionsProps } from "@/shared/types";
+import type { TransactionActionsProps } from "@/shared/types";
 
-function TradeActions({
+function TransactionActions({
   onBuy,
   onSell,
   onBack,
@@ -10,7 +10,7 @@ function TradeActions({
   buttonClassName,
   disableBuy = false,
   disableSell = false,
-}: TradeActionsProps) {
+}: TransactionActionsProps) {
   const directionClass = direction === "column" ? "flex-col" : "flex-row";
 
   return (
@@ -47,4 +47,4 @@ function TradeActions({
   );
 }
 
-export { TradeActions };
+export { TransactionActions };

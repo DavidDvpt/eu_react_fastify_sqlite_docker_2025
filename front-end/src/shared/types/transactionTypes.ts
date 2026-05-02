@@ -1,13 +1,13 @@
 import type { StockRow } from "./stockTypes";
 
-type TradeFilterRow = StockRow & {
+type TransactionFilterRow = StockRow & {
   itemTypeId: string | null;
   itemTypeName: string | null;
   categoryId: string | null;
   categoryName: string | null;
 };
 
-type TradeActionsProps = {
+type TransactionActionsProps = {
   onBuy: () => void;
   onSell: () => void;
   onBack: () => void;
@@ -18,7 +18,7 @@ type TradeActionsProps = {
   disableSell?: boolean;
 };
 
-type TradeItemDetailsProps = {
+type TransactionItemDetailsProps = {
   itemName: string;
   imageUrlId: string;
   unitPrice: number;
@@ -35,21 +35,21 @@ type TradeItemDetailsProps = {
   buttonClassName?: string;
 };
 
-type TradeBuyFormValues = {
+type TransactionBuyFormValues = {
   quantity: number;
   fee: number;
   buyPrice: number;
 };
 
-type TradeSellFormValues = {
+type TransactionSellFormValues = {
   quantity: number;
   ttc: number;
 };
 
 export type {
-  TradeFilterRow,
-  TradeActionsProps,
-  TradeItemDetailsProps,
-  TradeBuyFormValues,
-  TradeSellFormValues,
+  TransactionFilterRow,
+  TransactionActionsProps,
+  TransactionItemDetailsProps,
+  TransactionBuyFormValues,
+  TransactionSellFormValues,
 };

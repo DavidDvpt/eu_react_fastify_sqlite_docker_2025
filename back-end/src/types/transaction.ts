@@ -1,36 +1,38 @@
 import type { TransactionStatus } from '../../prisma/generated/client.js';
 
-type PurchaseLineInput = {
+type BuyLineInput = {
   itemId: string;
   quantity: number;
-  tt?: number;
+  tt: number;
   ttc: number;
+  fee?: number;
 };
 
 type SellLineInput = {
   itemId: string;
   quantity: number;
   inventoryLotId?: string;
-  tt?: number;
+  tt: number;
   ttc: number;
+  fee: number;
 };
 
-type TradeRejectedItem = {
+type TransactionRejectedItem = {
   itemId: string;
   requestedQuantity: number;
   availableQuantity: number;
   reason: string;
 };
 
-type TradeProcessedItem = {
+type TransactionProcessedItem = {
   itemId: string;
   quantity: number;
 };
 
-type TradeExecutionResult = {
+type TransactionExecutionResult = {
   sessionId: string | null;
-  processed: TradeProcessedItem[];
-  rejected: TradeRejectedItem[];
+  processed: TransactionProcessedItem[];
+  rejected: TransactionRejectedItem[];
 };
 
 type SellSessionRow = {
@@ -43,10 +45,10 @@ type SellSessionRow = {
 };
 
 export type {
-  PurchaseLineInput,
+  BuyLineInput,
   SellLineInput,
-  TradeRejectedItem,
-  TradeProcessedItem,
-  TradeExecutionResult,
+  TransactionRejectedItem,
+  TransactionProcessedItem,
+  TransactionExecutionResult,
   SellSessionRow,
 };

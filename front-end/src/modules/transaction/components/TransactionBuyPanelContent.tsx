@@ -8,9 +8,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools";
-import { purchaseTrade } from "../../../lib/services/tradeApi";
+import { buyTransaction } from "../../../lib/services/transactionApi";
 
-import type { TradeBuyFormValues, TradeFilterRow } from "@/shared/types";
+import type { TransactionBuyFormValues, TransactionFilterRow } from "@/shared/types";
 
 const buyFormSchema = z.object({
   quantity: z.coerce
@@ -28,17 +28,17 @@ const buyFormSchema = z.object({
     .positive("Le prix d'achat doit etre superieur a 0."),
 });
 
-type TradeBuyPanelContentProps = {
-  item: TradeFilterRow;
+type TransactionBuyPanelContentProps = {
+  item: TransactionFilterRow;
   onBack: () => void;
 };
 
-type TradeBuyFormFieldsProps = {
-  item: TradeFilterRow;
+type TransactionBuyFormFieldsProps = {
+  item: TransactionFilterRow;
 };
 
-function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
-  const form = useFormContext<TradeBuyFormValues>();
+function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
+  const form = useFormContext<TransactionBuyFormValues>();
   const buyPriceField = form.register("buyPrice", { valueAsNumber: true });
   const quantity = useWatch({ control: form.control, name: "quantity" });
   const fee = useWatch({ control: form.control, name: "fee" });
@@ -71,12 +71,12 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
         <div className="w-[30%] min-w-0 space-y-1">
           <label
             className="text-sm text-input-label"
-            htmlFor="trade-buy-quantity"
+            htmlFor="transaction-buy-quantity"
           >
             Quantite
           </label>
           <Input
-            id="trade-buy-quantity"
+            id="transaction-buy-quantity"
             type="number"
             min={1}
             step={1}
@@ -91,11 +91,11 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
         </div>
 
         <div className="w-[30%] min-w-0 space-y-1">
-          <label className="text-sm text-input-label" htmlFor="trade-buy-fee">
+          <label className="text-sm text-input-label" htmlFor="transaction-buy-fee">
             Fee (optionnel)
           </label>
           <Input
-            id="trade-buy-fee"
+            id="transaction-buy-fee"
             type="number"
             min={0}
             step="0.01"
@@ -110,11 +110,11 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
         </div>
 
         <div className="w-[30%] min-w-0 space-y-1">
-          <label className="text-sm text-input-label" htmlFor="trade-buy-price">
+          <label className="text-sm text-input-label" htmlFor="transaction-buy-price">
             Achat
           </label>
           <Input
-            id="trade-buy-price"
+            id="transaction-buy-price"
             type="number"
             min={0.01}
             step="0.01"
@@ -156,23 +156,26 @@ function TradeBuyFormFields({ item }: TradeBuyFormFieldsProps) {
   );
 }
 
-function TradeBuyPanelContent({ item, onBack }: TradeBuyPanelContentProps) {
+function TransactionBuyPanelContent({ item, onBack }: TransactionBuyPanelContentProps) {
   const queryClient = useQueryClient();
 
-  const purchaseMutation = useMutation({
-    mutationFn: async (values: TradeBuyFormValues) =>
-      purchaseTrade({
+  const buyMutation = useMutation({
+    mutationFn: async (values: TransactionBuyFormValues) =>
+      buyTransaction({
+        type: "buy",
         lines: [
           {
             itemId: item.itemId,
             quantity: values.quantity,
+            tt: values.quantity * item.unitPrice,
+            fee: values.fee,
             ttc: values.buyPrice,
           },
         ],
       }),
     onSuccess: async () => {
       await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["stock"] }),
+        queryClient.invalidateQueries({ queryKey: ["items-stock"] }),
         queryClient.invalidateQueries({
           queryKey: ["stock", "details", item.itemId],
         }),
@@ -194,11 +197,11 @@ function TradeBuyPanelContent({ item, onBack }: TradeBuyPanelContentProps) {
         schema={buyFormSchema}
         defaultValues={{ quantity: 1, fee: 0, buyPrice: item.unitPrice }}
         className="space-y-4"
-        onSubmit={(values) => purchaseMutation.mutate(values)}
+        onSubmit={(values) => buyMutation.mutate(values)}
       >
-        <TradeBuyFormFields item={item} />
+        <TransactionBuyFormFields item={item} />
 
-        {purchaseMutation.isError ? (
+        {buyMutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">
             Impossible de valider l&apos;achat.
           </p>
@@ -209,14 +212,14 @@ function TradeBuyPanelContent({ item, onBack }: TradeBuyPanelContentProps) {
             type="button"
             variant="secondary"
             onClick={onBack}
-            disabled={purchaseMutation.isPending}
+            disabled={buyMutation.isPending}
           >
             Retour
           </Button>
           <Button
             type="submit"
             variant="primary"
-            disabled={purchaseMutation.isPending}
+            disabled={buyMutation.isPending}
           >
             Acheter
           </Button>
@@ -226,4 +229,4 @@ function TradeBuyPanelContent({ item, onBack }: TradeBuyPanelContentProps) {
   );
 }
 
-export default TradeBuyPanelContent;
+export default TransactionBuyPanelContent;

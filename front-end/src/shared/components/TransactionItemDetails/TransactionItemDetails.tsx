@@ -1,11 +1,11 @@
 import { cn } from "@/lib/utils";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools";
-import { TradeActions } from "@/shared/components";
+import { TransactionActions } from "@/shared/components";
 
-import type { TradeItemDetailsProps } from "@/shared/types";
+import type { TransactionItemDetailsProps } from "@/shared/types";
 
-function TradeItemDetails({
+function TransactionItemDetails({
   itemName,
   imageUrlId,
   unitPrice,
@@ -20,7 +20,7 @@ function TradeItemDetails({
   className,
   actionsClassName,
   buttonClassName,
-}: TradeItemDetailsProps) {
+}: TransactionItemDetailsProps) {
   const image = ImageService.getItemImageUrl(imageUrlId, "normal");
   const price = FormatTools.pedFormat().format(unitPrice);
 
@@ -57,7 +57,7 @@ function TradeItemDetails({
         </div>
       </div>
 
-      <TradeActions
+      <TransactionActions
         direction={actionsDirection}
         className={cn(
           actionsPlacement === "bottom" ? "mt-auto" : undefined,
@@ -74,4 +74,4 @@ function TradeItemDetails({
   );
 }
 
-export { TradeItemDetails };
+export { TransactionItemDetails };

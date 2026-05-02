@@ -1,7 +1,7 @@
 import type { StockDetails } from "@/shared/types";
 
 import type { ContainerType } from "@/shared/types/containerTypes";
-import { TradeItemDetails } from "@/shared/components";
+import { TransactionItemDetails } from "@/shared/components";
 import { useNavigate } from "react-router-dom";
 import { Panel } from "@/shared/components/Containers";
 
@@ -16,19 +16,19 @@ function ItemStockDetails({ details, onBack }: DetailsItemProps) {
 
   function goToBuy() {
     if (!details) return;
-    navigate(`/trade/${details.itemId}/buy`);
+    navigate(`/inventory/${details.itemId}`);
   }
 
   function goToSell() {
     if (!details) return;
-    navigate(`/trade/${details.itemId}/sell`);
+    navigate(`/inventory/${details.itemId}`);
   }
 
   if (!details) return null;
 
   return (
     <Panel>
-      <TradeItemDetails
+      <TransactionItemDetails
         itemName={details.name}
         imageUrlId={details.imageUrlId}
         unitPrice={details.unitPrice}

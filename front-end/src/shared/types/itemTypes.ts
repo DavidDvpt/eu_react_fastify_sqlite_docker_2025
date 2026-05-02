@@ -39,7 +39,7 @@ export interface ItemDetailProps {
   onBack?: () => void;
   onBuy?: () => void;
   onSell?: () => void;
-  variant?: "trade" | "stock" | "manage"; // Nouvelle prop pour la variante
+  variant?: "transaction" | "stock" | "manage"; // Nouvelle prop pour la variante
 }
 
 export type ItemApis = ItemApi[];

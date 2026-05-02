@@ -40,7 +40,7 @@ const routes = [
             children: [
               { index: true, element: <Navigate to="/home" replace /> },
               { path: "home", element: <HomePage /> },
-              { path: "trading", element: <Navigate to="/trade" replace /> },
+              { path: "trading", element: <Navigate to="/inventory" replace /> },
               { path: "inventory", element: <InventoryPage /> },
               { path: "inventory/:id", element: <InventoryPage /> },
               {

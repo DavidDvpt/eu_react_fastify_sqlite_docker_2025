@@ -4,8 +4,8 @@ import type {
   SellProcessingResult,
   SellLineInput,
   SellTotals,
-  TradeProcessedItem,
-  TradeRejectedItem,
+  TransactionProcessedItem,
+  TransactionRejectedItem,
 } from '../../types/index.js';
 import type { StocksService } from '../stocks/index.js';
 
@@ -21,9 +21,9 @@ const buildRequestedByItem = (lines: SellLineInput[]): Map<string, number> => {
 const splitProcessableSellLines = (
   lines: SellLineInput[],
   availableByItem: Map<string, number>
-): { processable: SellLineInput[]; rejected: TradeRejectedItem[] } => {
+): { processable: SellLineInput[]; rejected: TransactionRejectedItem[] } => {
   const processable: SellLineInput[] = [];
-  const rejected: TradeRejectedItem[] = [];
+  const rejected: TransactionRejectedItem[] = [];
 
   for (const line of lines) {
     const available = availableByItem.get(line.itemId) ?? 0;
@@ -97,7 +97,7 @@ const processStackableSellLine = async (input: {
   line: SellLineInput;
   item: SellItemData;
 }): Promise<
-  { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TradeRejectedItem }
+  { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TransactionRejectedItem }
 > => {
   const { tx, stocksService, userId, now, sessionId, line, item } = input;
   const lots = await stocksService.getAvailableLotsFifoByItemId(userId, line.itemId);
@@ -182,7 +182,7 @@ const processNonStackableSellLine = async (input: {
   line: SellLineInput;
   item: SellItemData;
 }): Promise<
-  { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TradeRejectedItem }
+  { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TransactionRejectedItem }
 > => {
   const { tx, stocksService, userId, now, sessionId, line, item } = input;
 
@@ -271,11 +271,11 @@ const processSellLines = async ({
   now: string;
   processable: SellLineInput[];
   itemById: Map<string, SellItemData>;
-  initialRejected: TradeRejectedItem[];
+  initialRejected: TransactionRejectedItem[];
   stocksService: StocksService;
 }): Promise<SellProcessingResult> => {
-  const processed: TradeProcessedItem[] = [];
-  const rejected: TradeRejectedItem[] = [...initialRejected];
+  const processed: TransactionProcessedItem[] = [];
+  const rejected: TransactionRejectedItem[] = [...initialRejected];
   let totalTt = 0;
   let totalTtc = 0;
 

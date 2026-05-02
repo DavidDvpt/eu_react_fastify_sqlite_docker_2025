@@ -26,13 +26,13 @@ import type {
   StockLotOutRow,
 } from './stock.js';
 import type {
-  PurchaseLineInput,
+  BuyLineInput,
   SellLineInput,
   SellSessionRow,
-  TradeExecutionResult,
-  TradeProcessedItem,
-  TradeRejectedItem,
-} from './trade.js';
+  TransactionExecutionResult,
+  TransactionProcessedItem,
+  TransactionRejectedItem,
+} from './transaction.js';
 
 export type {
   PrismaModelClient,
@@ -58,10 +58,10 @@ export type {
   UserClient,
   ItemClient,
   CategoryClient,
-  PurchaseLineInput,
+  BuyLineInput,
   SellLineInput,
-  TradeRejectedItem,
-  TradeProcessedItem,
-  TradeExecutionResult,
+  TransactionRejectedItem,
+  TransactionProcessedItem,
+  TransactionExecutionResult,
   SellSessionRow,
 };

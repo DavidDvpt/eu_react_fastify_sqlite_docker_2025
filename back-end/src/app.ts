@@ -12,7 +12,6 @@ import {
   manageRoutes,
   sessionRoutes,
   stockRoutes,
-  tradeRoutes,
 } from './routes/index.js';
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
@@ -55,7 +54,6 @@ export function buildApp({
     app.register(manageRoutes, { prefix: API_PREFIX });
     app.register(stockRoutes, { prefix: API_PREFIX });
     app.register(sessionRoutes, { prefix: API_PREFIX });
-    app.register(tradeRoutes, { prefix: API_PREFIX });
   }
 
   return app;

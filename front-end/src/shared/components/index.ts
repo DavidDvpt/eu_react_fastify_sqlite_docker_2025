@@ -5,8 +5,8 @@ import { GenericFilter } from "./GenericFilter";
 import { GenericList } from "./GenericList";
 import { GenericTable } from "./GenericTable";
 import ModalGeneric from "./ModalGeneric";
-import { TradeActions } from "./TradeActions";
-import { TradeItemDetails } from "./TradeItemDetails";
+import { TransactionActions } from "./TransactionActions";
+import { TransactionItemDetails } from "./TransactionItemDetails";
 import { VerticalNav } from "./VerticalNav";
 
 export {
@@ -17,8 +17,8 @@ export {
   GenericList,
   GenericTable,
   ModalGeneric,
-  TradeActions,
-  TradeItemDetails,
+  TransactionActions,
+  TransactionItemDetails,
   VerticalNav,
 };
 export type { VerticalNavItem } from "./VerticalNav";
