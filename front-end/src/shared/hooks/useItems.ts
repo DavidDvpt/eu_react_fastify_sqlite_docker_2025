@@ -1,9 +1,9 @@
 import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getItems } from "@/pages/manage/services/itemsApi";
 import useCategories from "./useCategories";
 import useTypes from "./useTypes";
 import type { Items } from "../types";
+import { getItems } from "@/modules/manage";
 
 type UseItemsParams = {
   enabled?: boolean;

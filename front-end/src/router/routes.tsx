@@ -6,13 +6,12 @@ import RootLayout from "@/layouts/RootLayout";
 import GuestOnly from "@/modules/auth/guards/GuestOnly";
 import RequireAuth from "@/modules/auth/guards/RequireAuth";
 import HomePage from "@/pages/HomePage";
-import ManagePage from "@/pages/manage/ManagePage";
+import ManagePage from "@/pages/ManagePage";
 import NotFoundPage from "@/pages/NotFoundPage";
-import StockPage from "@/pages/stock/StockPage";
-import TradePage from "@/pages/trade/TradePage";
-import SignInPage from "@/pages/auth/SignInPage";
-import SignUpPage from "@/pages/auth/SignUpPage";
+import InventoryPage from "@/pages/InventoryPage";
 import { Navigate } from "react-router-dom";
+import SignInPage from "@/pages/SignInPage";
+import SignUpPage from "@/pages/SignUpPage";
 
 const routes = [
   {
@@ -42,11 +41,8 @@ const routes = [
               { index: true, element: <Navigate to="/home" replace /> },
               { path: "home", element: <HomePage /> },
               { path: "trading", element: <Navigate to="/trade" replace /> },
-              { path: "trade", element: <TradePage /> },
-              { path: "trade/:id", element: <TradePage /> },
-              { path: "trade/:id/:action", element: <TradePage /> },
-              { path: "stock", element: <StockPage /> },
-              { path: "stock/:id", element: <StockPage /> },
+              { path: "inventory", element: <InventoryPage /> },
+              { path: "inventory/:id", element: <InventoryPage /> },
               {
                 element: <LeftMenuLayout />,
                 children: [

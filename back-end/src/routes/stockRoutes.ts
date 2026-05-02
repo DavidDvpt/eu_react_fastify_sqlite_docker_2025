@@ -12,13 +12,13 @@ const stockRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const stocksService = new StocksService(app.repos.lotStock);
   app.protect();
 
-  app.get('/stock', async (request, reply) => {
+  app.get('/inventory', async (request, reply) => {
     const userId = getRequestUserId(request);
     const rows: StockByItemRow[] = await stocksService.list(userId);
     return reply.code(200).send(rows);
   });
 
-  app.get('/stock/:id', async (request, reply) => {
+  app.get('/inventory/:id', async (request, reply) => {
     const userId = getRequestUserId(request);
     const params = stockByItemParamsSchema.parse(request.params);
     const parsedQuery = stockByItemQuerySchema.safeParse(request.query);

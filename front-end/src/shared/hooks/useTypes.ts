@@ -1,8 +1,8 @@
 import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getTypes } from "@/pages/manage/services/typesApi";
 import useCategories from "./useCategories";
 import type { Types } from "../types";
+import { getTypes } from "@/modules/manage";
 
 type UseTypesParams = {
   enabled?: boolean;

@@ -1,8 +1,7 @@
-import type { GenericListColumn, ManageListRow } from "@/shared/types";
-import {
-  formatToFiveDecimals,
-  getItemImageUrl,
-} from "../../../../pages/manage/utils";
+import type { GenericListColumn } from "@/shared/types";
+
+import { formatToFiveDecimals, getItemImageUrl } from "@/modules/manage/utils";
+import type { ManageListRow } from "@/modules/manage/managePage.types";
 
 const itemColumns: GenericListColumn<ManageListRow>[] = [
   {
@@ -34,7 +33,7 @@ const itemColumns: GenericListColumn<ManageListRow>[] = [
     label: "Type",
     width: "minmax(160px, 1.4fr)",
     cellClassName: "",
-    render: (row) => ("itemTypeName" in row ? row.itemTypeName : "Unknown"),
+    render: (row) => ("typeName" in row ? row.typeName : "Unknown"),
   },
   {
     key: "value",

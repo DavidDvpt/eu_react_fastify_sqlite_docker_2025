@@ -1,8 +1,8 @@
 import AppCard from "@/shared/components/AppCard";
 import signupApi from "@/modules/auth/services/network/signupApi";
 import { useNavigate } from "react-router-dom";
-import SignUpForm from "./components/SignUpForm";
-import type { SignUpOutput } from "./validations";
+import SignUpForm from "../modules/auth/components/SignUpForm";
+import type { SignUpOutput } from "../modules/auth/validations";
 import styles from "./styles/signup.module.css";
 import { AppLink } from "@/shared/components/AppLink";
 

@@ -1,9 +1,9 @@
 import { useNavigate, useParams } from "react-router-dom";
-import StockListPanel from "./components/StockListPanel";
 
 import { cn } from "@/lib/utils";
 import { Panel } from "@/shared/components/Containers";
-import StockDetailsPanel from "./components/StockDetailsPanel";
+import StockListPanel from "../modules/inventory/components/StockListPanel";
+import StockDetailsPanel from "../modules/inventory/components/StockDetailsPanel";
 
 function StockPage() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ function StockPage() {
           "max-lg:hidden",
         ].join(" ")}
       >
-        <StockDetailsPanel onClose={() => navigate("/stock")} />
+        <StockDetailsPanel onClose={() => navigate("/inventory")} />
       </div>
     </Panel>
   );

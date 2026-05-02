@@ -10,7 +10,7 @@ import type {
 } from "@/shared/types";
 
 const API_URL = import.meta.env.VITE_API_URL;
-const STOCK_ROUTE = `${API_URL}/stock`;
+const STOCK_ROUTE = `${API_URL}/inventory`;
 
 function getStockRouteByItemId(itemId: string) {
   return `${STOCK_ROUTE}/${itemId}`;

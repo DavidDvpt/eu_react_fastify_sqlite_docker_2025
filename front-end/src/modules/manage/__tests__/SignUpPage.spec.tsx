@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import SignUpPage from "../SignUpPage";
+import SignUpPage from "../../../pages/SignUpPage";
 
 const mockSignupApi = vi.fn();
 const mockNavigate = vi.fn();
@@ -13,9 +13,10 @@ vi.mock("@/modules/auth/services/network/signupApi", () => ({
 }));
 
 vi.mock("react-router-dom", async () => {
-  const actual = await vi.importActual<typeof import("react-router-dom")>(
-    "react-router-dom"
-  );
+  const actual =
+    await vi.importActual<typeof import("react-router-dom")>(
+      "react-router-dom",
+    );
   return {
     ...actual,
     useNavigate: () => mockNavigate,
@@ -50,12 +51,12 @@ describe("SignUpPage", () => {
     render(
       <MemoryRouter>
         <SignUpPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Inscription")).toBeInTheDocument();
     expect(
-      screen.getByRole("link", { name: "Deja inscrit ? Connexion" })
+      screen.getByRole("link", { name: "Deja inscrit ? Connexion" }),
     ).toBeInTheDocument();
   });
 
@@ -68,10 +69,12 @@ describe("SignUpPage", () => {
     render(
       <MemoryRouter>
         <SignUpPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    await userEvent.click(screen.getByRole("button", { name: "mock-submit-signup" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "mock-submit-signup" }),
+    );
 
     await waitFor(() => {
       expect(mockSignupApi).toHaveBeenCalledWith({
@@ -81,7 +84,9 @@ describe("SignUpPage", () => {
         email: "frederic@test.com",
         password: "password123",
       });
-      expect(mockNavigate).toHaveBeenCalledWith("/auth/signin", { replace: true });
+      expect(mockNavigate).toHaveBeenCalledWith("/auth/signin", {
+        replace: true,
+      });
     });
   });
 });

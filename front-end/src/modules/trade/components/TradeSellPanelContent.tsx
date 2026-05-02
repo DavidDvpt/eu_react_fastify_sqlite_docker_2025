@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools";
-import { sellTrade } from "../services/tradeApi";
+import { sellTrade } from "../../../lib/services/tradeApi";
 
 import type { TradeFilterRow, TradeSellFormValues } from "@/shared/types";
 

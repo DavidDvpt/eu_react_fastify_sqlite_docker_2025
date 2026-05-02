@@ -2,8 +2,8 @@ import AppCard from "@/shared/components/AppCard";
 import { authMeThunk } from "@/modules/auth";
 import signinApi from "@/modules/auth/services/network/signinApi";
 import { useAppDispatch } from "@/store/hooks";
-import SignInForm from "./components/SignInForm";
-import type { LoginOutput } from "./validations";
+import SignInForm from "../modules/auth/components/SignInForm";
+import type { LoginOutput } from "../modules/auth/validations";
 import styles from "./styles/signin.module.css";
 import { AppLink } from "@/shared/components/AppLink";
 function SignInPage() {

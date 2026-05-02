@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Panel } from "@/shared/components/Containers";
 
-import type { GenericFilterContext, ManageTab } from "@/shared/types";
-import { ManageTable } from "./components/ManageTable";
-import { MANAGE_TABS } from "./managePage.utils";
+import type { GenericFilterContext } from "@/shared/types";
 import StringTools from "@/shared/tools/stringTools";
+import { MANAGE_TABS } from "@/modules/manage/managePage.utils";
+import { ManageTable } from "@/modules/manage/components/ManageTable";
+import type { ManageTab } from "@/modules/manage/managePage.types";
 
 function ManagePage() {
   const { tab } = useParams();

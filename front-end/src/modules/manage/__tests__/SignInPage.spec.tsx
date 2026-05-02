@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import SignInPage from "../SignInPage";
+import SignInPage from "../../../pages/SignInPage";
 
 const mockDispatch = vi.fn();
 const mockSigninApi = vi.fn();
@@ -43,11 +43,13 @@ describe("SignInPage", () => {
     render(
       <MemoryRouter>
         <SignInPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(screen.getByText("Connexion")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "S'inscrire" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("link", { name: "S'inscrire" }),
+    ).toBeInTheDocument();
   });
 
   it("dispatches authMeThunk after successful signin", async () => {
@@ -57,10 +59,12 @@ describe("SignInPage", () => {
     render(
       <MemoryRouter>
         <SignInPage />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
-    await userEvent.click(screen.getByRole("button", { name: "mock-submit-signin" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "mock-submit-signin" }),
+    );
 
     await waitFor(() => {
       expect(mockSigninApi).toHaveBeenCalledWith({

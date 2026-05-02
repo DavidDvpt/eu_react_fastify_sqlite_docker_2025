@@ -17,13 +17,13 @@ function InventoryList() {
     useInventoryList();
 
   const onSelectedItem = (itemId: string) => {
-    // Si on est sur la liste (/stock) et qu'on clique sur un élément, on navigue vers /stock/{itemId}
-    // Si on est déjà sur une page de détail (/stock/{itemId}), on ne fait rien
+    // Si on est sur la liste (/inventory) et qu'on clique sur un élément, on navigue vers /inventory/{itemId}
+    // Si on est déjà sur une page de détail (/inventory/{itemId}), on ne fait rien
     // Le composant useInventoryList gérera le rafraîchissement automatique via l'hook useStock
     const path =
       id === null && itemId
         ? STOCK_ROUTE.replace(":id", itemId)
-        : `/stock/${itemId}`;
+        : `/inventory/${itemId}`;
 
     navigate({
       pathname: path,
