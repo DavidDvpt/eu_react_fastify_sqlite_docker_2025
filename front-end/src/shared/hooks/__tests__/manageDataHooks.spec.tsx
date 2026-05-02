@@ -6,11 +6,7 @@ import useCategories from "../useCategories";
 import useTypes from "../useTypes";
 import useItems from "../useItems";
 
-const {
-  getCategoriesMock,
-  getTypesMock,
-  getItemsMock,
-} = vi.hoisted(() => ({
+const { getCategoriesMock, getTypesMock, getItemsMock } = vi.hoisted(() => ({
   getCategoriesMock: vi.fn(),
   getTypesMock: vi.fn(),
   getItemsMock: vi.fn(),
@@ -31,9 +27,7 @@ vi.mock("@/pages/manage/services/itemsApi", () => ({
 function createWrapper(queryClient: QueryClient) {
   return function Wrapper({ children }: { children: ReactNode }) {
     return (
-      <QueryClientProvider client={queryClient}>
-        {children}
-      </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
     );
   };
 }
@@ -71,7 +65,7 @@ describe("manage data hooks", () => {
     });
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
-    const { result } = renderHook(() => useTypes(), {
+    const { result } = renderHook(() => useTypes({}), {
       wrapper: createWrapper(queryClient),
     });
 
