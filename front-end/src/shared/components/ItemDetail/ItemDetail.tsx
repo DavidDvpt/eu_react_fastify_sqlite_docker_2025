@@ -1,59 +1,75 @@
 // eu_react_fastify_docker/front-end/src/shared/components/ItemDetails.tsx
-import type { Item } from "@/shared/types";
-import type { ContainerType } from "@/shared/types/containerTypes";
+import type { ItemDetailProps } from "@/shared/types";
 import { Button } from "@/components/ui/button";
-import Section from "../Containers/Section";
+import { Section } from "../Containers";
+import { ImageService } from "@/shared/services";
+import { FormatTools } from "@/shared/tools";
 
-interface ItemDetailsProps {
-  item: (Item & { stock: number }) | null;
-  containerType: ContainerType;
-  onBack?: () => void;
-  onBuy?: () => void;
-  onSell?: () => void;
-  variant?: "trade" | "stock" | "manage"; // Nouvelle prop pour la variante
-}
-
-function ItemDetails({
+function ItemDetail({
   item,
-  containerType,
   onBack = () => {},
   onBuy = () => {},
   onSell = () => {},
-}: ItemDetailsProps) {
+}: ItemDetailProps) {
   if (!item) return null;
 
   const tradeButton = (
-    <Button onClick={onBuy} disabled={!onBuy}>
+    <Button
+      onClick={onBuy}
+      disabled={!onBuy}
+      className="w-[100px]"
+      size="sm"
+      variant="primary"
+    >
       Achat
     </Button>
   );
 
   const sellButton = (
-    <Button onClick={onSell} disabled={item.quantity <= 0 || !onSell}>
+    <Button
+      onClick={onSell}
+      disabled={item.quantity <= 0 || !onSell}
+      className="w-[100px]"
+      size="sm"
+      variant="primary"
+    >
       Vente
     </Button>
   );
 
   return (
-    <Section type={containerType}>
-      <div className="flex flex-col gap-2">
-        {/* Affiche les détails de l'item */}
-        <h1>{item.name}</h1>
-        <img src={`/images/${item.imageUrlId}.png`} alt={item.name} />
-        <p>Prix unitaire: {item.unitPrice}</p>
-        <p>Quantité: {item.quantity}</p>
+    <Section className="flex flex-col gap-2">
+      <h1>{item.name}</h1>
+      <div className="flex">
+        <img
+          src={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
+          alt={item.name}
+        />
+
+        <div className="px-4 gap-2">
+          <p className="my-0 mb-2">Prix unitaire: {item.value}</p>
+          <p className="my-0 mb-2">Quantité: {item.quantity}</p>
+          <p className="my-0">
+            Valeur: {FormatTools.pedFormat().format(item.totalValue)} Peds
+          </p>
+        </div>
       </div>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-end gap-2">
+        {tradeButton}
+        {sellButton}
         {onBack && (
-          <Button onClick={onBack} className="mr-2">
+          <Button
+            onClick={onBack}
+            className="w-[100px]"
+            size="sm"
+            variant="primary"
+          >
             Retour
           </Button>
         )}
-        {tradeButton}
-        {sellButton}
       </div>
     </Section>
   );
 }
 
-export default ItemDetails;
+export default ItemDetail;

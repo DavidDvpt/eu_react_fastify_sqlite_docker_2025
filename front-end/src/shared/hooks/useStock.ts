@@ -5,13 +5,13 @@ import { getStock } from "../services";
 function useStock() {
   const queryClient = useQueryClient();
   const query = useQuery({
-    queryKey: ["stock"],
+    queryKey: ["items-stock"],
     queryFn: getStock,
     staleTime: 30_000,
   });
 
   const invalidateStock = useCallback(
-    () => queryClient.invalidateQueries({ queryKey: ["stock"] }),
+    () => queryClient.invalidateQueries({ queryKey: ["items-stock"] }),
     [queryClient],
   );
 

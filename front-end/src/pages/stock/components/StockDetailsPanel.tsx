@@ -1,36 +1,26 @@
 import StockMessages from "./StockMessages";
-import DetailsItem from "./DetailsItem";
-import StockLotInList from "./StockLotList";
+
 import { Panel } from "@/shared/components/Containers";
 import type { StockDetailsPanelProps } from "@/shared/types";
 
-function StockDetailsPanel({
-  details,
-  isLoading,
-  isError,
-  onClose,
-  className,
-}: StockDetailsPanelProps) {
+import ItemDetail from "@/shared/components/ItemDetail/ItemDetail";
+import { useParams } from "react-router-dom";
+import useInventoryList from "../useInventoryList";
+
+function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
+  const { id } = useParams();
+  const { getItemData, isError, isLoading } = useInventoryList();
+
   return (
     <Panel className={`relative ${className ?? ""}`}>
-      <div className="flex h-full min-h-0 flex-col gap-4 pt-1">
-        <StockMessages
-          isError={isError}
-          isLoading={isLoading}
-          details={Boolean(details)}
-        />
+      <StockMessages
+        isError={isError}
+        isLoading={isLoading}
+        details={Boolean(id)}
+      />
 
-        {details && (
-          <>
-            <DetailsItem
-              details={details}
-              containerType="Section"
-              onBack={onClose}
-            />
-            <StockLotInList lotList={details.lotsIn} containerType="Section" />
-          </>
-        )}
-      </div>
+      <ItemDetail onBack={onClose} item={getItemData(id)} />
+      {/* <StockLotInList lotList={details.lotsIn} containerType="Section" /> */}
     </Panel>
   );
 }

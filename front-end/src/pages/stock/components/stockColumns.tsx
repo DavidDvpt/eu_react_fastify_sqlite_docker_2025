@@ -1,8 +1,11 @@
-import type { GenericListColumn, StockRow } from "@/shared/types";
+import type { GenericListColumn } from "@/shared/types";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
+import type { ItemInventory } from "../stockTypes";
 
-const stockColumns: GenericListColumn<StockRow>[] = [
+const stockColumns: GenericListColumn<
+  Pick<ItemInventory, "imageUrlId" | "name" | "quantity" | "totalValue">
+>[] = [
   {
     key: "image",
     label: "Image",
@@ -43,7 +46,7 @@ const stockColumns: GenericListColumn<StockRow>[] = [
     label: "Prix total",
     width: "minmax(120px, 1fr)",
     align: "right",
-    render: (item) => `${FormatTools.pedFormat().format(item.totalPrice)} PED`,
+    render: (item) => `${FormatTools.pedFormat().format(item.totalValue)} PED`,
     cellClassName: "text-right",
     headerClassName: "text-right",
   },

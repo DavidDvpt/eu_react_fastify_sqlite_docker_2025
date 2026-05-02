@@ -1,3 +1,5 @@
+import type { ItemInventory } from "@/pages/stock/stockTypes";
+
 export type ItemApi = {
   id: string;
   name: string;
@@ -33,7 +35,7 @@ export type Item = {
   updatedAt?: string | null;
 };
 export interface ItemDetailProps {
-  item: (Item & { quantity: number }) | null;
+  item: ItemInventory | null;
   onBack?: () => void;
   onBuy?: () => void;
   onSell?: () => void;

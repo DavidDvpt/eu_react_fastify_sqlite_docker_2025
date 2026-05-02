@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getStockDetails } from "../services";
 
-function useStockDetails(itemId: string | null) {
+function useStockDetails({ itemId }: { itemId: string | null }) {
   return useQuery({
     queryKey: ["stock", "details", itemId],
     queryFn: () => getStockDetails(itemId as string),

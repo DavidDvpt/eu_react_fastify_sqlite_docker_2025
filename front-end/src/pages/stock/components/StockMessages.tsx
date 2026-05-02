@@ -4,7 +4,7 @@ interface StockMessagesProps {
   details: boolean;
 }
 function StockMessages({ details, isError, isLoading }: StockMessagesProps) {
-  if (details || !isError || !isLoading) return null;
+  if (!isError || !isLoading) return null;
   return (
     <div className="flex min-h-full flex-col gap-4 pr-1">
       {isLoading && (

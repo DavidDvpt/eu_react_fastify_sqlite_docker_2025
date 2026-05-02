@@ -60,9 +60,6 @@ type StockLotOut = {
 };
 
 type StockDetailsPanelProps = {
-  details: StockDetails | null;
-  isLoading: boolean;
-  isError: boolean;
   onClose: () => void;
   className?: string;
 };
@@ -78,11 +75,6 @@ type StockDetails = StockRow & {
 };
 
 type StockPanelProps = {
-  rows: StockRow[];
-  isLoading: boolean;
-  isError: boolean;
-  selectedItemId: string | null;
-  onSelectItem: (itemId: string) => void;
   className?: string;
 };
 

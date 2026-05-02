@@ -4,7 +4,10 @@ import { Button } from "@/components/ui/button";
 import type { NavbarButtonType } from "@/shared/types";
 
 function NavButton(props: NavbarButtonType) {
-  const { pathname } = useLocation();
+  const location = useLocation();
+
+  // Sécurisez le résultat de useLocation
+  const pathname = location?.pathname || "/";
 
   const isActive = props.isBrand
     ? false
