@@ -5,6 +5,5 @@ export * from "./navbarTypes";
 export * from "./containerTypes";
 export * from "./genericFilterType";
 export * from "./stockTypes";
-export * from "./transactionTypes";
 export * from "./genericListTypes";
 export * from "./formTypes";

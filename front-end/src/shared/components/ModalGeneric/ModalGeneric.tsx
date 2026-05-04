@@ -10,10 +10,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { MODAL_GENERIC_VARIANTS } from "./ModalGeneric.variant";
+
+import type { ModalGenericVariant } from "./ModalGeneric.variant";
 
 interface IModalGenericProps extends PropsWithChildren {
   dialogType: "form" | "info" | "confirm";
+  variant?: ModalGenericVariant;
   isDefaultOpen?: boolean;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
   headerStyle?: string;
   contentStyle?: string;
   title?: { value: React.ReactNode; style?: string };
@@ -23,7 +29,10 @@ interface IModalGenericProps extends PropsWithChildren {
 }
 function ModalGeneric({
   dialogType = "info",
+  variant = "default",
   isDefaultOpen = true,
+  open,
+  onOpenChange,
   headerStyle,
   title,
   description,
@@ -31,12 +40,19 @@ function ModalGeneric({
   children,
   noClose = false,
 }: IModalGenericProps) {
+  const hasControlledOpen = typeof open === "boolean";
+  const variantClassName = MODAL_GENERIC_VARIANTS[variant];
+
   return (
-    <Dialog defaultOpen={isDefaultOpen}>
+    <Dialog
+      defaultOpen={!hasControlledOpen ? isDefaultOpen : undefined}
+      open={hasControlledOpen ? open : undefined}
+      onOpenChange={onOpenChange}
+    >
       {!isDefaultOpen && <DialogTrigger></DialogTrigger>}
       <DialogContent
         className={[
-          "w-auto",
+          variantClassName,
           "flex",
           "flex-col",
           noClose && "[&>button]:hidden",

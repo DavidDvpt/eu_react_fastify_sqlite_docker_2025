@@ -43,6 +43,7 @@ const routes = [
               { path: "trading", element: <Navigate to="/inventory" replace /> },
               { path: "inventory", element: <InventoryPage /> },
               { path: "inventory/:id", element: <InventoryPage /> },
+              { path: "inventory/:id/:action", element: <InventoryPage /> },
               {
                 element: <LeftMenuLayout />,
                 children: [

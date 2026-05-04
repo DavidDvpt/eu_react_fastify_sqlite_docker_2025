@@ -7,9 +7,15 @@ import ItemDetail from "@/shared/components/ItemDetail/ItemDetail";
 import { useParams } from "react-router-dom";
 import useInventoryList from "../useInventoryList";
 
-function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
+function StockDetailsPanel({
+  onClose,
+  onBuy,
+  onSell,
+  className,
+}: StockDetailsPanelProps) {
   const { id } = useParams();
   const { getItemData, isError, isLoading } = useInventoryList();
+  const item = getItemData(id);
 
   return (
     <Panel className={`relative ${className ?? ""}`}>
@@ -19,7 +25,12 @@ function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
         details={Boolean(id)}
       />
 
-      <ItemDetail onBack={onClose} item={getItemData(id)} />
+      <ItemDetail
+        onBack={onClose}
+        onBuy={() => (item ? onBuy?.(item.id) : undefined)}
+        onSell={() => (item ? onSell?.(item.id) : undefined)}
+        item={item}
+      />
       {/* <StockLotInList lotList={details.lotsIn} containerType="Section" /> */}
     </Panel>
   );

@@ -1,13 +1,31 @@
-import type { StockRow } from "./stockTypes";
+import type { StockRow } from "@/shared/types";
 
-type TransactionFilterRow = StockRow & {
+export type TransactionBuyFormValues = {
+  quantity: number;
+  fee: number;
+  buyPrice: number;
+};
+
+export type TransactionSellFormValues = {
+  quantity: number;
+  ttc: number;
+};
+
+export type TransactionPanelProps = {
+  item: TransactionFilterRow;
+  onBack: () => void;
+};
+
+export type TransactionBuyFormFieldsProps = Pick<TransactionPanelProps, "item">;
+
+export type TransactionFilterRow = StockRow & {
   itemTypeId: string | null;
   itemTypeName: string | null;
   categoryId: string | null;
   categoryName: string | null;
 };
 
-type TransactionActionsProps = {
+export type TransactionActionsProps = {
   onBuy: () => void;
   onSell: () => void;
   onBack: () => void;
@@ -18,7 +36,7 @@ type TransactionActionsProps = {
   disableSell?: boolean;
 };
 
-type TransactionItemDetailsProps = {
+export type TransactionItemDetailsProps = {
   itemName: string;
   imageUrlId: string;
   unitPrice: number;
@@ -33,23 +51,4 @@ type TransactionItemDetailsProps = {
   className?: string;
   actionsClassName?: string;
   buttonClassName?: string;
-};
-
-type TransactionBuyFormValues = {
-  quantity: number;
-  fee: number;
-  buyPrice: number;
-};
-
-type TransactionSellFormValues = {
-  quantity: number;
-  ttc: number;
-};
-
-export type {
-  TransactionFilterRow,
-  TransactionActionsProps,
-  TransactionItemDetailsProps,
-  TransactionBuyFormValues,
-  TransactionSellFormValues,
 };

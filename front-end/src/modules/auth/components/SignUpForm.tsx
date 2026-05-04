@@ -1,5 +1,5 @@
-import { TextField } from "@/components/form/fields/Textfield";
-import { GenericForm } from "@/components/form/Genericform";
+import InputRHF from "@/shared/components/form/Input/InputRHF";
+import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 import {
   signUpDefaultValues,
@@ -19,35 +19,35 @@ function SignUpForm({ className, onSubmit }: ISignUpFormProps) {
       onSubmit={onSubmit}
       className={`flex flex-col items-stretch justify-center space-y-3 ${className}`}
     >
-      <TextField
+      <InputRHF
         name="pseudo"
         label="Pseudo"
         type="text"
         autoComplete="username"
         inputClassName="py-2"
       />
-      <TextField
+      <InputRHF
         name="firstname"
         label="Prenom (optionnel)"
         type="text"
         autoComplete="given-name"
         inputClassName="py-2"
       />
-      <TextField
+      <InputRHF
         name="lastname"
         label="Nom (optionnel)"
         type="text"
         autoComplete="family-name"
         inputClassName="py-2"
       />
-      <TextField
+      <InputRHF
         name="email"
         label="Email"
         type="email"
         autoComplete="email"
         inputClassName="py-2"
       />
-      <TextField
+      <InputRHF
         name="password"
         label="Mot de passe"
         type="password"

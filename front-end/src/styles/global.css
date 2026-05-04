@@ -19,6 +19,13 @@
   --color-section-border: var(--section-border-color);
   --color-section-title: var(--section-text-color);
   --shadow-section: 0 0 5px var(--section-shadow-color);
+  --color-section-modal-bg: var(--section-modal-bg);
+  --color-section-modal-border: var(--section-modal-border-color);
+  --color-section-modal-text: var(--section-modal-text-color);
+  --shadow-section-modal: 0 0 5px var(--section-modal-shadow-color);
+  --color-modal-bg: var(--modal-bg);
+  --color-modal-border: var(--modal-border);
+  --color-modal-text: var(--modal-text);
 
   --color-input-label: var(--input-label-color);
   --color-input-bg: var(--input-bg-color);
@@ -254,6 +261,13 @@
   --section-text-color: var(--L1C2);
   --section-border-color: var(--L4C3);
   --section-shadow-color: var(--L3C2);
+  --section-modal-bg: var(--L1C2);
+  --section-modal-text-color: var(--L4C5);
+  --section-modal-border-color: var(--L1C6);
+  --section-modal-shadow-color: var(--L2C1);
+  --modal-bg: var(--L1C1);
+  --modal-text: var(--L4C4);
+  --modal-border: var(--L4C8);
 
   --radius: 0.25rem;
 
