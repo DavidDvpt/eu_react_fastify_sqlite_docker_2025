@@ -9,7 +9,7 @@ type UseWatchFieldsProps<
   TFormValues extends FieldValues,
   TTransformedValues extends FieldValues = TFormValues,
 > = {
-  control: Control<TFormValues, any, TTransformedValues>;
+  control: Control<TFormValues, object, TTransformedValues>;
   errorState: WatchFieldError<TFormValues>[] | null;
   onFieldChange: (fieldName: Path<TFormValues>, value: unknown) => void;
 };
