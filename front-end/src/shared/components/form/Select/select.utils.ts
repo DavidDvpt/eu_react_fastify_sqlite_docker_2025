@@ -1,5 +1,5 @@
 import type { SelectOption } from "@/shared/types";
 
-export function SelectOptionHelper({ id, label }: SelectOption): SelectOption {
-  return { id, label };
+export function SelectOptionHelper({ value, label }: SelectOption): SelectOption {
+  return { value, label };
 }

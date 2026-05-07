@@ -1,34 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useEffect } from "react";
-import {
-  type FieldValues,
-  FormProvider,
-  type Path,
-  type Resolver,
-  type UseFormProps,
-  useForm,
-  type SubmitHandler,
-} from "react-hook-form";
+import { useEffect } from "react";
+import { FormProvider, type Resolver, useForm } from "react-hook-form";
 import * as z4 from "zod/v4/core";
 import useWatchFields from "./hookForm/useWatchFields";
-
-type SchemaInput<TSchema extends z4.$ZodType> = z4.input<TSchema> & FieldValues;
-type SchemaOutput<TSchema extends z4.$ZodType> = z4.output<TSchema> & FieldValues;
-
-export type FormExternalError<TFormValues extends FieldValues> = {
-  key: Path<TFormValues>;
-  msg: string;
-};
-
-type GenericFormProps<TSchema extends z4.$ZodType> = {
-  externalError?: FormExternalError<SchemaInput<TSchema>>[] | null;
-  resetExternalError?: () => void;
-  defaultValues?: UseFormProps<SchemaInput<TSchema>>["defaultValues"];
-  onSubmit: SubmitHandler<SchemaOutput<TSchema>>;
-  children: React.ReactNode;
-  schema: TSchema;
-  className?: string;
-};
+import type { GenericFormProps, SchemaInput, SchemaOutput } from "./form.types";
 
 export function GenericForm<TSchema extends z4.$ZodType>({
   externalError = null,

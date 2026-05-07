@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 
 import { Section, SubSection } from "../Containers";
-import AppSelect from "../form/Select/AppSelect";
+import SelectRHF from "../form/Select/SelectRHF";
 
 import { cn } from "@/lib/utils";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -42,7 +42,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
         aria-label="Filtres de sélection"
       >
         {displayedFields.category && (
-          <AppSelect
+          <SelectRHF
             options={categoriesForSelect}
             onValueChange={(value) => updateValue("category", value)}
             placeholder="Choisir une categorie ..."
@@ -51,7 +51,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
         )}
 
         {displayedFields.type && (
-          <AppSelect
+          <SelectRHF
             options={typesForSelect}
             onValueChange={(value) => updateValue("type", value)}
             placeholder="Choisir un type ..."
@@ -60,7 +60,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
         )}
 
         {displayedFields.item && (
-          <AppSelect
+          <SelectRHF
             options={itemsForSelect}
             onValueChange={(value) => updateValue("item", value)}
             placeholder="Choisir un item"

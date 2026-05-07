@@ -1,23 +1,10 @@
 import { Eye, EyeOff } from "lucide-react";
 import { type ChangeEvent, type InputHTMLAttributes, useState } from "react";
-import { type FieldValues, type RegisterOptions } from "react-hook-form";
 
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormContext";
-
-interface InputRHFProps extends Omit<InputHTMLAttributes<HTMLInputElement>, "name"> {
-  name: string;
-  label?: string;
-  wrapperClassName?: string;
-  inputClassName?: string;
-  labelClassName?: string;
-  errorClassName?: string;
-  onInputChange?: (event: ChangeEvent<HTMLInputElement>, name: string) => void;
-  selectOnFocus?: boolean;
-  hideErrorMessage?: boolean;
-  registerOptions?: RegisterOptions<FieldValues, string>;
-}
+import type { InputRHFProps } from "../form.types";
 
 function InputRHF({
   name,
@@ -34,7 +21,7 @@ function InputRHF({
   registerOptions,
   ...props
 }: InputRHFProps) {
-  const rhf = useSafeFormContext();
+  const rhf = useSafeFormContext({ required: true });
   const [visible, setVisible] = useState(false);
 
   if (!name) return null;
@@ -50,7 +37,9 @@ function InputRHF({
   const isPasswordField = type === "password";
 
   const effectiveType =
-    isPasswordField && visible ? "text" : (type as InputHTMLAttributes<HTMLInputElement>["type"]);
+    isPasswordField && visible
+      ? "text"
+      : (type as InputHTMLAttributes<HTMLInputElement>["type"]);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onInputChange?.(event, name);
@@ -79,7 +68,9 @@ function InputRHF({
           className={cn(
             className,
             inputClassName,
-            fieldState.error ? "border-destructive-300 ring-destructive-300" : "",
+            fieldState.error
+              ? "border-destructive-300 ring-destructive-300"
+              : "",
             isPasswordField ? "pr-10" : "",
           )}
           onBlur={(event) => {
@@ -100,15 +91,26 @@ function InputRHF({
             type="button"
             className="absolute inset-y-0 right-2 inline-flex items-center text-input-label"
             onClick={() => setVisible((prev) => !prev)}
-            aria-label={visible ? "Masquer le mot de passe" : "Afficher le mot de passe"}
+            aria-label={
+              visible ? "Masquer le mot de passe" : "Afficher le mot de passe"
+            }
           >
-            {visible ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+            {visible ? (
+              <Eye className="h-4 w-4" />
+            ) : (
+              <EyeOff className="h-4 w-4" />
+            )}
           </button>
         ) : null}
       </div>
 
       {!hideErrorMessage && fieldState.error?.message ? (
-        <p className={cn("m-0 text-[0.8rem] italic text-destructive-300", errorClassName)}>
+        <p
+          className={cn(
+            "m-0 text-[0.8rem] italic text-destructive-300",
+            errorClassName,
+          )}
+        >
           {String(fieldState.error.message)}
         </p>
       ) : null}

@@ -1,25 +1,20 @@
-import type {
-  Control,
-  FieldErrors,
-  FieldValues,
-  FormState,
-  UseFormGetFieldState,
-  UseFormRegister,
-  UseFormWatch,
-} from "react-hook-form";
+import type { FieldValues } from "react-hook-form";
 import { useFormContext } from "react-hook-form";
+import type { SafeFormContext } from "../form.types";
 
-function useSafeFormContext(): {
-  control: Control<FieldValues>;
-  errors: FieldErrors;
-  formState: FormState<FieldValues>;
-  getFieldState: UseFormGetFieldState<FieldValues>;
-  register: UseFormRegister<FieldValues>;
-  watch: UseFormWatch<FieldValues>;
-} {
+function useSafeFormContext(options: {
+  required: false;
+}): SafeFormContext | null;
+function useSafeFormContext(options?: { required?: true }): SafeFormContext;
+function useSafeFormContext(options?: {
+  required?: boolean;
+}): SafeFormContext | null {
+  const required = options?.required ?? true;
   const methods = useFormContext<FieldValues>();
 
   if (!methods) {
+    if (!required) return null;
+
     throw new Error(
       "useSafeFormContext must be used inside a FormProvider (GenericForm).",
     );
