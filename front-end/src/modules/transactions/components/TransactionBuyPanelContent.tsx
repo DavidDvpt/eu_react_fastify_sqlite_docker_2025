@@ -1,116 +1,20 @@
 import { useMemo } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useFormContext, useWatch } from "react-hook-form";
-import { z } from "zod";
 
-import { GenericForm } from "@/shared/components/form/Genericform";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
-import { FormatTools } from "@/shared/tools";
+import { GenericForm } from "@/shared/components/form/Genericform";
 import { buyTransaction } from "../../../lib/services/transactionApi";
-import type {
-  TransactionBuyFormFieldsProps,
-  TransactionBuyFormValues,
-  TransactionPanelProps,
-} from "../types";
-
-const buyFormSchema = z.object({
-  quantity: z.coerce
-    .number()
-    .int()
-    .positive("La quantite doit etre superieure a 0."),
-  fee: z.preprocess((value) => {
-    if (value === "" || value === undefined || value === null) {
-      return 0;
-    }
-    return value;
-  }, z.coerce.number().nonnegative("Le fee doit etre positif ou nul.")),
-  buyPrice: z.coerce
-    .number()
-    .positive("Le prix d'achat doit etre superieur a 0."),
-});
-
-function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
-  const form = useFormContext<TransactionBuyFormValues>();
-  const quantity = useWatch({ control: form.control, name: "quantity" });
-  const fee = useWatch({ control: form.control, name: "fee" });
-  const buyPrice = useWatch({ control: form.control, name: "buyPrice" });
-  const quantityValue = Number.isFinite(quantity) ? quantity : 0;
-  const feeValue = Number.isFinite(fee) ? fee : 0;
-  const buyPriceValue = Number.isFinite(buyPrice) ? buyPrice : 0;
-
-  const unitReferenceTotal = useMemo(
-    () => quantityValue * item.unitPrice,
-    [item.unitPrice, quantityValue],
-  );
-  const buyMarkupRatio = useMemo(
-    () =>
-      unitReferenceTotal > 0 ? (buyPriceValue / unitReferenceTotal) * 100 : 0,
-    [buyPriceValue, unitReferenceTotal],
-  );
-  const markupCost = useMemo(
-    () => buyPriceValue - feeValue - unitReferenceTotal,
-    [buyPriceValue, feeValue, unitReferenceTotal],
-  );
-
-  return (
-    <>
-      <div className="flex items-start justify-between gap-3">
-        <InputRHF
-          name="quantity"
-          type="number"
-          min={1}
-          step={1}
-          registerOptions={{ valueAsNumber: true }}
-          selectOnFocus
-          label="Quantite"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
-          wrapperClassName="w-[30%] min-w-0"
-        />
-
-        <InputRHF
-          name="fee"
-          type="number"
-          min={0}
-          step="0.01"
-          registerOptions={{ valueAsNumber: true }}
-          selectOnFocus
-          label="Fee (optionnel)"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
-          wrapperClassName="w-[30%] min-w-0"
-        />
-
-        <InputRHF
-          name="buyPrice"
-          type="number"
-          min={0.01}
-          step="0.01"
-          registerOptions={{ valueAsNumber: true }}
-          selectOnFocus
-          label="Achat"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
-          wrapperClassName="w-[30%] min-w-0"
-        />
-      </div>
-
-      <div className="space-y-1 text-sm text-card-inner-title">
-        <p className="m-0">
-          Cout TT : {FormatTools.pedFormat().format(unitReferenceTotal)} PED
-        </p>
-        <p className="m-0">Marlup : {buyMarkupRatio.toFixed(2)}%</p>
-        <p
-          className={`m-0 ${markupCost < 0 ? "font-bold text-destructive-700" : ""}`}
-        >
-          Cout markup : {FormatTools.pedFormat().format(markupCost)} PED
-        </p>
-      </div>
-    </>
-  );
-}
+import { createBuyFormSchema } from "../transactionSchemas";
+import type { TransactionBuyFormValues, TransactionPanelProps } from "../types";
+import TransactionBuyFormFields from "./TransactionBuyFormFields";
 
 function TransactionBuyPanelContent({ item, onBack }: TransactionPanelProps) {
   const queryClient = useQueryClient();
+  const buyFormSchema = useMemo(
+    () => createBuyFormSchema(item.quantity),
+    [item.quantity],
+  );
 
   const buyMutation = useMutation({
     mutationFn: async (values: TransactionBuyFormValues) =>
@@ -154,7 +58,12 @@ function TransactionBuyPanelContent({ item, onBack }: TransactionPanelProps) {
       <GenericForm
         key={item.itemId}
         schema={buyFormSchema}
-        defaultValues={{ quantity: 1, fee: 0, buyPrice: item.unitPrice }}
+        defaultValues={{
+          autoCalculation: true,
+          quantity: 1,
+          fee: 0,
+          buyPrice: item.unitPrice,
+        }}
         className="space-y-4"
         onSubmit={onSubmitBuy}
       >

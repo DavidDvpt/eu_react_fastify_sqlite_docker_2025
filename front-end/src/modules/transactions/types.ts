@@ -4,6 +4,7 @@ export type TransactionBuyFormValues = {
   quantity: number;
   fee: number;
   buyPrice: number;
+  autoCalculation: boolean;
 };
 
 export type TransactionSellFormValues = {
