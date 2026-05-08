@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
-import { buyTransaction } from "../../../lib/services/transactionApi";
+import { buyTransaction } from "../transaction.api";
 import { createBuyFormSchema } from "../transactionSchemas";
 import type { TransactionBuyFormValues, TransactionPanelProps } from "../types";
 import TransactionBuyFormFields from "./TransactionBuyFormFields";

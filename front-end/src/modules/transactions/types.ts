@@ -59,3 +59,62 @@ export type TransactionItemDetailsProps = {
   actionsClassName?: string;
   buttonClassName?: string;
 };
+
+type BuyTransactionLineInput = {
+  itemId: string;
+  quantity: number;
+  tt: number;
+  ttc: number;
+  fee?: number;
+};
+
+export type BuyTransactionBody = {
+  type: "buy";
+  lines: BuyTransactionLineInput[];
+};
+
+export type SellTransactionLineInput = {
+  itemId: string;
+  quantity: number;
+  inventoryLotId?: string;
+  tt: number;
+  ttc: number;
+  fee: number;
+};
+
+export type SellTransactionBody = {
+  type: "sell";
+  lines: SellTransactionLineInput[];
+};
+
+export type TransactionProcessedItem = {
+  itemId: string;
+  quantity: number;
+};
+
+export type TransactionRejectedItem = {
+  itemId: string;
+  requestedQuantity: number;
+  availableQuantity: number;
+  reason: string;
+};
+
+export type TransactionExecutionResult = {
+  sessionId: string | null;
+  processed: TransactionProcessedItem[];
+  rejected: TransactionRejectedItem[];
+  message?: string;
+};
+
+export type RunningSellLine = {
+  sessionLineId: string;
+  sessionId: string;
+  itemId: string;
+  itemName: string;
+  inventoryLotId: string | null;
+  quantity: number;
+  tt: number;
+  ttc: number;
+  lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+  saleStatus: "RUNNING";
+};

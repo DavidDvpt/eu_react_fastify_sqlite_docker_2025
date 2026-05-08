@@ -3,9 +3,12 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
-import { sellTransaction } from "../../../lib/services/transactionApi";
+import { sellTransaction } from "../transaction.api";
 import { sellFormSchema } from "../transactionSchemas";
-import type { TransactionPanelProps, TransactionSellFormValues } from "../types";
+import type {
+  TransactionPanelProps,
+  TransactionSellFormValues,
+} from "../types";
 import TransactionSellFormFields from "./TransactionSellFormFields";
 
 function TransactionSellPanelContent({ item, onBack }: TransactionPanelProps) {
