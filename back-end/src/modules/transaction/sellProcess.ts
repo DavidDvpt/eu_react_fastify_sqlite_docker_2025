@@ -291,7 +291,8 @@ const processSellLines = async ({
       continue;
     }
 
-    const processResult = item.isStackable
+    const shouldUseFifo = item.isStackable || !line.inventoryLotId;
+    const processResult = shouldUseFifo
       ? await processStackableSellLine({
           tx,
           stocksService,
