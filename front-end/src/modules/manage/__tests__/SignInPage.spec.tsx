@@ -21,7 +21,7 @@ vi.mock("@/modules/auth", () => ({
   authMeThunk: () => mockAuthMeThunk(),
 }));
 
-vi.mock("../components/SignInForm", () => ({
+vi.mock("../../../modules/auth/components/SignInForm", () => ({
   default: ({ onSubmit }: { onSubmit: (values: unknown) => Promise<void> }) => (
     <button
       type="button"
