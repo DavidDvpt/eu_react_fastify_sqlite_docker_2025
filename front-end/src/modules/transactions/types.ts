@@ -1,5 +1,9 @@
 import type { StockRow } from "@/shared/types";
 
+export type TransactionSellFormFieldsProps = Pick<
+  TransactionPanelProps,
+  "item"
+>;
 export type TransactionBuyFormValues = {
   quantity: number;
   fee: number;
@@ -8,7 +12,9 @@ export type TransactionBuyFormValues = {
 };
 
 export type TransactionSellFormValues = {
+  autoCalculation: boolean;
   quantity: number;
+  fee: number;
   ttc: number;
 };
 

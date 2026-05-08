@@ -1,5 +1,6 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn } from "@/lib/utils";
+import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 
 type CheckboxRHFProps = {
@@ -18,6 +19,9 @@ function CheckboxRHF({
   onCheckedChange,
 }: CheckboxRHFProps) {
   const form = useFormContext();
+  useEffect(() => {
+    form.register(name);
+  }, [form, name]);
   const value = Boolean(form.watch(name));
 
   return (
