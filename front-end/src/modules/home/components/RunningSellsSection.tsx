@@ -9,9 +9,11 @@ import { Section } from "@/shared/components/Containers";
 import { ImageService } from "@/shared/services";
 import FormatTools from "@/shared/tools/formatTools";
 import useRunningSells from "../useRunningSells";
+import useUpdateRunningSellStatus from "../useUpdateRunningSellStatus";
 
 function RunningSellsSection() {
   const { rows, isLoading, isError } = useRunningSells();
+  const updateStatusMutation = useUpdateRunningSellStatus();
 
   return (
     <Section className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden">
@@ -29,6 +31,9 @@ function RunningSellsSection() {
       <div className="min-h-0 flex-1 space-y-2 overflow-auto pr-1">
         {isLoading && <div className="text-sm text-muted-foreground">Chargement...</div>}
         {isError && <div className="text-sm text-red-500">Erreur de chargement.</div>}
+        {updateStatusMutation.isError && (
+          <div className="text-sm text-red-500">Impossible de mettre a jour le status.</div>
+        )}
         {!isLoading && !isError && rows.length === 0 && (
           <div className="text-sm text-muted-foreground">Aucune vente en cours.</div>
         )}
@@ -61,14 +66,29 @@ function RunningSellsSection() {
                 <div className="text-right text-sm">{FormatTools.pedFormat().format(row.tt)}</div>
                 <div className="text-right text-sm">{FormatTools.pedFormat().format(row.ttc)}</div>
                 <div className="text-right">
-                  <Select value={row.lineStatus}>
+                  <Select
+                    value={row.saleStatus}
+                    onValueChange={(value) => {
+                      if (value === "RUNNING") {
+                        return;
+                      }
+                      updateStatusMutation.mutate({
+                        sessionLineId: row.sessionLineId,
+                        status: value as "SOLDED" | "RETURNED",
+                      });
+                    }}
+                    disabled={
+                      updateStatusMutation.isPending &&
+                      updateStatusMutation.variables?.sessionLineId === row.sessionLineId
+                    }
+                  >
                     <SelectTrigger className="h-7 w-[92px] text-[11px]">
                       <SelectValue />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="OPENNED">OPENNED</SelectItem>
-                      <SelectItem value="CLOSED">CLOSED</SelectItem>
-                      <SelectItem value="ARCHIVED">ARCHIVED</SelectItem>
+                      <SelectItem value="RUNNING">RUNNING</SelectItem>
+                      <SelectItem value="SOLDED">SOLDED</SelectItem>
+                      <SelectItem value="RETURNED">RETURNED</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>

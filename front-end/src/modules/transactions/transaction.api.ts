@@ -5,12 +5,14 @@ import type {
   RunningSellLine,
   SellTransactionBody,
   TransactionExecutionResult,
+  UpdateRunningSellLineStatusInput,
+  UpdateRunningSellLineStatusResult,
 } from "./types";
 
 const API_URL = import.meta.env.VITE_API_URL;
 const TRANSACTIONS_ROUTE = `${API_URL}/inventory/transactions`;
-const RUNNING_SELL_LINES_ROUTE = `${API_URL}/sessions/sell/
-running-lines`;
+const RUNNING_SELL_LINES_ROUTE = `${API_URL}/sessions/sell/running-lines`;
+const SELL_LINE_STATUS_ROUTE = `${API_URL}/sessions/sell/lines`;
 
 async function buyTransaction(
   body: BuyTransactionBody,
@@ -36,10 +38,23 @@ async function getRunningSellLines(): Promise<RunningSellLine[]> {
   );
 }
 
+async function updateRunningSellLineStatus(
+  input: UpdateRunningSellLineStatusInput,
+): Promise<UpdateRunningSellLineStatusResult> {
+  return axiosCrud(axiosInstance()).patch<
+    UpdateRunningSellLineStatusResult,
+    { status: "SOLDED" | "RETURNED" }
+  >(`${SELL_LINE_STATUS_ROUTE}/${input.sessionLineId}/status`, {
+    status: input.status,
+  });
+}
+
 export {
   buyTransaction,
   sellTransaction,
   getRunningSellLines,
+  updateRunningSellLineStatus,
   RUNNING_SELL_LINES_ROUTE,
+  SELL_LINE_STATUS_ROUTE,
   TRANSACTIONS_ROUTE,
 };

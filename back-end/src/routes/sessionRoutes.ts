@@ -1,6 +1,11 @@
-import { sellSessionsQuerySchema } from './sessionRoutes.schema.js';
+import { SessionService } from '../modules/index.js';
 
-import type { AppWithSessionStatsRepo } from '../types/routes.js';
+import {
+  sellSessionsQuerySchema,
+  updateSellLineStatusBodySchema,
+  updateSellLineStatusParamsSchema,
+} from './sessionRoutes.schema.js';
+
 import type { FastifyPluginCallback, FastifyRequest } from 'fastify';
 
 function getRequestUserId(request: FastifyRequest): string {
@@ -12,20 +17,42 @@ function getRequestUserId(request: FastifyRequest): string {
 }
 
 const sessionRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const sessionApp = app as AppWithSessionStatsRepo;
+  const sessionService = new SessionService(app.prisma);
   app.protect();
 
   app.get('/sessions/sell', async (request, reply) => {
     const userId = getRequestUserId(request);
     const query = sellSessionsQuerySchema.parse(request.query);
-    const rows = await sessionApp.repos.sessionStats.getSellSessions(userId, query.status);
+    const rows = await app.repos.sessionStats.getSellSessions(userId, query.status);
     return reply.code(200).send(rows);
   });
 
   app.get('/sessions/sell/running-lines', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const rows = await sessionApp.repos.sessionStats.getRunningSellLines(userId);
+    const rows = await app.repos.sessionStats.getRunningSellLines(userId);
     return reply.code(200).send(rows);
+  });
+
+  app.patch('/sessions/sell/lines/:id/status', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const params = updateSellLineStatusParamsSchema.parse(request.params);
+    const body = updateSellLineStatusBodySchema.parse(request.body);
+
+    try {
+      const result = await sessionService.updateSellLineStatus(userId, {
+        sessionLineId: params.id,
+        nextSaleStatus: body.status,
+      });
+      return reply.code(200).send(result);
+    } catch (error) {
+      if (error instanceof Error && error.message === 'SELL_RUNNING_LINE_NOT_FOUND') {
+        return reply.code(404).send({ message: 'Running sell line not found' });
+      }
+      if (error instanceof Error && error.message === 'SELL_LINE_LOT_NOT_FOUND') {
+        return reply.code(409).send({ message: 'Sell line has no linked inventory lot' });
+      }
+      throw error;
+    }
   });
 
   done();

@@ -118,3 +118,16 @@ export type RunningSellLine = {
   lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
   saleStatus: "RUNNING";
 };
+
+export type UpdateRunningSellLineStatusInput = {
+  sessionLineId: string;
+  status: "SOLDED" | "RETURNED";
+};
+
+export type UpdateRunningSellLineStatusResult = {
+  sessionId: string;
+  sessionLineId: string;
+  saleStatus: "SOLDED" | "RETURNED";
+  lineStatus: "CLOSED";
+  sessionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+};
