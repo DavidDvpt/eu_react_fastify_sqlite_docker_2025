@@ -12,17 +12,17 @@ const { getCategoriesMock, getTypesMock, getItemsMock } = vi.hoisted(() => ({
   getItemsMock: vi.fn(),
 }));
 
-vi.mock("@/pages/manage/services/categoriesApi", () => ({
-  getCategories: getCategoriesMock,
-}));
-
-vi.mock("@/pages/manage/services/typesApi", () => ({
-  getTypes: getTypesMock,
-}));
-
-vi.mock("@/pages/manage/services/itemsApi", () => ({
-  getItems: getItemsMock,
-}));
+vi.mock("@/modules/manage", async () => {
+  const actual = await vi.importActual<typeof import("@/modules/manage")>(
+    "@/modules/manage",
+  );
+  return {
+    ...actual,
+    getCategories: getCategoriesMock,
+    getTypes: getTypesMock,
+    getItems: getItemsMock,
+  };
+});
 
 function createWrapper(queryClient: QueryClient) {
   return function Wrapper({ children }: { children: ReactNode }) {

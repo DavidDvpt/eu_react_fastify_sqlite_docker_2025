@@ -23,7 +23,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock("../components/SignUpForm", () => ({
+vi.mock("../../../modules/auth/components/SignUpForm", () => ({
   default: ({ onSubmit }: { onSubmit: (values: unknown) => Promise<void> }) => (
     <button
       type="button"
