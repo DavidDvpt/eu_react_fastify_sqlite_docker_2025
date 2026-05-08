@@ -26,7 +26,7 @@ function useInventoryList() {
         filteredItems
           .map((item) => {
             const itemStock = stock.find((s) => s.itemId === item.id);
-            const totalValue = (itemStock?.quantity ?? 0) * item.value;
+            const totalValue = itemStock?.totalPrice ?? 0;
             return {
               ...item,
               quantity: itemStock?.quantity ?? 0,

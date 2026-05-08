@@ -3,7 +3,7 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
-import stockRoutes from '../stockRoutes.js';
+import stockRoutes from '../inventoryRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
@@ -135,6 +135,8 @@ describe('stockRoutes', () => {
           lotType: 'SESSION_LINE',
           quantityRemaining: 200,
           quantityInitial: 250,
+          sessionStatus: 'CLOSED',
+          lineStatus: 'CLOSED',
           quantityExported: 50,
           priceRemaining: 40,
           dateCreated: '2025-10-21 13:37:17.68',
@@ -145,6 +147,8 @@ describe('stockRoutes', () => {
           id: 'line-1',
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
+          lineStatus: 'CLOSED',
+          sessionStatus: 'CLOSED',
           tt: 20,
           ttc: 25,
           saleStatus: 'SOLDED',
@@ -173,6 +177,8 @@ describe('stockRoutes', () => {
           lotType: 'SESSION_LINE',
           quantityRemaining: 200,
           quantityInitial: 250,
+          sessionStatus: 'CLOSED',
+          lineStatus: 'CLOSED',
           quantityExported: 50,
           priceRemaining: 40,
           dateCreated: '2025-10-21 13:37:17.68',
@@ -183,6 +189,8 @@ describe('stockRoutes', () => {
           id: 'line-1',
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
+          lineStatus: 'CLOSED',
+          sessionStatus: 'CLOSED',
           tt: 20,
           ttc: 25,
           saleStatus: 'SOLDED',

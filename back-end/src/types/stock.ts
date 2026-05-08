@@ -1,4 +1,4 @@
-type StockByItemRow = {
+type InventoryByItemRow = {
   itemId: string;
   imageUrlId: string;
   name: string;
@@ -7,34 +7,38 @@ type StockByItemRow = {
   totalPrice: number;
 };
 
-type StockLotInRow = {
+type InventoryLotInRow = {
   id: string;
   lotType: string;
   quantityRemaining: number;
   quantityInitial: number;
+  sessionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+  lineStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
   quantityExported: number;
   priceRemaining: number;
   dateCreated: string;
 };
 
-type StockLotOutRow = {
+type InventoryLotOutRow = {
   id: string;
   dateCreated: string;
   quantity: number;
+  lineStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+  sessionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
   tt: number;
   ttc: number;
   saleStatus: string | null;
 };
 
-type StockItemDetails = {
+type InventoryItemDetails = {
   itemId: string;
   imageUrlId: string;
   name: string;
   unitPrice: number;
   quantity: number;
   totalPrice: number;
-  lotsIn: StockLotInRow[];
-  lotsOut: StockLotOutRow[];
+  lotsIn: InventoryLotInRow[];
+  lotsOut: InventoryLotOutRow[];
 };
 
 type StockAvailabilityRow = {
@@ -78,10 +82,10 @@ type SellProcessingResult = {
 };
 
 export type {
-  StockByItemRow,
-  StockLotInRow,
-  StockLotOutRow,
-  StockItemDetails,
+  InventoryByItemRow,
+  InventoryLotInRow,
+  InventoryLotOutRow,
+  InventoryItemDetails,
   StockAvailabilityRow,
   SellableLotRow,
   SellItemData,

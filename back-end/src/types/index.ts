@@ -1,4 +1,4 @@
-import type {
+export type {
   PrismaModelClient,
   CrudRepositoryOptions,
   ReadScope,
@@ -14,18 +14,18 @@ import type {
   ItemClient,
   CategoryClient,
 } from './prismaTypes.js';
-import type {
+export type {
   SellItemData,
   SellProcessingResult,
   SellTotals,
   SellableLotRow,
   StockAvailabilityRow,
-  StockByItemRow,
-  StockItemDetails,
-  StockLotInRow,
-  StockLotOutRow,
+  InventoryByItemRow,
+  InventoryItemDetails,
+  InventoryLotInRow,
+  InventoryLotOutRow,
 } from './stock.js';
-import type {
+export type {
   BuyLineInput,
   SellLineInput,
   SellSessionRow,
@@ -33,35 +33,3 @@ import type {
   TransactionProcessedItem,
   TransactionRejectedItem,
 } from './transaction.js';
-
-export type {
-  PrismaModelClient,
-  CrudRepositoryOptions,
-  ReadScope,
-  CrudDelegate,
-  MethodResult,
-  MethodArgs,
-  RepositoryClient,
-  LotClient,
-  PrismaLikeClient,
-  StockByItemRow,
-  StockLotInRow,
-  StockItemDetails,
-  StockLotOutRow,
-  StockAvailabilityRow,
-  SellableLotRow,
-  SellItemData,
-  SellTotals,
-  SellProcessingResult,
-  SeedPatchClient,
-  TypeClient,
-  UserClient,
-  ItemClient,
-  CategoryClient,
-  BuyLineInput,
-  SellLineInput,
-  TransactionRejectedItem,
-  TransactionProcessedItem,
-  TransactionExecutionResult,
-  SellSessionRow,
-};
