@@ -51,4 +51,3 @@ class CategoriesService {
 }
 
 export { CategoriesService };
-

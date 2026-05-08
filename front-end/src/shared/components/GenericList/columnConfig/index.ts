@@ -1,5 +1,5 @@
-import { categoryColumns } from "./categoryColumns";
-import { typeColumns } from "./typeColumns";
-import { itemColumns } from "./itemColumns";
+import { createCategoryColumns } from "./categoryColumns";
+import { createTypeColumns } from "./typeColumns";
+import { createItemColumns } from "./itemColumns";
 
-export { categoryColumns, typeColumns, itemColumns };
+export { createCategoryColumns, createTypeColumns, createItemColumns };

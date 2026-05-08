@@ -2,8 +2,11 @@ import type { GenericListColumn } from "@/shared/types";
 
 import { formatToFiveDecimals, getItemImageUrl } from "@/modules/manage/utils";
 import type { ManageListRow } from "@/modules/manage/managePage.types";
+import { getScopeLabel } from "./scopeLabel";
 
-const itemColumns: GenericListColumn<ManageListRow>[] = [
+const createItemColumns = (
+  currentUserId?: string
+): GenericListColumn<ManageListRow>[] => [
   {
     key: "image",
     label: "Image",
@@ -64,9 +67,8 @@ const itemColumns: GenericListColumn<ManageListRow>[] = [
     label: "Scope",
     width: "minmax(120px, 1fr)",
     cellClassName: "",
-    render: (row) =>
-      "userId" in row ? (row.userId ? "Custom" : "Global") : "Global",
+    render: (row) => ("userId" in row ? getScopeLabel(row.userId, currentUserId) : "System"),
   },
 ];
 
-export { itemColumns };
+export { createItemColumns };

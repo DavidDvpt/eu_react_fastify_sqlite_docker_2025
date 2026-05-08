@@ -19,7 +19,9 @@ Les scripts Prisma utilisent `dotenv -e .env`, donc ils chargent les variables d
 
 - `npm run prisma:seed`
   - Exécute le seed Prisma (`prisma db seed`).
-  - À utiliser pour injecter des données de base/dev.
+  - Comportement:
+    - Toujours: seed `system` pour `category/type/item` + migration ownership vers `SYSTEM_USER_ID`.
+    - Dev seulement (`NODE_ENV=development` ou `SEED_INCLUDE_DEV_DATA=true`): seed `useruser` pour `session/lot/session_line`.
 
 - `npm run prisma:reset`
   - Reset complet de la base + réapplication des migrations (`prisma migrate reset --force`).

@@ -1,6 +1,9 @@
 import type { GenericListColumn, ManageListRow } from "@/shared/types";
+import { getScopeLabel } from "./scopeLabel";
 
-const typeColumns: GenericListColumn<ManageListRow>[] = [
+const createTypeColumns = (
+  currentUserId?: string
+): GenericListColumn<ManageListRow>[] => [
   {
     key: "name",
     label: "Nom",
@@ -17,8 +20,8 @@ const typeColumns: GenericListColumn<ManageListRow>[] = [
     key: "scope",
     label: "Scope",
     width: "minmax(140px, 1fr)",
-    render: (type) => (type.userId ? "Custom" : "Global"),
+    render: (type) => getScopeLabel(type.userId, currentUserId),
   },
 ];
 
-export { typeColumns };
+export { createTypeColumns };

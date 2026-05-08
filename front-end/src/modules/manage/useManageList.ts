@@ -5,10 +5,11 @@ import useTypes from "../../shared/hooks/useTypes";
 
 import type { GenericListColumn } from "../../shared/types";
 import {
-  categoryColumns,
-  itemColumns,
-  typeColumns,
+  createCategoryColumns,
+  createItemColumns,
+  createTypeColumns,
 } from "../../shared/components/GenericList/columnConfig";
+import { useAppSelector } from "@/store/hooks";
 
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
 import {
@@ -32,6 +33,7 @@ function useManageListData({ activeTab }: UseManageListData): {
   errorMessage: string;
   editRoute: (id: string) => string;
 } {
+  const currentUserId = useAppSelector((state) => state.auth.user.result?.id);
   const { params } = useGenericFilterParams();
 
   const {
@@ -57,7 +59,7 @@ function useManageListData({ activeTab }: UseManageListData): {
           list: filteredTypes,
           isPending: isTypesPending,
           isError: isTypesError,
-          columns: typeColumns,
+          columns: createTypeColumns(currentUserId),
           errorMessage: `Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`,
           editRoute: getTypeEditRoute,
         };
@@ -66,7 +68,7 @@ function useManageListData({ activeTab }: UseManageListData): {
           list: filteredItems,
           isPending: isItemsPending,
           isError: isItemsError,
-          columns: itemColumns,
+          columns: createItemColumns(currentUserId),
           errorMessage: `Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`,
           editRoute: getItemEditRoute,
         };
@@ -76,7 +78,7 @@ function useManageListData({ activeTab }: UseManageListData): {
           list: categories,
           isPending: isCategoriesPending,
           isError: isCategoriesError,
-          columns: categoryColumns,
+          columns: createCategoryColumns(currentUserId),
           errorMessage: `Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`,
           editRoute: getCategoryEditRoute,
         };
@@ -92,6 +94,7 @@ function useManageListData({ activeTab }: UseManageListData): {
     isTypesError,
     isItemsError,
     isCategoriesError,
+    currentUserId,
   ]);
 
   return { ...contentValues, list: contentValues?.list ?? [] };

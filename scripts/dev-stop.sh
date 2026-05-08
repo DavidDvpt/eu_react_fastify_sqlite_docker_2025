@@ -5,6 +5,8 @@ set -e
 DB_CONTAINER="app_eu_db_dev"
 API_PORT=8020
 FRONT_PORT=5173
+DB_COMPOSE_PROJECT="app_eu_dev"
+DB_COMPOSE_FILE="docker/docker-compose.dev.yml"
 
 echo "-----------------------------------------"
 echo "🛑 DEV STOP SCRIPT"
@@ -34,7 +36,7 @@ fi
 # 3. Stop Docker DB
 echo "🛑 Stopping PostgreSQL container..."
 if docker ps --format '{{.Names}}' | grep -q "$DB_CONTAINER"; then
-  docker compose -f docker/docker-compose.dev.yml down
+  docker compose -p "$DB_COMPOSE_PROJECT" -f "$DB_COMPOSE_FILE" down
   echo "   → PostgreSQL stopped."
 else
   echo "   → PostgreSQL container not running."

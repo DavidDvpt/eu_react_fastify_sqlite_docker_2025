@@ -127,4 +127,3 @@ describe('categorieRoutes', () => {
     await app.close();
   });
 });
-

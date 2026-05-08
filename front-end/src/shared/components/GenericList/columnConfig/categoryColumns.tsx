@@ -1,6 +1,9 @@
 import type { Category, GenericListColumn } from "@/shared/types";
+import { getScopeLabel } from "./scopeLabel";
 
-const categoryColumns: GenericListColumn<Category>[] = [
+const createCategoryColumns = (
+  currentUserId?: string
+): GenericListColumn<Category>[] => [
   {
     key: "name",
     label: "Nom",
@@ -13,8 +16,8 @@ const categoryColumns: GenericListColumn<Category>[] = [
     label: "Scope",
     width: "minmax(140px, 1fr)",
     cellClassName: "text-table-body-text",
-    render: (category) => (category.userId ? "Custom" : "Global"),
+    render: (category) => getScopeLabel(category.userId, currentUserId),
   },
 ];
 
-export { categoryColumns };
+export { createCategoryColumns };

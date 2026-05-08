@@ -6,6 +6,8 @@ DB_CONTAINER="app_eu_db_dev"
 DB_PORT=5433
 API_PORT=8020
 FRONT_PORT=5173
+DB_COMPOSE_PROJECT="app_eu_dev"
+DB_COMPOSE_FILE="docker/docker-compose.dev.yml"
 
 echo "-----------------------------------------"
 echo "🚀 DEV INIT SCRIPT"
@@ -16,7 +18,7 @@ if docker ps --format '{{.Names}}' | grep -q "$DB_CONTAINER"; then
   echo "🐘 PostgreSQL container already running."
 else
   echo "🔄 Starting Docker (PostgreSQL dev)..."
-  docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d
+  docker compose -p "$DB_COMPOSE_PROJECT" -f "$DB_COMPOSE_FILE" up -d
 fi
 
 echo "⏳ Waiting for PostgreSQL on port $DB_PORT..."
@@ -29,23 +31,23 @@ echo "📦 Moving into backend directory (Prisma init)..."
 cd back-end
 
 echo "💣 Resetting database..."
-npx prisma migrate reset --force
+npx dotenv -e .env -- prisma migrate reset --force
 
 echo "🧱 Applying migrations..."
-npx prisma migrate dev --name init
+npx dotenv -e .env -- prisma migrate dev --name init
 
 echo "🔧 Generating Prisma Client..."
-npx prisma generate
+npx dotenv -e .env -- prisma generate
 
 echo "🌱 Running seed..."
-npx prisma db seed
+npx dotenv -e .env -- prisma db seed
 
 # 3. Start backend if not already running
 if nc -z localhost $API_PORT; then
   echo "⚠️ Backend already running on port $API_PORT."
 else
   echo "🚀 Starting backend dev server..."
-  npm run dev &
+  npx dotenv -e .env -- npm run dev &
 fi
 
 cd ..
