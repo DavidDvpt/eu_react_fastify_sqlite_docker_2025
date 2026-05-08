@@ -7,13 +7,16 @@ import { Prisma } from '../../../prisma/generated/client.js';
 const getInventorySql = (userId: string) => Prisma.sql`
   SELECT
     i.id AS item_id,
+    i.image_url_id,
+    i.name,
+    i.value AS unit_price,
     COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
     COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
   FROM item i
   JOIN lot l ON l.item_id = i.id AND l.is_active = true
   WHERE l.user_id = ${userId}
     AND l.quantity_remaining > 0
-  GROUP BY i.id, i.value
+  GROUP BY i.id, i.image_url_id, i.name, i.value
 `;
 
 /**
@@ -23,6 +26,9 @@ const getInventorySql = (userId: string) => Prisma.sql`
 const getInventoryByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
   SELECT
     i.id AS item_id,
+    i.image_url_id,
+    i.name,
+    i.value AS unit_price,
     COALESCE(SUM(l.quantity_remaining), 0) AS quantity,
     COALESCE(SUM(l.quantity_remaining * i.value), 0) AS total_price
   FROM item i
@@ -30,7 +36,7 @@ const getInventoryByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
   WHERE l.user_id = ${userId}
     AND i.id = ${itemId}
     AND l.quantity_remaining > 0
-  GROUP BY i.id, i.value
+  GROUP BY i.id, i.image_url_id, i.name, i.value
 `;
 
 /**

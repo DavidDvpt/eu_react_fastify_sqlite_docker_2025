@@ -25,6 +25,17 @@ async function responseError(err: AxiosError<BackendErrorBody>) {
   }
 
   const { status, response, message } = err;
+  const requestUrl = err.config?.url ?? "";
+  const isMeRequest = requestUrl.includes("/auth/me");
+
+  if (
+    status === 401 &&
+    isMeRequest &&
+    typeof window !== "undefined" &&
+    window.location.pathname !== "/auth/signin"
+  ) {
+    window.location.replace("/auth/signin");
+  }
 
   const info = response.data?.message ?? "inconnu";
 
