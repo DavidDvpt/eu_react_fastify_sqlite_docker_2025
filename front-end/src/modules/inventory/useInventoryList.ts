@@ -32,8 +32,7 @@ function useInventoryList() {
               quantity: itemStock?.quantity ?? 0,
               totalValue,
             };
-          })
-          .filter((f) => f.quantity !== 0) ?? []
+          }) ?? []
       );
     }
     return [];
