@@ -47,7 +47,7 @@ function RunningSellsSection() {
 
             return (
               <div
-                key={row.sessionLineId}
+                key={row.groupKey}
                 className="grid grid-cols-[32px_minmax(120px,1fr)_52px_72px_72px_92px] items-center gap-2 rounded border p-2"
               >
                 {imageUrl ? (
@@ -73,13 +73,15 @@ function RunningSellsSection() {
                         return;
                       }
                       updateStatusMutation.mutate({
-                        sessionLineId: row.sessionLineId,
+                        sessionLineIds: row.sessionLineIds,
                         status: value as "SOLDED" | "RETURNED",
                       });
                     }}
                     disabled={
                       updateStatusMutation.isPending &&
-                      updateStatusMutation.variables?.sessionLineId === row.sessionLineId
+                      row.sessionLineIds.some((id) =>
+                        updateStatusMutation.variables?.sessionLineIds?.includes(id),
+                      )
                     }
                   >
                     <SelectTrigger className="h-7 w-[92px] text-[11px]">

@@ -1,3 +1,7 @@
+import { readFile } from 'node:fs/promises';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
 import {
   CategoryRepository,
   ItemRepository,
@@ -13,8 +17,25 @@ import { USERS } from './seedDatas/user.js';
 const itemCategoryRepository = new CategoryRepository(prismaClient);
 const itemTypesRepository = new TypeRepository(prismaClient);
 const itemRepository = new ItemRepository(prismaClient);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const installSessionLineSoldedArchiveTrigger = async () => {
+  const triggerSqlFilePath = join(__dirname, 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
+  const triggerSql = await readFile(triggerSqlFilePath, 'utf-8');
+  const statements = triggerSql
+    .split('\n-- @statement-break\n')
+    .map((statement) => statement.trim())
+    .filter((statement) => statement.length > 0);
+
+  for (const statement of statements) {
+    await prismaClient.$executeRawUnsafe(statement);
+  }
+};
 
 const seedSystemData = async () => {
+  await installSessionLineSoldedArchiveTrigger();
+
   const systemUser = SYSTEM_USER_ID ? USERS.find((user) => user.id === SYSTEM_USER_ID) : undefined;
 
   if (systemUser) {
