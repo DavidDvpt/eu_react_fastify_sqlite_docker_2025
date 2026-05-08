@@ -1,5 +1,3 @@
-import type { TransactionStatus } from '../../prisma/generated/client.js';
-
 type BuyLineInput = {
   itemId: string;
   quantity: number;
@@ -35,20 +33,10 @@ type TransactionExecutionResult = {
   rejected: TransactionRejectedItem[];
 };
 
-type SellSessionRow = {
-  sessionId: string;
-  name: string;
-  quantity: number;
-  totalPrice: number;
-  linesTotal: number;
-  saleStatus: TransactionStatus | null;
-};
-
 export type {
   BuyLineInput,
   SellLineInput,
   TransactionRejectedItem,
   TransactionProcessedItem,
   TransactionExecutionResult,
-  SellSessionRow,
 };

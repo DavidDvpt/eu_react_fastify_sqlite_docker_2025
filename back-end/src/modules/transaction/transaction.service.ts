@@ -14,7 +14,7 @@ import type {
   TransactionProcessedItem,
   TransactionRejectedItem,
 } from '../../types/index.js';
-import type { StocksService } from '../stocks/index.js';
+import type { StocksService } from '../inventory/index.js';
 
 class TransactionService {
   constructor(

@@ -25,4 +25,27 @@ const getSellSessionsSql = (userId: string, status?: TransactionStatus) => {
   `;
 };
 
-export { getSellSessionsSql };
+const getRunningSellLinesSql = (userId: string) => Prisma.sql`
+  SELECT
+    sl.id AS session_line_id,
+    sl.session_id,
+    sl.item_id,
+    i.name AS item_name,
+    sl.inventory_lot_id,
+    sl.quantity,
+    sl.tt,
+    sl.ttc,
+    sl.line_status,
+    sl.sale_status
+  FROM session_line sl
+  JOIN session s ON s.id = sl.session_id
+  JOIN item i ON i.id = sl.item_id
+  WHERE sl.user_id = ${userId}
+    AND s.user_id = ${userId}
+    AND sl.line_type = 'OUT'
+    AND sl.sale_status = 'RUNNING'
+    AND s.session_type = 'TRADE'
+  ORDER BY sl.session_id, sl.id
+`;
+
+export { getSellSessionsSql, getRunningSellLinesSql };

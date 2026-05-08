@@ -22,6 +22,12 @@ const sessionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(rows);
   });
 
+  app.get('/sessions/sell/running-lines', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const rows = await sessionApp.repos.sessionStats.getRunningSellLines(userId);
+    return reply.code(200).send(rows);
+  });
+
   done();
 };
 

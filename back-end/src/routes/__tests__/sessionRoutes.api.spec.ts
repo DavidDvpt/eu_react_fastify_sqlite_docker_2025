@@ -16,6 +16,7 @@ describe('sessionRoutes', () => {
 
     const sessionStats = {
       getSellSessions: vi.fn(),
+      getRunningSellLines: vi.fn(),
     };
 
     app.decorate('repos', { sessionStats } as unknown as FastifyInstance['repos']);
@@ -59,6 +60,48 @@ describe('sessionRoutes', () => {
         quantity: 100,
         totalPrice: 145,
         linesTotal: 2,
+        saleStatus: 'RUNNING',
+      },
+    ]);
+    await app.close();
+  });
+
+  it('GET /api/v1/sessions/sell/running-lines returns running sell lines for authenticated user', async () => {
+    const { app, sessionStats } = buildApp();
+    vi.mocked(sessionStats.getRunningSellLines).mockResolvedValueOnce([
+      {
+        sessionLineId: 'line-1',
+        sessionId: 'session-1',
+        itemId: 'item-1',
+        itemName: 'Oil',
+        inventoryLotId: 'lot-1',
+        quantity: 10,
+        tt: 100,
+        ttc: 112,
+        lineStatus: 'OPENNED',
+        saleStatus: 'RUNNING',
+      },
+    ]);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/sessions/sell/running-lines`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(sessionStats.getRunningSellLines).toHaveBeenCalledWith('user-1');
+    expect(res.json()).toEqual([
+      {
+        sessionLineId: 'line-1',
+        sessionId: 'session-1',
+        itemId: 'item-1',
+        itemName: 'Oil',
+        inventoryLotId: 'lot-1',
+        quantity: 10,
+        tt: 100,
+        ttc: 112,
+        lineStatus: 'OPENNED',
         saleStatus: 'RUNNING',
       },
     ]);

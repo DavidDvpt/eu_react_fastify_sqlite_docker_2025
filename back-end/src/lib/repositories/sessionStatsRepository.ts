@@ -1,8 +1,9 @@
-import { getSellSessionsSql } from './sessionStatsRepository.sqlraw.js';
+import { getRunningSellLinesSql, getSellSessionsSql } from './sessionStatsRepository.sqlraw.js';
 
 import type { Prisma } from '../../../prisma/generated/client.js';
 import type { TransactionStatus } from '../../../prisma/generated/client.js';
-import type { PrismaLikeClient, SellSessionRow } from '../../types/index.js';
+import type { RunningSellLineRow, SellSessionRow } from '../../modules/session/session.type.js';
+import type { PrismaLikeClient } from '../../types/index.js';
 
 export class SessionStatsRepository {
   constructor(private readonly client: PrismaLikeClient) {}
@@ -26,6 +27,36 @@ export class SessionStatsRepository {
       totalPrice:
         typeof row.total_price === 'number' ? row.total_price : Number(row.total_price.toString()),
       linesTotal: typeof row.lines_total === 'number' ? row.lines_total : Number(row.lines_total),
+      saleStatus: row.sale_status,
+    }));
+  }
+
+  async getRunningSellLines(userId: string): Promise<RunningSellLineRow[]> {
+    const rows = await this.client.$queryRaw<
+      Array<{
+        session_line_id: string;
+        session_id: string;
+        item_id: string;
+        item_name: string;
+        inventory_lot_id: string | null;
+        quantity: Prisma.Decimal | number;
+        tt: Prisma.Decimal | number;
+        ttc: Prisma.Decimal | number;
+        line_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+        sale_status: 'RUNNING';
+      }>
+    >(getRunningSellLinesSql(userId));
+
+    return rows.map((row) => ({
+      sessionLineId: row.session_line_id,
+      sessionId: row.session_id,
+      itemId: row.item_id,
+      itemName: row.item_name,
+      inventoryLotId: row.inventory_lot_id,
+      quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
+      tt: typeof row.tt === 'number' ? row.tt : Number(row.tt.toString()),
+      ttc: typeof row.ttc === 'number' ? row.ttc : Number(row.ttc.toString()),
+      lineStatus: row.line_status,
       saleStatus: row.sale_status,
     }));
   }

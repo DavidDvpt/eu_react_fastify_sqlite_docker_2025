@@ -7,7 +7,7 @@ import type {
   TransactionProcessedItem,
   TransactionRejectedItem,
 } from '../../types/index.js';
-import type { StocksService } from '../stocks/index.js';
+import type { StocksService } from '../inventory/index.js';
 
 const buildRequestedByItem = (lines: SellLineInput[]): Map<string, number> => {
   const requestedByItem = new Map<string, number>();

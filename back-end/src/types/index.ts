@@ -24,12 +24,12 @@ export type {
   InventoryItemDetails,
   InventoryLotInRow,
   InventoryLotOutRow,
-} from './stock.js';
+} from '../modules/inventory/inventory.types.js';
+
 export type {
   BuyLineInput,
   SellLineInput,
-  SellSessionRow,
   TransactionExecutionResult,
   TransactionProcessedItem,
   TransactionRejectedItem,
-} from './transaction.js';
+} from '../modules/transaction/transaction.types.js';
