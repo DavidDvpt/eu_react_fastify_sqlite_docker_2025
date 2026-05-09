@@ -31,23 +31,23 @@ echo "📦 Moving into backend directory (Prisma init)..."
 cd back-end
 
 echo "💣 Resetting database..."
-npx dotenv -e .env -- prisma migrate reset --force
+npx dotenv -e .env.dev -- prisma migrate reset --force
 
 echo "🧱 Applying migrations..."
-npx dotenv -e .env -- prisma migrate dev --name init
+npx dotenv -e .env.dev -- prisma migrate dev --name init
 
 echo "🔧 Generating Prisma Client..."
-npx dotenv -e .env -- prisma generate
+npx dotenv -e .env.dev -- prisma generate
 
 echo "🌱 Running seed..."
-npx dotenv -e .env -- prisma db seed
+npx dotenv -e .env.dev -- prisma db seed
 
 # 3. Start backend if not already running
 if nc -z localhost $API_PORT; then
   echo "⚠️ Backend already running on port $API_PORT."
 else
   echo "🚀 Starting backend dev server..."
-  npx dotenv -e .env -- npm run dev &
+  npx dotenv -e .env.dev -- npm run dev &
 fi
 
 cd ..

@@ -2,7 +2,7 @@
 
 ## Prisma scripts
 
-Les scripts Prisma utilisent `dotenv -e .env`, donc ils chargent les variables du fichier `.env` du dossier `back-end`.
+Les scripts Prisma utilisent `dotenv -e .env.dev`, donc ils chargent les variables du fichier `.env.dev` du dossier `back-end`.
 
 - `npm run prisma:generate`
   - Génère le client Prisma à partir de `prisma/schema.prisma`.
