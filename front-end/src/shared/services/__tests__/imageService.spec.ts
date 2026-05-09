@@ -7,30 +7,36 @@ describe("ImageService", () => {
   });
 
   it("builds encoded image url when API base url exists", () => {
+    const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL ?? "";
     const apiUrl = import.meta.env.VITE_API_URL ?? "";
+    const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
     const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
+    const expectedBaseUrl =
+      normalizedImageBaseUrl || (normalizedApiUrl ? `${normalizedApiUrl}/assets/images` : "");
     const result = ImageService.getItemImageUrl("A B");
 
-    if (!normalizedApiUrl) {
+    if (!expectedBaseUrl) {
       expect(result).toBeNull();
       return;
     }
 
-    expect(result).toBe(
-      `${normalizedApiUrl}/storage/images/${encodeURIComponent("A B")}`
-    );
+    expect(result).toBe(`${expectedBaseUrl}/${encodeURIComponent("A B")}`);
   });
 
   it("supports micro size", () => {
+    const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL ?? "";
     const apiUrl = import.meta.env.VITE_API_URL ?? "";
+    const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
     const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
+    const expectedBaseUrl =
+      normalizedImageBaseUrl || (normalizedApiUrl ? `${normalizedApiUrl}/assets/images` : "");
     const result = ImageService.getItemImageUrl("123", "micro");
 
-    if (!normalizedApiUrl) {
+    if (!expectedBaseUrl) {
       expect(result).toBeNull();
       return;
     }
 
-    expect(result).toBe(`${normalizedApiUrl}/storage/images/123?size=micro`);
+    expect(result).toBe(`${expectedBaseUrl}/123?size=micro`);
   });
 });

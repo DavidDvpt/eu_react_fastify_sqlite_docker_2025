@@ -5,6 +5,8 @@ services:
     build:
       context: ../back-end
       dockerfile: Dockerfile.api
+    extra_hosts:
+      - "em.assets.test:192.168.1.129"
     environment:
       DATABASE_URL: "file:/data/prod.sqlite"
     volumes:

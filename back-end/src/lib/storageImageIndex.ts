@@ -2,7 +2,7 @@ import { mkdir, readdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const IMAGE_FILE_PATTERN = /^(\d+)(Micro|Normal)\.jpg$/;
-const INDEX_FILE_NAME = '.image-index.json';
+const INDEX_FILE_NAME = 'image-index.json';
 
 type ImageSize = 'Micro' | 'Normal';
 
@@ -81,6 +81,13 @@ async function loadStorageImageIndex(
   const raw = await readFile(indexPath, 'utf8');
   const parsed = JSON.parse(raw) as Partial<StorageImageIndex>;
 
+  return validateStorageImageIndex(parsed, indexPath);
+}
+
+function validateStorageImageIndex(
+  parsed: Partial<StorageImageIndex>,
+  sourceLabel: string
+): StorageImageIndex {
   if (
     !parsed ||
     typeof parsed !== 'object' ||
@@ -89,15 +96,24 @@ async function loadStorageImageIndex(
     !parsed.normal ||
     typeof parsed.normal !== 'object'
   ) {
-    throw new Error(`Invalid storage image index at ${indexPath}`);
+    throw new Error(`Invalid storage image index at ${sourceLabel}`);
   }
 
   return {
     generatedAt:
       typeof parsed.generatedAt === 'string' ? parsed.generatedAt : new Date(0).toISOString(),
-    micro: parsed.micro as Record<string, string>,
-    normal: parsed.normal as Record<string, string>,
+    micro: parsed.micro,
+    normal: parsed.normal,
   };
+}
+
+async function downloadStorageImageIndex(remoteUrl: string): Promise<StorageImageIndex> {
+  const response = await fetch(remoteUrl);
+  if (!response.ok) {
+    throw new Error(`Unable to download storage image index from ${remoteUrl}`);
+  }
+  const parsed = (await response.json()) as Partial<StorageImageIndex>;
+  return validateStorageImageIndex(parsed, remoteUrl);
 }
 
 export {
@@ -105,6 +121,7 @@ export {
   buildStorageImageIndex,
   getDefaultStorageIndexPath,
   loadStorageImageIndex,
+  downloadStorageImageIndex,
   writeStorageImageIndex,
 };
 export type { StorageImageIndex };
