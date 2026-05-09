@@ -1,0 +1,30 @@
+FROM node:24-alpine3.22 AS deps
+WORKDIR /app/back-end
+COPY back-end/package*.json ./
+RUN npm ci
+
+FROM deps AS build
+WORKDIR /app/back-end
+COPY back-end/ ./
+RUN npm run build
+RUN npx prisma generate
+
+FROM node:24-alpine3.22 AS runtime
+WORKDIR /app/back-end
+ENV NODE_ENV=production
+
+RUN apk update && apk upgrade --no-cache
+
+COPY back-end/package*.json ./
+RUN npm ci --omit=dev
+
+COPY --from=build /app/back-end/dist ./dist
+COPY --from=build /app/back-end/prisma ./prisma
+COPY --from=build /app/back-end/prisma.config.ts ./prisma.config.ts
+COPY --from=build /app/back-end/scripts ./scripts
+COPY --from=build /app/back-end/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /app/back-end/node_modules/@prisma ./node_modules/@prisma
+
+EXPOSE 8020
+
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]

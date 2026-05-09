@@ -1,28 +1,33 @@
-version: "3.9"
-
 services:
   api:
     build:
-      context: ../back-end
-      dockerfile: Dockerfile.api
-    extra_hosts:
-      - "em.assets.test:192.168.1.129"
+      context: ..
+      dockerfile: docker/Dockerfile.api.prod
+    image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
     environment:
-      DATABASE_URL: "file:/data/prod.sqlite"
-    volumes:
-      - sqlite-prod:/data
-    # API NON exposée (tu ne veux qu'un seul port externe)
+      PORT: "8020"
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
     expose:
-      - "3000"
+      - "8020"
+    restart: unless-stopped
+    networks:
+      - ser5-network
 
   front:
     build:
-      context: ../front-end
-      dockerfile: Dockerfile.front
-    ports:
-      - "8080:80" # unique port externe
+      context: ..
+      dockerfile: docker/Dockerfile.front.prod
+      args:
+        VITE_API_URL: ${VITE_API_URL:-http://api:8020}
+    image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-front:${IMAGE_TAG:-latest}
+    expose:
+      - "8019"
+    restart: unless-stopped
     depends_on:
       - api
+    networks:
+      - ser5-network
 
-volumes:
-  sqlite-prod:
+networks:
+  ser5-network:
+    external: true
