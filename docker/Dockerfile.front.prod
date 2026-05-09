@@ -5,7 +5,7 @@ RUN npm ci
 COPY front-end/ ./
 ARG VITE_API_URL
 ENV VITE_API_URL=${VITE_API_URL}
-RUN npm run build
+RUN npm run build:docker
 
 FROM nginx:1.27-alpine AS runtime
 COPY --from=build /app/front-end/dist /usr/share/nginx/html

@@ -1,0 +1,27 @@
+services:
+  api:
+    image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
+    container_name: entropia-manager-api
+    restart: unless-stopped
+    environment:
+      PORT: "8020"
+      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+    expose:
+      - "8020"
+    networks:
+      - ser5-network
+
+  front:
+    image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-front:${IMAGE_TAG:-latest}
+    container_name: entropia-manager-front
+    restart: unless-stopped
+    expose:
+      - "8019"
+    depends_on:
+      - api
+    networks:
+      - ser5-network
+
+networks:
+  ser5-network:
+    external: true

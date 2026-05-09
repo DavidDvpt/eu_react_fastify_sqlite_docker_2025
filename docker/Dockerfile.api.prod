@@ -27,4 +27,4 @@ COPY --from=build /app/back-end/node_modules/@prisma ./node_modules/@prisma
 
 EXPOSE 8020
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/server.js"]
