@@ -75,44 +75,44 @@ describe('imageRoutes', () => {
     return { app };
   }
 
-  it('GET /api/v1/storage/images/:id returns 400 for invalid image id', async () => {
+  it('GET /api/v1/assets/images/:id returns 400 for invalid image id', async () => {
     const { app } = buildApp();
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/abc` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/assets/images/abc` });
 
     expect(res.statusCode).toBe(400);
     await app.close();
   });
 
-  it('GET /api/v1/storage/images/:id returns 400 for invalid size query', async () => {
+  it('GET /api/v1/assets/images/:id returns 400 for invalid size query', async () => {
     const { app } = buildApp();
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/storage/images/123?size=large`,
+      url: `${API_PREFIX}/assets/images/123?size=large`,
     });
 
     expect(res.statusCode).toBe(400);
     await app.close();
   });
 
-  it('GET /api/v1/storage/images/:id returns 404 when image is missing', async () => {
+  it('GET /api/v1/assets/images/:id returns 404 when image is missing', async () => {
     const { app } = buildApp();
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/999` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/assets/images/999` });
 
     expect(res.statusCode).toBe(404);
     await app.close();
   });
 
-  it('GET /api/v1/storage/images/:id returns image/jpeg when found (default normal)', async () => {
+  it('GET /api/v1/assets/images/:id returns image/jpeg when found (default normal)', async () => {
     const { app } = buildApp();
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/storage/images/123` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/assets/images/123` });
 
     expect(res.statusCode).toBe(200);
     expect(res.headers['content-type']).toContain('image/jpeg');
@@ -120,13 +120,13 @@ describe('imageRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/storage/images/:id?size=micro returns image/jpeg when found', async () => {
+  it('GET /api/v1/assets/images/:id?size=micro returns image/jpeg when found', async () => {
     const { app } = buildApp();
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/storage/images/123?size=micro`,
+      url: `${API_PREFIX}/assets/images/123?size=micro`,
     });
 
     expect(res.statusCode).toBe(200);
