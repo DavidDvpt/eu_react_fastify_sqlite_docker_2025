@@ -37,6 +37,7 @@ export function buildApp({
       if (!requestOrigin) return cb(null, true);
       cb(null, requestOrigin === origin);
     },
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   });
 

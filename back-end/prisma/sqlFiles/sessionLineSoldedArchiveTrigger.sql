@@ -63,33 +63,24 @@ BEGIN
     JOIN lot_balance lb
       ON lb.lot_id = sll.lot_id
     GROUP BY sll.session_id
-  ),
-  to_archive AS (
-    SELECT session_id
-    FROM session_has_nonzero
-    WHERE has_nonzero_lot = 0
-  ),
-  to_close AS (
-    SELECT session_id
-    FROM session_has_nonzero
-    WHERE has_nonzero_lot = 1
   )
   UPDATE "session" s
-  SET status = 'ARCHIVED'
-  WHERE s.id IN (SELECT session_id FROM to_archive);
+  SET status = CASE
+    WHEN shn.has_nonzero_lot = 0 THEN 'ARCHIVED'::"SessionStatus"
+    ELSE 'CLOSED'::"SessionStatus"
+  END
+  FROM session_has_nonzero shn
+  WHERE s.id = shn.session_id;
 
   UPDATE "session_line" sl
-  SET line_status = 'ARCHIVED'
-  WHERE sl.session_id IN (SELECT session_id FROM to_archive);
-
-  UPDATE "session" s
-  SET status = 'CLOSED'
-  WHERE s.id IN (SELECT session_id FROM to_close);
-
-  UPDATE "session_line" sl
-  SET line_status = 'CLOSED'
-  WHERE sl.session_id IN (SELECT session_id FROM to_close)
-    AND sl.line_status = 'ARCHIVED';
+  SET line_status = s.status
+  FROM "session" s
+  WHERE sl.session_id = s.id
+    AND sl.session_id IN (
+      SELECT DISTINCT sl2.session_id
+      FROM "session_line" sl2
+      WHERE sl2.inventory_lot_id = NEW.inventory_lot_id
+    );
 
   RETURN NEW;
 END;
