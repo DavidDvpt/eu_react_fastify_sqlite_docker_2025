@@ -16,15 +16,13 @@ ENV NODE_ENV=production
 RUN apk update && apk upgrade --no-cache
 
 COPY back-end/package*.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 COPY --from=build /app/back-end/dist ./dist
 COPY --from=build /app/back-end/prisma ./prisma
 COPY --from=build /app/back-end/prisma.config.ts ./prisma.config.ts
 COPY --from=build /app/back-end/scripts ./scripts
-COPY --from=build /app/back-end/node_modules/.prisma ./node_modules/.prisma
-COPY --from=build /app/back-end/node_modules/@prisma ./node_modules/@prisma
 
 EXPOSE 8020
 
-CMD ["sh", "-c", "npx prisma migrate deploy && npx prisma db seed && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/prisma/seed.js && node dist/server.js"]

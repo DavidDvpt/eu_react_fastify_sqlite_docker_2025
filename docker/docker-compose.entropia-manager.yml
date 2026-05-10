@@ -6,6 +6,11 @@ services:
     environment:
       PORT: "8020"
       DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
+      CORS_ORIGIN: ${CORS_ORIGIN:-http://entropia-manager}
+      SYSTEM_USER_ID: ${SYSTEM_USER_ID:-}
+      SYSTEM_USER_PSEUDO: ${SYSTEM_USER_PSEUDO:?SYSTEM_USER_PSEUDO is required}
+      SYSTEM_USER_EMAIL: ${SYSTEM_USER_EMAIL:?SYSTEM_USER_EMAIL is required}
+      SYSTEM_USER_PASSWORD: ${SYSTEM_USER_PASSWORD:?SYSTEM_USER_PASSWORD is required}
     expose:
       - "8020"
     networks:

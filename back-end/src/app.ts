@@ -16,7 +16,10 @@ import {
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-const origin = process.env.CORS_ORIGIN;
+const allowedOrigins = (process.env.CORS_ORIGIN ?? '')
+  .split(',')
+  .map((value) => value.trim())
+  .filter(Boolean);
 
 export function buildApp({
   logger = true,
@@ -33,9 +36,9 @@ export function buildApp({
 
   app.register(cors, {
     origin: (requestOrigin, cb) => {
-      if (!origin) return cb(null, true);
+      if (allowedOrigins.length === 0) return cb(null, true);
       if (!requestOrigin) return cb(null, true);
-      cb(null, requestOrigin === origin);
+      cb(null, allowedOrigins.includes(requestOrigin));
     },
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,

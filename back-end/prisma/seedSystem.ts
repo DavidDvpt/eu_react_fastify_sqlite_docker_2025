@@ -12,7 +12,7 @@ import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
 import { SYSTEM_USER_ID } from './seedDatas/systemUser.js';
-import { USERS } from './seedDatas/user.js';
+import { SYSTEM_USER } from './seedDatas/user.js';
 
 const itemCategoryRepository = new CategoryRepository(prismaClient);
 const itemTypesRepository = new TypeRepository(prismaClient);
@@ -21,8 +21,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const installSessionLineSoldedArchiveTrigger = async () => {
-  const triggerSqlFilePath = join(__dirname, 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
-  const triggerSql = await readFile(triggerSqlFilePath, 'utf-8');
+  const distSqlPath = join(__dirname, 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
+  const sourceSqlPath = join(__dirname, '..', '..', 'prisma', 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
+
+  let triggerSql: string;
+  try {
+    triggerSql = await readFile(distSqlPath, 'utf-8');
+  } catch {
+    triggerSql = await readFile(sourceSqlPath, 'utf-8');
+  }
   const statements = triggerSql
     .split('\n-- @statement-break\n')
     .map((statement) => statement.trim())
@@ -36,25 +43,37 @@ const installSessionLineSoldedArchiveTrigger = async () => {
 const seedSystemData = async () => {
   await installSessionLineSoldedArchiveTrigger();
 
-  const systemUser = SYSTEM_USER_ID ? USERS.find((user) => user.id === SYSTEM_USER_ID) : undefined;
-
-  if (systemUser) {
-    await prismaClient.user.upsert({
-      where: { id: systemUser.id },
-      create: systemUser,
-      update: {
-        firstname: systemUser.firstname,
-        lastname: systemUser.lastname,
-        pseudo: systemUser.pseudo,
-        email: systemUser.email,
-        password_hash: systemUser.password_hash,
-        role: systemUser.role,
-        date_created: systemUser.date_created,
-        date_updated: systemUser.date_updated,
-        is_active: systemUser.is_active,
-      },
-    });
+  if (!SYSTEM_USER.pseudo || !SYSTEM_USER.email || !SYSTEM_USER.password_hash) {
+    throw new Error('SYSTEM_USER_* env values are required for prod seed.');
   }
+
+  const upsertedSystemUser = await prismaClient.user.upsert({
+    where: { email: SYSTEM_USER.email },
+    create: {
+      ...(SYSTEM_USER_ID ? { id: SYSTEM_USER_ID } : {}),
+      firstname: SYSTEM_USER.firstname,
+      lastname: SYSTEM_USER.lastname,
+      pseudo: SYSTEM_USER.pseudo,
+      email: SYSTEM_USER.email,
+      password_hash: SYSTEM_USER.password_hash,
+      role: SYSTEM_USER.role,
+      date_created: SYSTEM_USER.date_created,
+      date_updated: SYSTEM_USER.date_updated,
+      is_active: SYSTEM_USER.is_active,
+    },
+    update: {
+      firstname: SYSTEM_USER.firstname,
+      lastname: SYSTEM_USER.lastname,
+      pseudo: SYSTEM_USER.pseudo,
+      email: SYSTEM_USER.email,
+      password_hash: SYSTEM_USER.password_hash,
+      role: SYSTEM_USER.role,
+      date_created: SYSTEM_USER.date_created,
+      date_updated: SYSTEM_USER.date_updated,
+      is_active: SYSTEM_USER.is_active,
+    },
+  });
+  const resolvedSystemUserId = upsertedSystemUser.id;
 
   const itemCategoriesCount = await prismaClient.category.count();
   const itemTypesCount = await prismaClient.type.count();
@@ -62,56 +81,54 @@ const seedSystemData = async () => {
 
   if (!itemCategoriesCount) {
     for (const e of ITEM_CATEGORIES) {
-      await itemCategoryRepository.create({ data: e });
+      await itemCategoryRepository.create({ data: { ...e, user_id: resolvedSystemUserId } });
     }
   }
 
   if (!itemTypesCount) {
     for (const e of ITEM_TYPES) {
-      await itemTypesRepository.create({ data: e });
+      await itemTypesRepository.create({ data: { ...e, user_id: resolvedSystemUserId } });
     }
   }
 
   if (!itemsCount) {
     for (const e of ITEMS) {
-      await itemRepository.create({ data: e });
+      await itemRepository.create({ data: { ...e, user_id: resolvedSystemUserId } });
     }
   }
 
-  if (SYSTEM_USER_ID) {
-    await prismaClient.category.updateMany({
-      where: {
-        NOT: {
-          user_id: SYSTEM_USER_ID,
-        },
+  await prismaClient.category.updateMany({
+    where: {
+      NOT: {
+        user_id: resolvedSystemUserId,
       },
-      data: {
-        user_id: SYSTEM_USER_ID,
-      },
-    });
+    },
+    data: {
+      user_id: resolvedSystemUserId,
+    },
+  });
 
-    await prismaClient.type.updateMany({
-      where: {
-        NOT: {
-          user_id: SYSTEM_USER_ID,
-        },
+  await prismaClient.type.updateMany({
+    where: {
+      NOT: {
+        user_id: resolvedSystemUserId,
       },
-      data: {
-        user_id: SYSTEM_USER_ID,
-      },
-    });
+    },
+    data: {
+      user_id: resolvedSystemUserId,
+    },
+  });
 
-    await prismaClient.item.updateMany({
-      where: {
-        NOT: {
-          user_id: SYSTEM_USER_ID,
-        },
+  await prismaClient.item.updateMany({
+    where: {
+      NOT: {
+        user_id: resolvedSystemUserId,
       },
-      data: {
-        user_id: SYSTEM_USER_ID,
-      },
-    });
-  }
+    },
+    data: {
+      user_id: resolvedSystemUserId,
+    },
+  });
 };
 
 export { seedSystemData };

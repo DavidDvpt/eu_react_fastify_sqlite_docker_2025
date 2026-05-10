@@ -5,6 +5,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 COMPOSE_FILE="$ROOT_DIR/docker/docker-compose.prod.yml"
 ENV_FILE="$SCRIPT_DIR/.env"
+PLATFORM="${PLATFORM:-linux/amd64}"
 
 if [[ -f "$ENV_FILE" ]]; then
   set -a
@@ -33,14 +34,22 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
   exit 1
 fi
 
-export VITE_API_URL="${VITE_API_URL:-http://api:8020}"
+export VITE_API_URL="${VITE_API_URL}"
+export SYSTEM_USER_ID="${SYSTEM_USER_ID}"
+export SYSTEM_USER_PSEUDO="${SYSTEM_USER_PSEUDO}"
+export SYSTEM_USER_EMAIL="${SYSTEM_USER_EMAIL}"
+export SYSTEM_USER_PASSWORD="${SYSTEM_USER_PASSWORD}"`
 
 echo "-----------------------------------------"
 echo "🐳 Docker Hub build + push (prod)"
 echo "Namespace : $DOCKERHUB_NAMESPACE"
 echo "Tag       : $IMAGE_TAG"
-echo "Compose   : $COMPOSE_FILE"
+echo "Platform  : $PLATFORM"
 echo "VITE_API_URL: $VITE_API_URL"
+echo "SYSTEM_USER_ID: $SYSTEM_USER_ID"
+echo "SYSTEM_USER_PSEUDO: $SYSTEM_USER_PSEUDO"
+echo "SYSTEM_USER_EMAIL: $SYSTEM_USER_EMAIL"
+echo "SYSTEM_USER_PASSWORD: $SYSTEM_USER_PASSWORD"
 echo "-----------------------------------------"
 
 echo "[1/4] Checking Docker login..."
@@ -49,14 +58,28 @@ if ! docker info >/dev/null 2>&1; then
   exit 1
 fi
 
-echo "[2/4] Validating compose config..."
-docker compose -f "$COMPOSE_FILE" config >/dev/null
+echo "[2/4] Ensuring buildx builder..."
+if ! docker buildx inspect >/dev/null 2>&1; then
+  docker buildx create --use
+fi
+docker buildx inspect --bootstrap >/dev/null
 
-echo "[3/4] Building images..."
-docker compose -f "$COMPOSE_FILE" build
+echo "[3/4] Building + pushing API image..."
+docker buildx build \
+  --platform "$PLATFORM" \
+  -f "$ROOT_DIR/docker/Dockerfile.api.prod" \
+  -t "${DOCKERHUB_NAMESPACE}/entropia-manager-api:${IMAGE_TAG}" \
+  --push \
+  "$ROOT_DIR"
 
-echo "[4/4] Pushing images to Docker Hub..."
-docker compose -f "$COMPOSE_FILE" push
+echo "[4/4] Building + pushing Front image..."
+docker buildx build \
+  --platform "$PLATFORM" \
+  -f "$ROOT_DIR/docker/Dockerfile.front.prod" \
+  --build-arg "VITE_API_URL=$VITE_API_URL" \
+  -t "${DOCKERHUB_NAMESPACE}/entropia-manager-front:${IMAGE_TAG}" \
+  --push \
+  "$ROOT_DIR"
 
 echo "✅ Build + push complete."
 echo "API   : ${DOCKERHUB_NAMESPACE}/entropia-manager-api:${IMAGE_TAG}"

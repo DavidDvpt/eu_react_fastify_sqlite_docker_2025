@@ -71,3 +71,33 @@ Les scripts Prisma utilisent `dotenv -e .env.dev`, donc ils chargent les variabl
 - `prisma:reset` ne doit pas être utilisé en production.
 - `prisma:migrate` sert à **créer** des migrations; `prisma:deploy` sert à **appliquer** des migrations existantes.
 - Si tu utilises une base de test dédiée, pense à surcharger `DATABASE_URL` dans la commande ou l'environnement.
+
+## Deploiement SER5 (Docker Hub)
+
+Le deploiement serveur utilise `docker-compose.server.yml` (images only, pas de build sur le serveur).
+
+1. Depuis la machine de dev, copier le compose serveur sur SER5:
+
+```bash
+scp docker/docker-compose.server.yml davserv@davserv-SER:~/projects/docker/docker-compose.entropia-manager.yml
+```
+
+2. Sur SER5, preparer `~/projects/.env` (runtime):
+
+```env
+DOCKERHUB_NAMESPACE=lamouche42
+IMAGE_TAG=latest
+DATABASE_URL=postgresql://...@ser5-postgres:5432/entropia_manager_db
+CORS_ORIGIN=http://entropia-manager
+SYSTEM_USER_ID=
+SYSTEM_USER_PSEUDO=system
+SYSTEM_USER_EMAIL=system@entropia.local
+SYSTEM_USER_PASSWORD=...
+```
+
+3. Sur SER5, pull + run:
+
+```bash
+docker compose -p entropia-manager --env-file ~/projects/.env -f ~/projects/docker/docker-compose.entropia-manager.yml pull
+docker compose -p entropia-manager --env-file ~/projects/.env -f ~/projects/docker/docker-compose.entropia-manager.yml up -d
+```

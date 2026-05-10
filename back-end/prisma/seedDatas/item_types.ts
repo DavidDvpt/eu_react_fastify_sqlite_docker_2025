@@ -2,7 +2,7 @@
 import type { Prisma } from '../generated/client.js';
 import { SYSTEM_USER_ID } from './systemUser.js';
 
-const RAW_ITEM_TYPES: Omit<Prisma.ItemTypeCreateManyInput, 'user_id'>[] = [
+const RAW_ITEM_TYPES: Omit<Prisma.TypeCreateManyInput, 'user_id'>[] = [
   {
     id: '25F61687-F547-4712-8B91-786889BA6CF1',
     category_id: '88B86318-0F7B-4D68-B095-D0DC313324A5',
@@ -75,7 +75,7 @@ const RAW_ITEM_TYPES: Omit<Prisma.ItemTypeCreateManyInput, 'user_id'>[] = [
   },
 ] as const;
 
-export const ITEM_TYPES: Prisma.ItemTypeCreateManyInput[] = RAW_ITEM_TYPES.map((itemType) => ({
+export const ITEM_TYPES: Prisma.TypeCreateManyInput[] = RAW_ITEM_TYPES.map((itemType) => ({
   ...itemType,
   user_id: SYSTEM_USER_ID,
 }));

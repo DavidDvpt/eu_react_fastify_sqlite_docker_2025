@@ -12,5 +12,6 @@
     "types": ["node"],
     "verbatimModuleSyntax": true
   },
-  "include": ["src", "prisma", "scripts"]
+  "include": ["src", "prisma", "scripts"],
+  "exclude": ["**/__tests__/**"]
 }
