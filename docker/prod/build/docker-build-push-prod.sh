@@ -2,9 +2,9 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
-COMPOSE_FILE="$ROOT_DIR/docker/docker-compose.prod.yml"
-ENV_FILE="$SCRIPT_DIR/.env"
+ROOT_DIR="$(cd -- "$SCRIPT_DIR/../../.." && pwd)"
+COMPOSE_FILE="$SCRIPT_DIR/docker-compose.build-prod.yml"
+ENV_FILE="$SCRIPT_DIR/.env.prod.build"
 PLATFORM="${PLATFORM:-linux/amd64}"
 
 if [[ -f "$ENV_FILE" ]]; then
@@ -26,11 +26,6 @@ fi
 
 if [[ -z "${IMAGE_TAG:-}" ]]; then
   echo "Missing IMAGE_TAG. Example: export IMAGE_TAG='v1.0.0'"
-  exit 1
-fi
-
-if [[ -z "${DATABASE_URL:-}" ]]; then
-  echo "Missing DATABASE_URL (required by docker-compose.prod.yml)."
   exit 1
 fi
 
@@ -59,7 +54,7 @@ docker buildx inspect --bootstrap >/dev/null
 echo "[3/4] Building + pushing API image..."
 docker buildx build \
   --platform "$PLATFORM" \
-  -f "$ROOT_DIR/docker/Dockerfile.api.prod" \
+  -f "$SCRIPT_DIR/Dockerfile.api.prod" \
   -t "${DOCKERHUB_NAMESPACE}/entropia-manager-api:${IMAGE_TAG}" \
   --push \
   "$ROOT_DIR"
@@ -67,7 +62,7 @@ docker buildx build \
 echo "[4/4] Building + pushing Front image..."
 docker buildx build \
   --platform "$PLATFORM" \
-  -f "$ROOT_DIR/docker/Dockerfile.front.prod" \
+  -f "$SCRIPT_DIR/Dockerfile.front.prod" \
   --build-arg "VITE_API_URL=$VITE_API_URL" \
   -t "${DOCKERHUB_NAMESPACE}/entropia-manager-front:${IMAGE_TAG}" \
   --push \

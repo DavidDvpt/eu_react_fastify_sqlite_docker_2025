@@ -4,18 +4,6 @@ services:
       context: ..
       dockerfile: docker/Dockerfile.api.prod
     image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
-    environment:
-      PORT: "8020"
-      DATABASE_URL: ${DATABASE_URL:?DATABASE_URL is required}
-      CORS_ORIGIN: ${CORS_ORIGIN:?CORS_ORIGIN is required}
-      SYSTEM_USER_ID: ${SYSTEM_USER_ID:-}
-      SYSTEM_USER_PSEUDO: ${SYSTEM_USER_PSEUDO:?SYSTEM_USER_PSEUDO is required}
-      SYSTEM_USER_EMAIL: ${SYSTEM_USER_EMAIL:?SYSTEM_USER_EMAIL is required}
-      SYSTEM_USER_PASSWORD: ${SYSTEM_USER_PASSWORD:?SYSTEM_USER_PASSWORD is required}
-      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:?JWT_ACCESS_SECRET is required}
-      JWT_ACCESS_EXPIRES_IN: ${JWT_ACCESS_EXPIRES_IN:-24h}
-      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:?JWT_REFRESH_SECRET is required}
-      JWT_REFRESH_EXPIRES_IN: ${JWT_REFRESH_EXPIRES_IN:-7d}
     expose:
       - "8020"
     restart: unless-stopped

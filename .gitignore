@@ -2,14 +2,14 @@
 node_modules/
 
 # Env
-.env
+*/**/.env*
 .env.dev
 .env.local
 
 # Build
 dist/
 build/
-
+!docker/prod/build/
 # SQLite (ne jamais versionner la DB prod)
 database/data/*.sqlite
 database/data/*.db
