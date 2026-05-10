@@ -25,4 +25,4 @@ COPY --from=build /app/back-end/scripts ./scripts
 
 EXPOSE 8020
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/prisma/seed.js && node dist/server.js"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/prisma/seed.js && node dist/src/server.js"]

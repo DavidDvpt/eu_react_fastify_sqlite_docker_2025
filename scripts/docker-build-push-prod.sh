@@ -35,10 +35,6 @@ if [[ -z "${DATABASE_URL:-}" ]]; then
 fi
 
 export VITE_API_URL="${VITE_API_URL}"
-export SYSTEM_USER_ID="${SYSTEM_USER_ID}"
-export SYSTEM_USER_PSEUDO="${SYSTEM_USER_PSEUDO}"
-export SYSTEM_USER_EMAIL="${SYSTEM_USER_EMAIL}"
-export SYSTEM_USER_PASSWORD="${SYSTEM_USER_PASSWORD}"`
 
 echo "-----------------------------------------"
 echo "🐳 Docker Hub build + push (prod)"
@@ -46,10 +42,6 @@ echo "Namespace : $DOCKERHUB_NAMESPACE"
 echo "Tag       : $IMAGE_TAG"
 echo "Platform  : $PLATFORM"
 echo "VITE_API_URL: $VITE_API_URL"
-echo "SYSTEM_USER_ID: $SYSTEM_USER_ID"
-echo "SYSTEM_USER_PSEUDO: $SYSTEM_USER_PSEUDO"
-echo "SYSTEM_USER_EMAIL: $SYSTEM_USER_EMAIL"
-echo "SYSTEM_USER_PASSWORD: $SYSTEM_USER_PASSWORD"
 echo "-----------------------------------------"
 
 echo "[1/4] Checking Docker login..."
