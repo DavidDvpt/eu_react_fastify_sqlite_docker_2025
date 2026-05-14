@@ -21,7 +21,7 @@ set +a
 : "${REMOTE_COMPOSE_NAME:?REMOTE_COMPOSE_NAME is required}"
 : "${REMOTE_ENV_NAME:?REMOTE_ENV_NAME is required}"
 
-LOCAL_COMPOSE="$ROOT_DIR/docker/prod/docker-compose.entropia-manager.yml"
+LOCAL_COMPOSE="$ROOT_DIR/docker/prod/server/docker-compose.entropia-manager.yml"
 LOCAL_ENV_RUNTIME="$SCRIPT_DIR/.env.prod.runtime"
 
 if [[ ! -f "$LOCAL_COMPOSE" ]]; then
