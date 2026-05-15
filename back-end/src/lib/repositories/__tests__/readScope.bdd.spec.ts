@@ -1,7 +1,7 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
-import { env } from '../../../config/env.js';
 import prismaClient from '../../../../prisma/prismaClient.js';
+import { env } from '../../../config/env.js';
 import { LotRepository, CategoryRepository, ItemRepository, TypeRepository } from '../index.js';
 
 const prisma = prismaClient;
