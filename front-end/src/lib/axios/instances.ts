@@ -5,6 +5,7 @@ import {
 } from "./interceptors";
 
 const baseConfig = {
+  baseURL: import.meta.env.VITE_API_URL,
   timeout: 20_000,
 };
 
