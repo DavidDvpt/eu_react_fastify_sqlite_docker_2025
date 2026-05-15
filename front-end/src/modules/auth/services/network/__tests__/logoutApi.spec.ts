@@ -1,3 +1,4 @@
+import { env } from "@/config/env";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { mockPost, mockAxiosCrud, mockAxiosInstance } = vi.hoisted(() => ({
@@ -29,7 +30,7 @@ describe("logoutApi", () => {
     await logoutApi();
 
     expect(mockPost).toHaveBeenCalledWith(
-      `${import.meta.env.VITE_API_URL}/auth/logout`,
+      `${env.VITE_API_URL}/auth/logout`,
       {}
     );
   });

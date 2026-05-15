@@ -1,3 +1,4 @@
+import { env } from "@/config/env";
 import { describe, expect, it } from "vitest";
 import { ImageService } from "../imageService";
 
@@ -7,8 +8,8 @@ describe("ImageService", () => {
   });
 
   it("builds encoded image url when API base url exists", () => {
-    const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL ?? "";
-    const apiUrl = import.meta.env.VITE_API_URL ?? "";
+    const imageBaseUrl = env.VITE_IMAGE_BASE_URL ?? "";
+    const apiUrl = env.VITE_API_URL ?? "";
     const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
     const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
     const expectedBaseUrl =
@@ -24,8 +25,8 @@ describe("ImageService", () => {
   });
 
   it("supports micro size", () => {
-    const imageBaseUrl = import.meta.env.VITE_IMAGE_BASE_URL ?? "";
-    const apiUrl = import.meta.env.VITE_API_URL ?? "";
+    const imageBaseUrl = env.VITE_IMAGE_BASE_URL ?? "";
+    const apiUrl = env.VITE_API_URL ?? "";
     const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
     const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
     const expectedBaseUrl =

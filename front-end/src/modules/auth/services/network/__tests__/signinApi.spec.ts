@@ -1,3 +1,4 @@
+import { env } from "@/config/env";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { mockPost, mockAxiosCrud, mockAxiosInstance } = vi.hoisted(() => ({
@@ -50,7 +51,7 @@ describe("signinApi", () => {
     });
 
     expect(mockPost).toHaveBeenCalledWith(
-      `${import.meta.env.VITE_API_URL}/auth/signin`,
+      `${env.VITE_API_URL}/auth/signin`,
       {
         pseudo: "john-doe",
         password: "password123",

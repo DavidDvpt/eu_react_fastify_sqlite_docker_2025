@@ -1,8 +1,9 @@
+import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { SignUpOutput } from "@/pages/auth/validations";
+import type { SignUpOutput } from "@/modules/auth/validations";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = env.VITE_API_URL;
 
 type SignupUser = {
   id: string;

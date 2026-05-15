@@ -1,10 +1,11 @@
+import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseTypes } from "../../../lib/parsers/typeParser";
 
 import type { TypeApis, Types } from "@/shared/types";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = env.VITE_API_URL;
 const TYPES_ROUTE = `${API_URL}/types`;
 
 function getTypeRouteById(id: string) {

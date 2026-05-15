@@ -1,8 +1,9 @@
+import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { LoginOutput } from "@/pages/auth/validations";
+import type { LoginOutput } from "@/modules/auth/validations";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = env.VITE_API_URL;
 
 async function signinApi(credentials: LoginOutput) {
   try {

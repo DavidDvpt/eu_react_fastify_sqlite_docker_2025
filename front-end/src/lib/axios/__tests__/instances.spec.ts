@@ -1,12 +1,13 @@
+import { env } from "@/config/env";
 import { describe, expect, it } from "vitest";
 import { axiosInstance, axiosPublicInstance } from "../instances";
 
 describe("axios instances", () => {
   it("should have the same base config", () => {
-    expect(axiosInstance().defaults.baseURL).toBe(import.meta.env.VITE_API_URL);
+    expect(axiosInstance().defaults.baseURL).toBe(env.VITE_API_URL);
 
     expect(axiosPublicInstance.defaults.baseURL).toBe(
-      import.meta.env.VITE_API_URL
+      env.VITE_API_URL
     );
 
     expect(axiosInstance().defaults.timeout).toBe(20_000);

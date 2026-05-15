@@ -1,3 +1,4 @@
+import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import type {
@@ -9,7 +10,7 @@ import type {
   UpdateRunningSellLineStatusResult,
 } from "./types";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = env.VITE_API_URL;
 const TRANSACTIONS_ROUTE = `${API_URL}/inventory/transactions`;
 const RUNNING_SELL_LINES_ROUTE = `${API_URL}/sessions/sell/running-lines`;
 const SELL_LINE_STATUS_ROUTE = `${API_URL}/sessions/sell/lines`;

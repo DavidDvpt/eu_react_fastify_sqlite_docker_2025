@@ -1,9 +1,10 @@
+import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseItems } from "../../../lib/parsers/itemParser";
 import type { ItemApis, Items } from "@/shared/types";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = env.VITE_API_URL;
 const ITEMS_ROUTE = `${API_URL}/items`;
 
 function getItemRouteById(id: string) {

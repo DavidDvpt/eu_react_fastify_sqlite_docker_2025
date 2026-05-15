@@ -1,5 +1,7 @@
-const API_URL = import.meta.env.VITE_API_URL ?? "";
-const IMAGE_BASE_URL = import.meta.env.VITE_IMAGE_BASE_URL ?? "";
+import { env } from "@/config/env";
+
+const API_URL = env.VITE_API_URL ?? "";
+const IMAGE_BASE_URL = env.VITE_IMAGE_BASE_URL ?? "";
 type ImageSize = "micro" | "normal";
 
 class ImageService {
