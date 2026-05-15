@@ -8,11 +8,11 @@ describe("Button variants", () => {
     render(<Button variant="primary">Primary</Button>);
     const button = screen.getByRole("button", { name: "Primary" });
 
-    expect(button.className).toContain("bg-button-primary-bg");
-    expect(button.className).toContain("text-button-primary-text");
-    expect(button.className).toContain("border-button-primary-border");
-    expect(button.className).toContain("hover:bg-button-primary-hover-bg");
-    expect(button.className).toContain("active:bg-button-primary-bg");
+    expect(button.className).toContain("bg-primary-500");
+    expect(button.className).toContain("text-white");
+    expect(button.className).toContain("border-primary-500");
+    expect(button.className).toContain("hover:not-active:bg-primary-700");
+    expect(button.className).toContain("active:bg-primary-500");
   });
 
   it("applies warning variant classes", () => {
