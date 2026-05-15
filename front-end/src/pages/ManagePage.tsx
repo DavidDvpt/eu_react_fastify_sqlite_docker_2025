@@ -20,8 +20,10 @@ function ManagePage() {
     `manage${StringTools.capitalizeFirstLetter(selectedTab)}` as GenericFilterContext;
 
   return (
-    <Panel className="flex h-full min-h-0 flex-col">
-      {selectedTab !== "category" && <GenericFilter context={context} />}
+    <Panel>
+      {selectedTab !== "category" && (
+        <GenericFilter context={context} className="m-0" />
+      )}
 
       {canCreate ? (
         <div className="flex items-center justify-end py-2">

@@ -34,7 +34,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
 
   return (
     <Section
-      className={cn("flex flex-col gap-4", className)}
+      className={cn("flex flex-col gap-2", className)}
       aria-label="Filtres"
     >
       <SubSection

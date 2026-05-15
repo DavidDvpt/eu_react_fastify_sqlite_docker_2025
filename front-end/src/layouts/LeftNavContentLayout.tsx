@@ -1,22 +1,15 @@
 import type { PropsWithChildren } from "react";
 import { VerticalNav } from "@/shared/components";
-import { useLocation } from "react-router-dom";
-import type { NavbarButtonType } from "@/shared/types";
-import { MANAGE_NAV_LINKS } from "@/modules/manage";
+
+import { Panel } from "@/shared/components/Containers";
+
+import useNavLinks from "@/shared/hooks/useNavLinks";
 
 function LeftNavContentLayout({ children }: PropsWithChildren) {
-  const location = useLocation();
-
-  // Sécurisez le résultat de useLocation
-  const pathname = location?.pathname || "/";
-
-  let links: NavbarButtonType[] = [];
-
-  if (pathname.startsWith("/manage")) links = [...MANAGE_NAV_LINKS];
-  const isManageRoute = pathname.startsWith("/manage");
+  const links = useNavLinks();
 
   return (
-    <section className="grid h-full min-h-0 px-3 grid-cols-[220px_minmax(0,1fr)] gap-1">
+    <Panel className="grid grid-cols-[220px_minmax(0,1fr)] gap-2">
       <VerticalNav
         items={links.map((link) => ({
           key: `left-nav-link-${link.key}`,
@@ -26,14 +19,8 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
         }))}
       />
 
-      <article
-        className={`h-full min-h-0 overflow-x-hidden rounded-md p-4 pt-0 md:p-6 ${
-          isManageRoute ? "overflow-y-hidden" : "overflow-y-auto"
-        }`}
-      >
-        {children}
-      </article>
-    </section>
+      {children}
+    </Panel>
   );
 }
 

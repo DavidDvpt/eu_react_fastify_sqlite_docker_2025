@@ -12,7 +12,7 @@ function VerticalNav({ items }: VerticalNavProps) {
     pathname === to || pathname.startsWith(`${to}/`);
 
   return (
-    <aside className={"flex flex-col space-y-2"}>
+    <aside className={"flex flex-col space-y-2 m-2"}>
       {items.map((item) => {
         const isActive = isRouteActive(item.route);
 
