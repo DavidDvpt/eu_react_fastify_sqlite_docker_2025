@@ -1,16 +1,8 @@
-import NavButton from "./NavButton";
-
 function Brand() {
   return (
-    <NavButton
-      content="Entropia Manager"
-      route="/home"
-      isBrand
-      selected={false}
-      adminOnly={false}
-      className="h-full"
-      variant="navHorizontal"
-    ></NavButton>
+    <div className="flex items-center gap-2 px-4">
+      <p>Entropia Manager</p>
+    </div>
   );
 }
 

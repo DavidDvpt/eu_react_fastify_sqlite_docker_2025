@@ -1,39 +1,22 @@
 import { ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { authMeThunk } from "@/modules/auth";
 import logoutApi from "@/modules/auth/services/network/logoutApi";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useNavigate } from "react-router-dom";
-import { Button } from "../ui/button";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const pseudo = useAppSelector((state) => state.auth.user.result?.pseudo);
 
   const avatarLetter = (pseudo?.trim()?.[0] ?? "U").toUpperCase();
-
-  useEffect(() => {
-    const handlePointerDown = (event: MouseEvent) => {
-      if (!containerRef.current) return;
-      if (!containerRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setIsOpen(false);
-    };
-
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("keydown", handleEscape);
-    return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("keydown", handleEscape);
-    };
-  }, []);
 
   const handleProfile = () => {
     setIsOpen(false);
@@ -47,41 +30,38 @@ function Profile() {
   };
 
   return (
-    <div
-      ref={containerRef}
-      className="w-[200px] flex items-center justify-end p-2 relative bg-layout-app-bg"
-    >
-      <Button
-        type="button"
-        className="inline-flex items-center gap-2 rounded-md border-0 bg-bg hover:bg-bg px-2 py-1 transition-colors cursor-pointer "
-        aria-haspopup="menu"
-        aria-expanded={isOpen}
-        onClick={() => setIsOpen((prev) => !prev)}
-      >
-        <span className="w-8 h-8 rounded-full border border-button-primary-border bg-button-primary-bg text-button-primary-text inline-flex items-center justify-center text-sm font-bold">
-          {avatarLetter}
-        </span>
-        <ChevronDown className="h-4 w-4 text-white" />
-      </Button>
-
-      {isOpen ? (
-        <div className="absolute right-2 top-full mt-1 w-40 p-1 shadow-ambient-lg z-20 bg-layout-app-bg">
+    <div className="w-[200px] flex items-center justify-end p-2 ">
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
           <button
             type="button"
-            className="w-full rounded-sm px-3 py-2 text-left text-sm border-0 hover:bg-accent hover:text-accent-foreground  bg-layout-app-bg"
+            className="inline-flex cursor-pointer items-center gap-2 rounded-md border-0 bg-bg px-2 py-1 transition-colors"
+            aria-label="Open profile menu"
+          >
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-button-primary-border bg-button-primary-bg text-sm font-bold text-button-primary-text">
+              {avatarLetter}
+            </span>
+            <ChevronDown className="h-4 w-4 text-white" />
+          </button>
+        </PopoverTrigger>
+
+        <PopoverContent align="end" className="z-20 mt-1 w-40 p-1 ">
+          <button
+            type="button"
+            className="w-full rounded-sm border-0 px-3 py-2 text-left text-sm "
             onClick={handleProfile}
           >
             Profile
           </button>
           <button
             type="button"
-            className="w-full rounded-sm px-3 py-2 text-left text-sm text-destructive-500 hover:bg-danger/10 border-0  bg-layout-app-bg"
+            className="w-full rounded-sm border-0 px-3 py-2 text-left text-sm text-destructive-500"
             onClick={handleLogout}
           >
             Logout
           </button>
-        </div>
-      ) : null}
+        </PopoverContent>
+      </Popover>
     </div>
   );
 }
