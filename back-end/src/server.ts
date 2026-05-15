@@ -1,6 +1,7 @@
-const PORT = Number(process.env.PORT ?? 8020);
-
 import { buildApp } from './app.js';
+import { env } from './config/env.js';
+
+const PORT = env.PORT;
 
 async function start() {
   const app = buildApp({});

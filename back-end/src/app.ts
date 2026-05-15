@@ -1,16 +1,16 @@
 import cookie from '@fastify/cookie';
 import cors from '@fastify/cors';
-import './config/env.js';
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 
+import { env } from './config/env.js';
 import { API_PREFIX, AUTH_PREFIX } from './config/index.js';
 import { authPlugin, authorizePlugin, prismaPlugin, repositoryPlugin } from './plugins/index.js';
 import { authRoutes, manageRoutes, sessionRoutes, inventoryRoutes } from './routes/index.js';
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-const allowedOrigins = (process.env.CORS_ORIGIN ?? '')
+const allowedOrigins = (env.CORS_ORIGIN ?? '')
   .split(',')
   .map((value) => value.trim())
   .filter(Boolean);

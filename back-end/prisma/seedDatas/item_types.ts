@@ -1,6 +1,8 @@
 // Auto-generated from datas.sql
 import type { Prisma } from '../generated/client.js';
-import { SYSTEM_USER_ID } from './systemUser.js';
+import { env } from '../../src/config/env.js';
+
+const SYSTEM_USER_ID = env.SYSTEM_USER_ID ?? '';
 
 const RAW_ITEM_TYPES: Omit<Prisma.TypeCreateManyInput, 'user_id'>[] = [
   {

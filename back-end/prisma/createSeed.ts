@@ -1,8 +1,8 @@
 import { PrismaPg } from '@prisma/adapter-pg';
-import 'dotenv/config';
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { env } from '../src/config/env.js';
 import { PrismaClient } from './generated/client.js';
 
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +22,7 @@ let statements = rawSql
 console.log(`📄 Loaded ${statements.length} SQL statements`);
 
 const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
+  connectionString: env.DATABASE_URL,
 });
 const prisma = new PrismaClient({ adapter });
 

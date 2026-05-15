@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
+import { env } from '../../../config/env.js';
 import prismaClient from '../../../../prisma/prismaClient.js';
 import { LotRepository, CategoryRepository, ItemRepository, TypeRepository } from '../index.js';
 
@@ -9,7 +10,7 @@ const categoryRepo = new CategoryRepository(prisma);
 const typeRepo = new TypeRepository(prisma);
 const itemRepo = new ItemRepository(prisma);
 const lotRepo = new LotRepository(prisma);
-const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
+const SYSTEM_USER_ID = env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
 const USER_A_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 const USER_B_ID = '1947DAFD-0CA4-4673-8F25-EB4702265ACA';
 

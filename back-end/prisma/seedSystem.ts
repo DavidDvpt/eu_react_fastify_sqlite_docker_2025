@@ -7,11 +7,11 @@ import {
   ItemRepository,
   TypeRepository,
 } from '../src/lib/repositories/index.js';
+import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
-import { SYSTEM_USER_ID } from './seedDatas/systemUser.js';
 import { SYSTEM_USER } from './seedDatas/user.js';
 
 const itemCategoryRepository = new CategoryRepository(prismaClient);
@@ -50,7 +50,7 @@ const seedSystemData = async () => {
   const upsertedSystemUser = await prismaClient.user.upsert({
     where: { email: SYSTEM_USER.email },
     create: {
-      ...(SYSTEM_USER_ID ? { id: SYSTEM_USER_ID } : {}),
+      ...(env.SYSTEM_USER_ID ? { id: env.SYSTEM_USER_ID } : {}),
       firstname: SYSTEM_USER.firstname,
       lastname: SYSTEM_USER.lastname,
       pseudo: SYSTEM_USER.pseudo,

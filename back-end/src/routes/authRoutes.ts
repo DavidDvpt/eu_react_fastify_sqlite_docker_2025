@@ -1,5 +1,6 @@
 import argon2 from 'argon2';
 
+import { env } from '../config/env.js';
 import { AUTH_API_PREFIX } from '../config/index.js';
 import { parseDurationToSeconds } from '../lib/auth/index.js';
 import { HashTools } from '../lib/security/index.js';
@@ -10,8 +11,8 @@ import type { FastifyPluginAsync } from 'fastify';
 
 // eslint-disable-next-line @typescript-eslint/require-await
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
-  const accessTokenMaxAge = parseDurationToSeconds(process.env.JWT_ACCESS_EXPIRES_IN || '24h');
-  const refreshTokenMaxAge = parseDurationToSeconds(process.env.JWT_REFRESH_EXPIRES_IN || '7d');
+  const accessTokenMaxAge = parseDurationToSeconds(env.JWT_ACCESS_EXPIRES_IN);
+  const refreshTokenMaxAge = parseDurationToSeconds(env.JWT_REFRESH_EXPIRES_IN);
   const usersService = () => new UsersService(app.repos.users);
 
   app.post(

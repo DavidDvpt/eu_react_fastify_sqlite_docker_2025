@@ -1,4 +1,5 @@
 import { UserRepository } from '../src/lib/repositories/index.js';
+import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { LOTS } from './seedDatas/lots.js';
 import { SESSIONS_BUY, SESSION_BUY_LINES } from './seedDatas/session_buy.js';
@@ -6,7 +7,7 @@ import { SESSIONS_SELL, SESSION_SELL_LINES } from './seedDatas/session_sell.js';
 import { USERS } from './seedDatas/user.js';
 
 const userRepository = new UserRepository(prismaClient);
-const DEFAULT_DATA_USER_ID = process.env.DEV_DATA_USER_ID;
+const DEFAULT_DATA_USER_ID = env.DEV_DATA_USER_ID;
 
 const normalizeSeededSessionStatuses = async () => {
   await prismaClient.sessionLine.updateMany({

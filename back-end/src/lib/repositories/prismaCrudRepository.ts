@@ -5,8 +5,9 @@ import type {
   MethodResult,
   ReadScope,
 } from '../../types/index.js';
+import { env } from '../../config/env.js';
 
-const SYSTEM_USER_ID = process.env.SYSTEM_USER_ID;
+const SYSTEM_USER_ID = env.SYSTEM_USER_ID;
 
 // Thin wrapper that forwards Prisma delegate calls while preserving types.
 class PrismaCrudRepository<Delegate extends CrudDelegate> {
