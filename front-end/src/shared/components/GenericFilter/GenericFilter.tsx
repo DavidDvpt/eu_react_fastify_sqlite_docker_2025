@@ -32,47 +32,55 @@ function GenericFilter({ className, context }: GenericFilterProps) {
     });
   };
 
+  const filterItemClassName = "min-w-0 basis-[220px] grow";
+
   return (
     <Section
       className={cn("flex flex-col gap-2", className)}
       aria-label="Filtres"
     >
       <SubSection
-        className="flex flex-nowrap justify-between gap-4"
+        className="flex flex-row flex-wrap gap-4"
         aria-label="Filtres de sélection"
       >
         {displayedFields.category && (
-          <SelectRHF
-            options={categoriesForSelect}
-            onValueChange={(value) => updateValue("category", value)}
-            placeholder="Choisir une categorie ..."
-            value={params.category}
-          />
+          <div className={filterItemClassName}>
+            <SelectRHF
+              options={categoriesForSelect}
+              onValueChange={(value) => updateValue("category", value)}
+              placeholder="Choisir une categorie ..."
+              value={params.category}
+            />
+          </div>
         )}
 
         {displayedFields.type && (
-          <SelectRHF
-            options={typesForSelect}
-            onValueChange={(value) => updateValue("type", value)}
-            placeholder="Choisir un type ..."
-            value={params.type}
-          />
+          <div className={filterItemClassName}>
+            <SelectRHF
+              options={typesForSelect}
+              onValueChange={(value) => updateValue("type", value)}
+              placeholder="Choisir un type ..."
+              value={params.type}
+            />
+          </div>
         )}
 
         {displayedFields.item && (
-          <SelectRHF
-            options={itemsForSelect}
-            onValueChange={(value) => updateValue("item", value)}
-            placeholder="Choisir un item"
-            value={params.item}
-            hasAutocomplete
-          />
+          <div className={filterItemClassName}>
+            <SelectRHF
+              options={itemsForSelect}
+              onValueChange={(value) => updateValue("item", value)}
+              placeholder="Choisir un item"
+              value={params.item}
+              hasAutocomplete
+            />
+          </div>
         )}
       </SubSection>
       <div className="flex flex-end">
         <Button
           type="button"
-          variant="primary"
+          variant="ternary"
           size="sm"
           className="ml-auto w-[100px]"
           onClick={() => updateValue("reset", undefined)}

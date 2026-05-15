@@ -32,18 +32,18 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
     <Select value={currentValue} onValueChange={onChange} disabled={disabled}>
       <SelectTrigger
         className={cn(
-          "mt-2 bg-input-bg border border-input-border data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
+          "mt-2 bg-white border border-input-border data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
           triggerClassName,
         )}
       >
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>
-      <SelectContent className="bg-input-bg text-input-text max-h-[200px] overflow-auto">
+      <SelectContent className="bg-white text-text max-h-[200px] min-w-[100px] overflow-auto">
         {options.map((o) => (
           <SelectItem
             key={o.label}
             value={o.value}
-            className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-input-text"
+            className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-text"
           >
             {o.label}
           </SelectItem>

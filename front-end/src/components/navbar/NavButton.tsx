@@ -9,9 +9,8 @@ function NavButton(props: NavbarButtonType) {
   // Sécurisez le résultat de useLocation
   const pathname = location?.pathname || "/";
 
-  const isActive = props.isBrand
-    ? false
-    : pathname === props.route || pathname.startsWith(`${props.route}/`);
+  const isActive =
+    pathname === props.route || pathname.startsWith(`${props.route}/`);
 
   return (
     <Button
