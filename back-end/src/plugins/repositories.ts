@@ -2,7 +2,6 @@ import fp from 'fastify-plugin';
 
 import {
   CategoryRepository,
-  ImageRepository,
   ItemRepository,
   LotStockRepository,
   SessionStatsRepository,
@@ -14,7 +13,6 @@ import type { FastifyPluginCallback } from 'fastify';
 
 const repositoriesPlugin: FastifyPluginCallback = (app, _opts, done) => {
   app.decorate('repos', {
-    images: new ImageRepository(),
     users: new UserRepository(app.prisma),
     categories: new CategoryRepository(app.prisma),
     types: new TypeRepository(app.prisma),

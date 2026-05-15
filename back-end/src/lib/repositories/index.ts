@@ -1,5 +1,4 @@
 import { CategoryRepository } from './categoryRepository.js';
-import { ImageRepository } from './imageRepository.js';
 import { ItemRepository } from './itemRepository.js';
 import { LotRepository } from './lotRepository.js';
 import { LotStockRepository } from './lotStockRepository.js';
@@ -10,7 +9,6 @@ import { UserRepository } from './userRepository.js';
 import { createRepositories } from './utils.js';
 
 export {
-  ImageRepository,
   LotRepository,
   LotStockRepository,
   SessionStatsRepository,

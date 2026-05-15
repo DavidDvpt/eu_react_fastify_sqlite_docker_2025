@@ -7,17 +7,16 @@ class ImageService {
     imageUrlId: string,
     size: ImageSize = "normal",
   ): string | null {
-    console.log(IMAGE_BASE_URL);
     const normalizedImageBaseUrl = IMAGE_BASE_URL.replace(/\/+$/, "");
     const normalizedApiUrl = API_URL.replace(/\/+$/, "");
     const baseUrl =
-      normalizedImageBaseUrl || (normalizedApiUrl ? "/images" : "");
-    console.log(normalizedImageBaseUrl);
+      normalizedImageBaseUrl ||
+      (normalizedApiUrl ? `${normalizedApiUrl}/assets/images` : "");
     if (!baseUrl || !imageUrlId) {
       return null;
     }
     const encodedImageId = encodeURIComponent(imageUrlId);
-    const sizeQuery = size === "micro" ? "?size=micro" : "";
+    const sizeQuery = `?size=${size}`;
 
     return `${baseUrl}/${encodedImageId}${sizeQuery}`;
   }

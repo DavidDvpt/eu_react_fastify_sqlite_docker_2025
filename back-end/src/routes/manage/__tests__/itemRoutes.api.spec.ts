@@ -34,7 +34,6 @@ describe('itemRoutes', () => {
     };
     const lotStock = { getStock: vi.fn(), getStockByItemId: vi.fn() };
     const sessionStats = { getSellSessions: vi.fn() };
-    const images = { getImageBufferById: vi.fn() };
     const users = {
       findMany: vi.fn(),
       findUnique: vi.fn(),
@@ -45,7 +44,6 @@ describe('itemRoutes', () => {
     };
 
     app.decorate('repos', {
-      images,
       users,
       categories,
       types,

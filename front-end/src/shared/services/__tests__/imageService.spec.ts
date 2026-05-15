@@ -20,7 +20,7 @@ describe("ImageService", () => {
       return;
     }
 
-    expect(result).toBe(`${expectedBaseUrl}/${encodeURIComponent("A B")}`);
+    expect(result).toBe(`${expectedBaseUrl}/${encodeURIComponent("A B")}?size=normal`);
   });
 
   it("supports micro size", () => {
