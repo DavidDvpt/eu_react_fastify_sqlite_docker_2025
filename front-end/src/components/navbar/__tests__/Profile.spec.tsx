@@ -75,7 +75,7 @@ describe("Profile", () => {
     mockLogoutApi.mockResolvedValueOnce({ message: "Logged out" });
     mockAuthMeThunk.mockReturnValueOnce({ type: "auth/me" });
 
-    await user.click(screen.getByRole("button", { name: "D" }));
+    await user.click(screen.getByRole("button", { name: /open profile menu/i }));
     await user.click(screen.getByRole("button", { name: "Logout" }));
 
     await waitFor(() => {
