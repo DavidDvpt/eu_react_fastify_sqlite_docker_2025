@@ -12,9 +12,9 @@ const { getCategoriesMock, getTypesMock, getItemsMock } = vi.hoisted(() => ({
   getItemsMock: vi.fn(),
 }));
 
-vi.mock("@/modules/manage", async () => {
-  const actual = await vi.importActual<typeof import("@/modules/manage")>(
-    "@/modules/manage",
+vi.mock("@/pages/managePage/manage", async () => {
+  const actual = await vi.importActual<typeof import("@/pages/managePage/manage")>(
+    "@/pages/managePage/manage",
   );
   return {
     ...actual,
@@ -70,7 +70,9 @@ describe("manage data hooks", () => {
     });
 
     await waitFor(() => {
-      expect(result.current.data).toEqual([{ id: "type-1", name: "Ore" }]);
+      expect(result.current.types).toEqual([
+        { id: "type-1", name: "Ore", categoryName: "Unknown" },
+      ]);
     });
 
     await result.current.invalidateTypes();
