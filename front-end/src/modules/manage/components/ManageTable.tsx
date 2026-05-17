@@ -1,8 +1,8 @@
 import { GenericList } from "@/shared/components";
 
 import { useNavigate } from "react-router-dom";
-import useManageListData from "../useManageList";
-import type { ManageTab } from "../managePage.types";
+import useManageListData from "../hooks/useManageList";
+import type { ManageTab } from "../../../shared/types/managePageTypes";
 
 interface ManageTableProps {
   activeTab: ManageTab;
@@ -28,6 +28,7 @@ function ManageTable({ activeTab }: ManageTableProps) {
       loadingMessage="Chargement des categories..."
       errorMessage={errorMessage}
       emptyMessage="Aucune categorie."
+      rowHeight={34}
       onRowClick={(row) => navigate(editRoute(row.id))}
     />
   );

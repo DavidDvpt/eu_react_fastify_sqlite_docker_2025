@@ -1,49 +1,54 @@
-import type { ReactNode } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 export type GenericListViewMode = "list" | "card";
-export type GenericListAlign = "left" | "center" | "right";
-export type GenericListColumnKind = "text" | "image" | "button" | "custom";
+
+export type GenericListColumnKind =
+  | "text"
+  | "number"
+  | "date"
+  | "image"
+  | "button"
+  | "select"
+  | "checkbox"
+  | "custom";
+
+export type RowRendererProps<T> = {
+  row: T;
+  onRowClick?: (row: T) => void;
+};
 
 export type GenericListColumn<T> = {
   key: string;
   label: string;
-  width?: string;
-  accessor?: keyof T;
-  align?: GenericListAlign;
   kind?: GenericListColumnKind;
-  headerClassName?: string;
-  cellClassName?: string;
+  accessor?: keyof T;
+  width?: string | number;
+  align?: "left" | "center" | "right";
+  headerCellClassName?: string;
+  bodyCellClassName?: string;
+  footerCellClassName?: string;
+  value?: (row: T) => ReactNode;
   render?: (row: T) => ReactNode;
+  onCellClick?: (row: T) => void;
+  imageSrc?: (value: unknown, row: T) => string;
+  imageAlt?: (row: T) => string;
+  buttonLabel?: string;
+  selectOptions?: Array<{ label: string; value: string }>;
+  onSelectChange?: (row: T, value: string) => void;
 };
 
-export type GenericListRowClassName<T> = string | ((row: T) => string);
-
-export type GenericListHeaderProps<T> = {
-  columns: GenericListColumn<T>[];
-  gridTemplateColumns: string;
-  headerHeight?: number;
-  showColumns?: boolean;
+export type GenericListFooterCell = {
+  key: string;
+  content: ReactNode;
+  className?: string;
 };
 
-export type GenericListFooterProps = {
-  footer?: ReactNode;
-  gridTemplateColumns: string;
-  footerHeight?: number;
-  showColumns?: boolean;
-};
-
-export type GenericListBodyProps<T> = {
-  columns: GenericListColumn<T>[];
-  rows: T[];
-  viewMode: GenericListViewMode;
-  gridTemplateColumns: string;
-  getRowKey: (row: T) => string;
-  onRowClick?: (row: T) => void;
-  rowClassName?: GenericListRowClassName<T>;
-  rowHeight?: number;
-  showColumns?: boolean;
-  renderRow?: (row: T) => ReactNode;
-  renderCard?: (row: T) => ReactNode;
+export type GenericListFooterConfig = {
+  visible?: boolean;
+  rowClassName?: string;
+  layout?: "grid" | "flex";
+  columnsTemplate?: string;
+  cells?: GenericListFooterCell[];
 };
 
 export type GenericListProps<T> = {
@@ -51,21 +56,50 @@ export type GenericListProps<T> = {
   rows: T[];
   getRowKey: (row: T) => string;
   onRowClick?: (row: T) => void;
+  allowCardView?: boolean;
+  className?: string;
+  headerClassName?: string;
+  bodyClassName?: string;
+  rowClassName?: string;
+  cardClassName?: string;
+  rowHeight?: number;
   isLoading?: boolean;
-  isError?: boolean;
   loadingMessage?: string;
+  isError?: boolean;
   errorMessage?: string;
   emptyMessage?: string;
-  className?: string;
-  bodyClassName?: string;
-  rowClassName?: GenericListRowClassName<T>;
-  viewMode?: GenericListViewMode;
-  allowCardView?: boolean;
-  showColumns?: boolean;
-  headerHeight?: number;
-  footerHeight?: number;
-  rowHeight?: number;
   footer?: ReactNode;
-  renderRow?: (row: T) => ReactNode;
-  renderCard?: (row: T) => ReactNode;
+  footerConfig?: GenericListFooterConfig;
+  RowComponent?: ComponentType<RowRendererProps<T>>;
+  CardComponent?: ComponentType<RowRendererProps<T>>;
+};
+
+export type GenericListHeaderProps<T> = {
+  columns: GenericListColumn<T>[];
+  visible?: boolean;
+  className?: string;
+  rowHeight?: number;
+};
+
+export type GenericListBodyProps<T> = {
+  columns: GenericListColumn<T>[];
+  rows: T[];
+  viewMode: GenericListViewMode;
+  getRowKey: (row: T) => string;
+  onRowClick?: (row: T) => void;
+  className?: string;
+  rowClassName?: string;
+  cardClassName?: string;
+  rowHeight?: number;
+  RowComponent?: ComponentType<RowRendererProps<T>>;
+  CardComponent?: ComponentType<RowRendererProps<T>>;
+};
+
+export type GenericListFooterProps = {
+  visible?: boolean;
+  rowClassName?: string;
+  layout?: "grid" | "flex";
+  columnsTemplate?: string;
+  cells?: GenericListFooterCell[];
+  fallback?: ReactNode;
 };

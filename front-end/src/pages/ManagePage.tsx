@@ -5,9 +5,9 @@ import { Panel } from "@/shared/components/Containers";
 
 import type { GenericFilterContext } from "@/shared/types";
 import StringTools from "@/shared/tools/stringTools";
-import { MANAGE_TABS } from "@/modules/manage/managePage.utils";
 import { ManageTable } from "@/modules/manage/components/ManageTable";
-import type { ManageTab } from "@/modules/manage/managePage.types";
+import type { ManageTab } from "@/shared/types/managePageTypes";
+import { MANAGE_TABS } from "@/modules/manage/utils";
 
 function ManagePage() {
   const { tab } = useParams();

@@ -1,86 +1,105 @@
 import { cn } from "@/lib/utils";
-import type { GenericListProps } from "@/shared/types";
-import { GenericListBody } from "./GenericListBody";
-import { GenericListFooter } from "./GenericListFooter";
+import { useState } from "react";
+import type {
+  GenericListProps,
+  GenericListViewMode,
+} from "../../types/genericListTypes";
 import { GenericListHeader } from "./GenericListHeader";
-import { buildGridTemplateColumns, resolveViewMode } from "./utils";
+import { Section } from "../Containers";
+import { GenericListFooter } from "./GenericListFooter";
+import SwitchApp from "../form/Switch/SwitchApp";
+import GenericListBody from "./GenericListBody";
 
 function GenericList<T>({
   columns,
   rows,
   getRowKey,
   onRowClick,
+  allowCardView = false,
+  className,
+  headerClassName,
+  bodyClassName,
+  rowClassName,
+  cardClassName,
+  rowHeight = 40,
   isLoading = false,
   isError = false,
   loadingMessage = "Chargement...",
   errorMessage = "Une erreur est survenue.",
   emptyMessage = "Aucune donnee.",
-  className,
-  bodyClassName,
-  rowClassName,
-  viewMode = "list",
-  allowCardView = false,
-  showColumns = true,
-  headerHeight = 44,
-  footerHeight = 44,
-  rowHeight = 40,
   footer,
-  renderRow,
-  renderCard,
+  footerConfig,
+  RowComponent,
+  CardComponent,
 }: GenericListProps<T>) {
-  const resolvedViewMode = resolveViewMode(viewMode, allowCardView);
-  const gridTemplateColumns = buildGridTemplateColumns(columns);
+  const [viewMode, setViewMode] = useState<GenericListViewMode>("list");
 
   return (
-    <section
-      className={cn(
-        "flex h-full min-h-0 flex-col overflow-hidden rounded-md border border-table-border shadow-table bg-table-bg text-sm",
-        className,
-      )}
-    >
-      <GenericListHeader
-        columns={columns}
-        gridTemplateColumns={gridTemplateColumns}
-        headerHeight={headerHeight}
-        showColumns={resolvedViewMode === "list" && showColumns}
+    <>
+      <SwitchApp
+        value={viewMode === "card"}
+        onChange={(checked) => setViewMode(checked ? "card" : "list")}
+        trueValue="Vue carte"
+        falseValue="Vue liste"
+        visible={allowCardView}
       />
 
-      <div
+      <Section
         className={cn(
-          "min-h-0 flex-1 overflow-y-auto overflow-x-hidden",
-          bodyClassName,
+          "overflow-hidden rounded-md border border-table-border bg-table-bg text-sm",
+          className,
         )}
       >
-        {isLoading ? (
-          <div className="px-4 py-4 text-table-body-text">{loadingMessage}</div>
-        ) : isError ? (
-          <div className="px-4 py-4 text-destructive-500">{errorMessage}</div>
-        ) : rows.length === 0 ? (
-          <div className="px-4 py-4 text-table-body-text">{emptyMessage}</div>
-        ) : (
-          <GenericListBody
-            columns={columns}
-            rows={rows}
-            viewMode={resolvedViewMode}
-            gridTemplateColumns={gridTemplateColumns}
-            getRowKey={getRowKey}
-            onRowClick={onRowClick}
-            rowClassName={rowClassName}
-            rowHeight={rowHeight}
-            showColumns={showColumns}
-            renderRow={renderRow}
-            renderCard={renderCard}
-          />
-        )}
-      </div>
+        <GenericListHeader
+          columns={columns}
+          visible={viewMode === "list"}
+          className={headerClassName}
+          rowHeight={rowHeight}
+        />
 
-      <GenericListFooter
-        footer={footer}
-        gridTemplateColumns={gridTemplateColumns}
-        footerHeight={footerHeight}
-        showColumns={resolvedViewMode === "list" && showColumns}
-      />
-    </section>
+        <div
+          className={cn(
+            "min-h-0 flex-1 overflow-y-auto overflow-x-hidden",
+            bodyClassName,
+          )}
+        >
+          {isLoading ? (
+            <div className="px-4 py-4 text-table-body-text">
+              {loadingMessage}
+            </div>
+          ) : isError ? (
+            <div className="px-4 py-4 text-destructive-500">{errorMessage}</div>
+          ) : rows.length === 0 ? (
+            <div className="px-4 py-4 text-table-body-text">{emptyMessage}</div>
+          ) : (
+            <GenericListBody
+              columns={columns}
+              rows={rows}
+              viewMode={viewMode}
+              getRowKey={getRowKey}
+              onRowClick={onRowClick}
+              rowClassName={rowClassName}
+              cardClassName={cardClassName}
+              rowHeight={rowHeight}
+              RowComponent={RowComponent}
+              CardComponent={CardComponent}
+            />
+          )}
+        </div>
+
+        <GenericListFooter
+          visible={
+            viewMode === "list" &&
+            (Boolean(footer) || Boolean(footerConfig?.cells?.length))
+          }
+          rowClassName={footerConfig?.rowClassName}
+          layout={footerConfig?.layout}
+          columnsTemplate={footerConfig?.columnsTemplate}
+          cells={footerConfig?.cells}
+          fallback={footer}
+        />
+      </Section>
+    </>
   );
 }
 

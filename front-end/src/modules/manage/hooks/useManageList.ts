@@ -1,14 +1,10 @@
 import { useMemo } from "react";
-import useCategories from "../../shared/hooks/useCategories";
-import useItems from "../../shared/hooks/useItems";
-import useTypes from "../../shared/hooks/useTypes";
+import useCategories from "../../../shared/hooks/useCategories";
+import useItems from "../../../shared/hooks/useItems";
+import useTypes from "../../../shared/hooks/useTypes";
 
-import type { GenericListColumn } from "../../shared/types";
-import {
-  createCategoryColumns,
-  createItemColumns,
-  createTypeColumns,
-} from "../../shared/components/GenericList/columnConfig";
+import type { GenericListColumn } from "../../../shared/types";
+
 import { useAppSelector } from "@/store/hooks";
 
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
@@ -19,20 +15,32 @@ import {
   getTypeEditRoute,
   ITEMS_ROUTE,
   TYPES_ROUTE,
-} from "./services";
-import type { ManageListRow, ManageTab } from "./managePage.types";
+} from "../services";
+import type {
+  ManageListRow,
+  ManageTab,
+} from "../../../shared/types/managePageTypes";
+import {
+  createCategoryColumns,
+  createItemColumns,
+  createTypeColumns,
+} from "../configs";
 
 interface UseManageListData {
   activeTab: ManageTab;
 }
-function useManageListData({ activeTab }: UseManageListData): {
+type ManageListDataResult = {
   list: ManageListRow[];
   columns: GenericListColumn<ManageListRow>[];
   isPending: boolean;
   isError: boolean;
   errorMessage: string;
   editRoute: (id: string) => string;
-} {
+};
+
+function useManageListData({
+  activeTab,
+}: UseManageListData): ManageListDataResult {
   const currentUserId = useAppSelector((state) => state.auth.user.result?.id);
   const { params } = useGenericFilterParams();
 
@@ -52,33 +60,39 @@ function useManageListData({ activeTab }: UseManageListData): {
     isError: isItemsError,
   } = useItems({ typeId: params.type });
 
-  const contentValues = useMemo(() => {
+  const contentValues = useMemo<ManageListDataResult>(() => {
     switch (activeTab) {
       case "type":
         return {
-          list: filteredTypes,
+          list: filteredTypes as ManageListRow[],
           isPending: isTypesPending,
           isError: isTypesError,
-          columns: createTypeColumns(currentUserId),
+          columns: createTypeColumns(
+            currentUserId,
+          ) as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`,
           editRoute: getTypeEditRoute,
         };
       case "item":
         return {
-          list: filteredItems,
+          list: filteredItems as ManageListRow[],
           isPending: isItemsPending,
           isError: isItemsError,
-          columns: createItemColumns(currentUserId),
+          columns: createItemColumns(
+            currentUserId,
+          ) as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`,
           editRoute: getItemEditRoute,
         };
       default:
       case "category":
         return {
-          list: categories,
+          list: categories as ManageListRow[],
           isPending: isCategoriesPending,
           isError: isCategoriesError,
-          columns: createCategoryColumns(currentUserId),
+          columns: createCategoryColumns(
+            currentUserId,
+          ) as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`,
           editRoute: getCategoryEditRoute,
         };
@@ -97,7 +111,7 @@ function useManageListData({ activeTab }: UseManageListData): {
     currentUserId,
   ]);
 
-  return { ...contentValues, list: contentValues?.list ?? [] };
+  return contentValues;
 }
 
 export default useManageListData;

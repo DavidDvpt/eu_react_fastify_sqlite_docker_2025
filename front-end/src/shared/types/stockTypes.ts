@@ -93,8 +93,8 @@ type GenericTableColumn<T> = {
   header: string;
   accessor?: keyof T;
   render?: (row: T) => ReactNode;
-  headerClassName?: string;
-  cellClassName?: string;
+  headerCellClassName?: string;
+  bodyCellClassName?: string;
 };
 
 type GenericTableProps<T> = {

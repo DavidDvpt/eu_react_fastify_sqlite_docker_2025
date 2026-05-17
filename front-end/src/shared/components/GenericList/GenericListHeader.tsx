@@ -1,37 +1,31 @@
 import { cn } from "@/lib/utils";
-import type { GenericListHeaderProps } from "@/shared/types";
-import { resolveAlignClass } from "./utils";
+import type { GenericListHeaderProps } from "../../types/genericListTypes";
 
 function GenericListHeader<T>({
   columns,
-  gridTemplateColumns,
-  headerHeight = 44,
-  showColumns = true,
+  visible = true,
+  className,
+  rowHeight = 30,
 }: GenericListHeaderProps<T>) {
-  if (!showColumns || columns.length === 0) return null;
+  if (!visible || columns.length === 0) return null;
 
   return (
     <div
-      className="sticky top-0 z-10 border-b border-table-border bg-table-head-bg"
-      style={{ height: `${headerHeight}px`, minHeight: `${headerHeight}px` }}
+      className={cn("flex flex-row justify-center top-0 z-10 ", className)}
+      style={{ minHeight: rowHeight }}
     >
-      <div
-        className="grid h-full items-center gap-0"
-        style={{ gridTemplateColumns }}
-      >
-        {columns.map((column) => (
-          <div
-            key={column.key}
-            className={cn(
-              "px-4 py-3 font-semibold text-table-head-text",
-              resolveAlignClass(column.align),
-              column.headerClassName,
-            )}
-          >
-            {column.kind === "image" ? "" : column.label}
-          </div>
-        ))}
-      </div>
+      {columns.map((column) => (
+        <div
+          key={column.key}
+          className={cn(
+            "pl-1 font-semibold text-black",
+            column.headerCellClassName,
+          )}
+          style={{ width: column.width }}
+        >
+          {column.kind === "image" ? "" : column.label}
+        </div>
+      ))}
     </div>
   );
 }

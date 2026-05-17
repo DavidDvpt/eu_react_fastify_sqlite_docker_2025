@@ -16,7 +16,7 @@ interface AppCardProps {
   content: ReactNode;
   variant?: AppCardVariant;
   className?: string;
-  headerClassName?: string;
+  headerCellClassName?: string;
   contentClassName?: string;
 }
 
@@ -26,12 +26,14 @@ function AppCard({
   content,
   variant,
   className,
-  headerClassName,
+  headerCellClassName,
   contentClassName,
 }: AppCardProps) {
   return (
     <Card variant={variant ?? "default"} className={className}>
-      <CardHeader className={cn("items-center text-center", headerClassName)}>
+      <CardHeader
+        className={cn("items-center text-center", headerCellClassName)}
+      >
         <CardTitle>{title}</CardTitle>
         {description ? <CardDescription>{description}</CardDescription> : null}
       </CardHeader>

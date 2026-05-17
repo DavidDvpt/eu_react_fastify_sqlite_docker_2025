@@ -6,3 +6,5 @@ const formatToFiveDecimals = FormatTools.formatToFiveDecimals;
 const getItemImageUrl = ImageService.getItemImageUrl;
 
 export { formatToFiveDecimals, getItemImageUrl };
+
+export const MANAGE_TABS = ["category", "type", "item"] as const;

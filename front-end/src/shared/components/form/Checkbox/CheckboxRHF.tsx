@@ -1,7 +1,6 @@
-import { Checkbox } from "@/components/ui/checkbox";
-import { cn } from "@/lib/utils";
 import { useEffect } from "react";
 import { useFormContext } from "react-hook-form";
+import CheckboxApp from "./CheckboxApp";
 
 type CheckboxRHFProps = {
   name: string;
@@ -24,23 +23,24 @@ function CheckboxRHF({
   }, [form, name]);
   const value = Boolean(form.watch(name));
 
+  const handleCheckedChange = (checked: boolean) => {
+    const nextChecked = checked === true;
+    form.setValue(name, nextChecked, {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    onCheckedChange?.(nextChecked);
+  };
+
   return (
-    <div className={cn("flex items-center gap-2", wrapperClassName)}>
-      <Checkbox
-        id={name}
-        checked={value}
-        onCheckedChange={(checked) => {
-          const nextChecked = checked === true;
-          form.setValue(name, nextChecked, { shouldDirty: true, shouldTouch: true });
-          onCheckedChange?.(nextChecked);
-        }}
-      />
-      {label ? (
-        <label htmlFor={name} className={cn("text-sm text-input-label", labelClassName)}>
-          {label}
-        </label>
-      ) : null}
-    </div>
+    <CheckboxApp
+      name={name}
+      value={value}
+      label={label}
+      wrapperClassName={wrapperClassName}
+      labelClassName={labelClassName}
+      onCheckedChange={handleCheckedChange}
+    />
   );
 }
 

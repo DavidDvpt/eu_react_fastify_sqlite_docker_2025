@@ -1,37 +1,52 @@
 import { cn } from "@/lib/utils";
-import type { GenericListFooterProps } from "@/shared/types";
+import type { GenericListFooterProps } from "../../types/genericListTypes";
 
 function GenericListFooter({
-  footer,
-  gridTemplateColumns,
-  footerHeight = 44,
-  showColumns = true,
+  visible = true,
+  rowClassName,
+  layout = "flex",
+  columnsTemplate,
+  cells,
+  fallback,
 }: GenericListFooterProps) {
-  if (!footer) return null;
+  if (!visible) return null;
+
+  if ((!cells || cells.length === 0) && !fallback) return null;
+
+  if (fallback) {
+    return (
+      <div className={cn("border-t border-table-border", rowClassName)}>
+        {fallback}
+      </div>
+    );
+  }
+
+  if (layout === "grid") {
+    return (
+      <div className={cn("border-t border-table-border", rowClassName)}>
+        <div className="grid" style={{ gridTemplateColumns: columnsTemplate }}>
+          {cells?.map((cell) => (
+            <div key={cell.key} className={cell.className}>
+              {cell.content}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
-      className="border-t border-table-border bg-table-foot-bg"
-      style={{ height: `${footerHeight}px`, minHeight: `${footerHeight}px` }}
-    >
-      {showColumns ? (
-        <div
-          className="grid h-full items-center"
-          style={{ gridTemplateColumns }}
-        >
-          <div
-            className={cn(
-              "col-[1/-1] px-4 py-3 text-right text-sm font-semibold text-table-foot-text",
-            )}
-          >
-            {footer}
-          </div>
-        </div>
-      ) : (
-        <div className="flex h-full items-center px-4 py-3 text-right text-sm font-semibold text-table-foot-text">
-          <div className="ml-auto">{footer}</div>
-        </div>
+      className={cn(
+        "border-t border-table-border flex items-center",
+        rowClassName,
       )}
+    >
+      {cells?.map((cell) => (
+        <div key={cell.key} className={cell.className}>
+          {cell.content}
+        </div>
+      ))}
     </div>
   );
 }

@@ -35,11 +35,11 @@ function StockPage() {
   };
 
   return (
-    <>
-      <Panel className="mx-auto flex h-full min-h-0 max-h-[100%] w-full max-w items-stretch gap-4 overflow-hidden p-4">
+    <Panel>
+      <Panel className="mx-auto flex-row max-h-[100%] w-full max-w items-stretch gap-2 overflow-hidden">
         <StockListPanel
           className={cn(
-            "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
+            "min-h-0 overflow-hidden transition-all duration-300 ease-in-out p-2",
             id ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
             "max-lg:basis-full max-lg:max-w-full",
           )}
@@ -47,7 +47,7 @@ function StockPage() {
 
         <div
           className={[
-            "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
+            "min-h-0 overflow-hidden transition-all duration-300 ease-in-out p-2",
             id
               ? "basis-1/2 max-w-[50%] opacity-100"
               : "pointer-events-none basis-0 max-w-0 opacity-0",
@@ -68,7 +68,7 @@ function StockPage() {
         transactionItem={transactionItem}
         onClose={goToInventoryDetail}
       />
-    </>
+    </Panel>
   );
 }
 

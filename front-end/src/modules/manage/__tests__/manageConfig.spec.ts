@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { MANAGE_NAV_LINKS, isManageTab } from "../manageConfig";
+import { MANAGE_NAV_LINKS, isManageTab } from "../configs/manageConfig";
 
 describe("manageConfig", () => {
   it("exposes left nav links for manage routes", () => {

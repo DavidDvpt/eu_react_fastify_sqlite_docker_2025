@@ -1,8 +1,8 @@
-import type { Item, Items } from "../../shared/types/itemTypes";
-import type { Type, Types } from "../../shared/types/typeTypes";
-import type { Categories, Category } from "../../shared/types/categoryTypes";
-import type { GenericFilterAvailability } from "../../shared/types/genericFilterType";
-import type { MANAGE_TABS } from "./managePage.utils";
+import type { Item, Items } from "./itemTypes";
+import type { Type, Types } from "./typeTypes";
+import type { Categories, Category } from "./categoryTypes";
+import type { GenericFilterAvailability } from "./genericFilterType";
+import type { MANAGE_TABS } from "../../modules/manage/utils";
 
 export type ManageTab = (typeof MANAGE_TABS)[number];
 

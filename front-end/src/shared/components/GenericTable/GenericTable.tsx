@@ -44,7 +44,7 @@ function GenericTable<T>({
                     DEFAULT_HEADER_CLASS,
                     "sticky top-0 z-10",
                     isImageColumn(column) && IMAGE_COLUMN_SIZE_CLASS,
-                    column.headerClassName,
+                    column.headerCellClassName,
                   )}
                 >
                   {isImageColumn(column) ? "" : column.header}
@@ -107,7 +107,7 @@ function GenericTable<T>({
                         className={cn(
                           DEFAULT_CELL_CLASS,
                           imageColumn && IMAGE_COLUMN_SIZE_CLASS,
-                          column.cellClassName,
+                          column.bodyCellClassName,
                         )}
                       >
                         {imageColumn ? (
