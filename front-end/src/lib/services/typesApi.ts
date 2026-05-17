@@ -1,7 +1,7 @@
 import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import { parseTypes } from "../../../lib/parsers/typeParser";
+import { parseTypes } from "@/lib/parsers";
 
 import type { TypeApis, Types } from "@/shared/types";
 

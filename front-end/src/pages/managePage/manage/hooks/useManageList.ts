@@ -1,30 +1,25 @@
 import { useMemo } from "react";
-import useCategories from "../../../shared/hooks/useCategories";
-import useItems from "../../../shared/hooks/useItems";
-import useTypes from "../../../shared/hooks/useTypes";
-
-import type { GenericListColumn } from "../../../shared/types";
 
 import { useAppSelector } from "@/store/hooks";
 
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
-import {
-  CATEGORIES_ROUTE,
-  getCategoryEditRoute,
-  getItemEditRoute,
-  getTypeEditRoute,
-  ITEMS_ROUTE,
-  TYPES_ROUTE,
-} from "../services";
-import type {
-  ManageListRow,
-  ManageTab,
-} from "../../../shared/types/managePageTypes";
+
 import {
   createCategoryColumns,
   createItemColumns,
   createTypeColumns,
 } from "../configs";
+import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
+import type { GenericListColumn } from "@/shared/types";
+import { useCategories, useItems, useTypes } from "@/shared/hooks";
+import {
+  CATEGORIES_ROUTE,
+  getCategoryEditRoute,
+  getItemEditRoute,
+  ITEMS_ROUTE,
+  getTypeEditRoute,
+  TYPES_ROUTE,
+} from "../../../../lib/services";
 
 interface UseManageListData {
   activeTab: ManageTab;

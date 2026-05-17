@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import useInventoryList from "@/modules/inventory/useInventoryList";
+import useInventoryList from "@/pages/inventoryPage/inventory/useInventoryList";
 import type { TransactionFilterRow } from "./types";
 
 type UseTransactionProps = {

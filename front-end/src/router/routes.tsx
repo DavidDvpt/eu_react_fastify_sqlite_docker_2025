@@ -6,12 +6,12 @@ import RootLayout from "@/layouts/RootLayout";
 import GuestOnly from "@/modules/auth/guards/GuestOnly";
 import RequireAuth from "@/modules/auth/guards/RequireAuth";
 import HomePage from "@/pages/HomePage";
-import ManagePage from "@/pages/ManagePage";
+import ManagePage from "@/pages/managePage/ManagePage";
 import NotFoundPage from "@/pages/NotFoundPage";
-import InventoryPage from "@/pages/InventoryPage";
 import { Navigate } from "react-router-dom";
 import SignInPage from "@/pages/SignInPage";
 import SignUpPage from "@/pages/SignUpPage";
+import InventoryPage from "@/pages/inventoryPage/InventoryPage";
 
 const routes = [
   {
@@ -40,7 +40,10 @@ const routes = [
             children: [
               { index: true, element: <Navigate to="/home" replace /> },
               { path: "home", element: <HomePage /> },
-              { path: "trading", element: <Navigate to="/inventory" replace /> },
+              {
+                path: "trading",
+                element: <Navigate to="/inventory" replace />,
+              },
               { path: "inventory", element: <InventoryPage /> },
               { path: "inventory/:id", element: <InventoryPage /> },
               { path: "inventory/:id/:action", element: <InventoryPage /> },

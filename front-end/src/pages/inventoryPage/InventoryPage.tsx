@@ -3,11 +3,11 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Panel } from "@/shared/components/Containers";
 import { useTransaction } from "@/modules/transactions";
-import StockListPanel from "../modules/inventory/components/StockListPanel";
-import StockDetailsPanel from "../modules/inventory/components/StockDetailsPanel";
-import InventoryTransactionModal from "../modules/inventory/components/InventoryTransactionModal";
+import StockListPanel from "./inventory/components/StockListPanel";
+import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
+import InventoryTransactionModal from "./inventory/components/InventoryTransactionModal";
 
-function StockPage() {
+function InventoryPage() {
   const { id, action } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
@@ -72,4 +72,4 @@ function StockPage() {
   );
 }
 
-export default StockPage;
+export default InventoryPage;

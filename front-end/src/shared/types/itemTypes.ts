@@ -1,4 +1,4 @@
-import type { ItemInventory } from "@/modules/inventory/stockTypes";
+import type { ItemInventory } from "@/pages/inventoryPage/inventory/stockTypes";
 
 export type ItemApi = {
   id: string;

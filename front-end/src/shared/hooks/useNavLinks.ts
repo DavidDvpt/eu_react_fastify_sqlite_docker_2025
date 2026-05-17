@@ -1,6 +1,6 @@
 import { useLocation } from "react-router-dom";
 import type { NavbarButtonType } from "../types";
-import { MANAGE_NAV_LINKS } from "@/modules/manage";
+import { MANAGE_NAV_LINKS } from "@/pages/managePage/manage/configs/manageConfig";
 
 function useNavLinks(): NavbarButtonType[] {
   const location = useLocation();

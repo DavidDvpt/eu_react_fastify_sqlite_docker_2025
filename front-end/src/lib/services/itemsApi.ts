@@ -1,7 +1,7 @@
 import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import { parseItems } from "../../../lib/parsers/itemParser";
+import { parseItems } from "@/lib/parsers";
 import type { ItemApis, Items } from "@/shared/types";
 
 const API_URL = env.VITE_API_URL;
