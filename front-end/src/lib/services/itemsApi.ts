@@ -1,18 +1,16 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseItems } from "@/lib/parsers";
 import type { ItemApis, Items } from "@/shared/types";
 
-const API_URL = env.VITE_API_URL;
-const ITEMS_ROUTE = `${API_URL}/items`;
+const ITEMS_ROUTE = "/items";
 
 function getItemRouteById(id: string) {
-  return `${API_URL}/items/${id}`;
+  return `${ITEMS_ROUTE}/${id}`;
 }
 
 function getItemEditRoute(id: string) {
-  return `${API_URL}/items/${id}/edit`;
+  return `${ITEMS_ROUTE}/${id}/edit`;
 }
 
 async function getItems(): Promise<Items> {

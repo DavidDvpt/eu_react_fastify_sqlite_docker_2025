@@ -1,9 +1,6 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import type { SignUpOutput } from "@/modules/auth/validations";
-
-const API_URL = env.VITE_API_URL;
 
 type SignupUser = {
   id: string;
@@ -41,7 +38,7 @@ async function signupApi(credentials: SignUpOutput) {
     const response = await axiosCrud(axiosInstance()).post<
       SignupApiResult,
       typeof payload
-    >(`${API_URL}/auth/signup`, payload);
+    >("/auth/signup", payload);
 
     // Some backends return `{ user, token? }`, others return the user directly.
     if ("user" in response) return response;

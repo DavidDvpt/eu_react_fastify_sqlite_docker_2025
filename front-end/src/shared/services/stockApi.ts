@@ -1,4 +1,3 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseStock, parseStockDetails } from "@/lib/parsers";
@@ -10,8 +9,7 @@ import type {
   StockDetailsApi,
 } from "@/shared/types";
 
-const API_URL = env.VITE_API_URL;
-const STOCK_ROUTE = `${API_URL}/inventory`;
+const STOCK_ROUTE = "/inventory";
 
 function getStockRouteByItemId(itemId: string) {
   return `${STOCK_ROUTE}/${itemId}`;

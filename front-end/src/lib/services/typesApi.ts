@@ -1,19 +1,17 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseTypes } from "@/lib/parsers";
 
 import type { TypeApis, Types } from "@/shared/types";
 
-const API_URL = env.VITE_API_URL;
-const TYPES_ROUTE = `${API_URL}/types`;
+const TYPES_ROUTE = "/types";
 
 function getTypeRouteById(id: string) {
-  return `${API_URL}/types/${id}`;
+  return `${TYPES_ROUTE}/${id}`;
 }
 
 function getTypeEditRoute(id: string) {
-  return `${API_URL}/types/${id}/edit`;
+  return `${TYPES_ROUTE}/${id}/edit`;
 }
 
 async function getTypes(): Promise<Types> {

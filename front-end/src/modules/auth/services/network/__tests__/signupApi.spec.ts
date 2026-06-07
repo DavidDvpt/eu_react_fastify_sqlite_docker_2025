@@ -1,4 +1,3 @@
-import { env } from "@/config/env";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 const { mockPost, mockAxiosCrud, mockAxiosInstance } = vi.hoisted(() => ({
@@ -62,7 +61,7 @@ describe("signupApi", () => {
     });
 
     expect(mockPost).toHaveBeenCalledWith(
-      `${env.VITE_API_URL}/auth/signup`,
+      "/auth/signup",
       {
         pseudo: "john",
         email: "john@test.com",
@@ -85,7 +84,7 @@ describe("signupApi", () => {
     });
 
     expect(mockPost).toHaveBeenCalledWith(
-      `${env.VITE_API_URL}/auth/signup`,
+      "/auth/signup",
       {
         pseudo: "john",
         firstname: "John",

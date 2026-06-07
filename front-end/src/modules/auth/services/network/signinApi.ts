@@ -1,9 +1,6 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import type { LoginOutput } from "@/modules/auth/validations";
-
-const API_URL = env.VITE_API_URL;
 
 async function signinApi(credentials: LoginOutput) {
   try {
@@ -14,7 +11,7 @@ async function signinApi(credentials: LoginOutput) {
     const response = await axiosCrud(axiosInstance()).post<
       { message: string },
       LoginOutput
-    >(`${API_URL}/auth/signin`, credentials);
+    >("/auth/signin", credentials);
 
     return response;
   } catch (error) {

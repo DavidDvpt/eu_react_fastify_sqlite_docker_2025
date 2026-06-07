@@ -1,19 +1,17 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { parseCategories } from "@/lib/parsers";
 
 import type { Categories, CategoryApis } from "@/shared/types";
 
-const API_URL = env.VITE_API_URL;
-const CATEGORIES_ROUTE = `${API_URL}/categories`;
+const CATEGORIES_ROUTE = "/categories";
 
 function getCategoryRouteById(id: string) {
-  return `${API_URL}/categories/${id}`;
+  return `${CATEGORIES_ROUTE}/${id}`;
 }
 
 function getCategoryEditRoute(id: string) {
-  return `${API_URL}/categories/${id}/edit`;
+  return `${CATEGORIES_ROUTE}/${id}/edit`;
 }
 
 async function getCategories(): Promise<Categories> {

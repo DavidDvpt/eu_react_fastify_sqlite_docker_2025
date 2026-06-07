@@ -1,4 +1,3 @@
-import { env } from "@/config/env";
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import type {
@@ -10,10 +9,9 @@ import type {
   UpdateRunningTransactionLineStatusResult,
 } from "./types";
 
-const API_URL = env.VITE_API_URL;
-const TRANSACTIONS_ROUTE = `${API_URL}/inventory/transactions`;
-const RUNNING_TRANSACTION_LINES_ROUTE = `${API_URL}/transactions/sell/running-lines`;
-const TRANSACTION_LINE_STATUS_ROUTE = `${API_URL}/transactions/sell/lines`;
+const TRANSACTIONS_ROUTE = "/inventory/transactions";
+const RUNNING_TRANSACTION_LINES_ROUTE = "/transactions/sell/running-lines";
+const TRANSACTION_LINE_STATUS_ROUTE = "/transactions/sell/lines";
 
 async function buyTransaction(
   body: BuyTransactionBody,
