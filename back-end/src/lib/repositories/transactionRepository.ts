@@ -5,7 +5,7 @@ import type { TransactionStatus } from '../../../prisma/generated/client.js';
 import type {
   RunningTransactionLineRow,
   TransactionSellRow,
-} from '../../modules/session/session.type.js';
+} from '../../modules/transactionStatus/index.js';
 import type { PrismaLikeClient } from '../../types/index.js';
 
 export class TransactionRepository {

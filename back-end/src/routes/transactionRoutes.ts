@@ -1,4 +1,4 @@
-import { TransactionStatusService } from '../modules/session/session.service.js';
+import { TransactionStatusService } from '../modules/transactionStatus/index.js';
 
 import {
   transactionSellQuerySchema,

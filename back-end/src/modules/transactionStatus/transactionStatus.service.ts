@@ -1,7 +1,7 @@
 import type {
   UpdateTransactionLineStatusInput,
   UpdateTransactionLineStatusResult,
-} from './session.type.js';
+} from './transactionStatus.type.js';
 import type { PrismaClient, SessionStatus } from '../../../prisma/generated/client.js';
 
 class TransactionStatusService {
