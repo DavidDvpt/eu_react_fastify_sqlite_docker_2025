@@ -3,7 +3,7 @@ import type {
   CategoryRepository,
   ItemRepository,
   LotStockRepository,
-  SessionStatsRepository,
+  TransactionRepository,
   TypeRepository,
   UserRepository,
 } from '../lib/repositories/index.js';
@@ -18,7 +18,7 @@ declare module 'fastify' {
       types: TypeRepository;
       items: ItemRepository;
       lotStock: LotStockRepository;
-      sessionStats: SessionStatsRepository;
+      transactionRepository: TransactionRepository;
     };
 
     authenticate: preHandlerAsyncHookHandler;

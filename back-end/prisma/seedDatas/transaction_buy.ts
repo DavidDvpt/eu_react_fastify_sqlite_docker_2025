@@ -3,7 +3,7 @@ import { env } from '../../src/config/env.js';
 
 const SYSTEM_USER_ID = env.SYSTEM_USER_ID ?? '';
 
-const TRADE_IN_SOURCE = [
+const TRANSACTION_IN_SOURCE = [
   {
     "id": "01429DE0-80B3-4EAF-8FCB-8490604C4BDE",
     "transaction_type": "PURCHASE",
@@ -1616,21 +1616,21 @@ const TRADE_IN_SOURCE = [
   }
 ] as const;
 
-export const SESSIONS_BUY: Prisma.SessionCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
-  id: `TRADE-${tx.id}`,
+export const TRANSACTIONS_BUY: Prisma.TransactionCreateManyInput[] = TRANSACTION_IN_SOURCE.map((tx) => ({
+  id: `${tx.id}`,
   cost_tt: tx.tt_value,
   cost_ttc: tx.ttc_value,
   win_tt: 0,
   win_ttc: 0,
-  session_type: 'TRADE',
+  transaction_type: 'PURCHASE',
   clics: 0,
   status: 'OPENNED',
   user_id: tx.user_id ?? SYSTEM_USER_ID,
 }));
 
-export const SESSION_BUY_LINES: Prisma.SessionLineCreateManyInput[] = TRADE_IN_SOURCE.map((tx) => ({
+export const TRANSACTION_BUY_LINES: Prisma.TransactionLotCreateManyInput[] = TRANSACTION_IN_SOURCE.map((tx) => ({
   id: tx.id,
-  session_id: `TRADE-${tx.id}`,
+  transaction_id: `${tx.id}`,
   item_id: tx.item_id,
   inventory_lot_id: tx.inventory_lot_id,
   quantity: tx.quantity,

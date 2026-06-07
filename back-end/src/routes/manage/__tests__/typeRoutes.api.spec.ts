@@ -33,7 +33,7 @@ describe('typeRoutes', () => {
       update: vi.fn(),
     };
     const lotStock = { getStock: vi.fn(), getStockByItemId: vi.fn() };
-    const sessionStats = { getSellSessions: vi.fn() };
+    const transactionRepository = { getSellSessions: vi.fn() };
     const users = {
       findMany: vi.fn(),
       findUnique: vi.fn(),
@@ -49,7 +49,7 @@ describe('typeRoutes', () => {
       types,
       items,
       lotStock,
-      sessionStats,
+      transactionRepository,
     } as unknown as FastifyInstance['repos']);
 
     app.decorate('protect', function (this: FastifyInstance) {

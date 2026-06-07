@@ -1,10 +1,10 @@
-import type { SessionStatsRepository } from '../lib/repositories/index.js';
+import type { TransactionRepository } from '../lib/repositories/index.js';
 import type { FastifyInstance } from 'fastify';
 
-type AppWithSessionStatsRepo = FastifyInstance & {
+type AppWithTransactionStatsRepo = FastifyInstance & {
   repos: {
-    sessionStats: SessionStatsRepository;
+    transactionRepository: TransactionRepository;
   };
 };
 
-export type { AppWithSessionStatsRepo };
+export type { AppWithTransactionStatsRepo };

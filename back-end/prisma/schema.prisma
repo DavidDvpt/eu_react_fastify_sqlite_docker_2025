@@ -45,7 +45,7 @@ enum TransactionLineType {
 }
 
 enum SessionType {
-  TRADE
+  TRANSACTION
   MINING
   CRAFTING
 }
@@ -78,6 +78,9 @@ model User {
   lots           Lot[]
   sessions       Session[]
   sessionLines   SessionLine[]
+  sessionLots    SessionLot[]
+  transactions   Transaction[]
+  transactionLots TransactionLot[]
 
   @@map("user")
 }
@@ -96,6 +99,7 @@ model Session {
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   lines SessionLine[]
+  lots  SessionLot[]
 
   @@index([user_id])
   @@map("session")
@@ -124,6 +128,75 @@ model SessionLine {
   @@index([inventory_lot_id])
   @@index([user_id])
   @@map("session_line")
+}
+
+model SessionLot {
+  id               String             @id @default(uuid())
+  session_id       String
+  item_id          String
+  inventory_lot_id String?
+  quantity         Int
+  line_type        SessionLineType
+  line_status      SessionStatus      @default(OPENNED)
+  sale_status      TransactionStatus?
+  tt               Decimal            @default(0)
+  ttc              Decimal            @default(0)
+  user_id          String
+
+  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
+  item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  lot     Lot?    @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([session_id])
+  @@index([item_id])
+  @@index([inventory_lot_id])
+  @@index([user_id])
+  @@map("session_lot")
+}
+
+model Transaction {
+  id               String        @id @default(uuid())
+  cost_tt          Decimal       @default(0)
+  cost_ttc         Decimal       @default(0)
+  win_tt           Decimal       @default(0)
+  win_ttc          Decimal       @default(0)
+  transaction_type TransactionType
+  clics            Int           @default(0)
+  status           SessionStatus @default(OPENNED)
+  user_id          String
+
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  lines TransactionLot[]
+
+  @@index([user_id])
+  @@map("transaction")
+}
+
+model TransactionLot {
+  id               String             @id @default(uuid())
+  transaction_id   String
+  item_id          String
+  inventory_lot_id String?
+  quantity         Int
+  line_type        SessionLineType
+  line_status      SessionStatus      @default(OPENNED)
+  sale_status      TransactionStatus?
+  tt               Decimal            @default(0)
+  ttc              Decimal            @default(0)
+  user_id          String
+
+  transaction Transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
+  item        Item        @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  lot         Lot?        @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
+  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  @@index([transaction_id])
+  @@index([item_id])
+  @@index([inventory_lot_id])
+  @@index([user_id])
+  @@map("transaction_lot")
 }
 
 model Category {
@@ -181,6 +254,8 @@ model Item {
   lots Lot[]
 
   session_lines SessionLine[]
+  session_lots   SessionLot[]
+  transaction_lots TransactionLot[]
 
   @@map("item")
 }
@@ -201,6 +276,8 @@ model Lot {
 
   item Item          @relation(fields: [item_id], references: [id], onDelete: Cascade)
   line SessionLine[]
+  session_lots SessionLot[]
+  transaction_lots TransactionLot[]
 
   @@map("lot")
 }

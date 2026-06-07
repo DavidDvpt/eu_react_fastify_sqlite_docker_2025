@@ -1,3 +1,5 @@
+import { SessionType } from '../../../prisma/generated/client.js';
+
 import {
   buildRequestedByItem,
   computeInitialSellTotals,
@@ -70,7 +72,7 @@ class TransactionService {
       // Create the session, then persist IN lines and inventory lots.
       const session = await tx.session.create({
         data: {
-          session_type: 'TRADE',
+          session_type: SessionType.TRANSACTION,
           status: 'CLOSED',
           user_id: userId,
           cost_tt: buyCostTt,
@@ -159,7 +161,7 @@ class TransactionService {
       // Create sell session first; totals are finalized after line processing.
       const session = await tx.session.create({
         data: {
-          session_type: 'TRADE',
+          session_type: SessionType.TRANSACTION,
           status: 'OPENNED',
           user_id: userId,
           cost_tt: 0,

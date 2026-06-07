@@ -14,7 +14,7 @@ CREATE TYPE "TransactionStatus" AS ENUM ('SOLDED', 'RETURNED', 'RUNNING');
 CREATE TYPE "TransactionLineType" AS ENUM ('GAIN', 'LOST');
 
 -- CreateEnum
-CREATE TYPE "SessionType" AS ENUM ('TRADE', 'MINING', 'CRAFTING');
+CREATE TYPE "SessionType" AS ENUM ('TRANSACTION', 'MINING', 'CRAFTING');
 
 -- CreateEnum
 CREATE TYPE "SessionStatus" AS ENUM ('OPENNED', 'CLOSED', 'ARCHIVED');
@@ -68,6 +68,55 @@ CREATE TABLE "session_line" (
     "user_id" TEXT NOT NULL,
 
     CONSTRAINT "session_line_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "session_lot" (
+    "id" TEXT NOT NULL,
+    "session_id" TEXT NOT NULL,
+    "item_id" TEXT NOT NULL,
+    "inventory_lot_id" TEXT,
+    "quantity" INTEGER NOT NULL,
+    "line_type" "SessionLineType" NOT NULL,
+    "line_status" "SessionStatus" NOT NULL DEFAULT 'OPENNED',
+    "sale_status" "TransactionStatus",
+    "tt" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "ttc" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "user_id" TEXT NOT NULL,
+
+    CONSTRAINT "session_lot_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "transaction" (
+    "id" TEXT NOT NULL,
+    "cost_tt" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "cost_ttc" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "win_tt" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "win_ttc" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "transaction_type" "TransactionType" NOT NULL,
+    "clics" INTEGER NOT NULL DEFAULT 0,
+    "status" "SessionStatus" NOT NULL DEFAULT 'OPENNED',
+    "user_id" TEXT NOT NULL,
+
+    CONSTRAINT "transaction_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "transaction_lot" (
+    "id" TEXT NOT NULL,
+    "transaction_id" TEXT NOT NULL,
+    "item_id" TEXT NOT NULL,
+    "inventory_lot_id" TEXT,
+    "quantity" INTEGER NOT NULL,
+    "line_type" "SessionLineType" NOT NULL,
+    "line_status" "SessionStatus" NOT NULL DEFAULT 'OPENNED',
+    "sale_status" "TransactionStatus",
+    "tt" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "ttc" DECIMAL(65,30) NOT NULL DEFAULT 0,
+    "user_id" TEXT NOT NULL,
+
+    CONSTRAINT "transaction_lot_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -161,6 +210,33 @@ CREATE INDEX "session_line_inventory_lot_id_idx" ON "session_line"("inventory_lo
 CREATE INDEX "session_line_user_id_idx" ON "session_line"("user_id");
 
 -- CreateIndex
+CREATE INDEX "session_lot_session_id_idx" ON "session_lot"("session_id");
+
+-- CreateIndex
+CREATE INDEX "session_lot_item_id_idx" ON "session_lot"("item_id");
+
+-- CreateIndex
+CREATE INDEX "session_lot_inventory_lot_id_idx" ON "session_lot"("inventory_lot_id");
+
+-- CreateIndex
+CREATE INDEX "session_lot_user_id_idx" ON "session_lot"("user_id");
+
+-- CreateIndex
+CREATE INDEX "transaction_user_id_idx" ON "transaction"("user_id");
+
+-- CreateIndex
+CREATE INDEX "transaction_lot_transaction_id_idx" ON "transaction_lot"("transaction_id");
+
+-- CreateIndex
+CREATE INDEX "transaction_lot_item_id_idx" ON "transaction_lot"("item_id");
+
+-- CreateIndex
+CREATE INDEX "transaction_lot_inventory_lot_id_idx" ON "transaction_lot"("inventory_lot_id");
+
+-- CreateIndex
+CREATE INDEX "transaction_lot_user_id_idx" ON "transaction_lot"("user_id");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "item_category_name_key" ON "item_category"("name");
 
 -- CreateIndex
@@ -186,6 +262,33 @@ ALTER TABLE "session_line" ADD CONSTRAINT "session_line_inventory_lot_id_fkey" F
 
 -- AddForeignKey
 ALTER TABLE "session_line" ADD CONSTRAINT "session_line_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "session_lot" ADD CONSTRAINT "session_lot_session_id_fkey" FOREIGN KEY ("session_id") REFERENCES "session"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "session_lot" ADD CONSTRAINT "session_lot_item_id_fkey" FOREIGN KEY ("item_id") REFERENCES "item"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "session_lot" ADD CONSTRAINT "session_lot_inventory_lot_id_fkey" FOREIGN KEY ("inventory_lot_id") REFERENCES "lot"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "session_lot" ADD CONSTRAINT "session_lot_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction" ADD CONSTRAINT "transaction_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_transaction_id_fkey" FOREIGN KEY ("transaction_id") REFERENCES "transaction"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_item_id_fkey" FOREIGN KEY ("item_id") REFERENCES "item"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_inventory_lot_id_fkey" FOREIGN KEY ("inventory_lot_id") REFERENCES "lot"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "item_category" ADD CONSTRAINT "item_category_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;

@@ -2,8 +2,8 @@ import { UserRepository } from '../src/lib/repositories/index.js';
 import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { LOTS } from './seedDatas/lots.js';
-import { SESSIONS_BUY, SESSION_BUY_LINES } from './seedDatas/session_buy.js';
-import { SESSIONS_SELL, SESSION_SELL_LINES } from './seedDatas/session_sell.js';
+import { TRANSACTIONS_BUY, TRANSACTION_BUY_LINES } from './seedDatas/transaction_buy.js';
+import { TRANSACTIONS_SELL, TRANSACTION_SELL_LINES } from './seedDatas/transaction_sell.js';
 import { USERS } from './seedDatas/user.js';
 
 const userRepository = new UserRepository(prismaClient);
@@ -183,14 +183,14 @@ const seedDevData = async () => {
 
   if (!userId) return;
 
-  const sessionsCount = await prismaClient.session.count();
-  if (!sessionsCount) {
-    const sessionsData = [...SESSIONS_BUY, ...SESSIONS_SELL].map((session) => ({
-      ...session,
+  const transactionsCount = await prismaClient.transaction.count();
+  if (!transactionsCount) {
+    const transactionsData = [...TRANSACTIONS_BUY, ...TRANSACTIONS_SELL].map((transaction) => ({
+      ...transaction,
       user_id: userId,
     }));
-    await prismaClient.session.createMany({
-      data: sessionsData,
+    await prismaClient.transaction.createMany({
+      data: transactionsData,
       skipDuplicates: true,
     });
   }
@@ -203,14 +203,14 @@ const seedDevData = async () => {
     });
   }
 
-  const sessionLinesCount = await prismaClient.sessionLine.count();
-  if (!sessionLinesCount) {
-    const sessionLinesData = [...SESSION_BUY_LINES, ...SESSION_SELL_LINES].map((line) => ({
+  const transactionLotsCount = await prismaClient.transactionLot.count();
+  if (!transactionLotsCount) {
+    const transactionLotsData = [...TRANSACTION_BUY_LINES, ...TRANSACTION_SELL_LINES].map((line) => ({
       ...line,
       user_id: userId,
     }));
-    await prismaClient.sessionLine.createMany({
-      data: sessionLinesData,
+    await prismaClient.transactionLot.createMany({
+      data: transactionLotsData,
       skipDuplicates: true,
     });
   }

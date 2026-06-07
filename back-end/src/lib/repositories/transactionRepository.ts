@@ -1,11 +1,11 @@
-import { getRunningSellLinesSql, getSellSessionsSql } from './sessionStatsRepository.sqlraw.js';
+import { getRunningSellLinesSql, getSellSessionsSql } from './transactionRepository.sqlraw.js';
 
 import type { Prisma } from '../../../prisma/generated/client.js';
 import type { TransactionStatus } from '../../../prisma/generated/client.js';
 import type { RunningSellLineRow, SellSessionRow } from '../../modules/session/session.type.js';
 import type { PrismaLikeClient } from '../../types/index.js';
 
-export class SessionStatsRepository {
+export class TransactionRepository {
   constructor(private readonly client: PrismaLikeClient) {}
 
   async getSellSessions(userId: string, status?: TransactionStatus): Promise<SellSessionRow[]> {

@@ -18,7 +18,7 @@ const getSellSessionsSql = (userId: string, status?: TransactionStatus) => {
     JOIN item i ON i.id = sl.item_id
     WHERE sl.user_id = ${userId}
       AND sl.line_type = 'OUT'
-      AND s.session_type = 'TRADE'
+      AND s.session_type = 'TRANSACTION'
       ${statusFilter}
     GROUP BY sl.session_id, i.id, i.name, sl.sale_status
     ORDER BY i.name, sl.session_id
@@ -44,7 +44,7 @@ const getRunningSellLinesSql = (userId: string) => Prisma.sql`
     AND s.user_id = ${userId}
     AND sl.line_type = 'OUT'
     AND sl.sale_status = 'RUNNING'
-    AND s.session_type = 'TRADE'
+    AND s.session_type = 'TRANSACTION'
   ORDER BY sl.session_id, sl.id
 `;
 

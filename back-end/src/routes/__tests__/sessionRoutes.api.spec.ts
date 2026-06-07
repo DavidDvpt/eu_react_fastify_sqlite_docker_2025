@@ -14,12 +14,12 @@ describe('sessionRoutes', () => {
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
-    const sessionStats = {
+    const transactionRepository = {
       getSellSessions: vi.fn(),
       getRunningSellLines: vi.fn(),
     };
 
-    app.decorate('repos', { sessionStats } as unknown as FastifyInstance['repos']);
+    app.decorate('repos', { transactionRepository } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
@@ -29,14 +29,14 @@ describe('sessionRoutes', () => {
 
     app.register(sessionRoutes, { prefix: API_PREFIX });
 
-    return { app, sessionStats };
+    return { app, transactionRepository };
   }
 
   it('GET /api/v1/sessions/sell returns sell sessions with status filter', async () => {
-    const { app, sessionStats } = buildApp();
-    vi.mocked(sessionStats.getSellSessions).mockResolvedValueOnce([
+    const { app, transactionRepository } = buildApp();
+    vi.mocked(transactionRepository.getSellSessions).mockResolvedValueOnce([
       {
-        sessionId: 'TRANSACTION-session-1',
+        sessionId: 'session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,
@@ -52,10 +52,10 @@ describe('sessionRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(sessionStats.getSellSessions).toHaveBeenCalledWith('user-1', 'RUNNING');
+    expect(transactionRepository.getSellSessions).toHaveBeenCalledWith('user-1', 'RUNNING');
     expect(res.json()).toEqual([
       {
-        sessionId: 'TRANSACTION-session-1',
+        sessionId: 'session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,
@@ -67,8 +67,8 @@ describe('sessionRoutes', () => {
   });
 
   it('GET /api/v1/sessions/sell/running-lines returns running sell lines for authenticated user', async () => {
-    const { app, sessionStats } = buildApp();
-    vi.mocked(sessionStats.getRunningSellLines).mockResolvedValueOnce([
+    const { app, transactionRepository } = buildApp();
+    vi.mocked(transactionRepository.getRunningSellLines).mockResolvedValueOnce([
       {
         sessionLineId: 'line-1',
         sessionId: 'session-1',
@@ -90,7 +90,7 @@ describe('sessionRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(sessionStats.getRunningSellLines).toHaveBeenCalledWith('user-1');
+    expect(transactionRepository.getRunningSellLines).toHaveBeenCalledWith('user-1');
     expect(res.json()).toEqual([
       {
         sessionLineId: 'line-1',

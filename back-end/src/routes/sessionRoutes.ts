@@ -23,13 +23,13 @@ const sessionRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/sessions/sell', async (request, reply) => {
     const userId = getRequestUserId(request);
     const query = sellSessionsQuerySchema.parse(request.query);
-    const rows = await app.repos.sessionStats.getSellSessions(userId, query.status);
+    const rows = await app.repos.transactionRepository.getSellSessions(userId, query.status);
     return reply.code(200).send(rows);
   });
 
   app.get('/sessions/sell/running-lines', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const rows = await app.repos.sessionStats.getRunningSellLines(userId);
+    const rows = await app.repos.transactionRepository.getRunningSellLines(userId);
     return reply.code(200).send(rows);
   });
 
