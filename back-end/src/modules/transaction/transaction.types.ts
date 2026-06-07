@@ -28,7 +28,7 @@ type TransactionProcessedItem = {
 };
 
 type TransactionExecutionResult = {
-  sessionId: string | null;
+  transactionId: string | null;
   processed: TransactionProcessedItem[];
   rejected: TransactionRejectedItem[];
 };

@@ -1,4 +1,4 @@
 export { default as authRoutes } from './authRoutes.js';
 export { default as manageRoutes } from './manageRoutes.js';
-export { default as sessionRoutes } from './sessionRoutes.js';
+export { default as transactionRoutes } from './transactionRoutes.js';
 export { default as inventoryRoutes } from './inventoryRoutes.js';

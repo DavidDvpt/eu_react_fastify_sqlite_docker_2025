@@ -88,7 +88,7 @@ export class LotStockRepository {
         lot_type: string;
         quantity_remaining: number;
         quantity_initial: number;
-        session_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+        transaction_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
         line_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
         quantity_exported: number;
         price_remaining: string;
@@ -102,7 +102,7 @@ export class LotStockRepository {
         date_created: string | null;
         quantity: number;
         line_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
-        session_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+        transaction_status: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
         tt: Prisma.Decimal | number;
         ttc: Prisma.Decimal | number;
         sale_status: string | null;
@@ -116,7 +116,7 @@ export class LotStockRepository {
         lotType: row.lot_type,
         quantityRemaining: row.quantity_remaining,
         quantityInitial: row.quantity_initial,
-        sessionStatus: row.session_status,
+        transactionStatus: row.transaction_status,
         lineStatus: row.line_status,
         quantityExported: row.quantity_exported,
         priceRemaining: Number(row.price_remaining),
@@ -127,7 +127,7 @@ export class LotStockRepository {
         dateCreated: row.date_created ?? '',
         quantity: row.quantity,
         lineStatus: row.line_status,
-        sessionStatus: row.session_status,
+        transactionStatus: row.transaction_status,
         tt: typeof row.tt === 'number' ? row.tt : Number(row.tt.toString()),
         ttc: typeof row.ttc === 'number' ? row.ttc : Number(row.ttc.toString()),
         saleStatus: row.sale_status,

@@ -12,7 +12,7 @@ type InventoryLotInRow = {
   lotType: string;
   quantityRemaining: number;
   quantityInitial: number;
-  sessionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+  transactionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
   lineStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
   quantityExported: number;
   priceRemaining: number;
@@ -24,7 +24,7 @@ type InventoryLotOutRow = {
   dateCreated: string;
   quantity: number;
   lineStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
-  sessionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
+  transactionStatus: 'OPENNED' | 'CLOSED' | 'ARCHIVED';
   tt: number;
   ttc: number;
   saleStatus: string | null;

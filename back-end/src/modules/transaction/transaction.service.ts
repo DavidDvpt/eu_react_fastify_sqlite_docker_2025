@@ -1,4 +1,4 @@
-import { SessionType } from '../../../prisma/generated/client.js';
+import { TransactionType } from '../../../prisma/generated/client.js';
 
 import {
   buildRequestedByItem,
@@ -48,10 +48,10 @@ class TransactionService {
       }));
 
     if (!processable.length) {
-      return { sessionId: null, processed: [], rejected };
+      return { transactionId: null, processed: [], rejected };
     }
 
-    // Compute purchase totals at session level.
+    // Compute purchase totals at transaction level.
     const buyCostTt = processable.reduce((sum, line) => {
       const item = itemById.get(line.itemId);
       if (!item) {
@@ -69,10 +69,10 @@ class TransactionService {
     }, 0);
 
     return this.prisma.$transaction(async (tx) => {
-      // Create the session, then persist IN lines and inventory lots.
-      const session = await tx.session.create({
+      // Create the transaction, then persist IN lines and inventory lots.
+      const transaction = await tx.transaction.create({
         data: {
-          session_type: SessionType.TRANSACTION,
+          transaction_type: TransactionType.PURCHASE,
           status: 'CLOSED',
           user_id: userId,
           cost_tt: buyCostTt,
@@ -100,16 +100,16 @@ class TransactionService {
             quantity_exported: 0,
             price_remaining: String(lineTtc),
             item_id: line.itemId,
-            lot_type: 'SESSION_LINE',
+            lot_type: 'TRANSACTION',
             date_created: now,
             user_id: userId,
           },
           select: { id: true },
         });
 
-        await tx.sessionLine.create({
+        await tx.transactionLot.create({
           data: {
-            session_id: session.id,
+            transaction_id: transaction.id,
             item_id: line.itemId,
             inventory_lot_id: lot.id,
             quantity: line.quantity,
@@ -126,7 +126,7 @@ class TransactionService {
       }
 
       return {
-        sessionId: session.id,
+        transactionId: transaction.id,
         processed,
         rejected,
       };
@@ -144,24 +144,24 @@ class TransactionService {
       availabilityRows.map((row) => [row.itemId, row.availableQuantity] as const)
     );
 
-    // Keep only processable lines before opening a transaction session.
+    // Keep only processable lines before opening a transaction.
     const { processable, rejected } = splitProcessableSellLines(lines, availableByItem);
 
     if (!processable.length) {
-      return { sessionId: null, processed: [], rejected };
+      return { transactionId: null, processed: [], rejected };
     }
 
     return this.prisma.$transaction(async (tx) => {
       const now = new Date().toISOString();
 
-      // Load sell item metadata and derive provisional session totals.
+      // Load sell item metadata and derive provisional transaction totals.
       const itemById = await loadSellItemsById(tx, processable);
       const { initialWinTt, initialWinTtc } = computeInitialSellTotals(processable, itemById);
 
-      // Create sell session first; totals are finalized after line processing.
-      const session = await tx.session.create({
+      // Create sell transaction first; totals are finalized after line processing.
+      const transaction = await tx.transaction.create({
         data: {
-          session_type: SessionType.TRANSACTION,
+          transaction_type: TransactionType.SELL,
           status: 'OPENNED',
           user_id: userId,
           cost_tt: 0,
@@ -181,7 +181,7 @@ class TransactionService {
       } = await processSellLines({
         tx,
         userId,
-        sessionId: session.id,
+        transactionId: transaction.id,
         now,
         processable,
         itemById,
@@ -189,15 +189,15 @@ class TransactionService {
         stocksService: this.stocksService,
       });
 
-      // Remove empty session when no line could be sold.
+      // Remove empty transaction when no line could be sold.
       if (!processed.length) {
-        await tx.session.delete({ where: { id: session.id } });
-        return { sessionId: null, processed, rejected: mergedRejected };
+        await tx.transaction.delete({ where: { id: transaction.id } });
+        return { transactionId: null, processed, rejected: mergedRejected };
       }
 
-      // Persist final session totals after all accepted lines are processed.
-      await tx.session.update({
-        where: { id: session.id },
+      // Persist final transaction totals after all accepted lines are processed.
+      await tx.transaction.update({
+        where: { id: transaction.id },
         data: {
           win_tt: totalTt,
           win_ttc: totalTtc,
@@ -205,7 +205,7 @@ class TransactionService {
       });
 
       return {
-        sessionId: session.id,
+        transactionId: transaction.id,
         processed,
         rejected: mergedRejected,
       };

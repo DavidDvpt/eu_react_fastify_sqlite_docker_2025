@@ -18,7 +18,7 @@ describe('stockRoutes', () => {
       item: {
         findMany: vi.fn(),
       },
-      session: {
+      transaction: {
         create: vi.fn(),
         update: vi.fn(),
         delete: vi.fn(),
@@ -27,7 +27,7 @@ describe('stockRoutes', () => {
         create: vi.fn(),
         update: vi.fn(),
       },
-      sessionLine: {
+      transactionLot: {
         create: vi.fn(),
       },
     };
@@ -132,10 +132,10 @@ describe('stockRoutes', () => {
       lotsIn: [
         {
           id: 'lot-1',
-          lotType: 'SESSION_LINE',
+          lotType: 'TRANSACTION',
           quantityRemaining: 200,
           quantityInitial: 250,
-          sessionStatus: 'CLOSED',
+          transactionStatus: 'CLOSED',
           lineStatus: 'CLOSED',
           quantityExported: 50,
           priceRemaining: 40,
@@ -148,7 +148,7 @@ describe('stockRoutes', () => {
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
           lineStatus: 'CLOSED',
-          sessionStatus: 'CLOSED',
+          transactionStatus: 'CLOSED',
           tt: 20,
           ttc: 25,
           saleStatus: 'SOLDED',
@@ -174,10 +174,10 @@ describe('stockRoutes', () => {
       lotsIn: [
         {
           id: 'lot-1',
-          lotType: 'SESSION_LINE',
+          lotType: 'TRANSACTION',
           quantityRemaining: 200,
           quantityInitial: 250,
-          sessionStatus: 'CLOSED',
+          transactionStatus: 'CLOSED',
           lineStatus: 'CLOSED',
           quantityExported: 50,
           priceRemaining: 40,
@@ -190,7 +190,7 @@ describe('stockRoutes', () => {
           dateCreated: '2025-10-21 13:37:17.68',
           quantity: 50,
           lineStatus: 'CLOSED',
-          sessionStatus: 'CLOSED',
+          transactionStatus: 'CLOSED',
           tt: 20,
           ttc: 25,
           saleStatus: 'SOLDED',
@@ -211,13 +211,13 @@ describe('stockRoutes', () => {
     await app.close();
   });
 
-  it('POST /api/v1/inventory/transactions with type=buy creates session and IN line', async () => {
+  it('POST /api/v1/inventory/transactions with type=buy creates transaction and IN line', async () => {
     const { app, tx, prisma } = buildApp();
 
     vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
-    vi.mocked(tx.session.create).mockResolvedValueOnce({ id: 'session-1' } as never);
+    vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-1' } as never);
     vi.mocked(tx.lot.create).mockResolvedValueOnce({ id: 'lot-1' } as never);
-    vi.mocked(tx.sessionLine.create).mockResolvedValueOnce({ id: 'line-1' } as never);
+    vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-1' } as never);
 
     await app.ready();
     const res = await app.inject({
@@ -230,7 +230,7 @@ describe('stockRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
-    const buySessionCreateCall = vi.mocked(tx.session.create).mock.calls[0]?.[0] as {
+    const buySessionCreateCall = vi.mocked(tx.transaction.create).mock.calls[0]?.[0] as {
       data: {
         status: string;
       };

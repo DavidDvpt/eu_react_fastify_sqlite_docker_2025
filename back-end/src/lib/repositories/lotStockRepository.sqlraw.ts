@@ -58,7 +58,7 @@ const getInventoryByItemIdsSql = (userId: string, itemIds: string[]) => Prisma.s
 
 /**
  * Returns incoming lots for one item and one user.
- * Each lot is joined with its source IN session line quantity.
+ * Each lot is joined with its source IN transaction line quantity.
  */
 const getLotsInByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
   SELECT
@@ -66,7 +66,7 @@ const getLotsInByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
     l.lot_type,
     l.quantity_remaining,
     sl_in.quantity AS quantity_initial,
-    sl_in.session_status,
+    sl_in.transaction_status,
     sl_in.line_status,
     l.quantity_exported,
     l.price_remaining,
@@ -76,9 +76,9 @@ const getLotsInByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
     SELECT
       sl.quantity,
       sl.line_status,
-      s.status AS session_status
-    FROM session_line sl
-    JOIN session s ON s.id = sl.session_id
+      s.status AS transaction_status
+    FROM transaction_lot sl
+    JOIN transaction s ON s.id = sl.transaction_id
     WHERE sl.inventory_lot_id = l.id
       AND sl.user_id = ${userId}
       AND s.user_id = ${userId}
@@ -94,7 +94,7 @@ const getLotsInByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
 `;
 
 /**
- * Returns outgoing session lines (OUT) for one item and one user.
+ * Returns outgoing transaction lines (OUT) for one item and one user.
  * Includes quantities and financial totals.
  */
 const getLotsOutByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
@@ -103,12 +103,12 @@ const getLotsOutByItemIdSql = (userId: string, itemId: string) => Prisma.sql`
     l.date_created,
     sl.quantity,
     sl.line_status,
-    s.status AS session_status,
+    s.status AS transaction_status,
     sl.tt,
     sl.ttc,
     sl.sale_status
-  FROM session_line sl
-  JOIN session s ON s.id = sl.session_id
+  FROM transaction_lot sl
+  JOIN transaction s ON s.id = sl.transaction_id
   LEFT JOIN lot l ON l.id = sl.inventory_lot_id
   WHERE sl.user_id = ${userId}
     AND s.user_id = ${userId}

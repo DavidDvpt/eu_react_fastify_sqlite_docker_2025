@@ -93,13 +93,13 @@ const processStackableSellLine = async (input: {
   stocksService: StocksService;
   userId: string;
   now: string;
-  sessionId: string;
+  transactionId: string;
   line: SellLineInput;
   item: SellItemData;
 }): Promise<
   { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TransactionRejectedItem }
 > => {
-  const { tx, stocksService, userId, now, sessionId, line, item } = input;
+  const { tx, stocksService, userId, now, transactionId, line, item } = input;
   const lots = await stocksService.getAvailableLotsFifoByItemId(userId, line.itemId);
   const available = lots.reduce((sum, lot) => sum + lot.quantityRemaining, 0);
   if (line.quantity > available) {
@@ -139,9 +139,9 @@ const processStackableSellLine = async (input: {
       ? remainingSaleTtc
       : (lineTtc * consumed) / line.quantity;
 
-    await tx.sessionLine.create({
+    await tx.transactionLot.create({
       data: {
-        session_id: sessionId,
+        transaction_id: transactionId,
         item_id: line.itemId,
         inventory_lot_id: lot.id,
         quantity: consumed,
@@ -178,13 +178,13 @@ const processNonStackableSellLine = async (input: {
   stocksService: StocksService;
   userId: string;
   now: string;
-  sessionId: string;
+  transactionId: string;
   line: SellLineInput;
   item: SellItemData;
 }): Promise<
   { ok: true; lineTt: number; lineTtc: number } | { ok: false; rejection: TransactionRejectedItem }
 > => {
-  const { tx, stocksService, userId, now, sessionId, line, item } = input;
+  const { tx, stocksService, userId, now, transactionId, line, item } = input;
 
   if (!line.inventoryLotId) {
     return {
@@ -227,9 +227,9 @@ const processNonStackableSellLine = async (input: {
   const lineTt = line.tt ?? consumedPrice;
   const lineTtc = line.ttc;
 
-  await tx.sessionLine.create({
+  await tx.transactionLot.create({
     data: {
-      session_id: sessionId,
+      transaction_id: transactionId,
       item_id: line.itemId,
       inventory_lot_id: lot.id,
       quantity: line.quantity,
@@ -258,7 +258,7 @@ const processNonStackableSellLine = async (input: {
 const processSellLines = async ({
   tx,
   userId,
-  sessionId,
+  transactionId,
   now,
   processable,
   itemById,
@@ -267,7 +267,7 @@ const processSellLines = async ({
 }: {
   tx: Prisma.TransactionClient;
   userId: string;
-  sessionId: string;
+  transactionId: string;
   now: string;
   processable: SellLineInput[];
   itemById: Map<string, SellItemData>;
@@ -298,7 +298,7 @@ const processSellLines = async ({
           stocksService,
           userId,
           now,
-          sessionId,
+          transactionId,
           line,
           item,
         })
@@ -307,7 +307,7 @@ const processSellLines = async ({
           stocksService,
           userId,
           now,
-          sessionId,
+          transactionId,
           line,
           item,
         });

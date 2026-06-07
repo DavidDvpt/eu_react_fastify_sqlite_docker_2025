@@ -4,11 +4,11 @@ Ce document fige les regles metier autour des sessions et de leur cycle de vie.
 
 ## Session Types
 
-- `transaction` (remplace le concept historique `trade`)
+- `transaction`
 - `mining`
 - `crafting`
 
-Note: la base actuelle peut encore contenir la valeur technique `TRADE` tant que la migration de schema n'est pas appliquee.
+Note: le schema cible utilise `TRANSACTION` pour les operations de session transactionnelle.
 
 ## Session Status
 

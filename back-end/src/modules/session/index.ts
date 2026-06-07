@@ -1,8 +1,8 @@
 export * from './session.service.js';
 
 export type {
-  RunningSellLineRow,
-  SellSessionRow,
-  UpdateSellLineStatusInput,
-  UpdateSellLineStatusResult,
+  RunningTransactionLineRow,
+  TransactionSellRow,
+  UpdateTransactionLineStatusInput,
+  UpdateTransactionLineStatusResult,
 } from './session.type.js';

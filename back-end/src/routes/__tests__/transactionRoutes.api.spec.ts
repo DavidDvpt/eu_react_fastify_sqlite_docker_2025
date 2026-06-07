@@ -3,12 +3,12 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
-import sessionRoutes from '../sessionRoutes.js';
+import transactionRoutes from '../transactionRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-describe('sessionRoutes', () => {
+describe('transactionRoutes', () => {
   function buildApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
@@ -27,16 +27,16 @@ describe('sessionRoutes', () => {
       });
     });
 
-    app.register(sessionRoutes, { prefix: API_PREFIX });
+    app.register(transactionRoutes, { prefix: API_PREFIX });
 
     return { app, transactionRepository };
   }
 
-  it('GET /api/v1/sessions/sell returns sell sessions with status filter', async () => {
+  it('GET /api/v1/transactions/sell returns sell transactions with status filter', async () => {
     const { app, transactionRepository } = buildApp();
     vi.mocked(transactionRepository.getSellSessions).mockResolvedValueOnce([
       {
-        sessionId: 'session-1',
+        transactionId: 'session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,
@@ -48,14 +48,14 @@ describe('sessionRoutes', () => {
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/sessions/sell?status=RUNNING`,
+      url: `${API_PREFIX}/transactions/sell?status=RUNNING`,
     });
 
     expect(res.statusCode).toBe(200);
     expect(transactionRepository.getSellSessions).toHaveBeenCalledWith('user-1', 'RUNNING');
     expect(res.json()).toEqual([
       {
-        sessionId: 'session-1',
+        transactionId: 'session-1',
         name: 'Oil',
         quantity: 100,
         totalPrice: 145,
@@ -66,12 +66,12 @@ describe('sessionRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/sessions/sell/running-lines returns running sell lines for authenticated user', async () => {
+  it('GET /api/v1/transactions/sell/running-lines returns running sell lines for authenticated user', async () => {
     const { app, transactionRepository } = buildApp();
     vi.mocked(transactionRepository.getRunningSellLines).mockResolvedValueOnce([
       {
-        sessionLineId: 'line-1',
-        sessionId: 'session-1',
+        transactionLotId: 'line-1',
+        transactionId: 'session-1',
         itemId: 'item-1',
         itemName: 'Oil',
         inventoryLotId: 'lot-1',
@@ -86,15 +86,15 @@ describe('sessionRoutes', () => {
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/sessions/sell/running-lines`,
+      url: `${API_PREFIX}/transactions/sell/running-lines`,
     });
 
     expect(res.statusCode).toBe(200);
     expect(transactionRepository.getRunningSellLines).toHaveBeenCalledWith('user-1');
     expect(res.json()).toEqual([
       {
-        sessionLineId: 'line-1',
-        sessionId: 'session-1',
+        transactionLotId: 'line-1',
+        transactionId: 'session-1',
         itemId: 'item-1',
         itemName: 'Oil',
         inventoryLotId: 'lot-1',

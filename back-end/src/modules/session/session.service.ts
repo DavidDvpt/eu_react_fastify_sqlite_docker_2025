@@ -1,24 +1,27 @@
-import type { UpdateSellLineStatusInput, UpdateSellLineStatusResult } from './session.type.js';
+import type {
+  UpdateTransactionLineStatusInput,
+  UpdateTransactionLineStatusResult,
+} from './session.type.js';
 import type { PrismaClient, SessionStatus } from '../../../prisma/generated/client.js';
 
-class SessionService {
+class TransactionStatusService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async updateSellLineStatus(
+  async updateTransactionLineStatus(
     userId: string,
-    input: UpdateSellLineStatusInput
-  ): Promise<UpdateSellLineStatusResult> {
+    input: UpdateTransactionLineStatusInput
+  ): Promise<UpdateTransactionLineStatusResult> {
     return this.prisma.$transaction(async (tx) => {
-      const line = await tx.sessionLine.findFirst({
+      const line = await tx.transactionLot.findFirst({
         where: {
-          id: input.sessionLineId,
+          id: input.transactionLotId,
           user_id: userId,
           line_type: 'OUT',
           sale_status: 'RUNNING',
         },
         select: {
           id: true,
-          session_id: true,
+          transaction_id: true,
           inventory_lot_id: true,
           quantity: true,
         },
@@ -43,7 +46,7 @@ class SessionService {
         });
       }
 
-      await tx.sessionLine.update({
+      await tx.transactionLot.update({
         where: { id: line.id },
         data: {
           sale_status: input.nextSaleStatus,
@@ -51,30 +54,30 @@ class SessionService {
         },
       });
 
-      const openedLinesCount = await tx.sessionLine.count({
+      const openedLinesCount = await tx.transactionLot.count({
         where: {
-          session_id: line.session_id,
+          transaction_id: line.transaction_id,
           user_id: userId,
           line_status: { not: 'CLOSED' },
         },
       });
 
-      const nextSessionStatus: SessionStatus = openedLinesCount === 0 ? 'CLOSED' : 'OPENNED';
+      const nextTransactionStatus: SessionStatus = openedLinesCount === 0 ? 'CLOSED' : 'OPENNED';
 
-      await tx.session.update({
-        where: { id: line.session_id },
-        data: { status: nextSessionStatus },
+      await tx.transaction.update({
+        where: { id: line.transaction_id },
+        data: { status: nextTransactionStatus },
       });
 
       return {
-        sessionId: line.session_id,
-        sessionLineId: line.id,
+        transactionId: line.transaction_id,
+        transactionLotId: line.id,
         saleStatus: input.nextSaleStatus,
         lineStatus: 'CLOSED',
-        sessionStatus: nextSessionStatus,
+        transactionStatus: nextTransactionStatus,
       };
     });
   }
 }
 
-export { SessionService };
+export { TransactionStatusService };

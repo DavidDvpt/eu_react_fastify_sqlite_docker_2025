@@ -1,7 +1,7 @@
 import type { SessionStatus, TransactionStatus } from '../../../prisma/generated/client.js';
 
-export type SellSessionRow = {
-  sessionId: string;
+export type TransactionSellRow = {
+  transactionId: string;
   name: string;
   quantity: number;
   totalPrice: number;
@@ -9,9 +9,9 @@ export type SellSessionRow = {
   saleStatus: TransactionStatus | null;
 };
 
-export type RunningSellLineRow = {
-  sessionLineId: string;
-  sessionId: string;
+export type RunningTransactionLineRow = {
+  transactionLotId: string;
+  transactionId: string;
   itemId: string;
   itemName: string;
   inventoryLotId: string | null;
@@ -22,15 +22,15 @@ export type RunningSellLineRow = {
   saleStatus: 'RUNNING';
 };
 
-export type UpdateSellLineStatusInput = {
-  sessionLineId: string;
+export type UpdateTransactionLineStatusInput = {
+  transactionLotId: string;
   nextSaleStatus: 'SOLDED' | 'RETURNED';
 };
 
-export type UpdateSellLineStatusResult = {
-  sessionId: string;
-  sessionLineId: string;
+export type UpdateTransactionLineStatusResult = {
+  transactionId: string;
+  transactionLotId: string;
   saleStatus: 'SOLDED' | 'RETURNED';
   lineStatus: 'CLOSED';
-  sessionStatus: SessionStatus;
+  transactionStatus: SessionStatus;
 };

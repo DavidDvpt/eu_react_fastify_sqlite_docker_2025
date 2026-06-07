@@ -6,7 +6,7 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { env } from './config/env.js';
 import { API_PREFIX, AUTH_PREFIX } from './config/index.js';
 import { authPlugin, authorizePlugin, prismaPlugin, repositoryPlugin } from './plugins/index.js';
-import { authRoutes, manageRoutes, sessionRoutes, inventoryRoutes } from './routes/index.js';
+import { authRoutes, manageRoutes, transactionRoutes, inventoryRoutes } from './routes/index.js';
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
@@ -50,7 +50,7 @@ export function buildApp({
     app.register(authRoutes, { prefix: `${API_PREFIX}${AUTH_PREFIX}` });
     app.register(manageRoutes, { prefix: API_PREFIX });
     app.register(inventoryRoutes, { prefix: API_PREFIX });
-    app.register(sessionRoutes, { prefix: API_PREFIX });
+    app.register(transactionRoutes, { prefix: API_PREFIX });
   }
 
   return app;

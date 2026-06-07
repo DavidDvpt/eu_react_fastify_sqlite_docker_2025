@@ -2,16 +2,19 @@ import { getRunningSellLinesSql, getSellSessionsSql } from './transactionReposit
 
 import type { Prisma } from '../../../prisma/generated/client.js';
 import type { TransactionStatus } from '../../../prisma/generated/client.js';
-import type { RunningSellLineRow, SellSessionRow } from '../../modules/session/session.type.js';
+import type {
+  RunningTransactionLineRow,
+  TransactionSellRow,
+} from '../../modules/session/session.type.js';
 import type { PrismaLikeClient } from '../../types/index.js';
 
 export class TransactionRepository {
   constructor(private readonly client: PrismaLikeClient) {}
 
-  async getSellSessions(userId: string, status?: TransactionStatus): Promise<SellSessionRow[]> {
+  async getSellSessions(userId: string, status?: TransactionStatus): Promise<TransactionSellRow[]> {
     const rows = await this.client.$queryRaw<
       Array<{
-        session_id: string;
+        transaction_id: string;
         name: string;
         quantity: Prisma.Decimal | number;
         total_price: Prisma.Decimal | number;
@@ -21,7 +24,7 @@ export class TransactionRepository {
     >(getSellSessionsSql(userId, status));
 
     return rows.map((row) => ({
-      sessionId: row.session_id,
+      transactionId: row.transaction_id,
       name: row.name,
       quantity: typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
       totalPrice:
@@ -31,11 +34,11 @@ export class TransactionRepository {
     }));
   }
 
-  async getRunningSellLines(userId: string): Promise<RunningSellLineRow[]> {
+  async getRunningSellLines(userId: string): Promise<RunningTransactionLineRow[]> {
     const rows = await this.client.$queryRaw<
       Array<{
-        session_line_id: string;
-        session_id: string;
+        transaction_lot_id: string;
+        transaction_id: string;
         item_id: string;
         item_name: string;
         inventory_lot_id: string | null;
@@ -48,8 +51,8 @@ export class TransactionRepository {
     >(getRunningSellLinesSql(userId));
 
     return rows.map((row) => ({
-      sessionLineId: row.session_line_id,
-      sessionId: row.session_id,
+      transactionLotId: row.transaction_lot_id,
+      transactionId: row.transaction_id,
       itemId: row.item_id,
       itemName: row.item_name,
       inventoryLotId: row.inventory_lot_id,
