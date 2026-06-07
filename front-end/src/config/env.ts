@@ -1,7 +1,12 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  VITE_API_URL: z.url("VITE_API_URL is required"),
+  VITE_API_URL: z
+    .string()
+    .refine(
+      (value) => value.startsWith("/") || URL.canParse(value),
+      "VITE_API_URL must be a relative path or a valid URL",
+    ),
   VITE_IMAGE_BASE_URL: z.string().optional(),
 });
 

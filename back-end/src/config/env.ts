@@ -1,12 +1,14 @@
 import dotenv from 'dotenv';
 import { z } from 'zod';
 
-const envPath =
-  process.env.NODE_ENV === 'test'
-    ? new URL('../../config/.env.test', import.meta.url)
-    : new URL('../../config/.env.dev', import.meta.url);
+if (process.env.NODE_ENV !== 'production') {
+  const envPath =
+    process.env.NODE_ENV === 'test'
+      ? new URL('../../config/.env.test', import.meta.url)
+      : new URL('../../config/.env.dev', import.meta.url);
 
-dotenv.config({ path: envPath, override: false });
+  dotenv.config({ path: envPath, override: false });
+}
 
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),

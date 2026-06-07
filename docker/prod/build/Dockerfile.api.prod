@@ -21,6 +21,7 @@ RUN npm ci
 COPY --from=build /app/back-end/dist ./dist
 COPY --from=build /app/back-end/prisma ./prisma
 COPY --from=build /app/back-end/prisma.config.ts ./prisma.config.ts
+COPY --from=build /app/back-end/src/config ./src/config
 COPY --from=build /app/back-end/scripts ./scripts
 
 EXPOSE 8020
