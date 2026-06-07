@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import SignUpPage from "../../../pages/SignUpPage";
+import SignUpPage from "../../../SignUpPage";
 
 const mockSignupApi = vi.fn();
 const mockNavigate = vi.fn();
@@ -23,7 +23,7 @@ vi.mock("react-router-dom", async () => {
   };
 });
 
-vi.mock("../../../modules/auth/components/SignUpForm", () => ({
+vi.mock("../../../../modules/auth/components/SignUpForm", () => ({
   default: ({ onSubmit }: { onSubmit: (values: unknown) => Promise<void> }) => (
     <button
       type="button"
