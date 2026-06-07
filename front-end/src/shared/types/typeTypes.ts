@@ -18,11 +18,11 @@ export type Type = {
   id: string;
   name: string;
   categoryId: string;
-  categoryName: string;
+  categoryName?: string;
   isActive: boolean;
-  supportsLimited: boolean;
-  isStackable: boolean;
-  userId: string;
+  supportsLimited?: boolean;
+  isStackable?: boolean;
+  userId?: string | null;
   createdAt: string;
   updatedAt?: string | null;
 };

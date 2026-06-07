@@ -24,10 +24,11 @@ export type Item = {
   imageUrlId: string;
   value: number;
   isLimited: boolean;
+  supportsLimited?: boolean;
   isStackable?: boolean;
   typeId: string;
-  categoryId: string;
-  categoryName: string;
+  categoryId?: string;
+  categoryName?: string;
   typeName?: string;
   isActive: boolean;
   userId?: string | null;

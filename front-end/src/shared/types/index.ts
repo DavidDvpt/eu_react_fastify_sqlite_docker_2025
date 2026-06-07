@@ -6,3 +6,8 @@ export * from "./containerTypes";
 export * from "./genericFilterType";
 export * from "./stockTypes";
 export * from "./genericListTypes";
+export type {
+  TransactionActionsProps,
+  TransactionItemDetailsProps,
+  TransactionFilterRow,
+} from "@/modules/transactions/types";

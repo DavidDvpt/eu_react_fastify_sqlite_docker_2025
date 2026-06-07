@@ -1,13 +1,10 @@
 import type { StockDetails } from "@/shared/types";
-
-import type { ContainerType } from "@/shared/types/containerTypes";
 import { TransactionItemDetails } from "@/shared/components";
 import { useNavigate } from "react-router-dom";
 import { Panel } from "@/shared/components/Containers";
 
 interface DetailsItemProps {
   details: StockDetails | null;
-  containerType: ContainerType;
   onBack: () => void;
 }
 

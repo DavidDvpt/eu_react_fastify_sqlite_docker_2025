@@ -1,9 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { updateRunningSellLineStatus } from "@/modules/transactions/transaction.api";
+import { updateRunningTransactionLineStatus } from "@/modules/transactions/transaction.api";
 
 type UpdateRunningSellGroupStatusInput = {
-  sessionLineIds: string[];
+  transactionLotIds: string[];
   status: "SOLDED" | "RETURNED";
 };
 
@@ -13,8 +13,11 @@ function useUpdateRunningSellStatus() {
   return useMutation({
     mutationFn: async (input: UpdateRunningSellGroupStatusInput) => {
       await Promise.all(
-        input.sessionLineIds.map((sessionLineId) =>
-          updateRunningSellLineStatus({ sessionLineId, status: input.status }),
+        input.transactionLotIds.map((transactionLotId) =>
+          updateRunningTransactionLineStatus({
+            transactionLotId,
+            status: input.status,
+          }),
         ),
       );
     },

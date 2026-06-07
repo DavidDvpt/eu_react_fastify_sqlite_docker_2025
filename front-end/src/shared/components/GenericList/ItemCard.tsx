@@ -24,7 +24,7 @@ function ItemCard({ item, isManage }: ItemCardProps) {
           {item.name ?? "Unknown"}
         </h3>
         <p className="truncate text-xs text-muted-foreground my-0">
-          {item.itemTypeName ?? item.itemTypeId}
+          {item.typeName ?? item.typeId}
         </p>
         <div className="mt-2 flex flex-wrap gap-2 text-xs text-table-body-text">
           <span>Valeur: {FormatTools.formatToThreeDecimals(item.value)}</span>

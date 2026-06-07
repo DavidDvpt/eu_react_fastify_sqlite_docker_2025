@@ -73,14 +73,14 @@ function RunningSellsSection() {
                         return;
                       }
                       updateStatusMutation.mutate({
-                        sessionLineIds: row.sessionLineIds,
+                        transactionLotIds: row.transactionLotIds,
                         status: value as "SOLDED" | "RETURNED",
                       });
                     }}
                     disabled={
                       updateStatusMutation.isPending &&
-                      row.sessionLineIds.some((id) =>
-                        updateStatusMutation.variables?.sessionLineIds?.includes(id),
+                      row.transactionLotIds.some((id) =>
+                        updateStatusMutation.variables?.transactionLotIds?.includes(id),
                       )
                     }
                   >

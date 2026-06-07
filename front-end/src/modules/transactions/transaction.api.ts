@@ -3,17 +3,17 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import type {
   BuyTransactionBody,
-  RunningSellLine,
+  RunningTransactionLine,
   SellTransactionBody,
   TransactionExecutionResult,
-  UpdateRunningSellLineStatusInput,
-  UpdateRunningSellLineStatusResult,
+  UpdateRunningTransactionLineStatusInput,
+  UpdateRunningTransactionLineStatusResult,
 } from "./types";
 
 const API_URL = env.VITE_API_URL;
 const TRANSACTIONS_ROUTE = `${API_URL}/inventory/transactions`;
-const RUNNING_SELL_LINES_ROUTE = `${API_URL}/sessions/sell/running-lines`;
-const SELL_LINE_STATUS_ROUTE = `${API_URL}/sessions/sell/lines`;
+const RUNNING_TRANSACTION_LINES_ROUTE = `${API_URL}/transactions/sell/running-lines`;
+const TRANSACTION_LINE_STATUS_ROUTE = `${API_URL}/transactions/sell/lines`;
 
 async function buyTransaction(
   body: BuyTransactionBody,
@@ -33,19 +33,19 @@ async function sellTransaction(
   >(TRANSACTIONS_ROUTE, body);
 }
 
-async function getRunningSellLines(): Promise<RunningSellLine[]> {
-  return axiosCrud(axiosInstance()).get<RunningSellLine[]>(
-    RUNNING_SELL_LINES_ROUTE,
+async function getRunningTransactionLines(): Promise<RunningTransactionLine[]> {
+  return axiosCrud(axiosInstance()).get<RunningTransactionLine[]>(
+    RUNNING_TRANSACTION_LINES_ROUTE,
   );
 }
 
-async function updateRunningSellLineStatus(
-  input: UpdateRunningSellLineStatusInput,
-): Promise<UpdateRunningSellLineStatusResult> {
+async function updateRunningTransactionLineStatus(
+  input: UpdateRunningTransactionLineStatusInput,
+): Promise<UpdateRunningTransactionLineStatusResult> {
   return axiosCrud(axiosInstance()).patch<
-    UpdateRunningSellLineStatusResult,
+    UpdateRunningTransactionLineStatusResult,
     { status: "SOLDED" | "RETURNED" }
-  >(`${SELL_LINE_STATUS_ROUTE}/${input.sessionLineId}/status`, {
+  >(`${TRANSACTION_LINE_STATUS_ROUTE}/${input.transactionLotId}/status`, {
     status: input.status,
   });
 }
@@ -53,9 +53,9 @@ async function updateRunningSellLineStatus(
 export {
   buyTransaction,
   sellTransaction,
-  getRunningSellLines,
-  updateRunningSellLineStatus,
-  RUNNING_SELL_LINES_ROUTE,
-  SELL_LINE_STATUS_ROUTE,
+  getRunningTransactionLines,
+  updateRunningTransactionLineStatus,
+  RUNNING_TRANSACTION_LINES_ROUTE,
+  TRANSACTION_LINE_STATUS_ROUTE,
   TRANSACTIONS_ROUTE,
 };

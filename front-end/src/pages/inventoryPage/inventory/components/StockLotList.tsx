@@ -1,11 +1,9 @@
 import type { StockLotIn } from "@/shared/types";
 import { Section } from "@/shared/components/Containers";
-import type { ContainerType } from "@/shared/types/containerTypes";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 interface StockLotInListProps {
   lotList: StockLotIn[] | null;
-  containerType: ContainerType;
 }
 
 function StockLotInList({ lotList }: StockLotInListProps) {

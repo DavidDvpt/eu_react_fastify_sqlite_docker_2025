@@ -8,10 +8,16 @@ type ContainerVariant =
   | "section"
   | "subsection"
   | "modal";
+type ContainerType = ContainerVariant;
 type ContainerBaseProps = Omit<ContainerProps, "type">;
 interface ContainerProps extends PropsWithChildren {
   variant?: ContainerVariant;
   className?: string;
 }
 
-export type { ContainerVariant, ContainerProps, ContainerBaseProps };
+export type {
+  ContainerVariant,
+  ContainerType,
+  ContainerProps,
+  ContainerBaseProps,
+};

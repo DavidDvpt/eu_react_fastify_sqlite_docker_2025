@@ -41,6 +41,7 @@ function parseStockDetails(details: StockDetailsApi): StockDetails {
       quantityExported: toNumber(lot.quantityExported),
       priceRemaining: toNumber(lot.priceRemaining),
       dateCreated: lot.dateCreated,
+      transactionStatus: lot.transactionStatus,
     })),
     lotsOut: details.lotsOut.map((line) => ({
       id: line.id,
@@ -49,6 +50,7 @@ function parseStockDetails(details: StockDetailsApi): StockDetails {
       tt: toNumber(line.tt),
       ttc: toNumber(line.ttc),
       saleStatus: line.saleStatus,
+      transactionStatus: line.transactionStatus,
     })),
   };
 }

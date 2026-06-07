@@ -16,8 +16,7 @@ function InventoryList() {
   const navigate = useNavigate();
   const { id } = useParams();
 
-  const { currentStock, isLoading, isError, selectedItem, totalStockValue } =
-    useInventoryList();
+  const { currentStock, isLoading, isError } = useInventoryList();
 
   const visibleStock = useMemo(
     () => currentStock.filter((item) => showAllItems || item.quantity !== 0),

@@ -2,7 +2,7 @@ import type { Item } from "@/shared/types";
 
 export type RunningSellItem = {
   groupKey: string;
-  sessionId: string;
+  transactionId: string;
   itemId: string;
   itemName: string;
   quantity: number;
@@ -10,7 +10,7 @@ export type RunningSellItem = {
   ttc: number;
   saleStatus: "RUNNING";
   lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
-  sessionLineIds: string[];
+  transactionLotIds: string[];
 } & {
   item: Item | null;
 };

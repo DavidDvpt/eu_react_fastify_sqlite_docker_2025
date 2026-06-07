@@ -100,15 +100,15 @@ export type TransactionRejectedItem = {
 };
 
 export type TransactionExecutionResult = {
-  sessionId: string | null;
+  transactionId: string | null;
   processed: TransactionProcessedItem[];
   rejected: TransactionRejectedItem[];
   message?: string;
 };
 
-export type RunningSellLine = {
-  sessionLineId: string;
-  sessionId: string;
+export type RunningTransactionLine = {
+  transactionLotId: string;
+  transactionId: string;
   itemId: string;
   itemName: string;
   inventoryLotId: string | null;
@@ -119,15 +119,15 @@ export type RunningSellLine = {
   saleStatus: "RUNNING";
 };
 
-export type UpdateRunningSellLineStatusInput = {
-  sessionLineId: string;
+export type UpdateRunningTransactionLineStatusInput = {
+  transactionLotId: string;
   status: "SOLDED" | "RETURNED";
 };
 
-export type UpdateRunningSellLineStatusResult = {
-  sessionId: string;
-  sessionLineId: string;
+export type UpdateRunningTransactionLineStatusResult = {
+  transactionId: string;
+  transactionLotId: string;
   saleStatus: "SOLDED" | "RETURNED";
   lineStatus: "CLOSED";
-  sessionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+  transactionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
 };

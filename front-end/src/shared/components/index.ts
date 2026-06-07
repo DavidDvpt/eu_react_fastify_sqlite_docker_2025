@@ -21,4 +21,4 @@ export {
   TransactionItemDetails,
   VerticalNav,
 };
-export type { VerticalNavItem } from "./VerticalNav";
+export type { VerticalNavProps } from "@/shared/types";

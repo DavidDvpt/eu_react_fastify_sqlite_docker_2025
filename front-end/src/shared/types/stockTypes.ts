@@ -29,6 +29,7 @@ type StockLotInApi = {
   quantityExported: number | string;
   priceRemaining: number | string;
   dateCreated: string;
+  transactionStatus?: "OPENNED" | "CLOSED" | "ARCHIVED";
 };
 
 type StockLotIn = {
@@ -39,6 +40,7 @@ type StockLotIn = {
   quantityExported: number;
   priceRemaining: number;
   dateCreated: string;
+  transactionStatus?: "OPENNED" | "CLOSED" | "ARCHIVED";
 };
 
 type StockLotOutApi = {
@@ -48,6 +50,7 @@ type StockLotOutApi = {
   tt: number | string;
   ttc: number | string;
   saleStatus: string | null;
+  transactionStatus?: "OPENNED" | "CLOSED" | "ARCHIVED";
 };
 
 type StockLotOut = {
@@ -57,6 +60,7 @@ type StockLotOut = {
   tt: number;
   ttc: number;
   saleStatus: string | null;
+  transactionStatus?: "OPENNED" | "CLOSED" | "ARCHIVED";
 };
 
 type StockDetailsPanelProps = {

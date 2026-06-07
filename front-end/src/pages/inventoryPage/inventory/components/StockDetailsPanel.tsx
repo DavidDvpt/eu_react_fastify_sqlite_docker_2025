@@ -40,7 +40,7 @@ function StockDetailsPanel({
         onSell={() => (item ? onSell?.(item.id) : undefined)}
         item={item}
       />
-      <StockLotInList lotList={details?.lotsIn ?? null} containerType="Section" />
+      <StockLotInList lotList={details?.lotsIn ?? null} />
     </Panel>
   );
 }

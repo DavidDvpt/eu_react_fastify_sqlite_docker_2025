@@ -9,8 +9,18 @@ describe("VerticalNav", () => {
       <MemoryRouter initialEntries={["/manage/item/42/edit"]}>
         <VerticalNav
           items={[
-            { key: "cat", content: "Categorie", route: "/manage/category" },
-            { key: "item", content: "Item", route: "/manage/item" },
+            {
+              key: "cat",
+              content: "Categorie",
+              route: "/manage/category",
+              variant: "navVertical",
+            },
+            {
+              key: "item",
+              content: "Item",
+              route: "/manage/item",
+              variant: "navVertical",
+            },
           ]}
         />
       </MemoryRouter>
@@ -27,7 +37,14 @@ describe("VerticalNav", () => {
     render(
       <MemoryRouter>
         <VerticalNav
-          items={[{ key: "refresh", content: "Refresh", route: "/manage/refresh" }]}
+          items={[
+            {
+              key: "refresh",
+              content: "Refresh",
+              route: "/manage/refresh",
+              variant: "navVertical",
+            },
+          ]}
         />
       </MemoryRouter>
     );

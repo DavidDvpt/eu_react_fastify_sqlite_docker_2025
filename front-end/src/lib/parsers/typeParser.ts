@@ -5,11 +5,11 @@ function parseType(apiType: TypeApi): Type {
     id: apiType.id,
     name: apiType.name,
     categoryId: apiType.category_id,
-
+    categoryName: apiType.category?.name ?? "Unknown",
     isActive: apiType.is_active,
-    supportsLimited: apiType.supports_limited,
-    isStackable: apiType.is_stackable,
-    userId: apiType.user_id,
+    supportsLimited: apiType.supports_limited ?? false,
+    isStackable: apiType.is_stackable ?? false,
+    userId: apiType.user_id ?? null,
     createdAt: apiType.date_created,
     updatedAt: apiType.date_updated,
   };
