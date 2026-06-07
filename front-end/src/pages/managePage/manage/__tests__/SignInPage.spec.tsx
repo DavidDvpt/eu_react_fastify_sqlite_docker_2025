@@ -1,9 +1,8 @@
+import SignInPage from "@/pages/SignInPage";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
-import SignInPage from "../../../pages/SignInPage";
 
 const mockDispatch = vi.fn();
 const mockSigninApi = vi.fn();
