@@ -3,7 +3,6 @@ import { AppLink } from "./AppLink";
 import CapsuleLoader from "./CapsuleLoader";
 import { GenericFilter } from "./GenericFilter";
 import { GenericList } from "./GenericList";
-import { GenericTable } from "./GenericTable";
 import ModalGeneric from "./ModalGeneric";
 import { TransactionActions } from "./TransactionActions";
 import { TransactionItemDetails } from "./TransactionItemDetails";
@@ -15,7 +14,6 @@ export {
   CapsuleLoader,
   GenericFilter,
   GenericList,
-  GenericTable,
   ModalGeneric,
   TransactionActions,
   TransactionItemDetails,
