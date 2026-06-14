@@ -1,6 +1,9 @@
+import Navbar from "./Navbar";
 import Brand from "./Brand";
 import Nav from "./Nav";
-import NavBar from "./NavBar";
+import Profile from "./Profile";
 import NavButton from "./NavButton";
 
-export { Brand, Nav, NavBar, NavButton };
+export * from "./utils";
+
+export { Navbar, Brand, Nav, Profile, NavButton };

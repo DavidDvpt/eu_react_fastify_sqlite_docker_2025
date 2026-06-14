@@ -1,5 +1,5 @@
-import { navbarValues } from "./utils";
 import NavButton from "./NavButton";
+import { navbarValues } from "./utils";
 
 function Nav() {
   return (

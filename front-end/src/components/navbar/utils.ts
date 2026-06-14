@@ -35,7 +35,7 @@ const navbarValues = [
     visible: true,
   },
   {
-    content: "manage",
+    content: "Manage",
     route: "/manage",
     selected: false,
     adminOnly: true,

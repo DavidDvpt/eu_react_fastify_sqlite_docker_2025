@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { NavButton } from "@/components/Navbar";
+import { NavButton } from "@/components/navbar";
 import type { VerticalNavProps } from "@/shared/types";
 
 function VerticalNav({ items }: VerticalNavProps) {
