@@ -22,7 +22,9 @@ export type GenericListColumn<T> = {
   label: string;
   kind?: GenericListColumnKind;
   accessor?: keyof T;
-  width?: string | number;
+  minWidth?: string | number;
+  maxWidth?: string | number;
+  fillRemainingSpace?: boolean;
   align?: "left" | "center" | "right";
   headerCellClassName?: string;
   bodyCellClassName?: string;
@@ -79,6 +81,7 @@ export type GenericListHeaderProps<T> = {
   visible?: boolean;
   className?: string;
   rowHeight?: number;
+  columnsTemplate?: string;
 };
 
 export type GenericListBodyProps<T> = {
@@ -91,6 +94,7 @@ export type GenericListBodyProps<T> = {
   rowClassName?: string;
   cardClassName?: string;
   rowHeight?: number;
+  columnsTemplate?: string;
   RowComponent?: ComponentType<RowRendererProps<T>>;
   CardComponent?: ComponentType<RowRendererProps<T>>;
 };

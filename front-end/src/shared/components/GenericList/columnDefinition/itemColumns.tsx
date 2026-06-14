@@ -1,9 +1,7 @@
 import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
-import {
-  formatToFiveDecimals,
-  getItemImageUrl,
-} from "@/pages/managePage/utils";
+import { getItemImageUrl } from "@/pages/managePage/utils";
 import type { Item, GenericListColumn } from "@/shared/types";
+import { FormatTools } from "@/shared/tools";
 
 const createItemColumns = (
   currentUserId?: string,
@@ -13,7 +11,8 @@ const createItemColumns = (
     label: "Image",
     kind: "image",
     accessor: "imageUrlId",
-    width: 40,
+    minWidth: 40,
+    maxWidth: 40,
     bodyCellClassName: "bg-white",
     imageSrc: (value) => getItemImageUrl(String(value ?? "")) ?? "",
     imageAlt: (item) => item.name ?? "Image",
@@ -23,34 +22,27 @@ const createItemColumns = (
     label: "Nom",
     kind: "text",
     accessor: "name",
-    width: 320,
-    bodyCellClassName: "text-black",
+    fillRemainingSpace: true,
+    bodyCellClassName: "text-black font-semibold",
     value: (item) => item.name ?? "Unknown",
   },
   {
     key: "type",
     label: "Type",
     kind: "text",
-    width: 220,
+    minWidth: 120,
+    maxWidth: 200,
     bodyCellClassName: "text-black",
     value: (row) => ("typeName" in row ? row.typeName : "Unknown"),
   },
-  {
-    key: "value",
-    label: "Valeur",
-    kind: "number",
-    accessor: "value",
-    width: 140,
-    align: "right",
-    bodyCellClassName: "text-black",
-    value: (row) => formatToFiveDecimals("value" in row ? row.value : 0),
-  },
+
   {
     key: "limited",
     label: "Limited",
     kind: "text",
     accessor: "isLimited",
-    width: 120,
+    minWidth: 60,
+    maxWidth: 80,
     bodyCellClassName: "text-black",
     value: (row) =>
       "isLimited" in row ? (row.isLimited ? "Oui" : "Non") : "Non",
@@ -60,7 +52,8 @@ const createItemColumns = (
     label: "Stackable",
     kind: "text",
     accessor: "isStackable",
-    width: 140,
+    minWidth: 60,
+    maxWidth: 80,
     bodyCellClassName: "text-black",
     value: (row) =>
       "isStackable" in row ? (row.isStackable ? "Oui" : "Non") : "Non",
@@ -70,10 +63,26 @@ const createItemColumns = (
     label: "Scope",
     kind: "text",
     accessor: "userId",
-    width: 140,
+    minWidth: 60,
+    maxWidth: 80,
     bodyCellClassName: "text-black",
     value: (row) =>
       "userId" in row ? getScopeLabel(row.userId, currentUserId) : "System",
+  },
+  {
+    key: "value",
+    label: "Valeur",
+    kind: "number",
+    accessor: "value",
+    minWidth: 80,
+    maxWidth: 100,
+    align: "right",
+    bodyCellClassName: "text-black font-semibold",
+    value: (row) =>
+      FormatTools.trimTrailingZeros(
+        FormatTools.formatToDecimals("value" in row ? row.value : 0, 5),
+        2,
+      ),
   },
 ];
 

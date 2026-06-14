@@ -1,27 +1,40 @@
 import { cn } from "@/lib/utils";
 import type { GenericListHeaderProps } from "../../types/genericListTypes";
 
+function getHeaderAlignClass(align?: "left" | "center" | "right") {
+  if (align === "center") return "text-center";
+  if (align === "right") return "text-right";
+  return "text-left";
+}
+
 function GenericListHeader<T>({
   columns,
   visible = true,
   className,
   rowHeight = 30,
+  columnsTemplate,
 }: GenericListHeaderProps<T>) {
   if (!visible || columns.length === 0) return null;
 
   return (
     <div
-      className={cn("flex flex-row justify-center top-0 z-10 ", className)}
-      style={{ minHeight: rowHeight }}
+      className={cn(
+        "top-0 z-10 grid items-center border-b border-table-row-divider bg-table-head-bg text-table-head-text",
+        className,
+      )}
+      style={{
+        minHeight: rowHeight,
+        gridTemplateColumns: columnsTemplate,
+      }}
     >
       {columns.map((column) => (
         <div
           key={column.key}
           className={cn(
-            "pl-1 font-semibold text-black",
+            "min-w-0 px-1 font-semibold",
+            getHeaderAlignClass(column.align),
             column.headerCellClassName,
           )}
-          style={{ width: column.width }}
         >
           {column.kind === "image" ? "" : column.label}
         </div>

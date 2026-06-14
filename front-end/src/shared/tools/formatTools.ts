@@ -6,6 +6,26 @@ class FormatTools {
       : `0.${"0".repeat(safeDecimals)}`;
   }
 
+  static trimTrailingZeros(value: string, minimumDecimals = 0): string {
+    const safeMinimumDecimals = Math.max(0, Math.trunc(minimumDecimals));
+    const [integerPart, fractionPart = ""] = value.split(".");
+
+    if (fractionPart === "") {
+      return safeMinimumDecimals > 0
+        ? `${integerPart}.${"0".repeat(safeMinimumDecimals)}`
+        : integerPart;
+    }
+
+    const trimmedFraction = fractionPart.replace(/0+$/, "");
+    if (trimmedFraction.length >= safeMinimumDecimals) {
+      return trimmedFraction.length > 0
+        ? `${integerPart}.${trimmedFraction}`
+        : integerPart;
+    }
+
+    return `${integerPart}.${trimmedFraction.padEnd(safeMinimumDecimals, "0")}`;
+  }
+
   static formatToDecimals(value: unknown, decimals: number): string {
     const numericValue = typeof value === "number" ? value : Number(value);
     if (!Number.isFinite(numericValue)) {

@@ -21,4 +21,15 @@ describe("FormatTools", () => {
     expect(FormatTools.formatToDecimals("abc", 2)).toBe("0.00");
     expect(FormatTools.formatToDecimals(undefined, 0)).toBe("0");
   });
+
+  it("trims useless trailing zeros from a formatted decimal string", () => {
+    expect(FormatTools.trimTrailingZeros("12.34000")).toBe("12.34");
+    expect(FormatTools.trimTrailingZeros("12.00000")).toBe("12");
+    expect(FormatTools.trimTrailingZeros("0.00000")).toBe("0");
+    expect(FormatTools.trimTrailingZeros("12")).toBe("12");
+    expect(FormatTools.trimTrailingZeros("12.00000", 2)).toBe("12.00");
+    expect(FormatTools.trimTrailingZeros("12.3", 2)).toBe("12.30");
+    expect(FormatTools.trimTrailingZeros("12", 2)).toBe("12.00");
+    expect(FormatTools.trimTrailingZeros("0.00000", 2)).toBe("0.00");
+  });
 });

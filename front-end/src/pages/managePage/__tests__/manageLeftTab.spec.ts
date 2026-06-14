@@ -1,5 +1,9 @@
 import { describe, expect, it } from "vitest";
-import { isManageTab, MANAGE_NAV_LINKS } from "../manageLeftNav";
+import {
+  getManageCreateLabel,
+  isManageTab,
+  MANAGE_NAV_LINKS,
+} from "../manageLeftNav";
 
 describe("manageLeftTab", () => {
   it("exposes left nav links for manage routes", () => {
@@ -16,5 +20,11 @@ describe("manageLeftTab", () => {
     expect(isManageTab("item")).toBe(true);
     expect(isManageTab("unknown")).toBe(false);
     expect(isManageTab(undefined)).toBe(false);
+  });
+
+  it("builds the create label from the selected tab", () => {
+    expect(getManageCreateLabel("category")).toBe("Créer categorie");
+    expect(getManageCreateLabel("type")).toBe("Créer type");
+    expect(getManageCreateLabel("item")).toBe("Créer item");
   });
 });

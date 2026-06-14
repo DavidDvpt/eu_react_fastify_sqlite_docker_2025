@@ -9,6 +9,7 @@ import { Section } from "../Containers";
 import { GenericListFooter } from "./GenericListFooter";
 import SwitchApp from "../form/Switch/SwitchApp";
 import GenericListBody from "./GenericListBody";
+import { getGridTemplateColumns } from "./gridTemplate";
 
 function GenericList<T>({
   columns,
@@ -33,6 +34,7 @@ function GenericList<T>({
   CardComponent,
 }: GenericListProps<T>) {
   const [viewMode, setViewMode] = useState<GenericListViewMode>("list");
+  const columnsTemplate = getGridTemplateColumns(columns);
 
   return (
     <>
@@ -46,7 +48,7 @@ function GenericList<T>({
 
       <Section
         className={cn(
-          "overflow-hidden rounded-md border border-table-border bg-table-bg text-sm",
+          "flex min-h-0 flex-1 flex-col rounded-md border border-table-border bg-table-bg text-sm",
           className,
         )}
       >
@@ -55,6 +57,7 @@ function GenericList<T>({
           visible={viewMode === "list"}
           className={headerClassName}
           rowHeight={rowHeight}
+          columnsTemplate={columnsTemplate}
         />
 
         <div
@@ -81,6 +84,7 @@ function GenericList<T>({
               rowClassName={rowClassName}
               cardClassName={cardClassName}
               rowHeight={rowHeight}
+              columnsTemplate={columnsTemplate}
               RowComponent={RowComponent}
               CardComponent={CardComponent}
             />
@@ -94,7 +98,7 @@ function GenericList<T>({
           }
           rowClassName={footerConfig?.rowClassName}
           layout={footerConfig?.layout}
-          columnsTemplate={footerConfig?.columnsTemplate}
+          columnsTemplate={footerConfig?.columnsTemplate ?? columnsTemplate}
           cells={footerConfig?.cells}
           fallback={footer}
         />

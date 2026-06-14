@@ -26,4 +26,12 @@ function isManageTab(value: string | undefined): value is ManageTab {
   return value === "category" || value === "type" || value === "item";
 }
 
-export { MANAGE_NAV_LINKS, isManageTab };
+function getManageCreateLabel(tab: ManageTab): string {
+  const selectedLink = MANAGE_NAV_LINKS.find(
+    (link) => link.route === `/manage/${tab}`,
+  );
+
+  return `Créer ${String(selectedLink?.content ?? tab).toLowerCase()}`;
+}
+
+export { MANAGE_NAV_LINKS, getManageCreateLabel, isManageTab };

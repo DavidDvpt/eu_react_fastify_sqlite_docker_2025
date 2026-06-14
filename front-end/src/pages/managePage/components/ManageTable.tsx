@@ -19,18 +19,20 @@ function ManageTable({ activeTab }: ManageTableProps) {
   type GenericListType = typeof list;
 
   return (
-    <GenericList<GenericListType[number]>
-      columns={columns}
-      rows={list}
-      getRowKey={(row) => row.id}
-      isLoading={isPending}
-      isError={isError}
-      loadingMessage="Chargement des categories..."
-      errorMessage={errorMessage}
-      emptyMessage="Aucune categorie."
-      rowHeight={34}
-      onRowClick={(row) => navigate(editRoute(row.id))}
-    />
+    <div className="flex min-h-0 flex-1 flex-col pb-2">
+      <GenericList<GenericListType[number]>
+        columns={columns}
+        rows={list}
+        getRowKey={(row) => row.id}
+        isLoading={isPending}
+        isError={isError}
+        loadingMessage="Chargement des categories..."
+        errorMessage={errorMessage}
+        emptyMessage="Aucune categorie."
+        rowHeight={34}
+        onRowClick={(row) => navigate(editRoute(row.id))}
+      />
+    </div>
   );
 }
 

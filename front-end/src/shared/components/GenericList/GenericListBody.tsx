@@ -6,7 +6,7 @@ import type {
 import { GenericCellRenderer } from "./GenericCellRenderer";
 
 const DEFAULT_ROW_CLASS =
-  "text-black odd:bg-table-row-odd-bg border odd:border--table-row-odd-bgeven:bg-table-row-even-bg even:border-table-row-even-bg hover:bg-table-row-hover-bg";
+  "grid items-stretch border-b border-table-row-divider text-black last:border-b-0 hover:bg-table-row-hover-bg";
 
 const ACTION_KINDS = new Set(["button", "select", "checkbox", "custom"]);
 
@@ -20,13 +20,14 @@ function GenericListBody<T>({
   rowClassName,
   cardClassName,
   rowHeight = 30,
+  columnsTemplate,
   RowComponent,
   CardComponent,
 }: GenericListBodyProps<T>) {
   const alignClass = (align: GenericListColumn<T>["align"]) => {
-    if (align === "center") return "text-center";
-    if (align === "right") return "text-right";
-    return "text-left";
+    if (align === "center") return "items-center justify-center text-center";
+    if (align === "right") return "items-center justify-end text-right";
+    return "items-center justify-start text-left";
   };
 
   if (viewMode === "card") {
@@ -91,21 +92,24 @@ function GenericListBody<T>({
             className={cn(DEFAULT_ROW_CLASS, rowClassName)}
             style={{ minHeight: rowHeight, height: rowHeight }}
           >
-            <div className="flex items-stretch">
+            <div
+              className="grid h-full min-w-0"
+              style={{ gridTemplateColumns: columnsTemplate }}
+            >
               {columns.map((column) => {
                 const isActionCell =
                   ACTION_KINDS.has(column.kind ?? "text") ||
                   Boolean(column.onCellClick);
+
                 return (
                   <div
                     key={column.key}
                     className={cn(
-                      "flex items-center pl-1 text-black",
+                      "flex min-w-0 overflow-hidden px-1 text-black",
                       alignClass(column.align),
                       column.bodyCellClassName,
                       !isActionCell && onRowClick ? "cursor-pointer" : "",
                     )}
-                    style={{ width: column.width }}
                     onClick={
                       isActionCell
                         ? (event) => {

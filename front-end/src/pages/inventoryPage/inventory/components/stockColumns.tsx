@@ -10,8 +10,9 @@ const stockColumns: GenericListColumn<
     key: "image",
     label: "Image",
     kind: "image",
+    minWidth: 40,
+    maxWidth: 40,
     bodyCellClassName: "bg-white",
-    headerCellClassName: "w-[40px]",
     render: (item) => {
       const imageUrl = ImageService.getItemImageUrl(item.imageUrlId, "micro");
       if (!imageUrl) {
@@ -32,22 +33,27 @@ const stockColumns: GenericListColumn<
     key: "name",
     label: "Item",
     accessor: "name",
-    headerCellClassName: "text-left pl-2 flex-1",
+    fillRemainingSpace: true,
+    minWidth: 280,
     bodyCellClassName: "font-medium",
   },
   {
     key: "quantity",
     label: "Quantite",
-    bodyCellClassName: "text-left pl-2 w-[10%]",
-    headerCellClassName: "text-left pl-2 w-[10%]",
+    minWidth: 120,
+    maxWidth: 120,
+    bodyCellClassName: "text-left",
+    headerCellClassName: "text-left",
     render: (item) => item.quantity,
   },
   {
     key: "totalPrice",
     label: "Prix total",
+    minWidth: 160,
+    maxWidth: 160,
     render: (item) => `${FormatTools.pedFormat().format(item.totalValue)} Peds`,
-    bodyCellClassName: "text-right pr-2 w-[15%]",
-    headerCellClassName: "text-right pr-2 w-[15%]",
+    bodyCellClassName: "text-right",
+    headerCellClassName: "text-right",
   },
 ];
 
