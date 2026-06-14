@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { loginSchema } from "../../validations";
+import { loginSchema } from "../validations";
 
 describe("signInSchema", () => {
   it("accepts a valid payload", () => {
