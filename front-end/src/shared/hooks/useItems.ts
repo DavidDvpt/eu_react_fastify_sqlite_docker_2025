@@ -3,7 +3,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useCategories from "./useCategories";
 import useTypes from "./useTypes";
 import type { Items } from "../types";
-import { getItems } from "@/pages/managePage/manage";
+import { getItems } from "@/lib/services";
 
 type UseItemsParams = {
   enabled?: boolean;

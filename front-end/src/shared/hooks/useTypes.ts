@@ -2,7 +2,7 @@ import { useCallback, useMemo } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import useCategories from "./useCategories";
 import type { Types } from "../types";
-import { getTypes } from "@/pages/managePage/manage";
+import { getTypes } from "@/lib/services";
 
 type UseTypesParams = {
   enabled?: boolean;

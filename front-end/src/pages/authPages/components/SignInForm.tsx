@@ -5,7 +5,7 @@ import {
   loginDefaultValues,
   loginSchema,
   type LoginOutput,
-} from "../validations";
+} from "./validations";
 
 interface ILoginFormProps {
   className?: string;

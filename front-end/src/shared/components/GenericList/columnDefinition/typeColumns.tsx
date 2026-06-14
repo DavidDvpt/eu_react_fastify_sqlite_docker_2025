@@ -1,5 +1,5 @@
+import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
 import type { Type, GenericListColumn } from "@/shared/types";
-import { getScopeLabel } from "./scopeLabel";
 
 const createTypeColumns = (
   currentUserId?: string,

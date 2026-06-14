@@ -5,7 +5,8 @@ import {
   signUpDefaultValues,
   signUpSchema,
   type SignUpOutput,
-} from "../validations";
+} from "./validations";
+
 interface ISignUpFormProps {
   className?: string;
   onSubmit: (values: SignUpOutput) => void | Promise<void>;

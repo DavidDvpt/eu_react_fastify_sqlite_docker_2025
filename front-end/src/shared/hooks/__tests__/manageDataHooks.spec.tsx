@@ -13,7 +13,7 @@ const { getCategoriesMock, getTypesMock, getItemsMock } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/pages/managePage/manage", async () => {
-  const actual = await vi.importActual<typeof import("@/pages/managePage/manage")>(
+  const actual = await vi.importActual<typeof import("@/pages/managePage")>(
     "@/pages/managePage/manage",
   );
   return {

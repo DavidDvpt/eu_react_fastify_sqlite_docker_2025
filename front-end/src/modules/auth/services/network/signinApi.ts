@@ -1,6 +1,6 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { LoginOutput } from "@/modules/auth/validations";
+import type { LoginOutput } from "@/pages/authPages/components/validations";
 
 async function signinApi(credentials: LoginOutput) {
   try {

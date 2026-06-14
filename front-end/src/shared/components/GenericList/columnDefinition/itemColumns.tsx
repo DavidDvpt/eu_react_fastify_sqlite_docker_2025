@@ -1,7 +1,9 @@
+import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
+import {
+  formatToFiveDecimals,
+  getItemImageUrl,
+} from "@/pages/managePage/utils";
 import type { Item, GenericListColumn } from "@/shared/types";
-
-import { getScopeLabel } from "./scopeLabel";
-import { formatToFiveDecimals, getItemImageUrl } from "../utils";
 
 const createItemColumns = (
   currentUserId?: string,

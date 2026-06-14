@@ -1,20 +1,26 @@
 class FormatTools {
-  static formatToFiveDecimals(value: unknown): string {
+  private static buildZeroValue(decimals: number): string {
+    const safeDecimals = Math.max(0, Math.trunc(decimals));
+    return safeDecimals === 0
+      ? "0"
+      : `0.${"0".repeat(safeDecimals)}`;
+  }
+
+  static formatToDecimals(value: unknown, decimals: number): string {
     const numericValue = typeof value === "number" ? value : Number(value);
     if (!Number.isFinite(numericValue)) {
-      return "0.00000";
+      return FormatTools.buildZeroValue(decimals);
     }
 
-    return numericValue.toFixed(5);
+    return numericValue.toFixed(Math.max(0, Math.trunc(decimals)));
+  }
+
+  static formatToFiveDecimals(value: unknown): string {
+    return FormatTools.formatToDecimals(value, 5);
   }
 
   static formatToThreeDecimals(value: unknown): string {
-    const numericValue = typeof value === "number" ? value : Number(value);
-    if (!Number.isFinite(numericValue)) {
-      return "0.000";
-    }
-
-    return numericValue.toFixed(3);
+    return FormatTools.formatToDecimals(value, 3);
   }
 
   static pedFormat() {

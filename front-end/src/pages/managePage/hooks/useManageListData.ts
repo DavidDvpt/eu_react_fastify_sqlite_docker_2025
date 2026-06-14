@@ -4,22 +4,18 @@ import { useAppSelector } from "@/store/hooks";
 
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
 
-import {
-  createCategoryColumns,
-  createItemColumns,
-  createTypeColumns,
-} from "../configs";
 import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
 import type { GenericListColumn } from "@/shared/types";
 import { useCategories, useItems, useTypes } from "@/shared/hooks";
+import { createTypeColumns } from "@/shared/components/GenericList/columnDefinition/typeColumns";
+import { getTypeEditRoute, TYPES_ROUTE } from "@/lib/services/typesApi";
+import { createItemColumns } from "@/shared/components/GenericList/columnDefinition/itemColumns";
+import { getItemEditRoute, ITEMS_ROUTE } from "@/lib/services/itemsApi";
+import { createCategoryColumns } from "@/shared/components/GenericList/columnDefinition/categoryColumns";
 import {
   CATEGORIES_ROUTE,
   getCategoryEditRoute,
-  getItemEditRoute,
-  ITEMS_ROUTE,
-  getTypeEditRoute,
-  TYPES_ROUTE,
-} from "../../../../lib/services";
+} from "@/lib/services/categoriesApi";
 
 interface UseManageListData {
   activeTab: ManageTab;

@@ -1,8 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { isManageTab, MANAGE_NAV_LINKS } from "../manageLeftNav";
 
-import { MANAGE_NAV_LINKS, isManageTab } from "../configs/manageConfig";
-
-describe("manageConfig", () => {
+describe("manageLeftTab", () => {
   it("exposes left nav links for manage routes", () => {
     expect(MANAGE_NAV_LINKS.map((link) => link.route)).toEqual([
       "/manage/category",

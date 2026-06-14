@@ -1,8 +1,8 @@
 import { GenericList } from "@/shared/components";
 
 import { useNavigate } from "react-router-dom";
-import useManageListData from "../hooks/useManageList";
 import type { ManageTab } from "@/shared/types/managePageTypes";
+import useManageListData from "../hooks/useManageListData";
 
 interface ManageTableProps {
   activeTab: ManageTab;

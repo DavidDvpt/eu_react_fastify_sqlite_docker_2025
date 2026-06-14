@@ -9,9 +9,9 @@ import HomePage from "@/pages/HomePage";
 import ManagePage from "@/pages/managePage/ManagePage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import { Navigate } from "react-router-dom";
-import SignInPage from "@/pages/SignInPage";
-import SignUpPage from "@/pages/SignUpPage";
 import InventoryPage from "@/pages/inventoryPage/InventoryPage";
+import SignInPage from "@/pages/authPages/SignInPage";
+import SignUpPage from "@/pages/authPages/SignUpPage";
 
 const routes = [
   {

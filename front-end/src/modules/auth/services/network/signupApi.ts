@@ -1,6 +1,6 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { SignUpOutput } from "@/modules/auth/validations";
+import type { SignUpOutput } from "@/pages/authPages/components/validations";
 
 type SignupUser = {
   id: string;

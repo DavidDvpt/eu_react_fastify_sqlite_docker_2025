@@ -2,7 +2,7 @@ import type { Item, Items } from "./itemTypes";
 import type { Type, Types } from "./typeTypes";
 import type { Categories, Category } from "./categoryTypes";
 import type { GenericFilterAvailability } from "./genericFilterType";
-import type { MANAGE_TABS } from "@/pages/managePage/manage/utils";
+import type { MANAGE_TABS } from "@/pages/managePage/utils";
 
 export type ManageTab = (typeof MANAGE_TABS)[number];
 

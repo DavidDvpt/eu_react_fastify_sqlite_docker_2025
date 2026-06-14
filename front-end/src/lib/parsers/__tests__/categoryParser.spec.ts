@@ -1,9 +1,5 @@
+import { parseCategories, parseCategory } from "@/lib/parsers";
 import { describe, expect, it } from "vitest";
-
-import {
-  parseCategories,
-  parseCategory,
-} from "../../../../lib/parsers/categoryParser";
 
 describe("categoryParser", () => {
   it("parses one category from snake_case to camelCase", async () => {

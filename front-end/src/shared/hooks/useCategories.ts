@@ -1,6 +1,6 @@
 import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getCategories } from "@/pages/managePage/manage";
+import { getCategories } from "@/lib/services";
 
 type UseCategoriesParams = {
   enabled?: boolean;

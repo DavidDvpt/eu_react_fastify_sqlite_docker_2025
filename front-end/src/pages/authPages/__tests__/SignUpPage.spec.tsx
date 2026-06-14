@@ -2,8 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-
-import SignUpPage from "../../../SignUpPage";
+import SignUpPage from "../SignUpPage";
 
 const mockSignupApi = vi.fn();
 const mockNavigate = vi.fn();
