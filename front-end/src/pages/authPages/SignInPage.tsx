@@ -1,11 +1,11 @@
-import AppCard from "@/shared/components/AppCard";
 import { authMeThunk } from "@/modules/auth";
 import signinApi from "@/modules/auth/services/network/signinApi";
-import { useAppDispatch } from "@/store/hooks";
-import styles from "./styles/signin.module.css";
+import { Section, SubSection } from "@/shared/components/Containers";
 import { AppLink } from "@/shared/components/AppLink";
+import { useAppDispatch } from "@/store/hooks";
 import type { LoginOutput } from "@/pages/authPages/components/validations";
 import SignInForm from "./components/SignInForm";
+import styles from "./styles/signin.module.css";
 
 function SignInPage() {
   const dispatch = useAppDispatch();
@@ -23,11 +23,14 @@ function SignInPage() {
   };
 
   return (
-    <AppCard
-      className={styles.card}
-      title="Connexion"
-      content={
+    <Section className={styles.section} aria-labelledby="signin-title">
+      <SubSection className="gap-4 px-6 py-6">
         <div className="space-y-4">
+          <div className="flex flex-col items-center gap-1.5 text-center">
+            <h1 id="signin-title" className="text-2xl font-bold leading-tight tracking-tight">
+              Connexion
+            </h1>
+          </div>
           <SignInForm onSubmit={handleSubmit} />
           <div className="flex justify-center text-sm">
             <AppLink
@@ -38,8 +41,8 @@ function SignInPage() {
             </AppLink>
           </div>
         </div>
-      }
-    />
+      </SubSection>
+    </Section>
   );
 }
 

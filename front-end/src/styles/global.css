@@ -28,6 +28,7 @@
   --color-modal-text: var(--modal-text);
 
   --color-input-label: var(--input-label-color);
+  --color-input-bg: var(--input-bg-color);
   --color-input-text: var(--input-text-color);
   --color-input-placeholder: var(--input-placeholder-color);
   --color-input-border: var(--input-border-color);
@@ -268,7 +269,7 @@
   --radius: 0.25rem;
 
   --input-label-color: var(--L1C3);
-  /* --input-bg-color: var(--L1C1); */
+  --input-bg-color: var(--white);
   --input-text-color: var(--L4C8);
   --input-placeholder-color: var(--black);
   --input-border-color: var(--L4C6);
@@ -533,6 +534,15 @@
     font-family: inherit;
     font-size: inherit;
     line-height: inherit;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px var(--white) inset !important;
+    -webkit-text-fill-color: var(--input-text-color) !important;
+    caret-color: var(--input-text-color);
   }
 
   *,
