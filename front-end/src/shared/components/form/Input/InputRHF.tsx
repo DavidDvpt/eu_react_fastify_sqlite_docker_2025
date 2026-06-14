@@ -89,7 +89,7 @@ function InputRHF({
         {isPasswordField ? (
           <button
             type="button"
-            className="absolute inset-y-0 right-2 inline-flex items-center text-input-label border-none bg-transparent cursor-pointer focus:outline-none focus:ring-0"
+            className="absolute inset-y-0 right-2 inline-flex items-center text-black border-none bg-transparent cursor-pointer focus:outline-none focus:ring-0"
             onClick={() => setVisible((prev) => !prev)}
             aria-label={
               visible ? "Masquer le mot de passe" : "Afficher le mot de passe"

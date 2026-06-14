@@ -27,7 +27,10 @@ function SignInPage() {
       <SubSection className="gap-4 px-6 py-6">
         <div className="space-y-4">
           <div className="flex flex-col items-center gap-1.5 text-center">
-            <h1 id="signin-title" className="text-2xl font-bold leading-tight tracking-tight">
+            <h1
+              id="signin-title"
+              className="text-2xl font-bold leading-tight tracking-tight"
+            >
               Connexion
             </h1>
           </div>
@@ -35,7 +38,7 @@ function SignInPage() {
           <div className="flex justify-center text-sm">
             <AppLink
               to="/auth/signup"
-              className="text-sm font-medium text-info underline-offset-4 transition-colors hover:text-info/80 hover:underline"
+              className="text-base font-medium text-primary-700 underline-offset-4 transition-colors hover:text-info/80 hover:underline"
             >
               S&apos;inscrire
             </AppLink>
