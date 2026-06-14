@@ -44,10 +44,10 @@ vi.mock("@/layouts/AdminLayout", () => ({
 vi.mock("@/pages/HomePage", () => ({
   default: () => <div>HOME</div>,
 }));
-vi.mock("@/pages/SignInPage", () => ({
+vi.mock("@/pages/authPages/SignInPage", () => ({
   default: () => <div>SIGNIN</div>,
 }));
-vi.mock("@/pages/SignUpPage", () => ({
+vi.mock("@/pages/authPages/SignUpPage", () => ({
   default: () => <div>SIGNUP</div>,
 }));
 
