@@ -40,7 +40,7 @@ function InventoryList() {
   };
 
   return (
-    <Panel className="flex-1 gap-1 m-0">
+    <Panel className="m-0 flex min-h-0 flex-1 gap-1 overflow-hidden">
       <CheckboxApp
         name="show-all-inventory-items"
         label="Afficher tous les items"

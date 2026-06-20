@@ -1,6 +1,7 @@
 import StockMessages from "./StockMessages";
 import StockLotInList from "./StockLotList";
 
+import { cn } from "@/lib/utils";
 import { Panel } from "@/shared/components/Containers";
 import type { StockDetailsPanelProps } from "@/shared/types";
 
@@ -27,7 +28,7 @@ function StockDetailsPanel({
   const item = getItemData(id);
 
   return (
-    <Panel className={`relative ${className ?? ""}`}>
+    <Panel className={cn("relative min-h-0 gap-2", className)}>
       <StockMessages
         isError={isError || isDetailsError}
         isLoading={isLoading || isDetailsLoading}
