@@ -59,6 +59,9 @@ export type GenericListProps<T> = {
   getRowKey: (row: T) => string;
   onRowClick?: (row: T) => void;
   allowCardView?: boolean;
+  viewMode?: GenericListViewMode;
+  onViewModeChange?: (viewMode: GenericListViewMode) => void;
+  showViewModeSwitch?: boolean;
   className?: string;
   headerClassName?: string;
   bodyClassName?: string;

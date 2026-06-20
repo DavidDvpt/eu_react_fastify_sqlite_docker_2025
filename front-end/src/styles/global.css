@@ -276,9 +276,9 @@
   --input-border-color: var(--L4C6);
   --select-item-hover: var(--L4C10);
 
-  --switch-bg-unselected: var(--L1C3);
-  --switch-bg-selected: var(--L1C1);
-  --switch-btn: var(--L3C2);
+  --switch-bg-unselected: var(--L4C3);
+  --switch-bg-selected: var(--L4C1);
+  --switch-btn: var(--L1C1);
 
   /* --button-primary-bg: var(--L3C4);
   --button-primary-border: var(--L3C3);

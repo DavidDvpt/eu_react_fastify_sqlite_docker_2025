@@ -1,22 +1,28 @@
+import { useMemo } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+
 import { GenericList } from "@/shared/components";
-
-import { stockColumns } from "./stockColumns";
-
 import { STOCK_ROUTE } from "@/shared/services";
 import useInventoryList from "../useInventoryList";
 import type { ItemInventory } from "../stockTypes";
-import { useMemo, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Panel } from "@/shared/components/Containers";
-import CheckboxApp from "@/shared/components/form/Checkbox/CheckboxApp";
+import { stockColumns } from "./stockColumns";
 
-function InventoryList() {
-  const [showAllItems, setShowAllItems] = useState(false);
+type InventoryListProps = {
+  className?: string;
+};
+
+function InventoryList({ className }: InventoryListProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { id } = useParams();
 
   const { currentStock, isLoading, isError } = useInventoryList();
+  const searchParams = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search],
+  );
+  const showAllItems = searchParams.has("showAllItems");
+  const isCardView = searchParams.has("cardView");
 
   const visibleStock = useMemo(
     () => currentStock.filter((item) => showAllItems || item.quantity !== 0),
@@ -35,19 +41,8 @@ function InventoryList() {
     });
   };
 
-  const handleCheckedChange = (checked: boolean) => {
-    setShowAllItems(checked);
-  };
-
   return (
-    <Panel className="m-0 flex min-h-0 flex-1 gap-1 overflow-hidden">
-      <CheckboxApp
-        name="show-all-inventory-items"
-        label="Afficher tous les items"
-        value={showAllItems}
-        onCheckedChange={handleCheckedChange}
-      />
-
+    <div className={className}>
       <GenericList<ItemInventory>
         columns={stockColumns}
         rows={visibleStock}
@@ -60,9 +55,11 @@ function InventoryList() {
         emptyMessage={
           showAllItems
             ? "Aucun item trouvé."
-            : 'Aucun item en stock. Cochez "Afficher tous les items" pour voir aussi les stocks à 0.'
+            : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
         }
         allowCardView
+        showViewModeSwitch={false}
+        viewMode={isCardView ? "card" : "list"}
 
         // rowClassName={(row) =>
         //   [
@@ -72,7 +69,7 @@ function InventoryList() {
         // }
         // footer={`Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`}
       />
-    </Panel>
+    </div>
   );
 }
 

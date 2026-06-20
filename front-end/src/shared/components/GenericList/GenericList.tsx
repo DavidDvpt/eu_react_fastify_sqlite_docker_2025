@@ -32,18 +32,28 @@ function GenericList<T>({
   footerConfig,
   RowComponent,
   CardComponent,
+  viewMode: controlledViewMode,
+  onViewModeChange,
+  showViewModeSwitch = true,
 }: GenericListProps<T>) {
   const [viewMode, setViewMode] = useState<GenericListViewMode>("list");
+  const resolvedViewMode = controlledViewMode ?? viewMode;
   const columnsTemplate = getGridTemplateColumns(columns);
+  const handleViewModeChange = (nextViewMode: GenericListViewMode) => {
+    setViewMode(nextViewMode);
+    onViewModeChange?.(nextViewMode);
+  };
 
   return (
     <>
       <SwitchApp
-        value={viewMode === "card"}
-        onChange={(checked) => setViewMode(checked ? "card" : "list")}
+        value={resolvedViewMode === "card"}
+        onChange={(checked) =>
+          handleViewModeChange(checked ? "card" : "list")
+        }
         trueValue="Vue carte"
         falseValue="Vue liste"
-        visible={allowCardView}
+        visible={allowCardView && showViewModeSwitch}
       />
 
       <Section
@@ -54,7 +64,7 @@ function GenericList<T>({
       >
         <GenericListHeader
           columns={columns}
-          visible={viewMode === "list"}
+          visible={resolvedViewMode === "list"}
           className={headerClassName}
           rowHeight={rowHeight}
           columnsTemplate={columnsTemplate}
@@ -78,7 +88,7 @@ function GenericList<T>({
             <GenericListBody
               columns={columns}
               rows={rows}
-              viewMode={viewMode}
+              viewMode={resolvedViewMode}
               getRowKey={getRowKey}
               onRowClick={onRowClick}
               rowClassName={rowClassName}
@@ -93,7 +103,7 @@ function GenericList<T>({
 
         <GenericListFooter
           visible={
-            viewMode === "list" &&
+            resolvedViewMode === "list" &&
             (Boolean(footer) || Boolean(footerConfig?.cells?.length))
           }
           rowClassName={footerConfig?.rowClassName}

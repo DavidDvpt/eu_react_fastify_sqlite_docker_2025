@@ -3,10 +3,11 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
 import { useTransaction } from "@/modules/transactions";
-import StockListPanel from "./inventory/components/StockListPanel";
+import InventoryList from "./inventory/components/InventoryList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
 import InventoryTransactionModal from "./inventory/components/InventoryTransactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
+import InventoryListFilter from "./inventory/components/InventoryListFilter";
 
 function InventoryPage() {
   const { id, action } = useParams();
@@ -43,16 +44,16 @@ function InventoryPage() {
       <GenericFilter context="inventory" className="m-0" />
 
       <Section className="flex min-h-0 flex-1 gap-2 overflow-hidden shadow-none max-lg:flex-col">
+        <InventoryListFilter />
+
         <div
           className={cn(
             "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
-            hasSelectedItem
-              ? "basis-1/2 max-w-[50%]"
-              : "basis-full max-w-full",
+            hasSelectedItem ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
             "max-lg:basis-full max-lg:max-w-full",
           )}
         >
-          <StockListPanel className="h-full min-h-0" />
+          <InventoryList className="h-full min-h-0" />
         </div>
 
         {hasSelectedItem && (

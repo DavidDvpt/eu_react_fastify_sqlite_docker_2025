@@ -12,6 +12,7 @@ type ContainerType = ContainerVariant;
 type ContainerBaseProps = Omit<ContainerProps, "type">;
 interface ContainerProps extends PropsWithChildren {
   variant?: ContainerVariant;
+  shadow?: boolean;
   className?: string;
 }
 

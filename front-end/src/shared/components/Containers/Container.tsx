@@ -7,9 +7,16 @@ function Container({
   children,
   className,
   variant = "default",
+  shadow = true,
 }: ContainerProps) {
   return (
-    <div className={cn(containerVariants({ variant }), className)}>
+    <div
+      className={cn(
+        containerVariants({ variant }),
+        !shadow && "shadow-none",
+        className,
+      )}
+    >
       {children}
     </div>
   );
