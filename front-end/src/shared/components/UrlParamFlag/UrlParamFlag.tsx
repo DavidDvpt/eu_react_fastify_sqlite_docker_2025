@@ -16,6 +16,7 @@ type UrlParamFlagProps = {
   labelClassName?: string;
   switchClassName?: string;
   ariaLabel?: string;
+  paramValue?: string;
 };
 
 function UrlParamFlag({
@@ -29,6 +30,7 @@ function UrlParamFlag({
   labelClassName,
   switchClassName,
   ariaLabel,
+  paramValue,
 }: UrlParamFlagProps) {
   const location = useLocation();
   const navigate = useNavigate();
@@ -39,7 +41,7 @@ function UrlParamFlag({
     const nextSearchParams = new URLSearchParams(location.search);
 
     if (nextChecked) {
-      nextSearchParams.set(paramKey, "1");
+      nextSearchParams.set(paramKey, paramValue ?? "1");
     } else {
       nextSearchParams.delete(paramKey);
     }

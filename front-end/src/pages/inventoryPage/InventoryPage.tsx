@@ -40,32 +40,38 @@ function InventoryPage() {
   const hasSelectedItem = Boolean(id);
 
   return (
-    <Panel className="min-h-0 gap-2">
-      <GenericFilter context="inventory" className="m-0" />
+    <Panel className="min-h-0 gap-2 mx-0">
+      <GenericFilter context="inventory" className="m-2" />
 
-      <Section className="flex min-h-0 flex-1 gap-2 overflow-hidden shadow-none max-lg:flex-col">
+      <Section
+        className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
+        shadow={false}
+      >
         <InventoryListFilter />
 
-        <div
-          className={cn(
-            "min-h-0 overflow-hidden transition-all duration-300 ease-in-out",
-            hasSelectedItem ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
-            "max-lg:basis-full max-lg:max-w-full",
-          )}
+        <Section
+          className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row gap-2"
+          shadow={false}
         >
-          <InventoryList className="h-full min-h-0" />
-        </div>
+          <InventoryList
+            className={cn(
+              "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
+              hasSelectedItem
+                ? "basis-1/2 max-w-[50%]"
+                : "basis-full max-w-full",
+              "max-lg:basis-full max-lg:max-w-full",
+            )}
+          />
 
-        {hasSelectedItem && (
-          <div className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden">
+          {hasSelectedItem && (
             <StockDetailsPanel
-              className="h-full min-h-0"
+              className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
               onClose={() => navigate("/inventory")}
               onBuy={(itemId) => openTransactionModal(itemId, "buy")}
               onSell={(itemId) => openTransactionModal(itemId, "sell")}
             />
-          </div>
-        )}
+          )}
+        </Section>
       </Section>
 
       <InventoryTransactionModal

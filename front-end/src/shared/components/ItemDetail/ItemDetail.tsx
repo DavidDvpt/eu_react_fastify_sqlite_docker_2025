@@ -38,7 +38,7 @@ function ItemDetail({
   );
 
   return (
-    <Section className="flex flex-col gap-2">
+    <Section className="flex flex-col gap-2 p-0">
       <h1>{item.name}</h1>
       <div className="flex">
         <img

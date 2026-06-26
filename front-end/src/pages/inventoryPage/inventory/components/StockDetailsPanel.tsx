@@ -2,7 +2,7 @@ import StockMessages from "./StockMessages";
 import StockLotInList from "./StockLotList";
 
 import { cn } from "@/lib/utils";
-import { Panel } from "@/shared/components/Containers";
+import { Section } from "@/shared/components/Containers";
 import type { StockDetailsPanelProps } from "@/shared/types";
 
 import ItemDetail from "@/shared/components/ItemDetail/ItemDetail";
@@ -28,7 +28,10 @@ function StockDetailsPanel({
   const item = getItemData(id);
 
   return (
-    <Panel className={cn("relative min-h-0 gap-2", className)}>
+    <Section
+      className={cn("relative min-h-0 gap-2 p-0", className)}
+      shadow={false}
+    >
       <StockMessages
         isError={isError || isDetailsError}
         isLoading={isLoading || isDetailsLoading}
@@ -41,8 +44,9 @@ function StockDetailsPanel({
         onSell={() => (item ? onSell?.(item.id) : undefined)}
         item={item}
       />
+
       <StockLotInList lotList={details?.lotsIn ?? null} />
-    </Panel>
+    </Section>
   );
 }
 
