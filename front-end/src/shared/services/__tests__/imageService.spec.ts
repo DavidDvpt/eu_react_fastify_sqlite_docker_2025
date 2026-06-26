@@ -11,9 +11,7 @@ describe("ImageService", () => {
     const imageBaseUrl = env.VITE_IMAGE_BASE_URL ?? "";
     const apiUrl = env.VITE_API_URL ?? "";
     const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
-    const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
-    const expectedBaseUrl =
-      normalizedImageBaseUrl || (normalizedApiUrl ? `${normalizedApiUrl}/assets/images` : "");
+    const expectedBaseUrl = normalizedImageBaseUrl || getFallbackImageBaseUrl(apiUrl);
     const result = ImageService.getItemImageUrl("A B");
 
     if (!expectedBaseUrl) {
@@ -28,9 +26,7 @@ describe("ImageService", () => {
     const imageBaseUrl = env.VITE_IMAGE_BASE_URL ?? "";
     const apiUrl = env.VITE_API_URL ?? "";
     const normalizedImageBaseUrl = imageBaseUrl.replace(/\/+$/, "");
-    const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
-    const expectedBaseUrl =
-      normalizedImageBaseUrl || (normalizedApiUrl ? `${normalizedApiUrl}/assets/images` : "");
+    const expectedBaseUrl = normalizedImageBaseUrl || getFallbackImageBaseUrl(apiUrl);
     const result = ImageService.getItemImageUrl("123", "micro");
 
     if (!expectedBaseUrl) {
@@ -41,3 +37,22 @@ describe("ImageService", () => {
     expect(result).toBe(`${expectedBaseUrl}/123?size=micro`);
   });
 });
+
+function getFallbackImageBaseUrl(apiUrl: string) {
+  if (!apiUrl) {
+    return "";
+  }
+
+  if (URL.canParse(apiUrl)) {
+    return `${new URL(apiUrl).origin}/images`;
+  }
+
+  const normalizedApiUrl = apiUrl.replace(/\/+$/, "");
+  const apiPrefix = normalizedApiUrl.match(/^(.*)\/api\/v\d+(?:\/.*)?$/);
+
+  if (apiPrefix?.[1]) {
+    return `${apiPrefix[1]}/images`;
+  }
+
+  return `${normalizedApiUrl}/images`;
+}
