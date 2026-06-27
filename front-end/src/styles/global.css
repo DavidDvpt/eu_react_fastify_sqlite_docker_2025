@@ -275,15 +275,15 @@
 
   --section-bg: var(--L4C4);
   --section-text-color: var(--L1C2);
-  --section-border-color: var(--L4C3);
-  --section-shadow-color: var(--L3C2);
-  --section-modal-bg: var(--L1C2);
+  --section-border-color: var(--L4C0);
+  --section-shadow-color: var(--black);
+  --section-modal-bg: var(--L4C8);
   --section-modal-text-color: var(--L4C5);
   --section-modal-border-color: var(--L1C6);
   --section-modal-shadow-color: var(--L2C1);
-  --modal-bg: var(--L1C1);
-  --modal-text: var(--L4C4);
-  --modal-border: var(--L4C8);
+  --modal-bg: var(--L4C8);
+  --modal-text: var(--text);
+  --modal-border: var(--L3C8);
 
   --radius: 0.25rem;
 
