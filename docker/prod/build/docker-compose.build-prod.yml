@@ -5,7 +5,7 @@ services:
       dockerfile: docker/Dockerfile.api.prod
     image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
     env_file:
-      - /srv/apps/entropia-manager/.env
+      - ~/srv/apps/entropia-manager/docker/.env
     expose:
       - "8020"
     restart: unless-stopped
