@@ -35,14 +35,14 @@ if [[ ! -f "$LOCAL_ENV_RUNTIME" ]]; then
 fi
 
 echo "Preparing remote directory..."
-ssh "$SSH_TARGET" "mkdir -p $REMOTE_DIR/docker"
+ssh "$SSH_TARGET" "mkdir -p $REMOTE_DIR"
 
 echo "Copying compose..."
-scp "$LOCAL_COMPOSE" "$SSH_TARGET:$REMOTE_DIR/docker/$REMOTE_COMPOSE_NAME"
+scp "$LOCAL_COMPOSE" "$SSH_TARGET:$REMOTE_DIR/$REMOTE_COMPOSE_NAME"
 
 echo "Copying runtime env..."
 scp "$LOCAL_ENV_RUNTIME" "$SSH_TARGET:$REMOTE_DIR/$REMOTE_ENV_NAME"
 
 echo "Done."
-echo "Remote compose: $REMOTE_DIR/docker/$REMOTE_COMPOSE_NAME"
+echo "Remote compose: $REMOTE_DIR/$REMOTE_COMPOSE_NAME"
 echo "Remote env:     $REMOTE_DIR/$REMOTE_ENV_NAME"
