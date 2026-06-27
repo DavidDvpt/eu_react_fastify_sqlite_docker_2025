@@ -16,8 +16,6 @@ services:
     build:
       context: ..
       dockerfile: docker/Dockerfile.front.prod
-      args:
-        VITE_API_URL: ${VITE_API_URL?VITE_API_URL is required}
     image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-front:${IMAGE_TAG:-latest}
     expose:
       - "8019"

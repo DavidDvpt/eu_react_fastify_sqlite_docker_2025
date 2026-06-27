@@ -29,14 +29,11 @@ if [[ -z "${IMAGE_TAG:-}" ]]; then
   exit 1
 fi
 
-export VITE_API_URL="${VITE_API_URL}"
-
 echo "-----------------------------------------"
 echo "🐳 Docker Hub build + push (prod)"
 echo "Namespace : $DOCKERHUB_NAMESPACE"
 echo "Tag       : $IMAGE_TAG"
 echo "Platform  : $PLATFORM"
-echo "VITE_API_URL: $VITE_API_URL"
 echo "-----------------------------------------"
 
 echo "[1/4] Checking Docker login..."
@@ -63,7 +60,6 @@ echo "[4/4] Building + pushing Front image..."
 docker buildx build \
   --platform "$PLATFORM" \
   -f "$SCRIPT_DIR/Dockerfile.front.prod" \
-  --build-arg "VITE_API_URL=$VITE_API_URL" \
   -t "${DOCKERHUB_NAMESPACE}/entropia-manager-front:${IMAGE_TAG}" \
   --push \
   "$ROOT_DIR"

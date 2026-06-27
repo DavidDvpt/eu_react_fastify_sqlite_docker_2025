@@ -1,4 +1,4 @@
-import { env } from "@/config/env";
+import { getApiBaseUrl } from "@/config/runtime";
 import axios from "axios";
 import {
   attachPrivateRequestInterceptor,
@@ -6,7 +6,7 @@ import {
 } from "./interceptors";
 
 const baseConfig = {
-  baseURL: env.VITE_API_URL,
+  baseURL: getApiBaseUrl(),
   timeout: 20_000,
 };
 

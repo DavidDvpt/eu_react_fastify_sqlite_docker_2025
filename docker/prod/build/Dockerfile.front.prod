@@ -3,8 +3,6 @@ WORKDIR /app/front-end
 COPY front-end/package*.json ./
 RUN npm ci
 COPY front-end/ ./
-ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
 RUN npm run build:docker
 
 FROM node:24-alpine3.22 AS runtime
