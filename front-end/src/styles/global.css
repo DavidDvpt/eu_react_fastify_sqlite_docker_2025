@@ -268,7 +268,7 @@
   --background: var(--L4C8);
   --text: var(--black);
 
-  --panel-bg: var(transparent);
+  --panel-bg: transparent;
   --panel-text-color: var(--text);
   --panel-border-color: var(--L4C10);
   --panel-shadow-color: var(--L4C12);
