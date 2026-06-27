@@ -53,7 +53,7 @@ function TransactionSellFormFields({ item }: TransactionSellFormFieldsProps) {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between">
         <InputRHF
           name="quantity"
           type="number"
@@ -65,7 +65,7 @@ function TransactionSellFormFields({ item }: TransactionSellFormFieldsProps) {
           onFocus={handleQuantityFocus}
           onBlur={handleQuantityBlur}
           label="Quantite"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
+          labelClassName="text-sm"
           wrapperClassName="w-[30%] min-w-0"
         />
 
@@ -81,7 +81,7 @@ function TransactionSellFormFields({ item }: TransactionSellFormFieldsProps) {
           onFocus={handleFeeFocus}
           onBlur={handleFeeBlur}
           label="Fee"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
+          labelClassName="text-sm"
           wrapperClassName="w-[30%] min-w-0"
         />
 
@@ -103,11 +103,10 @@ function TransactionSellFormFields({ item }: TransactionSellFormFieldsProps) {
       <CheckboxRHF
         name="autoCalculation"
         label="Calcul auto"
-        labelClassName="text-[var(--color-modal-text)]"
         onCheckedChange={applyAutoCalculationIfNeeded}
       />
 
-      <div className="space-y-1 text-sm text-card-inner-title">
+      <div className="space-y-1 text-xs">
         <p className="m-0">
           Cout TT : {FormatTools.pedFormat().format(costTt)} Ped
         </p>

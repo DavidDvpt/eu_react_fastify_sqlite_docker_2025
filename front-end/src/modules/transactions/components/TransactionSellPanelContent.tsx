@@ -56,7 +56,7 @@ function TransactionSellPanelContent({ item, onBack }: TransactionPanelProps) {
   };
 
   return (
-    <Section variant="modal" className="space-y-4">
+    <Section variant="modal" className="p-2">
       <GenericForm
         key={item.itemId}
         schema={schema}
@@ -66,7 +66,7 @@ function TransactionSellPanelContent({ item, onBack }: TransactionPanelProps) {
           fee: 0,
           ttc: Math.ceil(item.unitPrice),
         }}
-        className="space-y-4"
+        className="space-y-2"
         onSubmit={onSubmitSell}
       >
         <TransactionSellFormFields item={item} />

@@ -14,7 +14,7 @@ function StockLotInList({ lotList }: StockLotInListProps) {
   ).length;
 
   return (
-    <Section className="flex min-h-0 flex-1 flex-col overflow-hidden ">
+    <Section className="flex min-h-0 flex-1 flex-col overflow-hidden p-2 m-2">
       <h4 className="mb-2 text-sm font-semibold text-card-inner-title">
         Lots IN
       </h4>

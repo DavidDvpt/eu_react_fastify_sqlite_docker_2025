@@ -28,10 +28,7 @@ function StockDetailsPanel({
   const item = getItemData(id);
 
   return (
-    <Section
-      className={cn("relative min-h-0 gap-2 p-0", className)}
-      shadow={false}
-    >
+    <Section className={cn("relative min-h-0 p-0", className)} shadow={false}>
       <StockMessages
         isError={isError || isDetailsError}
         isLoading={isLoading || isDetailsLoading}

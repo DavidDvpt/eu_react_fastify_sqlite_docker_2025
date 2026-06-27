@@ -54,7 +54,7 @@ function TransactionBuyPanelContent({ item, onBack }: TransactionPanelProps) {
   };
 
   return (
-    <Section variant="modal" className="space-y-4">
+    <Section variant="modal" className="p-2">
       <GenericForm
         key={item.itemId}
         schema={buyFormSchema}
@@ -64,7 +64,7 @@ function TransactionBuyPanelContent({ item, onBack }: TransactionPanelProps) {
           fee: 0,
           buyPrice: item.unitPrice,
         }}
-        className="space-y-4"
+        className="space-y-2"
         onSubmit={onSubmitBuy}
       >
         <TransactionBuyFormFields item={item} />
@@ -75,7 +75,7 @@ function TransactionBuyPanelContent({ item, onBack }: TransactionPanelProps) {
           </p>
         ) : null}
 
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-1">
           <Button
             type="button"
             variant="secondary"

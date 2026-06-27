@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 
 export type TransactionSellFormFieldsProps = Pick<
@@ -56,6 +57,7 @@ export type TransactionItemDetailsProps = {
   actionsDirection?: "row" | "column";
   actionsPlacement?: "bottom" | "right";
   className?: string;
+  imageStyle?: CSSProperties;
   actionsClassName?: string;
   buttonClassName?: string;
 };

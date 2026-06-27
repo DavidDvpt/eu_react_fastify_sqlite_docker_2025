@@ -6,6 +6,7 @@ import {
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools";
 import type { InventoryTransactionModalProps } from "../stockTypes";
+import { Section } from "@/shared/components/Containers";
 
 function InventoryTransactionModal({
   isOpen,
@@ -32,8 +33,8 @@ function InventoryTransactionModal({
       }}
     >
       {transactionItem ? (
-        <div className="space-y-3">
-          <div className="flex items-center gap-3 rounded-[var(--radius-md)] border border-section-modal-border bg-section-modal-bg px-3 py-2">
+        <div className="gap-1 flex flex-col">
+          <Section variant="modal" className="flex flex-row items-center py-2">
             {itemImageUrl ? (
               <img
                 src={itemImageUrl}
@@ -42,16 +43,16 @@ function InventoryTransactionModal({
               />
             ) : null}
             <div className="min-w-0">
-              <p className="m-0 truncate font-semibold text-[var(--color-modal-text)]">
+              <p className="m-0 truncate font-semibold">
                 {transactionItem.name}
               </p>
-              <p className="m-0 text-sm text-[var(--color-modal-text)]/80">
+              <p className="m-0 text-sm">
                 Coût unitaire:{" "}
                 {FormatTools.pedFormat().format(transactionItem.unitPrice)} PED
                 · Stock: {transactionItem.quantity}
               </p>
             </div>
-          </div>
+          </Section>
 
           {action === "buy" ? (
             <TransactionBuyPanelContent

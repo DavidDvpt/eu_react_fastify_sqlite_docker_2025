@@ -38,15 +38,22 @@ function ItemDetail({
   );
 
   return (
-    <Section className="flex flex-col gap-2 p-0">
-      <h1>{item.name}</h1>
+    <Section className="flex flex-col gap-4 p-2 m-2">
+      <h1 className="m-0 p-0">{item.name}</h1>
       <div className="flex">
         <img
           src={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
           alt={item.name}
+          style={{
+            maxWidth: 120,
+            maxHeight: 200,
+            width: "auto",
+            height: "auto",
+            objectFit: "contain",
+          }}
         />
 
-        <div className="px-4 gap-2">
+        <div className="px-4 gap-1 text-sm">
           <p className="my-0 mb-2">Prix unitaire: {item.value}</p>
           <p className="my-0 mb-2">Quantité: {item.quantity}</p>
           <p className="my-0">

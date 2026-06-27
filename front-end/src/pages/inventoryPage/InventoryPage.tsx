@@ -50,7 +50,7 @@ function InventoryPage() {
         <InventoryListFilter />
 
         <Section
-          className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row gap-2"
+          className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row"
           shadow={false}
         >
           <InventoryList

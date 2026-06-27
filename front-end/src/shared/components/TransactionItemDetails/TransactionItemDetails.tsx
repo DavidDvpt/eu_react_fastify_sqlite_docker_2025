@@ -18,6 +18,7 @@ function TransactionItemDetails({
   actionsDirection = "row",
   actionsPlacement = "right",
   className,
+  imageStyle,
   actionsClassName,
   buttonClassName,
 }: TransactionItemDetailsProps) {
@@ -39,7 +40,8 @@ function TransactionItemDetails({
             <img
               src={image}
               alt={itemName}
-              className="h-[120px] w-auto rounded object-contain"
+              className="rounded object-contain"
+              style={imageStyle}
             />
           ) : null}
         </div>
@@ -48,7 +50,7 @@ function TransactionItemDetails({
             {itemName}
           </h3>
 
-          <dl className="grid grid-cols-2 gap-2 text-smtext-card-inner-title">
+          <dl className="grid grid-cols-2 gap-2 text-sm text-card-inner-title">
             <dt>Prix unitaire</dt>
             <dd>{price} PED</dd>
             <dt>Stock restant</dt>

@@ -3,7 +3,10 @@ import { useFormContext } from "react-hook-form";
 import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { FormatTools } from "@/shared/tools";
-import type { TransactionBuyFormFieldsProps, TransactionBuyFormValues } from "../types";
+import type {
+  TransactionBuyFormFieldsProps,
+  TransactionBuyFormValues,
+} from "../types";
 import useTransactionAutoPricing from "../hooks/useTransactionAutoPricing";
 
 function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
@@ -32,7 +35,7 @@ function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
 
   return (
     <>
-      <div className="flex items-start justify-between gap-3">
+      <div className="flex items-start justify-between">
         <InputRHF
           name="quantity"
           type="number"
@@ -73,7 +76,7 @@ function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
           onFocus={handleTotalFocus}
           onBlur={handleTotalBlur}
           label="Achat"
-          labelClassName="text-sm text-[var(--color-modal-text)]"
+          labelClassName="text-sm text-black"
           wrapperClassName="w-[30%] min-w-0"
         />
       </div>
@@ -81,18 +84,17 @@ function TransactionBuyFormFields({ item }: TransactionBuyFormFieldsProps) {
       <CheckboxRHF
         name="autoCalculation"
         label="Calcul auto"
-        labelClassName="text-[var(--color-modal-text)]"
+        labelClassName="text-black"
         onCheckedChange={applyAutoCalculationIfNeeded}
+        wrapperClassName="mb-1"
       />
 
-      <div className="space-y-1 text-sm text-card-inner-title">
+      <div className="space-y-1 text-sm">
         <p className="m-0">
           Cout TT : {FormatTools.pedFormat().format(unitReferenceTotal)} PED
         </p>
         <p className="m-0">Marlup : {buyMarkupRatio.toFixed(2)}%</p>
-        <p
-          className={`m-0 ${markupCost < 0 ? "font-bold text-destructive-700" : ""}`}
-        >
+        <p className={`m-0 ${markupCost < 0 ? "text-destructive-700" : ""}`}>
           Cout markup : {FormatTools.pedFormat().format(markupCost)} PED
         </p>
       </div>
