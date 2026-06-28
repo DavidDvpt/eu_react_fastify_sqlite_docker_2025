@@ -4,18 +4,22 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
 
-import { createBuyFormSchema } from "./transactionSchemas";
+import { createBuyFormSchema, sellFormSchema } from "./transactionSchemas";
 
 import TransactionFormFields from "./TransactionFormFields";
 
 import { PANEL_COPY } from "./constants";
 import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
 import type {
+  AutoPricingFormValues,
   TransactionBody,
-  TransactionFormValues,
   TransactionPanelProps,
 } from "@/shared/types/transactions";
 import { transaction } from "@/lib/services/transaction.api";
+
+type TransactionPanelFormValues =
+  | AutoPricingFormValues<"buyPrice">
+  | AutoPricingFormValues<"ttc">;
 
 function TransactionPanelContent({
   item,
@@ -23,31 +27,37 @@ function TransactionPanelContent({
   action,
 }: TransactionPanelProps) {
   const schema = useMemo(
-    () => createBuyFormSchema(item.quantity),
-    [item.quantity],
+    () =>
+      action === "buy"
+        ? createBuyFormSchema(item.quantity)
+        : sellFormSchema(item.quantity),
+    [action, item.quantity],
   );
   const refreshStock = useInventoryRefresh(item.itemId, onBack);
 
   const mutation = useMutation({
-    mutationFn: async (values: TransactionFormValues) =>
-      transaction({
+    mutationFn: async (values: TransactionPanelFormValues) => {
+      const ttc = action === "buy" ? values.buyPrice : values.ttc;
+
+      return transaction({
         type: action,
         lines: [
           {
             itemId: item.itemId,
             quantity: values.quantity,
             tt: values.quantity * item.unitPrice,
-            fee: 0,
-            ttc: values.buyPrice,
+            fee: values.fee,
+            ttc,
           },
         ],
-      } satisfies TransactionBody),
+      } satisfies TransactionBody);
+    },
     onSuccess: refreshStock,
   });
 
-  const onSubmitBuy = (values: TransactionFormValues) => {
+  const onSubmit = (values: TransactionPanelFormValues) => {
     const tt = values.quantity * item.unitPrice;
-    if (values.buyPrice < tt) {
+    if (action === "buy" && values.buyPrice < tt) {
       const shouldContinue = window.confirm(
         "Le prix d'achat est inférieur au TT. Confirmer l'achat dans cet état ?",
       );
@@ -62,14 +72,23 @@ function TransactionPanelContent({
       <GenericForm
         key={`${action}-${item.itemId}`}
         schema={schema}
-        defaultValues={{
-          autoCalculation: true,
-          quantity: 1,
-          fee: 0,
-          buyPrice: item.unitPrice,
-        }}
+        defaultValues={
+          action === "buy"
+            ? {
+                autoCalculation: true,
+                quantity: 1,
+                fee: 0,
+                buyPrice: item.unitPrice,
+              }
+            : {
+                autoCalculation: true,
+                quantity: 1,
+                fee: 0,
+                ttc: item.unitPrice,
+              }
+        }
         className="space-y-2"
-        onSubmit={onSubmitBuy}
+        onSubmit={onSubmit}
       >
         <TransactionFormFields item={item} action={action} />
 
