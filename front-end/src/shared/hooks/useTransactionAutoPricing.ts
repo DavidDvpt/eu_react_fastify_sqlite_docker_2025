@@ -1,12 +1,12 @@
-import { useCallback, useEffect, useRef } from "react";
-import type { FocusEvent } from "react";
+import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useWatch } from "react-hook-form";
 
 import {
-  getMinimumBuyTtc,
-  sanitizeNonNegative,
-  sanitizeQuantity,
-} from "../../modules/transactions/helpers";
+  computeFeePricing,
+  computeQuantityPricing,
+  computeTtcPricing,
+  type TransactionPricingValues,
+} from "@/pages/inventoryPage/inventory/components/transactionModal/transactionUtils";
 import type {
   AutoPricingFormValues,
   UseTransactionAutoPricingParams,
@@ -15,18 +15,10 @@ import type {
 import { FormatTools } from "../tools";
 
 function useTransactionAutoPricing({
+  action,
   form,
-  feeMode = "auto",
-  maxQuantity,
   unitPrice,
 }: UseTransactionAutoPricingParams<AutoPricingFormValues>): UseTransactionAutoPricingResult {
-  const isFeeAutoCalculated = feeMode === "auto";
-  const focusValueRef = useRef<{
-    fee?: number;
-    quantity?: number;
-    total?: number;
-  }>({});
-
   const quantity = useWatch({
     control: form.control,
     name: "quantity" as never,
@@ -35,7 +27,7 @@ function useTransactionAutoPricing({
     control: form.control,
     name: "fee" as never,
   });
-  const ttcValue = useWatch({
+  const ttc = useWatch({
     control: form.control,
     name: "ttc" as never,
   });
@@ -45,131 +37,135 @@ function useTransactionAutoPricing({
   });
 
   const isAutoCalculationEnabled = Boolean(autoCalculation);
+  const isBuy = action === "buy";
+  const isFeeReadOnly = !isBuy;
+
   const quantityValue = FormatTools.toSafeNumber(quantity);
   const feeValue = FormatTools.toSafeNumber(fee);
-  const totalValue = FormatTools.toSafeNumber(ttcValue);
+  const totalValue = FormatTools.toSafeNumber(ttc);
 
-  useEffect(() => {
-    if (isFeeAutoCalculated || feeValue === 0) {
-      return;
-    }
+  const prevValuesRef = useRef<TransactionPricingValues | null>(null);
+  const ignoreNextTtcEffectRef = useRef(false);
+  const currentValues = useMemo(
+    () => ({
+      quantity: quantityValue,
+      fee: feeValue,
+      ttc: totalValue,
+    }),
+    [feeValue, quantityValue, totalValue],
+  );
 
-    form.setValue("fee" as never, 0 as never, { shouldDirty: true });
-  }, [feeValue, form, isFeeAutoCalculated]);
+  const syncFormValues = useCallback(
+    (nextValues: TransactionPricingValues, options?: { ignoreTtcEffect?: boolean }) => {
+      ignoreNextTtcEffectRef.current = Boolean(options?.ignoreTtcEffect);
 
-  const setTotal = useCallback(
-    (value: number) => {
-      form.setValue("ttc" as never, value as never, { shouldDirty: true });
+      form.setValue("quantity" as never, nextValues.quantity as never, {
+        shouldDirty: true,
+      });
+      form.setValue("fee" as never, nextValues.fee as never, {
+        shouldDirty: true,
+      });
+      form.setValue("ttc" as never, nextValues.ttc as never, {
+        shouldDirty: true,
+      });
+      prevValuesRef.current = nextValues;
     },
     [form],
   );
 
-  const applyFromQuantity = useCallback(
-    (rawQuantity: number) => {
-      const nextQuantity = Math.min(sanitizeQuantity(rawQuantity), maxQuantity);
-      const nextFee = isFeeAutoCalculated
-        ? Math.min(
-            100,
-            sanitizeNonNegative(
-              form.getValues("fee" as never) as unknown as number | undefined,
-            ),
-          )
-        : 0;
-      const tt = nextQuantity * unitPrice;
-      const currentTotal = form.getValues("ttc" as never) as unknown as
-        | number
-        | undefined;
-      const nextTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
+  const runPricingEffect = useCallback(
+    (
+      shouldSync: (
+        previous: TransactionPricingValues,
+        current: TransactionPricingValues,
+      ) => boolean,
+      sync: (current: TransactionPricingValues) => TransactionPricingValues,
+      options?: { ignoreTtcEffect?: boolean },
+    ) => {
+      const previous = prevValuesRef.current;
 
-      form.setValue("quantity" as never, nextQuantity as never, {
-        shouldDirty: true,
-      });
-      if (isAutoCalculationEnabled) {
-        setTotal(nextTotal);
-        form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
+      if (!previous) {
+        prevValuesRef.current = currentValues;
+        return;
       }
+
+      if (!isAutoCalculationEnabled) {
+        prevValuesRef.current = currentValues;
+        return;
+      }
+
+      if (!shouldSync(previous, currentValues)) {
+        return;
+      }
+
+      syncFormValues(sync(currentValues), options);
     },
-    [
-      form,
-      isAutoCalculationEnabled,
-      isFeeAutoCalculated,
-      maxQuantity,
-      setTotal,
-      unitPrice,
-    ],
+    [currentValues, isAutoCalculationEnabled, syncFormValues],
   );
 
-  const applyFromFee = useCallback(
-    (rawFee: number) => {
-      const nextQuantity = Math.min(
-        sanitizeQuantity(
-          form.getValues("quantity" as never) as unknown as number | undefined,
-        ),
-        maxQuantity,
-      );
-      const nextFee = isFeeAutoCalculated
-        ? Math.min(100, sanitizeNonNegative(rawFee))
-        : 0;
-      const tt = nextQuantity * unitPrice;
-      const currentTotal = form.getValues("ttc" as never) as unknown as
-        | number
-        | undefined;
-      const minTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
-
-      form.setValue("quantity" as never, nextQuantity as never, {
-        shouldDirty: true,
-      });
-      form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
-      if (isAutoCalculationEnabled) {
-        setTotal(minTotal);
-      }
-    },
-    [
-      form,
-      isAutoCalculationEnabled,
-      isFeeAutoCalculated,
-      maxQuantity,
-      setTotal,
-      unitPrice,
-    ],
+  const syncFromQuantity = useCallback(
+    (values: TransactionPricingValues) =>
+      computeQuantityPricing({
+        action,
+        quantity: values.quantity,
+        fee: values.fee,
+        ttc: values.ttc,
+        unitPrice,
+      }),
+    [action, unitPrice],
   );
 
-  const applyFromTotal = useCallback(
-    (rawTotal: number) => {
-      const nextQuantity = Math.min(
-        sanitizeQuantity(
-          form.getValues("quantity" as never) as unknown as number | undefined,
-        ),
-        maxQuantity,
-      );
-      const tt = nextQuantity * unitPrice;
-      const nextFee = isFeeAutoCalculated
-        ? Math.min(
-            100,
-            sanitizeNonNegative(
-              form.getValues("fee" as never) as unknown as number | undefined,
-            ),
-          )
-        : 0;
-      const minTotal = getMinimumBuyTtc(tt, nextFee, rawTotal);
-
-      form.setValue("quantity" as never, nextQuantity as never, {
-        shouldDirty: true,
-      });
-      if (isAutoCalculationEnabled) {
-        setTotal(minTotal);
-        form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
-      }
-    },
-    [
-      form,
-      isAutoCalculationEnabled,
-      isFeeAutoCalculated,
-      maxQuantity,
-      setTotal,
-      unitPrice,
-    ],
+  const syncFromFee = useCallback(
+    (values: TransactionPricingValues) =>
+      computeFeePricing({
+        action,
+        quantity: values.quantity,
+        fee: values.fee,
+        ttc: values.ttc,
+        unitPrice,
+      }),
+    [action, unitPrice],
   );
+
+  const syncFromTtc = useCallback(
+    (values: TransactionPricingValues) =>
+      computeTtcPricing({
+        action,
+        quantity: values.quantity,
+        fee: values.fee,
+        ttc: values.ttc,
+        unitPrice,
+      }),
+    [action, unitPrice],
+  );
+
+  useEffect(() => {
+    runPricingEffect(
+      (previous, current) => previous.quantity !== current.quantity,
+      syncFromQuantity,
+      { ignoreTtcEffect: true },
+    );
+  }, [runPricingEffect, syncFromQuantity]);
+
+  useEffect(() => {
+    runPricingEffect(
+      (previous, current) => isBuy && previous.fee !== current.fee,
+      syncFromFee,
+      { ignoreTtcEffect: true },
+    );
+  }, [isBuy, runPricingEffect, syncFromFee]);
+
+  useEffect(() => {
+    if (ignoreNextTtcEffectRef.current) {
+      ignoreNextTtcEffectRef.current = false;
+      return;
+    }
+
+    runPricingEffect(
+      (previous, current) => previous.ttc !== current.ttc,
+      syncFromTtc,
+    );
+  }, [runPricingEffect, syncFromTtc]);
 
   const applyAutoCalculationIfNeeded = useCallback(
     (checked: boolean) => {
@@ -177,102 +173,23 @@ function useTransactionAutoPricing({
         return;
       }
 
-      const nextQuantity = Math.min(
-        sanitizeQuantity(
-          form.getValues("quantity" as never) as unknown as number | undefined,
-        ),
-        maxQuantity,
+      syncFormValues(
+        syncFromQuantity({
+          quantity: quantityValue,
+          fee: feeValue,
+          ttc: totalValue,
+        }),
+        { ignoreTtcEffect: true },
       );
-      const nextFee = isFeeAutoCalculated
-        ? Math.min(
-            100,
-            sanitizeNonNegative(
-              form.getValues("fee" as never) as unknown as number | undefined,
-            ),
-          )
-        : 0;
-      const currentTotal = sanitizeNonNegative(
-        form.getValues("ttc" as never) as unknown as number | undefined,
-      );
-      const tt = nextQuantity * unitPrice;
-      const currentRuleIsValid = tt + nextFee <= currentTotal;
-
-      form.setValue("quantity" as never, nextQuantity as never, {
-        shouldDirty: true,
-      });
-      form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
-
-      if (currentRuleIsValid) {
-        return;
-      }
-
-      const minTotal = getMinimumBuyTtc(tt, nextFee, tt);
-      setTotal(minTotal);
     },
-    [form, isFeeAutoCalculated, maxQuantity, setTotal, unitPrice],
-  );
-
-  const handleQuantityFocus = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      focusValueRef.current.quantity = Number(event.target.value);
-    },
-    [],
-  );
-
-  const handleFeeFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
-    focusValueRef.current.fee = Number(event.target.value);
-  }, []);
-
-  const handleTotalFocus = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      focusValueRef.current.total = Number(event.target.value);
-    },
-    [],
-  );
-
-  const handleQuantityBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      const current = Number(event.target.value);
-      if (focusValueRef.current.quantity === current) {
-        return;
-      }
-      applyFromQuantity(current);
-    },
-    [applyFromQuantity],
-  );
-
-  const handleFeeBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      const current = Number(event.target.value);
-      if (focusValueRef.current.fee === current) {
-        return;
-      }
-      applyFromFee(current);
-    },
-    [applyFromFee],
-  );
-
-  const handleTotalBlur = useCallback(
-    (event: FocusEvent<HTMLInputElement>) => {
-      const current = Number(event.target.value);
-      if (focusValueRef.current.total === current) {
-        return;
-      }
-      applyFromTotal(current);
-    },
-    [applyFromTotal],
+    [feeValue, quantityValue, syncFormValues, syncFromQuantity, totalValue],
   );
 
   return {
     applyAutoCalculationIfNeeded,
-    handleFeeBlur,
-    handleFeeFocus,
-    handleQuantityBlur,
-    handleQuantityFocus,
-    handleTotalBlur,
-    handleTotalFocus,
     feeValue,
     isAutoCalculationEnabled,
+    isFeeReadOnly,
     quantityValue,
     totalValue,
   };

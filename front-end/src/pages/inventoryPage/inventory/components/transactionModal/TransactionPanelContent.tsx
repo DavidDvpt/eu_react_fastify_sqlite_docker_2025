@@ -72,7 +72,7 @@ function TransactionPanelContent({
         className="space-y-2"
         onSubmit={onSubmit}
       >
-        <TransactionFormContent item={item} />
+        <TransactionFormContent item={item} action={action} />
 
         {mutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">

@@ -2,53 +2,36 @@ import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
 import useTransactionAutoPricing from "@/shared/hooks/useTransactionAutoPricing";
 import type {
   AutoPricingFormValues,
-  TransactionFilterRow,
+  TransactionFormFieldsProps,
 } from "@/shared/types";
 import { useFormContext } from "react-hook-form";
 
 import { TransactionFields } from "./TransactionFields";
 import TransactionSummary from "./TransactionSummary";
 
-interface TransactionFormContentProps {
-  item: TransactionFilterRow;
-}
-
-function TransactionFormContent({ item }: TransactionFormContentProps) {
+function TransactionFormContent({ item, action }: TransactionFormFieldsProps) {
   const form = useFormContext<AutoPricingFormValues>();
 
   const {
     applyAutoCalculationIfNeeded,
     feeValue,
-    handleFeeBlur,
-    handleFeeFocus,
-    handleQuantityBlur,
-    handleQuantityFocus,
-    handleTotalBlur,
-    handleTotalFocus,
+    isFeeReadOnly,
     quantityValue,
     totalValue,
   } = useTransactionAutoPricing({
+    action,
     form,
-    feeMode: "fixed-zero",
-    maxQuantity: item.quantity,
     unitPrice: item.unitPrice,
   });
 
   return (
     <>
-        <TransactionFields
-        item={item}
+      <TransactionFields
         quantityLabel="Quantite"
         feeLabel="Fee"
-        totalLabel="Achat"
+        totalLabel={action === "buy" ? "Achat" : "Vente"}
         totalLabelClassName="text-sm text-black"
-        feeReadOnly
-        onQuantityFocus={handleQuantityFocus}
-        onQuantityBlur={handleQuantityBlur}
-        onFeeFocus={handleFeeFocus}
-        onFeeBlur={handleFeeBlur}
-        onTotalFocus={handleTotalFocus}
-        onTotalBlur={handleTotalBlur}
+        feeReadOnly={isFeeReadOnly}
       />
 
       <CheckboxRHF

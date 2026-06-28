@@ -12,9 +12,11 @@ export function transactionFormSchema(
       .number()
       .int()
       .positive("La quantite doit etre superieure a 0.")
-      .max(
-        maxQuantity,
-        `La quantite doit etre inferieure ou egale a ${maxQuantity}.`,
+      .refine(
+        (value) => action === "buy" || value <= maxQuantity,
+        {
+          message: `La quantite doit etre inferieure ou egale a ${maxQuantity}.`,
+        },
       ),
     fee: z.preprocess(
       (value) => {

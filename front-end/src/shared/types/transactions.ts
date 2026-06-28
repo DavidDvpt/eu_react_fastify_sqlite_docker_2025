@@ -5,7 +5,7 @@ export type TransactionFormValues = {
   buyPrice: number;
 };
 
-import type { CSSProperties, FocusEvent } from "react";
+import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 
@@ -129,20 +129,14 @@ export type UseTransactionAutoPricingParams<
   TFormValues extends AutoPricingFormValues,
 > = {
   form: UseFormReturn<TFormValues>;
-  maxQuantity: number;
+  action: TransactionAction;
   unitPrice: number;
-  feeMode?: "auto" | "fixed-zero";
 };
 
 export type UseTransactionAutoPricingResult = {
   applyAutoCalculationIfNeeded: (checked: boolean) => void;
-  handleFeeBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleFeeFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  handleQuantityBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleQuantityFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  handleTotalBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleTotalFocus: (event: FocusEvent<HTMLInputElement>) => void;
   feeValue: number;
+  isFeeReadOnly: boolean;
   isAutoCalculationEnabled: boolean;
   quantityValue: number;
   totalValue: number;
