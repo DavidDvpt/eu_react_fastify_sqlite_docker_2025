@@ -20,7 +20,6 @@ export function TransactionFields({
       <InputRHF
         name="quantity"
         type="number"
-        min={1}
         step={1}
         registerOptions={{ valueAsNumber: true }}
         selectOnFocus
@@ -46,7 +45,6 @@ export function TransactionFields({
       <InputRHF
         name="ttc"
         type="number"
-        min={0.01}
         step="0.01"
         registerOptions={{ valueAsNumber: true }}
         selectOnFocus

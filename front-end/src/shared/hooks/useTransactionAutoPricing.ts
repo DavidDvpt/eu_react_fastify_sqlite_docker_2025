@@ -5,6 +5,7 @@ import {
   computeFeePricing,
   computeQuantityPricing,
   computeTtcPricing,
+  type TransactionPricingField,
   type TransactionPricingValues,
 } from "@/pages/inventoryPage/inventory/components/transactionModal/transactionUtils";
 import type {
@@ -13,6 +14,32 @@ import type {
   UseTransactionAutoPricingResult,
 } from "@/shared/types/transactions";
 import { FormatTools } from "../tools";
+
+type TransactionPricingSnapshot = TransactionPricingValues & {
+  autoCalculation: boolean;
+};
+
+function areSameSnapshot(
+  previous: TransactionPricingSnapshot,
+  current: TransactionPricingSnapshot,
+) {
+  return (
+    previous.quantity === current.quantity &&
+    previous.fee === current.fee &&
+    previous.ttc === current.ttc &&
+    previous.autoCalculation === current.autoCalculation
+  );
+}
+
+function detectChangedField(
+  previous: TransactionPricingSnapshot,
+  current: TransactionPricingSnapshot,
+): TransactionPricingField | null {
+  if (previous.quantity !== current.quantity) return "quantity";
+  if (previous.fee !== current.fee) return "fee";
+  if (previous.ttc !== current.ttc) return "ttc";
+  return null;
+}
 
 function useTransactionAutoPricing({
   action,
@@ -44,21 +71,23 @@ function useTransactionAutoPricing({
   const feeValue = FormatTools.toSafeNumber(fee);
   const totalValue = FormatTools.toSafeNumber(ttc);
 
-  const prevValuesRef = useRef<TransactionPricingValues | null>(null);
-  const ignoreNextTtcEffectRef = useRef(false);
-  const currentValues = useMemo(
+  const snapshotRef = useRef<TransactionPricingSnapshot | null>(null);
+  const skipNextEffectRef = useRef(false);
+  const lastEditedFieldRef = useRef<TransactionPricingField>("quantity");
+
+  const currentSnapshot = useMemo<TransactionPricingSnapshot>(
     () => ({
       quantity: quantityValue,
       fee: feeValue,
       ttc: totalValue,
+      autoCalculation: isAutoCalculationEnabled,
     }),
-    [feeValue, quantityValue, totalValue],
+    [feeValue, isAutoCalculationEnabled, quantityValue, totalValue],
   );
 
-  const syncFormValues = useCallback(
-    (nextValues: TransactionPricingValues, options?: { ignoreTtcEffect?: boolean }) => {
-      ignoreNextTtcEffectRef.current = Boolean(options?.ignoreTtcEffect);
-
+  const syncValues = useCallback(
+    (nextValues: TransactionPricingValues) => {
+      skipNextEffectRef.current = true;
       form.setValue("quantity" as never, nextValues.quantity as never, {
         shouldDirty: true,
       });
@@ -68,104 +97,104 @@ function useTransactionAutoPricing({
       form.setValue("ttc" as never, nextValues.ttc as never, {
         shouldDirty: true,
       });
-      prevValuesRef.current = nextValues;
+      snapshotRef.current = {
+        ...nextValues,
+        autoCalculation: isAutoCalculationEnabled,
+      };
     },
-    [form],
+    [form, isAutoCalculationEnabled],
   );
 
-  const runPricingEffect = useCallback(
-    (
-      shouldSync: (
-        previous: TransactionPricingValues,
-        current: TransactionPricingValues,
-      ) => boolean,
-      sync: (current: TransactionPricingValues) => TransactionPricingValues,
-      options?: { ignoreTtcEffect?: boolean },
-    ) => {
-      const previous = prevValuesRef.current;
+  const computeNextValues = useCallback(
+    (sourceField: TransactionPricingField): TransactionPricingValues => {
+      const baseValues = {
+        quantity: currentSnapshot.quantity,
+        fee: currentSnapshot.fee,
+        ttc: currentSnapshot.ttc,
+      };
 
-      if (!previous) {
-        prevValuesRef.current = currentValues;
-        return;
+      if (sourceField === "quantity") {
+        return computeQuantityPricing({
+          action,
+          quantity: baseValues.quantity,
+          fee: baseValues.fee,
+          ttc: baseValues.ttc,
+          unitPrice,
+        });
       }
 
-      if (!isAutoCalculationEnabled) {
-        prevValuesRef.current = currentValues;
-        return;
+      if (sourceField === "fee") {
+        return computeFeePricing({
+          action,
+          quantity: baseValues.quantity,
+          fee: baseValues.fee,
+          ttc: baseValues.ttc,
+          unitPrice,
+        });
       }
 
-      if (!shouldSync(previous, currentValues)) {
-        return;
-      }
-
-      syncFormValues(sync(currentValues), options);
+      return computeTtcPricing({
+        action,
+        quantity: baseValues.quantity,
+        fee: baseValues.fee,
+        ttc: baseValues.ttc,
+        unitPrice,
+      });
     },
-    [currentValues, isAutoCalculationEnabled, syncFormValues],
-  );
-
-  const syncFromQuantity = useCallback(
-    (values: TransactionPricingValues) =>
-      computeQuantityPricing({
-        action,
-        quantity: values.quantity,
-        fee: values.fee,
-        ttc: values.ttc,
-        unitPrice,
-      }),
-    [action, unitPrice],
-  );
-
-  const syncFromFee = useCallback(
-    (values: TransactionPricingValues) =>
-      computeFeePricing({
-        action,
-        quantity: values.quantity,
-        fee: values.fee,
-        ttc: values.ttc,
-        unitPrice,
-      }),
-    [action, unitPrice],
-  );
-
-  const syncFromTtc = useCallback(
-    (values: TransactionPricingValues) =>
-      computeTtcPricing({
-        action,
-        quantity: values.quantity,
-        fee: values.fee,
-        ttc: values.ttc,
-        unitPrice,
-      }),
-    [action, unitPrice],
+    [action, currentSnapshot.fee, currentSnapshot.quantity, currentSnapshot.ttc, unitPrice],
   );
 
   useEffect(() => {
-    runPricingEffect(
-      (previous, current) => previous.quantity !== current.quantity,
-      syncFromQuantity,
-      { ignoreTtcEffect: true },
-    );
-  }, [runPricingEffect, syncFromQuantity]);
-
-  useEffect(() => {
-    runPricingEffect(
-      (previous, current) => isBuy && previous.fee !== current.fee,
-      syncFromFee,
-      { ignoreTtcEffect: true },
-    );
-  }, [isBuy, runPricingEffect, syncFromFee]);
-
-  useEffect(() => {
-    if (ignoreNextTtcEffectRef.current) {
-      ignoreNextTtcEffectRef.current = false;
+    if (skipNextEffectRef.current) {
+      skipNextEffectRef.current = false;
+      snapshotRef.current = currentSnapshot;
       return;
     }
 
-    runPricingEffect(
-      (previous, current) => previous.ttc !== current.ttc,
-      syncFromTtc,
-    );
-  }, [runPricingEffect, syncFromTtc]);
+    const previousSnapshot = snapshotRef.current;
+    if (!previousSnapshot) {
+      snapshotRef.current = currentSnapshot;
+      return;
+    }
+
+    if (!isAutoCalculationEnabled) {
+      snapshotRef.current = currentSnapshot;
+      return;
+    }
+
+    if (
+      previousSnapshot.autoCalculation !== currentSnapshot.autoCalculation &&
+      currentSnapshot.autoCalculation
+    ) {
+      const nextValues = computeNextValues(lastEditedFieldRef.current);
+      if (!areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })) {
+        syncValues(nextValues);
+      } else {
+        snapshotRef.current = currentSnapshot;
+      }
+      return;
+    }
+
+    if (areSameSnapshot(previousSnapshot, currentSnapshot)) {
+      return;
+    }
+
+    const changedField = detectChangedField(previousSnapshot, currentSnapshot);
+    if (!changedField) {
+      snapshotRef.current = currentSnapshot;
+      return;
+    }
+
+    lastEditedFieldRef.current = changedField;
+    const nextValues = computeNextValues(changedField);
+
+    if (areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })) {
+      snapshotRef.current = currentSnapshot;
+      return;
+    }
+
+    syncValues(nextValues);
+  }, [computeNextValues, currentSnapshot, isAutoCalculationEnabled, syncValues]);
 
   const applyAutoCalculationIfNeeded = useCallback(
     (checked: boolean) => {
@@ -173,16 +202,11 @@ function useTransactionAutoPricing({
         return;
       }
 
-      syncFormValues(
-        syncFromQuantity({
-          quantity: quantityValue,
-          fee: feeValue,
-          ttc: totalValue,
-        }),
-        { ignoreTtcEffect: true },
-      );
+      const sourceField = lastEditedFieldRef.current;
+      const nextValues = computeNextValues(sourceField);
+      syncValues(nextValues);
     },
-    [feeValue, quantityValue, syncFormValues, syncFromQuantity, totalValue],
+    [computeNextValues, syncValues],
   );
 
   return {

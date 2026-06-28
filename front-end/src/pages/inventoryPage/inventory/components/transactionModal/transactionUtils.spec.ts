@@ -22,7 +22,23 @@ describe("transactionUtils", () => {
       ).toEqual({
         quantity: 12,
         fee: 2,
-        ttc: 38,
+        ttc: 200,
+      });
+    });
+
+    it("returns zeroes when the quantity is empty", () => {
+      expect(
+        computeQuantityPricing({
+          action: "buy",
+          quantity: 0,
+          fee: 2,
+          ttc: 200,
+          unitPrice: 3,
+        }),
+      ).toEqual({
+        quantity: 0,
+        fee: 0,
+        ttc: 0,
       });
     });
 
@@ -38,6 +54,22 @@ describe("transactionUtils", () => {
       expect(result).toEqual({
         quantity: 3,
         ...getMinimumTtcWithFee(30, 100),
+      });
+    });
+
+    it("keeps sell ttc untouched when it already satisfies the threshold", () => {
+      expect(
+        computeQuantityPricing({
+          action: "sell",
+          quantity: 3,
+          fee: 99,
+          ttc: 200,
+          unitPrice: 10,
+        }),
+      ).toEqual({
+        quantity: 3,
+        fee: getMinimumTtcWithFee(30, 200).fee,
+        ttc: 200,
       });
     });
   });
