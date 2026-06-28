@@ -76,7 +76,7 @@ function InventoryPage() {
 
       <InventoryTransactionModal
         isOpen={isTransactionModalOpen}
-        action={action}
+        action={action === "buy" || action === "sell" ? action : undefined}
         transactionItem={transactionItem}
         onClose={goToInventoryDetail}
       />

@@ -1,4 +1,4 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type { FocusEvent } from "react";
 import { useWatch } from "react-hook-form";
 import type { UseFormReturn } from "react-hook-form";
@@ -19,6 +19,7 @@ type UseTransactionAutoPricingParams<
   maxQuantity: number;
   totalField: TTotalField;
   unitPrice: number;
+  feeMode?: "auto" | "fixed-zero";
 };
 
 type UseTransactionAutoPricingResult = {
@@ -44,10 +45,12 @@ function useTransactionAutoPricing<
   TFormValues extends AutoPricingFormValues<TTotalField>,
 >({
   form,
+  feeMode = "auto",
   maxQuantity,
   totalField,
   unitPrice,
 }: UseTransactionAutoPricingParams<TTotalField, TFormValues>): UseTransactionAutoPricingResult {
+  const isFeeAutoCalculated = feeMode === "auto";
   const focusValueRef = useRef<{
     fee?: number;
     quantity?: number;
@@ -76,6 +79,14 @@ function useTransactionAutoPricing<
   const feeValue = toSafeNumber(fee);
   const totalValue = toSafeNumber(total);
 
+  useEffect(() => {
+    if (isFeeAutoCalculated || feeValue === 0) {
+      return;
+    }
+
+    form.setValue("fee" as never, 0 as never, { shouldDirty: true });
+  }, [feeValue, form, isFeeAutoCalculated]);
+
   const setTotal = useCallback(
     (value: number) => {
       form.setValue(totalField as never, value as never, { shouldDirty: true });
@@ -86,12 +97,14 @@ function useTransactionAutoPricing<
   const applyFromQuantity = useCallback(
     (rawQuantity: number) => {
       const nextQuantity = Math.min(sanitizeQuantity(rawQuantity), maxQuantity);
-      const nextFee = Math.min(
-        100,
-        sanitizeNonNegative(
-          form.getValues("fee" as never) as unknown as number | undefined,
-        ),
-      );
+      const nextFee = isFeeAutoCalculated
+        ? Math.min(
+            100,
+            sanitizeNonNegative(
+              form.getValues("fee" as never) as unknown as number | undefined,
+            ),
+          )
+        : 0;
       const tt = nextQuantity * unitPrice;
       const currentTotal = form.getValues(totalField as never) as unknown as
         | number
@@ -108,7 +121,15 @@ function useTransactionAutoPricing<
         form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
       }
     },
-    [form, isAutoCalculationEnabled, maxQuantity, setTotal, totalField, unitPrice],
+    [
+      form,
+      isAutoCalculationEnabled,
+      isFeeAutoCalculated,
+      maxQuantity,
+      setTotal,
+      totalField,
+      unitPrice,
+    ],
   );
 
   const applyFromFee = useCallback(
@@ -119,7 +140,7 @@ function useTransactionAutoPricing<
         ),
         maxQuantity,
       );
-      const nextFee = Math.min(100, sanitizeNonNegative(rawFee));
+      const nextFee = isFeeAutoCalculated ? Math.min(100, sanitizeNonNegative(rawFee)) : 0;
       const tt = nextQuantity * unitPrice;
       const currentTotal = form.getValues(totalField as never) as unknown as
         | number
@@ -136,7 +157,15 @@ function useTransactionAutoPricing<
         setTotal(minTotal);
       }
     },
-    [form, isAutoCalculationEnabled, maxQuantity, setTotal, totalField, unitPrice],
+    [
+      form,
+      isAutoCalculationEnabled,
+      isFeeAutoCalculated,
+      maxQuantity,
+      setTotal,
+      totalField,
+      unitPrice,
+    ],
   );
 
   const applyFromTotal = useCallback(
@@ -148,12 +177,14 @@ function useTransactionAutoPricing<
         maxQuantity,
       );
       const tt = nextQuantity * unitPrice;
-      const nextFee = Math.min(
-        100,
-        sanitizeNonNegative(
-          form.getValues("fee" as never) as unknown as number | undefined,
-        ),
-      );
+      const nextFee = isFeeAutoCalculated
+        ? Math.min(
+            100,
+            sanitizeNonNegative(
+              form.getValues("fee" as never) as unknown as number | undefined,
+            ),
+          )
+        : 0;
       const minTotal = getMinimumBuyTtc(tt, nextFee, rawTotal);
 
       form.setValue("quantity" as never, nextQuantity as never, { shouldDirty: true });
@@ -162,7 +193,7 @@ function useTransactionAutoPricing<
         form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
       }
     },
-    [form, isAutoCalculationEnabled, maxQuantity, setTotal, unitPrice],
+    [form, isAutoCalculationEnabled, isFeeAutoCalculated, maxQuantity, setTotal, unitPrice],
   );
 
   const applyAutoCalculationIfNeeded = useCallback(
@@ -177,12 +208,14 @@ function useTransactionAutoPricing<
         ),
         maxQuantity,
       );
-      const nextFee = Math.min(
-        100,
-        sanitizeNonNegative(
-          form.getValues("fee" as never) as unknown as number | undefined,
-        ),
-      );
+      const nextFee = isFeeAutoCalculated
+        ? Math.min(
+            100,
+            sanitizeNonNegative(
+              form.getValues("fee" as never) as unknown as number | undefined,
+            ),
+          )
+        : 0;
       const currentTotal = sanitizeNonNegative(
         form.getValues(totalField as never) as unknown as number | undefined,
       );
@@ -199,7 +232,7 @@ function useTransactionAutoPricing<
       const minTotal = getMinimumBuyTtc(tt, nextFee, tt);
       setTotal(minTotal);
     },
-    [form, maxQuantity, setTotal, totalField, unitPrice],
+    [form, isFeeAutoCalculated, maxQuantity, setTotal, totalField, unitPrice],
   );
 
   const handleQuantityFocus = useCallback(

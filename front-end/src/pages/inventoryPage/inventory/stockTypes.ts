@@ -1,4 +1,4 @@
-import type { Item, TransactionFilterRow } from "@/shared/types";
+import type { Item, TransactionAction, TransactionFilterRow } from "@/shared/types";
 
 export interface ItemInventory extends Item {
   quantity: number;
@@ -7,7 +7,7 @@ export interface ItemInventory extends Item {
 
 export type InventoryTransactionModalProps = {
   isOpen: boolean;
-  action?: string;
+  action?: TransactionAction;
   transactionItem: TransactionFilterRow | null;
   onClose: () => void;
 };

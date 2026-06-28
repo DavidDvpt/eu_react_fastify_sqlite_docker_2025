@@ -1,30 +1,15 @@
 import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 
-export type TransactionSellFormFieldsProps = Pick<
-  TransactionPanelProps,
-  "item"
->;
-export type TransactionBuyFormValues = {
-  quantity: number;
-  fee: number;
-  buyPrice: number;
-  autoCalculation: boolean;
-};
-
-export type TransactionSellFormValues = {
-  autoCalculation: boolean;
-  quantity: number;
-  fee: number;
-  ttc: number;
-};
+export type TransactionAction = "buy" | "sell";
 
 export type TransactionPanelProps = {
   item: TransactionFilterRow;
   onBack: () => void;
+  action: TransactionAction;
 };
 
-export type TransactionBuyFormFieldsProps = Pick<TransactionPanelProps, "item">;
+export type TransactionFormFieldsProps = Pick<TransactionPanelProps, "item" | "action">;
 
 export type TransactionFilterRow = StockRow & {
   itemTypeId: string | null;

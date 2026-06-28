@@ -7,6 +7,7 @@ export * from "./genericFilterType";
 export * from "./stockTypes";
 export * from "./genericListTypes";
 export type {
+  TransactionAction,
   TransactionActionsProps,
   TransactionItemDetailsProps,
   TransactionFilterRow,
