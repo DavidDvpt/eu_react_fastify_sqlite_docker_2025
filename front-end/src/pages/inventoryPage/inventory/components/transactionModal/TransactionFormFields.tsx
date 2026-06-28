@@ -5,12 +5,16 @@ import { useFormContext } from "react-hook-form";
 import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { FormatTools } from "@/shared/tools";
-import { feeCalculation, sanitizeNonNegative } from "../helpers";
-import useTransactionAutoPricing from "../hooks/useTransactionAutoPricing";
+import {
+  feeCalculation,
+  sanitizeNonNegative,
+} from "../../../../../modules/transactions/helpers";
+
 import type {
   TransactionFilterRow,
   TransactionFormFieldsProps,
 } from "@/shared/types/transactions";
+import { useTransactionAutoPricing } from "@/shared/hooks";
 
 type TransactionBuyFormValues = {
   autoCalculation: boolean;
@@ -251,7 +255,9 @@ function TransactionSellFields({ item }: { item: TransactionFilterRow }) {
         onTotalBlur={handleTotalBlur}
       />
 
-      <TransactionCalculationToggle onCheckedChange={applyAutoCalculationIfNeeded} />
+      <TransactionCalculationToggle
+        onCheckedChange={applyAutoCalculationIfNeeded}
+      />
 
       <TransactionSummary>
         <p className="m-0">

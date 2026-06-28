@@ -5,8 +5,9 @@ export type TransactionFormValues = {
   buyPrice: number;
 };
 
-import type { CSSProperties } from "react";
+import type { CSSProperties, FocusEvent } from "react";
 import type { StockRow } from "@/shared/types";
+import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 
 export type TransactionAction = "buy" | "sell";
 
@@ -71,33 +72,6 @@ export type TransactionLineInput = {
   fee: number;
 };
 
-// type BuyTransactionLineInput = {
-//   itemId: string;
-//   quantity: number;
-//   tt: number;
-//   ttc: number;
-//   fee?: number;
-// };
-
-// export type BuyTransactionBody = {
-//   type: "buy";
-//   lines: BuyTransactionLineInput[];
-// };
-
-// export type SellTransactionLineInput = {
-//   itemId: string;
-//   quantity: number;
-//   inventoryLotId?: string;
-//   tt: number;
-//   ttc: number;
-//   fee: number;
-// };
-
-// export type SellTransactionBody = {
-//   type: "sell";
-//   lines: SellTransactionLineInput[];
-// };
-
 export type TransactionProcessedItem = {
   itemId: string;
   quantity: number;
@@ -141,4 +115,35 @@ export type UpdateRunningTransactionLineStatusResult = {
   saleStatus: "SOLDED" | "RETURNED";
   lineStatus: "CLOSED";
   transactionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+};
+
+export type AutoPricingFormValues<TTotalField extends "buyPrice" | "ttc"> = {
+  autoCalculation: boolean;
+  quantity: number;
+  fee: number;
+} & Record<TTotalField, number>;
+
+export type UseTransactionAutoPricingParams<
+  TTotalField extends "buyPrice" | "ttc",
+  TFormValues extends AutoPricingFormValues<TTotalField>,
+> = {
+  form: UseFormReturn<TFormValues>;
+  maxQuantity: number;
+  totalField: TTotalField;
+  unitPrice: number;
+  feeMode?: "auto" | "fixed-zero";
+};
+
+export type UseTransactionAutoPricingResult = {
+  applyAutoCalculationIfNeeded: (checked: boolean) => void;
+  handleFeeBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  handleFeeFocus: (event: FocusEvent<HTMLInputElement>) => void;
+  handleQuantityBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  handleQuantityFocus: (event: FocusEvent<HTMLInputElement>) => void;
+  handleTotalBlur: (event: FocusEvent<HTMLInputElement>) => void;
+  handleTotalFocus: (event: FocusEvent<HTMLInputElement>) => void;
+  feeValue: number;
+  isAutoCalculationEnabled: boolean;
+  quantityValue: number;
+  totalValue: number;
 };

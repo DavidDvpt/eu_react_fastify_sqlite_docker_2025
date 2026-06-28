@@ -1,40 +1,17 @@
 import { useCallback, useEffect, useRef } from "react";
 import type { FocusEvent } from "react";
 import { useWatch } from "react-hook-form";
-import type { UseFormReturn } from "react-hook-form";
 
-import { getMinimumBuyTtc, sanitizeNonNegative, sanitizeQuantity } from "../helpers";
-
-type AutoPricingFormValues<TTotalField extends "buyPrice" | "ttc"> = {
-  autoCalculation: boolean;
-  quantity: number;
-  fee: number;
-} & Record<TTotalField, number>;
-
-type UseTransactionAutoPricingParams<
-  TTotalField extends "buyPrice" | "ttc",
-  TFormValues extends AutoPricingFormValues<TTotalField>,
-> = {
-  form: UseFormReturn<TFormValues>;
-  maxQuantity: number;
-  totalField: TTotalField;
-  unitPrice: number;
-  feeMode?: "auto" | "fixed-zero";
-};
-
-type UseTransactionAutoPricingResult = {
-  applyAutoCalculationIfNeeded: (checked: boolean) => void;
-  handleFeeBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleFeeFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  handleQuantityBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleQuantityFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  handleTotalBlur: (event: FocusEvent<HTMLInputElement>) => void;
-  handleTotalFocus: (event: FocusEvent<HTMLInputElement>) => void;
-  feeValue: number;
-  isAutoCalculationEnabled: boolean;
-  quantityValue: number;
-  totalValue: number;
-};
+import {
+  getMinimumBuyTtc,
+  sanitizeNonNegative,
+  sanitizeQuantity,
+} from "../../modules/transactions/helpers";
+import type {
+  AutoPricingFormValues,
+  UseTransactionAutoPricingParams,
+  UseTransactionAutoPricingResult,
+} from "@/shared/types/transactions";
 
 function toSafeNumber(value: unknown): number {
   return typeof value === "number" && Number.isFinite(value) ? value : 0;
@@ -49,7 +26,10 @@ function useTransactionAutoPricing<
   maxQuantity,
   totalField,
   unitPrice,
-}: UseTransactionAutoPricingParams<TTotalField, TFormValues>): UseTransactionAutoPricingResult {
+}: UseTransactionAutoPricingParams<
+  TTotalField,
+  TFormValues
+>): UseTransactionAutoPricingResult {
   const isFeeAutoCalculated = feeMode === "auto";
   const focusValueRef = useRef<{
     fee?: number;
@@ -109,13 +89,11 @@ function useTransactionAutoPricing<
       const currentTotal = form.getValues(totalField as never) as unknown as
         | number
         | undefined;
-      const nextTotal = getMinimumBuyTtc(
-        tt,
-        nextFee,
-        currentTotal,
-      );
+      const nextTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
 
-      form.setValue("quantity" as never, nextQuantity as never, { shouldDirty: true });
+      form.setValue("quantity" as never, nextQuantity as never, {
+        shouldDirty: true,
+      });
       if (isAutoCalculationEnabled) {
         setTotal(nextTotal);
         form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
@@ -140,18 +118,18 @@ function useTransactionAutoPricing<
         ),
         maxQuantity,
       );
-      const nextFee = isFeeAutoCalculated ? Math.min(100, sanitizeNonNegative(rawFee)) : 0;
+      const nextFee = isFeeAutoCalculated
+        ? Math.min(100, sanitizeNonNegative(rawFee))
+        : 0;
       const tt = nextQuantity * unitPrice;
       const currentTotal = form.getValues(totalField as never) as unknown as
         | number
         | undefined;
-      const minTotal = getMinimumBuyTtc(
-        tt,
-        nextFee,
-        currentTotal,
-      );
+      const minTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
 
-      form.setValue("quantity" as never, nextQuantity as never, { shouldDirty: true });
+      form.setValue("quantity" as never, nextQuantity as never, {
+        shouldDirty: true,
+      });
       form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
       if (isAutoCalculationEnabled) {
         setTotal(minTotal);
@@ -187,13 +165,22 @@ function useTransactionAutoPricing<
         : 0;
       const minTotal = getMinimumBuyTtc(tt, nextFee, rawTotal);
 
-      form.setValue("quantity" as never, nextQuantity as never, { shouldDirty: true });
+      form.setValue("quantity" as never, nextQuantity as never, {
+        shouldDirty: true,
+      });
       if (isAutoCalculationEnabled) {
         setTotal(minTotal);
         form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
       }
     },
-    [form, isAutoCalculationEnabled, isFeeAutoCalculated, maxQuantity, setTotal, unitPrice],
+    [
+      form,
+      isAutoCalculationEnabled,
+      isFeeAutoCalculated,
+      maxQuantity,
+      setTotal,
+      unitPrice,
+    ],
   );
 
   const applyAutoCalculationIfNeeded = useCallback(
@@ -222,7 +209,9 @@ function useTransactionAutoPricing<
       const tt = nextQuantity * unitPrice;
       const currentRuleIsValid = tt + nextFee <= currentTotal;
 
-      form.setValue("quantity" as never, nextQuantity as never, { shouldDirty: true });
+      form.setValue("quantity" as never, nextQuantity as never, {
+        shouldDirty: true,
+      });
       form.setValue("fee" as never, nextFee as never, { shouldDirty: true });
 
       if (currentRuleIsValid) {
@@ -246,9 +235,12 @@ function useTransactionAutoPricing<
     focusValueRef.current.fee = Number(event.target.value);
   }, []);
 
-  const handleTotalFocus = useCallback((event: FocusEvent<HTMLInputElement>) => {
-    focusValueRef.current.total = Number(event.target.value);
-  }, []);
+  const handleTotalFocus = useCallback(
+    (event: FocusEvent<HTMLInputElement>) => {
+      focusValueRef.current.total = Number(event.target.value);
+    },
+    [],
+  );
 
   const handleQuantityBlur = useCallback(
     (event: FocusEvent<HTMLInputElement>) => {

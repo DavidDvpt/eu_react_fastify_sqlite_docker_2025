@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
 
-import { createBuyFormSchema } from "../../../../../modules/transactions/transactionSchemas";
+import { createBuyFormSchema } from "./transactionSchemas";
 
-import TransactionFormFields from "../../../../../modules/transactions/components/TransactionFormFields";
+import TransactionFormFields from "./TransactionFormFields";
 
 import { PANEL_COPY } from "./constants";
 import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
@@ -79,7 +79,9 @@ function TransactionPanelContent({
           </p>
         ) : null}
 
-        <div className={`flex justify-end ${PANEL_COPY[action].buttonGapClassName}`}>
+        <div
+          className={`flex justify-end ${PANEL_COPY[action].buttonGapClassName}`}
+        >
           <Button
             type="button"
             variant="secondary"

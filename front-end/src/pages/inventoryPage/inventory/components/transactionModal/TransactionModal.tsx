@@ -1,10 +1,10 @@
 import ModalGeneric from "@/shared/components/ModalGeneric";
-import { TransactionPanelContent } from "@/modules/transactions";
 import { ImageService } from "@/shared/services";
 
 import type { InventoryTransactionModalProps } from "../../stockTypes";
 
 import ItemSectionInfo from "./ItemSectionInfo";
+import TransactionPanelContent from "./TransactionPanelContent";
 
 function TransactionModal({
   isOpen,
