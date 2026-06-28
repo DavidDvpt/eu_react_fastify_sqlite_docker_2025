@@ -1,3 +1,10 @@
+export type TransactionFormValues = {
+  autoCalculation: boolean;
+  quantity: number;
+  fee: number;
+  buyPrice: number;
+};
+
 import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 
@@ -9,7 +16,10 @@ export type TransactionPanelProps = {
   action: TransactionAction;
 };
 
-export type TransactionFormFieldsProps = Pick<TransactionPanelProps, "item" | "action">;
+export type TransactionFormFieldsProps = Pick<
+  TransactionPanelProps,
+  "item" | "action"
+>;
 
 export type TransactionFilterRow = StockRow & {
   itemTypeId: string | null;
@@ -47,20 +57,12 @@ export type TransactionItemDetailsProps = {
   buttonClassName?: string;
 };
 
-type BuyTransactionLineInput = {
-  itemId: string;
-  quantity: number;
-  tt: number;
-  ttc: number;
-  fee?: number;
+export type TransactionBody = {
+  type: TransactionAction;
+  lines: TransactionLineInput[];
 };
 
-export type BuyTransactionBody = {
-  type: "buy";
-  lines: BuyTransactionLineInput[];
-};
-
-export type SellTransactionLineInput = {
+export type TransactionLineInput = {
   itemId: string;
   quantity: number;
   inventoryLotId?: string;
@@ -69,10 +71,32 @@ export type SellTransactionLineInput = {
   fee: number;
 };
 
-export type SellTransactionBody = {
-  type: "sell";
-  lines: SellTransactionLineInput[];
-};
+// type BuyTransactionLineInput = {
+//   itemId: string;
+//   quantity: number;
+//   tt: number;
+//   ttc: number;
+//   fee?: number;
+// };
+
+// export type BuyTransactionBody = {
+//   type: "buy";
+//   lines: BuyTransactionLineInput[];
+// };
+
+// export type SellTransactionLineInput = {
+//   itemId: string;
+//   quantity: number;
+//   inventoryLotId?: string;
+//   tt: number;
+//   ttc: number;
+//   fee: number;
+// };
+
+// export type SellTransactionBody = {
+//   type: "sell";
+//   lines: SellTransactionLineInput[];
+// };
 
 export type TransactionProcessedItem = {
   itemId: string;

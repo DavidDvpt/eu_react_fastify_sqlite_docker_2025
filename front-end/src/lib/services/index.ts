@@ -1,20 +1,7 @@
-export {
-  CATEGORIES_ROUTE,
-  getCategories,
-  getCategoryEditRoute,
-  getCategoryRouteById,
-} from "./categoriesApi";
+export * from "./categoriesApi";
 
-export {
-  TYPES_ROUTE,
-  getTypeEditRoute,
-  getTypeRouteById,
-  getTypes,
-} from "./typesApi";
+export * from "./typesApi";
 
-export {
-  ITEMS_ROUTE,
-  getItemEditRoute,
-  getItemRouteById,
-  getItems,
-} from "./itemsApi";
+export * from "./itemsApi";
+
+export * from "./transaction.api";

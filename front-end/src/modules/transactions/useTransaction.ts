@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 
 import useInventoryList from "@/pages/inventoryPage/inventory/useInventoryList";
-import type { TransactionFilterRow } from "./types";
+import type { TransactionFilterRow } from "@/shared/types/transactions";
 
 type UseTransactionProps = {
   id?: string;

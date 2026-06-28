@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getRunningTransactionLines } from "@/modules/transactions/transaction.api";
+import { getRunningTransactionLines } from "@/lib/services/transaction.api";
 import { useItems } from "@/shared/hooks";
 import type { RunningSellItem } from "./types";
 

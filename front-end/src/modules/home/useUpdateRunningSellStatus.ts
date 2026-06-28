@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { updateRunningTransactionLineStatus } from "@/modules/transactions/transaction.api";
+import { updateRunningTransactionLineStatus } from "@/lib/services/transaction.api";
 
 type UpdateRunningSellGroupStatusInput = {
   transactionLotIds: string[];

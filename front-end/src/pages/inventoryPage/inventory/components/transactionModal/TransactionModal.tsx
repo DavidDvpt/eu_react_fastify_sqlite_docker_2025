@@ -1,11 +1,12 @@
 import ModalGeneric from "@/shared/components/ModalGeneric";
 import { TransactionPanelContent } from "@/modules/transactions";
 import { ImageService } from "@/shared/services";
-import { FormatTools } from "@/shared/tools";
-import type { InventoryTransactionModalProps } from "../stockTypes";
-import { Section } from "@/shared/components/Containers";
 
-function InventoryTransactionModal({
+import type { InventoryTransactionModalProps } from "../../stockTypes";
+
+import ItemSectionInfo from "./ItemSectionInfo";
+
+function TransactionModal({
   isOpen,
   action,
   transactionItem,
@@ -33,25 +34,10 @@ function InventoryTransactionModal({
     >
       {transactionItem ? (
         <div className="flex flex-col gap-1">
-          <Section variant="modal" className="flex flex-row items-center py-2">
-            {itemImageUrl ? (
-              <img
-                src={itemImageUrl}
-                alt={transactionItem.name}
-                className="h-10 w-10 rounded object-contain"
-              />
-            ) : null}
-            <div className="min-w-0">
-              <p className="m-0 truncate font-semibold">
-                {transactionItem.name}
-              </p>
-              <p className="m-0 text-sm">
-                Coût unitaire:{" "}
-                {FormatTools.pedFormat().format(transactionItem.unitPrice)} PED
-                · Stock: {transactionItem.quantity}
-              </p>
-            </div>
-          </Section>
+          <ItemSectionInfo
+            itemImageUrl={itemImageUrl}
+            transactionItem={transactionItem}
+          />
 
           <TransactionPanelContent
             item={transactionItem}
@@ -64,4 +50,4 @@ function InventoryTransactionModal({
   );
 }
 
-export default InventoryTransactionModal;
+export default TransactionModal;

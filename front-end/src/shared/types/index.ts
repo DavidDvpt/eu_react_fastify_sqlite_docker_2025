@@ -6,9 +6,4 @@ export * from "./containerTypes";
 export * from "./genericFilterType";
 export * from "./stockTypes";
 export * from "./genericListTypes";
-export type {
-  TransactionAction,
-  TransactionActionsProps,
-  TransactionItemDetailsProps,
-  TransactionFilterRow,
-} from "@/modules/transactions/types";
+export * from "./transactions";

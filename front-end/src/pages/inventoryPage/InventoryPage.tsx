@@ -5,7 +5,7 @@ import { Panel, Section } from "@/shared/components/Containers";
 import { useTransaction } from "@/modules/transactions";
 import InventoryList from "./inventory/components/InventoryList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
-import InventoryTransactionModal from "./inventory/components/InventoryTransactionModal";
+import InventoryTransactionModal from "./inventory/components/transactionModal/TransactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 import InventoryListFilter from "./inventory/components/InventoryListFilter";
 

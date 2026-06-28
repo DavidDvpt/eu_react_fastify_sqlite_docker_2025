@@ -7,7 +7,10 @@ import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { FormatTools } from "@/shared/tools";
 import { feeCalculation, sanitizeNonNegative } from "../helpers";
 import useTransactionAutoPricing from "../hooks/useTransactionAutoPricing";
-import type { TransactionFilterRow, TransactionFormFieldsProps } from "../types";
+import type {
+  TransactionFilterRow,
+  TransactionFormFieldsProps,
+} from "@/shared/types/transactions";
 
 type TransactionBuyFormValues = {
   autoCalculation: boolean;

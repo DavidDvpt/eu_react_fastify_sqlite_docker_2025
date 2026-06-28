@@ -5,7 +5,7 @@ import { GenericList } from "@/shared/components";
 import { STOCK_ROUTE } from "@/shared/services";
 import useInventoryList from "../useInventoryList";
 import type { ItemInventory } from "../stockTypes";
-import { stockColumns } from "./stockColumns";
+import { stockColumns } from "../utils/stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
 import { VIEW_MODE_PARAM_KEY } from "@/shared/contants";
 import type { GenericListViewMode } from "@/shared/types/genericListTypes";
