@@ -12,24 +12,14 @@ import type {
   UseTransactionAutoPricingParams,
   UseTransactionAutoPricingResult,
 } from "@/shared/types/transactions";
+import { FormatTools } from "../tools";
 
-function toSafeNumber(value: unknown): number {
-  return typeof value === "number" && Number.isFinite(value) ? value : 0;
-}
-
-function useTransactionAutoPricing<
-  TTotalField extends "buyPrice" | "ttc",
-  TFormValues extends AutoPricingFormValues<TTotalField>,
->({
+function useTransactionAutoPricing({
   form,
   feeMode = "auto",
   maxQuantity,
-  totalField,
   unitPrice,
-}: UseTransactionAutoPricingParams<
-  TTotalField,
-  TFormValues
->): UseTransactionAutoPricingResult {
+}: UseTransactionAutoPricingParams<AutoPricingFormValues>): UseTransactionAutoPricingResult {
   const isFeeAutoCalculated = feeMode === "auto";
   const focusValueRef = useRef<{
     fee?: number;
@@ -45,9 +35,9 @@ function useTransactionAutoPricing<
     control: form.control,
     name: "fee" as never,
   });
-  const total = useWatch({
+  const ttcValue = useWatch({
     control: form.control,
-    name: totalField as never,
+    name: "ttc" as never,
   });
   const autoCalculation = useWatch({
     control: form.control,
@@ -55,9 +45,9 @@ function useTransactionAutoPricing<
   });
 
   const isAutoCalculationEnabled = Boolean(autoCalculation);
-  const quantityValue = toSafeNumber(quantity);
-  const feeValue = toSafeNumber(fee);
-  const totalValue = toSafeNumber(total);
+  const quantityValue = FormatTools.toSafeNumber(quantity);
+  const feeValue = FormatTools.toSafeNumber(fee);
+  const totalValue = FormatTools.toSafeNumber(ttcValue);
 
   useEffect(() => {
     if (isFeeAutoCalculated || feeValue === 0) {
@@ -69,9 +59,9 @@ function useTransactionAutoPricing<
 
   const setTotal = useCallback(
     (value: number) => {
-      form.setValue(totalField as never, value as never, { shouldDirty: true });
+      form.setValue("ttc" as never, value as never, { shouldDirty: true });
     },
-    [form, totalField],
+    [form],
   );
 
   const applyFromQuantity = useCallback(
@@ -86,7 +76,7 @@ function useTransactionAutoPricing<
           )
         : 0;
       const tt = nextQuantity * unitPrice;
-      const currentTotal = form.getValues(totalField as never) as unknown as
+      const currentTotal = form.getValues("ttc" as never) as unknown as
         | number
         | undefined;
       const nextTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
@@ -105,7 +95,6 @@ function useTransactionAutoPricing<
       isFeeAutoCalculated,
       maxQuantity,
       setTotal,
-      totalField,
       unitPrice,
     ],
   );
@@ -122,7 +111,7 @@ function useTransactionAutoPricing<
         ? Math.min(100, sanitizeNonNegative(rawFee))
         : 0;
       const tt = nextQuantity * unitPrice;
-      const currentTotal = form.getValues(totalField as never) as unknown as
+      const currentTotal = form.getValues("ttc" as never) as unknown as
         | number
         | undefined;
       const minTotal = getMinimumBuyTtc(tt, nextFee, currentTotal);
@@ -141,7 +130,6 @@ function useTransactionAutoPricing<
       isFeeAutoCalculated,
       maxQuantity,
       setTotal,
-      totalField,
       unitPrice,
     ],
   );
@@ -204,7 +192,7 @@ function useTransactionAutoPricing<
           )
         : 0;
       const currentTotal = sanitizeNonNegative(
-        form.getValues(totalField as never) as unknown as number | undefined,
+        form.getValues("ttc" as never) as unknown as number | undefined,
       );
       const tt = nextQuantity * unitPrice;
       const currentRuleIsValid = tt + nextFee <= currentTotal;
@@ -221,7 +209,7 @@ function useTransactionAutoPricing<
       const minTotal = getMinimumBuyTtc(tt, nextFee, tt);
       setTotal(minTotal);
     },
-    [form, isFeeAutoCalculated, maxQuantity, setTotal, totalField, unitPrice],
+    [form, isFeeAutoCalculated, maxQuantity, setTotal, unitPrice],
   );
 
   const handleQuantityFocus = useCallback(

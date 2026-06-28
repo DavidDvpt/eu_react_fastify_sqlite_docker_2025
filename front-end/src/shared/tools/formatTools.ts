@@ -1,9 +1,7 @@
 class FormatTools {
   private static buildZeroValue(decimals: number): string {
     const safeDecimals = Math.max(0, Math.trunc(decimals));
-    return safeDecimals === 0
-      ? "0"
-      : `0.${"0".repeat(safeDecimals)}`;
+    return safeDecimals === 0 ? "0" : `0.${"0".repeat(safeDecimals)}`;
   }
 
   static trimTrailingZeros(value: string, minimumDecimals = 0): string {
@@ -24,6 +22,10 @@ class FormatTools {
     }
 
     return `${integerPart}.${trimmedFraction.padEnd(safeMinimumDecimals, "0")}`;
+  }
+
+  static toSafeNumber(value: unknown): number {
+    return typeof value === "number" && Number.isFinite(value) ? value : 0;
   }
 
   static formatToDecimals(value: unknown, decimals: number): string {

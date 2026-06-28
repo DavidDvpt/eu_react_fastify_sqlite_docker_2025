@@ -114,20 +114,20 @@
   --color-ternary-500: var(--ternary-500);
   --color-ternary-700: var(--ternary-700);
 
-  --color-success-100: var(--success-100);
-  --color-success-300: var(--success-300);
-  --color-success-500: var(--success-500);
-  --color-success-700: var(--success-700);
+  --color-success-100: var(--green-100);
+  --color-success-300: var(--green-300);
+  --color-success-500: var(--green-500);
+  --color-success-700: var(--green-700);
 
   --color-warning-100: var(--warning-100);
   --color-warning-300: var(--warning-300);
   --color-warning-500: var(--warning-500);
   --color-warning-700: var(--warning-700);
 
-  --color-destructive-100: var(--destructive-100);
-  --color-destructive-300: var(--destructive-300);
-  --color-destructive-500: var(--destructive-500);
-  --color-destructive-700: var(--destructive-700);
+  --color-destructive-100: var(--red-100);
+  --color-destructive-300: var(--red-300);
+  --color-destructive-500: var(--red-500);
+  --color-destructive-700: var(--red-700);
 
   /* navbar */
 
@@ -260,10 +260,15 @@
   --white: var(--L4C12);
   --black: var(--L1C1);
 
-  --destructive-100: oklch(0.74 0.15 25);
-  --destructive-300: oklch(0.66 0.22 27);
-  --destructive-500: oklch(0.62 0.26 29);
-  --destructive-700: oklch(0.56 0.25 29);
+  --red-100: oklch(0.74 0.15 25);
+  --red-300: oklch(0.66 0.22 27);
+  --red-500: oklch(0.62 0.26 29);
+  --red-700: oklch(0.56 0.25 29);
+
+  --green-100: oklch(0.94 0.05 135);
+  --green-300: oklch(0.84 0.11 133);
+  --green-500: oklch(0.68 0.16 132);
+  --green-700: oklch(0.52 0.14 131);
 
   --background: var(--L4C8);
   --text: var(--black);
@@ -385,12 +390,6 @@
   --orange-300: oklch(0.83 0.1 78);
   --orange-500: oklch(0.72 0.15 74);
   --orange-700: oklch(0.58 0.16 70);
-
-  /* red */
-  --red-100: oklch(0.89 0.04 25);
-  --red-300: oklch(0.8 0.08 25);
-  --red-500: oklch(0.58 0.16 25);
-  --red-700: oklch(0.44 0.17 25);
 }
 
 .dark {

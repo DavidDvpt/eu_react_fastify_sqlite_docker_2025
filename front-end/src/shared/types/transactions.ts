@@ -117,19 +117,19 @@ export type UpdateRunningTransactionLineStatusResult = {
   transactionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
 };
 
-export type AutoPricingFormValues<TTotalField extends "buyPrice" | "ttc"> = {
+export type AutoPricingFormValues = {
+  action: TransactionAction;
   autoCalculation: boolean;
   quantity: number;
   fee: number;
-} & Record<TTotalField, number>;
+  ttc: number;
+};
 
 export type UseTransactionAutoPricingParams<
-  TTotalField extends "buyPrice" | "ttc",
-  TFormValues extends AutoPricingFormValues<TTotalField>,
+  TFormValues extends AutoPricingFormValues,
 > = {
   form: UseFormReturn<TFormValues>;
   maxQuantity: number;
-  totalField: TTotalField;
   unitPrice: number;
   feeMode?: "auto" | "fixed-zero";
 };

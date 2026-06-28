@@ -1,7 +1,12 @@
+import type { TransactionAction } from "@/shared/types/transactions";
 import z from "zod";
 
-export function createBuyFormSchema(maxQuantity: number) {
+export function transactionFormSchema(
+  maxQuantity: number,
+  action: TransactionAction,
+) {
   return z.object({
+    action: z.literal(action),
     autoCalculation: z.boolean(),
     quantity: z.coerce
       .number()
@@ -23,26 +28,30 @@ export function createBuyFormSchema(maxQuantity: number) {
         .nonnegative("Le fee doit etre positif ou nul.")
         .max(100, "Le fee doit etre inferieur ou egal a 100."),
     ),
-    buyPrice: z.coerce
+    ttc: z.coerce
       .number()
-      .positive("Le prix d'achat doit etre superieur a 0."),
+      .positive(
+        action === "buy"
+          ? "Le prix d'achat doit etre superieur a 0."
+          : "Le TTC doit etre superieur a 0.",
+      ),
   });
 }
 
-export const sellFormSchema = (maxQuantity: number) =>
-  z.object({
-    autoCalculation: z.boolean(),
-    quantity: z.coerce
-      .number()
-      .int()
-      .positive("La quantite doit etre superieure a 0.")
-      .max(
-        maxQuantity,
-        `La quantite doit etre inferieure ou egale a ${maxQuantity}.`,
-      ),
-    fee: z.coerce
-      .number()
-      .nonnegative("Le fee doit etre positif ou nul.")
-      .max(100, "Le fee doit etre inferieur ou egal a 100."),
-    ttc: z.coerce.number().positive("Le TTC doit etre superieur a 0."),
-  });
+// export const sellFormSchema = (maxQuantity: number) =>
+//   z.object({
+//     autoCalculation: z.boolean(),
+//     quantity: z.coerce
+//       .number()
+//       .int()
+//       .positive("La quantite doit etre superieure a 0.")
+//       .max(
+//         maxQuantity,
+//         `La quantite doit etre inferieure ou egale a ${maxQuantity}.`,
+//       ),
+//     fee: z.coerce
+//       .number()
+//       .nonnegative("Le fee doit etre positif ou nul.")
+//       .max(100, "Le fee doit etre inferieur ou egal a 100."),
+//     ttc: z.coerce.number().positive("Le TTC doit etre superieur a 0."),
+//   });
