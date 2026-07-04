@@ -2,7 +2,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
-import InventoryTransactionModal from "@/shared/components/TransactionModal";
+import TransactionModal from "@/shared/components/transactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 import { useTransaction } from "@/shared/hooks";
 
@@ -75,7 +75,7 @@ function InventoryPage() {
         </Section>
       </Section>
 
-      <InventoryTransactionModal
+      <TransactionModal
         isOpen={isTransactionModalOpen}
         action={action === "buy" || action === "sell" ? action : undefined}
         transactionItem={transactionItem}

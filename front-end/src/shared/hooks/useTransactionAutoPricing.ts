@@ -5,19 +5,16 @@ import {
   computeFeePricing,
   computeQuantityPricing,
   computeTtcPricing,
-  type TransactionPricingField,
-  type TransactionPricingValues,
-} from "@/shared/components/TransactionModal/transactionUtils";
+} from "@/shared/components/transactionModal/transactionUtils";
 import type {
   AutoPricingFormValues,
+  TransactionPricingField,
+  TransactionPricingSnapshot,
+  TransactionPricingValues,
   UseTransactionAutoPricingParams,
   UseTransactionAutoPricingResult,
 } from "@/shared/types/transactions";
 import { FormatTools } from "../tools";
-
-type TransactionPricingSnapshot = TransactionPricingValues & {
-  autoCalculation: boolean;
-};
 
 function areSameSnapshot(
   previous: TransactionPricingSnapshot,
@@ -141,7 +138,13 @@ function useTransactionAutoPricing({
         unitPrice,
       });
     },
-    [action, currentSnapshot.fee, currentSnapshot.quantity, currentSnapshot.ttc, unitPrice],
+    [
+      action,
+      currentSnapshot.fee,
+      currentSnapshot.quantity,
+      currentSnapshot.ttc,
+      unitPrice,
+    ],
   );
 
   useEffect(() => {
@@ -167,7 +170,12 @@ function useTransactionAutoPricing({
       currentSnapshot.autoCalculation
     ) {
       const nextValues = computeNextValues(lastEditedFieldRef.current);
-      if (!areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })) {
+      if (
+        !areSameSnapshot(currentSnapshot, {
+          ...nextValues,
+          autoCalculation: true,
+        })
+      ) {
         syncValues(nextValues);
       } else {
         snapshotRef.current = currentSnapshot;
@@ -188,13 +196,20 @@ function useTransactionAutoPricing({
     lastEditedFieldRef.current = changedField;
     const nextValues = computeNextValues(changedField);
 
-    if (areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })) {
+    if (
+      areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })
+    ) {
       snapshotRef.current = currentSnapshot;
       return;
     }
 
     syncValues(nextValues);
-  }, [computeNextValues, currentSnapshot, isAutoCalculationEnabled, syncValues]);
+  }, [
+    computeNextValues,
+    currentSnapshot,
+    isAutoCalculationEnabled,
+    syncValues,
+  ]);
 
   const applyAutoCalculationIfNeeded = useCallback(
     (checked: boolean) => {

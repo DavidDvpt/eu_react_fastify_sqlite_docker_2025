@@ -5,11 +5,12 @@ import type { TransactionModalProps } from "@/shared/types/transactions";
 import ItemSectionInfo from "./ItemSectionInfo";
 import TransactionPanelContent from "./TransactionPanelContent";
 
-function TransactionModal({
+function transactionModal({
   isOpen,
   action,
   transactionItem,
   onClose,
+  defaultValues,
 }: TransactionModalProps) {
   const modalAction = action === "buy" || action === "sell" ? action : null;
 
@@ -42,6 +43,7 @@ function TransactionModal({
             item={transactionItem}
             onBack={onClose}
             action={modalAction}
+            defaultValues={defaultValues}
           />
         </div>
       ) : null}
@@ -49,4 +51,4 @@ function TransactionModal({
   );
 }
 
-export default TransactionModal;
+export default transactionModal;

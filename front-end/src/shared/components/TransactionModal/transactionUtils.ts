@@ -3,21 +3,10 @@ import {
   getMinimumTtcWithFee,
   sanitizeNonNegative,
 } from "@/modules/transactions/helpers";
-
-import type { TransactionAction } from "@/shared/types/transactions";
-
-export type TransactionPricingValues = {
-  quantity: number;
-  fee: number;
-  ttc: number;
-};
-
-export type TransactionPricingField = "quantity" | "fee" | "ttc";
-
-type TransactionPricingInput = TransactionPricingValues & {
-  action: TransactionAction;
-  unitPrice: number;
-};
+import type {
+  TransactionPricingInput,
+  TransactionPricingValues,
+} from "@/shared/types";
 
 function sanitizeEditableQuantity(value: number) {
   if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) {

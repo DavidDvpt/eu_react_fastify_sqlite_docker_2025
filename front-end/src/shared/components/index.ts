@@ -4,7 +4,7 @@ import CapsuleLoader from "./CapsuleLoader";
 import { GenericFilter } from "./GenericFilter";
 import { GenericList } from "./GenericList";
 import ModalGeneric from "./ModalGeneric";
-import InventoryTransactionModal from "./TransactionModal";
+import TransactionModal from "./transactionModal";
 import { UrlParamFlag } from "./UrlParamFlag";
 import { TransactionActions } from "./TransactionActions";
 import { TransactionItemDetails } from "./TransactionItemDetails";
@@ -17,7 +17,7 @@ export {
   GenericFilter,
   GenericList,
   ModalGeneric,
-  InventoryTransactionModal,
+  TransactionModal,
   UrlParamFlag,
   TransactionActions,
   TransactionItemDetails,

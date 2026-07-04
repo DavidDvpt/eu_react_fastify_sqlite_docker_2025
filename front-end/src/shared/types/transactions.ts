@@ -16,6 +16,9 @@ export type TransactionPanelProps = {
   item: TransactionFilterRow;
   onBack: () => void;
   action: TransactionAction;
+  defaultValues?: Partial<
+    Pick<AutoPricingFormValues, "quantity" | "fee" | "ttc">
+  >;
 };
 
 export type TransactionModalProps = {
@@ -23,6 +26,9 @@ export type TransactionModalProps = {
   action?: TransactionAction;
   transactionItem: TransactionFilterRow | null;
   onClose: () => void;
+  defaultValues?: Partial<
+    Pick<AutoPricingFormValues, "quantity" | "fee" | "ttc">
+  >;
 };
 
 export type TransactionFormFieldsProps = Pick<
@@ -117,6 +123,10 @@ export type UpdateRunningTransactionLineStatusInput = {
   status: "SOLDED" | "RETURNED";
 };
 
+export type TransactionPricingSnapshot = TransactionPricingValues & {
+  autoCalculation: boolean;
+};
+
 export type UpdateRunningTransactionLineStatusResult = {
   transactionId: string;
   transactionLotId: string;
@@ -171,4 +181,17 @@ export type CreateRunningTransactionsColumnsOptions = {
     row: RunningTransaction,
     status: "SOLDED" | "RETURNED",
   ) => void;
+};
+
+export type TransactionPricingValues = {
+  quantity: number;
+  fee: number;
+  ttc: number;
+};
+
+export type TransactionPricingField = "quantity" | "fee" | "ttc";
+
+export type TransactionPricingInput = TransactionPricingValues & {
+  action: TransactionAction;
+  unitPrice: number;
 };

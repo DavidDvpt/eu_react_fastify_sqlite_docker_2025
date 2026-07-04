@@ -4,9 +4,6 @@ import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
 
-import { transactionFormSchema } from "./transactionSchemas";
-
-import { PANEL_COPY } from "./constants";
 import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
 import type {
   AutoPricingFormValues,
@@ -14,12 +11,16 @@ import type {
   TransactionPanelProps,
 } from "@/shared/types/transactions";
 import { transaction } from "@/lib/services/transaction.api";
+import { transactionFormSchema } from "./transactionSchemas";
+import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
+import { PANEL_COPY } from "./constants";
 
 function TransactionPanelContent({
   item,
   onBack,
   action,
+  defaultValues,
 }: TransactionPanelProps) {
   const schema = useMemo(
     () => transactionFormSchema(item.quantity, action),
@@ -57,18 +58,38 @@ function TransactionPanelContent({
     mutation.mutate(values);
   };
 
+  const initialValues = useMemo(() => {
+    const mergedValues = {
+      quantity: defaultValues?.quantity ?? 1,
+      fee: defaultValues?.fee ?? 0,
+      ttc: defaultValues?.ttc ?? item.unitPrice,
+    };
+
+    return {
+      autoCalculation: true,
+      action,
+      ...computeQuantityPricing({
+        action,
+        quantity: mergedValues.quantity,
+        fee: mergedValues.fee,
+        ttc: mergedValues.ttc,
+        unitPrice: item.unitPrice,
+      }),
+    };
+  }, [
+    action,
+    defaultValues?.fee,
+    defaultValues?.quantity,
+    defaultValues?.ttc,
+    item.unitPrice,
+  ]);
+
   return (
     <Section variant="modal" className="p-2">
       <GenericForm
-        key={`${action}-${item.itemId}`}
+        key={`${action}-${item.itemId}-${item.unitPrice}-${initialValues.quantity}-${initialValues.ttc}`}
         schema={schema}
-        defaultValues={{
-          autoCalculation: true,
-          quantity: 1,
-          fee: 0,
-          ttc: item.unitPrice,
-          action: action,
-        }}
+        defaultValues={initialValues}
         className="space-y-2"
         onSubmit={onSubmit}
       >
