@@ -1,3 +1,4 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { configureStore } from "@reduxjs/toolkit";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -9,8 +10,11 @@ import { ApiStatus } from "@/lib/axios/ApiStatus";
 import authReducer from "@/modules/auth/authSlice";
 import Profile from "../Profile";
 
-const mockLogoutApi = vi.fn();
-const mockAuthMeThunk = vi.fn();
+const { mockLogoutApi, mockAuthMeThunk, mockGetPedCard } = vi.hoisted(() => ({
+  mockLogoutApi: vi.fn(),
+  mockAuthMeThunk: vi.fn(),
+  mockGetPedCard: vi.fn(),
+}));
 
 vi.mock("@/modules/auth/services/network/logoutApi", () => ({
   default: () => mockLogoutApi(),
@@ -24,6 +28,17 @@ vi.mock("@/modules/auth", async () => {
   return {
     ...actual,
     authMeThunk: () => mockAuthMeThunk(),
+  };
+});
+
+vi.mock("@/lib/services", async () => {
+  const actual = await vi.importActual<typeof import("@/lib/services")>(
+    "@/lib/services",
+  );
+
+  return {
+    ...actual,
+    getPedCard: mockGetPedCard,
   };
 });
 
@@ -43,6 +58,12 @@ function renderProfile(preloadedAuth?: Partial<AuthType>) {
     },
   };
 
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: { retry: false },
+    },
+  });
+
   const store = configureStore({
     reducer: { auth: authReducer },
     preloadedState: {
@@ -55,9 +76,11 @@ function renderProfile(preloadedAuth?: Partial<AuthType>) {
 
   render(
     <Provider store={store}>
-      <MemoryRouter>
-        <Profile />
-      </MemoryRouter>
+      <QueryClientProvider client={queryClient}>
+        <MemoryRouter>
+          <Profile />
+        </MemoryRouter>
+      </QueryClientProvider>
     </Provider>
   );
 
@@ -71,6 +94,11 @@ describe("Profile", () => {
 
   it("calls logout api then refreshes auth state", async () => {
     const user = userEvent.setup();
+    mockGetPedCard.mockResolvedValueOnce({
+      hasInitialBalance: true,
+      balance: 115.5,
+      needsSetup: false,
+    });
     renderProfile();
     mockLogoutApi.mockResolvedValueOnce({ message: "Logged out" });
     mockAuthMeThunk.mockReturnValueOnce({ type: "auth/me" });
@@ -82,5 +110,23 @@ describe("Profile", () => {
       expect(mockLogoutApi).toHaveBeenCalledOnce();
       expect(mockAuthMeThunk).toHaveBeenCalledOnce();
     });
+  });
+
+  it("opens the pedcard modal and enables only the expected action", async () => {
+    const user = userEvent.setup();
+    mockGetPedCard.mockResolvedValueOnce({
+      hasInitialBalance: false,
+      balance: null,
+      needsSetup: true,
+    });
+    renderProfile();
+
+    await user.click(screen.getByRole("button", { name: /open profile menu/i }));
+    await user.click(screen.getByRole("button", { name: "PedCard" }));
+
+    expect(
+      await screen.findByRole("button", { name: "Initialiser" }),
+    ).toBeEnabled();
+    expect(screen.queryByRole("button", { name: "Ajuster" })).not.toBeInTheDocument();
   });
 });

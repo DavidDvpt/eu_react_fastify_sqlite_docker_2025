@@ -5,7 +5,7 @@ import {
   computeFeePricing,
   computeQuantityPricing,
   computeTtcPricing,
-} from "@/shared/components/transactionModal/transactionUtils";
+} from "@/shared/components/TransactionModal/transactionUtils";
 import type {
   AutoPricingFormValues,
   TransactionPricingField,

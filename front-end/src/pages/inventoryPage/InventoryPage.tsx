@@ -2,7 +2,7 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
-import TransactionModal from "@/shared/components/transactionModal";
+import TransactionModal from "@/shared/components/TransactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 import { useTransaction } from "@/shared/hooks";
 

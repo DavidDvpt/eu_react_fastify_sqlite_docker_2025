@@ -2,7 +2,7 @@ import { useMemo } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import RunningTransactionsSection from "@/modules/home/components/RunningTransactionsSection";
 import { Panel, Section } from "@/shared/components/Containers";
-import TransactionModal from "@/shared/components/transactionModal";
+import TransactionModal from "@/shared/components/TransactionModal";
 import { useTransaction } from "@/shared/hooks";
 import type { TransactionModalProps } from "@/shared/types/transactions";
 

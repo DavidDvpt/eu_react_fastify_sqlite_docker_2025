@@ -2,6 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { useState } from "react";
 import { authMeThunk } from "@/modules/auth";
 import logoutApi from "@/modules/auth/services/network/logoutApi";
+
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,18 +10,31 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import PedCardModal from "../../shared/components/pedCardModal/PedCardModal";
+import usePedCard from "@/shared/hooks/usePedCard";
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isPedCardModalOpen, setIsPedCardModalOpen] = useState(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const pseudo = useAppSelector((state) => state.auth.user.result?.pseudo);
+  const { pedCard } = usePedCard();
 
   const avatarLetter = (pseudo?.trim()?.[0] ?? "U").toUpperCase();
 
   const handleProfile = () => {
     setIsOpen(false);
     navigate("/profile");
+  };
+
+  const handlePedCardSettings = () => {
+    setIsOpen(false);
+    setIsPedCardModalOpen(true);
+  };
+
+  const handlePedCardModalOpenChange = (open: boolean) => {
+    setIsPedCardModalOpen(open);
   };
 
   const handleLogout = async () => {
@@ -55,6 +69,13 @@ function Profile() {
           </button>
           <button
             type="button"
+            className="w-full rounded-sm border-0 px-3 py-2 text-left text-sm "
+            onClick={handlePedCardSettings}
+          >
+            PedCard
+          </button>
+          <button
+            type="button"
             className="w-full rounded-sm border-0 px-3 py-2 text-left text-sm text-destructive-500"
             onClick={handleLogout}
           >
@@ -62,6 +83,13 @@ function Profile() {
           </button>
         </PopoverContent>
       </Popover>
+
+      <PedCardModal
+        open={isPedCardModalOpen}
+        onOpenChange={handlePedCardModalOpenChange}
+        balance={pedCard?.balance ?? null}
+        hasInitialBalance={pedCard?.hasInitialBalance ?? null}
+      />
     </div>
   );
 }
