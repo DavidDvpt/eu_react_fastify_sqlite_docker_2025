@@ -63,6 +63,7 @@ function InventoryList({ className }: InventoryListProps) {
           ? "Aucun item trouvé."
           : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
       }
+      hasHeader
       allowCardView
       showViewModeSwitch={false}
       viewMode={urlViewMode as GenericListViewMode | null}

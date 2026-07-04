@@ -9,7 +9,7 @@ function getHeaderAlignClass(align?: "left" | "center" | "right") {
 
 function GenericListHeader<T>({
   columns,
-  visible = true,
+  visible,
   className,
   rowHeight = 30,
   columnsTemplate,

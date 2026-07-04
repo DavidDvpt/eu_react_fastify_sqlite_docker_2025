@@ -24,6 +24,7 @@ function ManageTable({ activeTab }: ManageTableProps) {
         columns={columns}
         rows={list}
         getRowKey={(row) => row.id}
+        hasHeader
         isLoading={isPending}
         isError={isError}
         loadingMessage="Chargement des categories..."

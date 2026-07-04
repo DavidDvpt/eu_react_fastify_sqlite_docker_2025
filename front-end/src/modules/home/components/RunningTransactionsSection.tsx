@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
+import { FormatTools } from "@/shared/tools/formatTools";
 import useRunningTransactions from "../useRunningTransactions";
 import useUpdateRunningTransactionsStatus from "../useUpdateRunningTransactionsStatus";
 import RunningTransactionResellConfirmModal from "./RunningTransactionResellConfirmModal";
@@ -16,6 +17,7 @@ function RunningTransactionsSection() {
   const [isResellConfirmOpen, setIsResellConfirmOpen] = useState(false);
   const { rows, isLoading, isError } = useRunningTransactions();
   const updateStatusMutation = useUpdateRunningTransactionsStatus();
+  const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
 
   const columns = createRunningTransactionsColumns({
     isRowPending: (row) =>
@@ -53,7 +55,6 @@ function RunningTransactionsSection() {
   };
 
   const confirmResell = () => {
-    console.log(pendingResell);
     if (!pendingResell) return;
 
     navigate({
@@ -73,17 +74,36 @@ function RunningTransactionsSection() {
         columns={columns}
         rows={rows}
         getRowKey={(row) => row.groupKey}
+        hasHeader
         viewMode="list"
+        grow={false}
         isLoading={isLoading}
         isError={isError}
         loadingMessage="Chargement des ventes en cours..."
         errorMessage="Erreur de chargement."
         emptyMessage="Aucune vente en cours."
-        className="flex min-h-0 flex-1 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md"
-        headerClassName="border-table-border bg-table-head-bg text-[0.7rem] font-semibold uppercase tracking-[0.08em] text-muted-foreground"
+        className="flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md m-2"
+        headerClassName="bg-transparent min-h-0 "
         bodyClassName="min-h-0 overflow-auto pr-1"
         rowClassName="transition duration-150 ease-in-out hover:-translate-y-px hover:border-info/30 hover:bg-info/5 hover:shadow-md last:border-b"
         rowHeight={56}
+        footerConfig={{
+          rowClassName: "justify-end px-4 py-3 text-table-body-text",
+          cells: [
+            {
+              key: "total-ttc",
+              content: (
+                <span>
+                  Total:{" "}
+                  <strong className="font-semibold">
+                    {FormatTools.pedFormat().format(totalTtc)}
+                  </strong>{" "}
+                  Peds
+                </span>
+              ),
+            },
+          ],
+        }}
       />
 
       <RunningTransactionResellConfirmModal

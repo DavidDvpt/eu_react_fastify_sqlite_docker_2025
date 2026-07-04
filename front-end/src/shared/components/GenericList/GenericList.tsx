@@ -14,7 +14,9 @@ function GenericList<T>({
   onRowClick,
   allowCardView = false,
   viewMode,
+  hasHeader = false,
   className,
+  grow = true,
   headerClassName,
   bodyClassName,
   rowClassName,
@@ -33,18 +35,19 @@ function GenericList<T>({
   const columnsTemplate = getGridTemplateColumns(columns);
 
   const view = allowCardView ? (viewMode ?? "list") : "list";
-
+  console.log(hasHeader, view, hasHeader && view === "list");
   return (
     <>
       <Section
         className={cn(
-          "flex min-h-0 flex-1 flex-col rounded-md border border-table-border bg-table-bg text-sm",
+          "flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm",
+          grow && "flex-1",
           className,
         )}
       >
         <GenericListHeader
           columns={columns}
-          visible={viewMode === "list"}
+          visible={hasHeader && view === "list"}
           className={headerClassName}
           rowHeight={rowHeight}
           columnsTemplate={columnsTemplate}
