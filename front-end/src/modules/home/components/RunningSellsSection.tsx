@@ -16,12 +16,9 @@ function RunningSellsSection() {
   const updateStatusMutation = useUpdateRunningSellStatus();
 
   return (
-    <Section className="flex min-h-0 flex-1 flex-col gap-3 overflow-hidden rounded-md border border-table-border bg-table-bg p-3 text-sm shadow-ambient-md">
+    <Section className="flex min-h-0 flex-1 flex-col m-2 overflow-hidden p-3 text-sm shadow-ambient-md">
       <div className="flex items-start justify-between gap-3">
         <div className="grid gap-1">
-          <span className="text-[0.7rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            Suivi des ventes
-          </span>
           <h2 className="m-0 text-base font-semibold leading-tight text-table-head-text">
             Ventes en cours
           </h2>
@@ -77,7 +74,9 @@ function RunningSellsSection() {
               const isBusy =
                 updateStatusMutation.isPending &&
                 row.transactionLotIds.some((id) =>
-                  updateStatusMutation.variables?.transactionLotIds?.includes(id),
+                  updateStatusMutation.variables?.transactionLotIds?.includes(
+                    id,
+                  ),
                 );
 
               return (
@@ -107,7 +106,9 @@ function RunningSellsSection() {
                     </div>
                   </div>
 
-                  <div className="text-right font-medium text-table-body-text">{row.quantity}</div>
+                  <div className="text-right font-medium text-table-body-text">
+                    {row.quantity}
+                  </div>
                   <div className="text-right font-medium text-table-body-text">
                     {FormatTools.pedFormat().format(row.tt)}
                   </div>
