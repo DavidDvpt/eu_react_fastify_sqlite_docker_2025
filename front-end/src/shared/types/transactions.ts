@@ -1,13 +1,14 @@
+import type { CSSProperties } from "react";
+import type { StockRow } from "@/shared/types";
+import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
+import type { Item } from "@/shared/types";
+
 export type TransactionFormValues = {
   autoCalculation: boolean;
   quantity: number;
   fee: number;
   buyPrice: number;
 };
-
-import type { CSSProperties } from "react";
-import type { StockRow } from "@/shared/types";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 
 export type TransactionAction = "buy" | "sell";
 
@@ -140,4 +141,27 @@ export type UseTransactionAutoPricingResult = {
   isAutoCalculationEnabled: boolean;
   quantityValue: number;
   totalValue: number;
+};
+
+export type RunningTransaction = {
+  groupKey: string;
+  transactionId: string;
+  itemId: string;
+  itemName: string;
+  quantity: number;
+  tt: number;
+  ttc: number;
+  saleStatus: "RUNNING";
+  lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+  transactionLotIds: string[];
+} & {
+  item: Item | null;
+};
+
+export type CreateRunningTransactionsColumnsOptions = {
+  isRowPending: (row: RunningTransaction) => boolean;
+  onStatusChange: (
+    row: RunningTransaction,
+    status: "SOLDED" | "RETURNED",
+  ) => void;
 };

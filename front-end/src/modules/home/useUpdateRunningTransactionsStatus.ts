@@ -7,7 +7,7 @@ type UpdateRunningSellGroupStatusInput = {
   status: "SOLDED" | "RETURNED";
 };
 
-function useUpdateRunningSellStatus() {
+function useUpdateRunningTransactionsStatus() {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -31,4 +31,4 @@ function useUpdateRunningSellStatus() {
   });
 }
 
-export default useUpdateRunningSellStatus;
+export default useUpdateRunningTransactionsStatus;

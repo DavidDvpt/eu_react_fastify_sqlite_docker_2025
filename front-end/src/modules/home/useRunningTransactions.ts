@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 
 import { getRunningTransactionLines } from "@/lib/services/transaction.api";
 import { useItems } from "@/shared/hooks";
-import type { RunningSellItem } from "./types";
+import type { RunningTransaction } from "@/shared/types/transactions";
 
-function useRunningSells() {
+function useRunningTransactions() {
   const runningLinesQuery = useQuery({
     queryKey: ["running-sell-lines"],
     queryFn: getRunningTransactionLines,
@@ -12,7 +12,7 @@ function useRunningSells() {
   });
   const itemsQuery = useItems({ prefillSelect: true });
 
-  const grouped = new Map<string, RunningSellItem>();
+  const grouped = new Map<string, RunningTransaction>();
   for (const line of runningLinesQuery.data ?? []) {
     const groupKey = `${line.transactionId}:${line.itemId}`;
     const current = grouped.get(groupKey);
@@ -39,7 +39,7 @@ function useRunningSells() {
     current.transactionLotIds.push(line.transactionLotId);
   }
 
-  const rows: RunningSellItem[] = Array.from(grouped.values());
+  const rows: RunningTransaction[] = Array.from(grouped.values());
 
   return {
     rows,
@@ -48,4 +48,4 @@ function useRunningSells() {
   };
 }
 
-export default useRunningSells;
+export default useRunningTransactions;
