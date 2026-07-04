@@ -1,10 +1,11 @@
 import { cn } from "@/lib/utils";
 import type { GenericListProps } from "../../types/genericListTypes";
-import { GenericListHeader } from "./GenericListHeader";
+
 import { Section } from "../Containers";
 import { GenericListFooter } from "./GenericListFooter";
 import GenericListBody from "./GenericListBody";
 import { getGridTemplateColumns } from "./gridTemplate";
+import { GenericListHeader } from "./GenericListHeader";
 
 function GenericList<T>({
   columns,

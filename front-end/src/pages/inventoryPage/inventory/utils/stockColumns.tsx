@@ -10,24 +10,15 @@ const stockColumns: GenericListColumn<
     key: "image",
     label: "Image",
     kind: "image",
+    accessor: "imageUrlId",
     minWidth: 40,
     maxWidth: 40,
     bodyCellClassName: "bg-white",
-    render: (item) => {
-      const imageUrl = ImageService.getItemImageUrl(item.imageUrlId, "micro");
-      if (!imageUrl) {
-        return "-";
-      }
-
-      return (
-        <img
-          src={imageUrl}
-          alt={item.name}
-          className="h-8 w-8 rounded object-contain"
-          loading="lazy"
-        />
-      );
-    },
+    imageSrc: (value) =>
+      typeof value === "string" && value.trim() !== ""
+        ? ImageService.getItemImageUrl(value, "micro") ?? ""
+        : "",
+    imageAlt: (item) => item.name,
   },
   {
     key: "name",

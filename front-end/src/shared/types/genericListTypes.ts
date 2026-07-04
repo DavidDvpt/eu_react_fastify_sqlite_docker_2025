@@ -32,6 +32,7 @@ export type GenericListColumn<T> = {
   value?: (row: T) => ReactNode;
   render?: (row: T) => ReactNode;
   onCellClick?: (row: T) => void;
+  disabled?: (row: T) => boolean;
   imageSrc?: (value: unknown, row: T) => string;
   imageAlt?: (row: T) => string;
   buttonLabel?: string;
