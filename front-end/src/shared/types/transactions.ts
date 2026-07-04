@@ -18,6 +18,13 @@ export type TransactionPanelProps = {
   action: TransactionAction;
 };
 
+export type TransactionModalProps = {
+  isOpen: boolean;
+  action?: TransactionAction;
+  transactionItem: TransactionFilterRow | null;
+  onClose: () => void;
+};
+
 export type TransactionFormFieldsProps = Pick<
   TransactionPanelProps,
   "item" | "action"

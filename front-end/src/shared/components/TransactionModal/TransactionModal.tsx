@@ -1,7 +1,6 @@
 import ModalGeneric from "@/shared/components/ModalGeneric";
 import { ImageService } from "@/shared/services";
-
-import type { InventoryTransactionModalProps } from "../../stockTypes";
+import type { TransactionModalProps } from "@/shared/types/transactions";
 
 import ItemSectionInfo from "./ItemSectionInfo";
 import TransactionPanelContent from "./TransactionPanelContent";
@@ -11,7 +10,7 @@ function TransactionModal({
   action,
   transactionItem,
   onClose,
-}: InventoryTransactionModalProps) {
+}: TransactionModalProps) {
   const modalAction = action === "buy" || action === "sell" ? action : null;
 
   if (!isOpen || !modalAction) return null;

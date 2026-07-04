@@ -2,13 +2,13 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
+import InventoryTransactionModal from "@/shared/components/TransactionModal";
+import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
+import { useTransaction } from "@/shared/hooks";
 
 import InventoryList from "./inventory/components/InventoryList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
-import InventoryTransactionModal from "./inventory/components/transactionModal/TransactionModal";
-import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 import InventoryListFilter from "./inventory/components/InventoryListFilter";
-import { useTransaction } from "@/shared/hooks";
 
 function InventoryPage() {
   const { id, action } = useParams();

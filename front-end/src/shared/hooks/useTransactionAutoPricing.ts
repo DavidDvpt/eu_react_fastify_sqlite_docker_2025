@@ -7,7 +7,7 @@ import {
   computeTtcPricing,
   type TransactionPricingField,
   type TransactionPricingValues,
-} from "@/pages/inventoryPage/inventory/components/transactionModal/transactionUtils";
+} from "@/shared/components/TransactionModal/transactionUtils";
 import type {
   AutoPricingFormValues,
   UseTransactionAutoPricingParams,
