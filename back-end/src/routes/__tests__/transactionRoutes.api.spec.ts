@@ -15,20 +15,27 @@ describe('transactionRoutes', () => {
     app.setSerializerCompiler(serializerCompiler);
 
     const tx = {
+      transaction: {
+        create: vi.fn(),
+        update: vi.fn(),
+        delete: vi.fn(),
+      },
+      lot: {
+        create: vi.fn(),
+        update: vi.fn(),
+      },
       transactionLot: {
+        create: vi.fn(),
         findFirst: vi.fn(),
         update: vi.fn(),
         count: vi.fn(),
       },
-      transaction: {
-        update: vi.fn(),
-      },
-      lot: {
-        update: vi.fn(),
-      },
     };
 
     const prisma = {
+      item: {
+        findMany: vi.fn(),
+      },
       $transaction: vi.fn((callback: (trx: typeof tx) => unknown) => Promise.resolve(callback(tx))),
     };
 
@@ -37,8 +44,20 @@ describe('transactionRoutes', () => {
       getRunningSellLines: vi.fn(),
     };
 
+    const lotStock = {
+      getStock: vi.fn(),
+      getStockByItemId: vi.fn(),
+      getStockDetailsByItemId: vi.fn(),
+      getAvailableStockByItemIds: vi.fn(),
+      getAvailableLotsFifoByItemId: vi.fn(),
+      getSellableLotById: vi.fn(),
+    };
+
     app.decorate('prisma', prisma as unknown as FastifyInstance['prisma']);
-    app.decorate('repos', { transactionRepository } as unknown as FastifyInstance['repos']);
+    app.decorate('repos', {
+      transactionRepository,
+      lotStock,
+    } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
@@ -48,8 +67,53 @@ describe('transactionRoutes', () => {
 
     app.register(transactionRoutes, { prefix: API_PREFIX });
 
-    return { app, transactionRepository, prisma, tx };
+    return { app, transactionRepository, prisma, tx, lotStock };
   }
+
+  it('POST /api/v1/transactions with type=buy creates transaction and IN line', async () => {
+    const { app, tx, prisma } = buildApp();
+
+    vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
+    vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-1' } as never);
+    vi.mocked(tx.lot.create).mockResolvedValueOnce({ id: 'lot-1' } as never);
+    vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-1' } as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/transactions`,
+      payload: {
+        type: 'buy',
+        lines: [{ itemId: 'item-1', quantity: 2, tt: 20, fee: 1, ttc: 25 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(201);
+    const buySessionCreateCall = vi.mocked(tx.transaction.create).mock.calls[0]?.[0] as {
+      data: {
+        status: string;
+      };
+    };
+    expect(buySessionCreateCall.data.status).toBe('CLOSED');
+    await app.close();
+  });
+
+  it('POST /api/v1/transactions with type=sell rejects when fee is missing', async () => {
+    const { app } = buildApp();
+    await app.ready();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/transactions`,
+      payload: {
+        type: 'sell',
+        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(500);
+    await app.close();
+  });
 
   it('GET /api/v1/transactions/sell returns sell transactions with status filter', async () => {
     const { app, transactionRepository } = buildApp();

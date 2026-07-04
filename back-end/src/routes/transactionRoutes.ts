@@ -1,24 +1,42 @@
+import { StocksService, TransactionService } from '../modules/index.js';
 import { TransactionStatusService } from '../modules/transactionStatus/index.js';
 
 import {
+  transactionBodySchema,
   transactionSellQuerySchema,
   updateTransactionLineStatusBodySchema,
   updateTransactionLineStatusParamsSchema,
 } from './transactionRoutes.schema.js';
+import { getRequestUserId } from './utils.js';
 
-import type { FastifyPluginCallback, FastifyRequest } from 'fastify';
-
-function getRequestUserId(request: FastifyRequest): string {
-  const user = request.user as { id?: string } | undefined;
-  if (!user?.id) {
-    throw new Error('Unauthorized');
-  }
-  return user.id;
-}
+import type { FastifyPluginCallback } from 'fastify';
 
 const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const stocksService = new StocksService(app.repos.lotStock);
+  const transactionService = new TransactionService(app.prisma, stocksService);
   const transactionStatusService = new TransactionStatusService(app.prisma);
   app.protect();
+
+  app.post('/transactions', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const body = transactionBodySchema.parse(request.body);
+
+    const result =
+      body.type === 'buy'
+        ? await transactionService.buy(userId, body.lines)
+        : await transactionService.sell(userId, body.lines);
+
+    if (!result.processed.length) {
+      const message =
+        body.type === 'buy' ? 'No buy line could be processed' : 'No sell line could be processed';
+      return reply.code(400).send({
+        message,
+        ...result,
+      });
+    }
+
+    return reply.code(result.rejected.length ? 207 : 201).send(result);
+  });
 
   app.get('/transactions/sell', async (request, reply) => {
     const userId = getRequestUserId(request);

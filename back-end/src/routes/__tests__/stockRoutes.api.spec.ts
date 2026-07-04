@@ -210,49 +210,4 @@ describe('stockRoutes', () => {
     expect(res.statusCode).toBe(404);
     await app.close();
   });
-
-  it('POST /api/v1/inventory/transactions with type=buy creates transaction and IN line', async () => {
-    const { app, tx, prisma } = buildApp();
-
-    vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
-    vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-1' } as never);
-    vi.mocked(tx.lot.create).mockResolvedValueOnce({ id: 'lot-1' } as never);
-    vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-1' } as never);
-
-    await app.ready();
-    const res = await app.inject({
-      method: 'POST',
-      url: `${API_PREFIX}/inventory/transactions`,
-      payload: {
-        type: 'buy',
-        lines: [{ itemId: 'item-1', quantity: 2, tt: 20, fee: 1, ttc: 25 }],
-      },
-    });
-
-    expect(res.statusCode).toBe(201);
-    const buySessionCreateCall = vi.mocked(tx.transaction.create).mock.calls[0]?.[0] as {
-      data: {
-        status: string;
-      };
-    };
-    expect(buySessionCreateCall.data.status).toBe('CLOSED');
-    await app.close();
-  });
-
-  it('POST /api/v1/inventory/transactions with type=sell rejects when fee is missing', async () => {
-    const { app } = buildApp();
-    await app.ready();
-
-    const res = await app.inject({
-      method: 'POST',
-      url: `${API_PREFIX}/inventory/transactions`,
-      payload: {
-        type: 'sell',
-        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12 }],
-      },
-    });
-
-    expect(res.statusCode).toBe(500);
-    await app.close();
-  });
 });

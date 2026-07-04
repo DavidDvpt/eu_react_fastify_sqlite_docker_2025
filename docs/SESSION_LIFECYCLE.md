@@ -26,4 +26,4 @@ Note: le schema cible utilise `TRANSACTION` pour les operations de session trans
 
 - Une seule porte d'entree fonctionnelle cote UI: inventaire central
 - Les operations d'achat/vente sont exposees via:
-  - `POST /inventory/transactions`
+  - `POST /transactions`

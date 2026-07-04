@@ -61,28 +61,53 @@ enum SessionLineType {
   OUT
 }
 
+enum PedCardTupleType {
+  INITIAL_BALANCE
+  BUY_TTC
+  BUY_FEE
+  SELL_TTC
+  SELL_FEE
+  ADJUSTMENT
+}
+
 model User {
-  id             String        @id @default(uuid())
-  firstname      String?
-  lastname       String?
-  pseudo         String        @unique
-  email          String        @unique
-  password_hash  String
-  role           Role
-  date_created   String
-  date_updated   String?
-  is_active      Boolean       @default(true)
-  itemCategories Category[]
-  itemTypes      Type[]
-  items          Item[]
-  lots           Lot[]
-  sessions       Session[]
-  sessionLines   SessionLine[]
-  sessionLots    SessionLot[]
-  transactions   Transaction[]
+  id              String           @id @default(uuid())
+  firstname       String?
+  lastname        String?
+  pseudo          String           @unique
+  email           String           @unique
+  password_hash   String
+  role            Role
+  date_created    String
+  date_updated    String?
+  is_active       Boolean          @default(true)
+  itemCategories  Category[]
+  itemTypes       Type[]
+  items           Item[]
+  lots            Lot[]
+  sessions        Session[]
+  sessionLines    SessionLine[]
+  sessionLots     SessionLot[]
+  transactions    Transaction[]
   transactionLots TransactionLot[]
+  pedCardEntries  PedCard[]
 
   @@map("user")
+}
+
+model PedCard {
+  id            String   @id @default(uuid())
+  userId        String
+  transactionId String?
+  type          String
+  value         Decimal
+  createdAt     DateTime @default(now())
+
+  user        User         @relation(fields: [userId], references: [id])
+  transaction Transaction? @relation(fields: [transactionId], references: [id])
+
+  @@unique([transactionId, type])
+  @@map("pedcard")
 }
 
 model Session {
@@ -156,19 +181,20 @@ model SessionLot {
 }
 
 model Transaction {
-  id               String        @id @default(uuid())
-  cost_tt          Decimal       @default(0)
-  cost_ttc         Decimal       @default(0)
-  win_tt           Decimal       @default(0)
-  win_ttc          Decimal       @default(0)
+  id               String          @id @default(uuid())
+  cost_tt          Decimal         @default(0)
+  cost_ttc         Decimal         @default(0)
+  win_tt           Decimal         @default(0)
+  win_ttc          Decimal         @default(0)
   transaction_type TransactionType
-  clics            Int           @default(0)
-  status           SessionStatus @default(OPENNED)
+  clics            Int             @default(0)
+  status           SessionStatus   @default(OPENNED)
   user_id          String
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  lines TransactionLot[]
+  lines          TransactionLot[]
+  pedCardEntries PedCard[]
 
   @@index([user_id])
   @@map("transaction")
@@ -253,8 +279,8 @@ model Item {
 
   lots Lot[]
 
-  session_lines SessionLine[]
-  session_lots   SessionLot[]
+  session_lines    SessionLine[]
+  session_lots     SessionLot[]
   transaction_lots TransactionLot[]
 
   @@map("item")
@@ -274,9 +300,9 @@ model Lot {
   user_id String?
   user    User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
-  item Item          @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  line SessionLine[]
-  session_lots SessionLot[]
+  item             Item             @relation(fields: [item_id], references: [id], onDelete: Cascade)
+  line             SessionLine[]
+  session_lots     SessionLot[]
   transaction_lots TransactionLot[]
 
   @@map("lot")
