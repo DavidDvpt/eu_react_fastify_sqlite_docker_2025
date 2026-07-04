@@ -3,6 +3,7 @@ import type {
   CategoryRepository,
   ItemRepository,
   LotStockRepository,
+  PedCardRepository,
   TransactionRepository,
   TypeRepository,
   UserRepository,
@@ -18,6 +19,7 @@ declare module 'fastify' {
       types: TypeRepository;
       items: ItemRepository;
       lotStock: LotStockRepository;
+      pedCard: PedCardRepository;
       transactionRepository: TransactionRepository;
     };
 
@@ -35,6 +37,7 @@ declare module 'fastify' {
   }
 
   interface FastifyRequest {
+    user?: UserForToken;
     accessJwtVerify: (options?: JwtVerifyOpts) => Promise<void>;
     refreshVerify: (options?: JwtVerifyOpts) => Promise<void>;
   }

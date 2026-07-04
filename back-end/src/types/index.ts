@@ -13,6 +13,7 @@ export type {
   UserClient,
   ItemClient,
   CategoryClient,
+  PedCardClient,
 } from './prismaTypes.js';
 export type {
   SellItemData,

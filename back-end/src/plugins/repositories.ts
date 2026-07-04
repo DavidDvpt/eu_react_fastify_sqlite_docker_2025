@@ -4,6 +4,7 @@ import {
   CategoryRepository,
   ItemRepository,
   LotStockRepository,
+  PedCardRepository,
   TransactionRepository,
   TypeRepository,
   UserRepository,
@@ -18,6 +19,7 @@ const repositoriesPlugin: FastifyPluginCallback = (app, _opts, done) => {
     types: new TypeRepository(app.prisma),
     items: new ItemRepository(app.prisma),
     lotStock: new LotStockRepository(app.prisma),
+    pedCard: new PedCardRepository(app.prisma),
     transactionRepository: new TransactionRepository(app.prisma),
   });
 

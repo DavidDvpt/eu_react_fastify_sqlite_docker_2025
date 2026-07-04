@@ -4,6 +4,7 @@ import {
   TypeRepository,
   ItemRepository,
   LotRepository,
+  PedCardRepository,
   SeedPatchRepository,
 } from './index.js';
 
@@ -18,6 +19,7 @@ const createRepositories = (client: RepositoryClient) => ({
   itemType: new TypeRepository(client),
   item: new ItemRepository(client),
   lot: new LotRepository(client),
+  pedCard: new PedCardRepository(client),
   seedPatch: new SeedPatchRepository(client),
 });
 

@@ -40,6 +40,7 @@ type RepositoryClient = PrismaModelClient<'User'> &
   PrismaModelClient<'Type'> &
   PrismaModelClient<'Item'> &
   PrismaModelClient<'Lot'> &
+  PrismaModelClient<'PedCard'> &
   PrismaModelClient<'SeedPatch'>;
 
 type LotClient = PrismaModelClient<'Lot'>;
@@ -49,6 +50,7 @@ type TypeClient = PrismaModelClient<'Type'>;
 type UserClient = PrismaModelClient<'User'>;
 type ItemClient = PrismaModelClient<'Item'>;
 type CategoryClient = PrismaModelClient<'Category'>;
+type PedCardClient = PrismaModelClient<'PedCard'>;
 
 export type {
   PrismaModelClient,
@@ -65,4 +67,5 @@ export type {
   UserClient,
   ItemClient,
   CategoryClient,
+  PedCardClient,
 };

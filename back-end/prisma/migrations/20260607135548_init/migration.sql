@@ -120,6 +120,18 @@ CREATE TABLE "transaction_lot" (
 );
 
 -- CreateTable
+CREATE TABLE "pedcard" (
+    "id" TEXT NOT NULL,
+    "userId" TEXT NOT NULL,
+    "transactionId" TEXT,
+    "type" TEXT NOT NULL,
+    "value" DECIMAL(65,30) NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT "pedcard_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "item_category" (
     "id" TEXT NOT NULL,
     "date_created" TEXT NOT NULL,
@@ -237,6 +249,12 @@ CREATE INDEX "transaction_lot_inventory_lot_id_idx" ON "transaction_lot"("invent
 CREATE INDEX "transaction_lot_user_id_idx" ON "transaction_lot"("user_id");
 
 -- CreateIndex
+CREATE INDEX "pedcard_userId_idx" ON "pedcard"("userId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "pedcard_transactionId_type_key" ON "pedcard"("transactionId", "type");
+
+-- CreateIndex
 CREATE UNIQUE INDEX "item_category_name_key" ON "item_category"("name");
 
 -- CreateIndex
@@ -289,6 +307,12 @@ ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_inventory_lot_id_f
 
 -- AddForeignKey
 ALTER TABLE "transaction_lot" ADD CONSTRAINT "transaction_lot_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "pedcard" ADD CONSTRAINT "pedcard_userId_fkey" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "pedcard" ADD CONSTRAINT "pedcard_transactionId_fkey" FOREIGN KEY ("transactionId") REFERENCES "transaction"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "item_category" ADD CONSTRAINT "item_category_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "user"("id") ON DELETE CASCADE ON UPDATE CASCADE;
