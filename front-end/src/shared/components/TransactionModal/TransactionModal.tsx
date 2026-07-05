@@ -27,8 +27,6 @@ function TransactionModal({ onClose }: TransactionModalProps) {
   const handleReselValidate = () => {
     onClose();
   };
-  if (params.action === "resell" || params.action === "newSell")
-    return <TransactionResellContent onResellValidate={handleReselValidate} />;
 
   return (
     <ModalGeneric
