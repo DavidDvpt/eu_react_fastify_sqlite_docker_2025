@@ -1,37 +1,13 @@
-import { useMemo } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import RunningTransactionsSection from "@/modules/home/components/RunningTransactionsSection";
+import { useNavigate } from "react-router-dom";
+
 import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
-import { useTransaction } from "@/shared/hooks";
-import type { TransactionModalProps } from "@/shared/types/transactions";
+
+import { RunningTransactionsSection } from "@/shared/components";
 
 function HomePage() {
-  const { id, action } = useParams();
-  const [searchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const { transactionItem } = useTransaction({
-    id,
-    action,
-  });
-
-  const defaultValues = useMemo<TransactionModalProps["defaultValues"]>(() => {
-    if (action !== "sell") {
-      return undefined;
-    }
-
-    const quantity = Number(searchParams.get("quantity"));
-    const ttc = Number(searchParams.get("ttc"));
-
-    return {
-      quantity:
-        Number.isFinite(quantity) && quantity > 0 ? quantity : undefined,
-      ttc: Number.isFinite(ttc) && ttc > 0 ? ttc : undefined,
-    };
-  }, [action, searchParams]);
-
-  const isTransactionModalOpen = action === "sell" && Boolean(transactionItem);
   const handleCloseTransaction = () => {
     navigate("/home", { replace: true });
   };
@@ -54,13 +30,7 @@ function HomePage() {
         </div>
       </Section>
 
-      <TransactionModal
-        isOpen={isTransactionModalOpen}
-        action={action === "sell" ? "sell" : undefined}
-        transactionItem={transactionItem}
-        defaultValues={defaultValues}
-        onClose={handleCloseTransaction}
-      />
+      <TransactionModal onClose={handleCloseTransaction} />
     </Panel>
   );
 }

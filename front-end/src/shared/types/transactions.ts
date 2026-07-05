@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
 import type { Item } from "@/shared/types";
+import type { ItemInventory } from "@/pages/inventoryPage/inventory/stockTypes";
 
 export type TransactionFormValues = {
   autoCalculation: boolean;
@@ -10,22 +11,12 @@ export type TransactionFormValues = {
   buyPrice: number;
 };
 
-export type TransactionAction = "buy" | "sell";
+export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
 
 export type TransactionPanelProps = {
-  item: TransactionFilterRow;
+  item: ItemInventory;
   onBack: () => void;
-  action: TransactionAction;
-  defaultValues?: Partial<
-    Pick<AutoPricingFormValues, "quantity" | "fee" | "ttc">
-  >;
-};
-
-export type TransactionModalProps = {
-  isOpen: boolean;
-  action?: TransactionAction;
-  transactionItem: TransactionFilterRow | null;
-  onClose: () => void;
+  modalParams: TransactionModalParams;
   defaultValues?: Partial<
     Pick<AutoPricingFormValues, "quantity" | "fee" | "ttc">
   >;
@@ -33,7 +24,7 @@ export type TransactionModalProps = {
 
 export type TransactionFormFieldsProps = Pick<
   TransactionPanelProps,
-  "item" | "action"
+  "item" | "modalParams"
 >;
 
 export type TransactionFilterRow = StockRow & {
@@ -140,6 +131,13 @@ export type AutoPricingFormValues = {
   autoCalculation: boolean;
   quantity: number;
   fee: number;
+  ttc: number;
+};
+
+export type TransactionModalParams = {
+  action: TransactionAction;
+  itemId: string;
+  quantity: number;
   ttc: number;
 };
 

@@ -19,14 +19,14 @@ import { PANEL_COPY } from "./constants";
 function TransactionPanelContent({
   item,
   onBack,
-  action,
-  defaultValues,
+  modalParams,
 }: TransactionPanelProps) {
-  const schema = useMemo(
-    () => transactionFormSchema(item.quantity, action),
-    [action, item.quantity],
-  );
-  const refreshStock = useInventoryRefresh(item.itemId, onBack);
+  const { action, quantity, ttc } = modalParams;
+  const schema = useMemo(() => {
+    return transactionFormSchema(item.quantity, modalParams.action!);
+  }, [modalParams, item]);
+
+  const refreshStock = useInventoryRefresh(item.id, onBack);
 
   const mutation = useMutation({
     mutationFn: async (values: AutoPricingFormValues) => {
@@ -34,9 +34,9 @@ function TransactionPanelContent({
         type: action,
         lines: [
           {
-            itemId: item.itemId,
+            itemId: item.id,
             quantity: values.quantity,
-            tt: values.quantity * item.unitPrice,
+            tt: values.quantity * item.value,
             fee: values.fee,
             ttc: values.ttc,
           },
@@ -46,23 +46,11 @@ function TransactionPanelContent({
     onSuccess: refreshStock,
   });
 
-  const onSubmit = (values: AutoPricingFormValues) => {
-    const tt = values.quantity * item.unitPrice;
-    if (action === "buy" && values.ttc < tt) {
-      const shouldContinue = window.confirm(
-        "Le prix d'achat est inférieur au TT. Confirmer l'achat dans cet état ?",
-      );
-      if (!shouldContinue) return;
-    }
-
-    mutation.mutate(values);
-  };
-
   const initialValues = useMemo(() => {
     const mergedValues = {
-      quantity: defaultValues?.quantity ?? 1,
-      fee: defaultValues?.fee ?? 0,
-      ttc: defaultValues?.ttc ?? item.unitPrice,
+      quantity: quantity ?? 1,
+      fee: 0,
+      ttc: ttc ?? item.value,
     };
 
     return {
@@ -73,27 +61,35 @@ function TransactionPanelContent({
         quantity: mergedValues.quantity,
         fee: mergedValues.fee,
         ttc: mergedValues.ttc,
-        unitPrice: item.unitPrice,
+        unitPrice: item.value,
       }),
     };
-  }, [
-    action,
-    defaultValues?.fee,
-    defaultValues?.quantity,
-    defaultValues?.ttc,
-    item.unitPrice,
-  ]);
+  }, [action, quantity, ttc, item.value]);
+
+  if (!item) return null;
+
+  const onSubmit = (values: AutoPricingFormValues) => {
+    const tt = values.quantity * item.value;
+    if (action === "buy" && values.ttc < tt) {
+      const shouldContinue = window.confirm(
+        "Le prix d'achat est inférieur au TT. Confirmer l'achat dans cet état ?",
+      );
+      if (!shouldContinue) return;
+    }
+
+    mutation.mutate(values);
+  };
 
   return (
     <Section variant="modal" className="p-2">
       <GenericForm
-        key={`${action}-${item.itemId}-${item.unitPrice}-${initialValues.quantity}-${initialValues.ttc}`}
+        key={`${action}-${item.id}-${item.value}-${initialValues.quantity}-${initialValues.ttc}`}
         schema={schema}
         defaultValues={initialValues}
         className="space-y-2"
         onSubmit={onSubmit}
       >
-        <TransactionFormContent item={item} action={action} />
+        <TransactionFormContent item={item} modalParams={modalParams} />
 
         {mutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">

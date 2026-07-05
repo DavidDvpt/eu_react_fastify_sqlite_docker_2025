@@ -9,4 +9,14 @@ export const PANEL_COPY = {
     errorMessage: "Impossible de valider la vente.",
     submitLabel: "Vendre",
   },
+  resell: {
+    buttonGapClassName: "gap-2",
+    errorMessage: "Impossible de valider la revente.",
+    submitLabel: "Revendre",
+  },
+  newSell: {
+    buttonGapClassName: "gap-2",
+    errorMessage: "Impossible de valider la vente.",
+    submitLabel: "Vendre",
+  },
 } as const;

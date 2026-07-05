@@ -1,4 +1,5 @@
 import { getRequestUserId } from './utils.js';
+import { pedCardCreateSchema } from './pedCardRoutes.schema.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -27,6 +28,22 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send({
       balance,
     });
+  });
+
+  app.post('/pedcard', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const body = pedCardCreateSchema.parse(request.body);
+
+    await app.repos.pedCard.create({
+      data: {
+        userId,
+        transactionId: null,
+        type: body.type,
+        value: body.value,
+      },
+    });
+
+    return reply.code(201).send();
   });
 
   done();

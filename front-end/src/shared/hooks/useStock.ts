@@ -2,7 +2,10 @@ import { useCallback } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { getStock } from "../services";
 
-function useStock() {
+interface UseStockParams {
+  id?: string;
+}
+function useStock({ id }: UseStockParams = {}) {
   const queryClient = useQueryClient();
   const query = useQuery({
     queryKey: ["items-stock"],
@@ -22,6 +25,7 @@ function useStock() {
       const stock = query.data?.find((s) => s.itemId === itemId);
       return stock ?? 0;
     },
+    stockById: query.data?.find((s) => s.itemId === id),
   };
 }
 

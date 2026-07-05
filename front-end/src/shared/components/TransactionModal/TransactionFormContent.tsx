@@ -9,7 +9,11 @@ import { useFormContext } from "react-hook-form";
 import { TransactionFields } from "./TransactionFields";
 import TransactionSummary from "./TransactionSummary";
 
-function TransactionFormContent({ item, action }: TransactionFormFieldsProps) {
+function TransactionFormContent({
+  item,
+  modalParams,
+}: TransactionFormFieldsProps) {
+  const { action } = modalParams;
   const form = useFormContext<AutoPricingFormValues>();
 
   const {
@@ -21,7 +25,7 @@ function TransactionFormContent({ item, action }: TransactionFormFieldsProps) {
   } = useTransactionAutoPricing({
     action,
     form,
-    unitPrice: item.unitPrice,
+    unitPrice: item.value,
   });
 
   return (
@@ -42,7 +46,7 @@ function TransactionFormContent({ item, action }: TransactionFormFieldsProps) {
       />
 
       <TransactionSummary
-        ttValue={quantityValue * item.unitPrice}
+        ttValue={quantityValue * item.value}
         feeValue={feeValue}
         ttcValue={totalValue}
       />

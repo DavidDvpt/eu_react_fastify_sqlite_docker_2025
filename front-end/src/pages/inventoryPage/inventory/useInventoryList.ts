@@ -23,16 +23,15 @@ function useInventoryList() {
   const currentStock = useMemo(() => {
     if (filteredItems && stock) {
       return (
-        filteredItems
-          .map((item) => {
-            const itemStock = stock.find((s) => s.itemId === item.id);
-            const totalValue = itemStock?.totalPrice ?? 0;
-            return {
-              ...item,
-              quantity: itemStock?.quantity ?? 0,
-              totalValue,
-            };
-          }) ?? []
+        filteredItems.map((item) => {
+          const itemStock = stock.find((s) => s.itemId === item.id);
+          const totalValue = itemStock?.totalPrice ?? 0;
+          return {
+            ...item,
+            quantity: itemStock?.quantity ?? 0,
+            totalValue,
+          };
+        }) ?? []
       );
     }
     return [];

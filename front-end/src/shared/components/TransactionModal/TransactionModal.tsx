@@ -1,54 +1,63 @@
-import ModalGeneric from "@/shared/components/ModalGeneric";
-import { ImageService } from "@/shared/services";
-import type { TransactionModalProps } from "@/shared/types/transactions";
+import { ModalGeneric } from "../ModalGeneric";
+import { useParams } from "react-router-dom";
+import { useMemo } from "react";
+import TransactionResellContent from "./TransactionResellContent";
+import TransactionModalActionContent from "./TransactionModalActionContent";
+import type { TransactionAction, TransactionModalParams } from "@/shared/types";
+import { usePedCard } from "@/shared/hooks";
 
-import ItemSectionInfo from "./ItemSectionInfo";
-import TransactionPanelContent from "./TransactionPanelContent";
+interface TransactionModalProps {
+  onClose: () => void;
+}
+function TransactionModal({ onClose }: TransactionModalProps) {
+  const { itemId, action, quantity, ttc } = useParams();
+  const { pedCard } = usePedCard();
 
-function transactionModal({
-  isOpen,
-  action,
-  transactionItem,
-  onClose,
-  defaultValues,
-}: TransactionModalProps) {
-  const modalAction = action === "buy" || action === "sell" ? action : null;
+  const params: TransactionModalParams = useMemo(() => {
+    return {
+      action: action as TransactionAction,
+      itemId: itemId || "",
+      quantity: Number(quantity) || 1,
+      ttc: Number(ttc) || 0,
+    };
+  }, [itemId, action, quantity, ttc]);
 
-  if (!isOpen || !modalAction) return null;
-  const itemImageUrl = transactionItem
-    ? ImageService.getItemImageUrl(transactionItem.imageUrlId, "micro")
-    : null;
+  if (!params.action || !params.itemId) return null;
+
+  const handleReselValidate = () => {
+    onClose();
+  };
+  if (params.action === "resell" || params.action === "newSell")
+    return <TransactionResellContent onResellValidate={handleReselValidate} />;
 
   return (
     <ModalGeneric
       dialogType="form"
       noClose={false}
-      open={isOpen}
+      open={action && itemId ? true : false}
       onOpenChange={(open) => {
         if (!open) onClose();
       }}
       title={{
-        value: modalAction === "buy" ? "Achat" : "Vente",
+        value: params.action === "buy" ? "Achat" : "Vente",
         style: "m-0 text-2xl leading-tight",
       }}
     >
-      {transactionItem ? (
-        <div className="flex flex-col gap-1">
-          <ItemSectionInfo
-            itemImageUrl={itemImageUrl}
-            transactionItem={transactionItem}
-          />
+      {(action === "resell" || action === "newSell") && (
+        <TransactionResellContent onResellValidate={handleReselValidate} />
+      )}
 
-          <TransactionPanelContent
-            item={transactionItem}
-            onBack={onClose}
-            action={modalAction}
-            defaultValues={defaultValues}
+      {(params.action === "sell" || params.action === "buy") &&
+        (pedCard?.hasInitialBalance ? (
+          <div></div>
+        ) : (
+          <TransactionModalActionContent
+            onClose={onClose}
+            modalParams={params}
           />
-        </div>
-      ) : null}
+        ))}
     </ModalGeneric>
   );
 }
 
-export default transactionModal;
+export default TransactionModal;

@@ -27,6 +27,7 @@ interface IModalGenericProps extends PropsWithChildren {
   footer?: { value: React.ReactNode; style?: string };
   noClose: boolean;
 }
+
 function ModalGeneric({
   dialogType = "info",
   variant = "default",

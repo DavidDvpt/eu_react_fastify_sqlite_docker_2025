@@ -4,6 +4,7 @@ const API_ROUTES = {
   transactionLineStatusRoutes: "/transactions/sell/lines",
   pedCardCheckRoute: "/pedcard/check",
   pedCardBalanceRoute: "/pedcard/balance",
+  pedCardCreateRoute: "/pedcard",
 };
 
 export default API_ROUTES;

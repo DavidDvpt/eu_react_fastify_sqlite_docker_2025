@@ -1,20 +1,12 @@
-import { useState } from "react";
 import { useNavigate, createSearchParams } from "react-router-dom";
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
-import useRunningTransactions from "../useRunningTransactions";
-import useUpdateRunningTransactionsStatus from "../useUpdateRunningTransactionsStatus";
-import RunningTransactionResellConfirmModal from "./RunningTransactionResellConfirmModal";
-import type { RunningTransaction } from "@/shared/types/transactions";
+import { useUpdateRunningTransactionsStatus } from "../hooks";
+import useRunningTransactions from "../hooks/useRunningTransactions";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
-  const [pendingResell, setPendingResell] = useState<{
-    row: RunningTransaction;
-    status: "SOLDED" | "RETURNED";
-  } | null>(null);
-  const [isResellConfirmOpen, setIsResellConfirmOpen] = useState(false);
   const { rows, isLoading, isError } = useRunningTransactions();
   const updateStatusMutation = useUpdateRunningTransactionsStatus();
   const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
@@ -26,12 +18,6 @@ function RunningTransactionsSection() {
         updateStatusMutation.variables?.transactionLotIds?.includes(id),
       ),
     onStatusChange: (row, status) => {
-      setPendingResell({
-        row,
-        status,
-      });
-      setIsResellConfirmOpen(false);
-
       updateStatusMutation.mutate(
         {
           transactionLotIds: row.transactionLotIds,
@@ -39,34 +25,19 @@ function RunningTransactionsSection() {
         },
         {
           onSuccess: () => {
-            setIsResellConfirmOpen(true);
-          },
-          onError: () => {
-            setPendingResell(null);
+            navigate({
+              pathname: `/home/${row.itemId}/sell`,
+              search: createSearchParams({
+                resellStatus: status,
+                quantity: String(row.quantity),
+                ttc: String(row.ttc),
+              }).toString(),
+            });
           },
         },
       );
     },
   });
-
-  const closeResellModal = () => {
-    setPendingResell(null);
-    setIsResellConfirmOpen(false);
-  };
-
-  const confirmResell = () => {
-    if (!pendingResell) return;
-
-    navigate({
-      pathname: `/home/${pendingResell.row.itemId}/sell`,
-      search: createSearchParams({
-        quantity: String(pendingResell.row.quantity),
-        ttc: String(pendingResell.row.ttc),
-      }).toString(),
-    });
-
-    closeResellModal();
-  };
 
   return (
     <>
@@ -104,14 +75,6 @@ function RunningTransactionsSection() {
             },
           ],
         }}
-      />
-
-      <RunningTransactionResellConfirmModal
-        open={isResellConfirmOpen && Boolean(pendingResell)}
-        row={pendingResell?.row ?? null}
-        status={pendingResell?.status ?? null}
-        onCancel={closeResellModal}
-        onConfirm={confirmResell}
       />
     </>
   );

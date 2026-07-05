@@ -9,6 +9,7 @@ import { UrlParamFlag } from "./UrlParamFlag";
 import { TransactionActions } from "./TransactionActions";
 import { TransactionItemDetails } from "./TransactionItemDetails";
 import { VerticalNav } from "./VerticalNav";
+export { default as RunningTransactionsSection } from "./RunningTransactionsSection";
 
 export {
   AppCard,
