@@ -1,15 +1,34 @@
-import { useNavigate, createSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
 import { useUpdateRunningTransactionsStatus } from "../hooks";
 import useRunningTransactions from "../hooks/useRunningTransactions";
+import type { RunningTransaction, TransactionAction } from "../types";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
   const { rows, isLoading, isError } = useRunningTransactions();
   const updateStatusMutation = useUpdateRunningTransactionsStatus();
   const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
+
+  const openTransactionModal = (
+    action: TransactionAction,
+    row: RunningTransaction,
+  ) => {
+    const query = {
+      action,
+      itemId: row.itemId,
+      ttc: row.ttc,
+      quantity: row.quantity,
+      closePath: "/home",
+    };
+
+    const search = new URLSearchParams();
+    search.set("transactionModal", JSON.stringify(query));
+
+    return search;
+  };
 
   const columns = createRunningTransactionsColumns({
     isRowPending: (row) =>
@@ -25,13 +44,13 @@ function RunningTransactionsSection() {
         },
         {
           onSuccess: () => {
+            const isSell = status === "SOLDED";
             navigate({
               pathname: `/home/${row.itemId}/sell`,
-              search: createSearchParams({
-                resellStatus: status,
-                quantity: String(row.quantity),
-                ttc: String(row.ttc),
-              }).toString(),
+              search: openTransactionModal(
+                isSell ? "newSell" : "resell",
+                row,
+              ).toString(),
             });
           },
         },
@@ -56,7 +75,7 @@ function RunningTransactionsSection() {
         className="flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md m-2"
         headerClassName="bg-transparent min-h-0 "
         bodyClassName="min-h-0 overflow-auto pr-1"
-        rowClassName="transition duration-150 ease-in-out hover:-translate-y-px hover:border-info/30 hover:bg-info/5 hover:shadow-md last:border-b"
+        rowClassName="transition duration-150 ease-in-out  hover:bg-info/5  last:border-b"
         rowHeight={56}
         footerConfig={{
           rowClassName: "justify-end px-4 py-3 text-table-body-text",

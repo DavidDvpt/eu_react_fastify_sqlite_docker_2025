@@ -35,7 +35,7 @@ function GenericList<T>({
   const columnsTemplate = getGridTemplateColumns(columns);
 
   const view = allowCardView ? (viewMode ?? "list") : "list";
-  console.log(hasHeader, view, hasHeader && view === "list");
+
   return (
     <>
       <Section

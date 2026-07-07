@@ -10,37 +10,27 @@ import { useStockDetails } from "@/shared/hooks";
 import { useParams } from "react-router-dom";
 import useInventoryList from "../useInventoryList";
 
-function StockDetailsPanel({
-  onClose,
-  onBuy,
-  onSell,
-  className,
-}: StockDetailsPanelProps) {
-  const { id } = useParams();
+function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
+  const { itemId } = useParams();
   const { getItemData, isError, isLoading } = useInventoryList();
   const {
     data: details,
     isError: isDetailsError,
     isLoading: isDetailsLoading,
   } = useStockDetails({
-    itemId: id ?? null,
+    itemId: itemId ?? null,
   });
-  const item = getItemData(id);
+  const item = getItemData(itemId);
 
   return (
     <Section className={cn("relative min-h-0 p-0", className)} shadow={false}>
       <StockMessages
         isError={isError || isDetailsError}
         isLoading={isLoading || isDetailsLoading}
-        details={Boolean(id)}
+        details={Boolean(itemId)}
       />
 
-      <ItemDetail
-        onBack={onClose}
-        onBuy={() => (item ? onBuy?.(item.id) : undefined)}
-        onSell={() => (item ? onSell?.(item.id) : undefined)}
-        item={item}
-      />
+      <ItemDetail onBack={onClose} item={item} />
 
       <StockLotInList lotList={details?.lotsIn ?? null} />
     </Section>

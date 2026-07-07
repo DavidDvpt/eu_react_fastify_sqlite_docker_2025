@@ -1,22 +1,39 @@
 // eu_react_fastify_docker/front-end/src/shared/components/ItemDetails.tsx
-import type { ItemDetailProps } from "@/shared/types";
+import type { ItemDetailProps, TransactionAction } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import { Section } from "../Containers";
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools";
+import { useLocation, useNavigate } from "react-router-dom";
 
-function ItemDetail({
-  item,
-  onBack = () => {},
-  onBuy = () => {},
-  onSell = () => {},
-}: ItemDetailProps) {
+function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   if (!item) return null;
+  const itemId = item.id;
+
+  const openTransactionModal = (action: TransactionAction) => {
+    const query = {
+      action,
+      itemId,
+      ttc: 0,
+      quantity: 1,
+      closePath: `/inventory/${itemId ?? ""}`,
+    };
+
+    const search = new URLSearchParams();
+    search.set("transactionModal", JSON.stringify(query));
+
+    navigate({
+      pathname: location.pathname,
+      search: search.toString(),
+    });
+  };
 
   const buyButton = (
     <Button
-      onClick={onBuy}
-      disabled={!onBuy}
+      onClick={() => openTransactionModal("buy")}
       className="w-[100px]"
       size="sm"
       variant="primary"
@@ -27,8 +44,8 @@ function ItemDetail({
 
   const sellButton = (
     <Button
-      onClick={onSell}
-      disabled={item.quantity <= 0 || !onSell}
+      onClick={() => openTransactionModal("sell")}
+      disabled={item.quantity <= 0}
       className="w-[100px]"
       size="sm"
       variant="primary"

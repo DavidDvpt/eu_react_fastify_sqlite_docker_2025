@@ -193,3 +193,16 @@ export type TransactionPricingInput = TransactionPricingValues & {
   action: TransactionAction;
   unitPrice: number;
 };
+
+export type TransactionModalQueries = {
+  action: TransactionAction;
+  itemId: string;
+  quantity: number;
+  ttc: number;
+  closePath: string;
+};
+
+export type UseTransactionQueriesResult = {
+  queries: TransactionModalQueries | null;
+  updateQueries: (nextQueries: TransactionModalQueries | null) => void;
+};

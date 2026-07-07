@@ -1,17 +1,9 @@
-import { useNavigate } from "react-router-dom";
-
 import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
 
 import { RunningTransactionsSection } from "@/shared/components";
 
 function HomePage() {
-  const navigate = useNavigate();
-
-  const handleCloseTransaction = () => {
-    navigate("/home", { replace: true });
-  };
-
   return (
     <Panel className="mx-0 grid h-full min-h-0 w-full grid-cols-12 gap-4 p-4">
       <Section
@@ -30,7 +22,7 @@ function HomePage() {
         </div>
       </Section>
 
-      <TransactionModal onClose={handleCloseTransaction} />
+      <TransactionModal />
     </Panel>
   );
 }

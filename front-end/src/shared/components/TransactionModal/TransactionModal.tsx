@@ -1,57 +1,42 @@
 import { ModalGeneric } from "../ModalGeneric";
-import { useParams } from "react-router-dom";
-import { useMemo } from "react";
 import TransactionResellContent from "./TransactionResellContent";
 import TransactionModalActionContent from "./TransactionModalActionContent";
-import type { TransactionAction, TransactionModalParams } from "@/shared/types";
 import { usePedCard } from "@/shared/hooks";
+import useTransactionQueries from "@/shared/hooks/useTransactionQueries";
 
-interface TransactionModalProps {
-  onClose: () => void;
-}
-function TransactionModal({ onClose }: TransactionModalProps) {
-  const { itemId, action, quantity, ttc } = useParams();
+function TransactionModal() {
+  const { queries, updateQueries } = useTransactionQueries();
   const { pedCard } = usePedCard();
 
-  const params: TransactionModalParams = useMemo(() => {
-    return {
-      action: action as TransactionAction,
-      itemId: itemId || "",
-      quantity: Number(quantity) || 1,
-      ttc: Number(ttc) || 0,
-    };
-  }, [itemId, action, quantity, ttc]);
+  if (!queries?.action || !queries?.itemId) return null;
 
-  if (!params.action || !params.itemId) return null;
-
-  const handleReselValidate = () => {
-    onClose();
-  };
-
+  const handleClose = () => updateQueries(null);
   return (
     <ModalGeneric
       dialogType="form"
       noClose={false}
-      open={action && itemId ? true : false}
+      open={true}
       onOpenChange={(open) => {
-        if (!open) onClose();
+        if (!open) handleClose();
       }}
       title={{
-        value: params.action === "buy" ? "Achat" : "Vente",
+        value: queries.action === "buy" ? "Achat" : "Vente",
         style: "m-0 text-2xl leading-tight",
       }}
     >
-      {(action === "resell" || action === "newSell") && (
-        <TransactionResellContent onResellValidate={handleReselValidate} />
+      {(queries.action === "resell" || queries.action === "newSell") && (
+        <TransactionResellContent
+          onResellValidate={() => updateQueries({ ...queries, action: "sell" })}
+        />
       )}
 
-      {(params.action === "sell" || params.action === "buy") &&
+      {(queries.action === "sell" || queries.action === "buy") &&
         (pedCard?.hasInitialBalance ? (
           <div></div>
         ) : (
           <TransactionModalActionContent
-            onClose={onClose}
-            modalParams={params}
+            onClose={handleClose}
+            modalParams={queries}
           />
         ))}
     </ModalGeneric>

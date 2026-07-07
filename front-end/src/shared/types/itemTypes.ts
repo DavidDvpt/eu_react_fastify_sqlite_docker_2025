@@ -38,8 +38,6 @@ export type Item = {
 export interface ItemDetailProps {
   item: ItemInventory | null;
   onBack?: () => void;
-  onBuy?: () => void;
-  onSell?: () => void;
   variant?: "transaction" | "stock" | "manage"; // Nouvelle prop pour la variante
 }
 

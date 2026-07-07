@@ -65,8 +65,6 @@ type StockLotOut = {
 
 type StockDetailsPanelProps = {
   onClose: () => void;
-  onBuy?: (itemId: string) => void;
-  onSell?: (itemId: string) => void;
   className?: string;
 };
 
