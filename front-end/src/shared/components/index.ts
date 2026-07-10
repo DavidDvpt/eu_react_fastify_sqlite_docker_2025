@@ -10,6 +10,7 @@ import { TransactionActions } from "./TransactionActions";
 import { TransactionItemDetails } from "./TransactionItemDetails";
 import { VerticalNav } from "./VerticalNav";
 export { default as RunningTransactionsSection } from "./RunningTransactionsSection";
+export { default as PedCardSummarySection } from "./PedCardSummarySection";
 
 export {
   AppCard,

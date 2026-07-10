@@ -19,6 +19,7 @@ function GenericList<T>({
   grow = true,
   headerClassName,
   bodyClassName,
+  rowBaseClassName,
   rowClassName,
   cardClassName,
   rowHeight = 40,
@@ -74,6 +75,7 @@ function GenericList<T>({
               viewMode={view}
               getRowKey={getRowKey}
               onRowClick={onRowClick}
+              rowBaseClassName={rowBaseClassName}
               rowClassName={rowClassName}
               cardClassName={cardClassName}
               rowHeight={rowHeight}

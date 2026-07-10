@@ -17,6 +17,7 @@ function GenericListBody<T>({
   getRowKey,
   onRowClick,
   className,
+  rowBaseClassName,
   rowClassName,
   cardClassName,
   rowHeight = 30,
@@ -89,7 +90,7 @@ function GenericListBody<T>({
         return (
           <div
             key={getRowKey(row)}
-            className={cn(DEFAULT_ROW_CLASS, rowClassName)}
+            className={cn(rowBaseClassName ?? DEFAULT_ROW_CLASS, rowClassName)}
             style={{ minHeight: rowHeight, height: rowHeight }}
           >
             <div

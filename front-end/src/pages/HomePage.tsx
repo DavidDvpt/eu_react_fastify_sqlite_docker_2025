@@ -1,7 +1,6 @@
 import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
-
-import { RunningTransactionsSection } from "@/shared/components";
+import { PedCardSummarySection, RunningTransactionsSection } from "@/shared/components";
 
 function HomePage() {
   return (
@@ -17,9 +16,7 @@ function HomePage() {
         className="col-span-6 flex min-h-0 flex-col overflow-hidden p-0"
         shadow={false}
       >
-        <div className="flex min-h-0 flex-1 items-center justify-center text-sm text-muted-foreground">
-          Section droite a definir
-        </div>
+        <PedCardSummarySection />
       </Section>
 
       <TransactionModal />

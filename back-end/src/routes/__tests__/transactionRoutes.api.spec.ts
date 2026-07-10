@@ -226,7 +226,6 @@ describe('transactionRoutes', () => {
       url: `${API_PREFIX}/transactions`,
       payload: {
         type: 'sell',
-        status: 'RUNNING',
         lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12, fee: 2 }],
       },
     });
@@ -245,8 +244,25 @@ describe('transactionRoutes', () => {
     await app.close();
   });
 
-  it('POST /api/v1/transactions with type=sell throws when status is not running', async () => {
-    const { app } = buildApp();
+  it('POST /api/v1/transactions with type=sell accepts payload without status', async () => {
+    const { app, tx, lotStock } = buildApp();
+
+    vi.mocked(lotStock.getAvailableStockByItemIds).mockResolvedValueOnce([
+      { itemId: 'item-1', availableQuantity: 10 },
+    ] as never);
+    vi.mocked(lotStock.getAvailableLotsFifoByItemId).mockResolvedValueOnce([
+      { id: 'lot-1', quantityRemaining: 10, priceRemaining: 100, itemId: 'item-1' },
+    ] as never);
+    vi.mocked(tx.item.findMany).mockResolvedValueOnce([
+      { id: 'item-1', value: 10, is_stackable: true },
+    ] as never);
+    vi.mocked(tx.pedCard.aggregate).mockResolvedValueOnce({ _sum: { value: 50 } } as never);
+    vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-2' } as never);
+    vi.mocked(tx.pedCard.createMany).mockResolvedValueOnce({ count: 1 } as never);
+    vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-2' } as never);
+    vi.mocked(tx.lot.update).mockResolvedValueOnce({} as never);
+    vi.mocked(tx.transaction.update).mockResolvedValueOnce({} as never);
+
     await app.ready();
 
     const res = await app.inject({
@@ -254,12 +270,11 @@ describe('transactionRoutes', () => {
       url: `${API_PREFIX}/transactions`,
       payload: {
         type: 'sell',
-        status: 'SOLDED',
-        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12 }],
+        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12, fee: 2 }],
       },
     });
 
-    expect(res.statusCode).toBe(500);
+    expect(res.statusCode).toBe(201);
     await app.close();
   });
 

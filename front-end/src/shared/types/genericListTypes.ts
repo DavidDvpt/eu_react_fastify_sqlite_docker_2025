@@ -68,6 +68,7 @@ export type GenericListProps<T> = {
   grow?: boolean;
   headerClassName?: string;
   bodyClassName?: string;
+  rowBaseClassName?: string;
   rowClassName?: string;
   cardClassName?: string;
   rowHeight?: number;
@@ -97,6 +98,7 @@ export type GenericListBodyProps<T> = {
   getRowKey: (row: T) => string;
   onRowClick?: (row: T) => void;
   className?: string;
+  rowBaseClassName?: string;
   rowClassName?: string;
   cardClassName?: string;
   rowHeight?: number;

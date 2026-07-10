@@ -12,6 +12,7 @@ function TransactionModal() {
   if (!queries?.action || !queries?.itemId || !pedCard) return null;
 
   const handleClose = () => updateQueries(null);
+
   return (
     <ModalGeneric
       dialogType="form"
@@ -27,6 +28,7 @@ function TransactionModal() {
     >
       {(queries.action === "resell" || queries.action === "newSell") && (
         <TransactionResellContent
+          onClose={handleClose}
           action={queries.action}
           onResellValidate={() => updateQueries({ ...queries, action: "sell" })}
         />

@@ -22,10 +22,6 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const body = transactionBodySchema.parse(request.body);
 
-    if (body.type === 'sell' && body.status !== 'RUNNING') {
-      throw new Error('not implementted');
-    }
-
     let result: TransactionExecutionResult;
     try {
       result =

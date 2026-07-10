@@ -19,3 +19,9 @@ export type PedCardResult = {
 export type PedCardFormValues = {
   updatedValue: number;
 };
+
+export type PedCardSummaryRow = {
+  key: string;
+  label: string;
+  amount: number;
+};

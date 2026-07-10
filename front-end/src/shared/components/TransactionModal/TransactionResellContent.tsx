@@ -2,11 +2,13 @@ import { Button } from "@/components/ui/button";
 import type { TransactionAction } from "@/shared/types";
 
 interface TransactionResellContentProps {
+  onClose: () => void;
   onResellValidate: () => void;
   action: TransactionAction;
 }
 
 function TransactionResellContent({
+  onClose,
   action,
   onResellValidate,
 }: TransactionResellContentProps) {
@@ -19,11 +21,7 @@ function TransactionResellContent({
       </p>
 
       <div className="flex justify-center gap-4 w-full ">
-        <Button
-          variant="secondary"
-          onClick={onResellValidate}
-          className="w-[30%]"
-        >
+        <Button variant="secondary" onClick={onClose} className="w-[30%]">
           Non
         </Button>
         <Button
