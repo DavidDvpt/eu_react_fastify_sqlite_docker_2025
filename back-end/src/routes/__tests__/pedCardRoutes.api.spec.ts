@@ -17,7 +17,7 @@ describe('pedCardRoutes', () => {
     const pedCard = {
       hasInitialBalance: vi.fn(),
       getBalance: vi.fn(),
-      create: vi.fn(),
+      createEntry: vi.fn(),
     };
 
     app.decorate('repos', { pedCard } as unknown as FastifyInstance['repos']);
@@ -83,14 +83,7 @@ describe('pedCardRoutes', () => {
 
   it('POST /api/v1/pedcard creates an entry and returns 201 with no body', async () => {
     const { app, pedCard } = buildApp();
-    vi.mocked(pedCard.create).mockResolvedValueOnce({
-      id: 'ped-1',
-      userId: 'user-1',
-      transactionId: null,
-      type: 'INITIAL_BALANCE',
-      value: 100,
-      createdAt: new Date('2026-07-05T00:00:00.000Z'),
-    });
+    vi.mocked(pedCard.createEntry).mockResolvedValueOnce(undefined);
 
     await app.ready();
     const res = await app.inject({
@@ -103,13 +96,11 @@ describe('pedCardRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
-    expect(pedCard.create).toHaveBeenCalledWith({
-      data: {
-        userId: 'user-1',
-        transactionId: null,
-        type: 'INITIAL_BALANCE',
-        value: 100,
-      },
+    expect(pedCard.createEntry).toHaveBeenCalledWith({
+      userId: 'user-1',
+      transactionId: null,
+      type: 'INITIAL_BALANCE',
+      value: 100,
     });
     expect(res.body).toBe('');
     await app.close();

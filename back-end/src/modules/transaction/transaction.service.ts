@@ -1,4 +1,5 @@
 import { TransactionType } from '../../../prisma/generated/client.js';
+import { createRepositories } from '../../lib/repositories/index.js';
 
 import {
   buildRequestedByItem,
@@ -9,6 +10,7 @@ import {
 } from './sellProcess.js';
 
 import type { PrismaClient } from '../../../prisma/generated/client.js';
+import type { PedCardEntryInput } from '../../lib/repositories/pedCardRepository.js';
 import type {
   BuyLineInput,
   SellLineInput,
@@ -17,6 +19,8 @@ import type {
   TransactionRejectedItem,
 } from '../../types/index.js';
 import type { StocksService } from '../inventory/index.js';
+
+const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
 
 class TransactionService {
   constructor(
@@ -68,7 +72,39 @@ class TransactionService {
       return sum + line.ttc;
     }, 0);
 
+    const buyFee = processable.reduce((sum, line) => sum + (line.fee ?? 0), 0);
+
     return this.prisma.$transaction(async (tx) => {
+      const repos = createRepositories(tx);
+      const pedCardEntries: PedCardEntryInput[] = [];
+
+      if (buyFee > 0) {
+        pedCardEntries.push({
+          userId,
+          transactionId: null,
+          type: 'BUY_FEE',
+          value: -buyFee,
+        });
+      }
+
+      if (buyCostTtc > 0) {
+        pedCardEntries.push({
+          userId,
+          transactionId: null,
+          type: 'BUY_TTC',
+          value: -buyCostTtc,
+        });
+      }
+
+      const hasEnoughBalance = await repos.pedCard.hasEnoughBalanceForEntries(
+        userId,
+        pedCardEntries
+      );
+
+      if (!hasEnoughBalance) {
+        throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
+      }
+
       // Create the transaction, then persist IN lines and inventory lots.
       const transaction = await tx.transaction.create({
         data: {
@@ -82,6 +118,13 @@ class TransactionService {
         },
         select: { id: true },
       });
+
+      await repos.pedCard.createManyEntries(
+        pedCardEntries.map((entry) => ({
+          ...entry,
+          transactionId: transaction.id,
+        }))
+      );
 
       const processed: TransactionProcessedItem[] = [];
 
@@ -152,11 +195,33 @@ class TransactionService {
     }
 
     return this.prisma.$transaction(async (tx) => {
+      const repos = createRepositories(tx);
       const now = new Date().toISOString();
 
       // Load sell item metadata and derive provisional transaction totals.
       const itemById = await loadSellItemsById(tx, processable);
       const { initialWinTt, initialWinTtc } = computeInitialSellTotals(processable, itemById);
+      const sellFee = processable.reduce((sum, line) => sum + line.fee, 0);
+      const pedCardEntries: PedCardEntryInput[] =
+        sellFee > 0
+          ? [
+              {
+                userId,
+                transactionId: null,
+                type: 'SELL_FEE',
+                value: -sellFee,
+              },
+            ]
+          : [];
+
+      const hasEnoughBalance = await repos.pedCard.hasEnoughBalanceForEntries(
+        userId,
+        pedCardEntries
+      );
+
+      if (!hasEnoughBalance) {
+        throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
+      }
 
       // Create sell transaction first; totals are finalized after line processing.
       const transaction = await tx.transaction.create({
@@ -171,6 +236,13 @@ class TransactionService {
         },
         select: { id: true },
       });
+
+      await repos.pedCard.createManyEntries(
+        pedCardEntries.map((entry) => ({
+          ...entry,
+          transactionId: transaction.id,
+        }))
+      );
 
       // Delegate line-level processing (stackable vs non-stackable) to helpers.
       const {

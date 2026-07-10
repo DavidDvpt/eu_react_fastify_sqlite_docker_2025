@@ -9,6 +9,7 @@ import {
 } from './transactionRoutes.schema.js';
 import { getRequestUserId } from './utils.js';
 
+import type { TransactionExecutionResult } from '../types/index.js';
 import type { FastifyPluginCallback } from 'fastify';
 
 const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
@@ -21,10 +22,25 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const body = transactionBodySchema.parse(request.body);
 
-    const result =
-      body.type === 'buy'
-        ? await transactionService.buy(userId, body.lines)
-        : await transactionService.sell(userId, body.lines);
+    if (body.type === 'sell' && body.status !== 'RUNNING') {
+      throw new Error('not implementted');
+    }
+
+    let result: TransactionExecutionResult;
+    try {
+      result =
+        body.type === 'buy'
+          ? await transactionService.buy(userId, body.lines)
+          : await transactionService.sell(userId, body.lines);
+    } catch (error) {
+      if (error instanceof Error && error.message === 'PEDCARD_INSUFFICIENT_BALANCE') {
+        return reply.code(400).send({
+          message: 'Insufficient pedCard balance',
+        });
+      }
+
+      throw error;
+    }
 
     if (!result.processed.length) {
       const message =

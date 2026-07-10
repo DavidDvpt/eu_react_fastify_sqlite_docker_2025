@@ -37,6 +37,7 @@ export const transactionBodySchema = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('sell'),
+    status: z.enum(['RUNNING', 'SOLDED', 'RETURNED']),
     lines: z.array(transactionSellLineSchema).min(1),
   }),
 ]);

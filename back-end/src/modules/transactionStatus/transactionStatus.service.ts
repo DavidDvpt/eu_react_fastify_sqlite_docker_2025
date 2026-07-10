@@ -24,6 +24,7 @@ class TransactionStatusService {
           transaction_id: true,
           inventory_lot_id: true,
           quantity: true,
+          ttc: true,
         },
       });
 
@@ -42,6 +43,28 @@ class TransactionStatusService {
             quantity_remaining: { increment: line.quantity },
             quantity_exported: { decrement: line.quantity },
             date_updated: new Date().toISOString(),
+          },
+        });
+      }
+
+      if (input.nextSaleStatus === 'SOLDED') {
+        await tx.pedCard.upsert({
+          where: {
+            transactionId_type: {
+              transactionId: line.transaction_id,
+              type: 'SELL_TTC',
+            },
+          },
+          create: {
+            userId,
+            transactionId: line.transaction_id,
+            type: 'SELL_TTC',
+            value: line.ttc,
+          },
+          update: {
+            value: {
+              increment: line.ttc,
+            },
           },
         });
       }

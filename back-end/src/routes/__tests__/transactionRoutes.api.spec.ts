@@ -3,18 +3,69 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
+import type {} from '../../types/fastify-augment.js';
 import transactionRoutes from '../transactionRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
+type MockFn = ReturnType<typeof vi.fn>;
+
+type TransactionTxStub = {
+  item: {
+    findMany: MockFn;
+  };
+  transaction: {
+    create: MockFn;
+    update: MockFn;
+    delete: MockFn;
+  };
+  lot: {
+    create: MockFn;
+    update: MockFn;
+  };
+  transactionLot: {
+    create: MockFn;
+    findFirst: MockFn;
+    update: MockFn;
+    count: MockFn;
+  };
+  pedCard: {
+    aggregate: MockFn;
+    create: MockFn;
+    createMany: MockFn;
+    upsert: MockFn;
+  };
+};
+
+type TransactionTestPrisma = {
+  item: {
+    findMany: MockFn;
+  };
+  $transaction: (callback: (trx: TransactionTxStub) => unknown) => Promise<unknown>;
+};
+
+type TransactionTestRepos = {
+  transactionRepository: {
+    getSellSessions: MockFn;
+    getRunningSellLines: MockFn;
+  };
+  lotStock: {
+    getStock: MockFn;
+    getStockByItemId: MockFn;
+    getStockDetailsByItemId: MockFn;
+    getAvailableStockByItemIds: MockFn;
+    getAvailableLotsFifoByItemId: MockFn;
+    getSellableLotById: MockFn;
+  };
+};
+
 describe('transactionRoutes', () => {
   function buildApp() {
-    const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
-    app.setValidatorCompiler(validatorCompiler);
-    app.setSerializerCompiler(serializerCompiler);
-
     const tx = {
+      item: {
+        findMany: vi.fn(),
+      },
       transaction: {
         create: vi.fn(),
         update: vi.fn(),
@@ -30,19 +81,25 @@ describe('transactionRoutes', () => {
         update: vi.fn(),
         count: vi.fn(),
       },
-    };
+      pedCard: {
+        aggregate: vi.fn(),
+        create: vi.fn(),
+        createMany: vi.fn(),
+        upsert: vi.fn(),
+      },
+    } satisfies TransactionTxStub;
 
     const prisma = {
       item: {
         findMany: vi.fn(),
       },
       $transaction: vi.fn((callback: (trx: typeof tx) => unknown) => Promise.resolve(callback(tx))),
-    };
+    } satisfies TransactionTestPrisma;
 
     const transactionRepository = {
       getSellSessions: vi.fn(),
       getRunningSellLines: vi.fn(),
-    };
+    } satisfies TransactionTestRepos['transactionRepository'];
 
     const lotStock = {
       getStock: vi.fn(),
@@ -51,19 +108,24 @@ describe('transactionRoutes', () => {
       getAvailableStockByItemIds: vi.fn(),
       getAvailableLotsFifoByItemId: vi.fn(),
       getSellableLotById: vi.fn(),
-    };
+    } satisfies TransactionTestRepos['lotStock'];
 
-    app.decorate('prisma', prisma as unknown as FastifyInstance['prisma']);
-    app.decorate('repos', {
-      transactionRepository,
-      lotStock,
-    } as unknown as FastifyInstance['repos']);
-    app.decorate('protect', function (this: FastifyInstance) {
-      // eslint-disable-next-line @typescript-eslint/require-await
-      this.addHook('preHandler', async (request) => {
-        request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
-      });
+    const app = Object.assign(Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>(), {
+      prisma,
+      repos: {
+        transactionRepository,
+        lotStock,
+      },
+      protect(this: FastifyInstance) {
+        // eslint-disable-next-line @typescript-eslint/require-await
+        this.addHook('preHandler', async (request) => {
+          request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
+        });
+      },
     });
+
+    app.setValidatorCompiler(validatorCompiler);
+    app.setSerializerCompiler(serializerCompiler);
 
     app.register(transactionRoutes, { prefix: API_PREFIX });
 
@@ -74,7 +136,9 @@ describe('transactionRoutes', () => {
     const { app, tx, prisma } = buildApp();
 
     vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
+    vi.mocked(tx.pedCard.aggregate).mockResolvedValueOnce({ _sum: { value: 100 } } as never);
     vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-1' } as never);
+    vi.mocked(tx.pedCard.createMany).mockResolvedValueOnce({ count: 2 } as never);
     vi.mocked(tx.lot.create).mockResolvedValueOnce({ id: 'lot-1' } as never);
     vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-1' } as never);
 
@@ -89,6 +153,22 @@ describe('transactionRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
+    expect(tx.pedCard.createMany).toHaveBeenCalledWith({
+      data: [
+        {
+          userId: 'user-1',
+          transactionId: 'transaction-1',
+          type: 'BUY_FEE',
+          value: -1,
+        },
+        {
+          userId: 'user-1',
+          transactionId: 'transaction-1',
+          type: 'BUY_TTC',
+          value: -25,
+        },
+      ],
+    });
     const buySessionCreateCall = vi.mocked(tx.transaction.create).mock.calls[0]?.[0] as {
       data: {
         status: string;
@@ -98,7 +178,74 @@ describe('transactionRoutes', () => {
     await app.close();
   });
 
-  it('POST /api/v1/transactions with type=sell rejects when fee is missing', async () => {
+  it('POST /api/v1/transactions with type=buy rejects when pedcard balance is insufficient', async () => {
+    const { app, tx, prisma } = buildApp();
+
+    vi.mocked(prisma.item.findMany).mockResolvedValueOnce([{ id: 'item-1', value: 10 } as never]);
+    vi.mocked(tx.pedCard.aggregate).mockResolvedValueOnce({ _sum: { value: 10 } } as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/transactions`,
+      payload: {
+        type: 'buy',
+        lines: [{ itemId: 'item-1', quantity: 2, tt: 20, fee: 1, ttc: 25 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(400);
+    expect(res.json()).toEqual({ message: 'Insufficient pedCard balance' });
+    expect(tx.transaction.create).not.toHaveBeenCalled();
+    expect(tx.pedCard.createMany).not.toHaveBeenCalled();
+    await app.close();
+  });
+
+  it('POST /api/v1/transactions with type=sell creates a fee pedcard entry only', async () => {
+    const { app, tx, lotStock } = buildApp();
+
+    vi.mocked(lotStock.getAvailableStockByItemIds).mockResolvedValueOnce([
+      { itemId: 'item-1', availableQuantity: 10 },
+    ] as never);
+    vi.mocked(lotStock.getAvailableLotsFifoByItemId).mockResolvedValueOnce([
+      { id: 'lot-1', quantityRemaining: 10, priceRemaining: 100, itemId: 'item-1' },
+    ] as never);
+    vi.mocked(tx.item.findMany).mockResolvedValueOnce([
+      { id: 'item-1', value: 10, is_stackable: true },
+    ] as never);
+    vi.mocked(tx.pedCard.aggregate).mockResolvedValueOnce({ _sum: { value: 50 } } as never);
+    vi.mocked(tx.transaction.create).mockResolvedValueOnce({ id: 'transaction-2' } as never);
+    vi.mocked(tx.pedCard.createMany).mockResolvedValueOnce({ count: 1 } as never);
+    vi.mocked(tx.transactionLot.create).mockResolvedValueOnce({ id: 'line-2' } as never);
+    vi.mocked(tx.lot.update).mockResolvedValueOnce({} as never);
+    vi.mocked(tx.transaction.update).mockResolvedValueOnce({} as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'POST',
+      url: `${API_PREFIX}/transactions`,
+      payload: {
+        type: 'sell',
+        status: 'RUNNING',
+        lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12, fee: 2 }],
+      },
+    });
+
+    expect(res.statusCode).toBe(201);
+    expect(tx.pedCard.createMany).toHaveBeenCalledWith({
+      data: [
+        {
+          userId: 'user-1',
+          transactionId: 'transaction-2',
+          type: 'SELL_FEE',
+          value: -2,
+        },
+      ],
+    });
+    await app.close();
+  });
+
+  it('POST /api/v1/transactions with type=sell throws when status is not running', async () => {
     const { app } = buildApp();
     await app.ready();
 
@@ -107,6 +254,7 @@ describe('transactionRoutes', () => {
       url: `${API_PREFIX}/transactions`,
       payload: {
         type: 'sell',
+        status: 'SOLDED',
         lines: [{ itemId: 'item-1', quantity: 1, tt: 10, ttc: 12 }],
       },
     });
@@ -198,8 +346,10 @@ describe('transactionRoutes', () => {
       transaction_id: 'transaction-1',
       inventory_lot_id: '22222222-2222-4222-8222-222222222222',
       quantity: 10,
+      ttc: 112,
     } as never);
     vi.mocked(tx.lot.update).mockResolvedValueOnce({} as never);
+    vi.mocked(tx.pedCard.upsert).mockResolvedValueOnce({} as never);
     vi.mocked(tx.transactionLot.update).mockResolvedValueOnce({} as never);
     vi.mocked(tx.transactionLot.count).mockResolvedValueOnce(0 as never);
     vi.mocked(tx.transaction.update).mockResolvedValueOnce({} as never);
@@ -225,6 +375,26 @@ describe('transactionRoutes', () => {
         transaction_id: true,
         inventory_lot_id: true,
         quantity: true,
+        ttc: true,
+      },
+    });
+    expect(tx.pedCard.upsert).toHaveBeenCalledWith({
+      where: {
+        transactionId_type: {
+          transactionId: 'transaction-1',
+          type: 'SELL_TTC',
+        },
+      },
+      create: {
+        userId: 'user-1',
+        transactionId: 'transaction-1',
+        type: 'SELL_TTC',
+        value: 112,
+      },
+      update: {
+        value: {
+          increment: 112,
+        },
       },
     });
     expect(res.json()).toEqual({

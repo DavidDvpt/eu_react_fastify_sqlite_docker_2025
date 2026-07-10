@@ -4,6 +4,13 @@ import PrismaCrudRepository from './prismaCrudRepository.js';
 
 import type { PedCardClient } from '../../types/index.js';
 
+export type PedCardEntryInput = {
+  userId: string;
+  transactionId: string | null;
+  type: string;
+  value: number;
+};
+
 export class PedCardRepository extends PrismaCrudRepository<PedCardClient['pedCard']> {
   constructor(private readonly client: PedCardClient) {
     super(client.pedCard, { readScope: 'user-only', userField: 'userId' });
@@ -35,5 +42,28 @@ export class PedCardRepository extends PrismaCrudRepository<PedCardClient['pedCa
 
     const balance = aggregate._sum.value;
     return balance == null ? 0 : Number(balance.toString());
+  }
+
+  async hasEnoughBalanceForEntries(userId: string, entries: PedCardEntryInput[]): Promise<boolean> {
+    const requiredBalance = entries.reduce((sum, entry) => sum + Math.abs(entry.value), 0);
+    const balance = await this.getBalance(userId);
+
+    return balance >= requiredBalance;
+  }
+
+  async createEntry(input: PedCardEntryInput): Promise<void> {
+    await this.client.pedCard.create({
+      data: input,
+    });
+  }
+
+  async createManyEntries(entries: PedCardEntryInput[]): Promise<void> {
+    if (!entries.length) {
+      return;
+    }
+
+    await this.client.pedCard.createMany({
+      data: entries,
+    });
   }
 }
