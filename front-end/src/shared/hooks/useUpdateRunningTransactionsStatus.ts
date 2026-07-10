@@ -26,6 +26,7 @@ function useUpdateRunningTransactionsStatus() {
         queryClient.invalidateQueries({ queryKey: ["running-sell-lines"] }),
         queryClient.invalidateQueries({ queryKey: ["items-stock"] }),
         queryClient.invalidateQueries({ queryKey: ["stock", "details"] }),
+        queryClient.invalidateQueries({ queryKey: ["pedCard"] }),
       ]);
     },
   });

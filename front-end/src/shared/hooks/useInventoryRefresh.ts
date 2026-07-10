@@ -10,6 +10,7 @@ function useInventoryRefresh(itemId: string, onBack: () => void) {
       queryClient.invalidateQueries({
         queryKey: ["stock", "details", itemId],
       }),
+      queryClient.invalidateQueries({ queryKey: ["pedCard"] }),
     ]);
     onBack();
   };
