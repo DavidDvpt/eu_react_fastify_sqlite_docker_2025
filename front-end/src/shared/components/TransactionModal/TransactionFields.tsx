@@ -45,7 +45,7 @@ export function TransactionFields({
       <InputRHF
         name="ttc"
         type="number"
-        step="0.01"
+        step="1"
         registerOptions={{ valueAsNumber: true }}
         selectOnFocus
         label={totalLabel}

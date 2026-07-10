@@ -37,6 +37,50 @@
   --color-button-primary-outline-disabled-text: var(
     --button-primary-outline-disabled-text
   );
+
+  --color-button-secondary-bg: var(--button-secondary-bg);
+  --color-button-secondary-text: var(--button-secondary-text);
+  --color-button-secondary-border: var(--button-secondary-border);
+  --color-button-secondary-hover-bg: var(--button-secondary-hover-bg);
+  --color-button-secondary-hover-text: var(--button-secondary-hover-text);
+  --color-button-secondary-hover-border: var(--button-secondary-hover-border);
+  --color-button-secondary-active-bg: var(--button-secondary-active-bg);
+  --color-button-secondary-active-text: var(--button-secondary-active-text);
+  --color-button-secondary-active-border: var(--button-secondary-active-border);
+  --color-button-secondary-disabled-bg: var(--button-secondary-disabled-bg);
+  --color-button-secondary-disabled-border: var(
+    --button-secondary-disabled-border
+  );
+  --color-button-secondary-outline-bg: var(--button-secondary-outline-bg);
+  --color-button-secondary-outline-text: var(--button-secondary-outline-text);
+  --color-button-secondary-outline-hover-bg: var(
+    --button-secondary-outline-hover-bg
+  );
+  --color-button-secondary-outline-hover-text: var(
+    --button-secondary-outline-hover-text
+  );
+  --color-button-secondary-outline-hover-border: var(
+    --button-secondary-outline-hover-border
+  );
+  --color-button-secondary-outline-active-bg: var(
+    --button-secondary-outline-active-bg
+  );
+  --color-button-secondary-outline-active-text: var(
+    --button-secondary-outline-active-text
+  );
+  --color-button-secondary-outline-active-border: var(
+    --button-secondary-outline-active-border
+  );
+  --color-button-secondary-outline-border: var(
+    --button-secondary-outline-border
+  );
+  --color-button-secondary-outline-disabled-border: var(
+    --button-secondary-outline-disabled-border
+  );
+  --color-button-secondary-outline-disabled-text: var(
+    --button-secondary-outline-disabled-text
+  );
+
   --color-button-success-bg: var(--button-success-bg);
   --color-button-success-text: var(--button-success-text);
   --color-button-success-border: var(--button-success-border);
@@ -161,44 +205,6 @@
   --color-button-destructive-outline-disabled-text: var(
     --button-destructive-outline-disabled-text
   );
-  --color-button-neutral-bg: var(--button-neutral-bg);
-  --color-button-neutral-text: var(--button-neutral-text);
-  --color-button-neutral-border: var(--button-neutral-border);
-  --color-button-neutral-hover-bg: var(--button-neutral-hover-bg);
-  --color-button-neutral-hover-text: var(--button-neutral-hover-text);
-  --color-button-neutral-hover-border: var(--button-neutral-hover-border);
-  --color-button-neutral-active-bg: var(--button-neutral-active-bg);
-  --color-button-neutral-active-text: var(--button-neutral-active-text);
-  --color-button-neutral-active-border: var(--button-neutral-active-border);
-  --color-button-neutral-disabled-bg: var(--button-neutral-disabled-bg);
-  --color-button-neutral-disabled-border: var(--button-neutral-disabled-border);
-  --color-button-neutral-outline-bg: var(--button-neutral-outline-bg);
-  --color-button-neutral-outline-text: var(--button-neutral-outline-text);
-  --color-button-neutral-outline-hover-bg: var(
-    --button-neutral-outline-hover-bg
-  );
-  --color-button-neutral-outline-hover-text: var(
-    --button-neutral-outline-hover-text
-  );
-  --color-button-neutral-outline-hover-border: var(
-    --button-neutral-outline-hover-border
-  );
-  --color-button-neutral-outline-active-bg: var(
-    --button-neutral-outline-active-bg
-  );
-  --color-button-neutral-outline-active-text: var(
-    --button-neutral-outline-active-text
-  );
-  --color-button-neutral-outline-active-border: var(
-    --button-neutral-outline-active-border
-  );
-  --color-button-neutral-outline-border: var(--button-neutral-outline-border);
-  --color-button-neutral-outline-disabled-border: var(
-    --button-neutral-outline-disabled-border
-  );
-  --color-button-neutral-outline-disabled-text: var(
-    --button-neutral-outline-disabled-text
-  );
 }
 
 :root {
@@ -224,6 +230,30 @@
   --button-primary-outline-border: var(--primary-500);
   --button-primary-outline-disabled-border: var(--primary-300);
   --button-primary-outline-disabled-text: var(--primary-300);
+
+  /* button secondary */
+  --button-secondary-bg: transparent;
+  --button-secondary-text: var(--dark);
+  --button-secondary-border: var(--dark);
+  --button-secondary-hover-bg: var(--L4C2);
+  --button-secondary-hover-text: var(--dark);
+  --button-secondary-hover-border: var(--L3C9);
+  --button-secondary-active-bg: transparent;
+  --button-secondary-active-text: var(--dark);
+  --button-secondary-active-border: var(--dark);
+  --button-secondary-disabled-bg: var(--gray-300);
+  --button-secondary-disabled-border: var(--gray-300);
+  --button-secondary-outline-bg: var(--white);
+  --button-secondary-outline-text: var(--gray-500);
+  --button-secondary-outline-hover-bg: var(--gray-300);
+  --button-secondary-outline-hover-text: var(--gray-700);
+  --button-secondary-outline-hover-border: var(--gray-300);
+  --button-secondary-outline-active-bg: var(--white);
+  --button-secondary-outline-active-text: var(--gray-500);
+  --button-secondary-outline-active-border: var(--gray-500);
+  --button-secondary-outline-border: var(--gray-500);
+  --button-secondary-outline-disabled-border: var(--gray-300);
+  --button-secondary-outline-disabled-text: var(--gray-300);
 
   /* button success */
   --button-success-bg: var(--green-500);
@@ -296,30 +326,6 @@
   --button-destructive-outline-border: var(--red-500);
   --button-destructive-outline-disabled-border: var(--red-300);
   --button-destructive-outline-disabled-text: var(--red-300);
-
-  /* button neutral */
-  --button-neutral-bg: var(--gray-500);
-  --button-neutral-text: var(--white);
-  --button-neutral-border: var(--gray-500);
-  --button-neutral-hover-bg: var(--gray-300);
-  --button-neutral-hover-text: var(--gray-700);
-  --button-neutral-hover-border: var(--gray-300);
-  --button-neutral-active-bg: var(--gray-500);
-  --button-neutral-active-text: var(--white);
-  --button-neutral-active-border: var(--gray-500);
-  --button-neutral-disabled-bg: var(--gray-300);
-  --button-neutral-disabled-border: var(--gray-300);
-  --button-neutral-outline-bg: var(--white);
-  --button-neutral-outline-text: var(--gray-500);
-  --button-neutral-outline-hover-bg: var(--gray-300);
-  --button-neutral-outline-hover-text: var(--gray-700);
-  --button-neutral-outline-hover-border: var(--gray-300);
-  --button-neutral-outline-active-bg: var(--white);
-  --button-neutral-outline-active-text: var(--gray-500);
-  --button-neutral-outline-active-border: var(--gray-500);
-  --button-neutral-outline-border: var(--gray-500);
-  --button-neutral-outline-disabled-border: var(--gray-300);
-  --button-neutral-outline-disabled-text: var(--gray-300);
 }
 
 :dark {
@@ -418,27 +424,27 @@
   --button-destructive-outline-disabled-border: var(--red-300);
   --button-destructive-outline-disabled-text: var(--red-300);
 
-  /* button neutral */
-  --button-neutral-bg: var(--gray-500);
-  --button-neutral-text: var(--white);
-  --button-neutral-border: var(--gray-500);
-  --button-neutral-hover-bg: var(--gray-300);
-  --button-neutral-hover-text: var(--gray-700);
-  --button-neutral-hover-border: var(--gray-300);
-  --button-neutral-active-bg: var(--gray-500);
-  --button-neutral-active-text: var(--white);
-  --button-neutral-active-border: var(--gray-500);
-  --button-neutral-disabled-bg: var(--gray-300);
-  --button-neutral-disabled-border: var(--gray-300);
-  --button-neutral-outline-bg: var(--white);
-  --button-neutral-outline-text: var(--gray-500);
-  --button-neutral-outline-hover-bg: var(--gray-300);
-  --button-neutral-outline-hover-text: var(--gray-700);
-  --button-neutral-outline-hover-border: var(--gray-300);
-  --button-neutral-outline-active-bg: var(--white);
-  --button-neutral-outline-active-text: var(--gray-500);
-  --button-neutral-outline-active-border: var(--gray-500);
-  --button-neutral-outline-border: var(--gray-500);
-  --button-neutral-outline-disabled-border: var(--gray-300);
-  --button-neutral-outline-disabled-text: var(--gray-300);
+  /* button secondary */
+  --button-secondary-bg: var(--gray-500);
+  --button-secondary-text: var(--dark);
+  --button-secondary-border: var(--gray-500);
+  --button-secondary-hover-bg: var(--gray-300);
+  --button-secondary-hover-text: var(--gray-700);
+  --button-secondary-hover-border: var(--gray-300);
+  --button-secondary-active-bg: var(--gray-500);
+  --button-secondary-active-text: var(--white);
+  --button-secondary-active-border: var(--gray-500);
+  --button-secondary-disabled-bg: var(--gray-300);
+  --button-secondary-disabled-border: var(--gray-300);
+  --button-secondary-outline-bg: var(--white);
+  --button-secondary-outline-text: var(--gray-500);
+  --button-secondary-outline-hover-bg: var(--gray-300);
+  --button-secondary-outline-hover-text: var(--gray-700);
+  --button-secondary-outline-hover-border: var(--gray-300);
+  --button-secondary-outline-active-bg: var(--white);
+  --button-secondary-outline-active-text: var(--gray-500);
+  --button-secondary-outline-active-border: var(--gray-500);
+  --button-secondary-outline-border: var(--gray-500);
+  --button-secondary-outline-disabled-border: var(--gray-300);
+  --button-secondary-outline-disabled-text: var(--gray-300);
 }

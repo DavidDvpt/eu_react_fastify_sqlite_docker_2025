@@ -3,12 +3,13 @@ import TransactionResellContent from "./TransactionResellContent";
 import TransactionModalActionContent from "./TransactionModalActionContent";
 import { usePedCard } from "@/shared/hooks";
 import useTransactionQueries from "@/shared/hooks/useTransactionQueries";
+import PedCardForm from "../pedCardModal/PedCardForm";
 
 function TransactionModal() {
   const { queries, updateQueries } = useTransactionQueries();
   const { pedCard } = usePedCard();
 
-  if (!queries?.action || !queries?.itemId) return null;
+  if (!queries?.action || !queries?.itemId || !pedCard) return null;
 
   const handleClose = () => updateQueries(null);
   return (
@@ -26,13 +27,17 @@ function TransactionModal() {
     >
       {(queries.action === "resell" || queries.action === "newSell") && (
         <TransactionResellContent
+          action={queries.action}
           onResellValidate={() => updateQueries({ ...queries, action: "sell" })}
         />
       )}
 
       {(queries.action === "sell" || queries.action === "buy") &&
-        (pedCard?.hasInitialBalance ? (
-          <div></div>
+        (!pedCard.hasInitialBalance ? (
+          <PedCardForm
+            initialized={pedCard.hasInitialBalance}
+            balance={pedCard.balance}
+          />
         ) : (
           <TransactionModalActionContent
             onClose={handleClose}

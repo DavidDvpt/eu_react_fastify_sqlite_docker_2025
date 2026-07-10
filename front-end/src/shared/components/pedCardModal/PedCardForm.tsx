@@ -1,41 +1,48 @@
 import type { PedCardFormValues } from "@/shared/types/pedcard";
+import { useQueryClient } from "@tanstack/react-query";
 import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { pedCardFormDefaultValues, pedCardFormSchema } from "./pedCardSchema";
 import { Button } from "@/components/ui/button";
+import { createPedCardEntry } from "@/lib/services";
 
 interface PedCardFormProps {
-  initialized: boolean;
+  initialized?: boolean;
   balance: number | null;
-  onSubmit?: (data: PedCardFormValues) => void | Promise<void>;
   submitLabel?: string;
 }
 
-function PedCardForm({
-  initialized,
-  balance,
-  onSubmit,
-  submitLabel,
-}: PedCardFormProps) {
-  const handleSubmit = (data: PedCardFormValues) => {
-    if (onSubmit) {
-      return onSubmit(data);
-    }
+function PedCardForm({ initialized, balance, submitLabel }: PedCardFormProps) {
+  const queryClient = useQueryClient();
 
-    console.log("Form submitted with data:", data);
+  const handleSubmit = async (data: PedCardFormValues) => {
+    const currentBalance = balance ?? 0;
+    const isInitialBalance = initialized !== true;
+    const value = isInitialBalance
+      ? data.updatedValue
+      : data.updatedValue - currentBalance;
+
+    await createPedCardEntry({
+      type: isInitialBalance ? "INITIAL_BALANCE" : "ADJUSTMENT",
+      value,
+    });
+
+    await queryClient.invalidateQueries({ queryKey: ["pedCard"] });
   };
 
   return (
     <GenericForm
       schema={pedCardFormSchema}
       defaultValues={{
-        updatedValue: initialized ? balance ?? 0 : pedCardFormDefaultValues.updatedValue,
+        updatedValue: initialized
+          ? (balance ?? 0)
+          : pedCardFormDefaultValues.updatedValue,
       }}
       onSubmit={handleSubmit}
     >
-      <div className="space-y-4">
-        <div className="grid gap-3 sm:grid-cols-2">
-          <p className="m-0 mt-1 text-md ">
+      <div className="space-y-4 flex justify-center flex-col items-center">
+        <div className="">
+          <p className="m-0 mt-1 text-md text-center mb-[50px]">
             {`${initialized ? "Ajustement" : "Initialisation"} de la pedCard`}
           </p>
           {initialized && balance !== null && (
@@ -43,10 +50,14 @@ function PedCardForm({
               Solde actuel: <strong>{balance.toFixed(2)}</strong> Ped
             </p>
           )}
-          <InputRHF name="updatedValue" />
+          <InputRHF
+            name="updatedValue"
+            selectOnFocus
+            wrapperClassName="flex justify-center"
+          />
         </div>
 
-        <Button type="submit" variant="primary" className="mt-4 w-full">
+        <Button type="submit" variant="primary" className="mt-4 w-[50%]">
           {submitLabel ?? (initialized ? "Ajuster" : "Initialiser")}
         </Button>
       </div>
