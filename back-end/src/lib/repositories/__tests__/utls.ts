@@ -11,13 +11,13 @@ async function truncateAll(table: string) {
       break;
     }
     case 'item_type': {
-      await prisma.itemType.deleteMany();
+      await prisma.type.deleteMany();
       break;
     }
     case 'item_category': {
       // Child table first to avoid FK violations
-      await prisma.itemType.deleteMany();
-      await prisma.itemCategory.deleteMany();
+      await prisma.type.deleteMany();
+      await prisma.category.deleteMany();
       break;
     }
     default: {

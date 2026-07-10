@@ -23,6 +23,7 @@
     "test:api": "vitest run --config vitest.api.config.ts",
     "test:bdd": "bash ./scripts/test-db.sh",
     "test:bdd:raw": "vitest run --config vitest.bdd.config.ts",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
     "format": "prettier \"src/**/*.{ts,tsx,js,json,md}\" --check",
