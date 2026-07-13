@@ -116,4 +116,42 @@ describe("PedCardForm", () => {
       });
     });
   });
+
+  it("calls onSuccess after a successful submission", async () => {
+    const user = userEvent.setup();
+    const queryClient = new QueryClient({
+      defaultOptions: {
+        queries: { retry: false },
+      },
+    });
+    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+    const onSuccess = vi.fn();
+
+    const { container } = render(
+      <QueryClientProvider client={queryClient}>
+        <PedCardForm
+          initialized={true}
+          balance={100}
+          onSuccess={onSuccess}
+        />
+      </QueryClientProvider>,
+    );
+
+    const input = container.querySelector<HTMLInputElement>(
+      'input[name="updatedValue"]',
+    );
+
+    expect(input).not.toBeNull();
+    await user.clear(input as HTMLInputElement);
+    await user.type(input as HTMLInputElement, "130");
+    await user.click(screen.getByRole("button", { name: "Ajuster" }));
+
+    await waitFor(() => {
+      expect(mockCreatePedCardEntry).toHaveBeenCalledOnce();
+      expect(invalidateSpy).toHaveBeenCalledWith({
+        queryKey: ["pedCard"],
+      });
+      expect(onSuccess).toHaveBeenCalledOnce();
+    });
+  });
 });

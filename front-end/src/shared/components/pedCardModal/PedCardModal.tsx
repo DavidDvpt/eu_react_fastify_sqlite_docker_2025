@@ -14,6 +14,8 @@ function PedCardModal({
   balance,
   hasInitialBalance,
 }: PedCardModalProps) {
+  const handleSuccess = () => onOpenChange(false);
+
   return (
     <ModalGeneric
       dialogType="form"
@@ -23,7 +25,11 @@ function PedCardModal({
       noClose={false}
       title={{ value: "PedCard" }}
     >
-      <PedCardForm initialized={hasInitialBalance === true} balance={balance} />
+      <PedCardForm
+        initialized={hasInitialBalance === true}
+        balance={balance}
+        onSuccess={handleSuccess}
+      />
     </ModalGeneric>
   );
 }

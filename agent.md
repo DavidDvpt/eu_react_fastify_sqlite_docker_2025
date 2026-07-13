@@ -34,6 +34,9 @@
 - Use Prisma for all database access
 - Do not write raw SQL unless strictly necessary
 - Validate all inputs with Zod
+- Never create, edit, or delete files under `back-end/prisma/migrations` manually.
+- Always use the Prisma CLI to generate migrations automatically.
+- If a schema change requires a migration, generate it with the appropriate Prisma command instead of touching migration files directly.
 
 ## Tests
 

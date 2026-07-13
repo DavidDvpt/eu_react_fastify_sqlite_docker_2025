@@ -7,7 +7,6 @@ export const pedCardFormDefaultValues: PedCardFormValues = {
 
 export const pedCardFormSchema = z.object({
   updatedValue: z.coerce
-    .number()
-    .int()
+    .number("La valeur doit etre un nombre")
     .nonnegative("La valeur ne peut pas etre négative."),
 });

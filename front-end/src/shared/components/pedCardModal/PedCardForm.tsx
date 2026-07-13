@@ -10,9 +10,15 @@ interface PedCardFormProps {
   initialized?: boolean;
   balance: number | null;
   submitLabel?: string;
+  onSuccess?: () => void | Promise<void>;
 }
 
-function PedCardForm({ initialized, balance, submitLabel }: PedCardFormProps) {
+function PedCardForm({
+  initialized,
+  balance,
+  submitLabel,
+  onSuccess,
+}: PedCardFormProps) {
   const queryClient = useQueryClient();
 
   const handleSubmit = async (data: PedCardFormValues) => {
@@ -28,6 +34,7 @@ function PedCardForm({ initialized, balance, submitLabel }: PedCardFormProps) {
     });
 
     await queryClient.invalidateQueries({ queryKey: ["pedCard"] });
+    await onSuccess?.();
   };
 
   return (
