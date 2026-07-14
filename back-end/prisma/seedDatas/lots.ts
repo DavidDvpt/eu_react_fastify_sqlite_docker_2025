@@ -14,13 +14,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "035EDE3E-2DBE-4377-AAA0-5B0FDB947209",
-    "quantity_remaining": 300,
-    "quantity_exported": 0,
-    "price_remaining": "54.0",
+    "quantity_remaining": 260,
+    "quantity_exported": 40,
+    "price_remaining": "45.000000000000014",
     "item_id": "5FD0DE31-33A5-49F1-86D9-4E9C5945335A",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.716",
-    "date_updated": "2025-10-21 13:37:17.716",
+    "date_updated": "2026-07-13T14:50:43.046Z",
     "is_active": true
   },
   {
@@ -333,13 +333,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "2F21C92A-65F2-4C48-A06D-928EB07C4748",
-    "quantity_remaining": 80,
-    "quantity_exported": 0,
-    "price_remaining": "8.0",
+    "quantity_remaining": 0,
+    "quantity_exported": 80,
+    "price_remaining": "0",
     "item_id": "F85D331F-07D0-4C8B-99C0-F1FC003D67B8",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
-    "date_updated": "2025-10-21 13:37:17.72",
+    "date_updated": "2026-06-30T21:24:45.767Z",
     "is_active": true
   },
   {
@@ -355,13 +355,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "337A9735-D25E-4B13-B45B-C6A96F30F8BA",
-    "quantity_remaining": 2557,
-    "quantity_exported": 0,
-    "price_remaining": "51.14",
+    "quantity_remaining": 1857,
+    "quantity_exported": 700,
+    "price_remaining": "37.14",
     "item_id": "4E4F11B9-FCE3-4122-9505-EEFFBB49C2C4",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
-    "date_updated": "2025-10-21 13:37:17.703",
+    "date_updated": "2026-07-14T07:32:46.724Z",
     "is_active": true
   },
   {
@@ -454,13 +454,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "3C81BEBC-F1CB-4B7D-9FED-91894469655C",
-    "quantity_remaining": 85,
-    "quantity_exported": 0,
-    "price_remaining": "63.75",
+    "quantity_remaining": 0,
+    "quantity_exported": 85,
+    "price_remaining": "0",
     "item_id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
-    "date_updated": "2025-10-21 13:37:17.713",
+    "date_updated": "2026-06-28T15:43:19.070Z",
     "is_active": true
   },
   {
@@ -509,13 +509,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "41AEEA04-A8DA-4619-8E18-32DB167E0FB4",
-    "quantity_remaining": 7216,
-    "quantity_exported": 0,
-    "price_remaining": "432.96",
+    "quantity_remaining": 4898,
+    "quantity_exported": 2318,
+    "price_remaining": "269.63999999999993",
     "item_id": "ED9F9E49-6929-430F-BDAF-F451B282FEC2",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
-    "date_updated": "2025-10-21 13:37:17.72",
+    "date_updated": "2026-07-13T09:09:09.284Z",
     "is_active": true
   },
   {
@@ -751,13 +751,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "61F16C52-99D7-4272-AE7B-B4386C31036F",
-    "quantity_remaining": 438,
-    "quantity_exported": 0,
-    "price_remaining": "43.8",
+    "quantity_remaining": 392,
+    "quantity_exported": 46,
+    "price_remaining": "37.099999999999994",
     "item_id": "F85D331F-07D0-4C8B-99C0-F1FC003D67B8",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
-    "date_updated": "2025-10-21 13:37:17.72",
+    "date_updated": "2026-07-13T14:53:14.235Z",
     "is_active": true
   },
   {
@@ -773,13 +773,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "64F05190-A006-4FC3-9310-EB712B6E67A6",
-    "quantity_remaining": 407,
-    "quantity_exported": 0,
-    "price_remaining": "24.42",
+    "quantity_remaining": 0,
+    "quantity_exported": 407,
+    "price_remaining": "3.2751579226442118e-15",
     "item_id": "ED9F9E49-6929-430F-BDAF-F451B282FEC2",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
-    "date_updated": "2025-10-21 13:37:17.71",
+    "date_updated": "2026-06-29T07:18:44.795Z",
     "is_active": true
   },
   {
@@ -795,13 +795,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "67B72688-3A57-4BD2-8A72-B66E9A79BD99",
-    "quantity_remaining": 321,
-    "quantity_exported": 0,
-    "price_remaining": "96.3",
+    "quantity_remaining": 271,
+    "quantity_exported": 50,
+    "price_remaining": "81.3",
     "item_id": "42963146-5158-4666-8EE8-A71925481958",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.696",
-    "date_updated": "2025-10-21 13:37:17.696",
+    "date_updated": "2026-07-13T14:52:41.343Z",
     "is_active": true
   },
   {
@@ -839,13 +839,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "6B074A93-4945-4E70-BFCD-94B05F142922",
-    "quantity_remaining": 273,
-    "quantity_exported": 0,
-    "price_remaining": "204.75",
+    "quantity_remaining": 0,
+    "quantity_exported": 273,
+    "price_remaining": "0",
     "item_id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
-    "date_updated": "2025-10-21 13:37:17.713",
+    "date_updated": "2026-06-30T16:06:24.955Z",
     "is_active": true
   },
   {
@@ -872,13 +872,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "71646ED8-7AE9-4927-AB9D-45644C9547D7",
-    "quantity_remaining": 273,
-    "quantity_exported": 0,
-    "price_remaining": "204.75",
+    "quantity_remaining": 0,
+    "quantity_exported": 273,
+    "price_remaining": "0",
     "item_id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
-    "date_updated": "2025-10-21 13:37:17.713",
+    "date_updated": "2026-06-30T22:41:30.631Z",
     "is_active": true
   },
   {
@@ -927,13 +927,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "7A03D089-FF14-421F-B491-8F63013C54B8",
-    "quantity_remaining": 202,
-    "quantity_exported": 0,
-    "price_remaining": "151.5",
+    "quantity_remaining": 0,
+    "quantity_exported": 202,
+    "price_remaining": "0",
     "item_id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
-    "date_updated": "2025-10-21 13:37:17.713",
+    "date_updated": "2026-07-06T07:48:05.847Z",
     "is_active": true
   },
   {
@@ -1125,13 +1125,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "913CEE7F-4EDC-4C63-9E74-D274583A22E2",
-    "quantity_remaining": 30,
-    "quantity_exported": 0,
-    "price_remaining": "11.4",
+    "quantity_remaining": 0,
+    "quantity_exported": 30,
+    "price_remaining": "0",
     "item_id": "D928A001-5B14-4185-A79C-BE5BE7BC7601",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.646",
-    "date_updated": "2025-10-21 13:37:17.646",
+    "date_updated": "2026-06-30T16:44:39.581Z",
     "is_active": true
   },
   {
@@ -1213,13 +1213,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "99D571A1-A8E3-436C-A193-B60BAED774BC",
-    "quantity_remaining": 504,
-    "quantity_exported": 0,
-    "price_remaining": "20.16",
+    "quantity_remaining": 104,
+    "quantity_exported": 400,
+    "price_remaining": "0.16000000000000014",
     "item_id": "068C9188-821C-4E74-9A54-F6C03C07333F",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.69",
-    "date_updated": "2025-10-21 13:37:17.69",
+    "date_updated": "2026-07-14T07:32:52.151Z",
     "is_active": true
   },
   {
@@ -1334,13 +1334,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA",
-    "quantity_remaining": 1485,
-    "quantity_exported": 0,
-    "price_remaining": "356.4",
+    "quantity_remaining": 285,
+    "quantity_exported": 1200,
+    "price_remaining": "44.39999999999998",
     "item_id": "39E70583-067C-4459-BFD4-1C50DB0A9BF0",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.72",
-    "date_updated": "2025-10-21 13:37:17.72",
+    "date_updated": "2026-07-14T07:37:39.638Z",
     "is_active": true
   },
   {
@@ -1356,13 +1356,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "B403DEE5-133A-455B-9CB6-D0F0CA9D1B43",
-    "quantity_remaining": 3770,
-    "quantity_exported": 0,
-    "price_remaining": "113.1",
+    "quantity_remaining": 3366,
+    "quantity_exported": 404,
+    "price_remaining": "97.94999999999999",
     "item_id": "F9A28E31-AA19-419F-B2FD-02C3882EF13C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.703",
-    "date_updated": "2025-10-21 13:37:17.703",
+    "date_updated": "2026-07-08T16:42:38.806Z",
     "is_active": true
   },
   {
@@ -1411,13 +1411,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "BD33C859-BB90-4769-A5CA-E589ECC09E1D",
-    "quantity_remaining": 547,
-    "quantity_exported": 0,
-    "price_remaining": "65.64",
+    "quantity_remaining": 227,
+    "quantity_exported": 320,
+    "price_remaining": "27.239999999999995",
     "item_id": "2B897E98-2235-4227-ACE4-D429BD172A7A",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.71",
-    "date_updated": "2025-10-21 13:37:17.71",
+    "date_updated": "2026-07-13T14:49:58.438Z",
     "is_active": true
   },
   {
@@ -1752,13 +1752,13 @@ export const LOTS: Prisma.LotCreateManyInput[] = [
   },
   {
     "id": "F6519BEE-3B5C-4188-8EE8-797A8FE55973",
-    "quantity_remaining": 128,
-    "quantity_exported": 0,
-    "price_remaining": "96.0",
+    "quantity_remaining": 94,
+    "quantity_exported": 34,
+    "price_remaining": "32.25",
     "item_id": "19550156-5630-4BF9-8AFA-827ACC250A2C",
     "lot_type": "SESSION_LINE",
     "date_created": "2025-10-21 13:37:17.713",
-    "date_updated": "2025-10-21 13:37:17.713",
+    "date_updated": "2026-07-13T09:04:23.815Z",
     "is_active": true
   },
   {

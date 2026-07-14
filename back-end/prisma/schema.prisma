@@ -181,14 +181,14 @@ model SessionLot {
 }
 
 model Transaction {
-  id               String          @id @default(uuid())
-  cost_tt          Decimal         @default(0)
-  cost_ttc         Decimal         @default(0)
-  win_tt           Decimal         @default(0)
-  win_ttc          Decimal         @default(0)
+  id               String            @id @default(uuid())
+  tt               Decimal           @default(0)
+  fee              Decimal           @default(0)
+  ttc              Decimal           @default(0)
   transaction_type TransactionType
-  clics            Int             @default(0)
-  status           SessionStatus   @default(OPENNED)
+  status           TransactionStatus @default(RUNNING)
+  created_at       DateTime          @default(now())
+  updated_at       DateTime?
   user_id          String
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
