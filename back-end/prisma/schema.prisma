@@ -71,26 +71,25 @@ enum PedCardTupleType {
 }
 
 model User {
-  id              String           @id @default(uuid())
-  firstname       String?
-  lastname        String?
-  pseudo          String           @unique
-  email           String           @unique
-  password_hash   String
-  role            Role
-  date_created    String
-  date_updated    String?
-  is_active       Boolean          @default(true)
-  itemCategories  Category[]
-  itemTypes       Type[]
-  items           Item[]
-  lots            Lot[]
-  sessions        Session[]
-  sessionLines    SessionLine[]
-  sessionLots     SessionLot[]
-  transactions    Transaction[]
-  transactionLots TransactionLot[]
-  pedCardEntries  PedCard[]
+  id             String        @id @default(uuid())
+  firstname      String?
+  lastname       String?
+  pseudo         String        @unique
+  email          String        @unique
+  password_hash  String
+  role           Role
+  date_created   String
+  date_updated   String?
+  is_active      Boolean       @default(true)
+  itemCategories Category[]
+  itemTypes      Type[]
+  items          Item[]
+  lots           Lot[]
+  sessions       Session[]
+  sessionLines   SessionLine[]
+  sessionLots    SessionLot[]
+  transactions   Transaction[]
+  pedCardEntries PedCard[]
 
   @@map("user")
 }
@@ -201,27 +200,14 @@ model Transaction {
 }
 
 model TransactionLot {
-  id               String             @id @default(uuid())
-  transaction_id   String
-  item_id          String
-  inventory_lot_id String?
-  quantity         Int
-  line_type        SessionLineType
-  line_status      SessionStatus      @default(OPENNED)
-  sale_status      TransactionStatus?
-  tt               Decimal            @default(0)
-  ttc              Decimal            @default(0)
-  user_id          String
+  transaction_id String
+  lot_id         String
+  quantity       Int
 
   transaction Transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
-  item        Item        @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  lot         Lot?        @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
-  user        User        @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  lot         Lot         @relation(fields: [lot_id], references: [id])
 
-  @@index([transaction_id])
-  @@index([item_id])
-  @@index([inventory_lot_id])
-  @@index([user_id])
+  @@unique([transaction_id, lot_id])
   @@map("transaction_lot")
 }
 
@@ -279,9 +265,8 @@ model Item {
 
   lots Lot[]
 
-  session_lines    SessionLine[]
-  session_lots     SessionLot[]
-  transaction_lots TransactionLot[]
+  session_lines SessionLine[]
+  session_lots  SessionLot[]
 
   @@map("item")
 }

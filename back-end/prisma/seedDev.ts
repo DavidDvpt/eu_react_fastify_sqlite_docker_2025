@@ -5,10 +5,6 @@ import { LOTS } from './seedDatas/lots.js';
 import { TRANSACTIONS_BUY, TRANSACTION_BUY_LINES } from './seedDatas/transaction_buy.js';
 import { TRANSACTIONS_SELL, TRANSACTION_SELL_LINES } from './seedDatas/transaction_sell.js';
 import { USERS } from './seedDatas/user.js';
-import {
-  TRANSACTION_SELL_LINES_NEW,
-  TRANSACTIONS_SELL_NEW,
-} from './seedDatas/transaction_sell_from_sql.js';
 
 const userRepository = new UserRepository(prismaClient);
 const DEFAULT_DATA_USER_ID = env.DEV_DATA_USER_ID;
@@ -194,11 +190,7 @@ const seedDevData = async () => {
 
   const transactionsCount = await prismaClient.transaction.count();
   if (!transactionsCount) {
-    const transactionsData = [
-      ...TRANSACTIONS_BUY,
-      ...TRANSACTIONS_SELL,
-      ...TRANSACTIONS_SELL_NEW,
-    ].map((transaction) => ({
+    const transactionsData = [...TRANSACTIONS_BUY, ...TRANSACTIONS_SELL].map((transaction) => ({
       ...transaction,
       user_id: userId,
     }));
@@ -218,14 +210,7 @@ const seedDevData = async () => {
 
   const transactionLotsCount = await prismaClient.transactionLot.count();
   if (!transactionLotsCount) {
-    const transactionLotsData = [
-      ...TRANSACTION_BUY_LINES,
-      ...TRANSACTION_SELL_LINES,
-      ...TRANSACTION_SELL_LINES_NEW,
-    ].map((line) => ({
-      ...line,
-      user_id: userId,
-    }));
+    const transactionLotsData = [...TRANSACTION_BUY_LINES, ...TRANSACTION_SELL_LINES];
     await prismaClient.transactionLot.createMany({
       data: transactionLotsData,
       skipDuplicates: true,
