@@ -1,4 +1,4 @@
-import type { JwtVerifyOpts, PrismaClientType, UserForToken } from './fastify.js';
+import type { JwtVerifyOpts, PrismaClientType, UserForToken } from './fastify.ts';
 import type {
   CategoryRepository,
   ItemRepository,
@@ -7,7 +7,7 @@ import type {
   TransactionRepository,
   TypeRepository,
   UserRepository,
-} from '../lib/repositories/index.js';
+} from '../lib/repositories/index.ts';
 import type { preHandlerAsyncHookHandler, preHandlerHookHandler, FastifyReply } from 'fastify';
 
 declare module 'fastify' {
