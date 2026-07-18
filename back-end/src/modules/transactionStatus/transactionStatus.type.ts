@@ -1,25 +1,14 @@
-import type { SessionStatus, TransactionStatus } from '../../../prisma/generated/client.js';
-
-export type TransactionSellRow = {
-  transactionId: string;
-  name: string;
-  quantity: number;
-  totalPrice: number;
-  linesTotal: number;
-  saleStatus: TransactionStatus | null;
-};
+import type { SessionStatus } from '../../../prisma/generated/client.js';
 
 export type RunningTransactionLineRow = {
-  transactionLotId: string;
-  transactionId: string;
+  id: string;
   itemId: string;
-  itemName: string;
-  inventoryLotId: string | null;
   quantity: number;
   tt: number;
+  fee: number;
   ttc: number;
-  lineStatus: SessionStatus;
-  saleStatus: 'RUNNING';
+  status: 'RUNNING';
+  createdAt: string;
 };
 
 export type UpdateTransactionLineStatusInput = {

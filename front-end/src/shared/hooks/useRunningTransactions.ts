@@ -14,21 +14,19 @@ function useRunningTransactions() {
 
   const grouped = new Map<string, RunningTransaction>();
   for (const line of runningLinesQuery.data ?? []) {
-    const groupKey = `${line.transactionId}:${line.itemId}`;
+    const groupKey = `${line.id}:${line.itemId}`;
+    const item = itemsQuery.items.find((item) => item.id === line.itemId);
     const current = grouped.get(groupKey);
     if (!current) {
       grouped.set(groupKey, {
         groupKey,
-        transactionId: line.transactionId,
-        itemId: line.itemId,
-        itemName: line.itemName,
+        id: line.id,
         quantity: line.quantity,
         tt: line.tt,
+        fee: line.fee,
         ttc: line.ttc,
-        saleStatus: line.saleStatus,
-        lineStatus: line.lineStatus,
-        transactionLotIds: [line.transactionLotId],
-        item: itemsQuery.items.find((item) => item.id === line.itemId) ?? null,
+        status: line.status,
+        item: item ? { ...item, id: line.itemId } : null,
       });
       continue;
     }
@@ -36,7 +34,6 @@ function useRunningTransactions() {
     current.quantity += line.quantity;
     current.tt += line.tt;
     current.ttc += line.ttc;
-    current.transactionLotIds.push(line.transactionLotId);
   }
 
   const rows: RunningTransaction[] = Array.from(grouped.values());

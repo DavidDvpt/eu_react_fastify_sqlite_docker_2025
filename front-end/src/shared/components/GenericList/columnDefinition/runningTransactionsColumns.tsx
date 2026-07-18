@@ -4,6 +4,7 @@ import type {
   CreateRunningTransactionsColumnsOptions,
   GenericListColumn,
   RunningTransaction,
+  TransactionStatus,
 } from "@/shared/types";
 
 const createRunningTransactionsColumns = ({
@@ -21,19 +22,19 @@ const createRunningTransactionsColumns = ({
     bodyCellClassName: "px-1",
     imageSrc: (_, row) =>
       row.item?.imageUrlId
-        ? ImageService.getItemImageUrl(row.item.imageUrlId, "micro") ?? ""
+        ? (ImageService.getItemImageUrl(row.item.imageUrlId, "micro") ?? "")
         : "",
-    imageAlt: (row) => row.item?.name ?? row.itemName,
+    imageAlt: (row) => row.item?.name ?? row.item!.name,
   },
   {
     key: "item",
     label: "Item",
     kind: "text",
-    accessor: "itemName",
+    accessor: "item",
     fillRemainingSpace: true,
     minWidth: 140,
     bodyCellClassName: "font-medium text-table-head-text",
-    value: (row) => row.item?.name ?? row.itemName,
+    value: (row) => row.item?.name ?? row.item!.name,
   },
   {
     key: "quantity",
@@ -71,7 +72,7 @@ const createRunningTransactionsColumns = ({
     key: "status",
     label: "Statut",
     kind: "select",
-    accessor: "saleStatus",
+    accessor: "status",
     minWidth: 110,
     maxWidth: 110,
     align: "right",
@@ -87,7 +88,7 @@ const createRunningTransactionsColumns = ({
         return;
       }
 
-      onStatusChange(row, value as "SOLDED" | "RETURNED");
+      onStatusChange(row, value as TransactionStatus);
     },
   },
 ];

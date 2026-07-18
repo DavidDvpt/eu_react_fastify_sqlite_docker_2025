@@ -2,14 +2,14 @@ import { useNavigate } from "react-router-dom";
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
-import { useUpdateRunningTransactionsStatus } from "../hooks";
+import { useUpdateTransactionsStatus } from "../hooks";
 import useRunningTransactions from "../hooks/useRunningTransactions";
 import type { RunningTransaction, TransactionAction } from "../types";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
   const { rows, isLoading, isError } = useRunningTransactions();
-  const updateStatusMutation = useUpdateRunningTransactionsStatus();
+  const updateStatusMutation = useUpdateTransactionsStatus();
   const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
 
   const openTransactionModal = (
@@ -18,7 +18,7 @@ function RunningTransactionsSection() {
   ) => {
     const query = {
       action,
-      itemId: row.itemId,
+      itemId: row.item!.id,
       ttc: row.ttc,
       quantity: row.quantity,
       closePath: "/home",
@@ -31,22 +31,18 @@ function RunningTransactionsSection() {
   };
 
   const columns = createRunningTransactionsColumns({
-    isRowPending: (row) =>
-      updateStatusMutation.isPending &&
-      row.transactionLotIds.some((id) =>
-        updateStatusMutation.variables?.transactionLotIds?.includes(id),
-      ),
-    onStatusChange: (row, status) => {
+    isRowPending: () => updateStatusMutation.isPending,
+    onStatusChange: (row) => {
       updateStatusMutation.mutate(
         {
-          transactionLotIds: row.transactionLotIds,
-          status,
+          id: row.id,
+          status: row.status,
         },
         {
           onSuccess: () => {
             const isSell = status === "SOLDED";
             navigate({
-              pathname: `/home/${row.itemId}/sell`,
+              pathname: `/home/${row.item!.id}/sell`,
               search: openTransactionModal(
                 isSell ? "newSell" : "resell",
                 row,

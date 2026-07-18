@@ -3,7 +3,6 @@ import { TransactionStatusService } from '../modules/transactionStatus/index.js'
 
 import {
   transactionBodySchema,
-  transactionSellQuerySchema,
   updateTransactionLineStatusBodySchema,
   updateTransactionLineStatusParamsSchema,
 } from './transactionRoutes.schema.js';
@@ -48,13 +47,6 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     }
 
     return reply.code(result.rejected.length ? 207 : 201).send(result);
-  });
-
-  app.get('/transactions/sell', async (request, reply) => {
-    const userId = getRequestUserId(request);
-    const query = transactionSellQuerySchema.parse(request.query);
-    const rows = await app.repos.transactionRepository.getSellSessions(userId, query.status);
-    return reply.code(200).send(rows);
   });
 
   app.get('/transactions/sell/running-lines', async (request, reply) => {

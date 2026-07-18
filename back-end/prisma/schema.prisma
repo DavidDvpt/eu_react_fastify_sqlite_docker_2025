@@ -195,7 +195,7 @@ model Transaction {
   lines          TransactionLot[]
   pedCardEntries PedCard[]
 
-  @@index([user_id])
+  @@index([user_id, status])
   @@map("transaction")
 }
 

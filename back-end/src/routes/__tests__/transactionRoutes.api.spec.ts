@@ -47,7 +47,6 @@ type TransactionTestPrisma = {
 
 type TransactionTestRepos = {
   transactionRepository: {
-    getSellSessions: MockFn;
     getRunningSellLines: MockFn;
   };
   lotStock: {
@@ -97,7 +96,6 @@ describe('transactionRoutes', () => {
     } satisfies TransactionTestPrisma;
 
     const transactionRepository = {
-      getSellSessions: vi.fn(),
       getRunningSellLines: vi.fn(),
     } satisfies TransactionTestRepos['transactionRepository'];
 
@@ -275,40 +273,6 @@ describe('transactionRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
-    await app.close();
-  });
-
-  it('GET /api/v1/transactions/sell returns sell transactions with status filter', async () => {
-    const { app, transactionRepository } = buildApp();
-    vi.mocked(transactionRepository.getSellSessions).mockResolvedValueOnce([
-      {
-        transactionId: 'transaction-1',
-        name: 'Oil',
-        quantity: 100,
-        totalPrice: 145,
-        linesTotal: 2,
-        saleStatus: 'RUNNING',
-      },
-    ]);
-
-    await app.ready();
-    const res = await app.inject({
-      method: 'GET',
-      url: `${API_PREFIX}/transactions/sell?status=RUNNING`,
-    });
-
-    expect(res.statusCode).toBe(200);
-    expect(transactionRepository.getSellSessions).toHaveBeenCalledWith('user-1', 'RUNNING');
-    expect(res.json()).toEqual([
-      {
-        transactionId: 'transaction-1',
-        name: 'Oil',
-        quantity: 100,
-        totalPrice: 145,
-        linesTotal: 2,
-        saleStatus: 'RUNNING',
-      },
-    ]);
     await app.close();
   });
 

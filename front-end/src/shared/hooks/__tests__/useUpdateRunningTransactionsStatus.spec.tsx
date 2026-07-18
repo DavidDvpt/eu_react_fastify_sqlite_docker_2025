@@ -3,14 +3,14 @@ import { renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
-import useUpdateRunningTransactionsStatus from "../useUpdateRunningTransactionsStatus";
+import useUpdateTransactionsStatus from "../useUpdateTransactionsStatus";
 
 const { updateRunningTransactionLineStatusMock } = vi.hoisted(() => ({
   updateRunningTransactionLineStatusMock: vi.fn(),
 }));
 
 vi.mock("@/lib/services/transaction.api", () => ({
-  updateRunningTransactionLineStatus: updateRunningTransactionLineStatusMock,
+  updateTransactionStatus: updateRunningTransactionLineStatusMock,
 }));
 
 function createWrapper(queryClient: QueryClient) {
@@ -21,7 +21,7 @@ function createWrapper(queryClient: QueryClient) {
   };
 }
 
-describe("useUpdateRunningTransactionsStatus", () => {
+describe("useUpdateTransactionsStatus", () => {
   it("invalidates pedCard after a successful status update", async () => {
     updateRunningTransactionLineStatusMock.mockResolvedValue(undefined);
 
@@ -30,7 +30,7 @@ describe("useUpdateRunningTransactionsStatus", () => {
     });
     const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
 
-    const { result } = renderHook(() => useUpdateRunningTransactionsStatus(), {
+    const { result } = renderHook(() => useUpdateTransactionsStatus(), {
       wrapper: createWrapper(queryClient),
     });
 

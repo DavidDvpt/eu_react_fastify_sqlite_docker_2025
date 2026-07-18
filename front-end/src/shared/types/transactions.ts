@@ -10,8 +10,9 @@ export type TransactionFormValues = {
   fee: number;
   buyPrice: number;
 };
-
+export type TransactionPricingField = "quantity" | "fee" | "ttc";
 export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
+export type TransactionStatus = "SOLDED" | "RUNNING" | "RETURNED";
 
 export type TransactionPanelProps = {
   item: ItemInventory;
@@ -97,21 +98,18 @@ export type TransactionExecutionResult = {
 };
 
 export type RunningTransactionLine = {
-  transactionLotId: string;
-  transactionId: string;
+  id: string;
   itemId: string;
-  itemName: string;
-  inventoryLotId: string | null;
   quantity: number;
   tt: number;
+  fee: number;
   ttc: number;
-  lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
-  saleStatus: "RUNNING";
+  status: TransactionStatus;
 };
 
-export type UpdateRunningTransactionLineStatusInput = {
-  transactionLotId: string;
-  status: "SOLDED" | "RETURNED";
+export type UpdateTransactionInput = {
+  id: string;
+  status: TransactionStatus;
 };
 
 export type TransactionPricingSnapshot = TransactionPricingValues & {
@@ -121,9 +119,7 @@ export type TransactionPricingSnapshot = TransactionPricingValues & {
 export type UpdateRunningTransactionLineStatusResult = {
   transactionId: string;
   transactionLotId: string;
-  saleStatus: "SOLDED" | "RETURNED";
-  lineStatus: "CLOSED";
-  transactionStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
+  saleStatus: TransactionStatus;
 };
 
 export type AutoPricingFormValues = {
@@ -160,25 +156,19 @@ export type UseTransactionAutoPricingResult = {
 
 export type RunningTransaction = {
   groupKey: string;
-  transactionId: string;
-  itemId: string;
-  itemName: string;
+  id: string;
   quantity: number;
   tt: number;
+  fee: number;
   ttc: number;
-  saleStatus: "RUNNING";
-  lineStatus: "OPENNED" | "CLOSED" | "ARCHIVED";
-  transactionLotIds: string[];
+  status: TransactionStatus;
 } & {
   item: Item | null;
 };
 
 export type CreateRunningTransactionsColumnsOptions = {
   isRowPending: (row: RunningTransaction) => boolean;
-  onStatusChange: (
-    row: RunningTransaction,
-    status: "SOLDED" | "RETURNED",
-  ) => void;
+  onStatusChange: (row: RunningTransaction, status: TransactionStatus) => void;
 };
 
 export type TransactionPricingValues = {
@@ -186,8 +176,6 @@ export type TransactionPricingValues = {
   fee: number;
   ttc: number;
 };
-
-export type TransactionPricingField = "quantity" | "fee" | "ttc";
 
 export type TransactionPricingInput = TransactionPricingValues & {
   action: TransactionAction;

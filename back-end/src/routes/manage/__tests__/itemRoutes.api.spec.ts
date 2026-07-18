@@ -33,7 +33,7 @@ describe('itemRoutes', () => {
       update: vi.fn(),
     };
     const lotStock = { getStock: vi.fn(), getStockByItemId: vi.fn() };
-    const transactionRepository = { getSellSessions: vi.fn() };
+    const transactionRepository = {};
     const users = {
       findMany: vi.fn(),
       findUnique: vi.fn(),

@@ -4,7 +4,8 @@ import type {
   RunningTransactionLine,
   TransactionBody,
   TransactionExecutionResult,
-  UpdateRunningTransactionLineStatusInput,
+  TransactionStatus,
+  UpdateTransactionInput,
   UpdateRunningTransactionLineStatusResult,
 } from "@/shared/types";
 import API_ROUTES from "./apiRoutes";
@@ -24,12 +25,12 @@ async function getRunningTransactionLines(): Promise<RunningTransactionLine[]> {
   );
 }
 
-async function updateRunningTransactionLineStatus(
-  input: UpdateRunningTransactionLineStatusInput,
+async function updateTransactionStatus(
+  input: UpdateTransactionInput,
 ): Promise<UpdateRunningTransactionLineStatusResult> {
   return axiosCrud(axiosInstance()).patch<
     UpdateRunningTransactionLineStatusResult,
-    { status: "SOLDED" | "RETURNED" }
+    { status: TransactionStatus }
   >(
     `${API_ROUTES.transactionLineStatusRoutes}/${input.transactionLotId}/status`,
     {
@@ -38,8 +39,4 @@ async function updateRunningTransactionLineStatus(
   );
 }
 
-export {
-  transaction,
-  getRunningTransactionLines,
-  updateRunningTransactionLineStatus,
-};
+export { transaction, getRunningTransactionLines, updateTransactionStatus };

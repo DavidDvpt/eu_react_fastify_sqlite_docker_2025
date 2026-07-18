@@ -13,6 +13,7 @@ type SellSourceRow = {
   lot_id: string;
   quantity: number;
 };
+
 const SELL_SOURCE: SellSourceRow[] = [
   {
     transaction_id: '0016DFFB-E880-472A-A83A-6132C9965865',

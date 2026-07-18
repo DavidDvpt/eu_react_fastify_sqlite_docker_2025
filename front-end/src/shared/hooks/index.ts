@@ -11,4 +11,4 @@ export { default as useTypes } from "./useTypes";
 export { default as useTransaction } from "./useTransaction";
 export { default as useTransactionAutoPricing } from "./useTransactionAutoPricing";
 export { default as useRunningTransaction } from "./useRunningTransactions";
-export { default as useUpdateRunningTransactionsStatus } from "./useUpdateRunningTransactionsStatus";
+export { default as useUpdateTransactionsStatus } from "./useUpdateTransactionsStatus";

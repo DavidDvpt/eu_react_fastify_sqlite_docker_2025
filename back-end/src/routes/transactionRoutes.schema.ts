@@ -1,9 +1,5 @@
 import { z } from 'zod';
 
-export const transactionSellQuerySchema = z.object({
-  status: z.enum(['RUNNING', 'SOLDED', 'RETURNED']).optional(),
-});
-
 const transactionLineBaseSchema = z.object({
   itemId: z.string().min(1),
   quantity: z.number().int().positive(),
