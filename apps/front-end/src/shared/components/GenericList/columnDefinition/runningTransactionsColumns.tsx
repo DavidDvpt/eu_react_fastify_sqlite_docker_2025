@@ -4,8 +4,8 @@ import type {
   CreateRunningTransactionsColumnsOptions,
   GenericListColumn,
   RunningTransaction,
-  TransactionStatus,
 } from "@/shared/types";
+import type { TransactionStatusDto } from "@eu/types";
 
 const createRunningTransactionsColumns = ({
   isRowPending,
@@ -88,7 +88,7 @@ const createRunningTransactionsColumns = ({
         return;
       }
 
-      onStatusChange(row, value as TransactionStatus);
+      onStatusChange(row, value as TransactionStatusDto);
     },
   },
 ];

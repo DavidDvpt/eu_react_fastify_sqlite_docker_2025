@@ -1,8 +1,10 @@
 import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
-import type { UseFormReturn } from "node_modules/react-hook-form/dist/types/form";
+
 import type { Item } from "@/shared/types";
 import type { ItemInventory } from "@/pages/inventoryPage/inventory/stockTypes";
+import type { UseFormReturn } from "react-hook-form";
+import type { TransactionStatusDto } from "@eu/types";
 
 export type TransactionFormValues = {
   autoCalculation: boolean;
@@ -12,15 +14,12 @@ export type TransactionFormValues = {
 };
 export type TransactionPricingField = "quantity" | "fee" | "ttc";
 export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
-export type TransactionStatus = "SOLDED" | "RUNNING" | "RETURNED";
 
 export type TransactionPanelProps = {
   item: ItemInventory;
   onBack: () => void;
   modalParams: TransactionModalParams;
-  defaultValues?: Partial<
-    Pick<AutoPricingFormValues, "quantity" | "fee" | "ttc">
-  >;
+  defaultValues?: Partial<Pick<AutoPricingFormValues, TransactionPricingField>>;
 };
 
 export type TransactionFormFieldsProps = Pick<
@@ -104,12 +103,12 @@ export type RunningTransactionLine = {
   tt: number;
   fee: number;
   ttc: number;
-  status: TransactionStatus;
+  status: TransactionStatusDto;
 };
 
 export type UpdateTransactionInput = {
   id: string;
-  status: TransactionStatus;
+  status: TransactionStatusDto;
 };
 
 export type TransactionPricingSnapshot = TransactionPricingValues & {
@@ -119,7 +118,7 @@ export type TransactionPricingSnapshot = TransactionPricingValues & {
 export type UpdateRunningTransactionLineStatusResult = {
   transactionId: string;
   transactionLotId: string;
-  saleStatus: TransactionStatus;
+  saleStatus: TransactionStatusDto;
 };
 
 export type AutoPricingFormValues = {
@@ -161,14 +160,17 @@ export type RunningTransaction = {
   tt: number;
   fee: number;
   ttc: number;
-  status: TransactionStatus;
+  status: TransactionStatusDto;
 } & {
   item: Item | null;
 };
 
 export type CreateRunningTransactionsColumnsOptions = {
   isRowPending: (row: RunningTransaction) => boolean;
-  onStatusChange: (row: RunningTransaction, status: TransactionStatus) => void;
+  onStatusChange: (
+    row: RunningTransaction,
+    status: TransactionStatusDto,
+  ) => void;
 };
 
 export type TransactionPricingValues = {
