@@ -1,11 +1,11 @@
 FROM node:24-alpine3.22 AS deps
 WORKDIR /app/back-end
-COPY back-end/package*.json ./
+COPY apps/back-end/package*.json ./
 RUN npm ci
 
 FROM deps AS build
 WORKDIR /app/back-end
-COPY back-end/ ./
+COPY apps/back-end/ ./
 RUN npm run build
 RUN npx prisma generate
 
@@ -16,7 +16,7 @@ ENV NODE_ENV=production
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache postgresql-client
 
-COPY back-end/package*.json ./
+COPY apps/back-end/package*.json ./
 RUN npm ci
 
 COPY --from=build /app/back-end/dist ./dist

@@ -1,13 +1,13 @@
 module.exports = {
-  "back-end/**/*.{ts,tsx,js}": [
-    "cd back-end && npm run lint --if-present -- --fix",
-    "cd back-end && npm run format:fix --if-present",
+  "apps/back-end/**/*.{ts,tsx,js}": [
+    "cd apps/back-end && npm run lint --if-present -- --fix",
+    "cd apps/back-end && npm run format:fix --if-present",
   ],
-  "front-end/**/*.{ts,tsx,js}": [
-    "cd front-end && npm run lint --if-present -- --fix",
+  "apps/front-end/**/*.{ts,tsx,js}": [
+    "cd apps/front-end && npm run lint --if-present -- --fix",
   ],
   "*.{json,md}": [
-    "cd back-end && npm run format:fix --if-present",
-    "cd front-end && npm run format:fix --if-present",
+    "cd apps/back-end && npm run format:fix --if-present",
+    "cd apps/front-end && npm run format:fix --if-present",
   ],
 };

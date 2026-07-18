@@ -1,8 +1,8 @@
 FROM node:24-alpine3.22 AS build
 WORKDIR /app/front-end
-COPY front-end/package*.json ./
+COPY apps/front-end/package*.json ./
 RUN npm ci
-COPY front-end/ ./
+COPY apps/front-end/ ./
 RUN npm run build:docker
 
 FROM node:24-alpine3.22 AS runtime

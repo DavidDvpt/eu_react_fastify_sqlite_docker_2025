@@ -7,13 +7,13 @@ ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
 echo "***********************"
 echo "🧪 Running BDD tests..."
 echo "***********************"
-sh "$ROOT_DIR/back-end/scripts/test-db.sh"
+sh "$ROOT_DIR/apps/back-end/scripts/test-db.sh"
 
 echo "***********************"
 echo "🧪 Running API tests..."
 echo "***********************"
 (
-  cd "$ROOT_DIR/back-end"
+  cd "$ROOT_DIR/apps/back-end"
   npm run test:api
 )
 
@@ -21,6 +21,6 @@ echo "***********************"
 echo "🧪 Running frontend tests..."
 echo "***********************"
 (
-  cd "$ROOT_DIR/front-end"
+  cd "$ROOT_DIR/apps/front-end"
   npm run test:front
 )

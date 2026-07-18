@@ -25,7 +25,6 @@ database/data/*.db
 docker-volumes/
 
 # Prisma generated client (backend)
-back-end/prisma/generated/
+apps/back-end/prisma/generated/
 
 storage
-

@@ -2,11 +2,14 @@
 
 set -e
 
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+ROOT_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
+
 DB_CONTAINER="app_eu_db_dev"
 API_PORT=8020
 FRONT_PORT=5173
 DB_COMPOSE_PROJECT="app_eu_dev"
-DB_COMPOSE_FILE="docker/docker-compose.dev.yml"
+DB_COMPOSE_FILE="$ROOT_DIR/docker/docker-compose.dev.yml"
 
 echo "-----------------------------------------"
 echo "🛑 DEV STOP SCRIPT"

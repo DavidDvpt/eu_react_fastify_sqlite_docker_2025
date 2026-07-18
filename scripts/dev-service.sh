@@ -2,11 +2,31 @@
 
 set -e
 
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+ROOT_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/.." && pwd)
+
 SERVICE="$1"
 ACTION="$2"
 
 API_PORT=8020
 FRONT_PORT=5173
+BACKEND_DIR="$ROOT_DIR/apps/back-end"
+FRONTEND_DIR="$ROOT_DIR/apps/front-end"
+VITE_BIN="$ROOT_DIR/node_modules/.bin/vite"
+
+load_env_file() {
+  ENV_FILE="$1"
+
+  if [ ! -f "$ENV_FILE" ]; then
+    echo "Missing env file: $ENV_FILE"
+    exit 1
+  fi
+
+  set -a
+  # shellcheck disable=SC1090
+  . "$ENV_FILE"
+  set +a
+}
 
 usage() {
   echo "Usage: sh ./scripts/dev-service.sh <api|front> <start|stop|restart|status>"
@@ -60,8 +80,9 @@ start_api() {
 
   echo "Starting API..."
   (
-    cd back-end
-    npx dotenv -e .env.dev -- npm run dev
+    load_env_file "$BACKEND_DIR/.env.dev"
+    cd "$BACKEND_DIR"
+    npm run dev
   ) &
 }
 
@@ -73,8 +94,9 @@ start_front() {
 
   echo "Starting front..."
   (
-    cd front-end
-    npx env-cmd -f ./config/.env.dev -- npm run dev
+    load_env_file "$FRONTEND_DIR/config/.env.dev"
+    cd "$FRONTEND_DIR"
+    "$VITE_BIN"
   ) &
 }
 

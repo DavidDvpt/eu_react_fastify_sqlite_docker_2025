@@ -1,6 +1,11 @@
 {
   "name": "eu_react_fastify_docker",
   "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
   "main": "index.js",
   "scripts": {
     "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
@@ -26,10 +31,5 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "wait-port": "^1.1.0"
-  },
-  "dependencies": {
-    "argon2": "^0.44.0",
-    "fastify-type-provider-zod": "^6.1.0",
-    "zod": "^4.2.1"
   }
 }
