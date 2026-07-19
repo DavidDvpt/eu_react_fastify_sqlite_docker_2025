@@ -34,7 +34,7 @@ afterAll(async () => {
   await prisma.$disconnect();
 });
 
-describe('ItemRepository CRUD', () => {
+describe('Item CRUD', () => {
   function createOwnerUserId() {
     return DEFAULT_OWNER_ID;
   }

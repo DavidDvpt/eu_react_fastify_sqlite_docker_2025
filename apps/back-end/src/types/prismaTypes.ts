@@ -36,8 +36,6 @@ type CrudRepositoryOptions = {
 };
 
 type RepositoryClient = PrismaModelClient<'User'> &
-  PrismaModelClient<'Category'> &
-  PrismaModelClient<'Type'> &
   PrismaModelClient<'Item'> &
   PrismaModelClient<'Lot'> &
   PrismaModelClient<'PedCard'> &
@@ -46,10 +44,8 @@ type RepositoryClient = PrismaModelClient<'User'> &
 type LotClient = PrismaModelClient<'Lot'>;
 type SeedPatchClient = PrismaModelClient<'SeedPatch'>;
 type PrismaLikeClient = PrismaClient | Prisma.TransactionClient;
-type TypeClient = PrismaModelClient<'Type'>;
 type UserClient = PrismaModelClient<'User'>;
 type ItemClient = PrismaModelClient<'Item'>;
-type CategoryClient = PrismaModelClient<'Category'>;
 type PedCardClient = PrismaModelClient<'PedCard'>;
 
 export type {
@@ -63,9 +59,7 @@ export type {
   LotClient,
   PrismaLikeClient,
   SeedPatchClient,
-  TypeClient,
   UserClient,
   ItemClient,
-  CategoryClient,
   PedCardClient,
 };

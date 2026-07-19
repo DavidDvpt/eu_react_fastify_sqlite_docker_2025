@@ -9,7 +9,7 @@ export type {
   TransatcionPatchDto,
 } from "./transaction.js";
 
-export type { ItemDto } from "./item.js";
+export type { ItemDto, ItemFormBody } from "./item.js";
 
 export type { StockAvailabilityRow, StockAvailabilityRows } from "./stock.js";
 

@@ -1,3 +1,6 @@
+import type { itemFormSchema } from "@eu/zod-schemas";
+import { z } from "zod";
+
 export type ItemDto = {
   id: string;
   name: string;
@@ -15,3 +18,5 @@ export type ItemDto = {
   type?: any;
   category?: any;
 };
+
+export type ItemFormBody = z.infer<typeof itemFormSchema>;

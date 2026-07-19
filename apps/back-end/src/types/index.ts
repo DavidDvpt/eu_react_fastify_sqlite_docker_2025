@@ -9,10 +9,8 @@ export type {
   LotClient,
   PrismaLikeClient,
   SeedPatchClient,
-  TypeClient,
   UserClient,
   ItemClient,
-  CategoryClient,
   PedCardClient,
 } from './prismaTypes.js';
 export type {

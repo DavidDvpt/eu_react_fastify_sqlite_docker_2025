@@ -15,7 +15,6 @@ import { Role } from '../../../prisma/generated/enums.js';
 import type { UserForToken } from '../../types/fastify.js';
 import HashTools from '../../lib/security/HashTools.js';
 import authPlugin from '../../plugins/authPlugin.js';
-import repositoryPlugin from '../../plugins/repositories.js';
 import { AUTH_API_PREFIX, AUTH_PREFIX } from '../../config/routes.js';
 
 const meUserMock: UserForToken = {
@@ -175,7 +174,7 @@ describe('authRoutes', () => {
     const { app, usersRepo } = buildSigninApp();
 
     vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(loginMock as any);
-    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(true as any);
+    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(true);
 
     await app.ready();
 
@@ -290,7 +289,7 @@ describe('authRoutes', () => {
     await app.ready();
 
     vi.spyOn(app.repos.users, 'findUnique').mockResolvedValueOnce(loginMock as any);
-    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(false as any);
+    vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(false);
 
     const res = await app.inject({
       method: 'POST',
