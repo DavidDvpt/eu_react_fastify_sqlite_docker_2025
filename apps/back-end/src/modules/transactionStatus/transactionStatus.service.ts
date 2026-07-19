@@ -7,8 +7,9 @@ import type { PrismaClient, SessionStatus } from '../../../prisma/generated/clie
 class TransactionStatusService {
   constructor(private readonly prisma: PrismaClient) {}
 
-  async updateTransactionLineStatus(
+  async patchTransaction(
     userId: string,
+    transactionId:string
     input: UpdateTransactionLineStatusInput
   ): Promise<UpdateTransactionLineStatusResult> {
     return this.prisma.$transaction(async (tx) => {

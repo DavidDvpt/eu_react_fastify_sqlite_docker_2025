@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getRunningTransactionLines } from "@/lib/services/transaction.api";
+import { getRunningTransactions } from "@/lib/services/transactionApi";
 import { useItems } from "@/shared/hooks";
 import type { RunningTransaction } from "@/shared/types/transactions";
 
 function useRunningTransactions() {
   const runningLinesQuery = useQuery({
     queryKey: ["running-sell-lines"],
-    queryFn: getRunningTransactionLines,
+    queryFn: getRunningTransactions,
     staleTime: 10_000,
   });
   const itemsQuery = useItems({ prefillSelect: true });

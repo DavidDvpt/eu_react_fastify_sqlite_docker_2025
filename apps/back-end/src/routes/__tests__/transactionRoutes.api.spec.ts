@@ -46,7 +46,7 @@ type TransactionTestPrisma = {
 };
 
 type TransactionTestRepos = {
-  transactionRepository: {
+  transaction: {
     getRunningSellLines: MockFn;
   };
   lotStock: {
@@ -95,9 +95,9 @@ describe('transactionRoutes', () => {
       $transaction: vi.fn((callback: (trx: typeof tx) => unknown) => Promise.resolve(callback(tx))),
     } satisfies TransactionTestPrisma;
 
-    const transactionRepository = {
+    const transaction = {
       getRunningSellLines: vi.fn(),
-    } satisfies TransactionTestRepos['transactionRepository'];
+    } satisfies TransactionTestRepos['transaction'];
 
     const lotStock = {
       getStock: vi.fn(),
@@ -111,7 +111,7 @@ describe('transactionRoutes', () => {
     const app = Object.assign(Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>(), {
       prisma,
       repos: {
-        transactionRepository,
+        transaction,
         lotStock,
       },
       protect(this: FastifyInstance) {
@@ -127,7 +127,7 @@ describe('transactionRoutes', () => {
 
     app.register(transactionRoutes, { prefix: API_PREFIX });
 
-    return { app, transactionRepository, prisma, tx, lotStock };
+    return { app, transaction, prisma, tx, lotStock };
   }
 
   it('POST /api/v1/transactions with type=buy creates transaction and IN line', async () => {
@@ -276,9 +276,9 @@ describe('transactionRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/transactions/sell/running-lines returns running sell lines for authenticated user', async () => {
-    const { app, transactionRepository } = buildApp();
-    vi.mocked(transactionRepository.getRunningSellLines).mockResolvedValueOnce([
+  it('GET /api/v1/transactions/running-lines returns running sell lines for authenticated user', async () => {
+    const { app, transaction } = buildApp();
+    vi.mocked(transaction.getRunningSellLines).mockResolvedValueOnce([
       {
         transactionLotId: 'line-1',
         transactionId: 'transaction-1',
@@ -296,11 +296,11 @@ describe('transactionRoutes', () => {
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/transactions/sell/running-lines`,
+      url: `${API_PREFIX}/transactions/running-lines`,
     });
 
     expect(res.statusCode).toBe(200);
-    expect(transactionRepository.getRunningSellLines).toHaveBeenCalledWith('user-1');
+    expect(transaction.getRunningSellLines).toHaveBeenCalledWith('user-1');
     expect(res.json()).toEqual([
       {
         transactionLotId: 'line-1',

@@ -1,10 +1,10 @@
 import type { LotStockRepository } from '../../lib/repositories/index.js';
 import type {
   SellableLotRow,
-  StockAvailabilityRow,
   InventoryByItemRow,
   InventoryItemDetails,
 } from '../../types/index.js';
+import type { StockAvailabilityRow, StockAvailabilityRows } from '@eu/types';
 
 class StocksService {
   constructor(private readonly lotStockRepository: LotStockRepository) {}
@@ -27,13 +27,19 @@ class StocksService {
   async getAvailableStockByItemIds(
     userId: string,
     itemIds: string[]
-  ): Promise<StockAvailabilityRow[]> {
+  ): Promise<StockAvailabilityRows> {
     const rows = await this.lotStockRepository.getAvailableStockByItemIds(userId, itemIds);
     return rows;
   }
 
   async getAvailableLotsFifoByItemId(userId: string, itemId: string): Promise<SellableLotRow[]> {
     const rows = await this.lotStockRepository.getAvailableLotsFifoByItemId(userId, itemId);
+    return rows;
+  }
+
+  async getAvailableStockByItemId(userId: string, itemId: string): Promise<StockAvailabilityRow> {
+    const rows = await this.lotStockRepository.getAvailableStockByItemId(userId, itemId);
+
     return rows;
   }
 

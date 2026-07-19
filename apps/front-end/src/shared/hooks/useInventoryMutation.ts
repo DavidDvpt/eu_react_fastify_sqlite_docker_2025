@@ -4,7 +4,7 @@ import type {
   TransactionFormValues,
   TransactionAction,
 } from "../types";
-import { transaction } from "@/lib/services/transaction.api";
+import { transaction } from "@/lib/services/transactionApi";
 
 interface UseInventoryMutation {
   type: TransactionAction;

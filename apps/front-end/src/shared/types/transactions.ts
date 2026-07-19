@@ -63,62 +63,8 @@ export type TransactionItemDetailsProps = {
   buttonClassName?: string;
 };
 
-export type TransactionBody = {
-  type: TransactionAction;
-  lines: TransactionLineInput[];
-};
-
-export type TransactionLineInput = {
-  itemId: string;
-  quantity: number;
-  inventoryLotId?: string;
-  tt: number;
-  ttc: number;
-  fee: number;
-};
-
-export type TransactionProcessedItem = {
-  itemId: string;
-  quantity: number;
-};
-
-export type TransactionRejectedItem = {
-  itemId: string;
-  requestedQuantity: number;
-  availableQuantity: number;
-  reason: string;
-};
-
-export type TransactionExecutionResult = {
-  transactionId: string | null;
-  processed: TransactionProcessedItem[];
-  rejected: TransactionRejectedItem[];
-  message?: string;
-};
-
-export type RunningTransactionLine = {
-  id: string;
-  itemId: string;
-  quantity: number;
-  tt: number;
-  fee: number;
-  ttc: number;
-  status: TransactionStatusDto;
-};
-
-export type UpdateTransactionInput = {
-  id: string;
-  status: TransactionStatusDto;
-};
-
 export type TransactionPricingSnapshot = TransactionPricingValues & {
   autoCalculation: boolean;
-};
-
-export type UpdateRunningTransactionLineStatusResult = {
-  transactionId: string;
-  transactionLotId: string;
-  saleStatus: TransactionStatusDto;
 };
 
 export type AutoPricingFormValues = {

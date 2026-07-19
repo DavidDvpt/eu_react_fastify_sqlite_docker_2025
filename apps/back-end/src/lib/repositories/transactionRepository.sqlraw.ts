@@ -1,6 +1,6 @@
 import { Prisma } from '../../../prisma/generated/client.js';
 
-const getRunningSellLinesSql = (userId: string) => Prisma.sql`
+export const getRunningTransactionsSql = (userId: string) => Prisma.sql`
   SELECT
     t.id,
     l.item_id,
@@ -18,5 +18,3 @@ const getRunningSellLinesSql = (userId: string) => Prisma.sql`
     AND t.transaction_type = 'SELL'
   ORDER BY t.created_at, t.id
 `;
-
-export { getRunningSellLinesSql };

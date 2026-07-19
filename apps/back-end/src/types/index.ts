@@ -20,7 +20,6 @@ export type {
   SellProcessingResult,
   SellTotals,
   SellableLotRow,
-  StockAvailabilityRow,
   InventoryByItemRow,
   InventoryItemDetails,
   InventoryLotInRow,
@@ -28,9 +27,7 @@ export type {
 } from '../modules/inventory/inventory.types.js';
 
 export type {
-  BuyLineInput,
-  SellLineInput,
   TransactionExecutionResult,
   TransactionProcessedItem,
   TransactionRejectedItem,
-} from '../modules/transaction/transaction.types.js';
+} from '../modules/transaction/transactionTypes.js';

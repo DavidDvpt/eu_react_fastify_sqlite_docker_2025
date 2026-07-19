@@ -12,10 +12,10 @@ import type { Prisma } from '../../../prisma/generated/client.js';
 import type {
   PrismaLikeClient,
   SellableLotRow,
-  StockAvailabilityRow,
   InventoryByItemRow,
   InventoryItemDetails,
 } from '../../types/index.js';
+import type { StockAvailabilityRow, StockAvailabilityRows } from '@eu/types';
 
 export class LotStockRepository {
   constructor(private readonly client: PrismaLikeClient) {}
@@ -138,9 +138,9 @@ export class LotStockRepository {
   async getAvailableStockByItemIds(
     userId: string,
     itemIds: string[]
-  ): Promise<StockAvailabilityRow[]> {
+  ): Promise<StockAvailabilityRows> {
     if (!itemIds.length) {
-      return [];
+      return [] as StockAvailabilityRows;
     }
 
     const rows = await this.client.$queryRaw<
@@ -155,7 +155,32 @@ export class LotStockRepository {
       itemId: row.item_id,
       availableQuantity:
         typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
+      tt:
+        typeof row.total_price === 'number' ? row.total_price : Number(row.total_price.toString()),
     }));
+  }
+
+  async getAvailableStockByItemId(userId: string, itemId: string): Promise<StockAvailabilityRow> {
+    const rows = await this.client.$queryRaw<
+      Array<{
+        item_id: string;
+        quantity: Prisma.Decimal | number;
+        total_price: Prisma.Decimal | number;
+      }>
+    >(getInventoryByItemIdSql(userId, itemId));
+
+    const row = rows[0];
+    if (!row) {
+      return { itemId, availableQuantity: 0, tt: 0 };
+    }
+
+    return {
+      itemId: row.item_id,
+      availableQuantity:
+        typeof row.quantity === 'number' ? row.quantity : Number(row.quantity.toString()),
+      tt:
+        typeof row.total_price === 'number' ? row.total_price : Number(row.total_price.toString()),
+    };
   }
 
   async getAvailableLotsFifoByItemId(userId: string, itemId: string): Promise<SellableLotRow[]> {

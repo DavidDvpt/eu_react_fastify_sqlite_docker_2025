@@ -4,6 +4,6 @@ export * from "./typesApi";
 
 export * from "./itemsApi";
 
-export * from "./transaction.api";
+export * from "./transactionApi";
 
 export * from "./pedCardApi";

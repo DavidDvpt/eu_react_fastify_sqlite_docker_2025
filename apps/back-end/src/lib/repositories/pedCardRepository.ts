@@ -44,11 +44,10 @@ export class PedCardRepository extends PrismaCrudRepository<PedCardClient['pedCa
     return balance == null ? 0 : Number(balance.toString());
   }
 
-  async hasEnoughBalanceForEntries(userId: string, entries: PedCardEntryInput[]): Promise<boolean> {
-    const requiredBalance = entries.reduce((sum, entry) => sum + Math.abs(entry.value), 0);
+  async hasEnoughBalanceForEntry(userId: string, value: number): Promise<boolean> {
     const balance = await this.getBalance(userId);
 
-    return balance >= requiredBalance;
+    return balance >= value;
   }
 
   async createEntry(input: PedCardEntryInput): Promise<void> {

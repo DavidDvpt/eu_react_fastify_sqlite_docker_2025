@@ -1,9 +1,12 @@
-export * from './transaction.service.js';
+export * from '../../lib/services/transactionService.js';
+export type {
+  TransactionBodyBuy,
+  TransactionBodySell,
+  TransactionBodyPatch,
+} from './transactionTypes.js';
 
 export type {
-  BuyLineInput,
-  SellLineInput,
   TransactionExecutionResult,
   TransactionProcessedItem,
   TransactionRejectedItem,
-} from './transaction.types.js';
+} from './transactionTypes.js';

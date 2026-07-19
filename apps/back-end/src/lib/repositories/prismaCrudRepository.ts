@@ -1,3 +1,5 @@
+import { env } from '../../config/env.js';
+
 import type {
   CrudDelegate,
   CrudRepositoryOptions,
@@ -5,7 +7,6 @@ import type {
   MethodResult,
   ReadScope,
 } from '../../types/index.js';
-import { env } from '../../config/env.js';
 
 const SYSTEM_USER_ID = env.SYSTEM_USER_ID;
 
@@ -53,7 +54,7 @@ class PrismaCrudRepository<Delegate extends CrudDelegate> {
   protected async canMutateForUser(where: unknown, userId: string): Promise<boolean> {
     const record = (await this.delegate.findUnique({
       where,
-    } as unknown as MethodArgs<Delegate, 'findUnique'>)) as unknown;
+    })) as unknown;
 
     if (!record || typeof record !== 'object') {
       return false;
@@ -68,7 +69,7 @@ class PrismaCrudRepository<Delegate extends CrudDelegate> {
     userId?: string
   ): Promise<MethodResult<Delegate, 'findMany'>> {
     if (!userId || this.readScope === 'none') {
-      return this.delegate.findMany(args as MethodArgs<Delegate, 'findMany'>);
+      return this.delegate.findMany(args);
     }
 
     // Read scope is enforced at query level for list endpoints.
@@ -78,7 +79,7 @@ class PrismaCrudRepository<Delegate extends CrudDelegate> {
     return this.delegate.findMany({
       ...baseArgs,
       where,
-    } as unknown as MethodArgs<Delegate, 'findMany'>);
+    });
   }
 
   findUnique(

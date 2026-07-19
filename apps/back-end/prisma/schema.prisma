@@ -180,13 +180,13 @@ model SessionLot {
 }
 
 model Transaction {
-  id               String            @id @default(uuid())
-  tt               Decimal           @default(0)
-  fee              Decimal           @default(0)
-  ttc              Decimal           @default(0)
+  id               String             @id @default(uuid())
+  tt               Decimal            @default(0)
+  fee              Decimal            @default(0)
+  ttc              Decimal            @default(0)
   transaction_type TransactionType
-  status           TransactionStatus @default(RUNNING)
-  created_at       DateTime          @default(now())
+  status           TransactionStatus?
+  created_at       DateTime           @default(now())
   updated_at       DateTime?
   user_id          String
 
@@ -275,7 +275,7 @@ model Lot {
   id                 String  @id @default(uuid())
   quantity_remaining Int
   quantity_exported  Int
-  price_remaining    String
+  price_remaining    Float?  @default(0)
   item_id            String
   lot_type           LotType
   date_created       String

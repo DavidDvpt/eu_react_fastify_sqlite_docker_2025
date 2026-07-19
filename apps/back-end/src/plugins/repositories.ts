@@ -20,7 +20,7 @@ const repositoriesPlugin: FastifyPluginCallback = (app, _opts, done) => {
     items: new ItemRepository(app.prisma),
     lotStock: new LotStockRepository(app.prisma),
     pedCard: new PedCardRepository(app.prisma),
-    transactionRepository: new TransactionRepository(app.prisma),
+    transaction: new TransactionRepository(app.prisma),
   });
 
   done();

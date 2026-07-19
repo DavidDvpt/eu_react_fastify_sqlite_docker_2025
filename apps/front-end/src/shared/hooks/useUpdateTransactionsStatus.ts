@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { updateTransactionStatus } from "@/lib/services/transaction.api";
+import { updateTransactionStatus } from "@/lib/services/transactionApi";
 import type { UpdateTransactionInput } from "../types";
 
 function useUpdateTransactionsStatus() {

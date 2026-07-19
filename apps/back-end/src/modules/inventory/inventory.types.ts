@@ -41,11 +41,6 @@ type InventoryItemDetails = {
   lotsOut: InventoryLotOutRow[];
 };
 
-type StockAvailabilityRow = {
-  itemId: string;
-  availableQuantity: number;
-};
-
 type SellableLotRow = {
   id: string;
   itemId: string;
@@ -86,7 +81,6 @@ export type {
   InventoryLotInRow,
   InventoryLotOutRow,
   InventoryItemDetails,
-  StockAvailabilityRow,
   SellableLotRow,
   SellItemData,
   SellTotals,

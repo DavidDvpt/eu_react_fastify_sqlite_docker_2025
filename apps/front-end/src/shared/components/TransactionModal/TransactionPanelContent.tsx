@@ -7,14 +7,18 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
 import type {
   AutoPricingFormValues,
-  TransactionBody,
   TransactionPanelProps,
 } from "@/shared/types/transactions";
-import { transaction } from "@/lib/services/transaction.api";
+import { transaction } from "@/lib/services/transactionApi";
 import { transactionFormSchema } from "./transactionSchemas";
 import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
+import type {
+  TransactionBodyDto,
+  TransactionStatusDto,
+  TransactionTypeDto,
+} from "@eu/types";
 
 function TransactionPanelContent({
   item,
@@ -29,19 +33,20 @@ function TransactionPanelContent({
   const refreshStock = useInventoryRefresh(item.id, onBack);
 
   const mutation = useMutation({
-    mutationFn: async (values: AutoPricingFormValues) => {
+    mutationFn: async (
+      values: AutoPricingFormValues & { status: TransactionStatusDto },
+    ) => {
       return transaction({
-        type: action,
-        lines: [
-          {
-            itemId: item.id,
-            quantity: values.quantity,
-            tt: values.quantity * item.value,
-            fee: values.fee,
-            ttc: values.ttc,
-          },
-        ],
-      } satisfies TransactionBody);
+        transactionType: (action === "sell"
+          ? "SELL"
+          : "BUY") as TransactionTypeDto,
+        itemId: item.id,
+        quantity: values.quantity,
+        tt: values.quantity * item.value,
+        fee: values.fee,
+        ttc: values.ttc,
+        status: values.status,
+      } satisfies TransactionBodyDto);
     },
     onSuccess: refreshStock,
   });
@@ -77,7 +82,7 @@ function TransactionPanelContent({
       if (!shouldContinue) return;
     }
 
-    mutation.mutate(values);
+    mutation.mutate({ ...values, status: "RUNNING" });
   };
 
   return (

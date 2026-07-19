@@ -3,7 +3,7 @@ import type { FastifyInstance } from 'fastify';
 
 type AppWithTransactionStatsRepo = FastifyInstance & {
   repos: {
-    transactionRepository: TransactionRepository;
+    transaction: TransactionRepository;
   };
 };
 
