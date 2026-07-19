@@ -15,3 +15,4 @@ export type { StockAvailabilityRow, StockAvailabilityRows } from "./stock.js";
 
 export type { CategoryFormBody } from "./category.js";
 export type { TypeFormBody } from "./type.js";
+export type { PedCardFormBody } from "./pedcard.js";

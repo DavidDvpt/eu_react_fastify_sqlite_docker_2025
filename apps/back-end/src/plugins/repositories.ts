@@ -3,7 +3,6 @@ import fp from 'fastify-plugin';
 import {
   LotRepository,
   LotStockRepository,
-  PedCardRepository,
   TransactionRepository,
   UserRepository,
 } from '../lib/repositories/index.js';
@@ -15,7 +14,6 @@ const repositoriesPlugin: FastifyPluginCallback = (app, _opts, done) => {
     users: new UserRepository(app.prisma),
     lotStock: new LotStockRepository(app.prisma),
     lot: new LotRepository(app.prisma),
-    pedCard: new PedCardRepository(app.prisma),
     transaction: new TransactionRepository(app.prisma),
   });
 

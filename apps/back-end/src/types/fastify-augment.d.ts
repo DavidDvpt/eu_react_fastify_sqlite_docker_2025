@@ -1,7 +1,6 @@
 import type { JwtVerifyOpts, PrismaClientType, UserForToken } from './fastify.ts';
 import type {
   LotStockRepository,
-  PedCardRepository,
   TransactionRepository,
   UserRepository,
   LotRepository,
@@ -15,7 +14,6 @@ declare module 'fastify' {
       users: UserRepository;
       lotStock: LotStockRepository;
       lot: LotRepository;
-      pedCard: PedCardRepository;
       transaction: TransactionRepository;
     };
 

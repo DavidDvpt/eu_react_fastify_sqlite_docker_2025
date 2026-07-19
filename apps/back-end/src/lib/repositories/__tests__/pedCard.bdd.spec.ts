@@ -3,10 +3,9 @@ import { randomUUID } from 'node:crypto';
 import { afterAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
-import { PedCardRepository } from '../pedCardRepository.js';
-
+import { PedcardService } from '../../services/pedcardService.js';
 const prisma = prismaClient;
-const repo = new PedCardRepository(prisma);
+const pedCardService = new PedcardService();
 
 afterAll(async () => {
   await prisma.$disconnect();
@@ -33,35 +32,29 @@ async function createUser() {
 }
 
 async function cleanupUser(userId: string) {
-  await prisma.pedCard.deleteMany({ where: { userId } });
+  await pedCardService.deleteMany(userId);
   await prisma.user.delete({ where: { id: userId } });
 }
 
-describe('PedCardRepository', () => {
+describe('PedCard service', () => {
   it('detects an initial balance entry for a user', async () => {
     const userId = await createUser();
 
     try {
-      await prisma.pedCard.create({
-        data: {
-          userId,
-          transactionId: null,
-          type: 'INITIAL_BALANCE',
-          value: 150,
-        },
+      await pedCardService.create({
+        userId,
+        type: 'INITIAL_BALANCE',
+        value: 150,
       });
 
-      await prisma.pedCard.create({
-        data: {
-          userId,
-          transactionId: null,
-          type: 'BUY_TTC',
-          value: -25,
-        },
+      await pedCardService.create({
+        userId,
+        type: 'BUY_TTC',
+        value: -25,
       });
 
-      const hasInitialBalance = await repo.hasInitialBalance(userId);
-      const hasInitialBalanceForUnknownUser = await repo.hasInitialBalance(randomUUID());
+      const hasInitialBalance = await pedCardService.hasInitialBalance(userId);
+      const hasInitialBalanceForUnknownUser = await pedCardService.hasInitialBalance(randomUUID());
 
       expect(hasInitialBalance).toBe(true);
       expect(hasInitialBalanceForUnknownUser).toBe(false);
@@ -74,30 +67,25 @@ describe('PedCardRepository', () => {
     const userId = await createUser();
 
     try {
-      await prisma.pedCard.createMany({
-        data: [
-          {
-            userId,
-            transactionId: null,
-            type: 'INITIAL_BALANCE',
-            value: 100,
-          },
-          {
-            userId,
-            transactionId: null,
-            type: 'BUY_TTC',
-            value: 25.5,
-          },
-          {
-            userId,
-            transactionId: null,
-            type: 'ADJUSTMENT',
-            value: -10,
-          },
-        ],
-      });
+      await pedCardService.createMany([
+        {
+          userId,
+          type: 'INITIAL_BALANCE',
+          value: 100,
+        },
+        {
+          userId,
+          type: 'BUY_TTC',
+          value: 25.5,
+        },
+        {
+          userId,
+          type: 'ADJUSTMENT',
+          value: -10,
+        },
+      ]);
 
-      const balance = await repo.getBalance(userId);
+      const balance = await pedCardService.getBalance(userId);
 
       expect(balance).toBe(115.5);
     } finally {

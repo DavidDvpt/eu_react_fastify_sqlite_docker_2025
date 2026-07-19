@@ -1,4 +1,4 @@
-import { UserRepository, LotRepository, PedCardRepository, SeedPatchRepository } from './index.js';
+import { UserRepository, LotRepository, SeedPatchRepository } from './index.js';
 
 import type { RepositoryClient } from '../../types/index.js';
 
@@ -8,7 +8,6 @@ import type { RepositoryClient } from '../../types/index.js';
 const createRepositories = (client: RepositoryClient) => ({
   user: new UserRepository(client),
   lot: new LotRepository(client),
-  pedCard: new PedCardRepository(client),
   seedPatch: new SeedPatchRepository(client),
 });
 
