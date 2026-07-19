@@ -2,11 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import {
-  CategoryRepository,
-  ItemRepository,
-  TypeRepository,
-} from '../src/lib/repositories/index.js';
+import { ItemRepository, TypeRepository } from '../src/lib/repositories/index.js';
 import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
@@ -14,7 +10,7 @@ import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
 import { SYSTEM_USER } from './seedDatas/user.js';
 
-const itemCategoryRepository = new CategoryRepository(prismaClient);
+const prismaCategory = prismaClient.category;
 const itemTypesRepository = new TypeRepository(prismaClient);
 const itemRepository = new ItemRepository(prismaClient);
 const __filename = fileURLToPath(import.meta.url);
@@ -22,7 +18,14 @@ const __dirname = dirname(__filename);
 
 const installSessionLineSoldedArchiveTrigger = async () => {
   const distSqlPath = join(__dirname, 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
-  const sourceSqlPath = join(__dirname, '..', '..', 'prisma', 'sqlFiles', 'sessionLineSoldedArchiveTrigger.sql');
+  const sourceSqlPath = join(
+    __dirname,
+    '..',
+    '..',
+    'prisma',
+    'sqlFiles',
+    'sessionLineSoldedArchiveTrigger.sql'
+  );
 
   let triggerSql: string;
   try {
@@ -81,7 +84,7 @@ const seedSystemData = async () => {
 
   if (!itemCategoriesCount) {
     for (const e of ITEM_CATEGORIES) {
-      await itemCategoryRepository.create({ data: { ...e, user_id: resolvedSystemUserId } });
+      await prismaCategory.create({ data: { ...e, user_id: resolvedSystemUserId } });
     }
   }
 

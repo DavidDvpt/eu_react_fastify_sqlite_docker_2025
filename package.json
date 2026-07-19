@@ -20,6 +20,7 @@
     "dev:front:restart": "sh ./scripts/dev-service.sh front restart",
     "dev:front:status": "sh ./scripts/dev-service.sh front status",
     "test:all": "sh ./scripts/test-all.sh",
+    "package:create": "node ./scripts/create-package.mjs",
     "prepare": "husky"
   },
   "keywords": [],

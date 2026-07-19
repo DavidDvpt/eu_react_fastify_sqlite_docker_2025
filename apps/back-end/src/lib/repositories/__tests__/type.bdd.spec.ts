@@ -1,14 +1,12 @@
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
-import { CategoryRepository } from '../categoryRepository.js';
-import { TypeRepository } from '../typeRepository.js';
 
 import { itemCategoriesMock, itemTypesMock } from './mock.js';
 
 const prisma = prismaClient;
-const categoryRepo = new CategoryRepository(prisma);
-const repo = new TypeRepository(prisma);
+const prismaCategory = prisma.category;
+const prismaType = prisma.type;
 const DEFAULT_OWNER_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 
 beforeAll(async () => {
@@ -42,12 +40,12 @@ describe('ItemTypeRepository CRUD', () => {
 
   it('creates and reads an itemType', async () => {
     const ownerId = createOwnerUserId();
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: itemCategoriesMock(ownerId)[0],
     });
     const [type] = itemTypesMock(category.id, ownerId);
-    const created = await repo.create({ data: type });
-    const found = await repo.findUnique({ where: { id: created.id } });
+    const created = await prismaType.create({ data: type });
+    const found = await prismaType.findUnique({ where: { id: created.id } });
 
     expect(found?.id).toBe(created.id);
     expect(found?.name).toBe(created.name);
@@ -56,13 +54,13 @@ describe('ItemTypeRepository CRUD', () => {
 
   it('updates an itemType', async () => {
     const ownerId = createOwnerUserId();
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: itemCategoriesMock(ownerId)[0],
     });
     const [type] = itemTypesMock(category.id, ownerId);
-    const created = await repo.create({ data: type });
+    const created = await prismaType.create({ data: type });
     const updatedAt = new Date().toISOString();
-    const updated = await repo.update({
+    const updated = await prismaType.update({
       where: { id: created.id },
       data: { name: 'Updated Type', date_updated: updatedAt },
     });
@@ -73,14 +71,14 @@ describe('ItemTypeRepository CRUD', () => {
 
   it('deletes an itemType', async () => {
     const ownerId = createOwnerUserId();
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: itemCategoriesMock(ownerId)[0],
     });
     const [type] = itemTypesMock(category.id, ownerId);
-    const created = await repo.create({ data: type });
+    const created = await prismaType.create({ data: type });
 
-    const deleted = await repo.delete({ where: { id: created.id } });
-    const found = await repo.findUnique({ where: { id: created.id } });
+    const deleted = await prismaType.delete({ where: { id: created.id } });
+    const found = await prismaType.findUnique({ where: { id: created.id } });
 
     expect(found).toBeNull();
     expect(deleted.id).toBe(created.id);
@@ -88,14 +86,14 @@ describe('ItemTypeRepository CRUD', () => {
 
   it('lists itemTypes', async () => {
     const ownerId = createOwnerUserId();
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: itemCategoriesMock(ownerId)[0],
     });
     const [typeA, typeB] = itemTypesMock(category.id, ownerId);
-    await repo.create({ data: typeA });
-    await repo.create({ data: typeB });
+    await prismaType.create({ data: typeA });
+    await prismaType.create({ data: typeB });
 
-    const all = await repo.findMany();
+    const all = await prismaType.findMany();
     expect(all.length).toBeGreaterThanOrEqual(2);
   });
 });

@@ -2,14 +2,12 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
 import { env } from '../../../config/env.js';
-import { LotRepository, CategoryRepository, ItemRepository, TypeRepository } from '../index.js';
 
 const prisma = prismaClient;
-
-const categoryRepo = new CategoryRepository(prisma);
-const typeRepo = new TypeRepository(prisma);
-const itemRepo = new ItemRepository(prisma);
-const lotRepo = new LotRepository(prisma);
+const prismaCategory = prisma.category;
+const prismaType = prisma.type;
+const prismaItem = prisma.item;
+const prismaLot = prisma.lot;
 const SYSTEM_USER_ID = env.SYSTEM_USER_ID ?? '8E3A0E4C-9F64-4C8E-A2B5-7DFA4A9F3C11';
 const USER_A_ID = '0FB0E33F-424C-4A2A-A135-FFF8A2D81E5E';
 const USER_B_ID = '1947DAFD-0CA4-4673-8F25-EB4702265ACA';
@@ -70,7 +68,7 @@ describe('Read scope by repository', () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
 
-    const globalCategory = await categoryRepo.create({
+    const globalCategory = await prismaCategory.create({
       data: {
         name: `global-category-${suffix()}`,
         date_created: now(),
@@ -79,7 +77,7 @@ describe('Read scope by repository', () => {
         user_id: SYSTEM_USER_ID,
       },
     });
-    const categoryA = await categoryRepo.create({
+    const categoryA = await prismaCategory.create({
       data: {
         name: `category-a-${suffix()}`,
         date_created: now(),
@@ -88,7 +86,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const categoryB = await categoryRepo.create({
+    const categoryB = await prismaCategory.create({
       data: {
         name: `category-b-${suffix()}`,
         date_created: now(),
@@ -98,19 +96,21 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const forA = await categoryRepo.findMany(undefined, userA.id);
+    const forA = await prismaCategory.findMany({ where: { user_id: userA.id } });
     expect(forA.map((c: { id: string }) => c.id)).toContain(globalCategory.id);
     expect(forA.map((c: { id: string }) => c.id)).toContain(categoryA.id);
     expect(forA.map((c: { id: string }) => c.id)).not.toContain(categoryB.id);
 
-    const blocked = await categoryRepo.findUnique({ where: { id: categoryB.id } }, userA.id);
+    const blocked = await prismaCategory.findUnique({
+      where: { id: categoryB.id, user_id: userA.id },
+    });
     expect(blocked).toBeNull();
   });
 
   it('ItemType: reads global + current user only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
-    const baseCategory = await categoryRepo.create({
+    const baseCategory = await prismaCategory.create({
       data: {
         name: `type-category-${suffix()}`,
         date_created: now(),
@@ -120,7 +120,7 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const globalType = await typeRepo.create({
+    const globalType = await prismaType.create({
       data: {
         name: `global-type-${suffix()}`,
         category_id: baseCategory.id,
@@ -130,7 +130,7 @@ describe('Read scope by repository', () => {
         user_id: SYSTEM_USER_ID,
       },
     });
-    const typeA = await typeRepo.create({
+    const typeA = await prismaType.create({
       data: {
         name: `type-a-${suffix()}`,
         category_id: baseCategory.id,
@@ -140,7 +140,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const typeB = await typeRepo.create({
+    const typeB = await prismaType.create({
       data: {
         name: `type-b-${suffix()}`,
         category_id: baseCategory.id,
@@ -151,19 +151,19 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const forA = await typeRepo.findMany(undefined, userA.id);
+    const forA = await prismaType.findMany({ where: { user_id: userA.id } });
     expect(forA.map((t: { id: string }) => t.id)).toContain(globalType.id);
     expect(forA.map((t: { id: string }) => t.id)).toContain(typeA.id);
     expect(forA.map((t: { id: string }) => t.id)).not.toContain(typeB.id);
 
-    const blocked = await typeRepo.findUnique({ where: { id: typeB.id } }, userA.id);
+    const blocked = await prismaType.findUnique({ where: { id: typeB.id, user_id: userA.id } });
     expect(blocked).toBeNull();
   });
 
   it('Item: reads global + current user only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
-    const baseCategory = await categoryRepo.create({
+    const baseCategory = await prismaCategory.create({
       data: {
         name: `item-category-${suffix()}`,
         date_created: now(),
@@ -172,7 +172,7 @@ describe('Read scope by repository', () => {
         user_id: SYSTEM_USER_ID,
       },
     });
-    const baseType = await typeRepo.create({
+    const baseType = await prismaType.create({
       data: {
         name: `item-type-${suffix()}`,
         category_id: baseCategory.id,
@@ -183,7 +183,7 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const globalItem = await itemRepo.create({
+    const globalItem = await prismaItem.create({
       data: {
         name: `global-item-${suffix()}`,
         image_url_id: `img-${suffix()}`,
@@ -196,7 +196,7 @@ describe('Read scope by repository', () => {
         user_id: SYSTEM_USER_ID,
       },
     });
-    const itemA = await itemRepo.create({
+    const itemA = await prismaItem.create({
       data: {
         name: `item-a-${suffix()}`,
         image_url_id: `img-${suffix()}`,
@@ -209,7 +209,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const itemB = await itemRepo.create({
+    const itemB = await prismaItem.create({
       data: {
         name: `item-b-${suffix()}`,
         image_url_id: `img-${suffix()}`,
@@ -223,19 +223,19 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const forA = await itemRepo.findMany(undefined, userA.id);
+    const forA = await prismaItem.findMany({ where: { user_id: userA.id } });
     expect(forA.map((i: { id: string }) => i.id)).toContain(globalItem.id);
     expect(forA.map((i: { id: string }) => i.id)).toContain(itemA.id);
     expect(forA.map((i: { id: string }) => i.id)).not.toContain(itemB.id);
 
-    const blocked = await itemRepo.findUnique({ where: { id: itemB.id } }, userA.id);
+    const blocked = await prismaItem.findUnique({ where: { id: itemB.id, user_id: userA.id } });
     expect(blocked).toBeNull();
   });
 
   it('Lot: reads current user only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: {
         name: `lot-category-${suffix()}`,
         date_created: now(),
@@ -244,7 +244,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const type = await typeRepo.create({
+    const type = await prismaType.create({
       data: {
         name: `lot-type-${suffix()}`,
         category_id: category.id,
@@ -254,7 +254,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const item = await itemRepo.create({
+    const item = await prismaItem.create({
       data: {
         name: `lot-item-${suffix()}`,
         image_url_id: `img-${suffix()}`,
@@ -268,11 +268,11 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const lotA = await lotRepo.create({
+    const lotA = await prismaLot.create({
       data: {
         quantity_remaining: 10,
         quantity_exported: 0,
-        price_remaining: '50',
+        price_remaining: 50,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -281,11 +281,11 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const lotB = await lotRepo.create({
+    const lotB = await prismaLot.create({
       data: {
         quantity_remaining: 11,
         quantity_exported: 0,
-        price_remaining: '55',
+        price_remaining: 55,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -294,11 +294,11 @@ describe('Read scope by repository', () => {
         user_id: userB.id,
       },
     });
-    const lotGlobal = await lotRepo.create({
+    const lotGlobal = await prismaLot.create({
       data: {
         quantity_remaining: 12,
         quantity_exported: 0,
-        price_remaining: '60',
+        price_remaining: 60,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -307,12 +307,12 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const forA = await lotRepo.findMany(undefined, userA.id);
+    const forA = await prismaLot.findMany({ where: { user_id: userA.id } });
     expect(forA.map((l: { id: string }) => l.id)).toContain(lotA.id);
     expect(forA.map((l: { id: string }) => l.id)).not.toContain(lotB.id);
     expect(forA.map((l: { id: string }) => l.id)).not.toContain(lotGlobal.id);
 
-    const blocked = await lotRepo.findUnique({ where: { id: lotB.id } }, userA.id);
+    const blocked = await prismaLot.findUnique({ where: { id: lotB.id, user_id: userA.id } });
     expect(blocked).toBeNull();
   });
 
@@ -320,7 +320,7 @@ describe('Read scope by repository', () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
 
-    const globalCategory = await categoryRepo.create({
+    const globalCategory = await prismaCategory.create({
       data: {
         name: `global-category-mutation-${suffix()}`,
         date_created: now(),
@@ -329,7 +329,7 @@ describe('Read scope by repository', () => {
         user_id: SYSTEM_USER_ID,
       },
     });
-    const categoryA = await categoryRepo.create({
+    const categoryA = await prismaCategory.create({
       data: {
         name: `category-owner-a-${suffix()}`,
         date_created: now(),
@@ -338,7 +338,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const categoryB = await categoryRepo.create({
+    const categoryB = await prismaCategory.create({
       data: {
         name: `category-owner-b-${suffix()}`,
         date_created: now(),
@@ -349,49 +349,42 @@ describe('Read scope by repository', () => {
     });
 
     await expect(
-      categoryRepo.update(
-        {
-          where: { id: globalCategory.id },
-          data: { name: `forbidden-global-update-${suffix()}` },
-        },
-        userA.id
-      )
+      prismaCategory.update({
+        where: { id: globalCategory.id, user_id: userA.id },
+        data: { name: `forbidden-global-update-${suffix()}` },
+      })
     ).rejects.toThrow('Forbidden mutation');
 
     await expect(
-      categoryRepo.update(
-        {
-          where: { id: categoryB.id },
-          data: { name: `forbidden-other-user-update-${suffix()}` },
-        },
-        userA.id
-      )
+      prismaCategory.update({
+        where: { id: categoryB.id, user_id: userA.id },
+        data: { name: `forbidden-other-user-update-${suffix()}` },
+      })
     ).rejects.toThrow('Forbidden mutation');
 
-    const updatedByOwner = await categoryRepo.update(
-      {
-        where: { id: categoryA.id },
-        data: { name: `owner-update-${suffix()}` },
-      },
-      userA.id
-    );
+    const updatedByOwner = await prismaCategory.update({
+      where: { id: categoryA.id, user_id: userA.id },
+      data: { name: `owner-update-${suffix()}` },
+    });
     expect(updatedByOwner.id).toBe(categoryA.id);
 
     await expect(
-      categoryRepo.delete({ where: { id: globalCategory.id } }, userA.id)
+      prismaCategory.delete({ where: { id: globalCategory.id, user_id: userA.id } })
     ).rejects.toThrow('Forbidden mutation');
-    await expect(categoryRepo.delete({ where: { id: categoryB.id } }, userA.id)).rejects.toThrow(
-      'Forbidden mutation'
-    );
+    await expect(
+      prismaCategory.delete({ where: { id: categoryB.id, user_id: userA.id } })
+    ).rejects.toThrow('Forbidden mutation');
 
-    const deletedByOwner = await categoryRepo.delete({ where: { id: categoryA.id } }, userA.id);
+    const deletedByOwner = await prismaCategory.delete({
+      where: { id: categoryA.id, user_id: userA.id },
+    });
     expect(deletedByOwner.id).toBe(categoryA.id);
   });
 
   it('Lot: update/delete allowed only for owner, global rows are read-only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
-    const category = await categoryRepo.create({
+    const category = await prismaCategory.create({
       data: {
         name: `lot-mutation-category-${suffix()}`,
         date_created: now(),
@@ -400,7 +393,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const type = await typeRepo.create({
+    const type = await prismaType.create({
       data: {
         name: `lot-mutation-type-${suffix()}`,
         category_id: category.id,
@@ -410,7 +403,7 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const item = await itemRepo.create({
+    const item = await prismaItem.create({
       data: {
         name: `lot-mutation-item-${suffix()}`,
         image_url_id: `img-${suffix()}`,
@@ -424,11 +417,11 @@ describe('Read scope by repository', () => {
       },
     });
 
-    const lotA = await lotRepo.create({
+    const lotA = await prismaLot.create({
       data: {
         quantity_remaining: 7,
         quantity_exported: 0,
-        price_remaining: '70',
+        price_remaining: 70,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -437,11 +430,11 @@ describe('Read scope by repository', () => {
         user_id: userA.id,
       },
     });
-    const lotB = await lotRepo.create({
+    const lotB = await prismaLot.create({
       data: {
         quantity_remaining: 8,
         quantity_exported: 0,
-        price_remaining: '80',
+        price_remaining: 80,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -450,11 +443,11 @@ describe('Read scope by repository', () => {
         user_id: userB.id,
       },
     });
-    const lotGlobal = await lotRepo.create({
+    const lotGlobal = await prismaLot.create({
       data: {
         quantity_remaining: 9,
         quantity_exported: 0,
-        price_remaining: '90',
+        price_remaining: 90,
         item_id: item.id,
         lot_type: 'LOT',
         date_created: now(),
@@ -464,41 +457,32 @@ describe('Read scope by repository', () => {
     });
 
     await expect(
-      lotRepo.update(
-        {
-          where: { id: lotGlobal.id },
-          data: { quantity_remaining: 99 },
-        },
-        userA.id
-      )
+      prismaLot.update({
+        where: { id: lotGlobal.id, user_id: userA.id },
+        data: { quantity_remaining: 99 },
+      })
     ).rejects.toThrow('Forbidden mutation');
     await expect(
-      lotRepo.update(
-        {
-          where: { id: lotB.id },
-          data: { quantity_remaining: 99 },
-        },
-        userA.id
-      )
+      prismaLot.update({
+        where: { id: lotB.id, user_id: userA.id },
+        data: { quantity_remaining: 99 },
+      })
     ).rejects.toThrow('Forbidden mutation');
 
-    const updatedByOwner = await lotRepo.update(
-      {
-        where: { id: lotA.id },
-        data: { quantity_remaining: 42 },
-      },
-      userA.id
-    );
+    const updatedByOwner = await prismaLot.update({
+      where: { id: lotA.id, user_id: userA.id },
+      data: { quantity_remaining: 42 },
+    });
     expect(updatedByOwner.quantity_remaining).toBe(42);
 
-    await expect(lotRepo.delete({ where: { id: lotGlobal.id } }, userA.id)).rejects.toThrow(
-      'Forbidden mutation'
-    );
-    await expect(lotRepo.delete({ where: { id: lotB.id } }, userA.id)).rejects.toThrow(
+    await expect(
+      prismaLot.delete({ where: { id: lotGlobal.id, user_id: userA.id } })
+    ).rejects.toThrow('Forbidden mutation');
+    await expect(prismaLot.delete({ where: { id: lotB.id, user_id: userA.id } })).rejects.toThrow(
       'Forbidden mutation'
     );
 
-    const deletedByOwner = await lotRepo.delete({ where: { id: lotA.id } }, userA.id);
+    const deletedByOwner = await prismaLot.delete({ where: { id: lotA.id, user_id: userA.id } });
     expect(deletedByOwner.id).toBe(lotA.id);
   });
 });

@@ -1,5 +1,5 @@
 {
-  "name": "@eu/zodSchemas",
+  "name": "@eu/zod-schemas",
   "private": true,
   "version": "0.0.0",
   "type": "module",

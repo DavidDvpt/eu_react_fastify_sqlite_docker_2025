@@ -1,5 +1,12 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["src", "prisma", "scripts"],
+  "include": [
+    "src",
+    "prisma",
+    "scripts",
+    "../../packages/zodSchemas/src",
+    "../../packages/types/src",
+    "../../packages/helpers/src"
+  ],
   "exclude": ["dist", "node_modules", "prisma/generated"]
 }

@@ -1,29 +1,36 @@
-import prismaClient from 'prisma/prismaClient.js';
+import { SortHelper } from '@eu/helpers';
 
-class CategoriesService {
+import prismaClient from '../../../prisma/prismaClient.js';
+
+import type { Category } from '../../../prisma/generated/client.js';
+
+export class CategoryService {
   private _client: typeof prismaClient.category;
+
   constructor() {
     this._client = prismaClient.category;
   }
 
-  async list(userId: string) {
+  async getAll(userId: string, sort?: keyof Category) {
+    const sortKey: keyof Category = sort ?? 'name';
     const rows = await this._client.findMany({ where: { user_id: userId } });
-    rows.sort((a, b) => a.name.localeCompare(b.name));
-    return rows;
+
+    return SortHelper.sortByKey(rows, sortKey);
   }
 
-  getById(id: string, userId: string) {
-    return this._client.findUnique({ where: { id, user_id: userId } });
+  async getById(id: string, userId: string) {
+    return await this._client.findUnique({ where: { id, user_id: userId } });
   }
 
   create(
+    userId: string,
     data: {
       name: string;
       is_active?: boolean;
-    },
-    userId: string
+    }
   ) {
     const now = new Date().toISOString();
+
     return this._client.create({
       data: {
         name: data.name,
@@ -37,11 +44,11 @@ class CategoriesService {
 
   update(
     id: string,
+    userId: string,
     data: {
       name?: string;
       is_active?: boolean;
-    },
-    userId: string
+    }
   ) {
     return this._client.update({
       where: { id, user_id: userId },
@@ -49,5 +56,3 @@ class CategoriesService {
     });
   }
 }
-
-export { CategoriesService };

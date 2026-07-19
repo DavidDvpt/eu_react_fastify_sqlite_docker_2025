@@ -1,20 +1,20 @@
-import { CategoriesService } from '../../modules/categories/index.js';
-
-import { categoryUpdateSchema, categoryCreateSchema } from './categorieRoutes.schema.js';
+import { categoryFormSchema } from '@eu/zod-schemas';
+import { CategoryService } from 'src/lib/services/categoryService.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
 const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const categoriesService = new CategoriesService(app.repos.categories);
+  const categoryService = new CategoryService();
 
   app.get('/', async (request, reply) => {
-    const rows = await categoriesService.list(request.user.id);
+    const rows = await categoryService.getAll(request.user.id);
+
     return reply.code(200).send(rows);
   });
 
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-    const row = await categoriesService.getById(params.id, request.user.id);
+    const row = await categoryService.getById(params.id, request.user.id);
 
     if (!row) return reply.code(404).send({ message: 'Category not found' });
 
@@ -22,16 +22,17 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.post('/', async (request, reply) => {
-    const body = categoryCreateSchema.parse(request.body);
-    const created = await categoriesService.create(body, request.user.id);
+    const body = categoryFormSchema.parse(request.body);
+    const created = await categoryService.create(request.user.id, body);
     return reply.code(201).send(created);
   });
 
-  app.put('/:id/edit', async (request, reply) => {
+  app.patch('/:id', async (request, reply) => {
     try {
       const params = request.params as { id: string };
-      const body = categoryUpdateSchema.parse(request.body);
-      const updated = await categoriesService.update(params.id, body, request.user.id);
+      const body = categoryFormSchema.partial().parse(request.body);
+      const updated = await categoryService.update(params.id, request.user.id, body);
+
       return reply.code(200).send(updated);
     } catch (error) {
       if (error instanceof Error && error.message.includes('Forbidden mutation')) {
