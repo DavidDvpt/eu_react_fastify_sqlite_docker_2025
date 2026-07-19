@@ -4,7 +4,6 @@ import type {
   LotStockRepository,
   PedCardRepository,
   TransactionRepository,
-  TypeRepository,
   UserRepository,
   LotRepository,
 } from '../lib/repositories/index.ts';
@@ -15,7 +14,7 @@ declare module 'fastify' {
     prisma: PrismaClientType;
     repos: {
       users: UserRepository;
-      types: TypeRepository;
+
       items: ItemRepository;
       lotStock: LotStockRepository;
       lot: LotRepository;

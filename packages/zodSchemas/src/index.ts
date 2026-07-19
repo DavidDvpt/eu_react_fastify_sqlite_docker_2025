@@ -1,2 +1,3 @@
 export * from "./transactionSchemas.js";
-export { categoryFormSchema } from "./categorySchemas.js";
+export * from "./categorySchemas.js";
+export * from "./typeSchemas.js";

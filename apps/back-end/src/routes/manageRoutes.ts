@@ -1,6 +1,7 @@
-import categorieRoutes from './manage/categorieRoutes.js';
+import typeRoutes from 'src/routes/typeRoutes.js';
+
+import categorieRoutes from './categorieRoutes.js';
 import itemRoutes from './manage/itemRoutes.js';
-import typeRoutes from './manage/typeRoutes.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 

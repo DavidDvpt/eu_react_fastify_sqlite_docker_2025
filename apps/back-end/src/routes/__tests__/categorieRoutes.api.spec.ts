@@ -2,13 +2,13 @@ import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { describe, expect, it, vi } from 'vitest';
 
-import { API_PREFIX } from '../../../config/routes.js';
-import typeRoutes from '../typeRoutes.js';
+import { API_PREFIX } from '../../config/routes.js';
+import categorieRoutes from '../categorieRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-describe('typeRoutes', () => {
+describe('categorieRoutes', () => {
   function buildApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
@@ -45,12 +45,11 @@ describe('typeRoutes', () => {
 
     app.decorate('repos', {
       users,
-      categories,
       types,
       items,
       lotStock,
       transaction,
-    } as unknown as FastifyInstance['repos']);
+    });
 
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
@@ -60,53 +59,65 @@ describe('typeRoutes', () => {
     });
     app.protect();
 
-    app.register(typeRoutes, { prefix: `${API_PREFIX}/types` });
+    app.register(categorieRoutes, { prefix: `${API_PREFIX}/categories` });
 
-    return { app, types };
+    return { app, categories };
   }
 
-  it('GET /api/v1/types returns list with user scope', async () => {
-    const { app, types } = buildApp();
-    vi.mocked(types.findMany).mockResolvedValueOnce([{ id: 'type-1', name: 'Ore' }]);
+  it('GET /api/v1/categories returns category list with user scope', async () => {
+    const { app, categories } = buildApp();
+    vi.mocked(categories.findMany).mockResolvedValueOnce([{ id: 'cat-1', name: 'Material' }]);
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/types` });
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/categories` });
 
     expect(res.statusCode).toBe(200);
-    expect(types.findMany).toHaveBeenCalledWith(undefined, 'user-1');
+    expect(categories.findMany).toHaveBeenCalledWith(undefined, 'user-1');
     await app.close();
   });
 
-  it('POST /api/v1/types creates type for authenticated user', async () => {
-    const { app, types } = buildApp();
-    vi.mocked(types.create).mockResolvedValueOnce({ id: 'type-1' });
+  it('POST /api/v1/categories creates category for authenticated user', async () => {
+    const { app, categories } = buildApp();
+    vi.mocked(categories.create).mockResolvedValueOnce({ id: 'cat-1', name: 'Custom' });
 
     await app.ready();
     const res = await app.inject({
       method: 'POST',
-      url: `${API_PREFIX}/types`,
-      payload: { name: 'Ore', category_id: 'cat-1' },
+      url: `${API_PREFIX}/categories`,
+      payload: { name: 'Custom' },
     });
 
     expect(res.statusCode).toBe(201);
-    const createCall = vi.mocked(types.create).mock.calls[0]?.[0] as {
-      data: { category_id: string; user_id: string };
+    const createCall = vi.mocked(categories.create).mock.calls[0]?.[0] as {
+      data: { name: string; user_id: string };
     };
-    expect(createCall.data).toMatchObject({ category_id: 'cat-1', user_id: 'user-1' });
+    expect(createCall.data).toMatchObject({ name: 'Custom', user_id: 'user-1' });
     await app.close();
   });
 
-  it('PUT /api/v1/types/:id/edit returns 403 when mutation is forbidden', async () => {
-    const { app, types } = buildApp();
-    vi.mocked(types.update).mockRejectedValueOnce(
+  it('GET /api/v1/categories/:id returns 404 when not found', async () => {
+    const { app, categories } = buildApp();
+    vi.mocked(categories.findUnique).mockResolvedValueOnce(null);
+
+    await app.ready();
+    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/categories/cat-x` });
+
+    expect(res.statusCode).toBe(404);
+    expect(categories.findUnique).toHaveBeenCalledWith({ where: { id: 'cat-x' } }, 'user-1');
+    await app.close();
+  });
+
+  it('PUT /api/v1/categories/:id/edit returns 403 when mutation is forbidden', async () => {
+    const { app, categories } = buildApp();
+    vi.mocked(categories.update).mockRejectedValueOnce(
       new Error('Forbidden mutation: only the owner can update this row')
     );
 
     await app.ready();
     const res = await app.inject({
       method: 'PUT',
-      url: `${API_PREFIX}/types/type-1/edit`,
-      payload: { name: 'Updated Type' },
+      url: `${API_PREFIX}/categories/cat-1/edit`,
+      payload: { name: 'Updated' },
     });
 
     expect(res.statusCode).toBe(403);

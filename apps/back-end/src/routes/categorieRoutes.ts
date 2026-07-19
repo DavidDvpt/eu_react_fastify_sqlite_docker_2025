@@ -1,6 +1,7 @@
 import { categoryFormSchema } from '@eu/zod-schemas';
 import { CategoryService } from 'src/lib/services/categoryService.js';
 
+import type { CategoryFormBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
@@ -22,7 +23,7 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.post('/', async (request, reply) => {
-    const body = categoryFormSchema.parse(request.body);
+    const body: CategoryFormBody = categoryFormSchema.parse(request.body);
     const created = await categoryService.create(request.user.id, body);
     return reply.code(201).send(created);
   });
@@ -30,7 +31,7 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.patch('/:id', async (request, reply) => {
     try {
       const params = request.params as { id: string };
-      const body = categoryFormSchema.partial().parse(request.body);
+      const body: Partial<CategoryFormBody> = categoryFormSchema.partial().parse(request.body);
       const updated = await categoryService.update(params.id, request.user.id, body);
 
       return reply.code(200).send(updated);

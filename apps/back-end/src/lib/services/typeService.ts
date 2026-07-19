@@ -1,30 +1,33 @@
-import type { TypeRepository } from '../../lib/repositories/index.js';
+import prismaClient from 'prisma/prismaClient.js';
 
-class TypesService {
-  constructor(private readonly typesRepository: TypeRepository) {}
+export class TypesService {
+  private _client: typeof prismaClient.type;
+  constructor() {
+    this._client = prismaClient.type;
+  }
 
-  async list(userId: string) {
-    const rows = await this.typesRepository.findMany(undefined, userId);
+  async getAll(userId: string) {
+    const rows = await this._client.findMany({ where: { user_id: userId } });
     rows.sort((a, b) => a.name.localeCompare(b.name));
     return rows;
   }
 
-  getById(id: string, userId: string) {
-    return this.typesRepository.findUnique({ where: { id } }, userId);
+  async getById(id: string, userId: string) {
+    return this._client.findUnique({ where: { id, user_id: userId } });
   }
 
-  create(
+  async create(
+    userId: string,
     data: {
       name: string;
       category_id: string;
       is_active?: boolean;
       supports_limited?: boolean;
       is_stackable?: boolean;
-    },
-    userId: string
+    }
   ) {
     const now = new Date().toISOString();
-    return this.typesRepository.create({
+    return this._client.create({
       data: {
         name: data.name,
         category_id: data.category_id,
@@ -38,7 +41,7 @@ class TypesService {
     });
   }
 
-  update(
+  async update(
     id: string,
     data: {
       name?: string;
@@ -49,14 +52,9 @@ class TypesService {
     },
     userId: string
   ) {
-    return this.typesRepository.update(
-      {
-        where: { id },
-        data: { ...data, date_updated: new Date().toISOString() },
-      },
-      userId
-    );
+    return this._client.update({
+      where: { id, user_id: userId },
+      data: { ...data, date_updated: new Date().toISOString() },
+    });
   }
 }
-
-export { TypesService };

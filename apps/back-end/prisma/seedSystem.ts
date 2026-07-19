@@ -2,16 +2,17 @@ import { readFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { ItemRepository, TypeRepository } from '../src/lib/repositories/index.js';
+import { ItemRepository } from '../src/lib/repositories/index.js';
 import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
 import { SYSTEM_USER } from './seedDatas/user.js';
+import { TypesService } from 'src/lib/services/typeService.js';
 
 const prismaCategory = prismaClient.category;
-const itemTypesRepository = new TypeRepository(prismaClient);
+const prismaType = new TypesService();
 const itemRepository = new ItemRepository(prismaClient);
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -90,7 +91,7 @@ const seedSystemData = async () => {
 
   if (!itemTypesCount) {
     for (const e of ITEM_TYPES) {
-      await itemTypesRepository.create({ data: { ...e, user_id: resolvedSystemUserId } });
+      await prismaType.create(resolvedSystemUserId, e);
     }
   }
 

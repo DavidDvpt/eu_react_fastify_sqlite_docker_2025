@@ -22,7 +22,7 @@ export class CategoryService {
     return await this._client.findUnique({ where: { id, user_id: userId } });
   }
 
-  create(
+  async create(
     userId: string,
     data: {
       name: string;
@@ -42,7 +42,7 @@ export class CategoryService {
     });
   }
 
-  update(
+  async update(
     id: string,
     userId: string,
     data: {

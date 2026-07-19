@@ -4,7 +4,6 @@ import { LotStockRepository } from './lotStockRepository.js';
 import { PedCardRepository } from './pedCardRepository.js';
 import { SeedPatchRepository } from './seedPatchRepository.js';
 import { TransactionRepository } from './transactionRepository.js';
-import { TypeRepository } from './typeRepository.js';
 import { UserRepository } from './userRepository.js';
 import { createRepositories } from './utils.js';
 
@@ -14,7 +13,6 @@ export {
   PedCardRepository,
   TransactionRepository,
   ItemRepository,
-  TypeRepository,
   SeedPatchRepository,
   UserRepository,
   createRepositories,

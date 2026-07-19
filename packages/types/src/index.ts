@@ -14,3 +14,4 @@ export type { ItemDto } from "./item.js";
 export type { StockAvailabilityRow, StockAvailabilityRows } from "./stock.js";
 
 export type { CategoryFormBody } from "./category.js";
+export type { TypeFormBody } from "./type.js";

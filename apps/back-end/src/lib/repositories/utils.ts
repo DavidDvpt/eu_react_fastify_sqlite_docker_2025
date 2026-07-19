@@ -1,6 +1,5 @@
 import {
   UserRepository,
-  TypeRepository,
   ItemRepository,
   LotRepository,
   PedCardRepository,
@@ -14,7 +13,6 @@ import type { RepositoryClient } from '../../types/index.js';
 // Helper to create every repository from a single Prisma client instance.
 const createRepositories = (client: RepositoryClient) => ({
   user: new UserRepository(client),
-  itemType: new TypeRepository(client),
   item: new ItemRepository(client),
   lot: new LotRepository(client),
   pedCard: new PedCardRepository(client),
