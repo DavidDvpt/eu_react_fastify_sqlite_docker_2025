@@ -1,4 +1,4 @@
-export * from "./categoriesApi";
+export * from "./categoryApi";
 
 export * from "./typesApi";
 

@@ -3,56 +3,70 @@ import { SortHelper } from '@eu/helpers';
 import prismaClient from '../../../prisma/prismaClient.js';
 
 import type { Category } from '../../../prisma/generated/client.js';
+import type { CategoryDto, CategoryFormOutputBody } from '@eu/types';
 
 export class CategoryService {
-  private _client: typeof prismaClient.category;
+  private static _client: typeof prismaClient.category = prismaClient.category;
 
-  constructor() {
-    this._client = prismaClient.category;
+  constructor() {}
+
+  private static parser(cat: Category) {
+    const parsed: CategoryDto = {
+      id: cat.id,
+      name: cat.name,
+      isActive: cat.is_active,
+      userId: cat.user_id,
+      createdAt: cat.date_created,
+      updatedAt: cat.date_updated ?? undefined,
+    };
+
+    return parsed;
   }
 
-  async getAll(userId: string, sort?: keyof Category) {
-    const sortKey: keyof Category = sort ?? 'name';
+  static async getAll(userId: string, sort?: keyof CategoryDto) {
+    const sortKey: keyof CategoryDto = sort ?? 'name';
+
     const rows = await this._client.findMany({ where: { user_id: userId } });
 
-    return SortHelper.sortByKey(rows, sortKey);
+    const parsed = rows.map((m) => this.parser(m));
+
+    SortHelper.sortByKey(parsed, sortKey);
+
+    return parsed;
   }
 
-  async getById(id: string, userId: string) {
-    return await this._client.findUnique({ where: { id, user_id: userId } });
+  static async getById(id: string, userId: string) {
+    const category = await this._client.findUnique({ where: { id, user_id: userId } });
+
+    if (!category) return null;
+
+    return this.parser(category);
   }
 
-  async create(
-    userId: string,
-    data: {
-      name: string;
-      is_active?: boolean;
-    }
-  ) {
-    const now = new Date().toISOString();
-
-    return this._client.create({
+  static async create(userId: string, data: Omit<CategoryFormOutputBody, 'id'>) {
+    const cat = await this._client.create({
       data: {
         name: data.name,
         is_active: data.is_active ?? true,
-        date_created: now,
+        date_created: new Date().toISOString(),
         date_updated: null,
         user_id: userId,
       },
     });
+
+    return { id: cat.id };
   }
 
-  async update(
+  static async update(
     id: string,
     userId: string,
-    data: {
-      name?: string;
-      is_active?: boolean;
-    }
+    data: Partial<Omit<CategoryFormOutputBody, 'id'>>
   ) {
-    return this._client.update({
+    const cat = await this._client.update({
       where: { id, user_id: userId },
       data: { ...data, date_updated: new Date().toISOString() },
     });
+
+    return { id: cat.id };
   }
 }

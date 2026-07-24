@@ -15,7 +15,7 @@ import { createCategoryColumns } from "@/shared/components/GenericList/columnDef
 import {
   CATEGORIES_ROUTE,
   getCategoryEditRoute,
-} from "@/lib/services/categoriesApi";
+} from "@/lib/services/categoryApi";
 
 interface UseManageListData {
   activeTab: ManageTab;

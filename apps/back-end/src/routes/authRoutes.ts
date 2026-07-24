@@ -6,7 +6,6 @@ import { AUTH_API_PREFIX } from '../config/index.js';
 import { parseDurationToSeconds } from '../lib/auth/index.js';
 import { HashTools } from '../lib/security/index.js';
 import { signinBodySchema, signupBodySchema } from '../lib/validations/index.js';
-import { UsersService } from '../modules/users/index.js';
 
 import type { FastifyPluginAsync } from 'fastify';
 
@@ -14,7 +13,6 @@ import type { FastifyPluginAsync } from 'fastify';
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   const accessTokenMaxAge = parseDurationToSeconds(env.JWT_ACCESS_EXPIRES_IN);
   const refreshTokenMaxAge = parseDurationToSeconds(env.JWT_REFRESH_EXPIRES_IN);
-  const usersService = () => new UsersService(app.repos.users);
 
   app.post(
     '/signup',
@@ -132,7 +130,8 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     protectedApp.get('/me', async (request, reply) => {
       try {
         const id = request.user.id;
-        const user = await usersService().getById(id);
+
+        const user = await UserService.getbyId(id);
 
         if (!user) return reply.code(401).send('Unauthorized');
 
