@@ -1,4 +1,5 @@
 import { z } from "zod";
 import { typeFormSchema } from "@eu/zod-schemas";
 
-export type TypeFormBody = z.infer<typeof typeFormSchema>;
+export type TypeFormIntputBody = z.input<typeof typeFormSchema>;
+export type TypeFormOutputBody = z.output<typeof typeFormSchema>;

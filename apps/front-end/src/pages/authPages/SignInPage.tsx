@@ -3,14 +3,14 @@ import signinApi from "@/modules/auth/services/network/signinApi";
 import { Section, SubSection } from "@/shared/components/Containers";
 import { AppLink } from "@/shared/components/AppLink";
 import { useAppDispatch } from "@/store/hooks";
-import type { LoginOutput } from "@/pages/authPages/components/validations";
 import SignInForm from "./components/SignInForm";
 import styles from "./styles/signin.module.css";
+import type { UserSignInFormOutputBody } from "@eu/types";
 
 function SignInPage() {
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (values: LoginOutput) => {
+  const handleSubmit = async (values: UserSignInFormOutputBody) => {
     try {
       const response = await signinApi(values);
 
@@ -34,7 +34,9 @@ function SignInPage() {
               Connexion
             </h1>
           </div>
+
           <SignInForm onSubmit={handleSubmit} />
+
           <div className="flex justify-center text-sm">
             <AppLink
               to="/auth/signup"

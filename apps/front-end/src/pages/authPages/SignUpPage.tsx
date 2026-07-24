@@ -3,13 +3,13 @@ import signupApi from "@/modules/auth/services/network/signupApi";
 import { useNavigate } from "react-router-dom";
 import styles from "./styles/signup.module.css";
 import { AppLink } from "@/shared/components/AppLink";
-import type { SignUpOutput } from "@/pages/authPages/components/validations";
 import SignUpForm from "./components/SignUpForm";
+import type { UserSignUpFormOutputBody } from "@eu/types";
 
 function SignUpPage() {
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: SignUpOutput) => {
+  const handleSubmit = async (values: UserSignUpFormOutputBody) => {
     try {
       await signupApi(values);
       navigate("/auth/signin", { replace: true });
@@ -26,6 +26,7 @@ function SignUpPage() {
       content={
         <div className="space-y-4">
           <SignUpForm onSubmit={handleSubmit} />
+
           <div className="flex justify-center text-sm">
             <AppLink
               to="/auth/signin"

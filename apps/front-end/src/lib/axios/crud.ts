@@ -1,33 +1,20 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import type { AxiosInstance, AxiosRequestConfig } from "axios";
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from "axios";
 
 function axiosCrud(client: AxiosInstance) {
   return {
-    get: async <T, Q extends QueryParams | undefined = undefined>(
-      url: string,
-      config?: AxiosRequestConfig<Q>
-    ) => (await client.get<T>(url, config)).data,
-    post: async <T, B extends JsonBody>(
-      url: string,
-      body: B,
-      config?: AxiosRequestConfig<any>
-    ) => (await client.post<T>(url, body, config)).data,
+    get: async <T>(url: string, config?: AxiosRequestConfig) =>
+      (await client.get<T>(url, config)).data,
 
-    put: async <T, B extends JsonBody>(
-      url: string,
-      body: 
-      B,
-      config?: AxiosRequestConfig<any>
-    ) => (await client.put<T>(url, body, config)).data,
+    post: async <T, B>(url: string, body: B, config?: AxiosRequestConfig<B>) =>
+      (await client.post<T, AxiosResponse<T>, B>(url, body, config)).data,
 
-    patch: async <T, B extends JsonBody>(
-      url: string,
-      body: B,
-      config?: AxiosRequestConfig<any>
-    ) => (await client.patch<T>(url, body, config)).data,
+    put: async <T, B>(url: string, body: B, config?: AxiosRequestConfig<B>) =>
+      (await client.put<T, AxiosResponse<T>, B>(url, body, config)).data,
 
-    del: async <T>(url: string, config?: AxiosRequestConfig<any>) =>
+    patch: async <T, B>(url: string, body: B, config?: AxiosRequestConfig<B>) =>
+      (await client.patch<T, AxiosResponse<T>, B>(url, body, config)).data,
+
+    del: async <T>(url: string, config?: AxiosRequestConfig) =>
       (await client.delete<T>(url, config)).data,
   };
 }

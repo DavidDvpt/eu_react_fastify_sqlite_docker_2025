@@ -1,4 +1,5 @@
 import argon2 from 'argon2';
+import { UserService } from 'src/lib/services/userService.js';
 
 import { env } from '../config/env.js';
 import { AUTH_API_PREFIX } from '../config/index.js';
@@ -23,29 +24,28 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       },
     },
     async (request, reply) => {
-      const { email, password, pseudo, firstname, lastname } = request.body as {
-        email: string;
-        password: string;
-        pseudo: string;
-        firstname?: string;
-        lastname?: string;
-      };
+      const { email, password, pseudo, firstname, lastname } = signupBodySchema.parse(request.body);
 
       // 1) check existing user
-      const existing = await usersService().getByEmail(email);
-      if (existing) {
+      const emailExists = await UserService.getByEmail(email);
+      const pseudoExists = await UserService.getByPseudo(email);
+
+      if (emailExists) {
         return reply.code(409).send({ message: 'Email already in use' });
+      }
+      if (pseudoExists) {
+        return reply.code(409).send({ message: 'Pseudo already in use' });
       }
       // 2) hash
       const hash = await argon2.hash(password);
 
       // 3) create (role forced)
-      await usersService().createAuthUser({
+      await UserService.create({
         email,
         pseudo,
         firstname,
         lastname,
-        passwordHash: hash,
+        password: hash,
       });
 
       return reply.code(201).send({
@@ -53,7 +53,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       });
     }
   );
-  //signin
+
   app.post(
     '/signin',
     {
@@ -62,19 +62,23 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       },
     },
     async (request, reply) => {
-      const { password, pseudo } = request.body as { password: string; pseudo: string };
+      const { password, pseudo } = signinBodySchema.parse(request.body);
 
-      const user = await usersService().getByPseudo(pseudo);
+      const user = await UserService.getByPseudo(pseudo);
 
       if (!user) {
         return reply.code(401).send({ message: 'Identifiants invalides' });
       }
 
-      if (!user.is_active) {
+      if (!user.isActive) {
         return reply.code(401).send({ message: 'utilisateur desactivé' });
       }
 
-      const passOk = await HashTools.verifyPassword(user.password_hash, password);
+      if (!user.password) {
+        return reply.code(401).send({ message: 'password incorrect' });
+      }
+
+      const passOk = await HashTools.verifyPassword(user.password, password);
 
       if (!passOk) {
         return reply.code(401).send({ message: 'Identifiants invalides' });

@@ -1,10 +1,14 @@
 import type { ItemDto } from "./item.js";
+import { z } from "zod";
+import { transactionBodySchema } from "@eu/zod-schemas";
 
 export type TransactionStatusDto = "SOLDED" | "RUNNING" | "RETURNED";
 
 export type TransactionTypeDto =
   "PURCHASE" | "FOUND" | "GIFT" | "EXISTING_STOCK" | "SELL" | "GIVEN";
 
+export type TransactionIntputBody = z.input<typeof transactionBodySchema>;
+export type TransactionOutputBody = z.output<typeof transactionBodySchema>;
 export interface RunningTransactionDto {
   id: string;
   itemId: string;

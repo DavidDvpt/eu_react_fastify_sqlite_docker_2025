@@ -19,4 +19,5 @@ export type ItemDto = {
   category?: any;
 };
 
-export type ItemFormBody = z.infer<typeof itemFormSchema>;
+export type ItemFormIntputBody = z.input<typeof itemFormSchema>;
+export type ItemFormOutputBody = z.output<typeof itemFormSchema>;

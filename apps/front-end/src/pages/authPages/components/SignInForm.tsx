@@ -1,20 +1,20 @@
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
-import {
-  loginDefaultValues,
-  loginSchema,
-  type LoginOutput,
-} from "./validations";
 
+import { userSignInSchema } from "@eu/zod-schemas";
+import type { UserSignInFormOutputBody } from "@eu/types";
+
+const loginDefaultValues = { pseudo: "", password: "" };
 interface ILoginFormProps {
   className?: string;
-  onSubmit: (values: LoginOutput) => void | Promise<void>;
+  onSubmit: (values: UserSignInFormOutputBody) => void | Promise<void>;
 }
+
 function SignInForm({ className, onSubmit }: ILoginFormProps) {
   return (
     <GenericForm
-      schema={loginSchema}
+      schema={userSignInSchema}
       defaultValues={loginDefaultValues}
       onSubmit={onSubmit}
       className={`flex flex-col items-stretch justify-center space-y-3 ${className}`}
