@@ -1,5 +1,5 @@
 import { SortHelper } from '@eu/helpers';
-import prismaClient from 'prisma/prismaClient.js';
+import prismaClient from '#prisma/prismaClient.js';
 
 import type { TypeDto } from '../../../../../packages/types/src/type.js';
 import type { TypeFormOutputBody, TypeDto } from '@eu/types';

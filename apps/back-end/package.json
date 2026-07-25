@@ -3,10 +3,22 @@
   "version": "1.0.0",
   "main": "index.js",
   "type": "module",
+  "imports": {
+    "#src/*": {
+      "types": "./src/*",
+      "development": "./src/*",
+      "default": "./dist/src/*"
+    },
+    "#prisma/*": {
+      "types": "./prisma/*",
+      "development": "./prisma/*",
+      "default": "./dist/prisma/*"
+    }
+  },
   "scripts": {
     "build": "tsc",
-    "dev": "tsx watch src/server.ts",
-    "start": "node dist/server.js",
+    "dev": "NODE_OPTIONS=--conditions=development tsx watch src/server.ts",
+    "start": "node dist/src/server.js",
     "prisma:reset": "dotenv -e .env.dev -- npx prisma migrate reset --force",
     "prisma:migrate": "dotenv -e .env.dev -- npx prisma migrate dev --name",
     "prisma:deploy": "npx prisma migrate deploy",
@@ -18,11 +30,11 @@
     "test:all": "npm run test:db:migrate && npm run test",
     "prisma:sync": "npm run prisma:deploy && npm run prisma:generate",
     "dev:reset-and-seed": "npm run prisma:reset && npm run prisma:seed",
-    "sql:extract": "tsx tools/sql-to-ts.ts",
-    "test": "vitest --config vitest.api.config.ts",
-    "test:api": "vitest run --config vitest.api.config.ts",
+    "sql:extract": "NODE_OPTIONS=--conditions=development tsx tools/sql-to-ts.ts",
+    "test": "NODE_OPTIONS=--conditions=development vitest --config vitest.api.config.ts",
+    "test:api": "NODE_OPTIONS=--conditions=development vitest run --config vitest.api.config.ts",
     "test:bdd": "bash ./scripts/test-db.sh",
-    "test:bdd:raw": "vitest run --config vitest.bdd.config.ts",
+    "test:bdd:raw": "NODE_OPTIONS=--conditions=development vitest run --config vitest.bdd.config.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.test.json",
     "lint": "eslint \"src/**/*.{ts,tsx}\"",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",

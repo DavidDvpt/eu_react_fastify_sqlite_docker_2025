@@ -1,5 +1,5 @@
-import { PedCardTupleType } from 'prisma/generated/enums.js';
-import prismaClient from 'prisma/prismaClient.js';
+import { PedCardTupleType } from '#prisma/generated/enums.js';
+import prismaClient from '#prisma/prismaClient.js';
 
 import type { PedCardFormBody } from '@eu/types';
 

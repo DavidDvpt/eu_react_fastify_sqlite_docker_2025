@@ -1,5 +1,5 @@
 import { typeFormSchema } from '@eu/zod-schemas';
-import { TypeService } from 'src/lib/services/typeService.js';
+import { TypeService } from '#src/lib/services/typeService.js';
 
 import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';

@@ -8,8 +8,8 @@ import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
 import { ITEM_TYPES } from './seedDatas/item_types.js';
 import { ITEMS } from './seedDatas/items.js';
 import { SYSTEM_USER } from './seedDatas/user.js';
-import { TypesService } from 'src/lib/services/typeService.js';
-import { ItemService } from 'src/lib/services/itemService.js';
+import { TypesService } from '#src/lib/services/typeService.js';
+import { ItemService } from '#src/lib/services/itemService.js';
 
 const prismaCategory = prismaClient.category;
 const prismaType = new TypesService();

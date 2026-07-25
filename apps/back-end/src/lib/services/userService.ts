@@ -1,7 +1,7 @@
-import prismaClient from 'prisma/prismaClient.js';
-
+import type { User } from '#prisma/generated/client.js';
 import type { UserDto, UserSignUpFormOutputBody } from '@eu/types';
-import type { User } from 'prisma/generated/client.js';
+
+import prismaClient from '#prisma/prismaClient.js';
 
 export class UserService {
   private static userParser(user: User | null) {

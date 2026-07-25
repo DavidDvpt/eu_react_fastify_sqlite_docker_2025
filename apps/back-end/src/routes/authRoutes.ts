@@ -1,5 +1,5 @@
 import argon2 from 'argon2';
-import { UserService } from 'src/lib/services/userService.js';
+import { UserService } from '#src/lib/services/userService.js';
 
 import { env } from '../config/env.js';
 import { AUTH_API_PREFIX } from '../config/index.js';

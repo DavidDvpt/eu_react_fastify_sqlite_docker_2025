@@ -1,5 +1,5 @@
 import { categoryFormSchema } from '@eu/zod-schemas';
-import { CategoryService } from 'src/lib/services/categoryService.js';
+import { CategoryService } from '#src/lib/services/categoryService.js';
 
 import type { CategoryFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
