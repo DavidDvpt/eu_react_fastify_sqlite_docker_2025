@@ -1,14 +1,19 @@
 import type { ItemDto } from "./item.js";
 import { z } from "zod";
-import { transactionBodySchema } from "@eu/zod-schemas";
+import {
+  transactionBodySchema,
+  transactionStatusSchema,
+  transactionTypeSchema,
+} from "@eu/zod-schemas";
 
-export type TransactionStatusDto = "SOLDED" | "RUNNING" | "RETURNED";
+export type TransactionStatusDto = z.output<typeof transactionStatusSchema>;
 
-export type TransactionTypeDto =
-  "PURCHASE" | "FOUND" | "GIFT" | "EXISTING_STOCK" | "SELL" | "GIVEN";
+export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
 
-export type TransactionIntputBody = z.input<typeof transactionBodySchema>;
-export type TransactionOutputBody = z.output<typeof transactionBodySchema>;
+export type TransactionStatusOutput = z.output<typeof transactionStatusSchema>;
+
+export type TransactionFormIntputBody = z.input<typeof transactionBodySchema>;
+export type TransactionFormOutputBody = z.output<typeof transactionBodySchema>;
 export interface RunningTransactionDto {
   id: string;
   itemId: string;
@@ -19,7 +24,6 @@ export interface RunningTransactionDto {
   status: TransactionStatusDto;
   createdAt: string;
 }
-export type RunningTransactionDtos = RunningTransactionDto[];
 
 export interface TransactionDto extends RunningTransactionDto {
   transactionType: TransactionTypeDto;
@@ -35,4 +39,5 @@ export type TransactionBodyDto = Omit<
 
 export type TransatcionPatchDto = Omit<TransactionDto, "item" | "lotIds">;
 
+export type RunningTransactionDtos = RunningTransactionDto[];
 export type TransactionDtos = TransactionDto[];

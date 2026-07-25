@@ -6,7 +6,7 @@ const USER_ID = env.SYSTEM_USER_ID ?? '';
 const TRANSACTION_IN_SOURCE = [
   {
     transaction_id: '01429DE0-80B3-4EAF-8FCB-8490604C4BDE',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1415,
     tt: 636.75,
     ttc: 642,
@@ -14,7 +14,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '01C53A1C-9346-46CA-848B-04E8A325DB61',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 755,
     tt: 181.2,
     ttc: 189,
@@ -30,7 +30,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '07BA1843-6302-4F6F-A3AE-754E9279E2DF',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 140,
     tt: 105,
     ttc: 109,
@@ -38,7 +38,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '09635B44-B2FA-403B-A3E4-4FB57B37DF37',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 974,
     tt: 233.76,
     ttc: 256,
@@ -46,7 +46,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '0B3F0AC8-E5E3-40EF-9C6E-25175EAE54EC',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 242,
     tt: 125.84,
     ttc: 141,
@@ -54,7 +54,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '0ECFE29A-72DB-4172-9BD1-483711734AB3',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 273,
     tt: 204.75,
     ttc: 216,
@@ -62,7 +62,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '0EF76CD2-EE2B-4059-B981-47950B7D4CEF',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 314,
     tt: 235.5,
     ttc: 247,
@@ -70,7 +70,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '0F3A5947-1F00-4139-91C2-459DCE1EE20A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1906,
     tt: 228.72,
     ttc: 231,
@@ -78,7 +78,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '13F7F41E-284C-4284-B7D0-C12453378F41',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 195,
     tt: 101.4,
     ttc: 106,
@@ -86,7 +86,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1650D9ED-4911-44B6-A9D2-F26A8154D591',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 10000,
     tt: 300,
     ttc: 311,
@@ -94,7 +94,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '179625C2-7129-430B-B988-CAF66E5B93A8',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 450,
     ttc: 460,
@@ -102,7 +102,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '17AE3029-BAF7-42DE-BCAB-4FB5D61E70E3',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 247,
     tt: 128.44,
     ttc: 138,
@@ -110,7 +110,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '18595DB5-457E-4D20-8B01-5567F07962D4',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 270,
     tt: 64.8,
     ttc: 67,
@@ -126,7 +126,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1BDAB59B-5CEF-4B9F-94B9-D1DD94252FA4',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 250,
     tt: 130,
     ttc: 137,
@@ -134,7 +134,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1C2E5D70-29AB-495C-B601-CCD795840D52',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 595,
     tt: 142.8,
     ttc: 150,
@@ -142,7 +142,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1CA77553-2D03-473E-B060-1EBA7A5D84B1',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 39,
     tt: 29.25,
     ttc: 31,
@@ -150,7 +150,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1DC4E511-F4D1-4EDF-9B04-3573B04D3846',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 443,
     tt: 199.35,
     ttc: 201,
@@ -158,7 +158,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '1E68975F-0B0C-4A51-BE73-B1267B0B76E1',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 10000,
     tt: 400,
     ttc: 407,
@@ -182,7 +182,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '2178C25B-47E1-424C-B011-95C7D1135A27',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 500,
     tt: 375,
     ttc: 415,
@@ -198,7 +198,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '244A5EBE-3AA8-451F-8205-58EEF5720FFB',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5445,
     tt: 217.8,
     ttc: 222,
@@ -206,7 +206,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '249EB1D0-6140-498A-A1B5-C33B130A9F39',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1242,
     tt: 124.2,
     ttc: 127,
@@ -222,7 +222,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '262D78DF-E5C4-4BFD-A77B-8B254DC2E959',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2000,
     tt: 200,
     ttc: 205,
@@ -230,7 +230,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '29745B36-1E54-4900-B3A0-576C59230EBB',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1091,
     tt: 109.1,
     ttc: 111,
@@ -238,7 +238,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '298BAE66-08D3-4C8E-A9C1-BFFFC80BAD56',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1914,
     tt: 229.68,
     ttc: 235,
@@ -246,7 +246,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '2A87F748-4B94-49CB-9850-B9DD417BB0DE',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 350,
     tt: 262.5,
     ttc: 288,
@@ -254,7 +254,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '2CAFAABE-0B15-4034-BAD8-29AFEE8791E6',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 365,
     tt: 36.5,
     ttc: 38,
@@ -262,7 +262,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '2D0CEDAC-DC88-4934-93E7-883351C29E06',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 325,
     tt: 243.75,
     ttc: 253,
@@ -270,7 +270,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '2EA05D8E-5AFD-4515-B63D-AA8CABD0D167',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2242,
     tt: 224.2,
     ttc: 229,
@@ -278,7 +278,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '337E833B-3634-4D5B-9ECF-28210F754D00',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2686,
     tt: 268.6,
     ttc: 273,
@@ -286,7 +286,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '34D157C9-20CD-49EA-8697-53B237857092',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 209,
     tt: 108.68,
     ttc: 115,
@@ -294,7 +294,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '35512F87-46F9-47B5-91C0-9CCA0EEC771B',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 431,
     tt: 224.12,
     ttc: 232,
@@ -302,7 +302,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '358FCD41-476F-4431-8917-53A4DD699171',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1078,
     tt: 129.36,
     ttc: 131,
@@ -334,7 +334,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '3C4A02BF-699B-4FEC-9D96-0E7B7197BD3B',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1615,
     tt: 96.9,
     ttc: 109,
@@ -342,7 +342,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '3D5D18A7-5B78-489C-BD2D-80ADF5DC0335',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 500,
     tt: 260,
     ttc: 275,
@@ -350,7 +350,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '3D971897-9A7A-442E-94FB-B841C5050632',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 300,
     tt: 54,
     ttc: 125,
@@ -358,7 +358,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '3E5BCFD9-9E17-4004-889B-B91ADA401DC1',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 203,
     tt: 91.35,
     ttc: 93,
@@ -366,7 +366,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '3FA44FC1-9A7D-4EE8-8F40-FC536682E33D',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 282,
     tt: 211.5,
     ttc: 232,
@@ -374,7 +374,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '40CBF9E6-D761-4209-935F-CDA9C3A321E8',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1576,
     tt: 378.24,
     ttc: 388,
@@ -382,7 +382,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '428FAA80-F33C-4C42-8A8E-FB52B8DED07D',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 324,
     tt: 168.48,
     ttc: 177,
@@ -390,7 +390,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '42BE78BE-1ED2-42E2-B41F-61084D807370',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 500,
     tt: 150,
     ttc: 155,
@@ -406,7 +406,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '4522BCEC-6E43-47D1-9B0A-F5C1BF42F626',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 500,
     tt: 260,
     ttc: 273,
@@ -414,7 +414,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '48C1420C-DE35-4DD9-B8E1-54E784C10EFC',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3144,
     tt: 125.76,
     ttc: 128,
@@ -430,7 +430,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '4EC9DA4D-94FF-4EEB-99AC-A0CA05920D53',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 248,
     tt: 24.8,
     ttc: 26,
@@ -438,7 +438,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '507C4A98-0658-48E9-A5E1-7DAFECB308A2',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 209,
     tt: 108.68,
     ttc: 115,
@@ -462,7 +462,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '5265AFFC-8A65-45D7-96FB-EBFFD60DEEAD',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2250,
     tt: 270,
     ttc: 273,
@@ -478,7 +478,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '55A395ED-DEA7-40D5-807C-D54C18DB45EA',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 141,
     tt: 105.75,
     ttc: 116,
@@ -494,7 +494,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '57B9B9FC-A30D-45ED-89F9-B651D2266627',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2497,
     tt: 149.82,
     ttc: 164,
@@ -502,7 +502,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '59759ACC-16A6-4195-AEEC-811DA6F79C60',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 806,
     tt: 193.44,
     ttc: 202,
@@ -518,7 +518,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '5C2BED50-23ED-452D-9EF2-9AC4F7060750',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 249,
     tt: 44.82,
     ttc: 105,
@@ -526,7 +526,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '60F72CB8-C1D7-48BF-A483-2F3AA01BE0E5',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1830,
     tt: 219.6,
     ttc: 223,
@@ -534,7 +534,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '65DC3A1B-1583-4A88-8E82-AE930DDA338A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 766,
     tt: 344.7,
     ttc: 352,
@@ -542,7 +542,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '65F7BFD1-A159-46E8-B041-15E2A0661CBE',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5000,
     tt: 300,
     ttc: 333,
@@ -550,7 +550,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '678A1FF9-8F98-43A4-B4B8-C195B075DF19',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 120,
     ttc: 123,
@@ -558,7 +558,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '68869110-CC4D-41F1-B231-FC8B750D8239',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 394,
     tt: 204.88,
     ttc: 231,
@@ -566,7 +566,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '68F3D5D4-10AC-433C-A38B-70592D7D234D',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 491,
     tt: 255.32,
     ttc: 265,
@@ -574,7 +574,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '6A1D4DCD-2A5F-463F-A507-79419DD8D76A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 576,
     tt: 138.24,
     ttc: 146,
@@ -590,7 +590,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '6ADEE89E-83BB-4044-A153-B288099A5CA8',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2699,
     tt: 269.9,
     ttc: 277,
@@ -598,7 +598,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '6B6E8C58-0B43-46F0-9A00-EDC174E1BF8D',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 569,
     tt: 426.75,
     ttc: 463,
@@ -614,7 +614,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '6D9F4FAD-B08B-4FA0-93E7-4ED832CC3F7A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5665,
     tt: 169.95,
     ttc: 177,
@@ -630,7 +630,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '7127F844-27A5-4353-AE52-5799CC035653',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5779,
     tt: 346.74,
     ttc: 388,
@@ -638,7 +638,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '71F0D2B8-AE92-4DB8-A797-8194DF380058',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 509,
     tt: 229.05,
     ttc: 235,
@@ -646,7 +646,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '72A345A4-A799-45AC-B4EF-A7F45104D333',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 128,
     tt: 96,
     ttc: 101,
@@ -654,7 +654,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '733D475F-6AE2-48A2-A511-8CED5B89C6D2',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 450,
     ttc: 456,
@@ -662,7 +662,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '736EC6F4-2AF9-4092-801D-91A7DAB264F7',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 500,
     tt: 260,
     ttc: 273,
@@ -670,7 +670,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '756B6FF2-AA19-4271-9C56-AAE72D492241',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 800,
     tt: 192,
     ttc: 212,
@@ -678,7 +678,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '75AC72A9-1A38-42A3-8C0A-99DCCFBA8542',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 293,
     tt: 152.36,
     ttc: 159,
@@ -686,7 +686,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '7663B7E5-6DC6-469B-9E21-FD63062F18A8',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5001,
     tt: 100.02,
     ttc: 102,
@@ -694,7 +694,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '7B6955E2-39FD-45EA-90BF-FFC03BDAFDB8',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 744,
     tt: 334.8,
     ttc: 338,
@@ -710,7 +710,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '7E30A44C-A1F1-4E5D-99D5-633F0DE2C91B',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 444,
     tt: 230.88,
     ttc: 250,
@@ -718,7 +718,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '7E9B7CC1-B709-4A60-88ED-6500700CD75C',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3034,
     tt: 182.04,
     ttc: 197,
@@ -726,7 +726,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '812ED00C-26E1-46F4-ADC9-19516621484F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 8940,
     tt: 268.2,
     ttc: 275,
@@ -734,7 +734,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '84160E50-178C-40EC-BB34-F34C471F5BEA',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 193,
     tt: 144.75,
     ttc: 156,
@@ -742,7 +742,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '8459D41C-BB97-49F1-9F8A-B156811D6C17',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1183,
     tt: 532.35,
     ttc: 539,
@@ -750,7 +750,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '849260FD-F03F-459D-8AD0-328D41F8474E',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 4806,
     tt: 96.12,
     ttc: 98,
@@ -758,7 +758,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '85F438AE-BE24-47BD-BAE7-C3CAF995FE5E',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 520,
     ttc: 547,
@@ -766,7 +766,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '8CD646B8-08EF-485E-A4F7-7D657EB5561F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2927,
     tt: 175.62,
     ttc: 193,
@@ -774,7 +774,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '8F9B3A1B-3DE1-463F-B313-D15DAAE02E19',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1762,
     tt: 422.88,
     ttc: 450,
@@ -790,7 +790,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '96880736-71E6-4E33-B426-00343D832E4B',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 85,
     tt: 63.75,
     ttc: 67,
@@ -798,7 +798,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '969A8609-B7C9-4AD3-98F6-0D46DDCE7410',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 160,
     tt: 83.2,
     ttc: 88,
@@ -806,7 +806,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '97B9D74B-8AAC-435C-AEBC-CAB359A7A12F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 266,
     tt: 199.5,
     ttc: 220,
@@ -814,7 +814,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '9872372B-C8F1-4BED-83FB-DC32E6FDB2A7',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 651,
     tt: 292.95,
     ttc: 305,
@@ -822,7 +822,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '9ADFE32F-6660-497E-878E-51892853FA3F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3087,
     tt: 308.7,
     ttc: 320,
@@ -838,7 +838,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: '9E265CB4-D147-452B-A5C3-060F624FB096',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 6005,
     tt: 360.3,
     ttc: 396,
@@ -854,7 +854,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'A09F5F77-3006-41AE-91A2-1A43BA974206',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 300,
     ttc: 308,
@@ -862,7 +862,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'A0B7C8FE-79D6-405A-B3E9-342C0B346AD6',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 330,
     tt: 171.6,
     ttc: 181,
@@ -870,7 +870,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'A246F925-9892-42EA-822B-46A214FC25FA',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1501,
     tt: 180.12,
     ttc: 182,
@@ -878,7 +878,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'A2B62532-39F8-4C28-9870-08A4226AEE4F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1375,
     tt: 137.5,
     ttc: 141,
@@ -886,7 +886,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'A4F6CB35-AFA4-484E-B40D-FB08AB0B7CE1',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 10000,
     tt: 400,
     ttc: 406,
@@ -902,7 +902,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'AC4236B6-C97E-4BE0-B7CF-D73C9B9052F9',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 300,
     tt: 156,
     ttc: 164,
@@ -934,7 +934,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'B22C8ABC-4B04-402A-A5B7-06FD2624273F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 120,
     ttc: 127,
@@ -942,7 +942,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'B24FFC00-FC3B-49B6-933D-C2EF23534A4A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 916,
     tt: 109.92,
     ttc: 113,
@@ -958,7 +958,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'B5D8C81B-B4B5-4B5B-9193-55D025C4F112',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 7216,
     tt: 432.96,
     ttc: 468,
@@ -998,7 +998,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'BE1DF500-A749-474A-AF96-9BC2AD48676A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3001,
     tt: 90.03,
     ttc: 93,
@@ -1006,7 +1006,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'BEA8B979-C4EE-42F0-9319-313558FC341F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 106,
     tt: 55.12,
     ttc: 60,
@@ -1022,7 +1022,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'C5534B34-6704-4277-A91C-934EF8BB5676',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 9000,
     tt: 180,
     ttc: 188,
@@ -1038,7 +1038,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'C6AA709C-D13A-4E61-B738-0DF3F7AB3649',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 320,
     tt: 240,
     ttc: 263,
@@ -1046,7 +1046,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'C7D9293D-99DE-4828-9E40-53D22EB816F6',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 805,
     tt: 193.2,
     ttc: 203,
@@ -1054,7 +1054,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'C8A1B43D-7B46-4E56-95BB-59F2F0C2E674',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 360,
     tt: 162,
     ttc: 165,
@@ -1062,7 +1062,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'CEA57EB1-66B9-4CFE-BA00-1070707D3DB9',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 300,
     tt: 225,
     ttc: 248,
@@ -1078,7 +1078,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'D03937C9-38A6-4977-A1C2-DC20CAF0F435',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 202,
     tt: 151.5,
     ttc: 157,
@@ -1086,7 +1086,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'D08EAAB5-41FE-483F-9327-62CDBF987832',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1000,
     tt: 300,
     ttc: 308,
@@ -1094,7 +1094,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'D0D821BE-1607-4555-9AAA-AC0476C0D949',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1175,
     tt: 282,
     ttc: 297,
@@ -1102,7 +1102,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'D0DE1095-3802-497F-A3F7-5A59195ED3E9',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 100,
     tt: 18,
     ttc: 42,
@@ -1110,7 +1110,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'DABF6FF2-166C-4125-8EA4-68F93B882A82',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 300,
     tt: 225,
     ttc: 237,
@@ -1118,7 +1118,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'DB665143-D83F-452C-8B8A-6FC4EAEE4040',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 267,
     tt: 200.25,
     ttc: 223,
@@ -1126,7 +1126,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'DCB32439-29D8-4A3F-8AEE-64D3E77C4EAA',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3914,
     tt: 469.68,
     ttc: 475,
@@ -1134,7 +1134,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'DE9D4B92-F135-48A3-8111-57EE906C9296',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1001,
     tt: 450.45,
     ttc: 454,
@@ -1142,7 +1142,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'DFE06F00-08DC-4691-BAE7-C12BB3EFBDEA',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 317,
     tt: 164.84,
     ttc: 173,
@@ -1150,7 +1150,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E0340D08-1F9B-4472-91CC-89EF94B3C908',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1500,
     tt: 675,
     ttc: 682,
@@ -1166,7 +1166,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E3655393-10F5-4006-B73D-E6F9A342C60A',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 1005,
     tt: 100.5,
     ttc: 103,
@@ -1174,7 +1174,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E5EE219D-FCD9-4839-819A-9F16825346F3',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 3527,
     tt: 141.08,
     ttc: 145,
@@ -1182,7 +1182,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E6C91992-7B63-4C71-9AFB-6488E3896554',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 846,
     tt: 380.7,
     ttc: 386,
@@ -1190,7 +1190,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E79B87F4-6B08-45D0-A0F0-85FCC2EF0DF1',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2528,
     tt: 303.36,
     ttc: 307,
@@ -1198,7 +1198,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E812D509-04E3-4B5A-923F-1BACF34E1FA4',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 80,
     tt: 41.6,
     ttc: 44,
@@ -1206,7 +1206,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'E834107B-9F2B-4D81-BEB7-23378C3584BB',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 5530,
     tt: 221.2,
     ttc: 225,
@@ -1222,7 +1222,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'EB6CCC48-A10B-4DFF-BABA-78D5E3FA2F7F',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2233,
     tt: 133.98,
     ttc: 145,
@@ -1238,7 +1238,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'F07825BC-0577-4962-8A1B-243CCDBC1CC4',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 242,
     tt: 125.84,
     ttc: 141,
@@ -1246,7 +1246,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'F3EB5C67-D5D0-4198-BC89-4410851AE4ED',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2018,
     tt: 201.8,
     ttc: 207,
@@ -1254,7 +1254,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'F5305BA3-CEEF-477D-A1DC-412756D9F5C7',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 778,
     tt: 350.1,
     ttc: 354,
@@ -1262,7 +1262,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'F6454A84-D7A2-4173-8E63-1DE761A5E1D2',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2575,
     tt: 257.5,
     ttc: 267,
@@ -1270,7 +1270,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'F647EB1E-31C4-4495-80F1-78244D223931',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 438,
     tt: 43.8,
     ttc: 45,
@@ -1286,7 +1286,7 @@ const TRANSACTION_IN_SOURCE = [
   },
   {
     transaction_id: 'FDC52186-59E9-4C85-B4AE-96BB88A22337',
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     quantity: 2513,
     tt: 100.52,
     ttc: 103,
@@ -1300,7 +1300,7 @@ export const TRANSACTIONS_BUY: Prisma.TransactionCreateManyInput[] = TRANSACTION
     tt: tx.tt,
     fee: 0,
     ttc: tx.ttc,
-    transaction_type: 'PURCHASE',
+    transaction_type: 'BUY',
     status: 'SOLDED',
     user_id: USER_ID,
     created_at: new Date(2025, 0, 1),

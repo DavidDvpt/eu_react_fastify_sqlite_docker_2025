@@ -25,7 +25,7 @@ enum LotType {
 }
 
 enum TransactionType {
-  PURCHASE
+  BUY
   FOUND
   GIFT
   EXISTING_STOCK

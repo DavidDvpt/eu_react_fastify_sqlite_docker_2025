@@ -1,51 +1,49 @@
-import { TransactionType } from '../../../prisma/generated/client.js';
-
-import type { PrismaClient } from '../../../prisma/generated/client.js';
 import type {
-  TransactionBodyBuy,
-  TransactionBodySell,
-} from '../../modules/transaction/transactionTypes.js';
-import type { AppRepos } from '../../types/fastify.js';
-import type { PedCardEntryInput } from '../repositories/pedCardRepository.js';
-import type { TransatcionPatchDto } from '@eu/types';
+  PedCardFormOutputBody,
+  TransactionFormOutputBody,
+  TransatcionPatchDto,
+} from '@eu/types';
+
+import { PrismaClient } from '#prisma/generated/client.js';
+import prismaClient from '#prisma/prismaClient.js';
+import { LotService } from '#src/lib/services/lotService.js';
+import { PedcardService } from '#src/lib/services/pedcardService.js';
 
 const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
 
 class TransactionService {
-  constructor(
-    private readonly prisma: PrismaClient,
-    private readonly repos: AppRepos
-  ) {}
+  private static _client = prismaClient.transaction;
+  private static prisma: PrismaClient;
 
-  private async checkAvaiability(userId: string, body: { itemId: string; quantity: number }) {
-    const { itemId, quantity } = body;
-    const availability = await this.repos.lotStock.getAvailableStockByItemId(userId, itemId);
+  constructor(private readonly prisma: PrismaClient) {}
 
-    return availability.availableQuantity < quantity ? false : true;
-  }
+  // private static async checkAvaiability(
+  //   userId: string,
+  //   body: { itemId: string; quantity: number }
+  // ) {
+  //   const { itemId, quantity } = body;
+  //   const availability = await this.repos.lotStock.getAvailableStockByItemId(userId, itemId);
 
-  async buy(
-    userId: string,
-    body: TransactionBodyBuy
-  ): Promise<{
-    transactionId: string;
-  }> {
-    return this.prisma.$transaction(async (tx) => {
+  //   return availability.availableQuantity < quantity ? false : true;
+  // }
+
+  static async buy(userId: string, body: TransactionFormOutputBody) {
+    await this.prisma.$transaction(async (tx) => {
       const availability = await this.checkAvaiability(userId, body);
 
-      const pedCardEntries: PedCardEntryInput[] = [];
+      const fee = body.fee ? body.fee : 0;
+
+      const pedCardEntries: PedCardFormOutputBody[] = [];
 
       if (availability) {
         pedCardEntries.push({
           userId,
-          transactionId: null,
           type: 'BUY_FEE',
-          value: -body.fee,
+          value: -fee,
         });
 
         pedCardEntries.push({
           userId,
-          transactionId: null,
           type: 'BUY_TTC',
           value: -body.ttc,
         });
@@ -53,47 +51,42 @@ class TransactionService {
         throw new Error('INSUFFISENT AVAILABLE QUANTITY');
       }
 
-      const hasEnoughBalance = await this.repos.pedCard.hasEnoughBalanceForEntry(
-        userId,
-        body.fee + body.ttc
-      );
+      const hasEnoughBalance = await PedcardService.canPay(userId, fee + body.ttc);
 
       if (!hasEnoughBalance) {
         throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
       }
 
       // Create the transaction, then persist IN lines and inventory lots.
-      const transaction = await this.repos.transaction.create({
+      const transaction = await tx.transaction.create({
         data: {
-          transaction_type: TransactionType.PURCHASE,
+          transaction_type: body.type,
           status: null,
           user_id: userId,
           tt: body.tt,
           ttc: body.ttc,
-          fee: body.fee ?? 0,
+          fee,
         },
         select: { id: true },
       });
 
-      await this.repos.pedCard.createManyEntries(
-        pedCardEntries.map((entry) => ({
-          ...entry,
-          transactionId: transaction.id,
-        }))
+      await Promise.all(
+        pedCardEntries.map((m) => PedcardService.create({ ...m, transactionId: transaction.id }))
       );
 
-      const lot = await this.repos.lot.create({
-        data: {
-          quantity_remaining: body.quantity,
-          quantity_exported: 0,
-          price_remaining: 0,
-          item_id: body.itemId,
-          lot_type: 'TRANSACTION',
-          date_created: new Date().toISOString(),
-          user_id: userId,
+      const lot = await LotService.create(
+        userId,
+        {
+          quantityRemaining: body.quantity,
+          quantityExported: 0,
+          priceRemaining: 0,
+          itemId: body.itemId,
+          lotType: 'TRANSACTION',
+          createdAt: new Date().toISOString(),
+          isActive: true,
         },
-        select: { id: true },
-      });
+        tx
+      );
 
       await tx.transactionLot.create({
         data: {
@@ -115,13 +108,14 @@ class TransactionService {
   ): Promise<{
     transactionId: string;
   }> {
+    const fee = body.fee ?? 0;
     const availability = await this.checkAvaiability(userId, body);
 
     if (availability) {
       throw new Error('INSUFFISENT AVAILABLE QUANTITY');
     }
 
-    const hasEnoughBalance = await this.repos.pedCard.hasEnoughBalanceForEntry(userId, body.fee);
+    const hasEnoughBalance = await this.repos.pedCard.hasEnoughBalanceForEntry(userId, fee);
 
     if (!hasEnoughBalance) {
       throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
@@ -135,7 +129,7 @@ class TransactionService {
         user_id: userId,
         tt: body.tt,
         ttc: body.ttc,
-        fee: body.fee,
+        fee,
       },
       select: { id: true },
     });
@@ -144,7 +138,7 @@ class TransactionService {
       userId,
       transactionId: transaction.id,
       type: 'SELL_FEE',
-      value: -body.fee,
+      value: -fee,
     });
 
     return {
@@ -152,7 +146,7 @@ class TransactionService {
     };
   }
 
-  async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
+  static async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
     void userId;
     void body;
 
