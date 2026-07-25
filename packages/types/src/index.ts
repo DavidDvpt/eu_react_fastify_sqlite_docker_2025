@@ -22,7 +22,11 @@ export type {
   CategoryFormOutputBody,
   CategoryDto,
 } from "./category.js";
-export type { TypeFormIntputBody, TypeFormOutputBody } from "./type.js";
+export type {
+  TypeFormIntputBody,
+  TypeFormOutputBody,
+  TypeDto,
+} from "./type.js";
 export type { PedCardFormInputBody, PedCardFormOutputBody } from "./pedcard.js";
 export type {
   UserSignInFormIntputBody,

@@ -9,7 +9,7 @@ class TransactionStatusService {
 
   async patchTransaction(
     userId: string,
-    transactionId:string
+    transactionId: string,
     input: UpdateTransactionLineStatusInput
   ): Promise<UpdateTransactionLineStatusResult> {
     return this.prisma.$transaction(async (tx) => {

@@ -1,14 +1,16 @@
 import { typeFormSchema } from '@eu/zod-schemas';
-import { TypesService } from 'src/lib/services/typeService.js';
+import { TypeService } from 'src/lib/services/typeService.js';
 
-import type { TypeFormBody } from '@eu/types';
+import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const typesService = new TypesService();
+  const typeService = new TypeService();
 
   app.get('/', async (request, reply) => {
-    const rows = await typesService.getAll(request.user.id);
+    const id = request.user.id;
+    const rows = await typeService.getAll(id);
+
     return reply.code(200).send(rows);
   });
 
@@ -22,15 +24,15 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.post('/', async (request, reply) => {
-    const body: TypeFormBody = typeFormSchema.parse(request.body);
+    const body: TypeFormOutputBody = typeFormSchema.parse(request.body);
     const created = await typesService.create(request.user.id, body);
-    return reply.code(201).send(created);
+    return reply.code(201).send({ id: created.id });
   });
 
   app.patch('/:id', async (request, reply) => {
     try {
       const params = request.params as { id: string };
-      const body: Partial<TypeFormBody> = typeFormSchema.partial().parse(request.body);
+      const body: Partial<TypeFormOutputBody> = typeFormSchema.partial().parse(request.body);
       const updated = await typesService.update(params.id, body, request.user.id);
       return reply.code(200).send(updated);
     } catch (error) {

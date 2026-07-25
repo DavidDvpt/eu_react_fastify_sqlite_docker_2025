@@ -1,60 +1,51 @@
+import { SortHelper } from '@eu/helpers';
 import prismaClient from 'prisma/prismaClient.js';
 
-export class TypesService {
-  private _client: typeof prismaClient.type;
-  constructor() {
-    this._client = prismaClient.type;
-  }
+import type { TypeDto } from '../../../../../packages/types/src/type.js';
+import type { TypeFormOutputBody, TypeDto } from '@eu/types';
 
-  async getAll(userId: string) {
+export class TypeService {
+  private static _client = prismaClient.type;
+  constructor() {}
+
+  static async getAll(userId: string, sortKey: keyof TypeDto) {
+    const sortKey: keyof TypeDto = sort ?? 'name';
     const rows = await this._client.findMany({ where: { user_id: userId } });
-    rows.sort((a, b) => a.name.localeCompare(b.name));
+
+    SortHelper.sortByKey(rows, sortKey);
+
     return rows;
   }
 
-  async getById(id: string, userId: string) {
+  static async getById(id: string, userId: string) {
     return this._client.findUnique({ where: { id, user_id: userId } });
   }
 
-  async create(
-    userId: string,
-    data: {
-      name: string;
-      category_id: string;
-      is_active?: boolean;
-      supports_limited?: boolean;
-      is_stackable?: boolean;
-    }
-  ) {
-    const now = new Date().toISOString();
-    return this._client.create({
+  static async create(userId: string, data: Omit<TypeFormOutputBody, 'id'>) {
+    const row = await this._client.create({
       data: {
         name: data.name,
-        category_id: data.category_id,
-        is_active: data.is_active ?? true,
-        supports_limited: data.supports_limited ?? false,
-        is_stackable: data.is_stackable ?? false,
-        date_created: now,
+        category_id: data.categoryId,
+        is_active: true,
+        is_stackable: data.isStackable ?? false,
+        date_created: new Date().toISOString(),
         date_updated: null,
         user_id: userId,
       },
     });
+    if (!row) return null;
+
+    return { id: row.id };
   }
 
-  async update(
-    id: string,
-    data: {
-      name?: string;
-      category_id?: string;
-      is_active?: boolean;
-      supports_limited?: boolean;
-      is_stackable?: boolean;
-    },
-    userId: string
-  ) {
-    return this._client.update({
+  static async update(id: string, userId: string, data: Partial<Omit<TypeFormOutputBody, 'id'>>) {
+    const row = await this._client.update({
       where: { id, user_id: userId },
       data: { ...data, date_updated: new Date().toISOString() },
     });
+
+    if (!row) return null;
+
+    return { id: row.id };
   }
 }

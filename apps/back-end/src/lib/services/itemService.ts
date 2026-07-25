@@ -25,7 +25,8 @@ export class ItemService {
 
   async create(data: ItemFormBody) {
     const now = new Date().toISOString();
-    const body: ItemFormBody = itemFormSchema.parse(data);
+    const parsedBody = itemFormSchema.parse(data);
+    const body: ItemFormBody = { ...data, ...parsedBody };
 
     return this._client.create({
       data: {

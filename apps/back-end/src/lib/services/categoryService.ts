@@ -3,7 +3,7 @@ import { SortHelper } from '@eu/helpers';
 import prismaClient from '../../../prisma/prismaClient.js';
 
 import type { Category } from '../../../prisma/generated/client.js';
-import type { CategoryDto, CategoryFormOutputBody } from '@eu/types';
+// import type { CategoryDto, CategoryFormOutputBody } from '@eu/types';
 
 export class CategoryService {
   private static _client: typeof prismaClient.category = prismaClient.category;
