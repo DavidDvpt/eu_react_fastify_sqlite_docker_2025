@@ -29,7 +29,7 @@ export class ItemService {
     return parsed;
   }
 
-  static async getAll(userId: string, sort: keyof ItemDto) {
+  static async getAll(userId: string, sort?: keyof ItemDto) {
     const sortKey = sort ?? 'name';
     const rows = await this._client.findMany({ where: { user_id: userId } });
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);

@@ -1,15 +1,21 @@
+import type { PedCardFormOutputBody } from '@eu/types';
+
 import { PedCardTupleType } from '#prisma/generated/enums.js';
 import prismaClient from '#prisma/prismaClient.js';
 
-import type { PedCardFormBody } from '@eu/types';
-
 export class PedcardService {
-  private _client: typeof prismaClient.pedCard;
-  constructor() {
-    this._client = prismaClient.pedCard;
-  }
+  private static _client = prismaClient.pedCard;
+  constructor() {}
 
-  async hasInitialBalance(userId: string) {
+  private static pedcardFormParse(b: PedCardFormOutputBody) {
+    return {
+      user_id: b.userId,
+      transaction_id: b.transactionId,
+      value: b.value,
+      type: b.type,
+    };
+  }
+  static async hasInitialBalance(userId: string) {
     const row = await this._client.findFirst({
       where: {
         user_id: userId,
@@ -23,7 +29,7 @@ export class PedcardService {
     return row !== null;
   }
 
-  async getBalance(userId: string) {
+  static async getBalance(userId: string) {
     const aggregate = await this._client.aggregate({
       where: {
         user_id: userId,
@@ -34,44 +40,28 @@ export class PedcardService {
     });
 
     const balance = aggregate._sum.value;
-    return balance == null ? 0 : Number(balance.toString());
+    return balance === null ? 0 : Number(balance.toString());
   }
 
-  async hasEnoughBalanceForEntry(userId: string, value: number): Promise<boolean> {
+  static async canPay(userId: string, value: number) {
+    if (!userId || value) return false;
+
     const balance = await this.getBalance(userId);
 
     return balance >= value;
   }
 
-  async create(body: PedCardFormBody): Promise<void> {
-    await this._client.create({
-      data: {
-        user_id: body.userId,
-        transaction_id: body.transactionId,
-        value: body.value,
-        type: body.type,
-      },
+  static async create(body: PedCardFormOutputBody) {
+    const row = await this._client.create({
+      data: this.pedcardFormParse(body),
     });
+
+    return { id: row.id };
   }
 
-  async createMany(entries: PedCardFormBody[]): Promise<void> {
-    if (!entries.length) {
-      return;
-    }
+  static async delete(id: string, userId: string) {
+    const row = await this._client.delete({ where: { user_id: userId, id } });
 
-    const parsedEntries = entries.map((m) => ({
-      user_id: m.userId,
-      transaction_id: m.transactionId,
-      value: m.value,
-      type: m.type,
-    }));
-
-    await this._client.createMany({
-      data: parsedEntries,
-    });
-  }
-
-  async deleteMany(userId: string) {
-    await this._client.deleteMany({ where: { user_id: userId } });
+    return { id: row.id };
   }
 }

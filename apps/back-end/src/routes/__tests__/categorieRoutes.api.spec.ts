@@ -3,7 +3,7 @@ import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod
 import { describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
-import categorieRoutes from '../categorieRoutes.js';
+import categorieRoutes from '../categoryRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';

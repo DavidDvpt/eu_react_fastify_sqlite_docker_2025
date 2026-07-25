@@ -2,7 +2,7 @@ import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { describe, expect, it, vi } from 'vitest';
 
-import { API_PREFIX } from '../../../config/routes.js';
+import { API_PREFIX } from '../../config/routes.js';
 import itemRoutes from '../itemRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
@@ -44,10 +44,6 @@ describe('itemRoutes', () => {
     };
 
     app.decorate('repos', {
-      users,
-      categories,
-      types,
-      items,
       lotStock,
       transaction,
     } as unknown as FastifyInstance['repos']);

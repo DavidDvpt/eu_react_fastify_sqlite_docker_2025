@@ -44,10 +44,6 @@ describe('typeRoutes', () => {
     };
 
     app.decorate('repos', {
-      users,
-      categories,
-      types,
-      items,
       lotStock,
       transaction,
     } as unknown as FastifyInstance['repos']);
