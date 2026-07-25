@@ -8,7 +8,6 @@ export type ItemDto = {
   value: number;
   isLimited: boolean;
   supportsLimited?: boolean;
-  isStackable: boolean;
   typeId: string;
   categoryId?: string;
   isActive: boolean;

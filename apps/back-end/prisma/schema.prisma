@@ -256,7 +256,6 @@ model Item {
   date_created String
   date_updated String?
   is_active    Boolean @default(true)
-  is_stackable Boolean @default(true)
   name         String  @unique
 
   item_type Type @relation(fields: [item_type_id], references: [id], onDelete: Cascade)

@@ -5,7 +5,6 @@ export const itemFormSchema = z.object({
   imageUrlId: z.string(),
   value: z.number().nonnegative(),
   isLimited: z.boolean().optional(),
-  isStackable: z.boolean().optional(),
   typeId: z.string(),
   isActive: z.boolean().optional(),
 });
