@@ -1,8 +1,9 @@
-import type { PedCardFormOutputBody } from '@eu/types';
+import type { PedCardFormOutputBody, PrismaMutationResponse } from '@eu/types';
 
 import { PedCardTupleType } from '#prisma/generated/enums.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 
+const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
 export class PedcardService {
   constructor(private readonly prisma: DatabaseClient) {}
 
@@ -46,16 +47,47 @@ export class PedcardService {
 
     const balance = await this.getBalance({ userId });
 
-    return balance >= value;
+    if (balance > value) throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
+
+    return true;
   }
 
-  async create({ userId, body }: { userId: string; body: PedCardFormOutputBody }) {
+  async create({
+    userId,
+    transactionId,
+    body,
+  }: {
+    userId: string;
+    body: PedCardFormOutputBody;
+    transactionId?: string;
+  }) {
     const data = this.pedcardFormParse(body);
     const row = await this.prisma.pedCard.create({
-      data: { ...data, user_id: userId },
+      data: { ...data, user_id: userId, transaction_id: transactionId },
     });
 
     return { id: row.id };
+  }
+  async createMany({
+    userId,
+    transactionId,
+    bodys,
+  }: {
+    userId: string;
+    transactionId: string;
+    bodys: PedCardFormOutputBody[];
+  }): Promise<PrismaMutationResponse[]> {
+    const datas = bodys.map((b) => this.pedcardFormParse({ ...b, transactionId }));
+
+    const results = await Promise.all(
+      datas.map((m) =>
+        this.prisma.pedCard.create({
+          data: { ...m, user_id: userId },
+        })
+      )
+    );
+
+    return results.map((m) => ({ id: m.id }));
   }
 
   async update({ userId, id, body }: { id: string; userId: string; body: PedCardFormOutputBody }) {

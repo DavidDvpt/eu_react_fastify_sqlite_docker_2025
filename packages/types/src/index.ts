@@ -6,5 +6,6 @@ export type * from "./item.js";
 export type * from "./transaction.js";
 export type * from "./lot.js";
 export type * from "./pedCard.js";
+export type * from "./prismaService.js";
 
 export type * from "./stock.js";

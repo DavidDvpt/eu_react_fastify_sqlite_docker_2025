@@ -1,63 +1,27 @@
-import type {
-  PedCardFormOutputBody,
-  TransactionFormOutputBody,
-  TransatcionPatchDto,
-} from '@eu/types';
+import type { DatabaseClient } from '#prisma/prismaClient.js';
+import type { PrismaMutationResponse, TransactionFormOutputBody } from '@eu/types';
 
-import { PrismaClient } from '#prisma/generated/client.js';
-import prismaClient from '#prisma/prismaClient.js';
 import { LotService } from '#src/lib/services/lotService.js';
 import { PedcardService } from '#src/lib/services/pedcardService.js';
 
-const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
+export default class TransactionService {
+  constructor(private readonly prisma: DatabaseClient) {}
 
-class TransactionService {
-  private static _client = prismaClient.transaction;
-  private static prisma: PrismaClient;
-
-  constructor(private readonly prisma: PrismaClient) {}
-
-  // private static async checkAvaiability(
-  //   userId: string,
-  //   body: { itemId: string; quantity: number }
-  // ) {
-  //   const { itemId, quantity } = body;
-  //   const availability = await this.repos.lotStock.getAvailableStockByItemId(userId, itemId);
-
-  //   return availability.availableQuantity < quantity ? false : true;
-  // }
-
-  static async buy(userId: string, body: TransactionFormOutputBody) {
-    await this.prisma.$transaction(async (tx) => {
-      const availability = await this.checkAvaiability(userId, body);
+  async buy({
+    body,
+    userId,
+  }: {
+    userId: string;
+    body: TransactionFormOutputBody;
+  }): Promise<PrismaMutationResponse> {
+    const result = await this.prisma.$transaction(async (tx) => {
+      const ps = new PedcardService(tx);
+      const ls = new LotService(tx);
 
       const fee = body.fee ? body.fee : 0;
 
-      const pedCardEntries: PedCardFormOutputBody[] = [];
+      await ps.canPay({ userId, value: fee + body.ttc });
 
-      if (availability) {
-        pedCardEntries.push({
-          userId,
-          type: 'BUY_FEE',
-          value: -fee,
-        });
-
-        pedCardEntries.push({
-          userId,
-          type: 'BUY_TTC',
-          value: -body.ttc,
-        });
-      } else {
-        throw new Error('INSUFFISENT AVAILABLE QUANTITY');
-      }
-
-      const hasEnoughBalance = await PedcardService.canPay(userId, fee + body.ttc);
-
-      if (!hasEnoughBalance) {
-        throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
-      }
-
-      // Create the transaction, then persist IN lines and inventory lots.
       const transaction = await tx.transaction.create({
         data: {
           transaction_type: body.type,
@@ -70,13 +34,24 @@ class TransactionService {
         select: { id: true },
       });
 
-      await Promise.all(
-        pedCardEntries.map((m) => PedcardService.create({ ...m, transactionId: transaction.id }))
-      );
-
-      const lot = await LotService.create(
+      await ps.createMany({
         userId,
-        {
+        transactionId: transaction.id,
+        bodys: [
+          {
+            type: 'BUY_FEE',
+            value: -fee,
+          },
+          {
+            type: 'BUY_TTC',
+            value: -body.ttc,
+          },
+        ],
+      });
+
+      const lot = await ls.create({
+        userId,
+        body: {
           quantityRemaining: body.quantity,
           quantityExported: 0,
           priceRemaining: 0,
@@ -85,8 +60,7 @@ class TransactionService {
           createdAt: new Date().toISOString(),
           isActive: true,
         },
-        tx
-      );
+      });
 
       await tx.transactionLot.create({
         data: {
@@ -97,62 +71,67 @@ class TransactionService {
       });
 
       return {
-        transactionId: transaction.id,
+        id: transaction.id,
       };
     });
+
+    return result;
   }
+  async sell({
+    body,
+    userId,
+  }: {
+    userId: string;
+    body: TransactionFormOutputBody;
+  }): Promise<PrismaMutationResponse> {
+    const { itemId, quantity } = body;
+    const result = await this.prisma.$transaction(async (tx) => {
+      const fee = body.fee ?? 0;
 
-  async sell(
-    userId: string,
-    body: TransactionBodySell
-  ): Promise<{
-    transactionId: string;
-  }> {
-    const fee = body.fee ?? 0;
-    const availability = await this.checkAvaiability(userId, body);
+      const ls = new LotService(tx);
+      const ps = new PedcardService(tx);
 
-    if (availability) {
-      throw new Error('INSUFFISENT AVAILABLE QUANTITY');
-    }
+      await ps.canPay({ userId, value: fee });
 
-    const hasEnoughBalance = await this.repos.pedCard.hasEnoughBalanceForEntry(userId, fee);
+      const transaction = await tx.transaction.create({
+        data: {
+          transaction_type: body.type,
+          status: body.status ?? 'RUNNING',
+          user_id: userId,
+          tt: body.tt,
+          ttc: body.ttc,
+          fee,
+        },
+        select: { id: true },
+      });
 
-    if (!hasEnoughBalance) {
-      throw new Error(PEDCARD_INSUFFICIENT_BALANCE_ERROR);
-    }
+      await ps.create({
+        userId,
+        transactionId: transaction.id,
+        body: { type: 'SELL_FEE', value: -fee },
+      });
 
-    // Create sell transaction first; totals are finalized after line processing.
-    const transaction = await this.repos.transaction.create({
-      data: {
-        transaction_type: TransactionType.SELL,
-        status: body.status ?? 'RUNNING',
-        user_id: userId,
-        tt: body.tt,
-        ttc: body.ttc,
-        fee,
-      },
-      select: { id: true },
+      const consumedLots = await ls.consumeQuantityOnLots({ userId, quantity, itemId });
+
+      await Promise.all(
+        consumedLots.map((m) =>
+          tx.transactionLot.create({
+            data: { quantity: m.quantity, lot_id: m.lotId, transaction_id: transaction.id },
+          })
+        )
+      );
+
+      return { id: transaction.id };
     });
 
-    await this.repos.pedCard.createEntry({
-      userId,
-      transactionId: transaction.id,
-      type: 'SELL_FEE',
-      value: -fee,
-    });
-
-    return {
-      transactionId: transaction.id,
-    };
+    return result;
   }
 
-  static async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
-    void userId;
-    void body;
+  // async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
+  //   void userId;
+  //   void body;
 
-    // Sell line status updates are handled by TransactionStatusService.
-    return { transactionId };
-  }
+  //   // Sell line status updates are handled by TransactionStatusService.
+  //   return { transactionId };
+  // }})
 }
-
-export { TransactionService };

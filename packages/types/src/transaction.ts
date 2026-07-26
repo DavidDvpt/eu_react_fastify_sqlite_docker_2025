@@ -14,6 +14,7 @@ export type TransactionStatusOutput = z.output<typeof transactionStatusSchema>;
 
 export type TransactionFormIntputBody = z.input<typeof transactionBodySchema>;
 export type TransactionFormOutputBody = z.output<typeof transactionBodySchema>;
+
 export interface RunningTransactionDto {
   id: string;
   itemId: string;
