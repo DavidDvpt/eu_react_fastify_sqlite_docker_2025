@@ -22,7 +22,10 @@ export const transactionQuerySchema = z.object({
   type: transactionTypeSchema.optional(),
 });
 
-export const transactionBodySchema = z.object({
+export const transactionStatusBodySchema = z.object({
+  status: transactionStatusSchema,
+});
+export const transactionBodySchema = transactionStatusBodySchema.extend({
   itemId: z.string().min(1),
   quantity: z.coerce.number().int().positive(),
   tt: z.coerce.number().nonnegative(),

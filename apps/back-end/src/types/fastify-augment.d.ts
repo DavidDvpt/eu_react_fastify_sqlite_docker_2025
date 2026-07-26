@@ -19,7 +19,7 @@ declare module 'fastify' {
   }
 
   interface FastifyRequest {
-    user?: UserForToken;
+    user: UserForToken;
     accessJwtVerify: (options?: JwtVerifyOpts) => Promise<void>;
     refreshVerify: (options?: JwtVerifyOpts) => Promise<void>;
   }

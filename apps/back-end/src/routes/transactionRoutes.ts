@@ -1,4 +1,8 @@
-import { transactionQuerySchema } from '@eu/zod-schemas';
+import {
+  transactionBodySchema,
+  transactionQuerySchema,
+  transactionStatusBodySchema,
+} from '@eu/zod-schemas';
 
 import { TransactionService } from '../lib/services/transactionService.js';
 
@@ -37,11 +41,12 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.patch('/transactions/:id/status', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const params = patchTransactionParamsSchema.parse(request.params);
-    const body = patchTransactionBodySchema.parse(request.body);
+    const params = request.params as { id: string };
+    const body = transactionStatusBodySchema.parse(request.body);
 
     try {
       const result = await ts.updateStatus({ userId, id: params.id, body });
+
       return reply.code(200).send(result);
     } catch (error) {
       return reply.code(400).send({ message: 'update status fails' });
