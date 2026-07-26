@@ -2,10 +2,9 @@ import type { Lot } from '#prisma/generated/client.js';
 import type { GetLotsOptions, LotDto, LotFormOutputBody } from '@eu/types';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
+import { StockService } from '#src/lib/services/stockService.js';
 
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
-const NEGATIVE_STOCK_ERROR = (itemId: string) =>
-  `Invariant violated: negative stock for item ${itemId}`;
 
 export class LotService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -26,11 +25,8 @@ export class LotService {
     return parsed;
   }
   private getStockFromLots(lots: LotDto[]) {
-    return lots.reduce((s, c) => {
-      return s + c.quantityRemaining;
-    }, 0);
+    return lots.reduce((stock, lot) => stock + lot.quantityRemaining, 0);
   }
-
   async getAll({ userId }: { userId: string }) {
     const rows = await this.prisma.lot.findMany({ where: { user_id: userId } });
 
@@ -68,21 +64,6 @@ export class LotService {
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
 
     return parsed;
-  }
-  async getStockByItemId({ itemId, userId }: { itemId: string; userId: string }) {
-    const lots = await this.getByItemId({
-      userId,
-      itemId,
-      options: { isAvailableOnly: true },
-    });
-
-    const stock = this.getStockFromLots(lots);
-
-    if (stock < 0) {
-      throw new Error(NEGATIVE_STOCK_ERROR(itemId));
-    }
-
-    return stock;
   }
   async consumeQuantityOnLots({
     itemId,
@@ -132,21 +113,6 @@ export class LotService {
 
     return allocations;
   }
-  async hasEnoughStock({
-    itemId,
-    userId,
-    quantity,
-  }: {
-    itemId: string;
-    userId: string;
-    quantity: number;
-  }) {
-    const stock = await this.getStockByItemId({ itemId, userId });
-
-    if (stock < quantity) throw new Error(STOCK_INSUFFISENT_AVAILABLE_QUANTITY);
-
-    return true;
-  }
   async create({ body, userId }: { userId: string; body: Omit<LotFormOutputBody, 'id'> }) {
     const row = await this.prisma.lot.create({
       data: {
@@ -163,27 +129,4 @@ export class LotService {
 
     return { id: row.id };
   }
-
-  // async update({
-  //   body,
-  //   id,
-  //   userId,
-  // }: {
-  //   id: string;
-  //   userId: string;
-  //   body: Partial<Omit<LotFormOutputBody, 'id'>>;
-  // }) {
-  //   const row = await this.prisma.lot.update({
-  //     where: { id, user_id: userId },
-  //     data: {
-  //       is_active: body.isActive,
-  //       quantity_exported: body.quantityExported,
-  //       quantity_remaining: body.quantityRemaining,
-  //       price_remaining: body.priceRemaining,
-  //       date_updated: new Date().toISOString(),
-  //     },
-  //   });
-
-  //   return { id: row.id };
-  // }
 }
