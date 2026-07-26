@@ -1,21 +1,9 @@
 import type { JwtVerifyOpts, PrismaClientType, UserForToken } from './fastify.ts';
-import type {
-  LotStockRepository,
-  TransactionRepository,
-  UserRepository,
-  LotRepository,
-} from '../lib/repositories/index.ts';
 import type { preHandlerAsyncHookHandler, preHandlerHookHandler, FastifyReply } from 'fastify';
 
 declare module 'fastify' {
   interface FastifyInstance {
     prisma: PrismaClientType;
-    repos: {
-      users: UserRepository;
-      lotStock: LotStockRepository;
-      lot: LotRepository;
-      transaction: TransactionRepository;
-    };
 
     authenticate: preHandlerAsyncHookHandler;
     authenticateRefresh: preHandlerAsyncHookHandler;

@@ -15,6 +15,11 @@ export type TransactionStatusOutput = z.output<typeof transactionStatusSchema>;
 export type TransactionFormIntputBody = z.input<typeof transactionBodySchema>;
 export type TransactionFormOutputBody = z.output<typeof transactionBodySchema>;
 
+export type TransactionWhereOptions = {
+  status?: TransactionStatusDto;
+  type?: TransactionTypeDto;
+  itemId?: string;
+};
 export interface RunningTransactionDto {
   id: string;
   itemId: string;
@@ -31,6 +36,7 @@ export interface TransactionDto extends RunningTransactionDto {
   updatedAt: string | null;
   item?: ItemDto;
   lotIds?: any;
+  lines: { quantity: number; lotId: string }[];
 }
 
 export type TransactionBodyDto = Omit<

@@ -1,12 +1,94 @@
+import type { Transaction } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type { PrismaMutationResponse, TransactionFormOutputBody } from '@eu/types';
+import type {
+  PrismaMutationResponse,
+  TransactionDto,
+  TransactionFormOutputBody,
+  TransactionWhereOptions,
+} from '@eu/types';
 
 import { LotService } from '#src/lib/services/lotService.js';
 import { PedcardService } from '#src/lib/services/pedcardService.js';
 
-export default class TransactionService {
+export class TransactionService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  parsePrismaToDto(
+    t: Transaction & { lines: { quantity: number; lot_id: string; lot: { item_id: string } }[] }
+  ) {
+    const qty = t.lines.reduce((t, c) => {
+      return t + c.quantity;
+    }, 0);
+    const lines = t.lines.map((m) => ({ quantity: m.quantity, lotId: m.lot_id }));
+    const lotIds = t.lines.map((m) => m.lot_id);
+    const itemId = t.lines[0].lot.item_id;
+
+    const parsed: TransactionDto = {
+      id: t.id,
+      tt: Number(t.tt),
+      fee: Number(t.fee),
+      ttc: Number(t.ttc),
+      createdAt: t.created_at.toISOString(),
+      updatedAt: t.updated_at?.toISOString() ?? null,
+      quantity: qty,
+      lines,
+      lotIds,
+      itemId,
+      status: t.status ?? 'SOLDED',
+      transactionType: t.transaction_type,
+    };
+
+    return parsed;
+  }
+  async getAll({
+    userId,
+    whereOptions,
+  }: {
+    userId: string;
+    whereOptions: TransactionWhereOptions;
+  }) {
+    const rows = await this.prisma.transaction.findMany({
+      where: {
+        user_id: userId,
+        status: whereOptions?.status,
+        transaction_type: whereOptions.type,
+        item_id: whereOptions.itemId,
+      },
+      include: {
+        lines: {
+          select: {
+            quantity: true,
+            lot_id: true,
+            lot: { select: { item_id: true } },
+          },
+        },
+      },
+    });
+
+    const parsed = rows.map((m) => this.parsePrismaToDto(m));
+
+    return parsed;
+  }
+  async getById({ userId, id }: { userId: string; id: string }) {
+    const row = await this.prisma.transaction.findUnique({
+      where: { id, user_id: userId },
+      include: {
+        lines: {
+          select: {
+            quantity: true,
+            lot_id: true,
+            lot: { select: { item_id: true } },
+          },
+        },
+      },
+    });
+
+    if (!row) return null;
+
+    const parsed = this.parsePrismaToDto(row);
+
+    return parsed;
+  }
   async buy({
     body,
     userId,
@@ -24,7 +106,7 @@ export default class TransactionService {
 
       const transaction = await tx.transaction.create({
         data: {
-          transaction_type: body.type,
+          transaction_type: body.transactionType,
           status: null,
           user_id: userId,
           tt: body.tt,
@@ -95,7 +177,7 @@ export default class TransactionService {
 
       const transaction = await tx.transaction.create({
         data: {
-          transaction_type: body.type,
+          transaction_type: body.transactionType,
           status: body.status ?? 'RUNNING',
           user_id: userId,
           tt: body.tt,
@@ -127,6 +209,50 @@ export default class TransactionService {
     return result;
   }
 
+  async updateStatus({
+    userId,
+    id,
+    body,
+  }: {
+    userId: string;
+    id: string;
+    body: Partial<Pick<TransactionFormOutputBody, 'status'>>;
+  }) {
+    if (body.status) {
+      const current = await this.getById({ userId, id });
+      if (current?.status === 'RUNNING') {
+        if (body.status === 'SOLDED') {
+          await this.prisma.transaction.update({
+            where: { user_id: userId, id },
+            data: { status: body.status },
+          });
+        }
+        if (body.status === 'RETURNED') {
+          await this.prisma.$transaction(async (tx) => {
+            await tx.transaction.update({
+              where: { user_id: userId, id },
+              data: { status: body.status },
+            });
+
+            await Promise.all(
+              current.lines.map((m) =>
+                tx.lot.update({
+                  where: { user_id: userId, id: m.lotId },
+                  data: {
+                    quantity_remaining: {
+                      increment: m.quantity,
+                    },
+                  },
+                })
+              )
+            );
+          });
+        }
+      }
+    }
+
+    return { id };
+  }
   // async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
   //   void userId;
   //   void body;
