@@ -1,10 +1,12 @@
 import type { User } from '#prisma/generated/client.js';
 import type { UserDto, UserSignUpFormOutputBody } from '@eu/types';
 
-import prismaClient from '#prisma/prismaClient.js';
+import { type DatabaseClient } from '#prisma/prismaClient.js';
 
 export class UserService {
-  private static userParser(user: User | null) {
+  constructor(private readonly prisma: DatabaseClient) {}
+
+  private userParser(user: User | null) {
     if (!user) return null;
     const parsed: UserDto = {
       id: user.id,
@@ -22,27 +24,27 @@ export class UserService {
     return parsed;
   }
 
-  static async getbyId(userId: string) {
-    const row = await prismaClient.user.findUnique({
-      where: { id: userId },
+  async getbyId({ id }: { id: string }) {
+    const row = await this.prisma.user.findUnique({
+      where: { id },
     });
 
     return this.userParser(row);
   }
 
-  static async getByEmail(email: string) {
-    const row = await prismaClient.user.findUnique({ where: { email } });
+  async getByEmail({ email }: { email: string }) {
+    const row = await this.prisma.user.findUnique({ where: { email } });
 
     return this.userParser(row);
   }
 
-  static async getByPseudo(pseudo: string) {
-    const row = await prismaClient.user.findUnique({ where: { pseudo } });
+  async getByPseudo({ pseudo }: { pseudo: string }) {
+    const row = await this.prisma.user.findUnique({ where: { pseudo } });
 
     return this.userParser(row);
   }
 
-  static async create(body: Omit<UserSignUpFormOutputBody, 'id'>) {
+  async create({ body }: { body: Omit<UserSignUpFormOutputBody, 'id'> }) {
     const parsed: Omit<User, 'id'> = {
       pseudo: body.pseudo,
       email: body.email,
@@ -55,12 +57,12 @@ export class UserService {
       date_updated: null,
     };
 
-    const row = await prismaClient.user.create({ data: parsed });
+    const row = await this.prisma.user.create({ data: parsed });
 
     return { id: row.id };
   }
 
-  static async update(id: string, body: Partial<Omit<UserDto, 'id' | 'password'>>) {
+  async update({ id, body }: { id: string; body: Partial<Omit<UserDto, 'id' | 'password'>> }) {
     const parsed: Partial<Omit<User, 'id' | 'password_hash'>> = {
       pseudo: body.pseudo,
       email: body.email,
@@ -70,7 +72,7 @@ export class UserService {
       date_updated: new Date().toISOString(),
     };
 
-    const row = await prismaClient.user.update({ where: { id }, data: parsed });
+    const row = await this.prisma.user.update({ where: { id }, data: parsed });
 
     return { id: row.id };
   }

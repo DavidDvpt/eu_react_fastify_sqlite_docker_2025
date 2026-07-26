@@ -1,5 +1,4 @@
 import argon2 from 'argon2';
-import { UserService } from '#src/lib/services/userService.js';
 
 import { env } from '../config/env.js';
 import { AUTH_API_PREFIX } from '../config/index.js';
@@ -9,10 +8,15 @@ import { signinBodySchema, signupBodySchema } from '../lib/validations/index.js'
 
 import type { FastifyPluginAsync } from 'fastify';
 
+import prismaClient from '#prisma/prismaClient.js';
+import { UserService } from '#src/lib/services/userService.js';
+
 // eslint-disable-next-line @typescript-eslint/require-await
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   const accessTokenMaxAge = parseDurationToSeconds(env.JWT_ACCESS_EXPIRES_IN);
   const refreshTokenMaxAge = parseDurationToSeconds(env.JWT_REFRESH_EXPIRES_IN);
+
+  const as = new UserService(prismaClient);
 
   app.post(
     '/signup',
@@ -24,26 +28,20 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     async (request, reply) => {
       const { email, password, pseudo, firstname, lastname } = signupBodySchema.parse(request.body);
 
-      // 1) check existing user
-      const emailExists = await UserService.getByEmail(email);
-      const pseudoExists = await UserService.getByPseudo(email);
+      const emailExists = await as.getByEmail({ email });
+      const pseudoExists = await as.getByPseudo({ pseudo });
 
-      if (emailExists) {
+      if (!emailExists) {
         return reply.code(409).send({ message: 'Email already in use' });
       }
-      if (pseudoExists) {
+      if (!pseudoExists) {
         return reply.code(409).send({ message: 'Pseudo already in use' });
       }
-      // 2) hash
+
       const hash = await argon2.hash(password);
 
-      // 3) create (role forced)
-      await UserService.create({
-        email,
-        pseudo,
-        firstname,
-        lastname,
-        password: hash,
+      await as.create({
+        body: { email, pseudo, firstname, lastname, password: hash },
       });
 
       return reply.code(201).send({
@@ -62,7 +60,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     async (request, reply) => {
       const { password, pseudo } = signinBodySchema.parse(request.body);
 
-      const user = await UserService.getByPseudo(pseudo);
+      const user = await as.getByPseudo({ pseudo });
 
       if (!user) {
         return reply.code(401).send({ message: 'Identifiants invalides' });
@@ -131,7 +129,7 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       try {
         const id = request.user.id;
 
-        const user = await UserService.getbyId(id);
+        const user = await as.getbyId({ id });
 
         if (!user) return reply.code(401).send('Unauthorized');
 

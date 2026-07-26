@@ -1,16 +1,12 @@
-import type { Lot, Prisma } from '#prisma/generated/client.js';
+import type { Lot } from '#prisma/generated/client.js';
 import type { LotDto, LotFormOutputBody } from '@eu/types';
 
-import prismaClient from '#prisma/prismaClient.js';
-
-type DbClient = typeof prismaClient | Prisma.TransactionClient;
+import { type DatabaseClient } from '#prisma/prismaClient.js';
 
 export class LotService {
-  private static _client = prismaClient.lot;
+  constructor(private readonly prisma: DatabaseClient) {}
 
-  constructor() {}
-
-  private static parser(body: Lot) {
+  private parser(body: Lot) {
     const parsed: LotDto = {
       id: body.id,
       itemId: body.item_id,
@@ -25,16 +21,16 @@ export class LotService {
 
     return parsed;
   }
-  static async getAll(userId: string) {
-    const rows = await this._client.findMany({ where: { user_id: userId } });
+  async getAll({ userId }: { userId: string }) {
+    const rows = await this.prisma.lot.findMany({ where: { user_id: userId } });
 
     if (!rows) return null;
     const parsed = rows.map((m) => this.parser(m));
 
     return parsed;
   }
-  static async getById(id: string, userId: string) {
-    const row = await this._client.findUnique({ where: { user_id: userId, id } });
+  async getById({ id, userId }: { id: string; userId: string }) {
+    const row = await this.prisma.lot.findUnique({ where: { user_id: userId, id } });
 
     if (!row) return null;
 
@@ -43,12 +39,8 @@ export class LotService {
     return parsed;
   }
 
-  static async create(
-    userId: string,
-    body: Omit<LotFormOutputBody, 'id'>,
-    db: DbClient = prismaClient
-  ) {
-    const row = await db.lot.create({
+  async create({ body, userId }: { userId: string; body: Omit<LotFormOutputBody, 'id'> }) {
+    const row = await this.prisma.lot.create({
       data: {
         is_active: true,
         item_id: body.itemId,
@@ -64,8 +56,16 @@ export class LotService {
     return { id: row.id };
   }
 
-  static async update(id: string, userId: string, body: Partial<Omit<LotFormOutputBody, 'id'>>) {
-    const row = await this._client.update({
+  async update({
+    body,
+    id,
+    userId,
+  }: {
+    id: string;
+    userId: string;
+    body: Partial<Omit<LotFormOutputBody, 'id'>>;
+  }) {
+    const row = await this.prisma.lot.update({
       where: { id, user_id: userId },
       data: {
         is_active: body.isActive,

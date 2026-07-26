@@ -1,16 +1,14 @@
 import { SortHelper } from '@eu/helpers';
 
-import prismaClient from '../../../prisma/prismaClient.js';
+import { type DatabaseClient } from '../../../prisma/prismaClient.js';
 
 import type { Item } from '#prisma/generated/client.js';
 import type { ItemFormOutputBody, ItemDto } from '@eu/types';
 
 export class ItemService {
-  private static _client = prismaClient.item;
+  constructor(private readonly prisma: DatabaseClient) {}
 
-  constructor() {}
-
-  static parser(row: Item | null) {
+  parser(row: Item | null) {
     if (!row) return null;
 
     const parsed: ItemDto = {
@@ -29,25 +27,25 @@ export class ItemService {
     return parsed;
   }
 
-  static async getAll(userId: string, sort?: keyof ItemDto) {
+  async getAll({ userId, sort }: { userId: string; sort?: keyof ItemDto }) {
     const sortKey = sort ?? 'name';
-    const rows = await this._client.findMany({ where: { user_id: userId } });
+    const rows = await this.prisma.item.findMany({ where: { user_id: userId } });
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
     SortHelper.sortByKey(parsed, sortKey);
 
     return rows;
   }
 
-  static async getById(id: string, userId: string) {
-    const row = await this._client.findUnique({ where: { id, user_id: userId } });
+  async getById({ id, userId }: { id: string; userId: string }) {
+    const row = await this.prisma.item.findUnique({ where: { id, user_id: userId } });
 
     const parsed = this.parser(row);
 
     return parsed;
   }
 
-  static async create(userId: string, body: ItemFormOutputBody) {
-    const row = await this._client.create({
+  async create({ body, userId }: { userId: string; body: ItemFormOutputBody }) {
+    const row = await this.prisma.item.create({
       data: {
         name: body.name,
         image_url_id: body.imageUrlId,
@@ -64,16 +62,24 @@ export class ItemService {
     return { id: row.id };
   }
 
-  static async update(id: string, userId: string, data: Partial<ItemFormOutputBody>) {
-    const row = await this._client.update({
+  async update({
+    body,
+    id,
+    userId,
+  }: {
+    id: string;
+    userId: string;
+    body: Partial<ItemFormOutputBody>;
+  }) {
+    const row = await this.prisma.item.update({
       where: { id, user_id: userId },
       data: {
-        name: data.name,
-        image_url_id: data.imageUrlId,
-        value: data.value,
-        is_limited: data.isLimited,
-        item_type_id: data.typeId,
-        is_active: data.isActive,
+        name: body.name,
+        image_url_id: body.imageUrlId,
+        value: body.value,
+        is_limited: body.isLimited,
+        item_type_id: body.typeId,
+        is_active: body.isActive,
         date_updated: new Date().toISOString(),
       },
     });

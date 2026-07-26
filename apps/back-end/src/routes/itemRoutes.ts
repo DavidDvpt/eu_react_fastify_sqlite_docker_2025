@@ -2,17 +2,19 @@ import { itemFormSchema } from '@eu/zod-schemas';
 
 import type { FastifyPluginCallback } from 'fastify';
 
+import prismaClient from '#prisma/prismaClient.js';
 import { ItemService } from '#src/lib/services/itemService.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const is = new ItemService(prismaClient);
   app.get('/', async (request, reply) => {
-    const rows = await ItemService.getAll(request.user.id);
+    const rows = await is.getAll({ userId: request.user.id });
     return reply.code(200).send(rows);
   });
 
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-    const row = await ItemService.getById(params.id, request.user.id);
+    const row = await is.getById({ id: params.id, userId: request.user.id });
 
     if (!row) return reply.code(404).send({ message: 'Item not found' });
 
@@ -21,7 +23,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.post('/', async (request, reply) => {
     const body = itemFormSchema.parse(request.body);
-    const created = await ItemService.create(request.user.id, body);
+    const created = await is.create({ userId: request.user.id, body });
 
     return reply.code(201).send(created);
   });
@@ -30,7 +32,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     try {
       const params = request.params as { id: string };
       const body = itemFormSchema.parse(request.body);
-      const updated = await ItemService.update(params.id, request.user.id, body);
+      const updated = await is.update({ id: params.id, userId: request.user.id, body });
 
       return reply.code(200).send(updated);
     } catch (error) {

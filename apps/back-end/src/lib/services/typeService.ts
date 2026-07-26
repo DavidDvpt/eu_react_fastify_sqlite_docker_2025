@@ -3,13 +3,12 @@ import { SortHelper } from '@eu/helpers';
 import type { Type } from '#prisma/generated/client.js';
 import type { TypeFormOutputBody, TypeDto } from '@eu/types';
 
-import prismaClient from '#prisma/prismaClient.js';
+import { type DatabaseClient } from '#prisma/prismaClient.js';
 
 export class TypeService {
-  private static _client = prismaClient.type;
-  constructor() {}
+  constructor(private readonly prisma: DatabaseClient) {}
 
-  static parser(row?: Type | null) {
+  parser(row?: Type | null) {
     if (!row) return null;
     const parsed: TypeDto = {
       id: row.id,
@@ -23,9 +22,9 @@ export class TypeService {
 
     return parsed;
   }
-  static async getAll(userId: string, sort: keyof TypeDto) {
+  async getAll({ userId, sort }: { userId: string; sort?: keyof TypeDto }) {
     const sortKey: keyof TypeDto = sort ?? 'name';
-    const rows = await this._client.findMany({ where: { user_id: userId } });
+    const rows = await this.prisma.type.findMany({ where: { user_id: userId } });
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
 
@@ -36,39 +35,46 @@ export class TypeService {
     return rows;
   }
 
-  static async getById(id: string, userId: string) {
-    const row = await this._client.findUnique({ where: { id, user_id: userId } });
+  async getById({ id, userId }: { id: string; userId: string }) {
+    const row = await this.prisma.type.findUnique({ where: { id, user_id: userId } });
 
     const parsed = this.parser(row);
 
     return parsed;
   }
 
-  static async create(userId: string, data: Omit<TypeFormOutputBody, 'id'>) {
-    const row = await this._client.create({
+  async create({ body, userId }: { userId: string; body: Omit<TypeFormOutputBody, 'id'> }) {
+    const row = await this.prisma.type.create({
       data: {
-        name: data.name,
-        category_id: data.categoryId,
+        name: body.name,
+        category_id: body.categoryId,
         is_active: true,
-        is_stackable: data.isStackable ?? false,
+        is_stackable: body.isStackable ?? false,
         date_created: new Date().toISOString(),
         date_updated: null,
         user_id: userId,
       },
     });
-    if (!row) return null;
 
     return { id: row.id };
   }
 
-  static async update(id: string, userId: string, data: Partial<Omit<TypeFormOutputBody, 'id'>>) {
-    const row = await this._client.update({
+  async update({
+    id,
+    userId,
+    body,
+  }: {
+    id: string;
+    userId: string;
+    body: Partial<Omit<TypeFormOutputBody, 'id'>>;
+  }) {
+    const row = await this.prisma.type.update({
       where: { id, user_id: userId },
       data: {
-        name: data.name,
-        category_id: data.categoryId,
+        name: body.name,
+        category_id: body.categoryId,
         is_active: true,
-        is_stackable: data.isStackable,
+        is_stackable: body.isStackable,
         date_updated: new Date().toISOString(),
       },
     });

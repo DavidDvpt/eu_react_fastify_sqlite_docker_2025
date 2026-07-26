@@ -4,14 +4,16 @@ import { getRequestUserId } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
+import prismaClient from '#prisma/prismaClient.js';
 import { PedcardService } from '#src/lib/services/pedcardService.js';
 
 const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const ps = new PedcardService(prismaClient);
   app.protect();
 
   app.get('/pedcard/check', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const hasInitialBalance = await PedcardService.hasInitialBalance(userId);
+    const hasInitialBalance = await ps.hasInitialBalance({ userId });
 
     if (!hasInitialBalance) {
       return reply.code(400).send({
@@ -26,7 +28,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/pedcard/balance', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const balance = await PedcardService.getBalance(userId);
+    const balance = await ps.getBalance({ userId });
 
     return reply.code(200).send({
       balance,
@@ -38,7 +40,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const userId = getRequestUserId(request);
 
-    const canPay = await PedcardService.canPay(userId, Number(value));
+    const canPay = await ps.canPay({ userId, value: Number(value) });
 
     return reply.code(200).send({
       canPay,
@@ -49,11 +51,9 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const body = pedcardFormSchema.parse(request.body);
 
-    await PedcardService.create({
+    await ps.create({
       userId,
-      transactionId: body.transactionId,
-      type: body.type,
-      value: body.value,
+      body: { transactionId: body.transactionId, type: body.type, value: body.value },
     });
 
     return reply.code(201).send();
@@ -64,11 +64,10 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const body = pedcardFormSchema.parse(request.body);
 
-    await PedcardService.create({
+    await ps.update({
       userId,
-      transactionId: body.transactionId,
-      type: body.type,
-      value: body.value,
+      id: params.id,
+      body: { type: body.type, value: body.value },
     });
 
     return reply.code(201).send();

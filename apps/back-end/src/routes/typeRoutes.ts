@@ -1,22 +1,24 @@
 import { typeFormSchema } from '@eu/zod-schemas';
-import { TypeService } from '#src/lib/services/typeService.js';
 
 import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
+import prismaClient from '#prisma/prismaClient.js';
+import { TypeService } from '#src/lib/services/typeService.js';
+
 const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const typeService = new TypeService();
+  const ts = new TypeService(prismaClient);
 
   app.get('/', async (request, reply) => {
     const id = request.user.id;
-    const rows = await typeService.getAll(id);
+    const rows = await ts.getAll({ userId: id });
 
     return reply.code(200).send(rows);
   });
 
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-    const row = await typesService.getById(params.id, request.user.id);
+    const row = await ts.getById({ id: params.id, userId: request.user.id });
 
     if (!row) return reply.code(404).send({ message: 'Type not found' });
 
@@ -25,7 +27,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.post('/', async (request, reply) => {
     const body: TypeFormOutputBody = typeFormSchema.parse(request.body);
-    const created = await typesService.create(request.user.id, body);
+    const created = await ts.create({ userId: request.user.id, body });
     return reply.code(201).send({ id: created.id });
   });
 
@@ -33,7 +35,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
     try {
       const params = request.params as { id: string };
       const body: Partial<TypeFormOutputBody> = typeFormSchema.partial().parse(request.body);
-      const updated = await typesService.update(params.id, body, request.user.id);
+      const updated = await ts.update({ id: params.id, body, userId: request.user.id });
       return reply.code(200).send(updated);
     } catch (error) {
       if (error instanceof Error && error.message.includes('Forbidden mutation')) {

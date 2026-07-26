@@ -1,20 +1,22 @@
 import { categoryFormSchema } from '@eu/zod-schemas';
-import { CategoryService } from '#src/lib/services/categoryService.js';
 
-import type { CategoryFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
+import prismaClient from '#prisma/prismaClient.js';
+import { CategoryService } from '#src/lib/services/categoryService.js';
+
 const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const cs = new CategoryService(prismaClient);
+
   app.get('/', async (request, reply) => {
-    const rows = await CategoryService.getAll(request.user.id);
+    const rows = await cs.getAll({ userId: request.user.id });
 
     return reply.code(200).send(rows);
   });
 
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-
-    const row = await CategoryService.getById(params.id, request.user.id);
+    const row = await cs.getById({ id: params.id, userId: request.user.id });
 
     if (!row) return reply.code(404).send({ message: 'Category not found' });
 
@@ -22,8 +24,8 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.post('/', async (request, reply) => {
-    const body: CategoryFormOutputBody = categoryFormSchema.parse(request.body);
-    const created = await CategoryService.create(request.user.id, body);
+    const body = categoryFormSchema.parse(request.body);
+    const created = await cs.create({ userId: request.user.id, body });
 
     return reply.code(201).send({ id: created.id });
   });
@@ -31,10 +33,8 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.patch('/:id', async (request, reply) => {
     try {
       const params = request.params as { id: string };
-      const body: Partial<CategoryFormOutputBody> = categoryFormSchema
-        .partial()
-        .parse(request.body);
-      const updated = await CategoryService.update(params.id, request.user.id, body);
+      const body = categoryFormSchema.partial().parse(request.body);
+      const updated = await cs.update({ id: params.id, userId: request.user.id, body });
 
       return reply.code(200).send({ id: updated.id });
     } catch (error) {

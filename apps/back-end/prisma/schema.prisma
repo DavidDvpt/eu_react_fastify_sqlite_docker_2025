@@ -95,12 +95,13 @@ model User {
 }
 
 model PedCard {
-  id             String   @id @default(uuid())
+  id             String    @id @default(uuid())
   user_id        String
   transaction_id String?
   type           String
   value          Decimal
-  created_at     DateTime @default(now())
+  created_at     DateTime  @default(now())
+  updated_at     DateTime?
 
   user        User         @relation(fields: [user_id], references: [id])
   transaction Transaction? @relation(fields: [transaction_id], references: [id])
