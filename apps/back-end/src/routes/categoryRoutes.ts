@@ -1,4 +1,4 @@
-import { categoryQuerySchema, categoryFormSchema } from '@eu/zod-schemas';
+import { categoryFormSchema } from '@eu/zod-schemas';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -9,7 +9,11 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const cs = new CategoryService(prismaClient);
 
   app.get('/', async (request, reply) => {
-    const rows = await cs.getAll({ userId: request.user.id, isActive: true });
+    const rows = await cs.getAll({
+      userId: request.user.id,
+      isActive: true,
+      sort: { key: 'name' },
+    });
 
     return reply.code(200).send(rows);
   });

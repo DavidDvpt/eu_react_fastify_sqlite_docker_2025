@@ -1,6 +1,5 @@
 import { itemFormSchema, itemQuerySchema } from '@eu/zod-schemas';
 
-import type { ItemDto } from '../../../../packages/types/src/item.js';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
@@ -10,12 +9,13 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const is = new ItemService(prismaClient);
 
   app.get('/', async (request, reply) => {
-    const query = itemQuerySchema.parse(request.query);
+    const { sortKey, sortOrder, typeId, isActive } = itemQuerySchema.parse(request.query);
+
     const rows = await is.getAll({
       userId: request.user.id,
-      isActive: true,
-      typeId: query.typeId,
-      sort: query.sortKey as keyof ItemDto,
+      isActive: isActive,
+      typeId,
+      sort: { key: sortKey ?? 'name', order: sortOrder },
     });
     return reply.code(200).send(rows);
   });

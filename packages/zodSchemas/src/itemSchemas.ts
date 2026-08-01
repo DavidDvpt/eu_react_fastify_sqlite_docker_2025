@@ -13,6 +13,6 @@ export const itemFormSchema = z.object({
 export const itemQuerySchema = z.object({
   isActive: z.boolean().optional(),
   typeId: z.string().optional(),
-  sortKey: z.string().optional(),
+  sortKey: itemFormSchema.keyof().optional(),
   sortOrder: sortOrderEnum.optional(),
 });

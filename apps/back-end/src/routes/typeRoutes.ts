@@ -16,6 +16,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
       userId: id,
       isActive: query.isActive,
       categoryId: query.categoryId,
+      sort: { key: 'name' },
     });
 
     return reply.code(200).send(rows);

@@ -41,7 +41,7 @@ describe('InventoryService', () => {
     };
     const service = new InventoryService(prisma as any, stockService);
 
-    const stock = await service.getStockByItemId({ userId: 'user-1', itemId: 'item-1' });
+    const stock = await service.getInventoryByItemId({ userId: 'user-1', itemId: 'item-1' });
 
     expect(prisma.lot.findMany).toHaveBeenCalledWith({
       where: {
@@ -63,13 +63,12 @@ describe('InventoryService', () => {
     };
     const stockService = {
       getStockFromLots: vi.fn().mockReturnValue(-1),
-      getStocksFromLots: vi.fn(),
     };
     const service = new InventoryService(prisma as any, stockService);
 
-    await expect(service.getStockByItemId({ userId: 'user-1', itemId: 'item-1' })).rejects.toThrow(
-      'Invariant violated: negative stock for item item-1'
-    );
+    await expect(
+      service.getInventoryByItemId({ userId: 'user-1', itemId: 'item-1' })
+    ).rejects.toThrow('Invariant violated: negative stock for item item-1');
   });
 
   it('returns the aggregated stocks by item using active lots sorted by creation date', async () => {
@@ -91,12 +90,11 @@ describe('InventoryService', () => {
       },
     };
     const stockService = {
-      getStockFromLots: vi.fn(),
-      getStocksFromLots: vi.fn().mockReturnValue({ 'item-1': 3 }),
+      getStockFromLots: vi.fn().mockReturnValue({ 'item-1': 3 }),
     };
     const service = new InventoryService(prisma as any, stockService);
 
-    const stocks = await service.getStocksByItem({ userId: 'user-1' });
+    const stocks = await service.getInventory({ userId: 'user-1' });
 
     expect(prisma.lot.findMany).toHaveBeenCalledWith({
       where: {
@@ -105,7 +103,7 @@ describe('InventoryService', () => {
       },
       orderBy: { createdAt: 'asc' },
     });
-    expect(stockService.getStocksFromLots).toHaveBeenCalledOnce();
+    expect(stockService.getStockFromLots).toHaveBeenCalledOnce();
     expect(stocks).toEqual({ 'item-1': 3 });
   });
 });

@@ -34,11 +34,11 @@ export class ItemService {
     sort,
   }: {
     userId: string;
-    sort: SortOptions<ItemDto>;
+    sort?: SortOptions<ItemDto>;
     typeId?: string;
     isActive?: boolean;
   }) {
-    const sortKey = sort.key ?? 'name';
+    const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.item.findMany({
       where: {
         user_id: userId,
@@ -47,7 +47,7 @@ export class ItemService {
       },
     });
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
-    SortHelper.sortByKey(parsed, sortKey, sort.order);
+    SortHelper.sortByKey(parsed, sortKey, sort?.order);
 
     return parsed;
   }

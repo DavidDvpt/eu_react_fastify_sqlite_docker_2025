@@ -29,13 +29,15 @@ describe('StockService', () => {
       },
     ]);
 
-    expect(stock).toBe(10);
+    expect(stock).toBe({
+      'item-1': 10,
+    });
   });
 
   it('aggregates remaining quantities by item id', () => {
     const service = new StockService();
 
-    const stocks = service.getStocksFromLots([
+    const stocks = service.getStockFromLots([
       {
         id: 'lot-1',
         itemId: 'item-1',

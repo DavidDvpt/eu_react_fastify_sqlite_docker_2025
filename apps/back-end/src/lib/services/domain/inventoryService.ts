@@ -21,7 +21,7 @@ export class InventoryService {
    * Lève une erreur si un stock négatif est détecté, ce qui indique une incohérence
    * de données.
    */
-  async getStockByItemId({ itemId, userId }: { itemId: string; userId: string }) {
+  async getInventoryByItemId({ itemId, userId }: { itemId: string; userId: string }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getByItemId({
       userId,
@@ -31,7 +31,7 @@ export class InventoryService {
 
     const stock = this.stockService.getStockFromLots(lots);
 
-    if (stock < 0) {
+    if (stock[itemId] < 0) {
       throw new Error(NEGATIVE_STOCK_ERROR(itemId));
     }
 
@@ -41,7 +41,7 @@ export class InventoryService {
   /**
    * Retourne les stocks actifs agrégés par item pour un utilisateur.
    */
-  async getStocksByItem({ userId }: { userId: string }) {
+  async getInventory({ userId }: { userId: string }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({
       userId,
@@ -49,7 +49,7 @@ export class InventoryService {
       sort: { key: 'createdAt', order: 'asc' },
     });
 
-    const stocks = this.stockService.getStocksFromLots(lots);
+    const stocks = this.stockService.getStockFromLots(lots);
 
     return stocks;
   }
