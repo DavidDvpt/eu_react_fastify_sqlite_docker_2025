@@ -47,4 +47,26 @@ if (!parsedEnv.success) {
   throw new Error(`Invalid environment variables:\n${errors}`);
 }
 
-export const env = parsedEnv.data;
+const flatEnv = parsedEnv.data;
+
+export const env = {
+  ...flatEnv,
+  SYSTEM_USER: {
+    id: flatEnv.SYSTEM_USER_ID,
+    pseudo: flatEnv.SYSTEM_USER_PSEUDO,
+    email: flatEnv.SYSTEM_USER_EMAIL,
+    password: flatEnv.SYSTEM_USER_PASSWORD,
+  },
+  DEV_USER: {
+    id: flatEnv.DEV_DATA_USER_ID,
+    login: flatEnv.DEV_DATA_USER_LOGIN,
+    email: flatEnv.DEV_DATA_USER_EMAIL,
+    password: flatEnv.DEV_DATA_USER_PASSWORD,
+  },
+  ADMIN_USER: {
+    id: flatEnv.DEV_ADMIN_ID,
+    pseudo: flatEnv.DEV_ADMIN_PSEUDO,
+    email: flatEnv.DEV_ADMIN_EMAIL,
+    password: flatEnv.DEV_ADMIN_PASSWORD,
+  },
+};

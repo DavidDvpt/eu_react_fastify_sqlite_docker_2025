@@ -1,8 +1,8 @@
 import type { Prisma } from '#prisma/generated/client.js';
-import { CATEGORIES_RAW_BASE } from '#prisma/seedDatas/system/categoryRaw.js';
-import { TYPES_RAW_BASE } from '#prisma/seedDatas/system/typeRaw.js';
-import { ITEMS_RAW_BASE } from '#prisma/seedDatas/system/itemRaw.js';
-import { USERS_RAW_BASE } from '#prisma/seedDatas/system/userRaw.js';
+import { CATEGORIES_RAW_BASE } from '#prisma/seedDatas/systemDatas/categoryRaw.js';
+import { TYPES_RAW_BASE } from '#prisma/seedDatas/systemDatas/typeRaw.js';
+import { ITEMS_RAW_BASE } from '#prisma/seedDatas/systemDatas/itemRaw.js';
+import { USERS_RAW_BASE } from '#prisma/seedDatas/systemDatas/userRaw.js';
 
 export const categoriesSeed = (userId: string): Prisma.CategoryCreateManyInput[] => {
   return CATEGORIES_RAW_BASE.map((c) => ({

@@ -19,9 +19,10 @@ enum Role {
 }
 
 enum LotType {
-  SESSION_LINE
-  TRANSACTION
-  LOT
+  MINING
+  CRAFTING
+  TRADE
+  REFINING
 }
 
 enum TransactionType {
