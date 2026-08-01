@@ -1,19 +1,13 @@
-import type { FastifyInstance } from 'fastify';
+export type PrismaClientType = typeof import('../../prisma/prismaClient.js').default;
 
-type PrismaClientType = typeof import('../../prisma/prismaClient.js').default;
-
-type UserForToken = {
+export type UserForToken = {
   id: string;
   role: string;
   pseudo: string;
 };
 
-type JwtVerifyOpts = {
+export type JwtVerifyOpts = {
   onlyCookie?: boolean;
   cookieName?: string;
   onlyHeader?: boolean;
 };
-
-export type { PrismaClientType, UserForToken, JwtVerifyOpts };
-
-export type AppRepos = FastifyInstance['repos'];

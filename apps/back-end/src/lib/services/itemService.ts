@@ -27,9 +27,25 @@ export class ItemService {
     return parsed;
   }
 
-  async getAll({ userId, sort }: { userId: string; sort?: keyof ItemDto }) {
+  async getAll({
+    userId,
+    isActive,
+    typeId,
+    sort,
+  }: {
+    userId: string;
+    sort?: keyof ItemDto;
+    typeId?: string;
+    isActive?: boolean;
+  }) {
     const sortKey = sort ?? 'name';
-    const rows = await this.prisma.item.findMany({ where: { user_id: userId } });
+    const rows = await this.prisma.item.findMany({
+      where: {
+        user_id: userId,
+        item_type_id: typeId,
+        is_active: isActive,
+      },
+    });
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
     SortHelper.sortByKey(parsed, sortKey);
 

@@ -1,4 +1,4 @@
-import { userSignUpFormSchema, userSignInSchema } from "@eu/zod-schemas";
+import { userSignUpFormSchema, userSignInFormSchema } from "@eu/zod-schemas";
 import { z } from "zod";
 
 export type UserRole = "ADMIN" | "USER";
@@ -6,8 +6,8 @@ export type UserRole = "ADMIN" | "USER";
 export type UserSignUpFormIntputBody = z.input<typeof userSignUpFormSchema>;
 export type UserSignUpFormOutputBody = z.output<typeof userSignUpFormSchema>;
 
-export type UserSignInFormIntputBody = z.input<typeof userSignInSchema>;
-export type UserSignInFormOutputBody = z.output<typeof userSignInSchema>;
+export type UserSignInFormIntputBody = z.input<typeof userSignInFormSchema>;
+export type UserSignInFormOutputBody = z.output<typeof userSignInFormSchema>;
 
 export type UserDto = {
   id: string;

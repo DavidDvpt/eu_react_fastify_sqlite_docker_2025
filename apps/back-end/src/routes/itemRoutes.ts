@@ -1,4 +1,4 @@
-import { itemFormSchema } from '@eu/zod-schemas';
+import { itemFormSchema, itemQuerySchema } from '@eu/zod-schemas';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -7,7 +7,9 @@ import { ItemService } from '#src/lib/services/itemService.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const is = new ItemService(prismaClient);
+
   app.get('/', async (request, reply) => {
+    const query = itemQuerySchema.parse(request.query);
     const rows = await is.getAll({ userId: request.user.id });
     return reply.code(200).send(rows);
   });

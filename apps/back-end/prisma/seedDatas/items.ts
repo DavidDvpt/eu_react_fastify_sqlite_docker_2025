@@ -1,11 +1,11 @@
 // Auto-generated from datas.sql
 import type { Prisma } from '../generated/client.js';
 import { env } from '../../src/config/env.js';
-import type { ItemFormBody } from '@eu/types';
+import type { ItemDto } from '@eu/types';
 
 const SYSTEM_USER_ID = env.SYSTEM_USER_ID ?? '';
 
-const RAW_ITEMS: Omit<ItemFormBody, 'userId'>[] = [
+const RAW_ITEMS: Omit<ItemDto, 'userId'>[] = [
   {
     id: '05236E1E-2D20-49CD-A0EB-090B2D91C582',
     imageUrlId: '6327',

@@ -1,16 +1,15 @@
+import { userSignInFormSchema, userSignUpFormSchema } from '@eu/zod-schemas';
 import argon2 from 'argon2';
 
 import { env } from '../config/env.js';
 import { AUTH_API_PREFIX } from '../config/index.js';
 import { parseDurationToSeconds } from '../lib/auth/index.js';
 import { HashTools } from '../lib/security/index.js';
-import { signinBodySchema, signupBodySchema } from '../lib/validations/index.js';
 
 import type { FastifyPluginAsync } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
 import { UserService } from '#src/lib/services/userService.js';
-
 // eslint-disable-next-line @typescript-eslint/require-await
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   const accessTokenMaxAge = parseDurationToSeconds(env.JWT_ACCESS_EXPIRES_IN);
@@ -22,11 +21,13 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     '/signup',
     {
       schema: {
-        body: signupBodySchema,
+        body: userSignUpFormSchema,
       },
     },
     async (request, reply) => {
-      const { email, password, pseudo, firstname, lastname } = signupBodySchema.parse(request.body);
+      const { email, password, pseudo, firstname, lastname } = userSignUpFormSchema.parse(
+        request.body
+      );
 
       const emailExists = await as.getByEmail({ email });
       const pseudoExists = await as.getByPseudo({ pseudo });
@@ -54,11 +55,11 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
     '/signin',
     {
       schema: {
-        body: signinBodySchema,
+        body: userSignInFormSchema,
       },
     },
     async (request, reply) => {
-      const { password, pseudo } = signinBodySchema.parse(request.body);
+      const { password, pseudo } = userSignInFormSchema.parse(request.body);
 
       const user = await as.getByPseudo({ pseudo });
 
