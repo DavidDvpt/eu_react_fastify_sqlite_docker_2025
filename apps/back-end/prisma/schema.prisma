@@ -228,15 +228,14 @@ model Category {
 }
 
 model Type {
-  id               String  @id @default(uuid())
-  category_id      String
-  date_created     String
-  date_updated     String?
-  is_active        Boolean @default(true)
-  is_stackable     Boolean @default(false)
-  supports_limited Boolean @default(false)
-  user_id          String
-  name             String  @unique
+  id           String  @id @default(uuid())
+  category_id  String
+  date_created String
+  date_updated String?
+  is_active    Boolean @default(true)
+  is_stackable Boolean @default(false)
+  user_id      String
+  name         String  @unique
 
   category Category @relation(fields: [category_id], references: [id], onDelete: Cascade)
 
@@ -252,14 +251,14 @@ model Item {
   image_url_id String
   value        Decimal
   is_limited   Boolean
-  item_type_id String
+  type_id      String
   user_id      String
   date_created String
   date_updated String?
   is_active    Boolean @default(true)
   name         String  @unique
 
-  item_type Type @relation(fields: [item_type_id], references: [id], onDelete: Cascade)
+  item_type Type @relation(fields: [type_id], references: [id], onDelete: Cascade)
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
 

@@ -4,7 +4,7 @@ import prismaClient from './prismaClient.js';
 import { LOTS } from './seedDatas/lots.js';
 import { TRANSACTIONS_BUY, TRANSACTION_BUY_LINES } from './seedDatas/transaction_buy.js';
 import { TRANSACTIONS_SELL, TRANSACTION_SELL_LINES } from './seedDatas/transaction_sell.js';
-import { USERS } from './seedDatas/user.js';
+import { USERS } from './seedDatas/system/userRaw.js';
 
 const userRepository = new UserRepository(prismaClient);
 const DEFAULT_DATA_USER_ID = env.DEV_DATA_USER_ID;

@@ -5,9 +5,9 @@ import { fileURLToPath } from 'node:url';
 import { env } from '../src/config/env.js';
 import prismaClient from './prismaClient.js';
 import { ITEM_CATEGORIES } from './seedDatas/item_categories.js';
-import { ITEM_TYPES } from './seedDatas/item_types.js';
+import { ITEM_TYPES } from './seedDatas/types.js';
 import { ITEMS } from './seedDatas/items.js';
-import { SYSTEM_USER } from './seedDatas/user.js';
+import { SYSTEM_USER } from './seedDatas/system/userRaw.js';
 import { TypesService } from '#src/lib/services/prisma/typeService.js';
 import { ItemService } from '#src/lib/services/prisma/itemService.js';
 
