@@ -22,9 +22,21 @@ export class TypeService {
 
     return parsed;
   }
-  async getAll({ userId, sort }: { userId: string; sort?: keyof TypeDto }) {
+  async getAll({
+    userId,
+    sort,
+    isActive,
+    categoryId,
+  }: {
+    userId: string;
+    sort?: keyof TypeDto;
+    isActive?: boolean;
+    categoryId?: string;
+  }) {
     const sortKey: keyof TypeDto = sort ?? 'name';
-    const rows = await this.prisma.type.findMany({ where: { user_id: userId } });
+    const rows = await this.prisma.type.findMany({
+      where: { user_id: userId, is_active: isActive, category_id: categoryId },
+    });
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
 

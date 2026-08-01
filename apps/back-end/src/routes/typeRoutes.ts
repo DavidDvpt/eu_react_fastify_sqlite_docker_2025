@@ -1,4 +1,4 @@
-import { typeFormSchema } from '@eu/zod-schemas';
+import { typeFormSchema, typeQuerySchema } from '@eu/zod-schemas';
 
 import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
@@ -10,17 +10,22 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ts = new TypeService(prismaClient);
 
   app.get('/', async (request, reply) => {
+    const query = typeQuerySchema.parse(request.query);
     const id = request.user.id;
-    const rows = await ts.getAll({ userId: id });
+    const rows = await ts.getAll({
+      userId: id,
+      isActive: query.isActive,
+      categoryId: query.categoryId,
+    });
 
     return reply.code(200).send(rows);
   });
-
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
     const row = await ts.getById({ id: params.id, userId: request.user.id });
 
     if (!row) return reply.code(404).send({ message: 'Type not found' });
+    if (!row.isActive) return reply.code(403).send({ message: 'Type is not active' });
 
     return reply.code(200).send(row);
   });

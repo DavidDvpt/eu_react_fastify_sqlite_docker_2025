@@ -21,9 +21,19 @@ export class CategoryService {
     return parsed;
   }
 
-  async getAll({ userId, sort }: { userId: string; sort?: keyof CategoryDto }) {
+  async getAll({
+    userId,
+    sort,
+    isActive,
+  }: {
+    userId: string;
+    sort?: keyof CategoryDto;
+    isActive?: boolean;
+  }) {
     const sortKey: keyof CategoryDto = sort ?? 'name';
-    const rows = await this.prisma.category.findMany({ where: { user_id: userId } });
+    const rows = await this.prisma.category.findMany({
+      where: { user_id: userId, is_active: isActive },
+    });
     const parsed = rows.map((m) => this.parser(m));
     SortHelper.sortByKey(parsed, sortKey);
 
