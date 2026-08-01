@@ -5,7 +5,7 @@ import { getRequestUserId } from './utils.js';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { PedcardService } from '#src/lib/services/pedcardService.js';
+import { PedcardService } from '#src/lib/services/prisma/pedcardService.js';
 
 const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ps = new PedcardService(prismaClient);

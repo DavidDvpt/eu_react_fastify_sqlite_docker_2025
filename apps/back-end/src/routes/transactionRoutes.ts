@@ -4,7 +4,7 @@ import {
   transactionStatusBodySchema,
 } from '@eu/zod-schemas';
 
-import { TransactionService } from '../lib/services/transactionService.js';
+import { TransactionService } from '../lib/services/prisma/transactionService.js';
 
 import { getRequestUserId } from './utils.js';
 

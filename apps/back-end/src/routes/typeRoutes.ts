@@ -4,7 +4,7 @@ import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { TypeService } from '#src/lib/services/typeService.js';
+import { TypeService } from '#src/lib/services/prisma/typeService.js';
 
 const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ts = new TypeService(prismaClient);

@@ -1,7 +1,7 @@
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type { LotDto } from '@eu/types';
+import type { StockService } from '#src/lib/services/domain/stockService.js';
 
-import { LotService } from '#src/lib/services/lotService.js';
+import { LotService } from '#src/lib/services/prisma/lotService.js';
 
 const NEGATIVE_STOCK_ERROR = (itemId: string) =>
   `Invariant violated: negative stock for item ${itemId}`;
@@ -9,37 +9,11 @@ const NEGATIVE_STOCK_ERROR = (itemId: string) =>
 /**
  * Fournit des calculs de stock agrégés à partir des lots.
  */
-export class StockService {
-  constructor(private readonly prisma: DatabaseClient) {}
-
-  /**
-   * Calcule le stock total restant pour une liste de lots appartenant au même item.
-   */
-  getStockFromLots(lots: LotDto[]) {
-    return lots.reduce((s, c) => {
-      return s + c.quantityRemaining;
-    }, 0);
-  }
-
-  /**
-   * Agrège les quantités restantes par `itemId` à partir d'une liste de lots.
-   */
-  getStocksFromLots(lots: LotDto[]) {
-    return lots.reduce(
-      (s, c) => {
-        if (!s[c.itemId]) {
-          s[c.itemId] = c.quantityRemaining;
-        } else {
-          s[c.itemId] += c.quantityRemaining;
-        }
-
-        return s;
-
-        // return s + c.quantityRemaining;
-      },
-      {} as Record<string, number>
-    );
-  }
+export class InventoryService {
+  constructor(
+    private readonly prisma: DatabaseClient,
+    private readonly stockService: StockService
+  ) {}
 
   /**
    * Retourne le stock actif disponible pour un item donné.
@@ -55,7 +29,7 @@ export class StockService {
       isActive: true,
     });
 
-    const stock = this.getStockFromLots(lots);
+    const stock = this.stockService.getStockFromLots(lots);
 
     if (stock < 0) {
       throw new Error(NEGATIVE_STOCK_ERROR(itemId));
@@ -75,7 +49,7 @@ export class StockService {
       sort: { key: 'createdAt', order: 'asc' },
     });
 
-    const stocks = this.getStocksFromLots(lots);
+    const stocks = this.stockService.getStocksFromLots(lots);
 
     return stocks;
   }

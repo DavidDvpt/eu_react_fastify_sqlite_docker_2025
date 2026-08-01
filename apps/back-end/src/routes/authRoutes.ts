@@ -9,7 +9,7 @@ import { HashTools } from '../lib/security/index.js';
 import type { FastifyPluginAsync } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { UserService } from '#src/lib/services/userService.js';
+import { UserService } from '#src/lib/services/prisma/userService.js';
 // eslint-disable-next-line @typescript-eslint/require-await
 const authRoutes: FastifyPluginAsync = async (app, _opts) => {
   const accessTokenMaxAge = parseDurationToSeconds(env.JWT_ACCESS_EXPIRES_IN);

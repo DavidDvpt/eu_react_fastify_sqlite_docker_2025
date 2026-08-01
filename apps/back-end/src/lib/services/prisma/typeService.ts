@@ -1,7 +1,7 @@
 import { SortHelper } from '@eu/helpers';
 
 import type { Type } from '#prisma/generated/client.js';
-import type { TypeFormOutputBody, TypeDto } from '@eu/types';
+import type { TypeFormOutputBody, TypeDto, SortOptions } from '@eu/types';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 
@@ -29,11 +29,11 @@ export class TypeService {
     categoryId,
   }: {
     userId: string;
-    sort?: keyof TypeDto;
+    sort?: SortOptions<TypeDto>;
     isActive?: boolean;
     categoryId?: string;
   }) {
-    const sortKey: keyof TypeDto = sort ?? 'name';
+    const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.type.findMany({
       where: { user_id: userId, is_active: isActive, category_id: categoryId },
     });
@@ -42,7 +42,7 @@ export class TypeService {
 
     if (!parsed) return [] as TypeDto[];
 
-    SortHelper.sortByKey(parsed ?? [], sortKey);
+    SortHelper.sortByKey(parsed ?? [], sortKey, sort?.order);
 
     return rows;
   }

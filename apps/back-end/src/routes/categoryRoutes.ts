@@ -3,7 +3,7 @@ import { categoryQuerySchema, categoryFormSchema } from '@eu/zod-schemas';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { CategoryService } from '#src/lib/services/categoryService.js';
+import { CategoryService } from '#src/lib/services/index.js';
 
 const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const cs = new CategoryService(prismaClient);

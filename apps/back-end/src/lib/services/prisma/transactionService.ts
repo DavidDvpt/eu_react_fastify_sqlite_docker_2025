@@ -6,8 +6,8 @@ import type {
   TransactionWhereOptions,
 } from '@eu/types';
 
-import { LotService } from '#src/lib/services/lotService.js';
-import { PedcardService } from '#src/lib/services/pedcardService.js';
+import { LotService } from '#src/lib/services/prisma/lotService.js';
+import { PedcardService } from '#src/lib/services/prisma/pedcardService.js';
 import {
   transactionWithLinesInclude,
   type TransactionWithLines,

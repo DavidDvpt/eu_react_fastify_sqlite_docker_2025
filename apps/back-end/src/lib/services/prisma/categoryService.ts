@@ -1,9 +1,9 @@
 import { SortHelper } from '@eu/helpers';
 
-import { type DatabaseClient } from '../../../prisma/prismaClient.js';
+import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
 
-import type { Category } from '../../../prisma/generated/client.js';
-import type { CategoryDto, CategoryFormOutputBody } from '@eu/types';
+import type { Category } from '../../../../prisma/generated/client.js';
+import type { CategoryDto, CategoryFormOutputBody, SortOptions } from '@eu/types';
 
 export class CategoryService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -27,15 +27,15 @@ export class CategoryService {
     isActive,
   }: {
     userId: string;
-    sort?: keyof CategoryDto;
+    sort?: SortOptions<CategoryDto>;
     isActive?: boolean;
   }) {
-    const sortKey: keyof CategoryDto = sort ?? 'name';
+    const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.category.findMany({
       where: { user_id: userId, is_active: isActive },
     });
     const parsed = rows.map((m) => this.parser(m));
-    SortHelper.sortByKey(parsed, sortKey);
+    SortHelper.sortByKey(parsed, sortKey, sort?.order);
 
     return parsed;
   }

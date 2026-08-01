@@ -1,7 +1,9 @@
+import type { Order } from "@eu/types";
+
 export class SortHelper {
   constructor() {}
 
-  static sortByKey<T>(array: T[], key: keyof T) {
+  static sortByKey<T>(array: T[], key: keyof T, order: Order = "asc") {
     array.sort((a, b) => {
       const av = a[key];
       const bv = b[key];

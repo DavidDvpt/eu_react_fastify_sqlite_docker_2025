@@ -1,4 +1,5 @@
 import type { Lot } from '#prisma/generated/client.js';
+import type { StockService } from '#src/lib/services/domain/stockService.js';
 import type { LotDto, LotFormOutputBody, SortOptions } from '@eu/types';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';

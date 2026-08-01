@@ -1,9 +1,9 @@
 import { SortHelper } from '@eu/helpers';
 
-import { type DatabaseClient } from '../../../prisma/prismaClient.js';
+import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
 
 import type { Item } from '#prisma/generated/client.js';
-import type { ItemFormOutputBody, ItemDto } from '@eu/types';
+import type { ItemFormOutputBody, ItemDto, SortOptions } from '@eu/types';
 
 export class ItemService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -34,11 +34,11 @@ export class ItemService {
     sort,
   }: {
     userId: string;
-    sort?: keyof ItemDto;
+    sort: SortOptions<ItemDto>;
     typeId?: string;
     isActive?: boolean;
   }) {
-    const sortKey = sort ?? 'name';
+    const sortKey = sort.key ?? 'name';
     const rows = await this.prisma.item.findMany({
       where: {
         user_id: userId,
@@ -47,7 +47,7 @@ export class ItemService {
       },
     });
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
-    SortHelper.sortByKey(parsed, sortKey);
+    SortHelper.sortByKey(parsed, sortKey, sort.order);
 
     return rows;
   }
