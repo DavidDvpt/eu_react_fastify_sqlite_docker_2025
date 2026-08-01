@@ -40,11 +40,9 @@ export class TypeService {
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
 
-    if (!parsed) return [] as TypeDto[];
-
     SortHelper.sortByKey(parsed ?? [], sortKey, sort?.order);
 
-    return rows;
+    return parsed;
   }
 
   async getById({ id, userId }: { id: string; userId: string }) {

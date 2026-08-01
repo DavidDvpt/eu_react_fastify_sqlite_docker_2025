@@ -49,7 +49,7 @@ export class ItemService {
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
     SortHelper.sortByKey(parsed, sortKey, sort.order);
 
-    return rows;
+    return parsed;
   }
 
   async getById({ id, userId }: { id: string; userId: string }) {
