@@ -1,4 +1,3 @@
-import type { Transaction } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   PrismaMutationResponse,
@@ -9,13 +8,15 @@ import type {
 
 import { LotService } from '#src/lib/services/lotService.js';
 import { PedcardService } from '#src/lib/services/pedcardService.js';
+import {
+  transactionWithLinesInclude,
+  type TransactionWithLines,
+} from '#src/types/prismaApi/transactions.js';
 
 export class TransactionService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  parsePrismaToDto(
-    t: Transaction & { lines: { quantity: number; lot_id: string; lot: { item_id: string } }[] }
-  ) {
+  parsePrismaToDto(t: TransactionWithLines): TransactionDto {
     const qty = t.lines.reduce((t, c) => {
       return t + c.quantity;
     }, 0);
@@ -52,17 +53,17 @@ export class TransactionService {
         user_id: userId,
         status: whereOptions?.status,
         transaction_type: whereOptions.type,
-        item_id: whereOptions.itemId,
+        lines: whereOptions.itemId
+          ? {
+              some: {
+                lot: {
+                  item_id: whereOptions.itemId,
+                },
+              },
+            }
+          : undefined,
       },
-      include: {
-        lines: {
-          select: {
-            quantity: true,
-            lot_id: true,
-            lot: { select: { item_id: true } },
-          },
-        },
-      },
+      include: transactionWithLinesInclude,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
@@ -72,15 +73,7 @@ export class TransactionService {
   async getById({ userId, id }: { userId: string; id: string }) {
     const row = await this.prisma.transaction.findUnique({
       where: { id, user_id: userId },
-      include: {
-        lines: {
-          select: {
-            quantity: true,
-            lot_id: true,
-            lot: { select: { item_id: true } },
-          },
-        },
-      },
+      include: transactionWithLinesInclude,
     });
 
     if (!row) return null;
