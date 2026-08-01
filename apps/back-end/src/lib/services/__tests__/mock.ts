@@ -23,7 +23,7 @@ const usersMock = () => [
   },
 ];
 
-const itemCategoriesMock = (userId: string) => [
+const categoryMock = (userId: string) => [
   {
     date_created: new Date().toISOString(),
     date_updated: null,
@@ -40,7 +40,7 @@ const itemCategoriesMock = (userId: string) => [
   },
 ];
 
-const itemTypesMock = (categoryId: string, userId: string) => {
+const typeMock = (categoryId: string, userId: string) => {
   const base = `${Date.now()}-${Math.random().toString(16).slice(2, 6)}`;
   return [
     {
@@ -87,4 +87,4 @@ const itemMock = (typeId: string, userId: string) => [
   },
 ];
 
-export { itemCategoriesMock, itemMock, itemTypesMock, usersMock };
+export { categoryMock, itemMock, typeMock, usersMock };

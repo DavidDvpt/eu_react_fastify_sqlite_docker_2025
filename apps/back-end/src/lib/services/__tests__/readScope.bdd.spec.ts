@@ -64,7 +64,7 @@ afterAll(async () => {
 });
 
 describe('Read scope by repository', () => {
-  it('ItemCategory: reads global + current user only', async () => {
+  it('Category: reads current user rows only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
 
@@ -97,9 +97,9 @@ describe('Read scope by repository', () => {
     });
 
     const forA = await prismaCategory.findMany({ where: { user_id: userA.id } });
-    expect(forA.map((c: { id: string }) => c.id)).toContain(globalCategory.id);
     expect(forA.map((c: { id: string }) => c.id)).toContain(categoryA.id);
     expect(forA.map((c: { id: string }) => c.id)).not.toContain(categoryB.id);
+    expect(forA.map((c: { id: string }) => c.id)).not.toContain(globalCategory.id);
 
     const blocked = await prismaCategory.findUnique({
       where: { id: categoryB.id, user_id: userA.id },
@@ -107,7 +107,7 @@ describe('Read scope by repository', () => {
     expect(blocked).toBeNull();
   });
 
-  it('ItemType: reads global + current user only', async () => {
+  it('Type: reads current user rows only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
     const baseCategory = await prismaCategory.create({
@@ -152,15 +152,15 @@ describe('Read scope by repository', () => {
     });
 
     const forA = await prismaType.findMany({ where: { user_id: userA.id } });
-    expect(forA.map((t: { id: string }) => t.id)).toContain(globalType.id);
     expect(forA.map((t: { id: string }) => t.id)).toContain(typeA.id);
     expect(forA.map((t: { id: string }) => t.id)).not.toContain(typeB.id);
+    expect(forA.map((t: { id: string }) => t.id)).not.toContain(globalType.id);
 
     const blocked = await prismaType.findUnique({ where: { id: typeB.id, user_id: userA.id } });
     expect(blocked).toBeNull();
   });
 
-  it('Item: reads global + current user only', async () => {
+  it('Item: reads current user rows only', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
     const baseCategory = await prismaCategory.create({
@@ -224,9 +224,9 @@ describe('Read scope by repository', () => {
     });
 
     const forA = await prismaItem.findMany({ where: { user_id: userA.id } });
-    expect(forA.map((i: { id: string }) => i.id)).toContain(globalItem.id);
     expect(forA.map((i: { id: string }) => i.id)).toContain(itemA.id);
     expect(forA.map((i: { id: string }) => i.id)).not.toContain(itemB.id);
+    expect(forA.map((i: { id: string }) => i.id)).not.toContain(globalItem.id);
 
     const blocked = await prismaItem.findUnique({ where: { id: itemB.id, user_id: userA.id } });
     expect(blocked).toBeNull();
@@ -316,7 +316,7 @@ describe('Read scope by repository', () => {
     expect(blocked).toBeNull();
   });
 
-  it('ItemCategory: update/delete allowed only for owner, global rows are read-only', async () => {
+  it('Category: update/delete operate only inside the scoped where clause', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
 
@@ -353,14 +353,14 @@ describe('Read scope by repository', () => {
         where: { id: globalCategory.id, user_id: userA.id },
         data: { name: `forbidden-global-update-${suffix()}` },
       })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for an update');
 
     await expect(
       prismaCategory.update({
         where: { id: categoryB.id, user_id: userA.id },
         data: { name: `forbidden-other-user-update-${suffix()}` },
       })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for an update');
 
     const updatedByOwner = await prismaCategory.update({
       where: { id: categoryA.id, user_id: userA.id },
@@ -370,10 +370,10 @@ describe('Read scope by repository', () => {
 
     await expect(
       prismaCategory.delete({ where: { id: globalCategory.id, user_id: userA.id } })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for a delete');
     await expect(
       prismaCategory.delete({ where: { id: categoryB.id, user_id: userA.id } })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for a delete');
 
     const deletedByOwner = await prismaCategory.delete({
       where: { id: categoryA.id, user_id: userA.id },
@@ -381,7 +381,7 @@ describe('Read scope by repository', () => {
     expect(deletedByOwner.id).toBe(categoryA.id);
   });
 
-  it('Lot: update/delete allowed only for owner, global rows are read-only', async () => {
+  it('Lot: update/delete operate only inside the scoped where clause', async () => {
     const userA = { id: USER_A_ID };
     const userB = { id: USER_B_ID };
     const category = await prismaCategory.create({
@@ -461,13 +461,13 @@ describe('Read scope by repository', () => {
         where: { id: lotGlobal.id, user_id: userA.id },
         data: { quantity_remaining: 99 },
       })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for an update');
     await expect(
       prismaLot.update({
         where: { id: lotB.id, user_id: userA.id },
         data: { quantity_remaining: 99 },
       })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for an update');
 
     const updatedByOwner = await prismaLot.update({
       where: { id: lotA.id, user_id: userA.id },
@@ -477,9 +477,9 @@ describe('Read scope by repository', () => {
 
     await expect(
       prismaLot.delete({ where: { id: lotGlobal.id, user_id: userA.id } })
-    ).rejects.toThrow('Forbidden mutation');
+    ).rejects.toThrow('No record was found for a delete');
     await expect(prismaLot.delete({ where: { id: lotB.id, user_id: userA.id } })).rejects.toThrow(
-      'Forbidden mutation'
+      'No record was found for a delete'
     );
 
     const deletedByOwner = await prismaLot.delete({ where: { id: lotA.id, user_id: userA.id } });

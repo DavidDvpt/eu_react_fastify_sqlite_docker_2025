@@ -6,20 +6,19 @@ import useCategories from "../useCategories";
 import useTypes from "../useTypes";
 import useItems from "../useItems";
 
-const { getCategoriesMock, getTypesMock, getItemsMock } = vi.hoisted(() => ({
-  getCategoriesMock: vi.fn(),
-  getTypesMock: vi.fn(),
+const { getcategoryMock, gettypeMock, getItemsMock } = vi.hoisted(() => ({
+  getcategoryMock: vi.fn(),
+  gettypeMock: vi.fn(),
   getItemsMock: vi.fn(),
 }));
 
 vi.mock("@/lib/services", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/services")>(
-    "@/lib/services",
-  );
+  const actual =
+    await vi.importActual<typeof import("@/lib/services")>("@/lib/services");
   return {
     ...actual,
-    getCategories: getCategoriesMock,
-    getTypes: getTypesMock,
+    getCategories: getcategoryMock,
+    getTypes: gettypeMock,
     getItems: getItemsMock,
   };
 });
@@ -38,7 +37,7 @@ describe("manage data hooks", () => {
   });
 
   it("fetches categories and exposes invalidateCategories", async () => {
-    getCategoriesMock.mockResolvedValue([{ id: "cat-1", name: "Material" }]);
+    getcategoryMock.mockResolvedValue([{ id: "cat-1", name: "Material" }]);
 
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -58,7 +57,7 @@ describe("manage data hooks", () => {
   });
 
   it("fetches types and exposes invalidateTypes", async () => {
-    getTypesMock.mockResolvedValue([{ id: "type-1", name: "Ore" }]);
+    gettypeMock.mockResolvedValue([{ id: "type-1", name: "Ore" }]);
 
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
