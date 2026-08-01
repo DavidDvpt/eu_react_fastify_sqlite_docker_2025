@@ -8,12 +8,6 @@ export type LotFormOutputBody = z.output<typeof lotBodySchema>;
 
 export type LotSortField = "date_created" | "date_updated";
 
-export type GetLotsOptions = {
-  isAvailableOnly?: boolean;
-  sort?: LotSortField;
-  sortDirection?: "asc" | "desc";
-};
-
 export type LotDto = {
   id: string;
   quantityRemaining: number;

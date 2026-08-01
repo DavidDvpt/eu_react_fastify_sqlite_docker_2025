@@ -1,9 +1,7 @@
 import type { Lot } from '#prisma/generated/client.js';
-import type { GetLotsOptions, LotDto, LotFormOutputBody } from '@eu/types';
+import type { LotDto, LotFormOutputBody, SortOptions } from '@eu/types';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
-import { StockService } from '#src/lib/services/stockService.js';
-
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
 export class LotService {
@@ -24,11 +22,20 @@ export class LotService {
 
     return parsed;
   }
-  private getStockFromLots(lots: LotDto[]) {
-    return lots.reduce((stock, lot) => stock + lot.quantityRemaining, 0);
-  }
-  async getAll({ userId }: { userId: string }) {
-    const rows = await this.prisma.lot.findMany({ where: { user_id: userId } });
+
+  async getAll({
+    userId,
+    isActive,
+    sort,
+  }: {
+    userId: string;
+    isActive?: boolean;
+    sort?: SortOptions<LotDto>;
+  }) {
+    const rows = await this.prisma.lot.findMany({
+      where: { user_id: userId, is_active: isActive },
+      orderBy: sort ? { [sort.key]: sort.order } : undefined,
+    });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
 
@@ -46,19 +53,21 @@ export class LotService {
   async getByItemId({
     userId,
     itemId,
-    options,
+    sort,
+    isActive,
   }: {
     userId: string;
     itemId: string;
-    options?: GetLotsOptions;
+    isActive?: boolean;
+    sort?: SortOptions<LotDto>;
   }) {
     const rows = await this.prisma.lot.findMany({
       where: {
         user_id: userId,
         item_id: itemId,
-        is_active: options?.isAvailableOnly ? true : undefined,
+        is_active: isActive,
       },
-      orderBy: options?.sort ? { [options.sort]: options.sortDirection ?? 'asc' } : undefined,
+      orderBy: sort ? { [sort.key]: sort.order } : undefined,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
@@ -69,47 +78,55 @@ export class LotService {
     itemId,
     userId,
     quantity,
+    sort,
+    isActive,
   }: {
     itemId: string;
     userId: string;
     quantity: number;
+    sort?: SortOptions<LotDto>;
+    isActive?: boolean;
   }) {
-    const lots = await this.getByItemId({
-      userId,
-      itemId,
-      options: { isAvailableOnly: true, sort: 'date_created' },
-    });
-
-    const stock = this.getStockFromLots(lots);
-
-    if (stock < quantity) throw new Error(STOCK_INSUFFISENT_AVAILABLE_QUANTITY);
-
-    let remaining = quantity;
     const allocations: { lotId: string; quantity: number }[] = [];
 
-    for (const lot of lots) {
-      if (remaining === 0) break;
+    await this.prisma.$transaction(async (tx) => {
+      let remaining = quantity;
 
-      const consumed = Math.min(lot.quantityRemaining, remaining);
-      const nextQuantity = lot.quantityRemaining - consumed;
-
-      await this.prisma.lot.update({
-        where: {
-          id: lot.id,
-        },
-        data: {
-          quantity_remaining: nextQuantity,
-          is_active: nextQuantity > 0,
-        },
+      const lots = await this.getByItemId({
+        userId,
+        itemId,
+        isActive,
+        sort: sort ? { key: sort.key, order: sort.order } : undefined,
       });
 
-      allocations.push({
-        lotId: lot.id,
-        quantity: consumed,
-      });
+      for (const lot of lots) {
+        if (remaining === 0) break;
 
-      remaining -= consumed;
-    }
+        const consumed = Math.min(lot.quantityRemaining, remaining);
+        const nextQuantity = lot.quantityRemaining - consumed;
+
+        await this.prisma.lot.update({
+          where: {
+            id: lot.id,
+          },
+          data: {
+            quantity_remaining: nextQuantity,
+            is_active: nextQuantity > 0,
+          },
+        });
+
+        allocations.push({
+          lotId: lot.id,
+          quantity: consumed,
+        });
+
+        remaining -= consumed;
+      }
+
+      if (remaining > 0) throw new Error(STOCK_INSUFFISENT_AVAILABLE_QUANTITY);
+
+      return allocations;
+    });
 
     return allocations;
   }

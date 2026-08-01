@@ -9,12 +9,34 @@ const NEGATIVE_STOCK_ERROR = (itemId: string) =>
 export class StockService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  getStockFromLots(lots: LotDto[]) {
+    return lots.reduce((s, c) => {
+      return s + c.quantityRemaining;
+    }, 0);
+  }
+  getStocksFromLots(lots: LotDto[]) {
+    return lots.reduce(
+      (s, c) => {
+        if (!s[c.itemId]) {
+          s[c.itemId] = c.quantityRemaining;
+        } else {
+          s[c.itemId] += c.quantityRemaining;
+        }
+
+        return s;
+
+        // return s + c.quantityRemaining;
+      },
+      {} as Record<string, number>
+    );
+  }
+
   async getStockByItemId({ itemId, userId }: { itemId: string; userId: string }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getByItemId({
       userId,
       itemId,
-      options: { isAvailableOnly: true },
+      isActive: true,
     });
 
     const stock = this.getStockFromLots(lots);
@@ -25,10 +47,16 @@ export class StockService {
 
     return stock;
   }
+  async getStocksByItem({ userId }: { userId: string }) {
+    const ls = new LotService(this.prisma);
+    const lots = await ls.getAll({
+      userId,
+      isActive: true,
+      sort: { key: 'createdAt', order: 'asc' },
+    });
 
-  getStockFromLots(lots: LotDto[]) {
-    return lots.reduce((s, c) => {
-      return s + c.quantityRemaining;
-    }, 0);
+    const stocks = this.getStocksFromLots(lots);
+
+    return stocks;
   }
 }

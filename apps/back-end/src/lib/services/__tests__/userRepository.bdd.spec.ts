@@ -1,12 +1,12 @@
 import { afterAll, describe, expect, it } from 'vitest';
 
 import prismaClient from '../../../../prisma/prismaClient.js';
-import { UserRepository } from '../userRepository.js';
+import { UserService } from '../userService.js';
 
 import { usersMock } from './mock.js';
 
 const prisma = prismaClient;
-const repo = new UserRepository(prisma);
+const us = new UserService(prismaClient);
 
 afterAll(async () => {
   await prisma.$disconnect();
@@ -14,7 +14,7 @@ afterAll(async () => {
 
 describe('UserRepository CRUD', () => {
   it('creates and reads a user', async () => {
-    const created = await repo.create({ data: usersMock()[0] });
+    const created = await us.create({ body: usersMock()[0] });
     const found = await repo.findUnique({ where: { id: created.id } });
 
     expect(found?.id).toBe(created.id);
