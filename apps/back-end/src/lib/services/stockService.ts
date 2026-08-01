@@ -6,14 +6,24 @@ import { LotService } from '#src/lib/services/lotService.js';
 const NEGATIVE_STOCK_ERROR = (itemId: string) =>
   `Invariant violated: negative stock for item ${itemId}`;
 
+/**
+ * Fournit des calculs de stock agrégés à partir des lots.
+ */
 export class StockService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  /**
+   * Calcule le stock total restant pour une liste de lots appartenant au même item.
+   */
   getStockFromLots(lots: LotDto[]) {
     return lots.reduce((s, c) => {
       return s + c.quantityRemaining;
     }, 0);
   }
+
+  /**
+   * Agrège les quantités restantes par `itemId` à partir d'une liste de lots.
+   */
   getStocksFromLots(lots: LotDto[]) {
     return lots.reduce(
       (s, c) => {
@@ -31,6 +41,12 @@ export class StockService {
     );
   }
 
+  /**
+   * Retourne le stock actif disponible pour un item donné.
+   *
+   * Lève une erreur si un stock négatif est détecté, ce qui indique une incohérence
+   * de données.
+   */
   async getStockByItemId({ itemId, userId }: { itemId: string; userId: string }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getByItemId({
@@ -47,6 +63,10 @@ export class StockService {
 
     return stock;
   }
+
+  /**
+   * Retourne les stocks actifs agrégés par item pour un utilisateur.
+   */
   async getStocksByItem({ userId }: { userId: string }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({

@@ -4,9 +4,15 @@ import type { LotDto, LotFormOutputBody, SortOptions } from '@eu/types';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
+/**
+ * Encapsule les opérations de lecture et de mutation sur les lots de stock.
+ */
 export class LotService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  /**
+   * Convertit un modèle Prisma `Lot` vers le DTO utilisé par l'application.
+   */
   private parsePrismaToDto(body: Lot) {
     const parsed: LotDto = {
       id: body.id,
@@ -23,6 +29,10 @@ export class LotService {
     return parsed;
   }
 
+  /**
+   * Retourne tous les lots d'un utilisateur, avec filtrage optionnel sur l'état actif
+   * et tri optionnel.
+   */
   async getAll({
     userId,
     isActive,
@@ -41,6 +51,10 @@ export class LotService {
 
     return parsed;
   }
+
+  /**
+   * Retourne un lot par son identifiant pour un utilisateur donné.
+   */
   async getById({ id, userId }: { id: string; userId: string }) {
     const row = await this.prisma.lot.findUnique({ where: { user_id: userId, id } });
 
@@ -50,6 +64,10 @@ export class LotService {
 
     return parsed;
   }
+
+  /**
+   * Retourne les lots rattachés à un item pour un utilisateur donné.
+   */
   async getByItemId({
     userId,
     itemId,
@@ -74,6 +92,14 @@ export class LotService {
 
     return parsed;
   }
+
+  /**
+   * Consomme une quantité sur les lots d'un item en parcourant les lots
+   * dans l'ordre fourni par `sort`.
+   *
+   * Lève une erreur si la somme des quantités restantes sur les lots sélectionnés
+   * est insuffisante pour couvrir la quantité demandée.
+   */
   async consumeQuantityOnLots({
     itemId,
     userId,
@@ -130,6 +156,10 @@ export class LotService {
 
     return allocations;
   }
+
+  /**
+   * Crée un nouveau lot actif pour un utilisateur.
+   */
   async create({ body, userId }: { userId: string; body: Omit<LotFormOutputBody, 'id'> }) {
     const row = await this.prisma.lot.create({
       data: {
