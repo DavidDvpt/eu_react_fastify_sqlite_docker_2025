@@ -36,7 +36,7 @@ describe('InventoryService', () => {
       },
     };
     const stockService = {
-      getStockFromLots: vi.fn().mockReturnValue(10),
+      getStockFromLots: vi.fn().mockReturnValue({ 'item-1': 10 }),
       getStocksFromLots: vi.fn(),
     };
     const service = new InventoryService(prisma as any, stockService);
@@ -52,7 +52,7 @@ describe('InventoryService', () => {
       orderBy: undefined,
     });
     expect(stockService.getStockFromLots).toHaveBeenCalledOnce();
-    expect(stock).toBe(10);
+    expect(stock).toEqual({ 'item-1': 10 });
   });
 
   it('throws when the computed stock is negative', async () => {
@@ -62,7 +62,7 @@ describe('InventoryService', () => {
       },
     };
     const stockService = {
-      getStockFromLots: vi.fn().mockReturnValue(-1),
+      getStockFromLots: vi.fn().mockReturnValue({ 'item-1': -1 }),
     };
     const service = new InventoryService(prisma as any, stockService);
 
@@ -101,7 +101,7 @@ describe('InventoryService', () => {
         user_id: 'user-1',
         is_active: true,
       },
-      orderBy: { createdAt: 'asc' },
+      orderBy: { date_created: 'asc' },
     });
     expect(stockService.getStockFromLots).toHaveBeenCalledOnce();
     expect(stocks).toEqual({ 'item-1': 3 });

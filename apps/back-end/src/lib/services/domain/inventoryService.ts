@@ -16,6 +16,22 @@ export class InventoryService {
   ) {}
 
   /**
+   * Retourne les stocks actifs agrégés par item pour un utilisateur.
+   */
+  async getInventory({ userId }: { userId: string }) {
+    const ls = new LotService(this.prisma);
+    const lots = await ls.getAll({
+      userId,
+      isActive: true,
+      sort: { key: 'date_created', order: 'asc' },
+    });
+
+    const stocks = this.stockService.getStockFromLots(lots);
+
+    return stocks;
+  }
+
+  /**
    * Retourne le stock actif disponible pour un item donné.
    *
    * Lève une erreur si un stock négatif est détecté, ce qui indique une incohérence
@@ -27,6 +43,7 @@ export class InventoryService {
       userId,
       itemId,
       isActive: true,
+      sort: { key: 'date_created', order: 'asc' },
     });
 
     const stock = this.stockService.getStockFromLots(lots);
@@ -36,21 +53,5 @@ export class InventoryService {
     }
 
     return stock;
-  }
-
-  /**
-   * Retourne les stocks actifs agrégés par item pour un utilisateur.
-   */
-  async getInventory({ userId }: { userId: string }) {
-    const ls = new LotService(this.prisma);
-    const lots = await ls.getAll({
-      userId,
-      isActive: true,
-      sort: { key: 'createdAt', order: 'asc' },
-    });
-
-    const stocks = this.stockService.getStockFromLots(lots);
-
-    return stocks;
   }
 }

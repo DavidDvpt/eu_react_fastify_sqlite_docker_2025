@@ -1,7 +1,6 @@
-import type { Lot } from '#prisma/generated/client.js';
-import type { StockService } from '#src/lib/services/domain/stockService.js';
 import type { LotDto, LotFormOutputBody, SortOptions } from '@eu/types';
 
+import { LotType, type Lot } from '#prisma/generated/client.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
@@ -41,7 +40,7 @@ export class LotService {
   }: {
     userId: string;
     isActive?: boolean;
-    sort?: SortOptions<LotDto>;
+    sort?: SortOptions<Lot>;
   }) {
     const rows = await this.prisma.lot.findMany({
       where: { user_id: userId, is_active: isActive },
@@ -78,7 +77,7 @@ export class LotService {
     userId: string;
     itemId: string;
     isActive?: boolean;
-    sort?: SortOptions<LotDto>;
+    sort?: SortOptions<Lot>;
   }) {
     const rows = await this.prisma.lot.findMany({
       where: {
@@ -111,7 +110,7 @@ export class LotService {
     itemId: string;
     userId: string;
     quantity: number;
-    sort?: SortOptions<LotDto>;
+    sort?: SortOptions<Lot>;
     isActive?: boolean;
   }) {
     const allocations: { lotId: string; quantity: number }[] = [];
