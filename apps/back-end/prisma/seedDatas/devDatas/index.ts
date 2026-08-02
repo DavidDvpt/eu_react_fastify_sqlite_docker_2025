@@ -4,9 +4,12 @@ import { TRANSACTION_BUY_RAW } from '#prisma/seedDatas/devDatas/transactionBuyRa
 import {
   TRANSACTION_LOT_BUY_RAW,
   TRANSACTION_LOT_SELL_RAW,
+  TRANSACTION_LOT_SELL_RAW_LATEST_TRUE,
 } from '#prisma/seedDatas/devDatas/transactionLotRaw.js';
-import { TRANSACTION_SELL_RAW } from '#prisma/seedDatas/devDatas/transactionSellRaw.js';
-
+import {
+  TRANSACTION_SELL_RAW,
+  TRANSACTION_SELL_RAW_LATEST_TRUE,
+} from '#prisma/seedDatas/devDatas/transactionSellRaw.js';
 export const lotSeed = (userId: string): Prisma.LotCreateManyInput[] =>
   LOTS_RAW.map((lot) => ({
     ...lot,
@@ -17,19 +20,20 @@ export const lotSeed = (userId: string): Prisma.LotCreateManyInput[] =>
 export const transactionBuySeed = (userId: string): Prisma.TransactionCreateManyInput[] =>
   TRANSACTION_BUY_RAW.map((t) => ({
     ...t,
-    date_created: '2025-11-23 11:59:01.6897533',
-    date_updated: null,
-    is_active: true,
+    created_at: '2025-11-23T11:59:01.689Z',
+    updated_at: null,
     user_id: userId,
   }));
 
 export const transactionSellSeed = (userId: string): Prisma.TransactionCreateManyInput[] =>
-  TRANSACTION_SELL_RAW.map((t) => ({
+  TRANSACTION_SELL_RAW.concat(TRANSACTION_SELL_RAW_LATEST_TRUE).map((t) => ({
     ...t,
     transaction_type: 'SELL',
-    is_active: true,
     user_id: userId,
   }));
 
-export const transactionLotSeed = (): Prisma.TransactionLotCreateManyInput[] =>
-  TRANSACTION_LOT_BUY_RAW.concat(TRANSACTION_LOT_SELL_RAW);
+export const transactionLotBuySeed = (): Prisma.TransactionLotCreateManyInput[] =>
+  TRANSACTION_LOT_BUY_RAW;
+
+export const transactionLotSellSeed = (): Prisma.TransactionLotCreateManyInput[] =>
+  TRANSACTION_LOT_SELL_RAW.concat(TRANSACTION_LOT_SELL_RAW_LATEST_TRUE);

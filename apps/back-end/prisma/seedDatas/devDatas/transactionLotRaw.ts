@@ -808,6 +808,7 @@ export const TRANSACTION_LOT_BUY_RAW: Prisma.TransactionLotCreateManyInput[] = [
   },
 ];
 
+// TRANSACTION_LOT_SELL_RAW contains 2334 entries.
 export const TRANSACTION_LOT_SELL_RAW: Prisma.TransactionLotCreateManyInput[] = [
   {
     transaction_id: '0016DFFB-E880-472A-A83A-6132C9965865',
@@ -12479,6 +12480,14 @@ export const TRANSACTION_LOT_SELL_RAW: Prisma.TransactionLotCreateManyInput[] = 
     lot_id: '3B54069E-ECC8-42A1-BCBD-F393A98C71BD',
     quantity: 50,
   },
+];
+
+// TRANSACTION_LOT_SELL_RAW_LATEST contains 0 entries.
+export const TRANSACTION_LOT_SELL_RAW_LATEST: Prisma.TransactionLotCreateManyInput[] = [
+];
+
+// TRANSACTION_LOT_SELL_RAW_LATEST_TRUE contains 87 entries.
+export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateManyInput[] = [
   {
     transaction_id: '0f16a3fc-ffe9-46db-9fd9-348e79b53b1f',
     lot_id: '7A03D089-FF14-421F-B491-8F63013C54B8',
@@ -12912,11 +12921,6 @@ export const TRANSACTION_LOT_SELL_RAW: Prisma.TransactionLotCreateManyInput[] = 
   {
     transaction_id: 'e39bf046-29d1-456d-b40e-cc01b63bec07',
     lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
-    quantity: 100,
-  },
-  {
-    transaction_id: '38969924-c9c2-4b09-a024-02d93762b82c',
-    lot_id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
     quantity: 100,
   },
 ];

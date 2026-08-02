@@ -80,7 +80,7 @@ start_api() {
 
   echo "Starting API..."
   (
-    load_env_file "$BACKEND_DIR/.env.dev"
+    load_env_file "$BACKEND_DIR/config/.env.dev"
     cd "$BACKEND_DIR"
     npm run dev
   ) &

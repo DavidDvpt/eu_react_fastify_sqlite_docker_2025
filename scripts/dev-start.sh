@@ -15,6 +15,20 @@ BACKEND_DIR="$ROOT_DIR/apps/back-end"
 FRONTEND_DIR="$ROOT_DIR/apps/front-end"
 PRISMA_BIN="$ROOT_DIR/node_modules/.bin/prisma"
 VITE_BIN="$ROOT_DIR/node_modules/.bin/vite"
+SKIP_FRONT=false
+
+for arg in "$@"; do
+  case "$arg" in
+    --skip-front)
+      SKIP_FRONT=true
+      ;;
+    *)
+      echo "Unknown argument: $arg"
+      echo "Usage: sh ./scripts/dev-start.sh [--skip-front]"
+      exit 1
+      ;;
+  esac
+done
 
 load_env_file() {
   ENV_FILE="$1"
@@ -36,7 +50,7 @@ if [ ! -x "$PRISMA_BIN" ]; then
   exit 1
 fi
 
-if [ ! -x "$VITE_BIN" ]; then
+if [ "$SKIP_FRONT" != "true" ] && [ ! -x "$VITE_BIN" ]; then
   echo "Missing Vite binary at $VITE_BIN"
   echo "Run npm install at the repository root first."
   exit 1
@@ -92,20 +106,32 @@ until nc -z localhost $API_PORT; do
   sleep 0.5
 done
 
-# 5. Start frontend if not running
-if nc -z localhost $FRONT_PORT; then
-  echo "⚠️ Frontend already running on port $FRONT_PORT."
+if [ "$SKIP_FRONT" = "true" ]; then
+  echo "⏭️ Skipping frontend startup."
 else
-  echo "🎨 Starting frontend dev server..."
-  load_env_file "$FRONTEND_DIR/config/.env.dev"
-  cd "$FRONTEND_DIR"
-  "$VITE_BIN" &
+  # 5. Start frontend if not running
+  if nc -z localhost $FRONT_PORT; then
+    echo "⚠️ Frontend already running on port $FRONT_PORT."
+  else
+    echo "🎨 Starting frontend dev server..."
+    load_env_file "$FRONTEND_DIR/config/.env.dev"
+    cd "$FRONTEND_DIR"
+    "$VITE_BIN" &
+  fi
 fi
 
 echo ""
 echo "-----------------------------------------"
-echo "✅ ALL SERVICES STARTED"
+if [ "$SKIP_FRONT" = "true" ]; then
+  echo "✅ BACKEND DEV SERVICES STARTED"
+else
+  echo "✅ ALL SERVICES STARTED"
+fi
 echo "DB       → localhost:$DB_PORT"
 echo "API      → http://localhost:$API_PORT"
-echo "Front    → http://localhost:$FRONT_PORT"
+if [ "$SKIP_FRONT" = "true" ]; then
+  echo "Front    → skipped"
+else
+  echo "Front    → http://localhost:$FRONT_PORT"
+fi
 echo "-----------------------------------------"

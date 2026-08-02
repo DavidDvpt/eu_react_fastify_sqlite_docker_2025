@@ -2,7 +2,8 @@ import type { RootDatabaseClient } from '#prisma/prismaClient.js';
 import {
   lotSeed,
   transactionBuySeed,
-  transactionLotSeed,
+  transactionLotBuySeed,
+  transactionLotSellSeed,
   transactionSellSeed,
 } from '#prisma/seedDatas/devDatas/index.js';
 import { LOTS_RAW } from '#prisma/seedDatas/devDatas/lotsRaw.js';
@@ -19,6 +20,7 @@ const DEV_USER = env.DEV_USER;
 
 export class SeedDevBase extends SeedPatchBase {
   patchId: string = '250101_seed_dev_base';
+  name: string = 'seed_dev_base';
 
   constructor(prismaClient: RootDatabaseClient) {
     super(prismaClient);
@@ -38,7 +40,13 @@ export class SeedDevBase extends SeedPatchBase {
     });
 
     await this.prismaClient.transactionLot.createMany({
-      data: transactionLotSeed(),
+      data: transactionLotBuySeed(),
     });
+
+    await this.prismaClient.transactionLot.createMany({
+      data: transactionLotSellSeed(),
+    });
+
+    super.run();
   }
 }

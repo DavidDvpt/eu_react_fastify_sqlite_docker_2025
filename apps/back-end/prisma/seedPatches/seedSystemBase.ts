@@ -10,6 +10,7 @@ const ADMIN_USER = env.ADMIN_USER;
 
 export class SeedSystemBase extends SeedPatchBase {
   patchId: string = '250101_seed_system_base';
+  name: string = 'seed_system_base';
 
   constructor(prismaClient: RootDatabaseClient) {
     super(prismaClient);
@@ -23,7 +24,7 @@ export class SeedSystemBase extends SeedPatchBase {
 
     await Promise.all(
       USERS.map(async (user) => {
-        this.prismaClient.user.create({
+        return this.prismaClient.user.create({
           data: {
             id: user.id,
             pseudo: user.pseudo,
@@ -44,5 +45,7 @@ export class SeedSystemBase extends SeedPatchBase {
     await this.prismaClient.type.createMany({ data: typesSeed(SYSTEM_USER.id) });
 
     await this.prismaClient.item.createMany({ data: itemsSeed(SYSTEM_USER.id) });
+
+    await super.run();
   }
 }

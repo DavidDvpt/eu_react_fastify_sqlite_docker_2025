@@ -23,6 +23,8 @@ const inventoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(200).send({ row });
   });
+
+  done();
 };
 
 export default inventoryRoutes;
