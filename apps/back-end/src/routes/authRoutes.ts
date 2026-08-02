@@ -32,10 +32,10 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
       const emailExists = await as.getByEmail({ email });
       const pseudoExists = await as.getByPseudo({ pseudo });
 
-      if (!emailExists) {
+      if (emailExists) {
         return reply.code(409).send({ message: 'Email already in use' });
       }
-      if (!pseudoExists) {
+      if (pseudoExists) {
         return reply.code(409).send({ message: 'Pseudo already in use' });
       }
 

@@ -20,7 +20,7 @@ export class ItemService {
       userId: row.user_id,
       createdAt: row.date_created,
       updatedAt: row.date_updated,
-      typeId: row.item_type_id,
+      typeId: row.type_id,
       value: Number(row.value),
     };
 
@@ -28,12 +28,12 @@ export class ItemService {
   }
 
   async getAll({
-    userId,
+    userIds,
     isActive,
     typeId,
     sort,
   }: {
-    userId: string;
+    userIds?: string[];
     sort?: SortOptions<ItemDto>;
     typeId?: string;
     isActive?: boolean;
@@ -41,7 +41,7 @@ export class ItemService {
     const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.item.findMany({
       where: {
-        user_id: userId,
+        user_id: { in: userIds },
         item_type_id: typeId,
         is_active: isActive,
       },
@@ -52,8 +52,10 @@ export class ItemService {
     return parsed;
   }
 
-  async getById({ id, userId }: { id: string; userId: string }) {
-    const row = await this.prisma.item.findUnique({ where: { id, user_id: userId } });
+  async getById({ id, userIds }: { id: string; userIds?: string[] }) {
+    const row = await this.prisma.item.findFirst({
+      where: { id, user_id: { in: userIds } },
+    });
 
     const parsed = this.parser(row);
 
@@ -67,7 +69,7 @@ export class ItemService {
         image_url_id: body.imageUrlId,
         value: body.value,
         is_limited: body.isLimited ?? false,
-        item_type_id: body.typeId,
+        type_id: body.typeId,
         is_active: body.isActive ?? true,
         date_created: new Date().toISOString(),
         date_updated: null,
@@ -94,7 +96,7 @@ export class ItemService {
         image_url_id: body.imageUrlId,
         value: body.value,
         is_limited: body.isLimited,
-        item_type_id: body.typeId,
+        type_id: body.typeId,
         is_active: body.isActive,
         date_updated: new Date().toISOString(),
       },

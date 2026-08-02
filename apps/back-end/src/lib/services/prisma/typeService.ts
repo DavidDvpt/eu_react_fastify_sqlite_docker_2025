@@ -23,19 +23,24 @@ export class TypeService {
     return parsed;
   }
   async getAll({
-    userId,
+    userIds,
     sort,
     isActive,
     categoryId,
   }: {
-    userId: string;
+    userIds?: string[];
     sort?: SortOptions<TypeDto>;
     isActive?: boolean;
     categoryId?: string;
   }) {
     const sortKey = sort?.key ?? 'name';
+
     const rows = await this.prisma.type.findMany({
-      where: { user_id: userId, is_active: isActive, category_id: categoryId },
+      where: {
+        user_id: { in: userIds },
+        is_active: isActive,
+        category_id: categoryId,
+      },
     });
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
@@ -44,9 +49,10 @@ export class TypeService {
 
     return parsed;
   }
-
-  async getById({ id, userId }: { id: string; userId: string }) {
-    const row = await this.prisma.type.findUnique({ where: { id, user_id: userId } });
+  async getById({ id, userIds }: { id: string; userIds?: string[] }) {
+    const row = await this.prisma.type.findFirst({
+      where: { id, user_id: { in: userIds } },
+    });
 
     const parsed = this.parser(row);
 

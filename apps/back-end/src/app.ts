@@ -10,6 +10,8 @@ import { authRoutes, inventoryRoutes, pedCardRoutes, transactionRoutes } from '.
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
+import { systemRoutes } from '#src/routes/systemRoutes.js';
+
 const allowedOrigins = (env.CORS_ORIGIN ?? '')
   .split(',')
   .map((value) => value.trim())
@@ -47,6 +49,7 @@ export function buildApp({
 
   if (registerRoutes !== false) {
     app.register(authRoutes, { prefix: `${API_PREFIX}${AUTH_PREFIX}` });
+    app.register(systemRoutes, { prefix: API_PREFIX });
     app.register(inventoryRoutes, { prefix: API_PREFIX });
     app.register(pedCardRoutes, { prefix: API_PREFIX });
     app.register(transactionRoutes, { prefix: API_PREFIX });

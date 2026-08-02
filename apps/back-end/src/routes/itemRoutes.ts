@@ -1,5 +1,7 @@
 import { itemFormSchema, itemQuerySchema } from '@eu/zod-schemas';
 
+import { getReadableUserIds } from './utils.js';
+
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
@@ -12,7 +14,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const { sortKey, sortOrder, typeId, isActive } = itemQuerySchema.parse(request.query);
 
     const rows = await is.getAll({
-      userId: request.user.id,
+      userIds: getReadableUserIds(request),
       isActive: isActive,
       typeId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
@@ -22,7 +24,10 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-    const row = await is.getById({ id: params.id, userId: request.user.id });
+    const row = await is.getById({
+      id: params.id,
+      userIds: getReadableUserIds(request),
+    });
 
     if (!row) return reply.code(404).send({ message: 'Item not found' });
 

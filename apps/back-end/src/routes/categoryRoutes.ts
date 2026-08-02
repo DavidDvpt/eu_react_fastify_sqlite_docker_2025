@@ -1,17 +1,20 @@
-import { categoryFormSchema } from '@eu/zod-schemas';
+import { categoryFormSchema, categoryQuerySchema } from '@eu/zod-schemas';
+
+import { getReadableUserIds } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
 import { CategoryService } from '#src/lib/services/index.js';
 
-const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
+export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const cs = new CategoryService(prismaClient);
 
   app.get('/', async (request, reply) => {
+    const query = categoryQuerySchema.parse(request.query);
     const rows = await cs.getAll({
-      userId: request.user.id,
-      isActive: true,
+      userIds: getReadableUserIds(request),
+      isActive: query.isActive,
       sort: { key: 'name' },
     });
 
@@ -19,7 +22,10 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
-    const row = await cs.getById({ id: params.id, userId: request.user.id });
+    const row = await cs.getById({
+      id: params.id,
+      userIds: getReadableUserIds(request),
+    });
 
     if (!row) return reply.code(404).send({ message: 'Category not found' });
     if (!row.isActive) return reply.code(403).send({ message: 'Category is not active' });
@@ -51,5 +57,3 @@ const categorieRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   done();
 };
-
-export default categorieRoutes;
