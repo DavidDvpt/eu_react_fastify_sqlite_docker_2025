@@ -12907,20 +12907,19 @@ export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateMa
     lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
     quantity: 100,
   },
+  {
+    transaction_id: 'e39bf046-29d1-456d-b40e-cc01b63bec07',
+    lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
+    quantity: 100,
+  },
+  {
+    transaction_id: '5b73566f-d626-41e9-b907-56e40e1b7b44',
+    lot_id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
+    quantity: 100,
+  },
+  {
+    transaction_id: 'fd14ca5a-5048-45f7-9338-bb66267af8ed',
+    lot_id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
+    quantity: 10,
+  },
 ];
-
-// {
-//   transaction_id: 'e39bf046-29d1-456d-b40e-cc01b63bec07',
-//   lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
-//   quantity: 100,
-// },
-// {
-//   transaction_id: '5b73566f-d626-41e9-b907-56e40e1b7b44',
-//   lot_id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
-//   quantity: 100,
-// },
-// {
-//   transaction_id: 'fd14ca5a-5048-45f7-9338-bb66267af8ed',
-//   lot_id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
-//   quantity: 10,
-// },

@@ -3,6 +3,8 @@ import type {
   PrismaMutationResponse,
   TransactionDto,
   TransactionFormOutputBody,
+  TransactionStatusDto,
+  TransactionTypeDto,
   TransactionWhereOptions,
 } from '@eu/types';
 
@@ -21,7 +23,7 @@ export class TransactionService {
       return t + c.quantity;
     }, 0);
     const lines = t.lines.map((m) => ({ quantity: m.quantity, lotId: m.lot_id }));
-    const lotIds = t.lines.map((m) => m.lot_id);
+    // const lotIds = t.lines.map((m) => m.lot_id);
     const itemId = t.lines[0].lot.item_id;
 
     const parsed: TransactionDto = {
@@ -33,7 +35,7 @@ export class TransactionService {
       updatedAt: t.updated_at?.toISOString() ?? null,
       quantity: qty,
       lines,
-      lotIds,
+      // lotIds,
       itemId,
       status: t.status ?? 'SOLDED',
       transactionType: t.transaction_type,
@@ -43,21 +45,25 @@ export class TransactionService {
   }
   async getAll({
     userId,
-    whereOptions,
+    status,
+    transactionType,
+    itemId,
   }: {
     userId: string;
-    whereOptions: TransactionWhereOptions;
+    itemId?: string;
+    status?: TransactionStatusDto;
+    transactionType?: TransactionTypeDto;
   }) {
     const rows = await this.prisma.transaction.findMany({
       where: {
         user_id: userId,
-        status: whereOptions?.status,
-        transaction_type: whereOptions.type,
-        lines: whereOptions.itemId
+        status: status,
+        transaction_type: transactionType,
+        lines: itemId
           ? {
               some: {
                 lot: {
-                  item_id: whereOptions.itemId,
+                  item_id: itemId,
                 },
               },
             }
@@ -131,7 +137,7 @@ export class TransactionService {
           quantityExported: 0,
           priceRemaining: 0,
           itemId: body.itemId,
-          lotType: 'TRANSACTION',
+          lotType: 'TRADE',
           createdAt: new Date().toISOString(),
           isActive: true,
         },

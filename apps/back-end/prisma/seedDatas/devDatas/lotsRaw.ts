@@ -14,8 +14,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: '035EDE3E-2DBE-4377-AAA0-5B0FDB947209',
-    quantity_remaining: 260,
-    quantity_exported: 40,
+    quantity_remaining: 270,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '5FD0DE31-33A5-49F1-86D9-4E9C5945335A',
     lot_type: 'TRADE',
@@ -334,7 +334,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '2F21C92A-65F2-4C48-A06D-928EB07C4748',
     quantity_remaining: 0,
-    quantity_exported: 80,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'F85D331F-07D0-4C8B-99C0-F1FC003D67B8',
     lot_type: 'TRADE',
@@ -356,7 +356,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
     quantity_remaining: 1857,
-    quantity_exported: 700,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '4E4F11B9-FCE3-4122-9505-EEFFBB49C2C4',
     lot_type: 'TRADE',
@@ -455,7 +455,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '3C81BEBC-F1CB-4B7D-9FED-91894469655C',
     quantity_remaining: 0,
-    quantity_exported: 85,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '19550156-5630-4BF9-8AFA-827ACC250A2C',
     lot_type: 'TRADE',
@@ -509,8 +509,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: '41AEEA04-A8DA-4619-8E18-32DB167E0FB4',
-    quantity_remaining: 4898,
-    quantity_exported: 2318,
+    quantity_remaining: 4999,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'ED9F9E49-6929-430F-BDAF-F451B282FEC2',
     lot_type: 'TRADE',
@@ -751,8 +751,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: '61F16C52-99D7-4272-AE7B-B4386C31036F',
-    quantity_remaining: 392,
-    quantity_exported: 46,
+    quantity_remaining: 413,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'F85D331F-07D0-4C8B-99C0-F1FC003D67B8',
     lot_type: 'TRADE',
@@ -774,7 +774,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '64F05190-A006-4FC3-9310-EB712B6E67A6',
     quantity_remaining: 0,
-    quantity_exported: 407,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'ED9F9E49-6929-430F-BDAF-F451B282FEC2',
     lot_type: 'TRADE',
@@ -796,7 +796,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
     quantity_remaining: 271,
-    quantity_exported: 50,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '42963146-5158-4666-8EE8-A71925481958',
     lot_type: 'TRADE',
@@ -840,7 +840,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '6B074A93-4945-4E70-BFCD-94B05F142922',
     quantity_remaining: 0,
-    quantity_exported: 273,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '19550156-5630-4BF9-8AFA-827ACC250A2C',
     lot_type: 'TRADE',
@@ -873,7 +873,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '71646ED8-7AE9-4927-AB9D-45644C9547D7',
     quantity_remaining: 0,
-    quantity_exported: 273,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '19550156-5630-4BF9-8AFA-827ACC250A2C',
     lot_type: 'TRADE',
@@ -928,7 +928,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '7A03D089-FF14-421F-B491-8F63013C54B8',
     quantity_remaining: 0,
-    quantity_exported: 202,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '19550156-5630-4BF9-8AFA-827ACC250A2C',
     lot_type: 'TRADE',
@@ -1126,7 +1126,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '913CEE7F-4EDC-4C63-9E74-D274583A22E2',
     quantity_remaining: 0,
-    quantity_exported: 30,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'D928A001-5B14-4185-A79C-BE5BE7BC7601',
     lot_type: 'TRADE',
@@ -1214,7 +1214,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
     quantity_remaining: 104,
-    quantity_exported: 400,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '068C9188-821C-4E74-9A54-F6C03C07333F',
     lot_type: 'TRADE',
@@ -1334,8 +1334,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: 'ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA',
-    quantity_remaining: 285,
-    quantity_exported: 1200,
+    quantity_remaining: 385,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '39E70583-067C-4459-BFD4-1C50DB0A9BF0',
     lot_type: 'TRADE',
@@ -1356,8 +1356,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: 'B403DEE5-133A-455B-9CB6-D0F0CA9D1B43',
-    quantity_remaining: 3366,
-    quantity_exported: 404,
+    quantity_remaining: 3467,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: 'F9A28E31-AA19-419F-B2FD-02C3882EF13C',
     lot_type: 'TRADE',
@@ -1411,8 +1411,8 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   },
   {
     id: 'BD33C859-BB90-4769-A5CA-E589ECC09E1D',
-    quantity_remaining: 227,
-    quantity_exported: 320,
+    quantity_remaining: 307,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '2B897E98-2235-4227-ACE4-D429BD172A7A',
     lot_type: 'TRADE',
@@ -1753,7 +1753,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
   {
     id: 'F6519BEE-3B5C-4188-8EE8-797A8FE55973',
     quantity_remaining: 94,
-    quantity_exported: 34,
+    quantity_exported: 0,
     price_remaining: 0,
     item_id: '19550156-5630-4BF9-8AFA-827ACC250A2C',
     lot_type: 'TRADE',

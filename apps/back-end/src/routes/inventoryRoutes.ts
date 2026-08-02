@@ -21,7 +21,7 @@ const inventoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const { id } = request.params as { id: string };
     const row = await is.getInventoryByItemId({ userId, itemId: id });
 
-    return reply.code(200).send({ row });
+    return reply.code(200).send(row);
   });
 
   done();
