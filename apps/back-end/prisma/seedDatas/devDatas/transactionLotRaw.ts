@@ -12483,8 +12483,7 @@ export const TRANSACTION_LOT_SELL_RAW: Prisma.TransactionLotCreateManyInput[] = 
 ];
 
 // TRANSACTION_LOT_SELL_RAW_LATEST contains 0 entries.
-export const TRANSACTION_LOT_SELL_RAW_LATEST: Prisma.TransactionLotCreateManyInput[] = [
-];
+export const TRANSACTION_LOT_SELL_RAW_LATEST: Prisma.TransactionLotCreateManyInput[] = [];
 
 // TRANSACTION_LOT_SELL_RAW_LATEST_TRUE contains 87 entries.
 export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateManyInput[] = [
@@ -12759,11 +12758,6 @@ export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateMa
     quantity: 10,
   },
   {
-    transaction_id: '5b73566f-d626-41e9-b907-56e40e1b7b44',
-    lot_id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
-    quantity: 100,
-  },
-  {
     transaction_id: '6b2a1e26-f445-464a-ab46-b799aff7da84',
     lot_id: 'ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA',
     quantity: 100,
@@ -12792,11 +12786,6 @@ export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateMa
     transaction_id: '1f88b186-cb75-422c-a8d3-c6d5e088c97e',
     lot_id: 'ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA',
     quantity: 100,
-  },
-  {
-    transaction_id: 'fd14ca5a-5048-45f7-9338-bb66267af8ed',
-    lot_id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
-    quantity: 10,
   },
   {
     transaction_id: '1ec52104-1720-4407-b94f-3bb86d55d63b',
@@ -12918,9 +12907,20 @@ export const TRANSACTION_LOT_SELL_RAW_LATEST_TRUE: Prisma.TransactionLotCreateMa
     lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
     quantity: 100,
   },
-  {
-    transaction_id: 'e39bf046-29d1-456d-b40e-cc01b63bec07',
-    lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
-    quantity: 100,
-  },
 ];
+
+// {
+//   transaction_id: 'e39bf046-29d1-456d-b40e-cc01b63bec07',
+//   lot_id: '337A9735-D25E-4B13-B45B-C6A96F30F8BA',
+//   quantity: 100,
+// },
+// {
+//   transaction_id: '5b73566f-d626-41e9-b907-56e40e1b7b44',
+//   lot_id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
+//   quantity: 100,
+// },
+// {
+//   transaction_id: 'fd14ca5a-5048-45f7-9338-bb66267af8ed',
+//   lot_id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
+//   quantity: 10,
+// },
