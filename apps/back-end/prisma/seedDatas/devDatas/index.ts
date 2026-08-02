@@ -4,7 +4,7 @@ import { TRANSACTION_BUY_RAW } from '#prisma/seedDatas/devDatas/transactionBuyRa
 import {
   TRANSACTION_LOT_BUY_RAW,
   TRANSACTION_LOT_SELL_RAW,
-} from '#prisma/seedDatas/devDatas/transactionLot.js';
+} from '#prisma/seedDatas/devDatas/transactionLotRaw.js';
 import { TRANSACTION_SELL_RAW } from '#prisma/seedDatas/devDatas/transactionSellRaw.js';
 
 export const lotSeed = (userId: string): Prisma.LotCreateManyInput[] =>
