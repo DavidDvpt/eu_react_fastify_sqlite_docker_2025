@@ -1,5 +1,7 @@
-import type { itemFormSchema } from "@eu/zod-schemas";
+import type { itemFormSchema, itemSortSchema } from "@eu/zod-schemas";
 import { z } from "zod";
+
+export type ItemSortKey = z.infer<typeof itemSortSchema>;
 
 export type ItemDto = {
   id: string;

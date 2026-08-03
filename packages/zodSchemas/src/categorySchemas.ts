@@ -1,5 +1,7 @@
 import { z } from "zod";
-import { booleanSchema } from "./common.js";
+import { booleanSchema, dateSortKeySchema } from "./common.js";
+
+export const categorySortKey = z.enum([...dateSortKeySchema.options, "name"]);
 
 export const categoryFormSchema = z.object({
   name: z.string().min(1),

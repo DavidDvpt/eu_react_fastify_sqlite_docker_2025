@@ -1,4 +1,9 @@
-import { dateSortSchema, itemFormSchema, itemQuerySchema, lotQuerySchema } from '@eu/zod-schemas';
+import {
+  dateSortKeySchema,
+  itemFormSchema,
+  itemQuerySchema,
+  lotQuerySchema,
+} from '@eu/zod-schemas';
 
 import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 

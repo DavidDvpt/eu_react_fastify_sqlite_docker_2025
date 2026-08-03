@@ -2,7 +2,7 @@ import { SortHelper } from '@eu/helpers';
 
 import type { Item } from '#prisma/generated/client.js';
 import type { RootDatabaseClient } from '#prisma/prismaClient.js';
-import type { ItemFormOutputBody, ItemDto, SortOptions, LotDto, DateSort } from '@eu/types';
+import type { ItemFormOutputBody, ItemDto, SortOptions, ItemSortKey, LotSortKey } from '@eu/types';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';
 import { LotService } from '#src/lib/services/prisma/lotService.js';
@@ -39,7 +39,7 @@ export class ItemService {
     sort,
   }: {
     userIds?: string[];
-    sort?: SortOptions<ItemDto>;
+    sort?: SortOptions<ItemSortKey>;
     typeId?: string;
     isActive?: boolean;
   }) {
@@ -92,7 +92,7 @@ export class ItemService {
     itemId: string;
     userId: string;
     isActive?: boolean;
-    sort?: SortOptions<LotDto>;
+    sort?: SortOptions<LotSortKey>;
   }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({

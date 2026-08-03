@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { booleanSchema, dateSortSchema, sortOrderEnum } from "./common.js";
+import { booleanSchema, dateSortKeySchema, sortOrderEnum } from "./common.js";
 
 export const lotTypeSchema = z.enum([
   "MINING",
@@ -21,7 +21,7 @@ export const lotBodySchema = z.object({
 });
 
 export const lotSortSchema = z.enum([
-  ...dateSortSchema.options,
+  ...dateSortKeySchema.options,
   "quantityRemaining",
   "lotType",
 ]);

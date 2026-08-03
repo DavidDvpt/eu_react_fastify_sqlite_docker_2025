@@ -3,7 +3,7 @@ import { SortHelper } from '@eu/helpers';
 import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
 
 import type { Category } from '../../../../prisma/generated/client.js';
-import type { CategoryDto, CategoryFormOutputBody, SortOptions } from '@eu/types';
+import type { CategoryDto, CategoryFormOutputBody, CategorySortKey, SortOptions } from '@eu/types';
 
 export class CategoryService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -27,7 +27,7 @@ export class CategoryService {
     isActive,
   }: {
     userIds?: string[];
-    sort?: SortOptions<CategoryDto>;
+    sort?: SortOptions<CategorySortKey>;
     isActive?: boolean;
   }) {
     const sortKey = sort?.key ?? 'name';
@@ -35,6 +35,7 @@ export class CategoryService {
       where: { user_id: { in: userIds }, is_active: isActive },
     });
     const parsed = rows.map((m) => this.parser(m));
+
     SortHelper.sortByKey(parsed, sortKey, sort?.order);
 
     return parsed;

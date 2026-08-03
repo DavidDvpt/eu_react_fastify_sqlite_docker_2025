@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { booleanSchema, sortOrderEnum, nameSortSchema } from "./common.js";
+import { booleanSchema, sortOrderEnum, dateSortKeySchema } from "./common.js";
+
+export const itemSortSchema = z.enum([
+  ...dateSortKeySchema.options,
+  "name",
+  "typeId",
+]);
 
 export const itemFormSchema = z.object({
   name: z.string().min(1),
@@ -13,6 +19,6 @@ export const itemFormSchema = z.object({
 export const itemQuerySchema = z.object({
   isActive: booleanSchema,
   typeId: z.string(),
-  sortKey: nameSortSchema.keyof(),
+  sortKey: itemSortSchema.optional(),
   sortOrder: sortOrderEnum,
 });
