@@ -1,11 +1,11 @@
 import { z } from "zod";
-import { optionalBooleanHttpSchema } from "./common.js";
+import { booleanSchema } from "./common.js";
 
 export const categoryFormSchema = z.object({
   name: z.string().min(1),
-  is_active: optionalBooleanHttpSchema,
+  is_active: booleanSchema.optional(),
 });
 
 export const categoryQuerySchema = z.object({
-  isActive: optionalBooleanHttpSchema,
+  isActive: booleanSchema.optional(),
 });

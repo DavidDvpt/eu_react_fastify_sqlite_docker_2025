@@ -10,6 +10,8 @@ import { CategoryService } from '#src/lib/services/index.js';
 export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const cs = new CategoryService(prismaClient);
 
+  app.protect();
+
   app.get('/', async (request, reply) => {
     const query = categoryQuerySchema.parse(request.query);
     const rows = await cs.getAll({

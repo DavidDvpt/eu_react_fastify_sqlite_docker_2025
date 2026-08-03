@@ -11,6 +11,8 @@ import { TypeService } from '#src/lib/services/prisma/typeService.js';
 const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ts = new TypeService(prismaClient);
 
+  app.protect();
+
   app.get('/', async (request, reply) => {
     const { sortKey, sortOrder, categoryId, isActive } = typeQuerySchema.parse(request.query);
 

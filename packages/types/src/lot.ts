@@ -1,4 +1,8 @@
-import type { lotBodySchema, lotTypeSchema } from "@eu/zod-schemas";
+import type {
+  lotBodySchema,
+  lotSortSchema,
+  lotTypeSchema,
+} from "@eu/zod-schemas";
 import { z } from "zod";
 
 export type LotTypeDto = z.output<typeof lotTypeSchema>;
@@ -8,6 +12,7 @@ export type LotFormOutputBody = z.output<typeof lotBodySchema>;
 
 export type LotSortField = "date_created" | "date_updated";
 
+export type LotSortKey = z.infer<typeof lotSortSchema>;
 export type LotDto = {
   id: string;
   quantityRemaining: number;

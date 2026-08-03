@@ -1,12 +1,17 @@
 import { SortHelper } from '@eu/helpers';
 
-import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
-
 import type { Item } from '#prisma/generated/client.js';
-import type { ItemFormOutputBody, ItemDto, SortOptions } from '@eu/types';
+import type { RootDatabaseClient } from '#prisma/prismaClient.js';
+import type { ItemFormOutputBody, ItemDto, SortOptions, LotDto, DateSort } from '@eu/types';
+
+import { StockService } from '#src/lib/services/domain/stockService.js';
+import { LotService } from '#src/lib/services/prisma/lotService.js';
+
+const NEGATIVE_STOCK_ERROR = (itemId: string) =>
+  `Invariant violated: negative stock for item ${itemId}`;
 
 export class ItemService {
-  constructor(private readonly prisma: DatabaseClient) {}
+  constructor(private readonly prisma: RootDatabaseClient) {}
 
   parser(row: Item | null) {
     if (!row) return null;
@@ -52,14 +57,65 @@ export class ItemService {
     return parsed;
   }
 
-  async getById({ id, userIds }: { id: string; userIds?: string[] }) {
+  async getById({
+    id,
+    userIds,
+    includeLots,
+    activeLotsOnly,
+  }: {
+    id: string;
+    userIds?: string[];
+    includeLots?: boolean;
+    activeLotsOnly?: boolean;
+  }) {
     const row = await this.prisma.item.findFirst({
       where: { id, user_id: { in: userIds } },
+      include: {
+        lots: includeLots
+          ? {
+              where: { is_active: activeLotsOnly },
+            }
+          : undefined,
+      },
     });
-
     const parsed = this.parser(row);
 
     return parsed;
+  }
+
+  async getLots({
+    userId,
+    itemId,
+    isActive,
+    sort,
+  }: {
+    itemId: string;
+    userId: string;
+    isActive?: boolean;
+    sort?: SortOptions<LotDto>;
+  }) {
+    const ls = new LotService(this.prisma);
+    const lots = await ls.getAll({
+      userId,
+      itemId,
+      isActive,
+      sort,
+    });
+
+    return lots;
+  }
+  async getStock({ userId, itemId }: { itemId: string; userId: string }) {
+    const ss = new StockService();
+
+    const lots = await this.getLots({ userId, itemId });
+
+    const stock = ss.getStockFromLots(lots);
+
+    if (stock[itemId] < 0) {
+      throw new Error(NEGATIVE_STOCK_ERROR(itemId));
+    }
+
+    return stock;
   }
 
   async create({ body, userId }: { userId: string; body: ItemFormOutputBody }) {

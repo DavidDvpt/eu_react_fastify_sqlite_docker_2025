@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { booleanHttpSchema } from "./common.js";
+import { booleanSchema, dateSortSchema, sortOrderEnum } from "./common.js";
 
 export const lotTypeSchema = z.enum([
   "MINING",
@@ -17,5 +17,18 @@ export const lotBodySchema = z.object({
   lotType: lotTypeSchema,
   createdAt: z.string(),
   updatedAt: z.string().optional(),
-  isActive: booleanHttpSchema,
+  isActive: booleanSchema,
+});
+
+export const lotSortSchema = z.enum([
+  ...dateSortSchema.options,
+  "quantityRemaining",
+  "lotType",
+]);
+
+export const lotQuerySchema = z.object({
+  itemId: z.string(),
+  sortKey: lotSortSchema,
+  sortOrder: sortOrderEnum.optional(),
+  isActive: booleanSchema,
 });

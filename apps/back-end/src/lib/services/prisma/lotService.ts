@@ -1,7 +1,8 @@
-import type { LotDto, LotFormOutputBody, SortOptions } from '@eu/types';
+import type { DateSort, LotDto, LotFormOutputBody, LotSortKey, SortOptions } from '@eu/types';
 
-import { LotType, type Lot } from '#prisma/generated/client.js';
+import { type Lot } from '#prisma/generated/client.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
+import { prismaLotSortKey } from '#src/lib/schemas/lotSchemas.js';
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
 /**
@@ -19,8 +20,8 @@ export class LotService {
       itemId: body.item_id,
       isActive: body.is_active,
       priceRemaining: body.price_remaining ?? 0,
-      quantityExported: body.quantity_exported,
-      quantityRemaining: body.quantity_remaining,
+      quantityExported: body.quantity_exported ?? 0,
+      quantityRemaining: body.quantity_remaining ?? 0,
       lotType: body.lot_type,
       createdAt: body.date_created,
       updatedAt: body.date_updated ?? undefined,
@@ -36,15 +37,17 @@ export class LotService {
   async getAll({
     userId,
     isActive,
+    itemId,
     sort,
   }: {
     userId: string;
+    itemId?: string;
     isActive?: boolean;
-    sort?: SortOptions<Lot>;
+    sort?: SortOptions<LotSortKey>;
   }) {
     const rows = await this.prisma.lot.findMany({
-      where: { user_id: userId, is_active: isActive },
-      orderBy: sort ? { [sort.key]: sort.order } : undefined,
+      where: { user_id: userId, is_active: isActive, item_id: itemId },
+      orderBy: sort ? { [prismaLotSortKey[sort.key]]: sort.order } : undefined,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
@@ -77,7 +80,7 @@ export class LotService {
     userId: string;
     itemId: string;
     isActive?: boolean;
-    sort?: SortOptions<Lot>;
+    sort?: SortOptions<LotSortKey>;
   }) {
     const rows = await this.prisma.lot.findMany({
       where: {
@@ -85,7 +88,7 @@ export class LotService {
         item_id: itemId,
         is_active: isActive,
       },
-      orderBy: sort ? { [sort.key]: sort.order } : undefined,
+      orderBy: sort ? { [prismaLotSortKey[sort.key]]: sort.order } : undefined,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
@@ -110,7 +113,7 @@ export class LotService {
     itemId: string;
     userId: string;
     quantity: number;
-    sort?: SortOptions<Lot>;
+    sort?: SortOptions<LotSortKey>;
     isActive?: boolean;
   }) {
     const allocations: { lotId: string; quantity: number }[] = [];
@@ -168,8 +171,8 @@ export class LotService {
         quantity_exported: body.quantityExported,
         quantity_remaining: body.quantityRemaining,
         price_remaining: body.priceRemaining,
-        date_created: new Date().toISOString(),
         lot_type: body.lotType,
+        date_created: new Date().toISOString(),
         user_id: userId,
       },
     });
