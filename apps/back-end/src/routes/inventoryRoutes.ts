@@ -15,6 +15,7 @@ const inventoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/inventory/lots', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { sortKey, sortOrder, isActive } = lotQuerySchema.parse(request.query);
+
     const rows = await is.getLots({ userId, isActive, sort: { key: sortKey, order: sortOrder } });
 
     return reply.code(200).send(rows);
@@ -23,6 +24,7 @@ const inventoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/inventory/stock', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { sortKey, sortOrder, isActive } = lotQuerySchema.parse(request.query);
+
     const rows = await is.getStocks({ userId, isActive, sort: { key: sortKey, order: sortOrder } });
 
     return reply.code(200).send(rows);

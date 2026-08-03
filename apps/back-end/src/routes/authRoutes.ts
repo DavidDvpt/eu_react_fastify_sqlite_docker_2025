@@ -17,98 +17,82 @@ const authRoutes: FastifyPluginAsync = async (app, _opts) => {
 
   const as = new UserService(prismaClient);
 
-  app.post(
-    '/signup',
-    {
-      schema: {
-        body: userSignUpFormSchema,
-      },
-    },
-    async (request, reply) => {
-      const { email, password, pseudo, firstname, lastname } = userSignUpFormSchema.parse(
-        request.body
-      );
+  app.post('/signup', async (request, reply) => {
+    const { email, password, pseudo, firstname, lastname } = userSignUpFormSchema.parse(
+      request.body
+    );
 
-      const emailExists = await as.getByEmail({ email });
-      const pseudoExists = await as.getByPseudo({ pseudo });
+    const emailExists = await as.getByEmail({ email });
+    const pseudoExists = await as.getByPseudo({ pseudo });
 
-      if (emailExists) {
-        return reply.code(409).send({ message: 'Email already in use' });
-      }
-      if (pseudoExists) {
-        return reply.code(409).send({ message: 'Pseudo already in use' });
-      }
-
-      const hash = await argon2.hash(password);
-
-      await as.create({
-        body: { email, pseudo, firstname, lastname, password: hash },
-      });
-
-      return reply.code(201).send({
-        message: 'User created',
-      });
+    if (emailExists) {
+      return reply.code(409).send({ message: 'Email already in use' });
     }
-  );
-
-  app.post(
-    '/signin',
-    {
-      schema: {
-        body: userSignInFormSchema,
-      },
-    },
-    async (request, reply) => {
-      const { password, pseudo } = userSignInFormSchema.parse(request.body);
-
-      const user = await as.getByPseudo({ pseudo });
-
-      if (!user) {
-        return reply.code(401).send({ message: 'Identifiants invalides' });
-      }
-
-      if (!user.isActive) {
-        return reply.code(401).send({ message: 'utilisateur desactivé' });
-      }
-
-      if (!user.password) {
-        return reply.code(401).send({ message: 'password incorrect' });
-      }
-
-      const passOk = await HashTools.verifyPassword(user.password, password);
-
-      if (!passOk) {
-        return reply.code(401).send({ message: 'Identifiants invalides' });
-      }
-
-      const accessToken = request.server.jwt.access.sign({
-        sub: user.id,
-        role: user.role,
-        pseudo: user.pseudo,
-      });
-
-      const refreshToken = request.server.jwt.refresh.sign({
-        sub: user.id,
-      });
-
-      reply
-        .setCookie('access_token', accessToken, {
-          httpOnly: true,
-          maxAge: accessTokenMaxAge,
-          secure: false,
-          sameSite: 'lax',
-          path: '/',
-        })
-        .setCookie('refresh_token', refreshToken, {
-          httpOnly: true,
-          maxAge: refreshTokenMaxAge,
-          secure: false,
-          sameSite: 'lax',
-          path: AUTH_API_PREFIX,
-        })
-        .send({ message: 'Success' });
+    if (pseudoExists) {
+      return reply.code(409).send({ message: 'Pseudo already in use' });
     }
-  );
+
+    const hash = await argon2.hash(password);
+
+    await as.create({
+      body: { email, pseudo, firstname, lastname, password: hash },
+    });
+
+    return reply.code(201).send({
+      message: 'User created',
+    });
+  });
+
+  app.post('/signin', async (request, reply) => {
+    const { password, pseudo } = userSignInFormSchema.parse(request.body);
+
+    const user = await as.getByPseudo({ pseudo });
+
+    if (!user) {
+      return reply.code(401).send({ message: 'Identifiants invalides' });
+    }
+
+    if (!user.isActive) {
+      return reply.code(401).send({ message: 'utilisateur desactivé' });
+    }
+
+    if (!user.password) {
+      return reply.code(401).send({ message: 'password incorrect' });
+    }
+
+    const passOk = await HashTools.verifyPassword(user.password, password);
+
+    if (!passOk) {
+      return reply.code(401).send({ message: 'Identifiants invalides' });
+    }
+
+    const accessToken = request.server.jwt.access.sign({
+      sub: user.id,
+      role: user.role,
+      pseudo: user.pseudo,
+    });
+
+    const refreshToken = request.server.jwt.refresh.sign({
+      sub: user.id,
+    });
+
+    reply
+      .setCookie('access_token', accessToken, {
+        httpOnly: true,
+        maxAge: accessTokenMaxAge,
+        secure: false,
+        sameSite: 'lax',
+        path: '/',
+      })
+      .setCookie('refresh_token', refreshToken, {
+        httpOnly: true,
+        maxAge: refreshTokenMaxAge,
+        secure: false,
+        sameSite: 'lax',
+        path: AUTH_API_PREFIX,
+      })
+      .send({ message: 'Success' });
+  });
 
   app.post('/logout', async (_request, reply) => {
     return reply
