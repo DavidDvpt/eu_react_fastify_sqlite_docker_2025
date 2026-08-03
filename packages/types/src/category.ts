@@ -6,6 +6,7 @@ export type CategoryFormInputBody = z.input<typeof categoryFormSchema>;
 export type CategoryFormOutputBody = z.output<typeof categoryFormSchema>;
 
 export type CategorySortKey = z.infer<typeof categorySortKey>;
+
 export type CategoryDto = {
   id: string;
   name: string;
