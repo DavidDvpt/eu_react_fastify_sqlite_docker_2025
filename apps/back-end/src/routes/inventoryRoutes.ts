@@ -12,18 +12,18 @@ const inventoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.protect();
 
-  app.get('/inventory', async (request, reply) => {
+  app.get('/inventory/lots', async (request, reply) => {
     const userId = getRequestUserId(request);
-
-    const rows = await is.getInventory({ userId });
+    const { sortKey, sortOrder, isActive } = lotQuerySchema.parse(request.query);
+    const rows = await is.getLots({ userId, isActive, sort: { key: sortKey, order: sortOrder } });
 
     return reply.code(200).send(rows);
   });
 
   app.get('/inventory/stock', async (request, reply) => {
     const userId = getRequestUserId(request);
-
-    const rows = await is.getStock({ userId });
+    const { sortKey, sortOrder, isActive } = lotQuerySchema.parse(request.query);
+    const rows = await is.getStocks({ userId, isActive, sort: { key: sortKey, order: sortOrder } });
 
     return reply.code(200).send(rows);
   });

@@ -1,6 +1,6 @@
 import { SortHelper } from '@eu/helpers';
 
-import type { LotDto, LotFormOutputBody, LotSortKey, SortOptions } from '@eu/types';
+import type { LotDto, LotFormBody, LotSortKey, SortOptions } from '@eu/types';
 
 import { type Lot } from '#prisma/generated/client.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
@@ -164,7 +164,7 @@ export class LotService {
   /**
    * Crée un nouveau lot actif pour un utilisateur.
    */
-  async create({ body, userId }: { userId: string; body: Omit<LotFormOutputBody, 'id'> }) {
+  async create({ body, userId }: { userId: string; body: Omit<LotFormBody, 'id'> }) {
     const row = await this.prisma.lot.create({
       data: {
         is_active: true,

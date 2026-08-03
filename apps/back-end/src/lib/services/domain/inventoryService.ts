@@ -1,5 +1,6 @@
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { StockService } from '#src/lib/services/domain/stockService.js';
+import type { LotSortKey, SortOptions } from '@eu/types';
 
 import { LotService } from '#src/lib/services/prisma/lotService.js';
 
@@ -15,24 +16,38 @@ export class InventoryService {
   /**
    * Retourne les stocks actifs agrégés par item pour un utilisateur.
    */
-  async getInventory({ userId, itemId }: { userId: string; itemId?: string }) {
+  async getLots({
+    userId,
+    isActive,
+    sort,
+  }: {
+    userId: string;
+    isActive: boolean;
+    sort: SortOptions<LotSortKey>;
+  }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({
       userId,
-      isActive: true,
-      itemId,
-      sort: { key: 'createdAt', order: 'asc' },
+      isActive,
+      sort: { key: sort?.key ?? 'createdAt', order: sort?.order },
     });
-
-    // const stocks = this.stockService.getStockFromLots(lots);
 
     return lots;
   }
 
-  async getStock({ userId, itemId }: { userId: string; itemId?: string }) {
-    const lots = await this.getInventory({
+  async getStocks({
+    userId,
+    isActive,
+    sort,
+  }: {
+    userId: string;
+    isActive: boolean;
+    sort: SortOptions<LotSortKey>;
+  }) {
+    const lots = await this.getLots({
       userId,
-      itemId,
+      sort,
+      isActive,
     });
 
     const stocks = this.stockService.getStockFromLots(lots);
