@@ -1,8 +1,9 @@
-import type { DateSort, LotDto, LotFormOutputBody, LotSortKey, SortOptions } from '@eu/types';
+import { SortHelper } from '@eu/helpers';
+
+import type { LotDto, LotFormOutputBody, LotSortKey, SortOptions } from '@eu/types';
 
 import { type Lot } from '#prisma/generated/client.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
-import { prismaLotSortKey } from '#src/lib/schemas/lotSchemas.js';
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
 /**
@@ -47,10 +48,11 @@ export class LotService {
   }) {
     const rows = await this.prisma.lot.findMany({
       where: { user_id: userId, is_active: isActive, item_id: itemId },
-      orderBy: sort ? { [prismaLotSortKey[sort.key]]: sort.order } : undefined,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
+
+    SortHelper.sortByKey(parsed, sort?.key ?? 'createdAt', sort?.order);
 
     return parsed;
   }
@@ -88,11 +90,11 @@ export class LotService {
         item_id: itemId,
         is_active: isActive,
       },
-      orderBy: sort ? { [prismaLotSortKey[sort.key]]: sort.order } : undefined,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
 
+    SortHelper.sortByKey(parsed, sort?.key ?? 'createdAt', sort?.order);
     return parsed;
   }
 
