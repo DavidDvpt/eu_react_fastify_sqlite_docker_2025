@@ -1,6 +1,6 @@
 import { categoryFormSchema, categoryQuerySchema } from '@eu/zod-schemas';
 
-import { getReadableUserIds } from './utils.js';
+import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -13,40 +13,46 @@ export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.protect();
 
   app.get('/', async (request, reply) => {
-    const query = categoryQuerySchema.parse(request.query);
+    const { sortKey, sortOrder, isActive } = categoryQuerySchema.parse(request.query);
     const rows = await cs.getAll({
       userIds: getReadableUserIds(request),
-      isActive: query.isActive,
-      sort: { key: 'name' },
+      isActive,
+      sort: { key: sortKey ?? 'name', order: sortOrder },
     });
 
     return reply.code(200).send(rows);
   });
   app.get('/:id', async (request, reply) => {
-    const params = request.params as { id: string };
+    const { id } = getIdParam(request);
+
     const row = await cs.getById({
-      id: params.id,
+      id,
       userIds: getReadableUserIds(request),
     });
 
     if (!row) return reply.code(404).send({ message: 'Category not found' });
+
     if (!row.isActive) return reply.code(403).send({ message: 'Category is not active' });
 
     return reply.code(200).send(row);
   });
 
   app.post('/', async (request, reply) => {
+    const userId = getRequestUserId(request);
+
     const body = categoryFormSchema.parse(request.body);
-    const created = await cs.create({ userId: request.user.id, body });
+    const created = await cs.create({ userId, body });
 
     return reply.code(201).send({ id: created.id });
   });
 
   app.patch('/:id', async (request, reply) => {
     try {
-      const params = request.params as { id: string };
+      const { id } = getIdParam(request);
+      const userId = getRequestUserId(request);
+
       const body = categoryFormSchema.partial().parse(request.body);
-      const updated = await cs.update({ id: params.id, userId: request.user.id, body });
+      const updated = await cs.update({ id, userId, body });
 
       return reply.code(200).send({ id: updated.id });
     } catch (error) {

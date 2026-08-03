@@ -8,12 +8,13 @@ import { type DatabaseClient } from '#prisma/prismaClient.js';
 export class TypeService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  parser(row?: Type | null) {
+  parsePrismaToDto(row?: Type | null) {
     if (!row) return null;
     const parsed: TypeDto = {
       id: row.id,
       name: row.name,
       categoryId: row.category_id,
+      isStackable: row.is_stackable,
       isActive: row.is_active,
       userId: row.user_id,
       createdAt: row.date_created,
@@ -28,13 +29,11 @@ export class TypeService {
     isActive,
     categoryId,
   }: {
-    userIds?: string[];
+    userIds: string[];
     sort?: SortOptions<TypeSortKey>;
     isActive?: boolean;
     categoryId?: string;
   }) {
-    const sortKey = sort?.key ?? 'name';
-
     const rows = await this.prisma.type.findMany({
       where: {
         user_id: { in: userIds },
@@ -43,9 +42,9 @@ export class TypeService {
       },
     });
 
-    const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
+    const parsed = rows.map((m) => this.parsePrismaToDto(m)).filter((f) => f !== null);
 
-    SortHelper.sortByKey(parsed ?? [], sortKey, sort?.order);
+    SortHelper.sortByKey(parsed ?? [], sort?.key ?? 'name', sort?.order);
 
     return parsed;
   }
@@ -54,7 +53,7 @@ export class TypeService {
       where: { id, user_id: { in: userIds } },
     });
 
-    const parsed = this.parser(row);
+    const parsed = this.parsePrismaToDto(row);
 
     return parsed;
   }

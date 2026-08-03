@@ -1,9 +1,10 @@
 import { SortHelper } from '@eu/helpers';
+import { categoryFormSchema } from '@eu/zod-schemas';
 
 import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
 
 import type { Category } from '../../../../prisma/generated/client.js';
-import type { CategoryDto, CategoryFormOutputBody, CategorySortKey, SortOptions } from '@eu/types';
+import type { CategoryDto, CategoryFormBody, CategorySortKey, SortOptions } from '@eu/types';
 
 export class CategoryService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -51,11 +52,13 @@ export class CategoryService {
     return this.parser(category);
   }
 
-  async create({ body, userId }: { userId: string; body: Omit<CategoryFormOutputBody, 'id'> }) {
+  async create({ body, userId }: { userId: string; body: CategoryFormBody }) {
+    const { name, isActive } = body;
+
     const cat = await this.prisma.category.create({
       data: {
-        name: body.name,
-        is_active: body.is_active ?? true,
+        name,
+        is_active: isActive,
         date_created: new Date().toISOString(),
         date_updated: null,
         user_id: userId,
@@ -72,7 +75,7 @@ export class CategoryService {
   }: {
     id: string;
     userId: string;
-    body: Partial<Omit<CategoryFormOutputBody, 'id'>>;
+    body: Partial<CategoryFormBody>;
   }) {
     const cat = await this.prisma.category.update({
       where: { id, user_id: userId },

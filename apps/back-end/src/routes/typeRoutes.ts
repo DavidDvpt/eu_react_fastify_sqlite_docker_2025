@@ -1,6 +1,6 @@
 import { typeFormSchema, typeQuerySchema } from '@eu/zod-schemas';
 
-import { getReadableUserIds } from './utils.js';
+import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 
 import type { TypeFormOutputBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
@@ -27,6 +27,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
   app.get('/:id', async (request, reply) => {
     const params = request.params as { id: string };
+
     const row = await ts.getById({
       id: params.id,
       userIds: getReadableUserIds(request),
@@ -39,16 +40,20 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.post('/', async (request, reply) => {
+    const userId = getRequestUserId(request);
+
     const body: TypeFormOutputBody = typeFormSchema.parse(request.body);
-    const created = await ts.create({ userId: request.user.id, body });
+    const created = await ts.create({ userId, body });
     return reply.code(201).send({ id: created.id });
   });
 
   app.patch('/:id', async (request, reply) => {
     try {
-      const params = request.params as { id: string };
+      const { id } = getIdParam(request);
+      const userId = getRequestUserId(request);
+
       const body: Partial<TypeFormOutputBody> = typeFormSchema.partial().parse(request.body);
-      const updated = await ts.update({ id: params.id, body, userId: request.user.id });
+      const updated = await ts.update({ id, body, userId });
       return reply.code(200).send(updated);
     } catch (error) {
       if (error instanceof Error && error.message.includes('Forbidden mutation')) {

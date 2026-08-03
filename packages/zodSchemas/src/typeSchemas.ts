@@ -6,8 +6,19 @@ export const typeSortSchema = z.enum([...dateSortKeySchema.options, "name"]);
 export const typeFormSchema = z.object({
   name: z.string().min(1),
   categoryId: z.string(),
-  isActive: booleanSchema.optional(),
-  isStackable: booleanSchema.optional(),
+  isActive: booleanSchema,
+  isStackable: booleanSchema,
+});
+
+export const typeDtoSchema = z.object({
+  id: z.string(),
+  name: z.string().min(1),
+  categoryId: z.string(),
+  isActive: booleanSchema,
+  isStackable: booleanSchema,
+  createdAt: z.string(),
+  updatedAt: z.string().optional(),
+  userId: z.string(),
 });
 
 export const typeQuerySchema = z.object({
