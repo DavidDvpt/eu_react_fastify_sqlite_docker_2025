@@ -1,5 +1,12 @@
 import { z } from "zod";
-import { booleanSchema, sortOrderEnum, dateSortKeySchema } from "./common.js";
+import {
+  booleanSchema,
+  sortOrderEnum,
+  dateSortKeySchema,
+  genericDateSchema,
+} from "./common.js";
+import { typeDtoSchema } from "./typeSchemas.js";
+import { categoryDtoSchema } from "./categorySchemas.js";
 
 export const itemSortSchema = z.enum([
   ...dateSortKeySchema.options,
@@ -16,9 +23,24 @@ export const itemFormSchema = z.object({
   isActive: booleanSchema.optional(),
 });
 
-export const itemQuerySchema = z.object({
-  isActive: booleanSchema,
+export const itemDtoSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  imageUrlId: z.string(),
+  value: z.coerce.number(),
+  isLimited: booleanSchema,
   typeId: z.string(),
+  ...genericDateSchema.shape,
+  isActive: booleanSchema,
+  userId: z.string(),
+
+  type: typeDtoSchema.optional(),
+  category: categoryDtoSchema.optional(),
+});
+
+export const itemQuerySchema = z.object({
+  isActive: booleanSchema.optional(),
+  typeId: z.string().optional(),
   sortKey: itemSortSchema.optional(),
-  sortOrder: sortOrderEnum,
+  sortOrder: sortOrderEnum.optional(),
 });

@@ -16,7 +16,7 @@ export class CategoryService {
       isActive: cat.is_active,
       userId: cat.user_id,
       createdAt: cat.date_created,
-      updatedAt: cat.date_updated ?? undefined,
+      updatedAt: cat.date_updated,
     };
 
     return parsed;

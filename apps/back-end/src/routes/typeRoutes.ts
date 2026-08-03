@@ -2,7 +2,7 @@ import { typeFormSchema, typeQuerySchema } from '@eu/zod-schemas';
 
 import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 
-import type { TypeFormOutputBody } from '@eu/types';
+import type { TypeFormBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
@@ -42,7 +42,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.post('/', async (request, reply) => {
     const userId = getRequestUserId(request);
 
-    const body: TypeFormOutputBody = typeFormSchema.parse(request.body);
+    const body: TypeFormBody = typeFormSchema.parse(request.body);
     const created = await ts.create({ userId, body });
     return reply.code(201).send({ id: created.id });
   });
@@ -52,7 +52,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
       const { id } = getIdParam(request);
       const userId = getRequestUserId(request);
 
-      const body: Partial<TypeFormOutputBody> = typeFormSchema.partial().parse(request.body);
+      const body: Partial<TypeFormBody> = typeFormSchema.partial().parse(request.body);
       const updated = await ts.update({ id, body, userId });
       return reply.code(200).send(updated);
     } catch (error) {

@@ -2,7 +2,7 @@ import { SortHelper } from '@eu/helpers';
 
 import type { Item } from '#prisma/generated/client.js';
 import type { RootDatabaseClient } from '#prisma/prismaClient.js';
-import type { ItemFormOutputBody, ItemDto, SortOptions, ItemSortKey, LotSortKey } from '@eu/types';
+import type { ItemFormBody, ItemDto, SortOptions, ItemSortKey, LotSortKey } from '@eu/types';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';
 import { LotService } from '#src/lib/services/prisma/lotService.js';
@@ -43,7 +43,6 @@ export class ItemService {
     typeId?: string;
     isActive?: boolean;
   }) {
-    const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.item.findMany({
       where: {
         user_id: { in: userIds },
@@ -51,8 +50,9 @@ export class ItemService {
         is_active: isActive,
       },
     });
+
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
-    SortHelper.sortByKey(parsed, sortKey, sort?.order);
+    SortHelper.sortByKey(parsed, sort?.key ?? 'name', sort?.order);
 
     return parsed;
   }
@@ -118,7 +118,7 @@ export class ItemService {
     return stock;
   }
 
-  async create({ body, userId }: { userId: string; body: ItemFormOutputBody }) {
+  async create({ body, userId }: { userId: string; body: ItemFormBody }) {
     const row = await this.prisma.item.create({
       data: {
         name: body.name,
@@ -136,15 +136,7 @@ export class ItemService {
     return { id: row.id };
   }
 
-  async update({
-    body,
-    id,
-    userId,
-  }: {
-    id: string;
-    userId: string;
-    body: Partial<ItemFormOutputBody>;
-  }) {
+  async update({ body, id, userId }: { id: string; userId: string; body: Partial<ItemFormBody> }) {
     const row = await this.prisma.item.update({
       where: { id, user_id: userId },
       data: {

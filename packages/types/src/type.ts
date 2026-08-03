@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { typeDtoSchema, typeFormSchema, typeSortSchema } from "@eu/zod-schemas";
 
-export type TypeFormOutputBody = z.output<typeof typeFormSchema>;
+export type TypeFormBody = z.output<typeof typeFormSchema>;
 
 export type TypeSortKey = z.infer<typeof typeSortSchema>;
 

@@ -11,3 +11,8 @@ export const dateSortKeySchema = z.enum(["createdAt", "updatedAt"]);
 // export const nameSortSchema = dateSortKeySchema.extend(["name"]);
 
 export const idSchema = z.object({ id: z.string() });
+
+export const genericDateSchema = z.object({
+  createdAt: z.string(),
+  updatedAt: z.string().nullable().default(null),
+});

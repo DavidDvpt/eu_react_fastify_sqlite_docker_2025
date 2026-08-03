@@ -1,21 +1,11 @@
-import {
-  dateSortKeySchema,
-  itemFormSchema,
-  itemQuerySchema,
-  lotQuerySchema,
-} from '@eu/zod-schemas';
+import { itemFormSchema, itemQuerySchema, lotQuerySchema } from '@eu/zod-schemas';
 
 import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import {
-  InventoryService,
-  ItemService,
-  LotService,
-  StockService,
-} from '#src/lib/services/index.js';
+import { ItemService } from '#src/lib/services/index.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const is = new ItemService(prismaClient);
@@ -31,15 +21,17 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
       typeId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
     });
+
     return reply.code(200).send(rows);
   });
 
   app.get('/:id/stock', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const { id } = request.params as { id: string };
+    const { id } = getIdParam(request);
+
     const stock = await is.getStock({ userId, itemId: id });
 
-    return stock;
+    return reply.code(200).send(stock);
   });
 
   app.get('/:id/lots', async (request, reply) => {
@@ -59,9 +51,10 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(lots);
   });
   app.get('/:id', async (request, reply) => {
-    const params = request.params as { id: string };
+    const { id } = getIdParam(request);
+
     const row = await is.getById({
-      id: params.id,
+      id,
       userIds: getReadableUserIds(request),
     });
 
@@ -72,24 +65,19 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   // Mutations
   app.post('/', async (request, reply) => {
+    const userId = getRequestUserId(request);
     const body = itemFormSchema.parse(request.body);
-    const created = await is.create({ userId: request.user.id, body });
+    const created = await is.create({ userId, body });
 
     return reply.code(201).send(created);
   });
   app.put('/:id', async (request, reply) => {
-    try {
-      const params = request.params as { id: string };
-      const body = itemFormSchema.parse(request.body);
-      const updated = await is.update({ id: params.id, userId: request.user.id, body });
+    const { id } = getIdParam(request);
+    const body = itemFormSchema.parse(request.body);
 
-      return reply.code(200).send(updated);
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('Forbidden mutation')) {
-        return reply.code(403).send({ message: 'Forbidden' });
-      }
-      throw error;
-    }
+    const updated = await is.update({ id, userId: request.user.id, body });
+
+    return reply.code(200).send(updated);
   });
 
   done();

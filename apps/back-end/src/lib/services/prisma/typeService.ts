@@ -1,7 +1,7 @@
 import { SortHelper } from '@eu/helpers';
 
 import type { Type } from '#prisma/generated/client.js';
-import type { TypeFormOutputBody, TypeDto, SortOptions, TypeSortKey } from '@eu/types';
+import type { TypeFormBody, TypeDto, SortOptions, TypeSortKey } from '@eu/types';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 
@@ -18,7 +18,7 @@ export class TypeService {
       isActive: row.is_active,
       userId: row.user_id,
       createdAt: row.date_created,
-      updatedAt: row.date_updated ?? undefined,
+      updatedAt: row.date_updated,
     };
 
     return parsed;
@@ -58,7 +58,7 @@ export class TypeService {
     return parsed;
   }
 
-  async create({ body, userId }: { userId: string; body: Omit<TypeFormOutputBody, 'id'> }) {
+  async create({ body, userId }: { userId: string; body: Omit<TypeFormBody, 'id'> }) {
     const row = await this.prisma.type.create({
       data: {
         name: body.name,
@@ -81,7 +81,7 @@ export class TypeService {
   }: {
     id: string;
     userId: string;
-    body: Partial<Omit<TypeFormOutputBody, 'id'>>;
+    body: Partial<Omit<TypeFormBody, 'id'>>;
   }) {
     const row = await this.prisma.type.update({
       where: { id, user_id: userId },
