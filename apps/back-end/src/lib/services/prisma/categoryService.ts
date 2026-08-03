@@ -41,10 +41,9 @@ export class CategoryService {
 
     return parsed;
   }
-
   async getById({ id, userIds }: { id: string; userIds?: string[] }) {
     const category = await this.prisma.category.findFirst({
-      where: { id, user_id: { in: userIds } },
+      where: { id, user_id: { in: userIds }, is_active: true },
     });
 
     if (!category) return null;

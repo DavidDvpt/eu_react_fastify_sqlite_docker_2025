@@ -46,7 +46,7 @@ export class ItemService {
     const rows = await this.prisma.item.findMany({
       where: {
         user_id: { in: userIds },
-        item_type_id: typeId,
+        type_id: typeId,
         is_active: isActive,
       },
     });
@@ -56,7 +56,6 @@ export class ItemService {
 
     return parsed;
   }
-
   async getById({
     id,
     userIds,
@@ -69,7 +68,7 @@ export class ItemService {
     activeLotsOnly?: boolean;
   }) {
     const row = await this.prisma.item.findFirst({
-      where: { id, user_id: { in: userIds } },
+      where: { id, user_id: { in: userIds }, is_active: true },
       include: {
         lots: includeLots
           ? {

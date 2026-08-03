@@ -50,7 +50,7 @@ export class TypeService {
   }
   async getById({ id, userIds }: { id: string; userIds?: string[] }) {
     const row = await this.prisma.type.findFirst({
-      where: { id, user_id: { in: userIds } },
+      where: { id, user_id: { in: userIds }, is_active: true },
     });
 
     const parsed = this.parsePrismaToDto(row);

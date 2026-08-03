@@ -12,7 +12,23 @@ export class SortHelper {
       if (av == null) return 1; // a va à la fin
       if (bv == null) return -1; // b va à la fin
 
-      return String(av).localeCompare(String(bv));
+      let comparison = 0;
+
+      if (typeof av === "number" && typeof bv === "number") {
+        comparison = av - bv;
+      } else if (typeof av === "boolean" && typeof bv === "boolean") {
+        comparison = Number(av) - Number(bv);
+      } else {
+        const aTime = av instanceof Date ? av.getTime() : Date.parse(String(av));
+        const bTime = bv instanceof Date ? bv.getTime() : Date.parse(String(bv));
+        const bothDates = !Number.isNaN(aTime) && !Number.isNaN(bTime);
+
+        comparison = bothDates
+          ? aTime - bTime
+          : String(av).localeCompare(String(bv), undefined, { numeric: true });
+      }
+
+      return order === "desc" ? -comparison : comparison;
     });
   }
 }

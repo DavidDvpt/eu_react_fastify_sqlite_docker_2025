@@ -49,7 +49,6 @@ export class LotService {
     const rows = await this.prisma.lot.findMany({
       where: { user_id: userId, is_active: isActive, item_id: itemId },
     });
-
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
 
     SortHelper.sortByKey(parsed, sort?.key ?? 'createdAt', sort?.order);
