@@ -15,7 +15,7 @@ export class UserService {
       pseudo: user.pseudo,
       email: user.email,
       createdAt: user.date_created,
-      updatedAt: user.date_updated ?? undefined,
+      updatedAt: user.date_updated ?? null,
       role: user.role,
       isActive: user.is_active,
       password: user.password_hash,

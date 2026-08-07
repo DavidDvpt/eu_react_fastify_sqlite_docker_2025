@@ -1,23 +1,15 @@
-import { userSignUpFormSchema, userSignInFormSchema } from "@eu/zod-schemas";
+import {
+  userSignUpFormSchema,
+  userSignInFormSchema,
+  userRoleSchema,
+  userSchemaDto,
+} from "@eu/zod-schemas";
 import { z } from "zod";
 
-export type UserRole = "ADMIN" | "USER";
+export type UserRole = z.infer<typeof userRoleSchema>;
 
-export type UserSignUpFormIntputBody = z.input<typeof userSignUpFormSchema>;
 export type UserSignUpFormOutputBody = z.output<typeof userSignUpFormSchema>;
 
-export type UserSignInFormIntputBody = z.input<typeof userSignInFormSchema>;
 export type UserSignInFormOutputBody = z.output<typeof userSignInFormSchema>;
 
-export type UserDto = {
-  id: string;
-  pseudo: string;
-  email: string;
-  role: UserRole;
-  isActive: boolean;
-  firstname?: string;
-  lastname?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  password?: string;
-};
+export type UserDto = z.infer<typeof userSchemaDto>;

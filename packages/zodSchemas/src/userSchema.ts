@@ -1,5 +1,7 @@
 import { z } from "zod";
+import { booleanSchema, genericDateSchema } from "./common.js";
 
+export const userRoleSchema = z.enum(["ADMIN", "USER"]);
 export const userSignInFormSchema = z.object({
   pseudo: z.string().min(8, "Le pseudo doit être de 8 caractères minimim"),
   password: z
@@ -21,4 +23,12 @@ export const userSignUpFormSchema = userSignInFormSchema.extend({
     .or(z.literal(""))
     .transform((value) => (value ? value : undefined)),
   email: z.email("Email invalide"),
+  pseudo: z.string("invalide"),
+});
+
+export const userSchemaDto = userSignUpFormSchema.extend({
+  id: z.string(),
+  role: userRoleSchema,
+  isActive: booleanSchema,
+  ...genericDateSchema.shape,
 });
