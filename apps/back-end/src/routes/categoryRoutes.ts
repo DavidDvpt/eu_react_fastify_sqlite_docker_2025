@@ -1,3 +1,5 @@
+import { cp } from 'node:fs';
+
 import { categoryFormSchema, categoryQuerySchema } from '@eu/zod-schemas';
 
 import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
@@ -5,7 +7,7 @@ import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { CategoryService } from '#src/lib/services/index.js';
+import { CategoryService, TypeService } from '#src/lib/services/index.js';
 
 export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const cs = new CategoryService(prismaClient);
@@ -45,7 +47,18 @@ export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(201).send({ id: created.id });
   });
+  app.get('/:id/types', async (request, reply) => {
+    const { id } = getIdParam(request);
+    const ts = new TypeService(prismaClient);
 
+    const rows = await ts.getAll({
+      userIds: getReadableUserIds(request),
+      categoryId: id,
+      isActive: true,
+    });
+
+    return reply.code(200).send(rows);
+  });
   app.patch('/:id', async (request, reply) => {
     try {
       const { id } = getIdParam(request);

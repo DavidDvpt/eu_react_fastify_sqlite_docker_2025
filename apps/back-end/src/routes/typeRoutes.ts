@@ -6,6 +6,7 @@ import type { TypeFormBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
+import { ItemService } from '#src/lib/services/index.js';
 import { TypeService } from '#src/lib/services/prisma/typeService.js';
 
 const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
@@ -26,10 +27,10 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(rows);
   });
   app.get('/:id', async (request, reply) => {
-    const params = request.params as { id: string };
+    const { id } = getIdParam(request);
 
     const row = await ts.getById({
-      id: params.id,
+      id,
       userIds: getReadableUserIds(request),
     });
 
@@ -37,6 +38,14 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
     if (!row.isActive) return reply.code(403).send({ message: 'Type is not active' });
 
     return reply.code(200).send(row);
+  });
+  app.get('/:id/items', async (request, reply) => {
+    const { id } = getIdParam(request);
+
+    const is = new ItemService(prismaClient);
+    const rows = is.getAll({ userIds: getReadableUserIds(request), typeId: id, isActive: true });
+
+    return reply.code(200).send(rows);
   });
 
   app.post('/', async (request, reply) => {
