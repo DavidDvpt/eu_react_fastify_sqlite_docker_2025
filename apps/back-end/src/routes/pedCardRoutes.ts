@@ -70,7 +70,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.patch('/pedcard/:id', async (request, reply) => {
     const { id } = getIdParam(request);
     const userId = getRequestUserId(request);
-    const body = pedcardPatchSchema.parse(request.body);
+    const body = pedcardPatchSchema.partial().parse(request.body);
 
     const patched = await ps.update({
       userId,

@@ -128,7 +128,15 @@ export class PedcardService {
     return results.map((m) => ({ id: m.id }));
   }
 
-  async update({ userId, id, body }: { id: string; userId: string; body: PedCardFormBody }) {
+  async update({
+    userId,
+    id,
+    body,
+  }: {
+    id: string;
+    userId: string;
+    body: Partial<PedCardFormBody>;
+  }) {
     const row = await this.prisma.pedCard.update({
       where: { user_id: userId, id },
       data: {

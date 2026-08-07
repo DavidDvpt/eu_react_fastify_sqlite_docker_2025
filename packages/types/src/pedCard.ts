@@ -7,7 +7,6 @@ import {
 import { z } from "zod";
 
 export type PedCardFormBody = z.output<typeof pedcardFormSchema>;
-export type PedCardPatchBody = z.output<typeof pedcardPatchSchema>;
 
 export type PedCardTypeDto = z.output<typeof pedcardTypeSchema>;
 
