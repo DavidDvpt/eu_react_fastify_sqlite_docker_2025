@@ -8,11 +8,7 @@ import {
 import { typeDtoSchema } from "./typeSchemas.js";
 import { categoryDtoSchema } from "./categorySchemas.js";
 
-export const itemSortSchema = z.enum([
-  ...dateSortKeySchema.options,
-  "name",
-  "typeId",
-]);
+export const itemSortSchema = z.enum([...dateSortKeySchema.options, "name"]);
 
 export const itemFormSchema = z.object({
   name: z.string().min(1),

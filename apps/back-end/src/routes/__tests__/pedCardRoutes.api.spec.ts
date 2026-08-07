@@ -105,4 +105,27 @@ describe('pedCardRoutes', () => {
     expect(res.body).toBe('');
     await app.close();
   });
+
+  it('PATCH /api/v1/pedcard/:id updates an entry with only value', async () => {
+    const { app, pedCard } = buildApp();
+    pedCard.update = vi.fn().mockResolvedValueOnce({ id: 'pedcard-1' });
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'PATCH',
+      url: `${API_PREFIX}/pedcard/pedcard-1`,
+      payload: {
+        value: 150,
+      },
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(pedCard.update).toHaveBeenCalledWith({
+      userId: 'user-1',
+      id: 'pedcard-1',
+      body: { value: 150 },
+    });
+    expect(res.json()).toEqual({ id: 'pedcard-1' });
+    await app.close();
+  });
 });

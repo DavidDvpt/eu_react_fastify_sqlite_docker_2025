@@ -1,4 +1,10 @@
-import type { PedCardFormOutputBody, PrismaMutationResponse } from '@eu/types';
+import type { PedCard } from '#prisma/generated/client.js';
+import type {
+  PedcardDto,
+  PedCardFormBody,
+  PedCardTypeDto,
+  PrismaMutationResponse,
+} from '@eu/types';
 
 import { PedCardTupleType } from '#prisma/generated/enums.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
@@ -7,12 +13,39 @@ const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
 export class PedcardService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  private pedcardFormParse(b: PedCardFormOutputBody) {
+  private pedcardFormParse(b: PedCardFormBody) {
     return {
       transaction_id: b.transactionId,
       value: b.value,
       type: b.type,
     };
+  }
+
+  private parser(value: PedCard) {
+    if (!value) return null;
+
+    const parsed: PedcardDto = {
+      id: value.id,
+      createdat: value.created_at,
+      type: value.type as PedCardTypeDto,
+      transactionId: value.transaction_id,
+      userId: value.user_id,
+      value: Number(value.value),
+    };
+
+    return parsed;
+  }
+
+  async getAll({ userId }: { userId: string }) {
+    const rows = await this.prisma.pedCard.findMany({
+      where: {
+        user_id: userId,
+      },
+    });
+
+    const parsed = rows.map((m) => this.parser(m));
+
+    return parsed;
   }
   async hasInitialBalance({ userId }: { userId: string }) {
     const row = await this.prisma.pedCard.findFirst({
@@ -58,12 +91,17 @@ export class PedcardService {
     body,
   }: {
     userId: string;
-    body: PedCardFormOutputBody;
+    body: PedCardFormBody;
     transactionId?: string;
   }) {
     const data = this.pedcardFormParse(body);
     const row = await this.prisma.pedCard.create({
-      data: { ...data, user_id: userId, transaction_id: transactionId },
+      data: {
+        ...data,
+        user_id: userId,
+        transaction_id: transactionId,
+        created_at: new Date().toISOString(),
+      },
     });
 
     return { id: row.id };
@@ -75,14 +113,14 @@ export class PedcardService {
   }: {
     userId: string;
     transactionId: string;
-    bodys: PedCardFormOutputBody[];
+    bodys: PedCardFormBody[];
   }): Promise<PrismaMutationResponse[]> {
     const datas = bodys.map((b) => this.pedcardFormParse({ ...b, transactionId }));
 
     const results = await Promise.all(
       datas.map((m) =>
         this.prisma.pedCard.create({
-          data: { ...m, user_id: userId },
+          data: { ...m, user_id: userId, created_at: new Date().toISOString() },
         })
       )
     );
@@ -90,10 +128,14 @@ export class PedcardService {
     return results.map((m) => ({ id: m.id }));
   }
 
-  async update({ userId, id, body }: { id: string; userId: string; body: PedCardFormOutputBody }) {
+  async update({ userId, id, body }: { id: string; userId: string; body: PedCardFormBody }) {
     const row = await this.prisma.pedCard.update({
       where: { user_id: userId, id },
-      data: { type: body.type, user_id: userId, value: body.value },
+      data: {
+        type: body.type,
+        value: body.value,
+        updated_at: new Date().toISOString(),
+      },
     });
 
     return { id: row.id };

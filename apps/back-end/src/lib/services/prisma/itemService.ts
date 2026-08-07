@@ -52,6 +52,7 @@ export class ItemService {
     });
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
+
     SortHelper.sortByKey(parsed, sort?.key ?? 'name', sort?.order);
 
     return parsed;

@@ -1,6 +1,6 @@
-import { pedcardFormSchema } from '@eu/zod-schemas';
+import { pedcardFormSchema, pedcardPatchSchema } from '@eu/zod-schemas';
 
-import { getRequestUserId } from './utils.js';
+import { getIdParam, getRequestUserId } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -13,6 +13,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/pedcard/check', async (request, reply) => {
     const userId = getRequestUserId(request);
+
     const hasInitialBalance = await ps.hasInitialBalance({ userId });
 
     if (!hasInitialBalance) {
@@ -26,6 +27,13 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     });
   });
 
+  app.get('/pedcard', async (request, reply) => {
+    const userId = getRequestUserId(request);
+
+    const rows = await ps.getAll({ userId });
+
+    return reply.code(200).send(rows);
+  });
   app.get('/pedcard/balance', async (request, reply) => {
     const userId = getRequestUserId(request);
     const balance = await ps.getBalance({ userId });
@@ -35,7 +43,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     });
   });
 
-  app.get('/pedcard/canPay', async (request, reply) => {
+  app.get('/pedcard/can-pay', async (request, reply) => {
     const { value } = request.query as { value?: string };
 
     const userId = getRequestUserId(request);
@@ -51,28 +59,36 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const body = pedcardFormSchema.parse(request.body);
 
-    await ps.create({
+    const created = await ps.create({
       userId,
       body: { transactionId: body.transactionId, type: body.type, value: body.value },
     });
 
-    return reply.code(201).send();
+    return reply.code(201).send(created);
   });
 
   app.patch('/pedcard/:id', async (request, reply) => {
-    const params = request.params as { id: string };
+    const { id } = getIdParam(request);
     const userId = getRequestUserId(request);
-    const body = pedcardFormSchema.parse(request.body);
+    const body = pedcardPatchSchema.parse(request.body);
 
-    await ps.update({
+    const patched = await ps.update({
       userId,
-      id: params.id,
-      body: { type: body.type, value: body.value },
+      id,
+      body,
     });
 
-    return reply.code(201).send();
+    return reply.code(200).send(patched);
   });
 
+  app.delete('/pedcard/delete/:id', async (request, reply) => {
+    const { id } = getIdParam(request);
+    const userId = getRequestUserId(request);
+
+    const deleted = await ps.delete({ userId, id });
+
+    return reply.code(204).send(deleted);
+  });
   done();
 };
 

@@ -96,13 +96,13 @@ model User {
 }
 
 model PedCard {
-  id             String    @id @default(uuid())
+  id             String  @id @default(uuid())
   user_id        String
   transaction_id String?
   type           String
   value          Decimal
-  created_at     DateTime  @default(now())
-  updated_at     DateTime?
+  created_at     String
+  updated_at     String?
 
   user        User         @relation(fields: [user_id], references: [id])
   transaction Transaction? @relation(fields: [transaction_id], references: [id])
@@ -188,8 +188,8 @@ model Transaction {
   ttc              Decimal            @default(0)
   transaction_type TransactionType
   status           TransactionStatus?
-  created_at       DateTime           @default(now())
-  updated_at       DateTime?
+  created_at       String
+  updated_at       String?
   user_id          String
 
   user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
@@ -205,9 +205,8 @@ model TransactionLot {
   transaction_id String
   lot_id         String
   quantity       Int
-
-  transaction Transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
-  lot         Lot         @relation(fields: [lot_id], references: [id])
+  transaction    Transaction @relation(fields: [transaction_id], references: [id], onDelete: Cascade)
+  lot            Lot         @relation(fields: [lot_id], references: [id])
 
   @@unique([transaction_id, lot_id])
   @@map("transaction_lot")

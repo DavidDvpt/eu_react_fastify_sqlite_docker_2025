@@ -43,7 +43,11 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const { id } = getIdParam(request);
 
     const is = new ItemService(prismaClient);
-    const rows = is.getAll({ userIds: getReadableUserIds(request), typeId: id, isActive: true });
+    const rows = await is.getAll({
+      userIds: getReadableUserIds(request),
+      typeId: id,
+      isActive: true,
+    });
 
     return reply.code(200).send(rows);
   });
