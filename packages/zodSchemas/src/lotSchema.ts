@@ -30,12 +30,13 @@ export const lotBodySchema = z.object({
   isActive: booleanSchema,
 });
 
-export const lotDtoSchema = z.object({
+export const lotItemIdSchema = z.object({ itemId: z.string() });
+export const lotDtoSchema = lotItemIdSchema.extend({
   id: z.string(),
   quantityRemaining: z.coerce.number(),
   quantityExported: z.coerce.number(),
   priceRemaining: z.coerce.number(),
-  itemId: z.string(),
+
   lotType: lotTypeSchema,
   isActive: booleanSchema,
   ...genericDateSchema.shape,

@@ -1,49 +1,47 @@
 import { useQuery } from "@tanstack/react-query";
 
-import { getRunningTransactions } from "@/lib/services/transactionApi";
 import { useSystemDatas } from "@/shared/hooks";
-import type { RunningTransaction } from "@/shared/types/transactions";
+import type { TransactionWithItem } from "@/shared/types/transactions";
+import { useAppSelector } from "@/store/hooks";
+import { selectIsLoggued } from "@/store";
+import type { TransactionFormBody } from "@eu/types";
+import TransactionsApi from "@/lib/services/transactionsApi";
 
-function useRunningTransactions() {
-  const runningLinesQuery = useQuery({
-    queryKey: ["running-transactions"],
-    queryFn: getRunningTransactions,
+function useRunningTransactions(props: Partial<TransactionFormBody>) {
+  const ts = new TransactionsApi();
+  const isLoggued = useAppSelector(selectIsLoggued);
+  const runningTransactions = useQuery({
+    queryKey: ["running-transactions", props],
+    queryFn: () => ts.get(props),
+    enabled: isLoggued,
     staleTime: 10_000,
   });
   const {
     items: { filteredItems, isLoading: itemIsLoading, isError: itemIsError },
   } = useSystemDatas();
 
-  const grouped = new Map<string, RunningTransaction>();
-  for (const line of runningLinesQuery.data ?? []) {
-    const groupKey = `${line.id}:${line.itemId}`;
-    const item = filteredItems().find((item) => item.id === line.itemId);
-    const current = grouped.get(groupKey);
+  const transactionMap = new Map<string, TransactionWithItem>();
+
+  for (const t of runningTransactions.data ?? []) {
+    const itemId = t.entries[0].lot.itemId;
+    const item = filteredItems().find((item) => item.id === itemId)!;
+    const current = transactionMap.get(t.id);
     if (!current) {
-      grouped.set(groupKey, {
-        groupKey,
-        id: line.id,
-        quantity: line.quantity,
-        tt: line.tt,
-        fee: line.fee,
-        ttc: line.ttc,
-        status: line.status,
-        item: item ? { ...item, id: line.itemId } : null,
+      transactionMap.set(t.id, {
+        ...t,
+        item: item,
       });
-      continue;
+    } else {
+      current.tt += t.tt;
+      current.ttc += t.ttc;
     }
-
-    current.quantity += line.quantity;
-    current.tt += line.tt;
-    current.ttc += line.ttc;
   }
-
-  const rows: RunningTransaction[] = Array.from(grouped.values());
+  const rows: TransactionWithItem[] = Array.from(transactionMap.values());
 
   return {
     rows,
-    isLoading: runningLinesQuery.isLoading || itemIsLoading,
-    isError: runningLinesQuery.isError || itemIsError,
+    isLoading: runningTransactions.isLoading || itemIsLoading,
+    isError: runningTransactions.isError || itemIsError,
   };
 }
 

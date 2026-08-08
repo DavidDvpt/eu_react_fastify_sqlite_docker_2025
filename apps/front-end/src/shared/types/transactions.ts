@@ -4,7 +4,16 @@ import type { StockRow } from "@/shared/types";
 import type { Item } from "@/shared/types";
 import type { ItemInventory } from "@/pages/inventoryPage/inventory/stockTypes";
 import type { UseFormReturn } from "react-hook-form";
-import type { TransactionStatusDto, TransactionStatusPatchDto } from "@eu/types";
+import type {
+  ItemDto,
+  TransactionDto,
+  TransactionStatusDto,
+  TransactionStatusPatchDto,
+} from "@eu/types";
+
+export interface TransactionWithItem extends TransactionDto {
+  item: ItemDto;
+}
 
 export type TransactionFormValues = {
   autoCalculation: boolean;
@@ -112,9 +121,9 @@ export type RunningTransaction = {
 };
 
 export type CreateRunningTransactionsColumnsOptions = {
-  isRowPending: (row: RunningTransaction) => boolean;
+  isRowPending: (row: TransactionWithItem) => boolean;
   onStatusChange: (
-    row: RunningTransaction,
+    row: TransactionWithItem,
     status: TransactionStatusPatchDto,
   ) => void;
 };

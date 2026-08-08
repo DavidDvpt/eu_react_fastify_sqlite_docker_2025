@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { genericDateSchema } from "./common.js";
+import { lotItemIdSchema } from "./lotSchema.js";
 
 export const transactionTypeSchema = z.enum([
   "BUY",
@@ -25,11 +26,12 @@ export const transactionCancelDtoSchema = transactionStatusDtoSchema.extract([
 export const transactionLotSchema = z.object({
   lotId: z.string(),
   quantity: z.coerce.number(),
+  lot: lotItemIdSchema,
 });
 
 export const transactionQuerySchema = z.object({
   itemId: z.string().optional(),
-  status: transactionStatusPatchDtoSchema.optional(),
+  status: transactionStatusDtoSchema.optional(),
   type: transactionTypeSchema.optional(),
 });
 
@@ -43,8 +45,14 @@ export const transactionBodySchema = z.object({
   status: transactionStatusDtoSchema,
 });
 
-export const transactionSchemaDto = transactionBodySchema.extend({
+export const transactionSchemaDto = z.object({
   id: z.string(),
+  quantity: z.coerce.number().int().positive(),
+  tt: z.coerce.number().nonnegative(),
+  ttc: z.coerce.number().positive(),
+  fee: z.coerce.number().nonnegative().optional(),
+  transactionType: transactionTypeSchema,
+  status: transactionStatusDtoSchema,
   userId: z.string(),
   ...genericDateSchema.shape,
   entries: transactionLotSchema.array(),

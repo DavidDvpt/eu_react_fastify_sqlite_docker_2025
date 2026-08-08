@@ -46,14 +46,14 @@ describe('pedCardRoutes', () => {
     vi.clearAllMocks();
   });
 
-  it('GET /api/v1/pedcard/check returns 200 when the user has an INITIAL_BALANCE row', async () => {
+  it('GET /api/v1/pedcard/balance returns 200 when the user has an INITIAL_BALANCE row', async () => {
     const { app } = buildApp();
-    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(true as never);
+    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(true);
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/pedcard/check`,
+      url: `${API_PREFIX}/pedcard/balance`,
     });
 
     expect(res.statusCode).toBe(200);
@@ -62,14 +62,14 @@ describe('pedCardRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/pedcard/check returns 400 when the user has no INITIAL_BALANCE row', async () => {
+  it('GET /api/v1/pedcard/can-pay returns 400 when the user has no INITIAL_BALANCE row', async () => {
     const { app } = buildApp();
-    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(false as never);
+    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(false);
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/pedcard/check`,
+      url: `${API_PREFIX}/pedcard/can-pay`,
     });
 
     expect(res.statusCode).toBe(400);
@@ -80,7 +80,7 @@ describe('pedCardRoutes', () => {
 
   it('GET /api/v1/pedcard/balance returns the user balance', async () => {
     const { app } = buildApp();
-    vi.mocked(pedcardServiceMocks.getBalance).mockResolvedValueOnce(115.5 as never);
+    vi.mocked(pedcardServiceMocks.getBalance).mockResolvedValueOnce(115.5);
 
     await app.ready();
     const res = await app.inject({
@@ -96,7 +96,7 @@ describe('pedCardRoutes', () => {
 
   it('POST /api/v1/pedcard creates an entry and returns 201', async () => {
     const { app } = buildApp();
-    vi.mocked(pedcardServiceMocks.create).mockResolvedValueOnce({ id: 'pedcard-1' } as never);
+    vi.mocked(pedcardServiceMocks.create).mockResolvedValueOnce({ id: 'pedcard-1' });
 
     await app.ready();
     const res = await app.inject({
@@ -120,7 +120,7 @@ describe('pedCardRoutes', () => {
 
   it('PATCH /api/v1/pedcard/:id updates an entry with only value', async () => {
     const { app } = buildApp();
-    vi.mocked(pedcardServiceMocks.update).mockResolvedValueOnce({ id: 'pedcard-1' } as never);
+    vi.mocked(pedcardServiceMocks.update).mockResolvedValueOnce({ id: 'pedcard-1' });
 
     await app.ready();
     const res = await app.inject({

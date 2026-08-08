@@ -35,6 +35,11 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(row);
   });
 
+  // app.get('/:id/running', async (request, reply) => {
+  //   const userId = getRequestUserId(request);
+  //   const { id } = request.params as { id: string };
+  // });
+
   app.post('/', async (request, reply) => {
     const userId = getRequestUserId(request);
     const body = transactionBodySchema.parse(request.body);
@@ -67,12 +72,6 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(200).send(cancel);
   });
-
-  //     return reply.code(200).send(result);
-  //   } catch (error) {
-  //     return reply.code(400).send({ message: 'update status fails' });
-  //   }
-  // });
 
   done();
 };

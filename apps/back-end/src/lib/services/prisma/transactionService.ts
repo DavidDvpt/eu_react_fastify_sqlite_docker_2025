@@ -23,9 +23,8 @@ export class TransactionService {
     const qty = t.lines.reduce((t, c) => {
       return t + c.quantity;
     }, 0);
-    const lines = t.lines.map((m) => ({ quantity: m.quantity, lotId: m.lot_id }));
-    // const lotIds = t.lines.map((m) => m.lot_id);
     const itemId = t.lines[0].lot.item_id;
+    const lines = t.lines.map((m) => ({ quantity: m.quantity, lotId: m.lot_id, lot: { itemId } }));
 
     const parsed: TransactionDto = {
       id: t.id,
@@ -36,8 +35,6 @@ export class TransactionService {
       updatedAt: t.updated_at ?? null,
       quantity: qty,
       entries: lines,
-      // lotIds,
-      itemId,
       userId: t.user_id,
       status: t.status ?? 'SOLDED',
       transactionType: t.transaction_type,
@@ -91,6 +88,51 @@ export class TransactionService {
 
     return parsed;
   }
+  // async getRunningTransactions({
+  //   userId,
+  //   status,
+  // }: {
+  //   userId: string;
+  //   status: TransactionStatusDto;
+  // }): Promise<TransactionRunningDto[]> {
+  //   const rows = await this.prisma.transaction.findMany({
+  //     where: { user_id: userId, status },
+  //     select: {
+  //       id: true,
+  //       tt: true,
+  //       fee: true,
+  //       ttc: true,
+  //       lines: {
+  //         select: {
+  //           quantity: true,
+  //           lot: {
+  //             select: {
+  //               item_id: true,
+  //             },
+  //           },
+  //         },
+  //       },
+  //     },
+  //   });
+
+  //   if (!rows) return [];
+
+  //   const result = rows.map((m) => {
+  //     const quantity = m.lines.reduce((total, line) => total + line.quantity, 0);
+  //     const itemId = m.lines[0]?.lot.item_id ?? null;
+
+  //     return {
+  //       id: m.id,
+  //       tt: Number(m.tt),
+  //       fee: Number(m.fee),
+  //       ttc: Number(m.ttc),
+  //       itemId,
+  //       quantity,
+  //     };
+  //   });
+
+  //   return result;
+  // }
   async buy({
     body,
     userId,

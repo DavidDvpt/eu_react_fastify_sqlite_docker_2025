@@ -4,6 +4,6 @@ export * from "./typesApi";
 
 export * from "./itemsApi";
 
-export * from "./transactionApi";
+export { default as TransactionsApi } from "./transactionsApi";
 
 export * from "./pedCardApi";

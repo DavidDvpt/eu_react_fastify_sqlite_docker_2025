@@ -10,7 +10,7 @@ import type {
 
 async function pedCardCheck() {
   return axiosCrud(axiosInstance()).get<PedCardCheckResponse>(
-    API_ROUTES.pedCardCheckRoute,
+    "/pedcard/can-pay",
   );
 }
 

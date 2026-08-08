@@ -4,21 +4,23 @@ import { createRunningTransactionsColumns } from "@/shared/components/GenericLis
 import { FormatTools } from "@/shared/tools/formatTools";
 import { useUpdateTransactionsStatus } from "../hooks";
 import useRunningTransactions from "../hooks/useRunningTransactions";
-import type { RunningTransaction, TransactionAction } from "../types";
+import type { TransactionAction, TransactionWithItem } from "../types";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
-  const { rows, isLoading, isError } = useRunningTransactions();
+  const { rows, isLoading, isError } = useRunningTransactions({
+    status: "RUNNING",
+  });
   const updateStatusMutation = useUpdateTransactionsStatus();
   const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
 
   const openTransactionModal = (
     action: TransactionAction,
-    row: RunningTransaction,
+    row: TransactionWithItem,
   ) => {
     const query = {
       action,
-      itemId: row.item!.id,
+      itemId: row.item.id,
       ttc: row.ttc,
       quantity: row.quantity,
       closePath: "/home",
@@ -59,7 +61,7 @@ function RunningTransactionsSection() {
       <GenericList
         columns={columns}
         rows={rows}
-        getRowKey={(row) => row.groupKey}
+        getRowKey={(row) => row.id}
         hasHeader
         viewMode="list"
         grow={false}

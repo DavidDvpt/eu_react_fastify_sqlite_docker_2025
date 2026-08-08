@@ -9,7 +9,6 @@ import type {
   AutoPricingFormValues,
   TransactionPanelProps,
 } from "@/shared/types/transactions";
-import { transaction } from "@/lib/services/transactionApi";
 import { transactionFormSchema } from "./transactionSchemas";
 import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
@@ -19,6 +18,7 @@ import type {
   TransactionStatusDto,
   TransactionTypeDto,
 } from "@eu/types";
+import TransactionsApi from "@/lib/services/transactionsApi";
 
 function TransactionPanelContent({
   item,
@@ -36,7 +36,8 @@ function TransactionPanelContent({
     mutationFn: async (
       values: AutoPricingFormValues & { status: TransactionStatusDto },
     ) => {
-      return transaction({
+      const ts = new TransactionsApi();
+      return ts.create({
         transactionType: (action === "sell"
           ? "SELL"
           : "BUY") as TransactionTypeDto,

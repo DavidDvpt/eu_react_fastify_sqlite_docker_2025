@@ -127,6 +127,59 @@ describe('TransactionService', () => {
     expect(all[0]?.status).toBe('SOLDED');
   });
 
+  it('reads one running transaction with itemId and summed quantity', async () => {
+    const prisma = {
+      transaction: {
+        findUnique: vi.fn().mockResolvedValue({
+          id: 'transaction-1',
+          tt: 100,
+          fee: 12,
+          ttc: 112,
+          lines: [
+            { quantity: 2, lot: { item_id: 'item-1' } },
+            { quantity: 3, lot: { item_id: 'item-1' } },
+          ],
+        }),
+      },
+    };
+    const service = new TransactionService(prisma as any);
+
+    const found = await service.getRunningTransactions({
+      userId: 'user-1',
+      id: 'transaction-1',
+    });
+
+    expect(prisma.transaction.findUnique).toHaveBeenCalledWith({
+      where: { user_id: 'user-1', id: 'transaction-1' },
+      select: {
+        id: true,
+        tt: true,
+        fee: true,
+        ttc: true,
+        lines: {
+          select: {
+            quantity: true,
+            lot: {
+              select: {
+                item_id: true,
+              },
+            },
+          },
+        },
+      },
+    });
+    expect(found).toEqual({
+      id: 'transaction-1',
+      tt: 100,
+      fee: 12,
+      ttc: 112,
+      itemId: 'item-1',
+      _sum: {
+        quantity: 5,
+      },
+    });
+  });
+
   it('creates a BUY transaction, pedcard entries and one lot', async () => {
     const tx = {
       transaction: {

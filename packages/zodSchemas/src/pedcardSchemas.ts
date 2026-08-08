@@ -12,14 +12,14 @@ export const pedcardTypeSchema = z.enum([
 export const pedcardFormSchema = z.object({
   type: pedcardTypeSchema,
   value: z.coerce.number(),
+  transactionId: z.string().optional(),
 });
 
-export const pedcardPatchSchema = pedcardFormSchema.partial().refine(
-  (value) => value.type !== undefined || value.value !== undefined,
-  {
+export const pedcardPatchSchema = pedcardFormSchema
+  .partial()
+  .refine((value) => value.type !== undefined || value.value !== undefined, {
     message: "At least one field must be provided",
-  }
-);
+  });
 
 export const pedcardDtoSchema = z.object({
   id: z.string(),

@@ -1,14 +1,15 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-import { updateTransactionStatus } from "@/lib/services/transactionApi";
 import type { UpdateTransactionInput } from "../types";
+import { TransactionsApi } from "@/lib/services";
 
 function useUpdateTransactionsStatus() {
   const queryClient = useQueryClient();
+  const ts = new TransactionsApi();
 
   return useMutation({
     mutationFn: async ({ id, status }: UpdateTransactionInput) => {
-      await updateTransactionStatus({
+      await ts.patchStatus({
         id,
         status,
       });

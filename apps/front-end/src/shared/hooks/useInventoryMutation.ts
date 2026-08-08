@@ -4,7 +4,7 @@ import type {
   TransactionFormValues,
   TransactionAction,
 } from "../types";
-import { transaction } from "@/lib/services/transactionApi";
+import TransactionsApi from "@/lib/services/transactionsApi";
 
 interface UseInventoryMutation {
   type: TransactionAction;
@@ -13,10 +13,10 @@ interface UseInventoryMutation {
 
 export function useInventoryMutation({ type, item }: UseInventoryMutation) {
   const queryClient = useQueryClient();
-
+  const ts = new TransactionsApi();
   const mutation = useMutation({
     mutationFn: async (values: TransactionFormValues) => {
-      return transaction({
+      return ts.create({
         transactionType: type === "sell" ? "SELL" : "BUY",
         itemId: item.itemId,
         quantity: values.quantity,
