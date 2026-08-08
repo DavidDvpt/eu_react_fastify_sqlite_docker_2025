@@ -17,16 +17,16 @@ describe('CategoryService', () => {
     const prisma = {
       category: {
         create: vi.fn().mockResolvedValue(categoryRow),
-        findUnique: vi.fn().mockResolvedValue(categoryRow),
+        findFirst: vi.fn().mockResolvedValue(categoryRow),
       },
     };
     const service = new CategoryService(prisma as any);
 
     const created = await service.create({
       userId: 'user-1',
-      body: { name: 'Materials', is_active: true },
+      body: { name: 'Materials', isActive: true },
     });
-    const found = await service.getById({ id: created.id, userId: 'user-1' });
+    const found = await service.getById({ id: created.id, userIds: ['user-1'] });
 
     expect(created).toEqual({ id: 'category-1' });
     expect(found).toEqual({
@@ -35,7 +35,7 @@ describe('CategoryService', () => {
       isActive: true,
       userId: 'user-1',
       createdAt: '2026-08-01T10:00:00.000Z',
-      updatedAt: undefined,
+      updatedAt: null,
     });
   });
 
@@ -43,7 +43,7 @@ describe('CategoryService', () => {
     const prisma = {
       category: {
         update: vi.fn().mockResolvedValue({ id: 'category-1' }),
-        findUnique: vi.fn().mockResolvedValue({
+        findFirst: vi.fn().mockResolvedValue({
           id: 'category-1',
           name: 'Updated Category',
           is_active: true,
@@ -60,7 +60,7 @@ describe('CategoryService', () => {
       userId: 'user-1',
       body: { name: 'Updated Category' },
     });
-    const found = await service.getById({ id: updated.id, userId: 'user-1' });
+    const found = await service.getById({ id: updated.id, userIds: ['user-1'] });
 
     expect(updated).toEqual({ id: 'category-1' });
     expect(found?.name).toBe('Updated Category');
@@ -91,10 +91,10 @@ describe('CategoryService', () => {
     };
     const service = new CategoryService(prisma as any);
 
-    const all = await service.getAll({ userId: 'user-1' });
+    const all = await service.getAll({ userIds: ['user-1'] });
 
     expect(prisma.category.findMany).toHaveBeenCalledWith({
-      where: { user_id: 'user-1', is_active: undefined },
+      where: { user_id: { in: ['user-1'] }, is_active: undefined },
     });
     expect(all.map((category) => category.name)).toEqual(['Alpha', 'Zeta']);
     expect(all.every((category) => category.userId === 'user-1')).toBe(true);

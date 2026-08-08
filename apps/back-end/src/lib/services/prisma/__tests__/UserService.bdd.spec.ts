@@ -6,6 +6,35 @@ import { describe, expect, it, vi } from 'vitest';
 import { UserService } from '../userService.js';
 
 describe('UserService', () => {
+  it('reads a user by id', async () => {
+    const userRow = {
+      id: 'user-1',
+      firstname: 'John',
+      lastname: 'Doe',
+      pseudo: 'john-doe',
+      email: 'john@test.local',
+      password_hash: 'hashed',
+      role: 'USER',
+      date_created: '2026-08-01T10:00:00.000Z',
+      date_updated: null,
+      is_active: true,
+    };
+    const prisma = {
+      user: {
+        findUnique: vi.fn().mockResolvedValue(userRow),
+      },
+    };
+    const service = new UserService(prisma as any);
+
+    const found = await service.getbyId({ id: 'user-1' });
+
+    expect(prisma.user.findUnique).toHaveBeenCalledWith({
+      where: { id: 'user-1' },
+    });
+    expect(found?.id).toBe('user-1');
+    expect(found?.pseudo).toBe('john-doe');
+  });
+
   it('creates and reads a user by email and pseudo', async () => {
     const userRow = {
       id: 'user-1',

@@ -13,6 +13,7 @@ describe('TypeService', () => {
       id: 'type-1',
       name: 'Booster',
       category_id: 'category-1',
+      is_stackable: false,
       is_active: true,
       user_id: 'user-1',
       date_created: '2026-08-01T10:00:00.000Z',
@@ -21,7 +22,7 @@ describe('TypeService', () => {
     const prisma = {
       type: {
         create: vi.fn().mockResolvedValue(typeRow),
-        findUnique: vi.fn().mockResolvedValue(typeRow),
+        findFirst: vi.fn().mockResolvedValue(typeRow),
       },
     };
     const service = new TypeService(prisma as any);
@@ -34,17 +35,18 @@ describe('TypeService', () => {
         isStackable: false,
       },
     });
-    const found = await service.getById({ id: created.id, userId: 'user-1' });
+    const found = await service.getById({ id: created.id, userIds: ['user-1'] });
 
     expect(created).toEqual({ id: 'type-1' });
     expect(found).toEqual({
       id: 'type-1',
       name: 'Booster',
       categoryId: 'category-1',
+      isStackable: false,
       isActive: true,
       userId: 'user-1',
       createdAt: '2026-08-01T10:00:00.000Z',
-      updatedAt: undefined,
+      updatedAt: null,
     });
   });
 
@@ -52,10 +54,11 @@ describe('TypeService', () => {
     const prisma = {
       type: {
         update: vi.fn().mockResolvedValue({ id: 'type-1' }),
-        findUnique: vi.fn().mockResolvedValue({
+        findFirst: vi.fn().mockResolvedValue({
           id: 'type-1',
           name: 'Updated Type',
           category_id: 'category-1',
+          is_stackable: true,
           is_active: true,
           user_id: 'user-1',
           date_created: '2026-08-01T10:00:00.000Z',
@@ -70,7 +73,7 @@ describe('TypeService', () => {
       userId: 'user-1',
       body: { name: 'Updated Type', categoryId: 'category-1', isStackable: true },
     });
-    const found = await service.getById({ id: updated?.id ?? '', userId: 'user-1' });
+    const found = await service.getById({ id: updated?.id ?? '', userIds: ['user-1'] });
 
     expect(updated).toEqual({ id: 'type-1' });
     expect(found?.name).toBe('Updated Type');
@@ -84,6 +87,7 @@ describe('TypeService', () => {
             id: 'type-2',
             name: 'Zeta',
             category_id: 'category-1',
+            is_stackable: false,
             is_active: true,
             user_id: 'user-1',
             date_created: '2026-08-01T10:05:00.000Z',
@@ -93,6 +97,7 @@ describe('TypeService', () => {
             id: 'type-1',
             name: 'Alpha',
             category_id: 'category-1',
+            is_stackable: true,
             is_active: true,
             user_id: 'user-1',
             date_created: '2026-08-01T10:00:00.000Z',
@@ -103,11 +108,11 @@ describe('TypeService', () => {
     };
     const service = new TypeService(prisma as any);
 
-    const all = await service.getAll({ userId: 'user-1' });
+    const all = await service.getAll({ userIds: ['user-1'] });
 
     expect(prisma.type.findMany).toHaveBeenCalledWith({
       where: {
-        user_id: 'user-1',
+        user_id: { in: ['user-1'] },
         is_active: undefined,
         category_id: undefined,
       },

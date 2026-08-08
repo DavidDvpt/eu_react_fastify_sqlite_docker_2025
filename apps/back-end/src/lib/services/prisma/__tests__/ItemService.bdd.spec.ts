@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { describe, expect, it, vi } from 'vitest';
 
+import { LotService } from '../lotService.js';
 import { ItemService } from '../itemService.js';
 
 describe('ItemService', () => {
@@ -15,13 +16,13 @@ describe('ItemService', () => {
       user_id: 'user-1',
       date_created: '2026-08-01T10:00:00.000Z',
       date_updated: null,
-      item_type_id: 'type-1',
+      type_id: 'type-1',
       value: 1.23,
     };
     const prisma = {
       item: {
         create: vi.fn().mockResolvedValue(itemRow),
-        findUnique: vi.fn().mockResolvedValue(itemRow),
+        findFirst: vi.fn().mockResolvedValue(itemRow),
       },
     };
     const service = new ItemService(prisma as any);
@@ -37,7 +38,7 @@ describe('ItemService', () => {
         isActive: true,
       },
     });
-    const found = await service.getById({ id: created.id, userId: 'user-1' });
+    const found = await service.getById({ id: created.id, userIds: ['user-1'] });
 
     expect(created).toEqual({ id: 'item-1' });
     expect(found).toEqual({
@@ -58,7 +59,7 @@ describe('ItemService', () => {
     const prisma = {
       item: {
         update: vi.fn().mockResolvedValue({ id: 'item-1' }),
-        findUnique: vi.fn().mockResolvedValue({
+        findFirst: vi.fn().mockResolvedValue({
           id: 'item-1',
           name: 'Updated Item',
           image_url_id: 'img-1',
@@ -67,7 +68,7 @@ describe('ItemService', () => {
           user_id: 'user-1',
           date_created: '2026-08-01T10:00:00.000Z',
           date_updated: '2026-08-01T11:00:00.000Z',
-          item_type_id: 'type-1',
+          type_id: 'type-1',
           value: 1.23,
         }),
       },
@@ -79,7 +80,7 @@ describe('ItemService', () => {
       userId: 'user-1',
       body: { name: 'Updated Item', typeId: 'type-1' },
     });
-    const found = await service.getById({ id: updated.id, userId: 'user-1' });
+    const found = await service.getById({ id: updated.id, userIds: ['user-1'] });
 
     expect(updated).toEqual({ id: 'item-1' });
     expect(found?.name).toBe('Updated Item');
@@ -98,7 +99,7 @@ describe('ItemService', () => {
             user_id: 'user-1',
             date_created: '2026-08-01T10:05:00.000Z',
             date_updated: null,
-            item_type_id: 'type-1',
+            type_id: 'type-1',
             value: 2.34,
           },
           {
@@ -110,7 +111,7 @@ describe('ItemService', () => {
             user_id: 'user-1',
             date_created: '2026-08-01T10:00:00.000Z',
             date_updated: null,
-            item_type_id: 'type-1',
+            type_id: 'type-1',
             value: 1.23,
           },
         ]),
@@ -119,18 +120,79 @@ describe('ItemService', () => {
     const service = new ItemService(prisma as any);
 
     const all = await service.getAll({
-      userId: 'user-1',
+      userIds: ['user-1'],
       sort: { key: 'name', order: 'asc' },
     });
 
     expect(prisma.item.findMany).toHaveBeenCalledWith({
       where: {
-        user_id: 'user-1',
-        item_type_id: undefined,
+        user_id: { in: ['user-1'] },
+        type_id: undefined,
         is_active: undefined,
       },
     });
     expect(all.map((item) => item.name)).toEqual(['Alpha', 'Zeta']);
     expect(all.every((item) => item.userId === 'user-1')).toBe(true);
+  });
+
+  it('delegates lot lookup to LotService', async () => {
+    const prisma = {};
+    const getAllSpy = vi.spyOn(LotService.prototype, 'getAll').mockResolvedValueOnce([
+      {
+        id: 'lot-1',
+        itemId: 'item-1',
+        isActive: true,
+        priceRemaining: 10,
+        quantityExported: 0,
+        quantityRemaining: 2,
+        lotType: 'TRADE',
+        createdAt: '2026-08-01T10:00:00.000Z',
+        updatedAt: null,
+      },
+    ]);
+    const service = new ItemService(prisma as any);
+
+    const lots = await service.getLots({ userId: 'user-1', itemId: 'item-1' });
+
+    expect(getAllSpy).toHaveBeenCalledWith({
+      userId: 'user-1',
+      itemId: 'item-1',
+      isActive: undefined,
+      sort: undefined,
+    });
+    expect(lots).toHaveLength(1);
+  });
+
+  it('computes stock from lots for one item', async () => {
+    const prisma = {};
+    vi.spyOn(LotService.prototype, 'getAll').mockResolvedValueOnce([
+      {
+        id: 'lot-1',
+        itemId: 'item-1',
+        isActive: true,
+        priceRemaining: 10,
+        quantityExported: 0,
+        quantityRemaining: 2,
+        lotType: 'TRADE',
+        createdAt: '2026-08-01T10:00:00.000Z',
+        updatedAt: null,
+      },
+      {
+        id: 'lot-2',
+        itemId: 'item-1',
+        isActive: true,
+        priceRemaining: 20,
+        quantityExported: 0,
+        quantityRemaining: 3,
+        lotType: 'TRADE',
+        createdAt: '2026-08-01T11:00:00.000Z',
+        updatedAt: null,
+      },
+    ]);
+    const service = new ItemService(prisma as any);
+
+    const stock = await service.getStock({ userId: 'user-1', itemId: 'item-1' });
+
+    expect(stock).toEqual({ 'item-1': 5 });
   });
 });
