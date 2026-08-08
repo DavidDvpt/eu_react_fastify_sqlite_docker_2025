@@ -38,6 +38,7 @@ enum TransactionStatus {
   SOLDED
   RETURNED
   RUNNING
+  CANCELED
 }
 
 enum TransactionLineType {

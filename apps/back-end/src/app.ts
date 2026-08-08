@@ -10,6 +10,7 @@ import { authRoutes, inventoryRoutes, pedCardRoutes, transactionRoutes } from '.
 
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
+import { errorHandler } from '#src/plugins/errorHandler.js';
 import { categoryRoutes } from '#src/routes/categoryRoutes.js';
 import itemRoutes from '#src/routes/itemRoutes.js';
 import typeRoutes from '#src/routes/typeRoutes.js';
@@ -48,6 +49,7 @@ export function buildApp({
   app.register(authPlugin);
   app.register(authorizePlugin);
   app.register(prismaPlugin);
+  app.setErrorHandler(errorHandler);
 
   if (registerRoutes !== false) {
     app.register(authRoutes, { prefix: `${API_PREFIX}${AUTH_PREFIX}` });
@@ -56,7 +58,7 @@ export function buildApp({
     app.register(itemRoutes, { prefix: `${API_PREFIX}/items` });
     app.register(inventoryRoutes, { prefix: API_PREFIX });
     app.register(pedCardRoutes, { prefix: API_PREFIX });
-    app.register(transactionRoutes, { prefix: API_PREFIX });
+    app.register(transactionRoutes, { prefix: `${API_PREFIX}/transactions` });
   }
 
   return app;

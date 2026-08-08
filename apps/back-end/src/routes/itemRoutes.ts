@@ -1,11 +1,16 @@
-import { itemFormSchema, itemQuerySchema, lotQuerySchema } from '@eu/zod-schemas';
+import {
+  itemFormSchema,
+  itemQuerySchema,
+  lotQuerySchema,
+  transactionQuerySchema,
+} from '@eu/zod-schemas';
 
 import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { ItemService } from '#src/lib/services/index.js';
+import { ItemService, TransactionService } from '#src/lib/services/index.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const is = new ItemService(prismaClient);
@@ -33,7 +38,6 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(200).send(stock);
   });
-
   app.get('/:id/lots', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
@@ -50,6 +54,16 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(200).send(lots);
   });
+  app.get('/:id/transactions', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const { id } = getIdParam(request);
+    const ts = new TransactionService(prismaClient);
+    const { status, type } = transactionQuerySchema.partial().parse(request.query);
+
+    const rows = await ts.getAll({ userId, itemId: id, status, transactionType: type });
+
+    return reply.code(200).send(rows);
+  });
   app.get('/:id', async (request, reply) => {
     const { id } = getIdParam(request);
 
@@ -57,8 +71,6 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
       id,
       userIds: getReadableUserIds(request),
     });
-
-    if (!row) return reply.code(404).send({ message: 'Item not found' });
 
     return reply.code(200).send(row);
   });

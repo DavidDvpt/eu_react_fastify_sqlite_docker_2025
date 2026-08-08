@@ -2,24 +2,30 @@ import type { ItemDto } from "./item.js";
 import { z } from "zod";
 import {
   transactionBodySchema,
-  transactionStatusSchema,
+  transactionSchemaDto,
+  transactionStatusPatchDtoSchema,
+  transactionStatusDtoSchema,
   transactionTypeSchema,
+  transactionCancelDtoSchema,
 } from "@eu/zod-schemas";
 
-export type TransactionStatusDto = z.output<typeof transactionStatusSchema>;
-
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
+export type TransactionStatusDto = z.output<typeof transactionStatusDtoSchema>;
+export type TransactionStatusPatchDto = z.infer<
+  typeof transactionStatusPatchDtoSchema
+>;
+export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
-export type TransactionStatusOutput = z.output<typeof transactionStatusSchema>;
+export type TransactionFormBody = z.output<typeof transactionBodySchema>;
 
-export type TransactionFormIntputBody = z.input<typeof transactionBodySchema>;
-export type TransactionFormOutputBody = z.output<typeof transactionBodySchema>;
+export type TransactionDto = z.infer<typeof transactionSchemaDto>;
 
 export type TransactionWhereOptions = {
   status?: TransactionStatusDto;
   type?: TransactionTypeDto;
   itemId?: string;
 };
+
 export interface RunningTransactionDto {
   id: string;
   itemId: string;
@@ -29,14 +35,6 @@ export interface RunningTransactionDto {
   ttc: number;
   status: TransactionStatusDto;
   createdAt: string;
-}
-
-export interface TransactionDto extends RunningTransactionDto {
-  transactionType: TransactionTypeDto;
-  updatedAt: string | null;
-  item?: ItemDto;
-  lotIds?: any;
-  lines: { quantity: number; lotId: string }[];
 }
 
 export type TransactionBodyDto = Omit<

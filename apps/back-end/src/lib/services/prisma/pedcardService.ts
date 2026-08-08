@@ -15,7 +15,6 @@ export class PedcardService {
 
   private pedcardFormParse(b: PedCardFormBody) {
     return {
-      transaction_id: b.transactionId,
       value: b.value,
       type: b.type,
     };
@@ -87,20 +86,19 @@ export class PedcardService {
 
   async create({
     userId,
-    transactionId,
     body,
+    transactionId,
   }: {
     userId: string;
     body: PedCardFormBody;
     transactionId?: string;
   }) {
-    const data = this.pedcardFormParse(body);
     const row = await this.prisma.pedCard.create({
       data: {
-        ...data,
-        user_id: userId,
+        ...this.pedcardFormParse(body),
         transaction_id: transactionId,
         created_at: new Date().toISOString(),
+        user_id: userId,
       },
     });
 
@@ -115,12 +113,17 @@ export class PedcardService {
     transactionId: string;
     bodys: PedCardFormBody[];
   }): Promise<PrismaMutationResponse[]> {
-    const datas = bodys.map((b) => this.pedcardFormParse({ ...b, transactionId }));
+    const datas = bodys.map((b) => this.pedcardFormParse({ ...b }));
 
     const results = await Promise.all(
       datas.map((m) =>
         this.prisma.pedCard.create({
-          data: { ...m, user_id: userId, created_at: new Date().toISOString() },
+          data: {
+            ...m,
+            user_id: userId,
+            created_at: new Date().toISOString(),
+            transaction_id: transactionId,
+          },
         })
       )
     );
@@ -153,5 +156,18 @@ export class PedcardService {
     const row = await this.prisma.pedCard.delete({ where: { user_id: userId, id } });
 
     return { id: row.id };
+  }
+  async deleteByTransactionId({
+    transactionId,
+    userId,
+  }: {
+    transactionId: string;
+    userId: string;
+  }) {
+    const deleted = await this.prisma.pedCard.deleteMany({
+      where: { user_id: userId, transaction_id: transactionId },
+    });
+
+    return deleted;
   }
 }

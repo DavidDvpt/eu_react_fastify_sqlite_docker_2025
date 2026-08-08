@@ -25,7 +25,7 @@ export class LotService {
       quantityRemaining: body.quantity_remaining ?? 0,
       lotType: body.lot_type,
       createdAt: body.date_created,
-      updatedAt: body.date_updated ?? undefined,
+      updatedAt: body.date_updated ?? null,
     };
 
     return parsed;
@@ -159,6 +159,27 @@ export class LotService {
     });
 
     return allocations;
+  }
+
+  async remainingIncrement({
+    userId,
+    id,
+    increment,
+  }: {
+    userId: string;
+    id: string;
+    increment: number;
+  }) {
+    const result = await this.prisma.lot.update({
+      where: { user_id: userId, id },
+      data: {
+        quantity_remaining: { increment },
+        date_updated: new Date().toISOString(),
+        is_active: true,
+      },
+    });
+
+    return { id: result.id };
   }
 
   /**

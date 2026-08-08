@@ -10,7 +10,6 @@ export const pedcardTypeSchema = z.enum([
 ]);
 
 export const pedcardFormSchema = z.object({
-  transactionId: z.string().optional(),
   type: pedcardTypeSchema,
   value: z.coerce.number(),
 });

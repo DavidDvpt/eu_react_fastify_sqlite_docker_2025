@@ -2,10 +2,11 @@ import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   PrismaMutationResponse,
   TransactionDto,
-  TransactionFormOutputBody,
+  TransactionFormBody,
+  TransactionCancelDto,
   TransactionStatusDto,
+  TransactionStatusPatchDto,
   TransactionTypeDto,
-  TransactionWhereOptions,
 } from '@eu/types';
 
 import { LotService } from '#src/lib/services/prisma/lotService.js';
@@ -18,7 +19,7 @@ import {
 export class TransactionService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  parsePrismaToDto(t: TransactionWithLines): TransactionDto {
+  parser(t: TransactionWithLines): TransactionDto {
     const qty = t.lines.reduce((t, c) => {
       return t + c.quantity;
     }, 0);
@@ -31,12 +32,13 @@ export class TransactionService {
       tt: Number(t.tt),
       fee: Number(t.fee),
       ttc: Number(t.ttc),
-      createdAt: t.created_at.toISOString(),
-      updatedAt: t.updated_at?.toISOString() ?? null,
+      createdAt: t.created_at,
+      updatedAt: t.updated_at ?? null,
       quantity: qty,
-      lines,
+      entries: lines,
       // lotIds,
       itemId,
+      userId: t.user_id,
       status: t.status ?? 'SOLDED',
       transactionType: t.transaction_type,
     };
@@ -72,19 +74,20 @@ export class TransactionService {
       include: transactionWithLinesInclude,
     });
 
-    const parsed = rows.map((m) => this.parsePrismaToDto(m));
+    const parsed = rows.map((m) => this.parser(m));
 
     return parsed;
   }
   async getById({ userId, id }: { userId: string; id: string }) {
     const row = await this.prisma.transaction.findUnique({
       where: { id, user_id: userId },
+
       include: transactionWithLinesInclude,
     });
 
     if (!row) return null;
 
-    const parsed = this.parsePrismaToDto(row);
+    const parsed = this.parser(row);
 
     return parsed;
   }
@@ -93,7 +96,7 @@ export class TransactionService {
     userId,
   }: {
     userId: string;
-    body: TransactionFormOutputBody;
+    body: TransactionFormBody;
   }): Promise<PrismaMutationResponse> {
     const result = await this.prisma.$transaction(async (tx) => {
       const ps = new PedcardService(tx);
@@ -111,6 +114,7 @@ export class TransactionService {
           tt: body.tt,
           ttc: body.ttc,
           fee,
+          created_at: new Date().toISOString(),
         },
         select: { id: true },
       });
@@ -163,7 +167,7 @@ export class TransactionService {
     userId,
   }: {
     userId: string;
-    body: TransactionFormOutputBody;
+    body: TransactionFormBody;
   }): Promise<PrismaMutationResponse> {
     const { itemId, quantity } = body;
     const result = await this.prisma.$transaction(async (tx) => {
@@ -182,6 +186,7 @@ export class TransactionService {
           tt: body.tt,
           ttc: body.ttc,
           fee,
+          created_at: new Date().toISOString(),
         },
         select: { id: true },
       });
@@ -211,52 +216,77 @@ export class TransactionService {
   async updateStatus({
     userId,
     id,
-    body,
+    status,
   }: {
     userId: string;
     id: string;
-    body: Partial<Pick<TransactionFormOutputBody, 'status'>>;
+    status: TransactionStatusPatchDto;
   }) {
-    if (body.status) {
-      const current = await this.getById({ userId, id });
-      if (current?.status === 'RUNNING') {
-        if (body.status === 'SOLDED') {
-          await this.prisma.transaction.update({
-            where: { user_id: userId, id },
-            data: { status: body.status },
-          });
-        }
-        if (body.status === 'RETURNED') {
-          await this.prisma.$transaction(async (tx) => {
-            await tx.transaction.update({
-              where: { user_id: userId, id },
-              data: { status: body.status },
-            });
+    const current = await this.getById({ userId, id });
 
-            await Promise.all(
-              current.lines.map((m) =>
-                tx.lot.update({
-                  where: { user_id: userId, id: m.lotId },
-                  data: {
-                    quantity_remaining: {
-                      increment: m.quantity,
-                    },
-                  },
-                })
-              )
-            );
-          });
-        }
-      }
+    if (current?.status !== 'RUNNING') {
+      throw new Error("A non running transaction can't be updated");
     }
+    await this.prisma.$transaction(async (tx) => {
+      if (status === 'SOLDED') {
+        const ps = new PedcardService(tx);
+        const tr = await this.prisma.transaction.update({
+          where: { user_id: userId, id },
+          data: { status },
+        });
+        await ps.create({
+          userId,
+          transactionId: id,
+          body: { type: 'SELL_TTC', value: Number(tr.ttc) },
+        });
+      }
 
-    return { id };
+      if (status === 'RETURNED') {
+        const ls = new LotService(tx);
+
+        await tx.transaction.update({
+          where: { user_id: userId, id },
+          data: { status },
+        });
+        const entries = await tx.transactionLot.findMany({ where: { transaction_id: id } });
+
+        await Promise.all(
+          entries.map((m) => ls.remainingIncrement({ userId, id: m.lot_id, increment: m.quantity }))
+        );
+      }
+
+      return;
+    });
   }
-  // async patchTransaction(userId: string, transactionId: string, body: TransatcionPatchDto) {
-  //   void userId;
-  //   void body;
 
-  //   // Sell line status updates are handled by TransactionStatusService.
-  //   return { transactionId };
-  // }})
+  async cancel({
+    userId,
+    id,
+    status,
+  }: {
+    userId: string;
+    id: string;
+    status: TransactionCancelDto;
+  }) {
+    await this.prisma.$transaction(async (tx) => {
+      const ls = new LotService(tx);
+      const ps = new PedcardService(tx);
+
+      await tx.transaction.update({
+        where: { user_id: userId, id },
+        data: { status },
+      });
+
+      const entries = await tx.transactionLot.findMany({ where: { transaction_id: id } });
+
+      await Promise.all(
+        entries.map((m) => ls.remainingIncrement({ userId, id: m.lot_id, increment: m.quantity }))
+      );
+
+      await ps.deleteByTransactionId({
+        userId,
+        transactionId: id,
+      });
+    });
+  }
 }

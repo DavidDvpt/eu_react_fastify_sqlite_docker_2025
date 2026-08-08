@@ -1,7 +1,8 @@
 import {
   transactionBodySchema,
   transactionQuerySchema,
-  transactionStatusBodySchema,
+  transactionCancelDtoSchema,
+  transactionStatusPatchDtoSchema,
 } from '@eu/zod-schemas';
 
 import { TransactionService } from '../lib/services/prisma/transactionService.js';
@@ -16,7 +17,7 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ts = new TransactionService(prismaClient);
   app.protect();
 
-  app.get('/transactions', async (request, reply) => {
+  app.get('/', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { status, type, itemId } = transactionQuerySchema.parse(request.query);
 
@@ -25,7 +26,7 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(rows);
   });
 
-  app.get('/transactions/:id', async (request, reply) => {
+  app.get('/:id', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { id } = request.params as { id: string };
 
@@ -34,7 +35,7 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(row);
   });
 
-  app.post('/transactions', async (request, reply) => {
+  app.post('/', async (request, reply) => {
     const userId = getRequestUserId(request);
     const body = transactionBodySchema.parse(request.body);
 
@@ -48,19 +49,30 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(201).send(result);
   });
 
-  app.patch('/transactions/:id/status', async (request, reply) => {
+  app.patch('/:id/status', async (request, reply) => {
     const userId = getRequestUserId(request);
     const params = request.params as { id: string };
-    const body = transactionStatusBodySchema.parse(request.body);
+    const status = transactionStatusPatchDtoSchema.parse(request.body);
 
-    try {
-      const result = await ts.updateStatus({ userId, id: params.id, body });
+    const updated = await ts.updateStatus({ userId, id: params.id, status });
 
-      return reply.code(200).send(result);
-    } catch (error) {
-      return reply.code(400).send({ message: 'update status fails' });
-    }
+    return reply.code(200).send(updated);
   });
+  app.patch('/:id/cancel', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const params = request.params as { id: string };
+    const status = transactionCancelDtoSchema.parse(request.body);
+
+    const cancel = await ts.cancel({ userId, id: params.id, status });
+
+    return reply.code(200).send(cancel);
+  });
+
+  //     return reply.code(200).send(result);
+  //   } catch (error) {
+  //     return reply.code(400).send({ message: 'update status fails' });
+  //   }
+  // });
 
   done();
 };
