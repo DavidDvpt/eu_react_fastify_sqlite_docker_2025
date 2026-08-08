@@ -8,7 +8,7 @@ type UseTransactionProps = {
   action?: string;
 };
 
-function useTransaction({ id, action }: UseTransactionProps) {
+function useTransactions({ id, action }: UseTransactionProps) {
   const { getItemData } = useInventoryList();
   const selectedItem = getItemData(id);
   const isTransactionModalOpen = action === "buy" || action === "sell";
@@ -33,4 +33,4 @@ function useTransaction({ id, action }: UseTransactionProps) {
   return { transactionItem, isTransactionModalOpen };
 }
 
-export default useTransaction;
+export default useTransactions;

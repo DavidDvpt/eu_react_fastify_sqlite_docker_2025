@@ -1,4 +1,3 @@
-import type { ItemDto } from "./item.js";
 import { z } from "zod";
 import {
   transactionBodySchema,

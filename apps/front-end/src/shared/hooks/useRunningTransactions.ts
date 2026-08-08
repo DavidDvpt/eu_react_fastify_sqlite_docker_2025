@@ -1,21 +1,23 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { getRunningTransactions } from "@/lib/services/transactionApi";
-import { useItems } from "@/shared/hooks";
+import { useSystemDatas } from "@/shared/hooks";
 import type { RunningTransaction } from "@/shared/types/transactions";
 
 function useRunningTransactions() {
   const runningLinesQuery = useQuery({
-    queryKey: ["running-sell-lines"],
+    queryKey: ["running-transactions"],
     queryFn: getRunningTransactions,
     staleTime: 10_000,
   });
-  const itemsQuery = useItems({ prefillSelect: true });
+  const {
+    items: { filteredItems, isLoading: itemIsLoading, isError: itemIsError },
+  } = useSystemDatas();
 
   const grouped = new Map<string, RunningTransaction>();
   for (const line of runningLinesQuery.data ?? []) {
     const groupKey = `${line.id}:${line.itemId}`;
-    const item = itemsQuery.items.find((item) => item.id === line.itemId);
+    const item = filteredItems().find((item) => item.id === line.itemId);
     const current = grouped.get(groupKey);
     if (!current) {
       grouped.set(groupKey, {
@@ -40,8 +42,8 @@ function useRunningTransactions() {
 
   return {
     rows,
-    isLoading: runningLinesQuery.isLoading || itemsQuery.isLoading,
-    isError: runningLinesQuery.isError || itemsQuery.isError,
+    isLoading: runningLinesQuery.isLoading || itemIsLoading,
+    isError: runningLinesQuery.isError || itemIsError,
   };
 }
 

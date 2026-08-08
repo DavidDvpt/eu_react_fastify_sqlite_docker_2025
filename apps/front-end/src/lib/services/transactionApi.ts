@@ -2,12 +2,17 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 
 import API_ROUTES from "./apiRoutes";
-import type { RunningTransactionDtos, TransactionBodyDto } from "@eu/types";
+import type {
+  RunningTransactionDtos,
+  TransactionBodyDto,
+  TransactionFormBody,
+  TransactionStatusPatchDto,
+} from "@eu/types";
 
-export async function transaction(body: TransactionBodyDto) {
+export async function transaction(body: TransactionFormBody) {
   return axiosCrud(axiosInstance()).post<
-    { transactionId: string },
-    TransactionBodyDto
+    { id: string },
+    TransactionFormBody
   >(API_ROUTES.transactionsRoutes, body);
 }
 
@@ -22,4 +27,17 @@ export async function patchTransaction(body: Partial<TransactionBodyDto>) {
     { transactionId: string },
     Partial<TransactionBodyDto>
   >(`${API_ROUTES.transactionsRoutes}/${body.id}`, body);
+}
+
+export async function updateTransactionStatus({
+  id,
+  status,
+}: {
+  id: string;
+  status: TransactionStatusPatchDto;
+}) {
+  return axiosCrud(axiosInstance()).patch<void, TransactionStatusPatchDto>(
+    `${API_ROUTES.transactionsRoutes}/${id}/status`,
+    status,
+  );
 }

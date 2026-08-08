@@ -2,8 +2,9 @@ import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ApiStatus } from "@/lib/axios/ApiStatus";
 import { getPedCard } from "@/lib/services";
-import { selectAuthStatus, selectIsLoggued } from "@/modules/auth";
+
 import { useAppSelector } from "@/store/hooks";
+import { selectAuthStatus, selectIsLoggued } from "@/store";
 
 const PED_CARD_QUERY_KEY = ["pedCard"];
 
@@ -17,7 +18,7 @@ function usePedCard() {
   const query = useQuery({
     queryKey: PED_CARD_QUERY_KEY,
     queryFn: getPedCard,
-    enabled,
+    enabled: isLoggued,
     staleTime: Infinity,
     refetchOnMount: true,
   });

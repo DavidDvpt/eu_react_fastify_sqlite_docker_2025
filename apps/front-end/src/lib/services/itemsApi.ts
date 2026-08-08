@@ -10,12 +10,12 @@ function getItemRouteById(id: string) {
 }
 
 function getItemEditRoute(id: string) {
-  return `${ITEMS_ROUTE}/${id}/edit`;
+  return `${ITEMS_ROUTE}/${id}`;
 }
 
 async function getItems(): Promise<Items> {
   const response = await axiosCrud(axiosInstance()).get<ItemApis>(
-    `${ITEMS_ROUTE}?include=parent`,
+    ITEMS_ROUTE,
   );
   return parseItems(response);
 }

@@ -5,7 +5,6 @@ import type {
   GenericListColumn,
   RunningTransaction,
 } from "@/shared/types";
-import type { TransactionStatusDto } from "@eu/types";
 
 const createRunningTransactionsColumns = ({
   isRowPending,
@@ -84,11 +83,11 @@ const createRunningTransactionsColumns = ({
     ],
     disabled: (row) => isRowPending(row),
     onSelectChange: (row, value) => {
-      if (value === "RUNNING") {
+      if (value !== "SOLDED" && value !== "RETURNED") {
         return;
       }
 
-      onStatusChange(row, value as TransactionStatusDto);
+      onStatusChange(row, value);
     },
   },
 ];

@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { signUpSchema } from "../validations";
+import { userSignUpFormSchema } from "@eu/zod-schemas";
 
 describe("signUpSchema", () => {
   it("accepts a valid payload", () => {
-    const result = signUpSchema.safeParse({
+    const result = userSignUpFormSchema.safeParse({
       pseudo: "frederic",
       firstname: "Frederic",
       lastname: "Francois",
@@ -16,7 +16,7 @@ describe("signUpSchema", () => {
   });
 
   it("rejects short pseudo", () => {
-    const result = signUpSchema.safeParse({
+    const result = userSignUpFormSchema.safeParse({
       pseudo: "abc",
       email: "frederic@test.com",
       password: "password123",
@@ -25,13 +25,13 @@ describe("signUpSchema", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.pseudo?.[0]).toBe(
-        "Le pseudo doit contenir au moins 4 caracteres"
+        "Too small: expected string to have >=8 characters"
       );
     }
   });
 
   it("rejects invalid email", () => {
-    const result = signUpSchema.safeParse({
+    const result = userSignUpFormSchema.safeParse({
       pseudo: "frederic",
       email: "invalid-email",
       password: "password123",
@@ -46,7 +46,7 @@ describe("signUpSchema", () => {
   });
 
   it("rejects short password", () => {
-    const result = signUpSchema.safeParse({
+    const result = userSignUpFormSchema.safeParse({
       pseudo: "frederic",
       email: "frederic@test.com",
       password: "123",
@@ -55,13 +55,13 @@ describe("signUpSchema", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.password?.[0]).toBe(
-        "Le mot de passe doit etre de 8 caracteres minimum"
+        "Le mot de passe doit être de 8 caractères minimim"
       );
     }
   });
 
   it("transforms empty optional names to undefined", () => {
-    const result = signUpSchema.safeParse({
+    const result = userSignUpFormSchema.safeParse({
       pseudo: "frederic",
       firstname: "",
       lastname: "",

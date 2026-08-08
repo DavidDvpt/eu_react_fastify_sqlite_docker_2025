@@ -1,6 +1,5 @@
 import {
   pedcardFormSchema,
-  pedcardPatchSchema,
   pedcardTypeSchema,
   pedcardDtoSchema,
 } from "@eu/zod-schemas";

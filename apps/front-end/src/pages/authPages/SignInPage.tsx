@@ -1,4 +1,3 @@
-import { authMeThunk } from "@/modules/auth";
 import signinApi from "@/modules/auth/services/network/signinApi";
 import { Section, SubSection } from "@/shared/components/Containers";
 import { AppLink } from "@/shared/components/AppLink";
@@ -6,6 +5,7 @@ import { useAppDispatch } from "@/store/hooks";
 import SignInForm from "./components/SignInForm";
 import styles from "./styles/signin.module.css";
 import type { UserSignInFormOutputBody } from "@eu/types";
+import { authMeThunk } from "@/store";
 
 function SignInPage() {
   const dispatch = useAppDispatch();

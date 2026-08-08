@@ -1,8 +1,7 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import { parseTypes } from "@/lib/parsers";
 
-import type { TypeApis, Types } from "@/shared/types";
+import type { typeDtos } from "@eu/types";
 
 const TYPES_ROUTE = "/types";
 
@@ -11,15 +10,13 @@ function getTypeRouteById(id: string) {
 }
 
 function getTypeEditRoute(id: string) {
-  return `${TYPES_ROUTE}/${id}/edit`;
+  return `${TYPES_ROUTE}/${id}`;
 }
 
-async function getTypes(): Promise<Types> {
-  const response = await axiosCrud(axiosInstance()).get<TypeApis>(
-    `${TYPES_ROUTE}?include=parent`,
-  );
+async function getTypes(): Promise<typeDtos> {
+  const response = await axiosCrud(axiosInstance()).get<typeDtos>(TYPES_ROUTE);
 
-  return parseTypes(response);
+  return response;
 }
 
 export { getTypeEditRoute, getTypeRouteById, getTypes, TYPES_ROUTE };

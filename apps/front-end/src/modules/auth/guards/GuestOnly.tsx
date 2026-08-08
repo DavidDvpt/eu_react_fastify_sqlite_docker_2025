@@ -1,5 +1,5 @@
-import { selectIsAuthResolving, selectIsLoggued } from "@/modules/auth";
 import { CapsuleLoader } from "@/shared/components";
+import { selectIsAuthResolving, selectIsLoggued } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { Navigate, Outlet } from "react-router-dom";
 

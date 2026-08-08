@@ -1,6 +1,5 @@
 import { ChevronDown } from "lucide-react";
 import { useState } from "react";
-import { authMeThunk } from "@/modules/auth";
 import logoutApi from "@/modules/auth/services/network/logoutApi";
 
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
@@ -12,6 +11,7 @@ import {
 } from "@/components/ui/popover";
 import PedCardModal from "../../shared/components/pedCardModal/PedCardModal";
 import usePedCard from "@/shared/hooks/usePedCard";
+import { authMeThunk } from "@/store";
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);

@@ -32,11 +32,11 @@ function RunningTransactionsSection() {
 
   const columns = createRunningTransactionsColumns({
     isRowPending: () => updateStatusMutation.isPending,
-    onStatusChange: (row) => {
+    onStatusChange: (row, status) => {
       updateStatusMutation.mutate(
         {
           id: row.id,
-          status: row.status,
+          status,
         },
         {
           onSuccess: () => {

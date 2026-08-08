@@ -1,7 +1,7 @@
 import { ApiStatus } from "@/lib/axios/ApiStatus";
 import type { RootState } from "@/store";
+import { authMeThunk } from "@/store/reducers/auth/authThunks";
 import { createSlice } from "@reduxjs/toolkit";
-import { authMeThunk } from "./authThunks";
 
 const initialState: AuthType = {
   isLoggued: false,

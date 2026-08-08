@@ -5,12 +5,12 @@ import { describe, expect, it, vi } from "vitest";
 
 import useUpdateTransactionsStatus from "../useUpdateTransactionsStatus";
 
-const { updateRunningTransactionLineStatusMock } = vi.hoisted(() => ({
-  updateRunningTransactionLineStatusMock: vi.fn(),
+const { updateTransactionStatusMock } = vi.hoisted(() => ({
+  updateTransactionStatusMock: vi.fn(),
 }));
 
-vi.mock("@/lib/services/transaction.api", () => ({
-  updateTransactionStatus: updateRunningTransactionLineStatusMock,
+vi.mock("@/lib/services/transactionApi", () => ({
+  updateTransactionStatus: updateTransactionStatusMock,
 }));
 
 function createWrapper(queryClient: QueryClient) {
@@ -23,7 +23,7 @@ function createWrapper(queryClient: QueryClient) {
 
 describe("useUpdateTransactionsStatus", () => {
   it("invalidates pedCard after a successful status update", async () => {
-    updateRunningTransactionLineStatusMock.mockResolvedValue(undefined);
+    updateTransactionStatusMock.mockResolvedValue(undefined);
 
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
@@ -35,7 +35,7 @@ describe("useUpdateTransactionsStatus", () => {
     });
 
     result.current.mutate({
-      transactionLotIds: ["line-1", "line-2"],
+      id: "transaction-1",
       status: "SOLDED",
     });
 

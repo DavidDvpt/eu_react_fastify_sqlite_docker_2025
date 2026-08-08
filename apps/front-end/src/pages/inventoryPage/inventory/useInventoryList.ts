@@ -1,5 +1,5 @@
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
-import { useItems, useStock } from "@/shared/hooks";
+import { useStock, useSystemDatas } from "@/shared/hooks";
 
 import { useMemo } from "react";
 import type { ItemInventory } from "./stockTypes";
@@ -7,12 +7,8 @@ import type { ItemInventory } from "./stockTypes";
 function useInventoryList() {
   const { params } = useGenericFilterParams();
   const {
-    filteredItems,
-    isLoading: isItemsLoading,
-    isError: isItemsError,
-  } = useItems({
-    typeId: params.type,
-  });
+    items: { filteredItems, isError: isItemsError, isLoading: isItemLoading },
+  } = useSystemDatas();
   const {
     data: stock,
     invalidateStock,
@@ -23,19 +19,21 @@ function useInventoryList() {
   const currentStock = useMemo(() => {
     if (filteredItems && stock) {
       return (
-        filteredItems.map((item) => {
-          const itemStock = stock.find((s) => s.itemId === item.id);
-          const totalValue = itemStock?.totalPrice ?? 0;
-          return {
-            ...item,
-            quantity: itemStock?.quantity ?? 0,
-            totalValue,
-          };
-        }) ?? []
+        filteredItems({ typeId: params.type, categoryId: params.category }).map(
+          (item) => {
+            const itemStock = stock.find((s) => s.itemId === item.id);
+            const totalValue = itemStock?.totalPrice ?? 0;
+            return {
+              ...item,
+              quantity: itemStock?.quantity ?? 0,
+              totalValue,
+            };
+          },
+        ) ?? []
       );
     }
     return [];
-  }, [filteredItems, stock]);
+  }, [filteredItems, stock, params]);
 
   const totalStockValue = useMemo(() => {
     if (currentStock) {
@@ -46,7 +44,7 @@ function useInventoryList() {
   }, [currentStock]);
 
   const isError = isItemsError || isStockError;
-  const isLoading = isItemsLoading || isStockLoading;
+  const isLoading = isItemLoading || isStockLoading;
 
   const getItemData = useMemo(
     () => (itemId?: string) =>

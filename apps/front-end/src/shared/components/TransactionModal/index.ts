@@ -12,4 +12,3 @@ export {
   computeQuantityPricing,
   computeTtcPricing,
 } from "./transactionUtils";
-export type { TransactionModalProps } from "@/shared/types/transactions";

@@ -2,9 +2,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import useCategories from "../useCategories";
-import useTypes from "../useTypes";
-import useItems from "../useItems";
 
 const { getcategoryMock, gettypeMock, getItemsMock } = vi.hoisted(() => ({
   getcategoryMock: vi.fn(),

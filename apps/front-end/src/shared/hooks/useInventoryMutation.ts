@@ -17,16 +17,13 @@ export function useInventoryMutation({ type, item }: UseInventoryMutation) {
   const mutation = useMutation({
     mutationFn: async (values: TransactionFormValues) => {
       return transaction({
-        type,
-        lines: [
-          {
-            itemId: item.itemId,
-            quantity: values.quantity,
-            tt: values.quantity * item.unitPrice,
-            fee: values.fee,
-            ttc: values.buyPrice,
-          },
-        ],
+        transactionType: type === "sell" ? "SELL" : "BUY",
+        itemId: item.itemId,
+        quantity: values.quantity,
+        tt: values.quantity * item.unitPrice,
+        fee: values.fee,
+        ttc: values.buyPrice,
+        status: type === "sell" ? "RUNNING" : "SOLDED",
       });
     },
     onSuccess: () => {

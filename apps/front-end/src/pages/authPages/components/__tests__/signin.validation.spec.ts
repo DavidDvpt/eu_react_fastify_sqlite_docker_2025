@@ -1,10 +1,10 @@
 import { describe, expect, it } from "vitest";
 
-import { loginSchema } from "../validations";
+import { userSignInFormSchema } from "@eu/zod-schemas";
 
 describe("signInSchema", () => {
   it("accepts a valid payload", () => {
-    const result = loginSchema.safeParse({
+    const result = userSignInFormSchema.safeParse({
       pseudo: "fredericFrancois",
       password: "password123",
     });
@@ -13,7 +13,7 @@ describe("signInSchema", () => {
   });
 
   it("rejects short pseudo", () => {
-    const result = loginSchema.safeParse({
+    const result = userSignInFormSchema.safeParse({
       pseudo: "height",
       password: "password123",
     });
@@ -27,7 +27,7 @@ describe("signInSchema", () => {
   });
 
   it("rejects short password", () => {
-    const result = loginSchema.safeParse({
+    const result = userSignInFormSchema.safeParse({
       email: "fredericFrancois",
       password: "123",
     });

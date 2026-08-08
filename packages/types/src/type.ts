@@ -6,3 +6,4 @@ export type TypeFormBody = z.output<typeof typeFormSchema>;
 export type TypeSortKey = z.infer<typeof typeSortSchema>;
 
 export type TypeDto = z.infer<typeof typeDtoSchema>;
+export type typeDtos = TypeDto[];

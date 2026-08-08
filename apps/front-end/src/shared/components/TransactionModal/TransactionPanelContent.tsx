@@ -15,7 +15,7 @@ import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
 import type {
-  TransactionBodyDto,
+  TransactionFormBody,
   TransactionStatusDto,
   TransactionTypeDto,
 } from "@eu/types";
@@ -46,7 +46,7 @@ function TransactionPanelContent({
         fee: values.fee,
         ttc: values.ttc,
         status: values.status,
-      } satisfies TransactionBodyDto);
+      } satisfies TransactionFormBody);
     },
     onSuccess: refreshStock,
   });
