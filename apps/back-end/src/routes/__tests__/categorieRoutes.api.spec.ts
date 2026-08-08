@@ -1,55 +1,40 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
-import categorieRoutes from '../categoryRoutes.js';
+import { errorHandler } from '../../plugins/errorHandler.js';
+import { categoryRoutes } from '../categoryRoutes.js';
 
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
+
+const categoryServiceMocks = {
+  getAll: vi.fn(),
+  getById: vi.fn(),
+  create: vi.fn(),
+  update: vi.fn(),
+};
+
+const typeServiceMocks = {
+  getAll: vi.fn(),
+};
+
+vi.mock('../../lib/services/index.js', () => ({
+  CategoryService: vi.fn(function MockCategoryService() {
+    return categoryServiceMocks;
+  }),
+  TypeService: vi.fn(function MockTypeService() {
+    return typeServiceMocks;
+  }),
+}));
 
 describe('categorieRoutes', () => {
   function buildApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
-
-    const categories = {
-      findMany: vi.fn(),
-      findUnique: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-    };
-    const types = {
-      findMany: vi.fn(),
-      findUnique: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-    };
-    const items = {
-      findMany: vi.fn(),
-      findUnique: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-    };
-    const lotStock = { getStock: vi.fn(), getStockByItemId: vi.fn() };
-    const transaction = {};
-    const users = {
-      findMany: vi.fn(),
-      findUnique: vi.fn(),
-      create: vi.fn(),
-      update: vi.fn(),
-      delete: vi.fn(),
-      findFirst: vi.fn(),
-    };
-
-    app.decorate('repos', {
-      users,
-      types,
-      items,
-      lotStock,
-      transaction,
-    });
+    app.setErrorHandler(errorHandler);
 
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
@@ -57,70 +42,82 @@ describe('categorieRoutes', () => {
         request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
       });
     });
-    app.protect();
 
-    app.register(categorieRoutes, { prefix: `${API_PREFIX}/categories` });
+    app.register(categoryRoutes, { prefix: `${API_PREFIX}/categories` });
 
-    return { app, categories };
+    return { app };
   }
 
-  it('GET /api/v1/categories returns category list with user scope', async () => {
-    const { app, categories } = buildApp();
-    vi.mocked(categories.findMany).mockResolvedValueOnce([{ id: 'cat-1', name: 'Material' }]);
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('GET /api/v1/categories returns category list with readable scopes', async () => {
+    const { app } = buildApp();
+    vi.mocked(categoryServiceMocks.getAll).mockResolvedValueOnce([{ id: 'cat-1', name: 'Material' }] as never);
 
     await app.ready();
     const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/categories` });
 
     expect(res.statusCode).toBe(200);
-    expect(categories.findMany).toHaveBeenCalledWith(undefined, 'user-1');
+    expect(categoryServiceMocks.getAll).toHaveBeenCalledWith({
+      userIds: ['user-1', expect.any(String)],
+      isActive: undefined,
+      sort: { key: 'name', order: undefined },
+    });
     await app.close();
   });
 
   it('POST /api/v1/categories creates category for authenticated user', async () => {
-    const { app, categories } = buildApp();
-    vi.mocked(categories.create).mockResolvedValueOnce({ id: 'cat-1', name: 'Custom' });
+    const { app } = buildApp();
+    vi.mocked(categoryServiceMocks.create).mockResolvedValueOnce({ id: 'cat-1' } as never);
 
     await app.ready();
     const res = await app.inject({
       method: 'POST',
       url: `${API_PREFIX}/categories`,
-      payload: { name: 'Custom' },
+      payload: { name: 'Custom', isActive: true },
     });
 
     expect(res.statusCode).toBe(201);
-    const createCall = vi.mocked(categories.create).mock.calls[0]?.[0] as {
-      data: { name: string; user_id: string };
-    };
-    expect(createCall.data).toMatchObject({ name: 'Custom', user_id: 'user-1' });
+    expect(categoryServiceMocks.create).toHaveBeenCalledWith({
+      userId: 'user-1',
+      body: { name: 'Custom', isActive: true },
+    });
+    expect(res.json()).toEqual({ id: 'cat-1' });
     await app.close();
   });
 
   it('GET /api/v1/categories/:id returns 404 when not found', async () => {
-    const { app, categories } = buildApp();
-    vi.mocked(categories.findUnique).mockResolvedValueOnce(null);
+    const { app } = buildApp();
+    vi.mocked(categoryServiceMocks.getById).mockResolvedValueOnce(null as never);
 
     await app.ready();
     const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/categories/cat-x` });
 
     expect(res.statusCode).toBe(404);
-    expect(categories.findUnique).toHaveBeenCalledWith({ where: { id: 'cat-x' } }, 'user-1');
+    expect(categoryServiceMocks.getById).toHaveBeenCalledWith({
+      id: 'cat-x',
+      userIds: ['user-1', expect.any(String)],
+    });
     await app.close();
   });
 
-  it('PUT /api/v1/categories/:id/edit returns 403 when mutation is forbidden', async () => {
-    const { app, categories } = buildApp();
-    vi.mocked(categories.update).mockRejectedValueOnce(
+  it('PATCH /api/v1/categories/:id returns 403 when mutation is forbidden', async () => {
+    const { app } = buildApp();
+    vi.mocked(categoryServiceMocks.update).mockRejectedValueOnce(
       new Error('Forbidden mutation: only the owner can update this row')
     );
 
     await app.ready();
     const res = await app.inject({
-      method: 'PUT',
-      url: `${API_PREFIX}/categories/cat-1/edit`,
+      method: 'PATCH',
+      url: `${API_PREFIX}/categories/cat-1`,
       payload: { name: 'Updated' },
     });
 
     expect(res.statusCode).toBe(403);
+    expect(res.json()).toEqual({ message: 'Forbidden' });
     await app.close();
   });
 });

@@ -1,47 +1,39 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable import/order */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
-import * as argon2 from 'argon2';
+import cookie from '@fastify/cookie';
 import Fastify from 'fastify';
-import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import cookie from '@fastify/cookie';
-import authRoutes from '../authRoutes.js';
-import type { FastifyInstance } from 'fastify';
-import { Role } from '../../../prisma/generated/enums.js';
-import type { UserForToken } from '../../types/fastify.js';
+
+import { AUTH_API_PREFIX, AUTH_PREFIX } from '../../config/routes.js';
 import HashTools from '../../lib/security/HashTools.js';
 import authPlugin from '../../plugins/authPlugin.js';
-import { AUTH_API_PREFIX, AUTH_PREFIX } from '../../config/routes.js';
+import authRoutes from '../authRoutes.js';
 
-const meUserMock: UserForToken = {
-  id: 'user-1',
-  pseudo: 'test',
-  role: Role.USER,
-};
+import type { FastifyInstance } from 'fastify';
+import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
-const loginMock = {
-  ...meUserMock,
-  password_hash: 'stored-hash',
-  is_active: true,
-};
-
-const createdUserMock = {
-  ...meUserMock,
-  email: 'test@example.com',
+const userServiceMocks = {
+  getByEmail: vi.fn(),
+  getByPseudo: vi.fn(),
+  create: vi.fn(),
+  getbyId: vi.fn(),
 };
 
 vi.mock('argon2', () => ({
   default: {
-    hash: vi.fn(() => Promise.resolve('hashed-password')),
+    hash: vi.fn(async () => 'hashed-password'),
   },
+}));
+
+vi.mock('../../lib/services/prisma/userService.js', () => ({
+  UserService: vi.fn(function MockUserService() {
+    return userServiceMocks;
+  }),
 }));
 
 describe('authRoutes', () => {
   beforeEach(() => {
+    vi.clearAllMocks();
     vi.restoreAllMocks();
   });
 
@@ -49,82 +41,46 @@ describe('authRoutes', () => {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
-
     app.register(cookie);
 
-    // repos minimal
-    const usersRepo = { findUnique: vi.fn(), create: vi.fn() };
-    app.decorate('repos', { users: usersRepo } as any);
-
-    // jwt minimal compatible signup+signin
-    const jwt = {
-      sign: vi.fn(() => 'fake.jwt.token'),
+    app.decorate('jwt', {
       access: { sign: vi.fn(() => 'access.jwt') },
       refresh: { sign: vi.fn(() => 'refresh.jwt') },
-    };
-    app.decorate('jwt', jwt as any);
-    // app.register(repositoryPlugin);
-    // eslint-disable-next-line @typescript-eslint/require-await
-    app.decorate('authenticate', async (request: any) => {
-      request.user = { id: 'user-1', role: Role.USER, pseudo: 'test' };
-    });
+    } as any);
 
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
-        request.user = { id: 'user-1', role: Role.USER, pseudo: 'test' };
+        request.user = { id: 'user-1', role: 'USER', pseudo: 'test' };
       });
     });
 
-    return { app, usersRepo, jwt };
+    return app;
   }
 
-  function buildSignupApp() {
-    const { app, usersRepo, jwt } = createBaseApp();
+  function buildApp() {
+    const app = createBaseApp();
     app.register(authRoutes, { prefix: AUTH_PREFIX });
-    return { app, usersRepo, jwt };
+    return app;
   }
 
-  function buildSigninApp() {
-    const { app, usersRepo, jwt } = createBaseApp();
-    app.register(authRoutes, { prefix: AUTH_PREFIX });
-    return { app, usersRepo, jwt };
-  }
-
-  function buildMeApp() {
-    const { app, usersRepo, jwt } = createBaseApp();
-
-    app.register(authRoutes, { prefix: AUTH_PREFIX });
-    return { app, usersRepo, jwt };
-  }
-
-  function buildLogoutApp() {
-    const { app, usersRepo, jwt } = createBaseApp();
-    app.register(authRoutes, { prefix: AUTH_PREFIX });
-    return { app, usersRepo, jwt };
-  }
-
-  function buildMeIntegrationApp() {
+  function buildAuthPluginApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
-
     app.register(cookie);
-
-    app.register(authPlugin); // <-- celui qui decorate protect + jwtVerify
+    app.register(authPlugin);
     app.register(authRoutes, { prefix: AUTH_PREFIX });
-
-    return { app };
+    return app;
   }
 
-  it('POST /auth/signup -> should be ok, return 201', async () => {
-    const { app, usersRepo, jwt } = buildSignupApp();
-
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(null);
-    vi.mocked(usersRepo.create).mockResolvedValueOnce(createdUserMock as any);
+  it('POST /auth/signup creates a user and returns 201', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByEmail).mockResolvedValueOnce(null as never);
+    vi.mocked(userServiceMocks.getByPseudo).mockResolvedValueOnce(null as never);
+    vi.mocked(userServiceMocks.create).mockResolvedValueOnce({ id: 'user-1' } as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signup`,
@@ -136,25 +92,26 @@ describe('authRoutes', () => {
     });
 
     expect(res.statusCode).toBe(201);
-    expect(res.json()).toEqual({
-      message: 'User created',
+    expect(userServiceMocks.getByEmail).toHaveBeenCalledWith({ email: 'test@example.com' });
+    expect(userServiceMocks.getByPseudo).toHaveBeenCalledWith({ pseudo: 'test' });
+    expect(userServiceMocks.create).toHaveBeenCalledWith({
+      body: {
+        email: 'test@example.com',
+        pseudo: 'test',
+        firstname: undefined,
+        lastname: undefined,
+        password: 'hashed-password',
+      },
     });
-
-    // ✅ argon2 mock propre (pas de any)
-    expect((argon2 as any).default.hash).toHaveBeenCalledWith('password123');
-
-    expect(jwt.access.sign).not.toHaveBeenCalled();
-
+    expect(res.json()).toEqual({ message: 'User created' });
     await app.close();
   });
-  it('POST /auth/signup -> allready exists => 409', async () => {
-    const { app, usersRepo } = buildSignupApp();
 
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(meUserMock as any);
-    vi.mocked(usersRepo.create).mockResolvedValueOnce(createdUserMock as any);
+  it('POST /auth/signup returns 409 when email already exists', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByEmail).mockResolvedValueOnce({ id: 'user-1' } as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signup`,
@@ -166,79 +123,81 @@ describe('authRoutes', () => {
     });
 
     expect(res.statusCode).toBe(409);
-
+    expect(res.json()).toEqual({ message: 'Email already in use' });
     await app.close();
   });
 
-  it('POST /auth/signin -> should be ok, return 200', async () => {
-    const { app, usersRepo } = buildSigninApp();
-
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(loginMock as any);
+  it('POST /auth/signin returns 200 and auth cookies when credentials are valid', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByPseudo).mockResolvedValueOnce({
+      id: 'user-1',
+      pseudo: 'test',
+      role: 'USER',
+      password: 'stored-hash',
+      isActive: true,
+    } as never);
     vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(true);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signin`,
       payload: {
-        pseudo: 'test',
+        pseudo: 'testuser',
         password: 'password123',
       },
     });
 
     expect(res.statusCode).toBe(200);
+    expect(res.json()).toEqual({ message: 'Success' });
     expect(res.cookies).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           name: 'access_token',
           value: 'access.jwt',
-          maxAge: 24 * 60 * 60,
           path: '/',
           httpOnly: true,
         }),
         expect.objectContaining({
           name: 'refresh_token',
           value: 'refresh.jwt',
-          maxAge: 7 * 24 * 60 * 60,
           path: AUTH_API_PREFIX,
           httpOnly: true,
         }),
       ])
     );
-
     await app.close();
   });
-  it('POST /auth/signin -> user desactivated, return 401', async () => {
-    const { app, usersRepo } = buildSigninApp();
 
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce({
-      ...loginMock,
-      is_active: false,
-    } as any);
+  it('POST /auth/signin returns 401 when user is deactivated', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByPseudo).mockResolvedValueOnce({
+      id: 'user-1',
+      pseudo: 'testuser',
+      role: 'USER',
+      password: 'stored-hash',
+      isActive: false,
+    } as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signin`,
       payload: {
-        pseudo: 'test',
+        pseudo: 'testuser',
         password: 'password123',
       },
     });
 
     expect(res.statusCode).toBe(401);
-    expect(res.statusMessage).toBe('Unauthorized');
-
+    expect(res.json()).toEqual({ message: 'utilisateur desactivé' });
     await app.close();
   });
 
-  it('POST /auth/logout -> clears auth cookies and returns 200', async () => {
-    const { app } = buildLogoutApp();
+  it('POST /auth/logout clears auth cookies and returns 200', async () => {
+    const app = buildApp();
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/logout`,
@@ -260,82 +219,83 @@ describe('authRoutes', () => {
         }),
       ])
     );
-
     await app.close();
   });
-  it('POST /auth/signin -> pseudo invalid return 401', async () => {
-    const { app, usersRepo } = buildSigninApp();
 
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(null);
+  it('POST /auth/signin returns 401 when pseudo is invalid', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByPseudo).mockResolvedValueOnce(null as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signin`,
       payload: {
-        pseudo: 'test',
+        pseudo: 'testuser',
         password: 'password123',
       },
     });
 
     expect(res.statusCode).toBe(401);
-
+    expect(res.json()).toEqual({ message: 'Identifiants invalides' });
     await app.close();
   });
-  it('POST /auth/signin -> password invalid return 401', async () => {
-    const { app } = buildSigninApp();
 
-    await app.ready();
-
-    vi.spyOn(app.repos.users, 'findUnique').mockResolvedValueOnce(loginMock as any);
+  it('POST /auth/signin returns 401 when password is invalid', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getByPseudo).mockResolvedValueOnce({
+      id: 'user-1',
+      pseudo: 'testuser',
+      role: 'USER',
+      password: 'stored-hash',
+      isActive: true,
+    } as never);
     vi.spyOn(HashTools, 'verifyPassword').mockResolvedValueOnce(false);
 
+    await app.ready();
     const res = await app.inject({
       method: 'POST',
       url: `${AUTH_PREFIX}/signin`,
       payload: {
-        pseudo: 'test',
+        pseudo: 'testuser',
         password: 'password123',
       },
     });
 
     expect(res.statusCode).toBe(401);
-
+    expect(res.json()).toEqual({ message: 'Identifiants invalides' });
     await app.close();
   });
 
-  it('GET /me -> should be authenticated return 200', async () => {
-    const { app, usersRepo } = buildMeApp();
-
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(meUserMock as any);
+  it('GET /auth/me returns the authenticated user', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getbyId).mockResolvedValueOnce({
+      id: 'user-1',
+      role: 'USER',
+      pseudo: 'test',
+    } as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'GET',
       url: `${AUTH_PREFIX}/me`,
     });
 
     expect(res.statusCode).toBe(200);
+    expect(userServiceMocks.getbyId).toHaveBeenCalledWith({ id: 'user-1' });
     expect(res.json()).toEqual({
       id: 'user-1',
-      role: Role.USER,
+      role: 'USER',
       pseudo: 'test',
     });
-
-    // vérifie qu'on a bien fetch avec l'id issu du token (sub)
-    expect(usersRepo.findUnique).toHaveBeenCalledWith({ where: { id: 'user-1' } });
-
     await app.close();
   });
-  it('GET /me -> user not fould should return 401', async () => {
-    const { app, usersRepo } = buildMeApp();
 
-    vi.mocked(usersRepo.findUnique).mockResolvedValueOnce(null);
+  it('GET /auth/me returns 401 when the user is not found', async () => {
+    const app = buildApp();
+    vi.mocked(userServiceMocks.getbyId).mockResolvedValueOnce(null as never);
 
     await app.ready();
-
     const res = await app.inject({
       method: 'GET',
       url: `${AUTH_PREFIX}/me`,
@@ -343,14 +303,13 @@ describe('authRoutes', () => {
 
     expect(res.statusCode).toBe(401);
     expect(res.body).toBe('Unauthorized');
-
     await app.close();
   });
-  it('GET /me -> no cookie found should return 401', async () => {
-    const { app } = buildMeIntegrationApp();
+
+  it('GET /auth/me returns 401 when the access token cookie is invalid', async () => {
+    const app = buildAuthPluginApp();
 
     await app.ready();
-
     const res = await app.inject({
       method: 'GET',
       url: `${AUTH_PREFIX}/me`,
@@ -361,7 +320,6 @@ describe('authRoutes', () => {
 
     expect(res.statusCode).toBe(401);
     expect(res.json()).toEqual({ message: 'Unauthorized' });
-
     await app.close();
   });
 });

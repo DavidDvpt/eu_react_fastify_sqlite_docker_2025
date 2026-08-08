@@ -29,7 +29,7 @@ describe('StockService', () => {
       },
     ]);
 
-    expect(stock).toBe({
+    expect(stock).toEqual({
       'item-1': 10,
     });
   });

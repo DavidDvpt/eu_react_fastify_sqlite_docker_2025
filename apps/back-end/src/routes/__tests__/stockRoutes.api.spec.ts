@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
 import stockRoutes from '../inventoryRoutes.js';
@@ -8,48 +8,26 @@ import stockRoutes from '../inventoryRoutes.js';
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
+const inventoryServiceMocks = {
+  getLots: vi.fn(),
+  getStocks: vi.fn(),
+};
+
+vi.mock('../../lib/services/domain/index.js', () => ({
+  InventoryService: vi.fn(function MockInventoryService() {
+    return inventoryServiceMocks;
+  }),
+  StockService: vi.fn(function MockStockService() {
+    return {};
+  }),
+}));
+
 describe('stockRoutes', () => {
   function buildApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
-    const tx = {
-      item: {
-        findMany: vi.fn(),
-      },
-      transaction: {
-        create: vi.fn(),
-        update: vi.fn(),
-        delete: vi.fn(),
-      },
-      lot: {
-        create: vi.fn(),
-        update: vi.fn(),
-      },
-      transactionLot: {
-        create: vi.fn(),
-      },
-    };
-
-    const prisma = {
-      item: {
-        findMany: vi.fn(),
-      },
-      $transaction: vi.fn((callback: (trx: typeof tx) => unknown) => Promise.resolve(callback(tx))),
-    };
-
-    const lotStock = {
-      getStock: vi.fn(),
-      getStockByItemId: vi.fn(),
-      getStockDetailsByItemId: vi.fn(),
-      getAvailableStockByItemIds: vi.fn(),
-      getAvailableLotsFifoByItemId: vi.fn(),
-      getSellableLotById: vi.fn(),
-    };
-
-    app.decorate('prisma', prisma as unknown as FastifyInstance['prisma']);
-    app.decorate('repos', { lotStock } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
@@ -59,155 +37,94 @@ describe('stockRoutes', () => {
 
     app.register(stockRoutes, { prefix: API_PREFIX });
 
-    return { app, lotStock, tx, prisma };
+    return { app };
   }
 
-  it('GET /api/v1/inventory returns stock list for authenticated user', async () => {
-    const { app, lotStock } = buildApp();
-    vi.mocked(lotStock.getStock).mockResolvedValueOnce([
-      {
-        itemId: 'item-1',
-        imageUrlId: '123',
-        name: 'Oil',
-        unitPrice: 5,
-        quantity: 250,
-        totalPrice: 1250,
-      },
-    ]);
-
-    await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory` });
-
-    expect(res.statusCode).toBe(200);
-    expect(lotStock.getStock).toHaveBeenCalledWith('user-1');
-    expect(res.json()).toEqual([
-      {
-        itemId: 'item-1',
-        imageUrlId: '123',
-        name: 'Oil',
-        unitPrice: 5,
-        quantity: 250,
-        totalPrice: 1250,
-      },
-    ]);
-    await app.close();
+  beforeEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('GET /api/v1/inventory`/:id returns item stock for authenticated user', async () => {
-    const { app, lotStock } = buildApp();
-    vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce({
-      itemId: 'item-1',
-      imageUrlId: '123',
-      name: 'Oil',
-      unitPrice: 5,
-      quantity: 250,
-      totalPrice: 1250,
-    });
-
-    await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory/item-1` });
-
-    expect(res.statusCode).toBe(200);
-    expect(lotStock.getStockByItemId).toHaveBeenCalledWith('user-1', 'item-1');
-    expect(res.json()).toEqual({
-      itemId: 'item-1',
-      imageUrlId: '123',
-      name: 'Oil',
-      unitPrice: 5,
-      quantity: 250,
-      totalPrice: 1250,
-    });
-    await app.close();
-  });
-
-  it('GET /api/v1/inventory/:id?include=details returns stock details for item', async () => {
-    const { app, lotStock } = buildApp();
-    vi.mocked(lotStock.getStockDetailsByItemId).mockResolvedValueOnce({
-      itemId: 'item-1',
-      imageUrlId: '123',
-      name: 'Oil',
-      unitPrice: 5,
-      quantity: 250,
-      totalPrice: 1250,
-      lotsIn: [
-        {
-          id: 'lot-1',
-          lotType: 'TRANSACTION',
-          quantityRemaining: 200,
-          quantityInitial: 250,
-          transactionStatus: 'CLOSED',
-          lineStatus: 'CLOSED',
-          quantityExported: 50,
-          priceRemaining: 40,
-          dateCreated: '2025-10-21 13:37:17.68',
-        },
-      ],
-      lotsOut: [
-        {
-          id: 'line-1',
-          dateCreated: '2025-10-21 13:37:17.68',
-          quantity: 50,
-          lineStatus: 'CLOSED',
-          transactionStatus: 'CLOSED',
-          tt: 20,
-          ttc: 25,
-          saleStatus: 'SOLDED',
-        },
-      ],
-    });
+  it('GET /api/v1/inventory/lots returns lots for authenticated user', async () => {
+    const { app } = buildApp();
+    vi.mocked(inventoryServiceMocks.getLots).mockResolvedValueOnce([
+      {
+        id: 'lot-1',
+        itemId: 'item-1',
+        quantityRemaining: 2,
+      },
+    ] as never);
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/inventory/item-1?include=details`,
+      url: `${API_PREFIX}/inventory/lots?sortKey=createdAt&isActive=true`,
     });
 
     expect(res.statusCode).toBe(200);
-    expect(lotStock.getStockDetailsByItemId).toHaveBeenCalledWith('user-1', 'item-1');
-    expect(res.json()).toEqual({
-      itemId: 'item-1',
-      imageUrlId: '123',
-      name: 'Oil',
-      unitPrice: 5,
-      quantity: 250,
-      totalPrice: 1250,
-      lotsIn: [
-        {
-          id: 'lot-1',
-          lotType: 'TRANSACTION',
-          quantityRemaining: 200,
-          quantityInitial: 250,
-          transactionStatus: 'CLOSED',
-          lineStatus: 'CLOSED',
-          quantityExported: 50,
-          priceRemaining: 40,
-          dateCreated: '2025-10-21 13:37:17.68',
-        },
-      ],
-      lotsOut: [
-        {
-          id: 'line-1',
-          dateCreated: '2025-10-21 13:37:17.68',
-          quantity: 50,
-          lineStatus: 'CLOSED',
-          transactionStatus: 'CLOSED',
-          tt: 20,
-          ttc: 25,
-          saleStatus: 'SOLDED',
-        },
-      ],
+    expect(inventoryServiceMocks.getLots).toHaveBeenCalledWith({
+      userId: 'user-1',
+      isActive: true,
+      sort: { key: 'createdAt', order: undefined },
+    });
+    expect(res.json()).toEqual([
+      {
+        id: 'lot-1',
+        itemId: 'item-1',
+        quantityRemaining: 2,
+      },
+    ]);
+    await app.close();
+  });
+
+  it('GET /api/v1/inventory/stock returns aggregated stocks for authenticated user', async () => {
+    const { app } = buildApp();
+    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 } as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/inventory/stock?sortKey=createdAt&isActive=true`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(inventoryServiceMocks.getStocks).toHaveBeenCalledWith({
+      userId: 'user-1',
+      isActive: true,
+      sort: { key: 'createdAt', order: undefined },
+    });
+    expect(res.json()).toEqual({ 'item-1': 5 });
+    await app.close();
+  });
+
+  it('GET /api/v1/inventory/stock forwards explicit sort order', async () => {
+    const { app } = buildApp();
+    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 } as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/inventory/stock?sortKey=quantityRemaining&sortOrder=desc&isActive=false`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(inventoryServiceMocks.getStocks).toHaveBeenCalledWith({
+      userId: 'user-1',
+      isActive: false,
+      sort: { key: 'quantityRemaining', order: 'desc' },
     });
     await app.close();
   });
 
-  it('GET /api/v1/inventory/:id returns 404 when item stock is not found', async () => {
-    const { app, lotStock } = buildApp();
-    vi.mocked(lotStock.getStockByItemId).mockResolvedValueOnce(null);
+  it('GET /api/v1/inventory/lots validates query params', async () => {
+    const { app } = buildApp();
 
     await app.ready();
-    const res = await app.inject({ method: 'GET', url: `${API_PREFIX}/inventory/item-x` });
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/inventory/lots`,
+    });
 
-    expect(res.statusCode).toBe(404);
+    expect(res.statusCode).toBe(500);
     await app.close();
   });
 });

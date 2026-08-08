@@ -1,6 +1,6 @@
 import Fastify from 'fastify';
 import { serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import { describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { API_PREFIX } from '../../config/routes.js';
 import pedCardRoutes from '../pedCardRoutes.js';
@@ -8,19 +8,28 @@ import pedCardRoutes from '../pedCardRoutes.js';
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 
+const pedcardServiceMocks = {
+  hasInitialBalance: vi.fn(),
+  getAll: vi.fn(),
+  getBalance: vi.fn(),
+  canPay: vi.fn(),
+  create: vi.fn(),
+  update: vi.fn(),
+  delete: vi.fn(),
+};
+
+vi.mock('../../lib/services/prisma/pedcardService.js', () => ({
+  PedcardService: vi.fn(function MockPedcardService() {
+    return pedcardServiceMocks;
+  }),
+}));
+
 describe('pedCardRoutes', () => {
   function buildApp() {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
 
-    const pedCard = {
-      hasInitialBalance: vi.fn(),
-      getBalance: vi.fn(),
-      createEntry: vi.fn(),
-    };
-
-    app.decorate('repos', { pedCard } as unknown as FastifyInstance['repos']);
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
@@ -30,12 +39,16 @@ describe('pedCardRoutes', () => {
 
     app.register(pedCardRoutes, { prefix: API_PREFIX });
 
-    return { app, pedCard };
+    return { app };
   }
 
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
   it('GET /api/v1/pedcard/check returns 200 when the user has an INITIAL_BALANCE row', async () => {
-    const { app, pedCard } = buildApp();
-    vi.mocked(pedCard.hasInitialBalance).mockResolvedValueOnce(true);
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(true as never);
 
     await app.ready();
     const res = await app.inject({
@@ -44,14 +57,14 @@ describe('pedCardRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(pedCard.hasInitialBalance).toHaveBeenCalledWith('user-1');
+    expect(pedcardServiceMocks.hasInitialBalance).toHaveBeenCalledWith({ userId: 'user-1' });
     expect(res.json()).toEqual({ message: 'PedCard initialized' });
     await app.close();
   });
 
   it('GET /api/v1/pedcard/check returns 400 when the user has no INITIAL_BALANCE row', async () => {
-    const { app, pedCard } = buildApp();
-    vi.mocked(pedCard.hasInitialBalance).mockResolvedValueOnce(false);
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(false as never);
 
     await app.ready();
     const res = await app.inject({
@@ -60,14 +73,14 @@ describe('pedCardRoutes', () => {
     });
 
     expect(res.statusCode).toBe(400);
-    expect(pedCard.hasInitialBalance).toHaveBeenCalledWith('user-1');
+    expect(pedcardServiceMocks.hasInitialBalance).toHaveBeenCalledWith({ userId: 'user-1' });
     expect(res.json()).toEqual({ message: 'PedCard must be initialized' });
     await app.close();
   });
 
   it('GET /api/v1/pedcard/balance returns the user balance', async () => {
-    const { app, pedCard } = buildApp();
-    vi.mocked(pedCard.getBalance).mockResolvedValueOnce(115.5);
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.getBalance).mockResolvedValueOnce(115.5 as never);
 
     await app.ready();
     const res = await app.inject({
@@ -76,14 +89,14 @@ describe('pedCardRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(pedCard.getBalance).toHaveBeenCalledWith('user-1');
+    expect(pedcardServiceMocks.getBalance).toHaveBeenCalledWith({ userId: 'user-1' });
     expect(res.json()).toEqual({ balance: 115.5 });
     await app.close();
   });
 
-  it('POST /api/v1/pedcard creates an entry and returns 201 with no body', async () => {
-    const { app, pedCard } = buildApp();
-    vi.mocked(pedCard.createEntry).mockResolvedValueOnce(undefined);
+  it('POST /api/v1/pedcard creates an entry and returns 201', async () => {
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.create).mockResolvedValueOnce({ id: 'pedcard-1' } as never);
 
     await app.ready();
     const res = await app.inject({
@@ -92,23 +105,22 @@ describe('pedCardRoutes', () => {
       payload: {
         value: 100,
         type: 'INITIAL_BALANCE',
+        transactionId: null,
       },
     });
 
     expect(res.statusCode).toBe(201);
-    expect(pedCard.createEntry).toHaveBeenCalledWith({
+    expect(pedcardServiceMocks.create).toHaveBeenCalledWith({
       userId: 'user-1',
-      transactionId: null,
-      type: 'INITIAL_BALANCE',
-      value: 100,
+      body: { transactionId: undefined, type: 'INITIAL_BALANCE', value: 100 },
     });
-    expect(res.body).toBe('');
+    expect(res.json()).toEqual({ id: 'pedcard-1' });
     await app.close();
   });
 
   it('PATCH /api/v1/pedcard/:id updates an entry with only value', async () => {
-    const { app, pedCard } = buildApp();
-    pedCard.update = vi.fn().mockResolvedValueOnce({ id: 'pedcard-1' });
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.update).mockResolvedValueOnce({ id: 'pedcard-1' } as never);
 
     await app.ready();
     const res = await app.inject({
@@ -120,7 +132,7 @@ describe('pedCardRoutes', () => {
     });
 
     expect(res.statusCode).toBe(200);
-    expect(pedCard.update).toHaveBeenCalledWith({
+    expect(pedcardServiceMocks.update).toHaveBeenCalledWith({
       userId: 'user-1',
       id: 'pedcard-1',
       body: { value: 150 },
