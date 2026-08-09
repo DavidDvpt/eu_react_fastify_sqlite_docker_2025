@@ -18,7 +18,7 @@ import type {
   TransactionStatusDto,
   TransactionTypeDto,
 } from "@eu/types";
-import TransactionsApi from "@/lib/services/transactionsApi";
+import TransactionsApi from "@/shared/services/transactionsApi";
 
 function TransactionPanelContent({
   item,

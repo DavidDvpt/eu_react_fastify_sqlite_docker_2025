@@ -1,9 +1,7 @@
 import { SortHelper } from '@eu/helpers';
-import { categoryFormSchema } from '@eu/zod-schemas';
 
-import { type DatabaseClient } from '../../../../prisma/prismaClient.js';
-
-import type { Category } from '../../../../prisma/generated/client.js';
+import type { Category } from '#prisma/generated/client.js';
+import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { CategoryDto, CategoryFormBody, CategorySortKey, SortOptions } from '@eu/types';
 
 export class CategoryService {

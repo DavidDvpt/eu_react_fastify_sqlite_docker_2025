@@ -1,4 +1,4 @@
-import type { Item } from "./itemTypes";
+import type { Item } from "./item.type";
 
 type GenericFilterStateValue = string | boolean | null;
 type GenericFilterState = Record<string, GenericFilterStateValue>;
@@ -118,11 +118,7 @@ export interface DisplayedFields {
 }
 
 export type GenericFilterContext =
-  | "manageCategory"
-  | "manageType"
-  | "manageItem"
-  | "inventory"
-  | "transaction";
+  "manageCategory" | "manageType" | "manageItem" | "inventory" | "transaction";
 export interface GenericFilterProps {
   className?: string;
   selectedItem?: Item | null;

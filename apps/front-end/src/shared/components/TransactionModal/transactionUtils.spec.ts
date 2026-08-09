@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getMinimumTtcWithFee } from "@/modules/transactions/helpers";
+import { getMinimumTtcWithFee } from "@/shared/helpers/transactionHelpers";
 
 import {
   computeFeePricing,

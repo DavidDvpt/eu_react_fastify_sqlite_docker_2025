@@ -4,7 +4,7 @@ import { createRunningTransactionsColumns } from "@/shared/components/GenericLis
 import { FormatTools } from "@/shared/tools/formatTools";
 import { useUpdateTransactionsStatus } from "../hooks";
 import useRunningTransactions from "../hooks/useRunningTransactions";
-import type { TransactionAction, TransactionWithItem } from "../types";
+import type { TransactionAction, TransactionDto } from "../types";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ function RunningTransactionsSection() {
 
   const openTransactionModal = (
     action: TransactionAction,
-    row: TransactionWithItem,
+    row: TransactionDto,
   ) => {
     const query = {
       action,

@@ -1,18 +1,16 @@
-import type { Item, Items } from "./itemTypes";
-import type { Type, Types } from "./typeTypes";
-import type { Categories, Category } from "./categoryTypes";
 import type { GenericFilterAvailability } from "./genericFilterType";
 import type { MANAGE_TABS } from "@/pages/managePage/utils";
+import type { CategoryDto, ItemDto, TypeDto } from "@eu/types";
 
 export type ManageTab = (typeof MANAGE_TABS)[number];
 
-export type ManageListRow = Category | Type | Item;
+export type ManageListRow = CategoryDto | TypeDto | ItemDto;
 
 export type ManageTableProps = {
   activeTab: ManageTab;
-  categories: Categories;
-  typesRows: Types;
-  itemsRows: Items;
+  categories: CategoryDto[];
+  typesRows: TypeDto[];
+  itemsRows: ItemDto[];
   availability: GenericFilterAvailability[];
 };
 

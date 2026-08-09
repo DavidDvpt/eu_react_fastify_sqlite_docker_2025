@@ -1,6 +1,4 @@
-export * from "./categoryTypes";
-export * from "./typeTypes";
-export * from "./itemTypes";
+export * from "./item.type.js";
 export * from "./navbarTypes";
 export * from "./containerTypes";
 export * from "./genericFilterType";

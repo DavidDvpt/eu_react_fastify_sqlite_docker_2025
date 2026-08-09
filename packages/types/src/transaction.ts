@@ -6,6 +6,7 @@ import {
   transactionStatusDtoSchema,
   transactionTypeSchema,
   transactionCancelDtoSchema,
+  transactionQuerySchema,
 } from "@eu/zod-schemas";
 
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
@@ -15,6 +16,7 @@ export type TransactionStatusPatchDto = z.infer<
 >;
 export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
+export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
 export type TransactionFormBody = z.output<typeof transactionBodySchema>;
 
 export type TransactionDto = z.infer<typeof transactionSchemaDto>;

@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
@@ -8,12 +8,17 @@ import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 import InventoryList from "./inventory/components/InventoryList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
 import InventoryListFilter from "./inventory/components/InventoryListFilter";
+import { useQueryParams } from "@/shared/hooks";
 
 function InventoryPage() {
-  const { itemId } = useParams();
+  const location = useLocation();
+  const { category, type } = useQueryParams();
+  console.log(location);
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
-  const hasSelectedItem = Boolean(itemId);
+  const hasSelectedItem = Boolean(id);
 
   return (
     <Panel className="min-h-0 gap-2 mx-0">
@@ -30,6 +35,8 @@ function InventoryPage() {
           shadow={false}
         >
           <InventoryList
+            categoryId={category as string}
+            typeId={type as string}
             className={cn(
               "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
               hasSelectedItem

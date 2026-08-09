@@ -1,26 +1,26 @@
 import { useMemo } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { GenericList } from "@/shared/components";
-import { STOCK_ROUTE } from "@/shared/services";
-import useInventoryList from "../useInventoryList";
-import type { ItemInventory } from "../stockTypes";
 import { stockColumns } from "../utils/stockColumns";
 import { FormatTools } from "@/shared/tools/formatTools";
 import { VIEW_MODE_PARAM_KEY } from "@/shared/contants";
 import type { GenericListViewMode } from "@/shared/types/genericListTypes";
+import type { ItemWithStock } from "@/shared/types";
+
+import useItemStock from "@/shared/hooks/useItemStock";
 
 type InventoryListProps = {
   className?: string;
+  categoryId?: string;
+  typeId?: string;
 };
 
-function InventoryList({ className }: InventoryListProps) {
+function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id } = useParams();
-
-  const { currentStock, isLoading, isError, totalStockValue } =
-    useInventoryList();
+  console.log(categoryId, typeId);
+  const { itemsWithStock, isLoading, isError } = useItemStock({});
 
   const searchParams = useMemo(
     () => new URLSearchParams(location.search),
@@ -29,15 +29,26 @@ function InventoryList({ className }: InventoryListProps) {
   const showAllItems = searchParams.has("showAllItems");
 
   const visibleStock = useMemo(
-    () => currentStock.filter((item) => showAllItems || item.quantity !== 0),
-    [currentStock, showAllItems],
+    () =>
+      itemsWithStock
+        ?.filter((item) => showAllItems || item.stock !== 0)
+        .filter(
+          (f) =>
+            (f.typeId === typeId || typeId === undefined) &&
+            (f.type?.categoryId === categoryId || categoryId === undefined),
+        ),
+    [itemsWithStock, showAllItems, categoryId, typeId],
   );
 
+  const totalStockValue = useMemo(() => {
+    return visibleStock.reduce((t, c) => {
+      const n = t + c.stock * c.value;
+      return n;
+    }, 0);
+  }, [visibleStock]);
+
   const onSelectedItem = (itemId: string) => {
-    const path =
-      id === null && itemId
-        ? STOCK_ROUTE.replace(":id", itemId)
-        : `/inventory/${itemId}`;
+    const path = `/inventory/${itemId}`;
 
     navigate({
       pathname: path,
@@ -48,7 +59,7 @@ function InventoryList({ className }: InventoryListProps) {
   const urlViewMode = searchParams.get(VIEW_MODE_PARAM_KEY);
 
   return (
-    <GenericList<ItemInventory>
+    <GenericList<ItemWithStock>
       columns={stockColumns}
       className={className}
       rows={visibleStock}
@@ -57,7 +68,7 @@ function InventoryList({ className }: InventoryListProps) {
       isLoading={isLoading}
       isError={isError}
       loadingMessage="Chargement de l'inventaire..."
-      errorMessage={`Impossible de charger l'inventaire (endpoint attendu: ${STOCK_ROUTE}).`}
+      errorMessage={`Impossible de charger l'inventaire.`}
       emptyMessage={
         showAllItems
           ? "Aucun item trouvé."

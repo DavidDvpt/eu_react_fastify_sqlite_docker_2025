@@ -2,7 +2,7 @@ import {
   getMinimumBuyTtc,
   getMinimumTtcWithFee,
   sanitizeNonNegative,
-} from "@/modules/transactions/helpers";
+} from "@/shared/helpers/transactionHelpers";
 import type {
   TransactionPricingInput,
   TransactionPricingValues,

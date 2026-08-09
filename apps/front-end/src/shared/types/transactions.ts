@@ -11,7 +11,7 @@ import type {
   TransactionStatusPatchDto,
 } from "@eu/types";
 
-export interface TransactionWithItem extends TransactionDto {
+export interface TransactionDto extends TransactionDto {
   item: ItemDto;
 }
 
@@ -121,9 +121,9 @@ export type RunningTransaction = {
 };
 
 export type CreateRunningTransactionsColumnsOptions = {
-  isRowPending: (row: TransactionWithItem) => boolean;
+  isRowPending: (row: TransactionDto) => boolean;
   onStatusChange: (
-    row: TransactionWithItem,
+    row: TransactionDto,
     status: TransactionStatusPatchDto,
   ) => void;
 };

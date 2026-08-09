@@ -37,11 +37,11 @@ export class InventoryService {
 
   async getStocks({
     userId,
-    isActive,
+    isActive = true,
     sort,
   }: {
     userId: string;
-    isActive: boolean;
+    isActive?: boolean;
     sort: SortOptions<LotSortKey>;
   }) {
     const lots = await this.getLots({

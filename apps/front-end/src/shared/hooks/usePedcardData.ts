@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ApiStatus } from "@/lib/axios/ApiStatus";
-import { getPedCard } from "@/lib/services";
 
 import { useAppSelector } from "@/store/hooks";
 import { selectAuthStatus, selectIsLoggued } from "@/store";
+import pedcardApi from "@/shared/services/pedCardApi";
 
 const PED_CARD_QUERY_KEY = ["pedCard"];
 
@@ -15,9 +15,10 @@ function usePedCard() {
   const enabled = isLoggued && authStatus === ApiStatus.FULFILLED;
   const clearOnDisable = true;
 
+  const ps = new pedcardApi();
   const query = useQuery({
     queryKey: PED_CARD_QUERY_KEY,
-    queryFn: getPedCard,
+    queryFn: ps.balance,
     enabled: isLoggued,
     staleTime: Infinity,
     refetchOnMount: true,

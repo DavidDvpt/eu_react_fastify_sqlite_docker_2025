@@ -1,9 +1,10 @@
 import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
-import type { Category, GenericListColumn } from "@/shared/types";
+import type { GenericListColumn } from "@/shared/types";
+import type { CategoryDto } from "@eu/types";
 
 const createCategoryColumns = (
   currentUserId?: string,
-): GenericListColumn<Category>[] => [
+): GenericListColumn<CategoryDto>[] => [
   {
     key: "name",
     label: "Nom",

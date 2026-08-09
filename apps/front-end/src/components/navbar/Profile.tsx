@@ -10,7 +10,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import PedCardModal from "../../shared/components/pedCardModal/PedCardModal";
-import usePedCard from "@/shared/hooks/usePedCard";
+import usePedCard from "@/shared/hooks/usePedcardData";
 import { authMeThunk } from "@/store";
 
 function Profile() {

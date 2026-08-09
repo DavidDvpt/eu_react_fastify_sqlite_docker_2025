@@ -11,9 +11,8 @@ const { mockCreatePedCardEntry } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/lib/services", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/services")>(
-    "@/lib/services",
-  );
+  const actual =
+    await vi.importActual<typeof import("@/lib/services")>("@/lib/services");
 
   return {
     ...actual,
@@ -129,11 +128,7 @@ describe("PedCardForm", () => {
 
     const { container } = render(
       <QueryClientProvider client={queryClient}>
-        <PedCardForm
-          initialized={true}
-          balance={100}
-          onSuccess={onSuccess}
-        />
+        <PedCardForm initialized={true} balance={100} onSuccess={onSuccess} />
       </QueryClientProvider>,
     );
 

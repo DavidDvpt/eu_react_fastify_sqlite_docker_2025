@@ -1,10 +1,11 @@
 export { default as useInventoryMutation } from "./useInventoryMutation";
 export { default as useInventoryRefresh } from "./useInventoryRefresh";
 export { default as useNavLinks } from "./useNavLinks";
-export { default as usePedCard } from "./usePedCard";
-export { default as useStock } from "./useStock";
+export { default as usePedCard } from "./usePedcardData";
+export { default as useQueryParams } from "./useQueryParams";
+export { default as useStock } from "./useInventoryData";
 export { default as useStockDetails } from "./useStockDetails";
-export { default as useTransaction } from "./useTransactions";
+export { default as useTransaction } from "./useTransactionsData";
 export { default as useTransactionAutoPricing } from "./useTransactionAutoPricing";
 export { default as useRunningTransaction } from "./useRunningTransactions";
 export { default as useUpdateTransactionsStatus } from "./useUpdateTransactionsStatus";

@@ -4,7 +4,7 @@ import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { pedCardFormDefaultValues, pedCardFormSchema } from "./pedCardSchema";
 import { Button } from "@/components/ui/button";
-import { createPedCardEntry } from "@/lib/services";
+import pedcardApi from "@/shared/services/pedCardApi";
 
 interface PedCardFormProps {
   initialized?: boolean;
@@ -27,8 +27,8 @@ function PedCardForm({
     const value = isInitialBalance
       ? data.updatedValue
       : data.updatedValue - currentBalance;
-
-    await createPedCardEntry({
+    const ps = new pedcardApi();
+    await ps.create({
       type: isInitialBalance ? "INITIAL_BALANCE" : "ADJUSTMENT",
       value,
     });

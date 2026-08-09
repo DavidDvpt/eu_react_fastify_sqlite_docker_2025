@@ -8,14 +8,8 @@ import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
 import type { GenericListColumn } from "@/shared/types";
 import { useSystemDatas } from "@/shared/hooks";
 import { createTypeColumns } from "@/shared/components/GenericList/columnDefinition/typeColumns";
-import { getTypeEditRoute, TYPES_ROUTE } from "@/lib/services/typesApi";
 import { createItemColumns } from "@/shared/components/GenericList/columnDefinition/itemColumns";
-import { getItemEditRoute, ITEMS_ROUTE } from "@/lib/services/itemsApi";
 import { createCategoryColumns } from "@/shared/components/GenericList/columnDefinition/categoryColumns";
-import {
-  CATEGORIES_ROUTE,
-  getCategoryEditRoute,
-} from "@/lib/services/categoryApi";
 
 interface UseManageListData {
   activeTab: ManageTab;
@@ -51,7 +45,7 @@ function useManageListData({
 
   const contentValues = useMemo<ManageListDataResult>(() => {
     switch (activeTab) {
-      case "type":
+      case "type": {
         return {
           list: typesByCategory(params.category) as ManageListRow[],
           isPending: isTypesPending,
@@ -59,9 +53,10 @@ function useManageListData({
           columns: createTypeColumns(
             currentUserId,
           ) as GenericListColumn<ManageListRow>[],
-          errorMessage: `Impossible de charger les types (endpoint attendu: ${TYPES_ROUTE}).`,
-          editRoute: getTypeEditRoute,
+          errorMessage: "Impossible de charger les types.",
+          editRoute: (id) => `/types/${id}`,
         };
+      }
       case "item":
         return {
           list: filteredItems({
@@ -73,8 +68,8 @@ function useManageListData({
           columns: createItemColumns(
             currentUserId,
           ) as GenericListColumn<ManageListRow>[],
-          errorMessage: `Impossible de charger les items (endpoint attendu: ${ITEMS_ROUTE}).`,
-          editRoute: getItemEditRoute,
+          errorMessage: `Impossible de charger les items.`,
+          editRoute: (id) => `/items/${id}`,
         };
       default:
       case "category":
@@ -85,8 +80,8 @@ function useManageListData({
           columns: createCategoryColumns(
             currentUserId,
           ) as GenericListColumn<ManageListRow>[],
-          errorMessage: `Impossible de charger les categories (endpoint attendu: ${CATEGORIES_ROUTE}).`,
-          editRoute: getCategoryEditRoute,
+          errorMessage: `Impossible de charger les categories.`,
+          editRoute: (id) => `/categories/${id}`,
         };
     }
   }, [

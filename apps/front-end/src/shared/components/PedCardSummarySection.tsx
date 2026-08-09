@@ -1,6 +1,6 @@
 import { GenericList } from "@/shared/components";
 import useInventoryList from "@/pages/inventoryPage/inventory/useInventoryList";
-import usePedCard from "@/shared/hooks/usePedCard";
+import usePedCard from "@/shared/hooks/usePedcardData";
 import useRunningTransactions from "@/shared/hooks/useRunningTransactions";
 import FormatTools from "@/shared/tools/formatTools";
 import { useMemo } from "react";
@@ -25,7 +25,7 @@ function PedCardSummarySection() {
     rows: runningRows,
     isLoading: isRunningTransactionsLoading,
     isError: isRunningTransactionsError,
-  } = useRunningTransactions();
+  } = useRunningTransactions({ status: "RUNNING" });
   const {
     totalStockValue,
     isLoading: isInventoryLoading,
@@ -44,11 +44,11 @@ function PedCardSummarySection() {
         label: "Montant de la ped card",
         amount: FormatTools.toSafeNumber(pedCard?.balance),
       },
-      {
-        key: "stock-value",
-        label: "Valeur totale du stock (TT)",
-        amount: totalStockValue,
-      },
+      // {
+      //   key: "stock-value",
+      //   label: "Valeur totale du stock (TT)",
+      //   amount: totalStockValue,
+      // },
       {
         key: "running-sales",
         label: "Total des ventes en cours (TTC)",

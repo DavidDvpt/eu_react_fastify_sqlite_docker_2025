@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import type { UpdateTransactionInput } from "../types";
-import { TransactionsApi } from "@/lib/services";
+import TransactionsApi from "@/shared/services/transactionsApi";
 
 function useUpdateTransactionsStatus() {
   const queryClient = useQueryClient();

@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { genericDateSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
+import { itemDtoSchema } from "./itemSchemas.js";
 
 export const transactionTypeSchema = z.enum([
   "BUY",
@@ -56,4 +57,5 @@ export const transactionSchemaDto = z.object({
   userId: z.string(),
   ...genericDateSchema.shape,
   entries: transactionLotSchema.array(),
+  item: itemDtoSchema.optional(),
 });

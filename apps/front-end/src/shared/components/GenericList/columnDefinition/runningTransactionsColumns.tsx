@@ -3,13 +3,13 @@ import FormatTools from "@/shared/tools/formatTools";
 import type {
   CreateRunningTransactionsColumnsOptions,
   GenericListColumn,
-  TransactionWithItem,
+  TransactionDto,
 } from "@/shared/types";
 
 const createRunningTransactionsColumns = ({
   isRowPending,
   onStatusChange,
-}: CreateRunningTransactionsColumnsOptions): GenericListColumn<TransactionWithItem>[] => [
+}: CreateRunningTransactionsColumnsOptions): GenericListColumn<TransactionDto>[] => [
   {
     key: "image",
     label: "Image",

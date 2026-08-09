@@ -1,4 +1,4 @@
-import { getCategories, getItems, getTypes } from "@/lib/services";
+import { CategoriesApi, ItemsApi, TypesApi } from "@/shared/services";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store/reducers/auth";
 import type { ItemDtos } from "@eu/types";
@@ -9,10 +9,13 @@ export default function useSystemDatas() {
   const logged = useAppSelector(selectIsLoggued);
   const queryClient = useQueryClient();
 
+  const catApi = new CategoriesApi();
+  const typesApi = new TypesApi();
+  const itemsApi = new ItemsApi();
   /* CATEGORIES */
   const categories = useQuery({
     queryKey: ["categories"],
-    queryFn: getCategories,
+    queryFn: () => catApi.get(),
     enabled: logged,
     staleTime: Infinity,
   });
@@ -24,7 +27,7 @@ export default function useSystemDatas() {
   /* TYPES */
   const t = useQuery({
     queryKey: ["types"],
-    queryFn: getTypes,
+    queryFn: () => typesApi.get(),
     enabled: logged,
     staleTime: Infinity,
   });
@@ -53,7 +56,7 @@ export default function useSystemDatas() {
   /* ITEMS */
   const i = useQuery({
     queryKey: ["items"],
-    queryFn: getItems,
+    queryFn: () => itemsApi.get(),
     enabled: logged,
     staleTime: Infinity,
   });

@@ -1,14 +1,5 @@
 import type { ReactNode } from "react";
 
-type StockRowApi = {
-  itemId: string;
-  imageUrlId: string;
-  name: string;
-  unitPrice: number | string;
-  quantity: number | string;
-  totalPrice: number | string;
-};
-
 type StockRow = {
   itemId: string;
   imageUrlId: string;
@@ -18,7 +9,6 @@ type StockRow = {
   totalPrice: number;
 };
 
-type StockApi = StockRowApi[];
 type Stock = StockRow[];
 
 type StockLotInApi = {
