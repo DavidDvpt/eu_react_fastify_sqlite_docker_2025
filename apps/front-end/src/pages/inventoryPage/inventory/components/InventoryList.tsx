@@ -78,12 +78,6 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
       allowCardView
       showViewModeSwitch={false}
       viewMode={urlViewMode as GenericListViewMode | null}
-      // rowClassName={(row) =>
-      //   [
-      //     "hover:bg-muted/30 cursor-pointer",
-      //     selectedItem === row.id ? "bg-muted/40" : "",
-      //   ].join(" ")
-      // }
       footer={`Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`}
     />
   );

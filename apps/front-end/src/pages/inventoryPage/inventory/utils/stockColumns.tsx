@@ -25,7 +25,7 @@ const stockColumns: GenericListColumn<
     accessor: "name",
     fillRemainingSpace: true,
     minWidth: 280,
-    bodyCellClassName: "font-medium",
+    bodyCellClassName: "font-medium pl-1",
   },
   {
     key: "quantity",

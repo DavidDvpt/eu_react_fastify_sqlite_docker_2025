@@ -106,7 +106,7 @@ function GenericListBody<T>({
                   <div
                     key={column.key}
                     className={cn(
-                      "flex min-w-0 overflow-hidden px-1 text-black",
+                      "flex min-w-0 overflow-hidden text-black",
                       alignClass(column.align),
                       column.bodyCellClassName,
                       !isActionCell && onRowClick ? "cursor-pointer" : "",
@@ -122,13 +122,7 @@ function GenericListBody<T>({
                           : undefined
                     }
                   >
-                    {column.kind === "image" ? (
-                      <div className="flex h-full w-full items-center justify-center">
-                        <GenericCellRenderer column={column} row={row} />
-                      </div>
-                    ) : (
-                      <GenericCellRenderer column={column} row={row} />
-                    )}
+                    <GenericCellRenderer column={column} row={row} />
                   </div>
                 );
               })}

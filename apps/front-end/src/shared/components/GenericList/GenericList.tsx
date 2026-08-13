@@ -61,13 +61,11 @@ function GenericList<T>({
           )}
         >
           {isLoading ? (
-            <div className="px-4 py-4 text-table-body-text">
-              {loadingMessage}
-            </div>
+            <div className="p-4 text-table-body-text">{loadingMessage}</div>
           ) : isError ? (
-            <div className="px-4 py-4 text-destructive-500">{errorMessage}</div>
+            <div className="p-4 text-destructive-500">{errorMessage}</div>
           ) : rows.length === 0 ? (
-            <div className="px-4 py-4 text-table-body-text">{emptyMessage}</div>
+            <div className="p-4 text-table-body-text">{emptyMessage}</div>
           ) : (
             <GenericListBody
               columns={columns}
