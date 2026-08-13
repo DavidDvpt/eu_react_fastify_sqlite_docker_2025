@@ -63,10 +63,9 @@ describe('TransactionService', () => {
       updatedAt: null,
       quantity: 5,
       entries: [
-        { quantity: 2, lotId: 'lot-1' },
-        { quantity: 3, lotId: 'lot-2' },
+        { quantity: 2, lotId: 'lot-1', lot: { itemId: 'item-1' } },
+        { quantity: 3, lotId: 'lot-2', lot: { itemId: 'item-1' } },
       ],
-      itemId: 'item-1',
       userId: 'user-1',
       status: 'RUNNING',
       transactionType: 'SELL',
@@ -127,38 +126,42 @@ describe('TransactionService', () => {
     expect(all[0]?.status).toBe('SOLDED');
   });
 
-  it('reads one running transaction with itemId and summed quantity', async () => {
+  it('lists running transactions and keeps itemId on entries', async () => {
     const prisma = {
       transaction: {
-        findUnique: vi.fn().mockResolvedValue({
-          id: 'transaction-1',
-          tt: 100,
-          fee: 12,
-          ttc: 112,
-          lines: [
-            { quantity: 2, lot: { item_id: 'item-1' } },
-            { quantity: 3, lot: { item_id: 'item-1' } },
-          ],
-        }),
+        findMany: vi.fn().mockResolvedValue([
+          {
+            id: 'transaction-1',
+            tt: 100,
+            fee: 12,
+            ttc: 112,
+            created_at: '2026-08-01T10:00:00.000Z',
+            updated_at: null,
+            user_id: 'user-1',
+            status: 'RUNNING',
+            transaction_type: 'SELL',
+            lines: [
+              { quantity: 2, lot_id: 'lot-1', lot: { item_id: 'item-1' } },
+              { quantity: 3, lot_id: 'lot-2', lot: { item_id: 'item-1' } },
+            ],
+          },
+        ]),
       },
     };
     const service = new TransactionService(prisma as any);
 
-    const found = await service.getRunningTransactions({
+    const found = await service.getAll({
       userId: 'user-1',
-      id: 'transaction-1',
+      status: 'RUNNING',
     });
 
-    expect(prisma.transaction.findUnique).toHaveBeenCalledWith({
-      where: { user_id: 'user-1', id: 'transaction-1' },
-      select: {
-        id: true,
-        tt: true,
-        fee: true,
-        ttc: true,
+    expect(prisma.transaction.findMany).toHaveBeenCalledWith({
+      where: { user_id: 'user-1', status: 'RUNNING', transaction_type: undefined, lines: undefined },
+      include: {
         lines: {
           select: {
             quantity: true,
+            lot_id: true,
             lot: {
               select: {
                 item_id: true,
@@ -168,16 +171,24 @@ describe('TransactionService', () => {
         },
       },
     });
-    expect(found).toEqual({
-      id: 'transaction-1',
-      tt: 100,
-      fee: 12,
-      ttc: 112,
-      itemId: 'item-1',
-      _sum: {
+    expect(found).toEqual([
+      {
+        id: 'transaction-1',
+        tt: 100,
+        fee: 12,
+        ttc: 112,
+        createdAt: '2026-08-01T10:00:00.000Z',
+        updatedAt: null,
         quantity: 5,
+        entries: [
+          { quantity: 2, lotId: 'lot-1', lot: { itemId: 'item-1' } },
+          { quantity: 3, lotId: 'lot-2', lot: { itemId: 'item-1' } },
+        ],
+        userId: 'user-1',
+        status: 'RUNNING',
+        transactionType: 'SELL',
       },
-    });
+    ]);
   });
 
   it('creates a BUY transaction, pedcard entries and one lot', async () => {

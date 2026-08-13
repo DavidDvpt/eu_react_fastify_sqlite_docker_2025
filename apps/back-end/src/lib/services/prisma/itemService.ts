@@ -88,11 +88,13 @@ export class ItemService {
     itemId,
     isActive,
     sort,
+    hasInitialValue,
   }: {
     itemId: string;
     userId: string;
     isActive?: boolean;
     sort?: SortOptions<LotSortKey>;
+    hasInitialValue?: boolean;
   }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({
@@ -100,6 +102,7 @@ export class ItemService {
       itemId,
       isActive,
       sort,
+      hasInitialValue,
     });
 
     return lots;

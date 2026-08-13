@@ -5,7 +5,7 @@ import StockApi from "@/shared/services/inventoryApi";
 import type { StockQuery } from "@eu/types";
 import { ItemsApi } from "@/shared/services";
 
-function useInventoryData({ itemId }: StockQuery = {}) {
+function useInventoryStockData({ itemId }: StockQuery = {}) {
   const stockApi = new StockApi();
   const itemApi = new ItemsApi();
   const queryClient = useQueryClient();
@@ -49,4 +49,4 @@ function useInventoryData({ itemId }: StockQuery = {}) {
   };
 }
 
-export default useInventoryData;
+export default useInventoryStockData;

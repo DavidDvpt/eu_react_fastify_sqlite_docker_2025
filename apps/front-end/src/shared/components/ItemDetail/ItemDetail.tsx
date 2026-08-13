@@ -5,18 +5,26 @@ import { Section } from "../Containers";
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useMemo } from "react";
+import ItemImage from "@/shared/components/itemImage/ItemImage";
 
 function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
+  const totalValue = useMemo(() => {
+    if (!item) return 0;
+    return item.stock * item.value;
+  }, [item]);
+
   if (!item) return null;
+
   const itemId = item.id;
 
   const openTransactionModal = (action: TransactionAction) => {
     const query = {
       action,
-      itemId,
+      itemId: item,
       ttc: 0,
       quantity: 1,
       closePath: `/inventory/${itemId ?? ""}`,
@@ -45,7 +53,7 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
   const sellButton = (
     <Button
       onClick={() => openTransactionModal("sell")}
-      disabled={item.quantity <= 0}
+      disabled={item.stock <= 0}
       className="w-[100px]"
       size="sm"
       variant="primary"
@@ -58,23 +66,19 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
     <Section className="flex flex-col gap-4 p-2 m-2">
       <h1 className="m-0 p-0">{item.name}</h1>
       <div className="flex">
-        <img
-          src={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
+        <ItemImage
+          url={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
           alt={item.name}
-          style={{
-            maxWidth: 120,
-            maxHeight: 200,
-            width: "auto",
-            height: "auto",
-            objectFit: "contain",
-          }}
+          size="medium"
         />
 
         <div className="px-4 gap-1 text-sm">
-          <p className="my-0 mb-2">Prix unitaire: {item.value}</p>
-          <p className="my-0 mb-2">Quantité: {item.quantity}</p>
+          <p className="my-0 mb-2">
+            {`Prix unitaire: ${FormatTools.pedFormat().format(item.value)} Ped(s)`}
+          </p>
+          <p className="my-0 mb-2">Quantité: {item.stock}</p>
           <p className="my-0">
-            Valeur: {FormatTools.pedFormat().format(item.totalValue)} Peds
+            {`Valeur: ${FormatTools.pedFormat().format(totalValue)} Ped(s)`}
           </p>
         </div>
       </div>

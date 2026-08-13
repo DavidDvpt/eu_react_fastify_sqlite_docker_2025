@@ -1,9 +1,10 @@
 import { SortHelper } from '@eu/helpers';
 
+import type { Prisma } from '#prisma/generated/client.js';
 import type { LotDto, LotFormBody, LotSortKey, SortOptions } from '@eu/types';
 
-import { type Lot } from '#prisma/generated/client.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
+import { lotWithTransactionLotsInclude, type LotWithLines } from '#src/types/prismaApi/lots.js';
 const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 
 /**
@@ -12,10 +13,58 @@ const STOCK_INSUFFISENT_AVAILABLE_QUANTITY = 'INSUFFISENT AVAILABLE QUANTITY';
 export class LotService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  private async findLots({
+    userId,
+    isActive,
+    itemId,
+    sort,
+    hasInitialValue,
+  }: {
+    userId: string;
+    itemId?: string;
+    isActive?: boolean;
+    sort?: SortOptions<LotSortKey>;
+    hasInitialValue?: boolean;
+  }) {
+    const rows = await this.prisma.lot.findMany({
+      where: {
+        user_id: userId,
+        is_active: isActive,
+        item_id: itemId,
+      },
+      include: hasInitialValue
+        ? {
+            transaction_lots: {
+              where: {
+                transaction: {
+                  transaction_type: {
+                    notIn: ['SELL'],
+                  },
+                },
+              },
+              select: { quantity: true },
+            },
+          }
+        : undefined,
+    });
+
+    const parsed = rows.map((m) => this.parsePrismaToDto(m));
+
+    SortHelper.sortByKey(parsed, sort?.key ?? 'createdAt', sort?.order);
+
+    return parsed;
+  }
+
   /**
    * Convertit un modèle Prisma `Lot` vers le DTO utilisé par l'application.
    */
-  private parsePrismaToDto(body: Lot) {
+  private parsePrismaToDto(
+    body:
+      | LotWithLines
+      | Prisma.LotGetPayload<{
+          include: undefined;
+        }>
+  ) {
     const parsed: LotDto = {
       id: body.id,
       itemId: body.item_id,
@@ -26,6 +75,10 @@ export class LotService {
       lotType: body.lot_type,
       createdAt: body.date_created,
       updatedAt: body.date_updated ?? null,
+      initialQuantity:
+        'transaction_lots' in body
+          ? body.transaction_lots.reduce((total, line) => total + line.quantity, 0)
+          : 0,
     };
 
     return parsed;
@@ -40,15 +93,36 @@ export class LotService {
     isActive,
     itemId,
     sort,
+    hasInitialValue,
   }: {
     userId: string;
     itemId?: string;
     isActive?: boolean;
     sort?: SortOptions<LotSortKey>;
+    hasInitialValue?: boolean;
   }) {
     const rows = await this.prisma.lot.findMany({
-      where: { user_id: userId, is_active: isActive, item_id: itemId },
+      where: {
+        user_id: userId,
+        is_active: isActive,
+        item_id: itemId,
+      },
+      include: hasInitialValue
+        ? {
+            transaction_lots: {
+              where: {
+                transaction: {
+                  transaction_type: {
+                    notIn: ['SELL'],
+                  },
+                },
+              },
+              select: { quantity: true },
+            },
+          }
+        : undefined,
     });
+
     const parsed = rows.map((m) => this.parsePrismaToDto(m));
 
     SortHelper.sortByKey(parsed, sort?.key ?? 'createdAt', sort?.order);
@@ -60,7 +134,10 @@ export class LotService {
    * Retourne un lot par son identifiant pour un utilisateur donné.
    */
   async getById({ id, userId }: { id: string; userId: string }) {
-    const row = await this.prisma.lot.findUnique({ where: { user_id: userId, id } });
+    const row = await this.prisma.lot.findUnique({
+      where: { user_id: userId, id },
+      include: lotWithTransactionLotsInclude,
+    });
 
     if (!row) return null;
 
@@ -89,6 +166,7 @@ export class LotService {
         item_id: itemId,
         is_active: isActive,
       },
+      include: lotWithTransactionLotsInclude,
     });
 
     const parsed = rows.map((m) => this.parsePrismaToDto(m));

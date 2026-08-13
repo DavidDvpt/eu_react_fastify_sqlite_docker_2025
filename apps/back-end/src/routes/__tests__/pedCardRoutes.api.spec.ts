@@ -46,14 +46,14 @@ describe('pedCardRoutes', () => {
     vi.clearAllMocks();
   });
 
-  it('GET /api/v1/pedcard/balance returns 200 when the user has an INITIAL_BALANCE row', async () => {
+  it('GET /api/v1/pedcard/check returns 200 when the user has an INITIAL_BALANCE row', async () => {
     const { app } = buildApp();
     vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(true);
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/pedcard/balance`,
+      url: `${API_PREFIX}/pedcard/check`,
     });
 
     expect(res.statusCode).toBe(200);
@@ -62,14 +62,14 @@ describe('pedCardRoutes', () => {
     await app.close();
   });
 
-  it('GET /api/v1/pedcard/can-pay returns 400 when the user has no INITIAL_BALANCE row', async () => {
+  it('GET /api/v1/pedcard/check returns 400 when the user has no INITIAL_BALANCE row', async () => {
     const { app } = buildApp();
     vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(false);
 
     await app.ready();
     const res = await app.inject({
       method: 'GET',
-      url: `${API_PREFIX}/pedcard/can-pay`,
+      url: `${API_PREFIX}/pedcard/check`,
     });
 
     expect(res.statusCode).toBe(400);
@@ -94,6 +94,22 @@ describe('pedCardRoutes', () => {
     await app.close();
   });
 
+  it('GET /api/v1/pedcard/can-pay returns the service result', async () => {
+    const { app } = buildApp();
+    vi.mocked(pedcardServiceMocks.canPay).mockResolvedValueOnce(true);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/pedcard/can-pay?value=42`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(pedcardServiceMocks.canPay).toHaveBeenCalledWith({ userId: 'user-1', value: 42 });
+    expect(res.json()).toEqual({ canPay: true });
+    await app.close();
+  });
+
   it('POST /api/v1/pedcard creates an entry and returns 201', async () => {
     const { app } = buildApp();
     vi.mocked(pedcardServiceMocks.create).mockResolvedValueOnce({ id: 'pedcard-1' });
@@ -105,7 +121,6 @@ describe('pedCardRoutes', () => {
       payload: {
         value: 100,
         type: 'INITIAL_BALANCE',
-        transactionId: null,
       },
     });
 

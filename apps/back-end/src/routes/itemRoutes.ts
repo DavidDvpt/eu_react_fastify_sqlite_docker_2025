@@ -41,13 +41,16 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/:id/lots', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
-    const { sortKey, sortOrder, isActive } = lotQuerySchema.partial().parse(request.query);
+    const { sortKey, sortOrder, isActive, hasInitialValue } = lotQuerySchema
+      .partial()
+      .parse(request.query);
 
     const lots = await is.getLots({
       userId,
       itemId: id,
       isActive,
       sort: sortKey && { key: sortKey, order: sortOrder },
+      hasInitialValue,
     });
 
     if (!lots) return reply.code(404).send({ message: 'Item not found' });

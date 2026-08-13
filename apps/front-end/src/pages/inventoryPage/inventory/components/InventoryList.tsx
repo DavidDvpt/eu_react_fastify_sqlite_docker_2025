@@ -19,7 +19,7 @@ type InventoryListProps = {
 function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  console.log(categoryId, typeId);
+
   const { itemsWithStock, isLoading, isError } = useItemStock({});
 
   const searchParams = useMemo(

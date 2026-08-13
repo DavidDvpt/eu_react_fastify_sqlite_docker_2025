@@ -4,10 +4,10 @@ import {
   transactionSchemaDto,
   transactionStatusPatchDtoSchema,
   transactionStatusDtoSchema,
-  transactionTypeSchema,
   transactionCancelDtoSchema,
   transactionQuerySchema,
 } from "@eu/zod-schemas";
+import type { transactionTypeSchema } from "../../zodSchemas/src/transactionTypeSchema.js";
 
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
 export type TransactionStatusDto = z.output<typeof transactionStatusDtoSchema>;

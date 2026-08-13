@@ -10,7 +10,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '035EDE3E-2DBE-4377-AAA0-5B0FDB947209',
@@ -32,7 +32,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.676',
     date_updated: '2025-10-21 13:37:17.676',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '056BDFA6-5CD0-411D-BB73-4B8DB18385E1',
@@ -54,7 +54,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.683',
     date_updated: '2025-10-21 13:37:17.683',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '074A71AA-4782-4B5B-83AB-F3F2C48A3F17',
@@ -65,7 +65,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.636',
     date_updated: '2025-10-21 13:37:17.636',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '085A10BE-F4C6-4821-AACE-F8A4812FE199',
@@ -76,7 +76,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '0A7F33BC-91C4-45C0-A1DD-B1AFCF54FCE6',
@@ -87,7 +87,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '0CE80B67-D8C7-4719-AD7B-4BF4431FB537',
@@ -98,7 +98,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.633',
     date_updated: '2025-10-21 13:37:17.633',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '0E17D651-C65A-40CA-A907-3770C636FF28',
@@ -120,7 +120,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1123575E-41A8-410B-80FF-B810BAF10E4D',
@@ -131,7 +131,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '11D4CA63-87A2-4AFA-AB95-40AFB936D000',
@@ -142,7 +142,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.676',
     date_updated: '2025-10-21 13:37:17.676',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '13C0E189-D20B-4A43-AF84-355D8C92A7AC',
@@ -153,7 +153,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '14F6DC9F-CED4-4334-A925-9DDCF1FCFE6E',
@@ -175,7 +175,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.683',
     date_updated: '2025-10-21 13:37:17.683',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '18B5C6EA-CB4A-4CF7-8DE4-7E15A6E1A43A',
@@ -186,7 +186,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1BDFEC59-1960-470A-AFD4-385756B531EB',
@@ -197,7 +197,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.65',
     date_updated: '2025-10-21 13:37:17.65',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1CC95847-0276-4E3D-9C71-EB1F583C442C',
@@ -208,7 +208,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1D67A612-A424-4937-9C18-88165A4E2AAB',
@@ -219,7 +219,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1DB5715E-2E10-441C-99B9-EE228F094E5A',
@@ -230,7 +230,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1DEE6D57-1CC3-49EE-AC72-081A049BC78E',
@@ -241,7 +241,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.656',
     date_updated: '2025-10-21 13:37:17.656',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '1F382FCA-4400-4B16-AF76-C9E52397F448',
@@ -263,7 +263,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.65',
     date_updated: '2025-10-21 13:37:17.65',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '24376E62-4C30-4198-AC9F-B23E32AD758F',
@@ -274,7 +274,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.703',
     date_updated: '2025-10-21 13:37:17.703',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '25122907-BD5A-41ED-AEC6-83BDB8CBD697',
@@ -285,7 +285,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.683',
     date_updated: '2025-10-21 13:37:17.683',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '25566E04-229C-478A-B3D3-9C1573F97158',
@@ -296,7 +296,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.696',
     date_updated: '2025-10-21 13:37:17.696',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '27AEC3FA-2736-4C0F-901A-4E3BC5498B67',
@@ -307,7 +307,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.656',
     date_updated: '2025-10-21 13:37:17.656',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '28FB8C5E-C709-4279-A267-EC7F016AEB63',
@@ -318,7 +318,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '2E15A5F2-17EF-479E-9BA9-3A68BE9E5443',
@@ -329,7 +329,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '2F21C92A-65F2-4C48-A06D-928EB07C4748',
@@ -340,7 +340,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.72',
     date_updated: '2026-06-30T21:24:45.767Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '32AD3EB5-D6CC-4EF8-A5DF-5B6121A6B437',
@@ -384,7 +384,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '393400DC-A56E-4483-B983-030BF6FF8324',
@@ -395,7 +395,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3A438F8F-8F84-4A85-A222-2BB9ECC1EC29',
@@ -406,7 +406,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3B3B9EA9-D73B-468B-8CAB-9E00C9D02C41',
@@ -417,7 +417,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3B54069E-ECC8-42A1-BCBD-F393A98C71BD',
@@ -428,7 +428,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3BCB1B70-40B0-42E0-A1E9-CF52DF849B54',
@@ -450,7 +450,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3C81BEBC-F1CB-4B7D-9FED-91894469655C',
@@ -461,7 +461,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.713',
     date_updated: '2026-06-28T15:43:19.070Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3E8F2C53-DF7E-4903-B099-7205D7E3EBA4',
@@ -472,7 +472,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.683',
     date_updated: '2025-10-21 13:37:17.683',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '3EA4312B-6838-43EE-AE13-95145CB6B999',
@@ -494,7 +494,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.703',
     date_updated: '2025-10-21 13:37:17.703',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '408A8E64-5C08-4989-B14C-9A1FBF1555C8',
@@ -505,7 +505,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.696',
     date_updated: '2025-10-21 13:37:17.696',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '41AEEA04-A8DA-4619-8E18-32DB167E0FB4',
@@ -527,7 +527,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '42EF6E8D-FE84-42F1-867B-58F30052E956',
@@ -538,7 +538,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '44695F79-A3EB-4109-AAFB-EF709026F971',
@@ -549,7 +549,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.636',
     date_updated: '2025-10-21 13:37:17.636',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '46912296-561A-4893-BDBB-BDA9C93365CD',
@@ -560,7 +560,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '46D95ACE-B0ED-43DC-9E76-533C2197797C',
@@ -571,7 +571,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '472ADF07-F464-4419-B5A6-EF76EEE5EB67',
@@ -582,7 +582,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '4733AAC3-E7F2-47E4-8EA3-494021DADB60',
@@ -604,7 +604,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2025-10-21 13:37:17.71',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '49E25FA6-C120-4F4F-B283-B99AA1943EBE',
@@ -615,7 +615,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '4A20AB46-7D86-4C56-A27F-0F87E55147D1',
@@ -626,7 +626,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '4B77BAD9-CD6C-48E2-8216-F8A78C0D02B5',
@@ -637,7 +637,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '4C0A274C-885F-42E2-976D-3A2A6DA5A5B0',
@@ -648,7 +648,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '4C2BC3E5-60ED-4AA3-9D71-AE03ACD3D190',
@@ -659,7 +659,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '5117C718-E2F0-42E9-B99B-AE7599D43DF0',
@@ -670,7 +670,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '51885219-7B67-4455-BF6D-A854DEDEBE1C',
@@ -692,7 +692,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '54216053-5ED0-4A51-83FB-FABC57FDBDA3',
@@ -703,7 +703,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '56DE65BC-3498-43D8-A1E6-6725274B180A',
@@ -714,7 +714,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.703',
     date_updated: '2025-10-21 13:37:17.703',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '5B58724D-B4AA-481B-8089-79901AE7DA4A',
@@ -725,7 +725,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '5C21CED0-144B-42F9-A315-8F9B23358496',
@@ -747,7 +747,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '61F16C52-99D7-4272-AE7B-B4386C31036F',
@@ -769,7 +769,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2025-10-21 13:37:17.71',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '64F05190-A006-4FC3-9310-EB712B6E67A6',
@@ -780,7 +780,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2026-06-29T07:18:44.795Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '66444EE6-6211-4921-8BD0-EE194602ACA0',
@@ -791,7 +791,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '67B72688-3A57-4BD2-8A72-B66E9A79BD99',
@@ -813,7 +813,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '6A378FD3-4E4D-4638-B5FC-AD34999D4EF7',
@@ -824,7 +824,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '6A80628F-FB37-4D51-9828-4B0261BB0AB4',
@@ -835,7 +835,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '6B074A93-4945-4E70-BFCD-94B05F142922',
@@ -846,7 +846,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.713',
     date_updated: '2026-06-30T16:06:24.955Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '6B32FF15-0F0B-4198-94AA-CF603DFDC95C',
@@ -868,7 +868,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.676',
     date_updated: '2025-10-21 13:37:17.676',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '71646ED8-7AE9-4927-AB9D-45644C9547D7',
@@ -879,7 +879,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.713',
     date_updated: '2026-06-30T22:41:30.631Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '72B9B52B-2507-45F8-8C15-AE750E941B10',
@@ -890,7 +890,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '7665D9B5-4228-4360-B032-D82108EC1D0C',
@@ -901,7 +901,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '7822F4B5-DD33-429B-8078-BB480D4DAAFF',
@@ -912,7 +912,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.646',
     date_updated: '2025-10-21 13:37:17.646',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '79937CAA-98FB-471E-9F9E-FD0EBD3E3988',
@@ -923,7 +923,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '7A03D089-FF14-421F-B491-8F63013C54B8',
@@ -934,7 +934,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.713',
     date_updated: '2026-07-06T07:48:05.847Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '7D777695-142F-41BF-9714-2C393E6E56A5',
@@ -945,7 +945,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.636',
     date_updated: '2025-10-21 13:37:17.636',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '80A7EFC5-4754-427E-909E-4681BB209160',
@@ -967,7 +967,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.683',
     date_updated: '2025-10-21 13:37:17.683',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '82798F01-DDA5-424A-BA97-6F32085D3CB8',
@@ -978,7 +978,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8327C242-3A1B-4856-B1F5-03182004DC17',
@@ -989,7 +989,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.716',
     date_updated: '2025-10-21 13:37:17.716',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '86247834-2DFD-45AC-9675-9430E10BE140',
@@ -1000,7 +1000,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8662AA28-694D-4880-906C-9B0910FD0C27',
@@ -1011,7 +1011,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '888F5932-7E84-4B06-8509-8FE4DFC220EB',
@@ -1022,7 +1022,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2025-10-21 13:37:17.71',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8C6A8FAF-ED68-4936-87E9-7AF6D4B529EC',
@@ -1055,7 +1055,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2025-10-21 13:37:17.71',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8D67DC3E-0F93-4A85-BA85-4A2C3ED91D9E',
@@ -1066,7 +1066,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8F157E86-91EE-40B4-9C7D-2BF86CE79525',
@@ -1077,7 +1077,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '8FA05151-145E-4B8C-8045-2CE5D0878086',
@@ -1088,7 +1088,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '906C9638-F3BC-43D7-970F-CC270E304699',
@@ -1099,7 +1099,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '90A33411-26F2-4F10-8377-62D0E497A55E',
@@ -1110,7 +1110,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.666',
     date_updated: '2025-10-21 13:37:17.666',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '90BF8C5F-9A62-49E0-8422-0483DBBFFF96',
@@ -1121,7 +1121,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '913CEE7F-4EDC-4C63-9E74-D274583A22E2',
@@ -1132,7 +1132,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.646',
     date_updated: '2026-06-30T16:44:39.581Z',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '92CF56D6-A4E1-4C94-A6D1-95865D13B99F',
@@ -1143,7 +1143,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.71',
     date_updated: '2025-10-21 13:37:17.71',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '94E9D84C-71D3-4153-8070-784942E6FCD1',
@@ -1154,7 +1154,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '95879A16-9045-41F9-9AC1-23AD49502513',
@@ -1176,7 +1176,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '975EA1A5-18D1-4351-A8C8-234A2BC26D0B',
@@ -1187,7 +1187,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '979844CA-27DA-42FA-BE4D-BAE3C0AE09A6',
@@ -1198,7 +1198,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '992A309F-8748-498E-9B70-C4CB07B0D973',
@@ -1209,7 +1209,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '99D571A1-A8E3-436C-A193-B60BAED774BC',
@@ -1231,7 +1231,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.706',
     date_updated: '2025-10-21 13:37:17.706',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '9C931A70-C4FA-45DF-A6FF-BF8C7879FA24',
@@ -1242,7 +1242,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.65',
     date_updated: '2025-10-21 13:37:17.65',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '9DBFF552-7E49-4A77-BC20-787689D2838F',
@@ -1253,7 +1253,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '9EAA0835-D9CD-49E6-AC64-97141AFF3C73',
@@ -1264,7 +1264,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.676',
     date_updated: '2025-10-21 13:37:17.676',
-    is_active: true,
+    is_active: false,
   },
   {
     id: '9FC8DD6A-E103-46FE-8829-ED140A006699',
@@ -1286,7 +1286,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'A30D6ABF-AF56-4F4F-9616-9859C09886C7',
@@ -1297,7 +1297,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.7',
     date_updated: '2025-10-21 13:37:17.7',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'A446054C-0D76-4554-8E4D-3A2123C9CA67',
@@ -1319,7 +1319,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'A7E5606C-686F-4E76-9C65-9FA8BB8C9C38',
@@ -1330,7 +1330,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'ADC849B0-4F5F-4EE9-91C0-0EFB00BA68CA',
@@ -1352,7 +1352,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'B403DEE5-133A-455B-9CB6-D0F0CA9D1B43',
@@ -1374,7 +1374,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'B8C1D68B-DE20-4FCD-B2F7-B8C505936E96',
@@ -1385,7 +1385,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'B94C4858-A500-4E2D-BBF1-A5056FB8A14F',
@@ -1396,7 +1396,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.646',
     date_updated: '2025-10-21 13:37:17.646',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'BB608DEB-A8FB-40FF-AF3D-93A5902CDA41',
@@ -1407,7 +1407,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'BD33C859-BB90-4769-A5CA-E589ECC09E1D',
@@ -1429,7 +1429,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.653',
     date_updated: '2025-10-21 13:37:17.653',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C0BAB6CC-B124-4721-9E1D-1A25169F82CD',
@@ -1451,7 +1451,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.696',
     date_updated: '2025-10-21 13:37:17.696',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C0EC9374-D244-49F3-BF8D-03EE64706059',
@@ -1462,7 +1462,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C15DA412-BA81-4897-859A-881903122869',
@@ -1473,7 +1473,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.696',
     date_updated: '2025-10-21 13:37:17.696',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C2EF3EBA-0A2C-44B6-8CEC-0F2D0B17D050',
@@ -1484,7 +1484,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C3916D9A-DB91-43AE-9196-81A2E2D169F1',
@@ -1495,7 +1495,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.696',
     date_updated: '2025-10-21 13:37:17.696',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C5FC9CE1-6347-482F-8457-07D513A8DFF8',
@@ -1506,7 +1506,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'C984C8D4-CA98-46F3-84EA-D519E79D8870',
@@ -1528,7 +1528,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'CC135D00-0BC9-486F-B3FC-76FB471A9F90',
@@ -1539,7 +1539,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'CD563C76-1196-4166-BB91-38316A9A9A91',
@@ -1550,7 +1550,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.643',
     date_updated: '2025-10-21 13:37:17.643',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'CEBAEE83-F17A-4BFF-972C-3E6729B39076',
@@ -1583,7 +1583,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.686',
     date_updated: '2025-10-21 13:37:17.686',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'D292EA47-8EB4-419C-A712-A4F1573D7B3B',
@@ -1605,7 +1605,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.713',
     date_updated: '2025-10-21 13:37:17.713',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'D5F85603-F84A-4920-AF21-978E1376F1A1',
@@ -1616,7 +1616,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.636',
     date_updated: '2025-10-21 13:37:17.636',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'D661395A-3435-4378-AE31-D004F1153715',
@@ -1638,7 +1638,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.693',
     date_updated: '2025-10-21 13:37:17.693',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'DA34DE2E-13BD-47E3-AF0B-8EB2C91E2AB2',
@@ -1649,7 +1649,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.676',
     date_updated: '2025-10-21 13:37:17.676',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'DA461F0B-1D38-4D00-80EA-6A0AC680927F',
@@ -1660,7 +1660,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.68',
     date_updated: '2025-10-21 13:37:17.68',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'DAEA1F12-AECE-4965-AE10-847D3F92BC4B',
@@ -1671,7 +1671,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'DB8DA73A-498A-4CF3-B628-D528E9005B49',
@@ -1682,7 +1682,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.673',
     date_updated: '2025-10-21 13:37:17.673',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'E15F21A0-37E5-469C-8578-50382B3BFE87',
@@ -1693,7 +1693,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.67',
     date_updated: '2025-10-21 13:37:17.67',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'E402A2B9-DF04-466C-886D-E38BE53FB1B7',
@@ -1715,7 +1715,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.69',
     date_updated: '2025-10-21 13:37:17.69',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'E789AB8B-701B-44CE-83AA-4D0923AA39A4',
@@ -1726,7 +1726,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.64',
     date_updated: '2025-10-21 13:37:17.64',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'F3549ED7-7943-48D2-AF26-8C5B34F7249C',
@@ -1748,7 +1748,7 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.656',
     date_updated: '2025-10-21 13:37:17.656',
-    is_active: true,
+    is_active: false,
   },
   {
     id: 'F6519BEE-3B5C-4188-8EE8-797A8FE55973',
@@ -1770,6 +1770,6 @@ export const LOTS_RAW: Prisma.LotCreateManyInput[] = [
     lot_type: 'TRADE',
     date_created: '2025-10-21 13:37:17.646',
     date_updated: '2025-10-21 13:37:17.646',
-    is_active: true,
+    is_active: false,
   },
 ];

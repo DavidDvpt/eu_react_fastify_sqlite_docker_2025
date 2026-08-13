@@ -12,7 +12,7 @@ const stockColumns: GenericListColumn<
     accessor: "imageUrlId",
     minWidth: 40,
     maxWidth: 40,
-    bodyCellClassName: "bg-white",
+    bodyCellClassName: "bg-transparent",
     imageSrc: (value) =>
       typeof value === "string" && value.trim() !== ""
         ? (ImageService.getItemImageUrl(value, "micro") ?? "")

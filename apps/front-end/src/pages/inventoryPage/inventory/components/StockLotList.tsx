@@ -1,14 +1,14 @@
-import type { StockLotIn } from "@/shared/types";
 import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools/formatTools";
+import type { LotDto } from "@eu/types";
 
 interface StockLotInListProps {
-  lotList: StockLotIn[] | null;
+  lotList: LotDto[] | null;
 }
 
 function StockLotInList({ lotList }: StockLotInListProps) {
   if (!lotList) return null;
-  const visibleLots = lotList.filter((lot) => lot.quantityRemaining > 0);
+  const visibleLots = lotList.filter((lot) => lot.isActive);
   const soldOutLotsCount = lotList.filter(
     (lot) => lot.quantityRemaining === 0,
   ).length;
@@ -28,8 +28,8 @@ function StockLotInList({ lotList }: StockLotInListProps) {
           <>
             <div className="grid grid-cols-[1.4fr_1fr_1fr] gap-2 border-b border-card-inner-border px-2 py-1 text-xs font-semibold text-card-inner-title">
               <span>Date</span>
-              <span className="text-right">Quantite depart</span>
-              <span className="text-right">Remaining</span>
+              <span className="text-right">Initial</span>
+              <span className="text-right">Actuel</span>
             </div>
             <ul className="m-0 list-none p-0">
               {visibleLots.map((lot) => {
@@ -38,8 +38,8 @@ function StockLotInList({ lotList }: StockLotInListProps) {
                     key={lot.id}
                     className="grid grid-cols-[1.4fr_1fr_1fr] gap-2 border-b border-card-inner-border px-2 py-1 text-xs text-table-body-text last:border-b-0"
                   >
-                    <span>{FormatTools.dateFrShort(lot.dateCreated)}</span>
-                    <span className="text-right">{lot.quantityInitial}</span>
+                    <span>{FormatTools.dateFrShort(lot.createdAt)}</span>
+                    <span className="text-right">{lot.initialQuantity}</span>
                     <span className="text-right">{lot.quantityRemaining}</span>
                   </li>
                 );

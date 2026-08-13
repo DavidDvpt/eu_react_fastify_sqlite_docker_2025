@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
@@ -11,14 +11,11 @@ import InventoryListFilter from "./inventory/components/InventoryListFilter";
 import { useQueryParams } from "@/shared/hooks";
 
 function InventoryPage() {
-  const location = useLocation();
   const { category, type } = useQueryParams();
-  console.log(location);
-  const { id } = useParams();
-
+  const { itemId } = useParams();
   const navigate = useNavigate();
 
-  const hasSelectedItem = Boolean(id);
+  const hasSelectedItem = Boolean(itemId);
 
   return (
     <Panel className="min-h-0 gap-2 mx-0">

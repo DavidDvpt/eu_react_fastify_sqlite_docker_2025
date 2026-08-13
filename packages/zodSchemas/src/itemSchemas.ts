@@ -7,6 +7,7 @@ import {
 } from "./common.js";
 import { typeDtoSchema } from "./typeSchemas.js";
 import { categoryDtoSchema } from "./categorySchemas.js";
+import { transactionTypeSchema } from "./transactionTypeSchema.js";
 
 export const itemSortSchema = z.enum([...dateSortKeySchema.options, "name"]);
 
@@ -39,4 +40,12 @@ export const itemQuerySchema = z.object({
   typeId: z.string().optional(),
   sortKey: itemSortSchema.optional(),
   sortOrder: sortOrderEnum.optional(),
+});
+
+export const itemLotsQuerySchema = itemQuerySchema.extend({
+  isActive: booleanSchema.optional(),
+  typeId: z.string().optional(),
+  sortKey: itemSortSchema.optional(),
+  sortOrder: sortOrderEnum.optional(),
+  hasInitialValue: booleanSchema.optional(),
 });

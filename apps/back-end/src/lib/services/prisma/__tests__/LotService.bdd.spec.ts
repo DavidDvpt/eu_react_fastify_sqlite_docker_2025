@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { describe, expect, it, vi } from 'vitest';
 
 import { LotService } from '../lotService.js';
+
+import { lotWithTransactionLotsInclude } from '#src/types/prismaApi/lots.js';
 
 describe('LotService', () => {
   it('reads one lot by id', async () => {
@@ -17,6 +20,13 @@ describe('LotService', () => {
           lot_type: 'TRADE',
           date_created: '2026-08-01T10:00:00.000Z',
           date_updated: null,
+          transaction_lots: [
+            {
+              quantity: 2,
+              transaction_id: 'transaction-1',
+              transaction: { hasInitialValue: true },
+            },
+          ],
         }),
       },
     };
@@ -26,6 +36,7 @@ describe('LotService', () => {
 
     expect(prisma.lot.findUnique).toHaveBeenCalledWith({
       where: { user_id: 'user-1', id: 'lot-1' },
+      include: lotWithTransactionLotsInclude,
     });
     expect(found).toEqual({
       id: 'lot-1',
@@ -37,6 +48,7 @@ describe('LotService', () => {
       lotType: 'TRADE',
       createdAt: '2026-08-01T10:00:00.000Z',
       updatedAt: null,
+      initialQuantity: 2,
     });
   });
 
@@ -54,6 +66,13 @@ describe('LotService', () => {
             lot_type: 'BUY',
             date_created: '2026-08-01T10:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 2,
+                transaction_id: 'transaction-1',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
           {
             id: 'lot-2',
@@ -65,6 +84,13 @@ describe('LotService', () => {
             lot_type: 'BUY',
             date_created: '2026-08-01T11:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 10,
+                transaction_id: 'transaction-2',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
           {
             id: 'lot-3',
@@ -76,6 +102,13 @@ describe('LotService', () => {
             lot_type: 'BUY',
             date_created: '2026-08-01T12:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 1,
+                transaction_id: 'transaction-3',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
         ]),
       },
@@ -91,6 +124,13 @@ describe('LotService', () => {
       sort: { key: 'quantityRemaining', order: 'desc' },
     });
 
+    expect(prisma.lot.findMany).toHaveBeenNthCalledWith(1, {
+      where: {
+        user_id: 'user-1',
+        is_active: undefined,
+        item_id: undefined,
+      },
+    });
     expect(asc.map((lot) => lot.quantityRemaining)).toEqual([1, 2, 10]);
     expect(desc.map((lot) => lot.quantityRemaining)).toEqual([10, 2, 1]);
   });
@@ -109,6 +149,13 @@ describe('LotService', () => {
             lot_type: 'TRADE',
             date_created: '2026-08-01T10:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 2,
+                transaction_id: 'transaction-1',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
         ]),
       },
@@ -123,6 +170,7 @@ describe('LotService', () => {
         item_id: 'item-1',
         is_active: undefined,
       },
+      include: lotWithTransactionLotsInclude,
     });
     expect(lots).toHaveLength(1);
     expect(lots[0]?.itemId).toBe('item-1');
@@ -142,6 +190,13 @@ describe('LotService', () => {
             lot_type: 'TRADE',
             date_created: '2026-08-01T10:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 2,
+                transaction_id: 'transaction-1',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
           {
             id: 'lot-2',
@@ -153,6 +208,13 @@ describe('LotService', () => {
             lot_type: 'TRADE',
             date_created: '2026-08-01T11:00:00.000Z',
             date_updated: null,
+            transaction_lots: [
+              {
+                quantity: 3,
+                transaction_id: 'transaction-2',
+                transaction: { transaction_type: 'BUY' },
+              },
+            ],
           },
         ]),
         update: vi.fn().mockResolvedValue({ id: 'lot-1' }),

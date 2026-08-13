@@ -1,6 +1,6 @@
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { StockService } from '#src/lib/services/domain/stockService.js';
-import type { LotSortKey, SortOptions } from '@eu/types';
+import type { LotSortKey, SortOptions, TransactionTypeDto } from '@eu/types';
 
 import { LotService } from '#src/lib/services/prisma/lotService.js';
 
@@ -20,16 +20,19 @@ export class InventoryService {
     userId,
     isActive,
     sort,
+    hasInitialValue,
   }: {
     userId: string;
-    isActive: boolean;
-    sort: SortOptions<LotSortKey>;
+    isActive?: boolean;
+    sort?: SortOptions<LotSortKey>;
+    hasInitialValue?: boolean;
   }) {
     const ls = new LotService(this.prisma);
     const lots = await ls.getAll({
       userId,
       isActive,
       sort: { key: sort?.key ?? 'createdAt', order: sort?.order },
+      hasInitialValue,
     });
 
     return lots;
@@ -42,7 +45,7 @@ export class InventoryService {
   }: {
     userId: string;
     isActive?: boolean;
-    sort: SortOptions<LotSortKey>;
+    sort?: SortOptions<LotSortKey>;
   }) {
     const lots = await this.getLots({
       userId,

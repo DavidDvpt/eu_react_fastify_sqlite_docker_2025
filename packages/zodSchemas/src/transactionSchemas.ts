@@ -1,17 +1,8 @@
 import { z } from "zod";
 import { genericDateSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
+import { transactionTypeSchema } from "./transactionTypeSchema.js";
 import { itemDtoSchema } from "./itemSchemas.js";
-
-export const transactionTypeSchema = z.enum([
-  "BUY",
-  "SELL",
-  "FOUND",
-  "GIFT",
-  "EXISTING_STOCK",
-  "SELL",
-  "GIVEN",
-]);
 export const transactionStatusDtoSchema = z.enum([
   "SOLDED",
   "RUNNING",

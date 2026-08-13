@@ -1,4 +1,4 @@
-import useStockData from "@/shared/hooks/useInventoryData";
+import useStockData from "@/shared/hooks/useInventoryStockData";
 import useSystemDatas from "@/shared/hooks/useSystemDatas";
 import type { ItemWithStock } from "@/shared/types";
 import type { StockQuery } from "@eu/types";
@@ -21,14 +21,14 @@ export default function useItemStock({ itemId }: StockQuery = {}) {
   }, [inventoryStock, itemDatas]);
 
   const itemWithStock = useMemo(() => {
-    if (!itemDatas || !itemStock) return [];
+    if (!itemDatas || !itemStock) return null;
 
     return itemDatas
       .filter((f) => f.id === itemId)
       .map((item) => ({
         ...item,
         stock: itemStock[item.id] ?? 0,
-      })) as ItemWithStock[];
+      }))[0] as ItemWithStock;
   }, [itemStock, itemDatas, itemId]);
 
   return {

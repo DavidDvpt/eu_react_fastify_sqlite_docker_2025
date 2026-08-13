@@ -65,6 +65,7 @@ describe('stockRoutes', () => {
       userId: 'user-1',
       isActive: true,
       sort: { key: 'createdAt', order: undefined },
+      hasInitialValue: undefined,
     });
     expect(res.json()).toEqual([
       {
@@ -78,7 +79,7 @@ describe('stockRoutes', () => {
 
   it('GET /api/v1/inventory/stock returns aggregated stocks for authenticated user', async () => {
     const { app } = buildApp();
-    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 } as never);
+    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 });
 
     await app.ready();
     const res = await app.inject({
@@ -98,7 +99,7 @@ describe('stockRoutes', () => {
 
   it('GET /api/v1/inventory/stock forwards explicit sort order', async () => {
     const { app } = buildApp();
-    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 } as never);
+    vi.mocked(inventoryServiceMocks.getStocks).mockResolvedValueOnce({ 'item-1': 5 });
 
     await app.ready();
     const res = await app.inject({
@@ -111,6 +112,26 @@ describe('stockRoutes', () => {
       userId: 'user-1',
       isActive: false,
       sort: { key: 'quantityRemaining', order: 'desc' },
+    });
+    await app.close();
+  });
+
+  it('GET /api/v1/inventory/lots forwards hasInitialValue when provided', async () => {
+    const { app } = buildApp();
+    vi.mocked(inventoryServiceMocks.getLots).mockResolvedValueOnce([] as never);
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'GET',
+      url: `${API_PREFIX}/inventory/lots?sortKey=createdAt&isActive=true&hasInitialValue=false`,
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(inventoryServiceMocks.getLots).toHaveBeenCalledWith({
+      userId: 'user-1',
+      isActive: true,
+      sort: { key: 'createdAt', order: undefined },
+      hasInitialValue: false,
     });
     await app.close();
   });
