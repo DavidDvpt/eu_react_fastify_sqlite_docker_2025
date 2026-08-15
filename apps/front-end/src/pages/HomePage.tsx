@@ -1,6 +1,9 @@
 import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
-import { PedCardSummarySection, RunningTransactionsSection } from "@/shared/components";
+import {
+  FinancialSummarySection,
+  RunningTransactionsSection,
+} from "@/shared/components";
 
 function HomePage() {
   return (
@@ -16,7 +19,7 @@ function HomePage() {
         className="col-span-6 flex min-h-0 flex-col overflow-hidden p-0"
         shadow={false}
       >
-        <PedCardSummarySection />
+        <FinancialSummarySection />
       </Section>
 
       <TransactionModal />

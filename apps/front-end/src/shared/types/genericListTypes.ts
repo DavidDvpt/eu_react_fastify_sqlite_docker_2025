@@ -12,6 +12,11 @@ export type GenericListColumnKind =
   | "checkbox"
   | "custom";
 
+export type GenericColumnOnSelectChangeProps<T> = {
+  row: T;
+  accessor?: keyof T;
+  value: string;
+};
 export type RowRendererProps<T> = {
   row: T;
   onRowClick?: (row: T) => void;
@@ -37,7 +42,11 @@ export type GenericListColumn<T> = {
   imageAlt?: (row: T) => string;
   buttonLabel?: string;
   selectOptions?: Array<{ label: string; value: string }>;
-  onSelectChange?: (row: T, value: string) => void;
+  onSelectChange?: ({
+    row,
+    accessor,
+    value,
+  }: GenericColumnOnSelectChangeProps<T>) => void;
 };
 
 export type GenericListFooterCell = {

@@ -1,14 +1,14 @@
-import type { PedCardFormValues } from "@/shared/types/pedcard";
 import { useQueryClient } from "@tanstack/react-query";
 import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
-import { pedCardFormDefaultValues, pedCardFormSchema } from "./pedCardSchema";
 import { Button } from "@/components/ui/button";
 import pedcardApi from "@/shared/services/pedCardApi";
+import { pedcardFormSchema } from "@eu/zod-schemas";
+import type { PedCardFormBody } from "@eu/types";
 
 interface PedCardFormProps {
   initialized?: boolean;
-  balance: number | null;
+  balance: number;
   submitLabel?: string;
   onSuccess?: () => void | Promise<void>;
 }
@@ -21,30 +21,30 @@ function PedCardForm({
 }: PedCardFormProps) {
   const queryClient = useQueryClient();
 
-  const handleSubmit = async (data: PedCardFormValues) => {
-    const currentBalance = balance ?? 0;
+  const handleSubmit = async (data: PedCardFormBody) => {
+    const currentBalance = balance;
     const isInitialBalance = initialized !== true;
-    const value = isInitialBalance
-      ? data.updatedValue
-      : data.updatedValue - currentBalance;
+    const value = isInitialBalance ? data.value : data.value - currentBalance;
     const ps = new pedcardApi();
     await ps.create({
-      type: isInitialBalance ? "INITIAL_BALANCE" : "ADJUSTMENT",
+      type: data.type,
       value,
     });
 
-    await queryClient.invalidateQueries({ queryKey: ["pedCard"] });
-    await onSuccess?.();
+    queryClient.invalidateQueries({ queryKey: ["pedCard"] });
+
+    onSuccess?.();
   };
 
   return (
     <GenericForm
-      schema={pedCardFormSchema}
-      defaultValues={{
-        updatedValue: initialized
-          ? (balance ?? 0)
-          : pedCardFormDefaultValues.updatedValue,
-      }}
+      schema={pedcardFormSchema}
+      defaultValues={
+        initialized
+          ? { value: balance ?? 0, type: "ADJUSTMENT" }
+          : { value: 0, type: "INITIAL_BALANCE" }
+      }
+
       onSubmit={handleSubmit}
     >
       <div className="space-y-4 flex justify-center flex-col items-center">
@@ -58,7 +58,7 @@ function PedCardForm({
             </p>
           )}
           <InputRHF
-            name="updatedValue"
+            name="value"
             selectOnFocus
             wrapperClassName="flex justify-center"
           />

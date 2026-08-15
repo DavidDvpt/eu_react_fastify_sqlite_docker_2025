@@ -17,7 +17,6 @@ export type TransactionStatusPatchDto = z.infer<
 export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
 export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
-export type TransactionFormBody = z.output<typeof transactionBodySchema>;
 
 export type TransactionDto = z.infer<typeof transactionSchemaDto>;
 
@@ -43,7 +42,10 @@ export type TransactionBodyDto = Omit<
   "createdAt" | "updatedAt" | "item" | "lotIds" | "id"
 > & { id?: string };
 
-export type TransatcionPatchDto = Omit<TransactionDto, "item" | "lotIds">;
+export type TransatcionPatchDto = Omit<
+  TransactionDto,
+  "item" | "lotIds" | "status"
+> & { status: TransactionStatusPatchDto };
 
 export type RunningTransactionDtos = RunningTransactionDto[];
 export type TransactionDtos = TransactionDto[];

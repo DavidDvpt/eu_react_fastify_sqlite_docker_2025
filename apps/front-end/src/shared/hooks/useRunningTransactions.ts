@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { useSystemDatas } from "@/shared/hooks";
-import type { TransactionDto } from "@/shared/types/transactions";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
-import type { TransactionFormBody } from "@eu/types";
+import type { TransactionDto, TransactionBodyDto } from "@eu/types";
 import TransactionsApi from "@/shared/services/transactionsApi";
 
-function useRunningTransactions(props: Partial<TransactionFormBody>) {
+function useRunningTransactions(props: Partial<TransactionBodyDto>) {
   const ts = new TransactionsApi();
   const isLoggued = useAppSelector(selectIsLoggued);
   const runningTransactions = useQuery({

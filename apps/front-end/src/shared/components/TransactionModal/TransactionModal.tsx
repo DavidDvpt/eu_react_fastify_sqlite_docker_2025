@@ -7,9 +7,9 @@ import PedCardForm from "../pedCardModal/PedCardForm";
 
 function TransactionModal() {
   const { queries, updateQueries } = useTransactionQueries();
-  const { pedCard } = usePedCard();
+  const { check, balance } = usePedCard();
 
-  if (!queries?.action || !queries?.itemId || !pedCard) return null;
+  if (!queries?.action || !queries?.itemId) return null;
 
   const handleClose = () => updateQueries(null);
 
@@ -35,11 +35,8 @@ function TransactionModal() {
       )}
 
       {(queries.action === "sell" || queries.action === "buy") &&
-        (!pedCard.hasInitialBalance ? (
-          <PedCardForm
-            initialized={pedCard.hasInitialBalance}
-            balance={pedCard.balance}
-          />
+        (!check ? (
+          <PedCardForm initialized={check} balance={balance} />
         ) : (
           <TransactionModalActionContent
             onClose={handleClose}

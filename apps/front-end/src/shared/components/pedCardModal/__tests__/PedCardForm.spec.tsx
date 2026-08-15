@@ -26,15 +26,15 @@ vi.mock("../form/Genericform", () => ({
     onSubmit,
   }: {
     children: ReactNode;
-    onSubmit: (data: { updatedValue: number }) => void | Promise<void>;
+    onSubmit: (data: { value: number }) => void | Promise<void>;
   }) => (
     <form
       onSubmit={(event) => {
         event.preventDefault();
         const input = event.currentTarget.querySelector<HTMLInputElement>(
-          'input[name="updatedValue"]',
+          'input[name="value"]',
         );
-        void onSubmit({ updatedValue: Number(input?.value ?? 0) });
+        void onSubmit({ value: Number(input?.value ?? 0) });
       }}
     >
       {children}
@@ -43,7 +43,7 @@ vi.mock("../form/Genericform", () => ({
 }));
 
 vi.mock("../form/Input/InputRHF", () => ({
-  default: () => <input aria-label="updatedValue" />,
+  default: () => <input aria-label="value" />,
 }));
 
 describe("PedCardForm", () => {
@@ -96,7 +96,7 @@ describe("PedCardForm", () => {
     );
 
     const input = container.querySelector<HTMLInputElement>(
-      'input[name="updatedValue"]',
+      'input[name="value"]',
     );
 
     expect(input).not.toBeNull();
@@ -133,7 +133,7 @@ describe("PedCardForm", () => {
     );
 
     const input = container.querySelector<HTMLInputElement>(
-      'input[name="updatedValue"]',
+      'input[name="value"]',
     );
 
     expect(input).not.toBeNull();

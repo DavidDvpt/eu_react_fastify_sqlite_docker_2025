@@ -1,17 +1,14 @@
 import type { CSSProperties } from "react";
-import type { StockRow } from "@/shared/types";
-
-import type { Item } from "@/shared/types";
-import type { ItemInventory } from "@/pages/inventoryPage/inventory/stockTypes";
-import type { UseFormReturn } from "react-hook-form";
 import type {
-  ItemDto,
-  TransactionDto,
-  TransactionStatusDto,
-  TransactionStatusPatchDto,
-} from "@eu/types";
+  GenericColumnOnSelectChangeProps,
+  StockRow,
+} from "@/shared/types";
 
-export interface TransactionDto extends TransactionDto {
+import type { UseFormReturn } from "react-hook-form";
+import type { ItemDto, TransactionDto, TransactionStatusDto } from "@eu/types";
+import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
+
+export interface TransactionDtoWithItem extends TransactionDto {
   item: ItemDto;
 }
 
@@ -23,13 +20,6 @@ export type TransactionFormValues = {
 };
 export type TransactionPricingField = "quantity" | "fee" | "ttc";
 export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
-
-export type TransactionPanelProps = {
-  item: ItemInventory;
-  onBack: () => void;
-  modalParams: TransactionModalParams;
-  defaultValues?: Partial<Pick<AutoPricingFormValues, TransactionPricingField>>;
-};
 
 export type TransactionFormFieldsProps = Pick<
   TransactionPanelProps,
@@ -117,20 +107,16 @@ export type RunningTransaction = {
   ttc: number;
   status: TransactionStatusDto;
 } & {
-  item: Item | null;
+  item: ItemDto | null;
 };
 
-export type CreateRunningTransactionsColumnsOptions = {
+export type CreateRunningTransactionsColumnsOptions<T> = {
   isRowPending: (row: TransactionDto) => boolean;
-  onStatusChange: (
-    row: TransactionDto,
-    status: TransactionStatusPatchDto,
-  ) => void;
-};
-
-export type UpdateTransactionInput = {
-  id: string;
-  status: TransactionStatusPatchDto;
+  onChange: ({
+    row,
+    accessor,
+    value,
+  }: GenericColumnOnSelectChangeProps<T>) => void;
 };
 
 export type TransactionPricingValues = {

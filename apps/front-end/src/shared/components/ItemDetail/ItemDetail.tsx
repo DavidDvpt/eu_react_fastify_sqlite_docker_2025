@@ -24,7 +24,7 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
   const openTransactionModal = (action: TransactionAction) => {
     const query = {
       action,
-      itemId: item,
+      itemId: item.id,
       ttc: 0,
       quantity: 1,
       closePath: `/inventory/${itemId ?? ""}`,

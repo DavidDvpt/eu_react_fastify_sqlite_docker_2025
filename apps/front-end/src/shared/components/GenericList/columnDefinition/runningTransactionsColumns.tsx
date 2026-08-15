@@ -3,13 +3,13 @@ import FormatTools from "@/shared/tools/formatTools";
 import type {
   CreateRunningTransactionsColumnsOptions,
   GenericListColumn,
-  TransactionDto,
 } from "@/shared/types";
+import type { TransactionDto } from "@eu/types";
 
 const createRunningTransactionsColumns = ({
   isRowPending,
-  onStatusChange,
-}: CreateRunningTransactionsColumnsOptions): GenericListColumn<TransactionDto>[] => [
+  onChange,
+}: CreateRunningTransactionsColumnsOptions<TransactionDto>): GenericListColumn<TransactionDto>[] => [
   {
     key: "image",
     label: "Image",
@@ -77,17 +77,21 @@ const createRunningTransactionsColumns = ({
     align: "right",
     bodyCellClassName: "justify-end",
     selectOptions: [
-      { label: "RUNNING", value: "RUNNING" },
       { label: "SOLDED", value: "SOLDED" },
       { label: "RETURNED", value: "RETURNED" },
+      { label: "CANCELED", value: "CANCELED" },
     ],
     disabled: (row) => isRowPending(row),
-    onSelectChange: (row, value) => {
-      if (value !== "SOLDED" && value !== "RETURNED") {
+    onSelectChange: ({ row, accessor, value }) => {
+      if (accessor !== "status") {
         return;
       }
 
-      onStatusChange(row, value);
+      if (!["SOLDED", "RETURNED", "CANCELED"].includes(value)) {
+        return;
+      }
+
+      onChange({ row, accessor, value });
     },
   },
 ];

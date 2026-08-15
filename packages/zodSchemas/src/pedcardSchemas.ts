@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { booleanSchema } from "./common.js";
 
 export const pedcardTypeSchema = z.enum([
   "INITIAL_BALANCE",
@@ -29,3 +30,7 @@ export const pedcardDtoSchema = z.object({
   value: z.coerce.number(),
   createdat: z.string(),
 });
+
+export const pedcardCheckSchema = z.object({ initialized: booleanSchema });
+export const pedcardCanPaySchema = z.object({ authorized: booleanSchema });
+export const pedcardBalanceSchema = z.object({ balance: z.number() });

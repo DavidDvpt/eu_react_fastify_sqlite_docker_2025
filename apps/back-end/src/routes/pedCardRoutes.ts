@@ -23,7 +23,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     }
 
     return reply.code(200).send({
-      message: 'PedCard initialized',
+      initialized: true,
     });
   });
 
@@ -81,7 +81,7 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(patched);
   });
 
-  app.delete('/pedcard/delete/:id', async (request, reply) => {
+  app.delete('/pedcard/:id/delete', async (request, reply) => {
     const { id } = getIdParam(request);
     const userId = getRequestUserId(request);
 

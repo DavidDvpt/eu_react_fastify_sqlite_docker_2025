@@ -8,5 +8,5 @@ export { default as useStockDetails } from "./useStockDetails";
 export { default as useTransaction } from "./useTransactionsData";
 export { default as useTransactionAutoPricing } from "./useTransactionAutoPricing";
 export { default as useRunningTransaction } from "./useRunningTransactions";
-export { default as useUpdateTransactionsStatus } from "./useUpdateTransactionsStatus";
+export { default as useUpdateTransactionsStatus } from "./useTransactionsMutation";
 export { default as useSystemDatas } from "./useSystemDatas";

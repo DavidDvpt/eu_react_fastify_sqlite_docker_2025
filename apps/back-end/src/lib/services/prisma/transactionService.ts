@@ -2,7 +2,7 @@ import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   PrismaMutationResponse,
   TransactionDto,
-  TransactionFormBody,
+  TransactionBodyDto,
   TransactionCancelDto,
   TransactionStatusDto,
   TransactionStatusPatchDto,
@@ -138,7 +138,7 @@ export class TransactionService {
     userId,
   }: {
     userId: string;
-    body: TransactionFormBody;
+    body: TransactionBodyDto;
   }): Promise<PrismaMutationResponse> {
     const result = await this.prisma.$transaction(async (tx) => {
       const ps = new PedcardService(tx);
@@ -209,7 +209,7 @@ export class TransactionService {
     userId,
   }: {
     userId: string;
-    body: TransactionFormBody;
+    body: TransactionBodyDto;
   }): Promise<PrismaMutationResponse> {
     const { itemId, quantity } = body;
     const result = await this.prisma.$transaction(async (tx) => {
