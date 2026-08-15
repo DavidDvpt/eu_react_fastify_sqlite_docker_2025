@@ -17,7 +17,7 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
     isLoading: isItemStockLoading,
     isError: isItemStockError,
   } = useQuery({
-    queryKey: ["item-stock", itemId],
+    queryKey: ["stock", "item-stock", itemId],
     queryFn: () => itemApi.getStock(itemId),
     staleTime: 30_000,
   });
@@ -27,7 +27,7 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
     isLoading: isItemsStockLoading,
     isError: isItemsStockError,
   } = useQuery({
-    queryKey: ["items-stock", itemId],
+    queryKey: ["stock", "items-stock", itemId],
     queryFn: () => stockApi.getStock(),
     staleTime: 30_000,
   });
@@ -44,7 +44,7 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
   return {
     itemStock,
     inventoryStock,
-    inventoryStockValue,
+    inventoryStockValue: inventoryStockValue ?? 0,
     isItemStockLoading: isItemStockLoading || isItemsStockLoading,
     isItemStockError: isItemStockError || isItemsStockError,
   };

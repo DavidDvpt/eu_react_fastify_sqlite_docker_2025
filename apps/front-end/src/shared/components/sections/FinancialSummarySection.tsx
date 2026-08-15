@@ -11,9 +11,10 @@ import {
   pedCardSummaryRowBaseClassName,
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
-} from "./GenericList/columnDefinition/pedCardSummaryColumns";
-import type { PedCardSummaryRow } from "../types/pedcard";
+} from "../GenericList/columnDefinition/pedCardSummaryColumns";
+
 import useInventoryStockData from "@/shared/hooks/useInventoryStockData";
+import type { PedCardSummaryRow } from "@/shared/types/pedcard";
 
 function FinancialSummarySection() {
   const { balance } = usePedCard();

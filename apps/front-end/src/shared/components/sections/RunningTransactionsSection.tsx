@@ -1,10 +1,10 @@
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
-import useRunningTransactions from "../hooks/useRunningTransactions";
-import type { OpenTransactionModal } from "../types";
 
 import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
+import useRunningTransactions from "@/shared/hooks/useRunningTransactions";
+import type { OpenTransactionModal } from "@/shared/types";
 
 function RunningTransactionsSection() {
   const { rows, isLoading, isError } = useRunningTransactions({

@@ -2,12 +2,8 @@ import type { CSSProperties } from "react";
 import type { StockRow } from "@/shared/types";
 
 import type { UseFormReturn } from "react-hook-form";
-import type { ItemDto, TransactionDto, TransactionStatusDto } from "@eu/types";
+import type { TransactionDto } from "@eu/types";
 import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
-
-export interface TransactionDtoWithItem extends TransactionDto {
-  item: ItemDto;
-}
 
 export type TransactionFormValues = {
   autoCalculation: boolean;
@@ -93,18 +89,6 @@ export type UseTransactionAutoPricingResult = {
   isAutoCalculationEnabled: boolean;
   quantityValue: number;
   totalValue: number;
-};
-
-export type RunningTransaction = {
-  groupKey: string;
-  id: string;
-  quantity: number;
-  tt: number;
-  fee: number;
-  ttc: number;
-  status: TransactionStatusDto;
-} & {
-  item: ItemDto | null;
 };
 
 export type TransactionPricingValues = {
