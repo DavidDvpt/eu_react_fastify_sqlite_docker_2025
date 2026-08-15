@@ -1,4 +1,5 @@
 import { Section } from "@/shared/components/Containers";
+import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools/formatTools";
 import type { ItemWithStock } from "@/shared/types";
@@ -17,15 +18,10 @@ function ItemSectionInfo({ itemWithStock }: ItemSectionInfoProps) {
   );
 
   return (
-    <Section variant="modal" className="flex flex-row items-center py-2">
-      {itemImageUrl ? (
-        <img
-          src={itemImageUrl}
-          alt={name}
-          className="h-10 w-10 rounded object-contain"
-        />
-      ) : null}
-      <div className="min-w-0">
+    <Section variant="modal" className="flex flex-row items-center p-2">
+      <ItemImage url={itemImageUrl} size="small" alt={`${name} image`} />
+
+      <div className="min-w-0 ml-2">
         <p className="m-0 truncate font-semibold">{name}</p>
         <p className="m-0 text-sm">
           Coût unitaire: {FormatTools.pedFormat().format(value ?? 0)} Ped ·

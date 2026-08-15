@@ -2,7 +2,7 @@ import { useMemo } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import TransactionsApi from "@/shared/services/transactionsApi";
-import type { TransactionDto, TransactionFormBody } from "@eu/types";
+import type { TransactionDto, TransactionBodyDto } from "@eu/types";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/useSystemDatas";
@@ -10,7 +10,7 @@ import useSystemDatas from "@/shared/hooks/useSystemDatas";
 type UseTransactionProps = {
   id?: string;
   action?: string;
-  runningProps?: Partial<TransactionFormBody>;
+  runningProps?: Partial<TransactionBodyDto>;
 };
 
 function useTransactionsData({

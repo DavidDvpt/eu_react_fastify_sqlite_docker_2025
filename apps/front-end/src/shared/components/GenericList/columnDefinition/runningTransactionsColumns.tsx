@@ -1,15 +1,36 @@
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/pages/managePage";
 import FormatTools from "@/shared/tools/formatTools";
 import type {
-  CreateRunningTransactionsColumnsOptions,
+  GenericColumnOnSelectChangeProps,
   GenericListColumn,
+  ItemWithStock,
 } from "@/shared/types";
-import type { TransactionDto } from "@eu/types";
+import type { TransactionDto, TransactionStatusPatchDto } from "@eu/types";
+import { transactionStatusPatchDtoSchema } from "@eu/zod-schemas";
+
+type RunningTransactionStatusChange = {
+  row: TransactionDto;
+  accessor?: "status";
+  value: TransactionStatusPatchDto;
+};
+
+const statusOptions: Array<{
+  label: string;
+  value: TransactionStatusPatchDto | "RUNNING";
+}> = [
+  { label: "RUNNING", value: "RUNNING" },
+  { label: "SOLDED", value: "SOLDED" },
+  { label: "RETURNED", value: "RETURNED" },
+  { label: "CANCELED", value: "CANCELED" },
+];
 
 const createRunningTransactionsColumns = ({
   isRowPending,
   onChange,
-}: CreateRunningTransactionsColumnsOptions<TransactionDto>): GenericListColumn<TransactionDto>[] => [
+}: {
+  isRowPending: (row: TransactionDto) => boolean;
+  onChange: (value: RunningTransactionStatusChange) => void;
+}): GenericListColumn<TransactionDto>[] => [
   {
     key: "image",
     label: "Image",
@@ -18,12 +39,16 @@ const createRunningTransactionsColumns = ({
     minWidth: 40,
     maxWidth: 40,
     headerCellClassName: "px-1",
-    bodyCellClassName: "px-1",
-    imageSrc: (_, row) =>
-      row.item?.imageUrlId
-        ? (ImageService.getItemImageUrl(row.item.imageUrlId, "micro") ?? "")
-        : "",
-    imageAlt: (row) => row.item?.name ?? row.item!.name,
+    bodyCellClassName: "",
+    imageSrc: (row) => {
+      return (
+        getItemImageUrl(
+          String((row as ItemWithStock).imageUrlId ?? ""),
+          "micro",
+        ) ?? ""
+      );
+    },
+    imageAlt: (row) => row.item?.name ?? "Image",
   },
   {
     key: "item",
@@ -32,7 +57,7 @@ const createRunningTransactionsColumns = ({
     accessor: "item",
     fillRemainingSpace: true,
     minWidth: 140,
-    bodyCellClassName: "font-medium text-table-head-text",
+    bodyCellClassName: "font-medium text-table-head-text pl-1",
     value: (row) => row.item?.name ?? row.item!.name,
   },
   {
@@ -76,22 +101,22 @@ const createRunningTransactionsColumns = ({
     maxWidth: 110,
     align: "right",
     bodyCellClassName: "justify-end",
-    selectOptions: [
-      { label: "SOLDED", value: "SOLDED" },
-      { label: "RETURNED", value: "RETURNED" },
-      { label: "CANCELED", value: "CANCELED" },
-    ],
+    selectOptions: statusOptions,
     disabled: (row) => isRowPending(row),
-    onSelectChange: ({ row, accessor, value }) => {
-      if (accessor !== "status") {
-        return;
-      }
+    onSelectChange: ({
+      row,
+      accessor,
+      value,
+    }: GenericColumnOnSelectChangeProps<TransactionDto>) => {
+      const result = transactionStatusPatchDtoSchema.safeParse(value);
 
-      if (!["SOLDED", "RETURNED", "CANCELED"].includes(value)) {
-        return;
-      }
+      if (accessor !== "status" || !result.success) return;
 
-      onChange({ row, accessor, value });
+      onChange({
+        row,
+        accessor,
+        value: result.data,
+      });
     },
   },
 ];

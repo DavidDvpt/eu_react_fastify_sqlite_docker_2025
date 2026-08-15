@@ -14,7 +14,9 @@ function PedCardModal({
   balance,
   hasInitialBalance,
 }: PedCardModalProps) {
-  const handleSuccess = () => onOpenChange(false);
+  const handleSuccess = () => {
+    onOpenChange(false);
+  };
 
   return (
     <ModalGeneric

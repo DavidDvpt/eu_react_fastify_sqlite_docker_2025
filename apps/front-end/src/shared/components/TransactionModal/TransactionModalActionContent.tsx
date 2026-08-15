@@ -12,9 +12,9 @@ function TransactionModalActionContent({
   modalParams,
 }: TransactionModalActionContentProps) {
   const { itemId } = modalParams;
-  console.log(modalParams);
+
   const { itemWithStock } = useItemStock({ itemId });
-  console.log(itemWithStock);
+
   if (!itemWithStock) return null;
 
   return (

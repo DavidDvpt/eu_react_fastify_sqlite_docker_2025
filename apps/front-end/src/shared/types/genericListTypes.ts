@@ -1,52 +1,11 @@
+import type { GenericListColumn } from "@/shared/types";
 import type { ComponentType, ReactNode } from "react";
 
 export type GenericListViewMode = "list" | "card";
 
-export type GenericListColumnKind =
-  | "text"
-  | "number"
-  | "date"
-  | "image"
-  | "button"
-  | "select"
-  | "checkbox"
-  | "custom";
-
-export type GenericColumnOnSelectChangeProps<T> = {
-  row: T;
-  accessor?: keyof T;
-  value: string;
-};
 export type RowRendererProps<T> = {
   row: T;
   onRowClick?: (row: T) => void;
-};
-
-export type GenericListColumn<T> = {
-  key: string;
-  label: string;
-  kind?: GenericListColumnKind;
-  accessor?: keyof T;
-  minWidth?: string | number;
-  maxWidth?: string | number;
-  fillRemainingSpace?: boolean;
-  align?: "left" | "center" | "right";
-  headerCellClassName?: string;
-  bodyCellClassName?: string;
-  footerCellClassName?: string;
-  value?: (row: T) => ReactNode;
-  render?: (row: T) => ReactNode;
-  onCellClick?: (row: T) => void;
-  disabled?: (row: T) => boolean;
-  imageSrc?: (value: unknown, row: T) => string;
-  imageAlt?: (row: T) => string;
-  buttonLabel?: string;
-  selectOptions?: Array<{ label: string; value: string }>;
-  onSelectChange?: ({
-    row,
-    accessor,
-    value,
-  }: GenericColumnOnSelectChangeProps<T>) => void;
 };
 
 export type GenericListFooterCell = {

@@ -3,6 +3,7 @@ import {
   transactionQuerySchema,
   transactionCancelDtoSchema,
   transactionStatusPatchDtoSchema,
+  transactionStatusPatchSchema,
 } from '@eu/zod-schemas';
 
 import { TransactionService } from '../lib/services/prisma/transactionService.js';
@@ -56,8 +57,9 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.patch('/:id/status', async (request, reply) => {
     const userId = getRequestUserId(request);
+
     const params = request.params as { id: string };
-    const status = transactionStatusPatchDtoSchema.parse(request.body);
+    const { status } = transactionStatusPatchSchema.parse(request.body);
 
     const updated = await ts.updateStatus({ userId, id: params.id, status });
 

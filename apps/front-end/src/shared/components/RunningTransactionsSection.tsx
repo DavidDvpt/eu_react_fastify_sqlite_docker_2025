@@ -1,26 +1,20 @@
-import { useNavigate } from "react-router-dom";
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
-import { useUpdateTransactionsStatus } from "../hooks";
 import useRunningTransactions from "../hooks/useRunningTransactions";
-import type { TransactionAction, TransactionDto } from "../types";
+import type { OpenTransactionModal } from "../types";
+
+import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
 
 function RunningTransactionsSection() {
-  const navigate = useNavigate();
   const { rows, isLoading, isError } = useRunningTransactions({
     status: "RUNNING",
   });
-  const updateStatusMutation = useUpdateTransactionsStatus();
-  const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
 
-  const openTransactionModal = (
-    action: TransactionAction,
-    row: TransactionDto,
-  ) => {
+  const openTransactionModal = ({ action, row }: OpenTransactionModal) => {
     const query = {
       action,
-      itemId: row.item.id,
+      itemId: row.item?.id,
       ttc: row.ttc,
       quantity: row.quantity,
       closePath: "/home",
@@ -32,27 +26,18 @@ function RunningTransactionsSection() {
     return search;
   };
 
+  const { mutateAsync: patchTransaction, isPending } = useTransactionsMutation({
+    onStatusMutationSuccess: openTransactionModal,
+  });
+  const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
+
   const columns = createRunningTransactionsColumns({
-    isRowPending: () => updateStatusMutation.isPending,
-    onStatusChange: (row, status) => {
-      updateStatusMutation.mutate(
-        {
-          id: row.id,
-          status,
-        },
-        {
-          onSuccess: () => {
-            const isSell = status === "SOLDED";
-            navigate({
-              pathname: `/home/${row.item!.id}/sell`,
-              search: openTransactionModal(
-                isSell ? "newSell" : "resell",
-                row,
-              ).toString(),
-            });
-          },
-        },
-      );
+    isRowPending: () => isPending,
+    onChange: ({ row, value }) => {
+      patchTransaction({
+        row,
+        status: value,
+      });
     },
   });
 

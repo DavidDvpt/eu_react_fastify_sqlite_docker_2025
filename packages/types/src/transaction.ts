@@ -37,15 +37,11 @@ export interface RunningTransactionDto {
   createdAt: string;
 }
 
-export type TransactionBodyDto = Omit<
-  TransactionDto,
-  "createdAt" | "updatedAt" | "item" | "lotIds" | "id"
-> & { id?: string };
+export type TransactionBodyDto = z.infer<typeof transactionBodySchema>;
 
-export type TransatcionPatchDto = Omit<
-  TransactionDto,
-  "item" | "lotIds" | "status"
-> & { status: TransactionStatusPatchDto };
+export type TransatcionPatchDto = Omit<TransactionBodyDto, "status"> & {
+  status: TransactionStatusPatchDto;
+};
 
 export type RunningTransactionDtos = RunningTransactionDto[];
 export type TransactionDtos = TransactionDto[];

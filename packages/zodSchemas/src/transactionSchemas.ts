@@ -11,6 +11,9 @@ export const transactionStatusDtoSchema = z.enum([
 ]);
 export const transactionStatusPatchDtoSchema =
   transactionStatusDtoSchema.extract(["SOLDED", "RETURNED", "CANCELED"]);
+export const transactionStatusPatchSchema = z.object({
+  status: transactionStatusPatchDtoSchema,
+});
 export const transactionCancelDtoSchema = transactionStatusDtoSchema.extract([
   "CANCELED",
 ]);

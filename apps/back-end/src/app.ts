@@ -28,7 +28,16 @@ export function buildApp({
   registerRoutes?: boolean;
 }) {
   const app = Fastify({
-    logger,
+    logger: {
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          colorize: true,
+          translateTime: 'HH:MM:ss',
+          ignore: 'pid,hostname',
+        },
+      },
+    },
   }).withTypeProvider<ZodTypeProvider>();
 
   app.register(cookie);
@@ -57,7 +66,7 @@ export function buildApp({
     app.register(typeRoutes, { prefix: `${API_PREFIX}/types` });
     app.register(itemRoutes, { prefix: `${API_PREFIX}/items` });
     app.register(inventoryRoutes, { prefix: API_PREFIX });
-    app.register(pedCardRoutes, { prefix: API_PREFIX });
+    app.register(pedCardRoutes, { prefix: `${API_PREFIX}/pedcard` });
     app.register(transactionRoutes, { prefix: `${API_PREFIX}/transactions` });
   }
 

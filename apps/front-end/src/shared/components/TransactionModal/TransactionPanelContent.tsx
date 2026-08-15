@@ -7,18 +7,27 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
 import type {
   AutoPricingFormValues,
-  TransactionPanelProps,
+  TransactionModalParams,
+  TransactionPricingField,
 } from "@/shared/types/transactions";
 import { transactionFormSchema } from "./transactionSchemas";
 import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
 import type {
-  TransactionFormBody,
+  TransactionBodyDto,
   TransactionStatusDto,
   TransactionTypeDto,
 } from "@eu/types";
 import TransactionsApi from "@/shared/services/transactionsApi";
+import type { ItemWithStock } from "@/shared/types";
+
+export type TransactionPanelProps = {
+  item: ItemWithStock;
+  onBack: () => void;
+  modalParams: TransactionModalParams;
+  defaultValues?: Partial<Pick<AutoPricingFormValues, TransactionPricingField>>;
+};
 
 function TransactionPanelContent({
   item,
@@ -27,7 +36,7 @@ function TransactionPanelContent({
 }: TransactionPanelProps) {
   const { action, quantity, ttc } = modalParams;
   const schema = useMemo(() => {
-    return transactionFormSchema(item.quantity, modalParams.action!);
+    return transactionFormSchema(item.stock, modalParams.action!);
   }, [modalParams, item]);
 
   const refreshStock = useInventoryRefresh(item.id, onBack);
@@ -47,7 +56,7 @@ function TransactionPanelContent({
         fee: values.fee,
         ttc: values.ttc,
         status: values.status,
-      } satisfies TransactionFormBody);
+      } satisfies TransactionBodyDto);
     },
     onSuccess: refreshStock,
   });

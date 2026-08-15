@@ -29,7 +29,7 @@ export default function useItemStock({ itemId }: StockQuery = {}) {
 
     return { ...i, stock: itemStock[i.id] ?? 0 };
   }, [itemStock, itemDatas, itemId]);
-  console.log(itemId, itemWithStock);
+
   return {
     itemsWithStock,
     itemWithStock,

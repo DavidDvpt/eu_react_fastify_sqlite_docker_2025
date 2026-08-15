@@ -24,7 +24,7 @@ function useRunningTransactions(props: Partial<TransactionBodyDto>) {
   for (const t of runningTransactions.data ?? []) {
     const itemId = t.entries[0].lot.itemId;
     const item = filteredItems().find((item) => item.id === itemId)!;
-    transactionMap.set(itemId, { ...t, item });
+    transactionMap.set(t.id, { ...t, item });
   }
   const rows: TransactionDto[] = Array.from(transactionMap.values());
 

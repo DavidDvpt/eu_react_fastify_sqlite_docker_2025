@@ -10,21 +10,23 @@ function usePedCard() {
   const ps = new pedcardApi();
 
   const balance = useQuery({
-    queryKey: ["pedcard-balance"],
+    queryKey: ["pedcard", "balance"],
     queryFn: ps.balance,
     enabled: isLoggued,
     staleTime: Infinity,
     refetchOnMount: true,
   });
+
   const check = useQuery({
-    queryKey: ["pedcard-check"],
+    queryKey: ["pedcard", "check"],
     queryFn: ps.check,
     enabled: isLoggued,
     staleTime: Infinity,
     refetchOnMount: false,
   });
+
   const canPay = useQuery({
-    queryKey: ["pedcard-can-pay"],
+    queryKey: ["pedcard", "can-pay"],
     queryFn: ps.canPay,
     enabled: isLoggued,
     staleTime: Infinity,

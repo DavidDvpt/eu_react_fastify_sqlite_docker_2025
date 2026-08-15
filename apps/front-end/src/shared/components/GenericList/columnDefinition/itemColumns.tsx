@@ -1,11 +1,12 @@
 import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
 import { getItemImageUrl } from "@/pages/managePage/utils";
-import type { Item, GenericListColumn } from "@/shared/types";
+import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
+import type { ItemDto } from "@eu/types";
 
 const createItemColumns = (
   currentUserId?: string,
-): GenericListColumn<Item>[] => [
+): GenericListColumn<ItemDto>[] => [
   {
     key: "image",
     label: "Image",
@@ -33,7 +34,7 @@ const createItemColumns = (
     minWidth: 120,
     maxWidth: 200,
     bodyCellClassName: "text-black",
-    value: (row) => ("typeName" in row ? row.typeName : "Unknown"),
+    value: (row) => row.type?.name ?? "Unknown",
   },
 
   {
@@ -51,7 +52,7 @@ const createItemColumns = (
     key: "stackable",
     label: "Stackable",
     kind: "text",
-    accessor: "isStackable",
+    accessor: "type",
     minWidth: 60,
     maxWidth: 80,
     bodyCellClassName: "text-black",

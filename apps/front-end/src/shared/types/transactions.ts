@@ -1,8 +1,5 @@
 import type { CSSProperties } from "react";
-import type {
-  GenericColumnOnSelectChangeProps,
-  StockRow,
-} from "@/shared/types";
+import type { StockRow } from "@/shared/types";
 
 import type { UseFormReturn } from "react-hook-form";
 import type { ItemDto, TransactionDto, TransactionStatusDto } from "@eu/types";
@@ -110,15 +107,6 @@ export type RunningTransaction = {
   item: ItemDto | null;
 };
 
-export type CreateRunningTransactionsColumnsOptions<T> = {
-  isRowPending: (row: TransactionDto) => boolean;
-  onChange: ({
-    row,
-    accessor,
-    value,
-  }: GenericColumnOnSelectChangeProps<T>) => void;
-};
-
 export type TransactionPricingValues = {
   quantity: number;
   fee: number;
@@ -141,4 +129,9 @@ export type TransactionModalQueries = {
 export type UseTransactionQueriesResult = {
   queries: TransactionModalQueries | null;
   updateQueries: (nextQueries: TransactionModalQueries | null) => void;
+};
+
+export type OpenTransactionModal = {
+  action: TransactionAction;
+  row: TransactionDto;
 };

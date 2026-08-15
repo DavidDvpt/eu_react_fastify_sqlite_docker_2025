@@ -31,7 +31,9 @@ function PedCardForm({
       value,
     });
 
-    queryClient.invalidateQueries({ queryKey: ["pedCard"] });
+    queryClient.invalidateQueries({
+      queryKey: ["pedcard-check", "pedcard-balance", "pedcard-can-pay"],
+    });
 
     onSuccess?.();
   };
