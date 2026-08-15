@@ -2,8 +2,25 @@ import { cn } from "@/lib/utils";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools";
 import { TransactionActions } from "@/shared/components";
+import type { CSSProperties } from "react";
 
-import type { TransactionItemDetailsProps } from "@/shared/types";
+type TransactionItemDetailsProps = {
+  itemName: string;
+  imageUrlId: string;
+  unitPrice: number;
+  quantity: number;
+  onBuy: () => void;
+  onSell: () => void;
+  onBack: () => void;
+  disableBuy?: boolean;
+  disableSell?: boolean;
+  actionsDirection?: "row" | "column";
+  actionsPlacement?: "bottom" | "right";
+  className?: string;
+  imageStyle?: CSSProperties;
+  actionsClassName?: string;
+  buttonClassName?: string;
+};
 
 function TransactionItemDetails({
   itemName,

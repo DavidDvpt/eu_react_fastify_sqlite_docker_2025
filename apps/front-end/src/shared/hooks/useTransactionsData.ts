@@ -48,23 +48,6 @@ function useTransactionsData({
     return rows;
   }, [running.data, filteredItems]);
 
-  // const transactionItem = useMemo<TransactionFilterRow | null>(() => {
-  //   if (!selectedItem) return null;
-
-  //   return {
-  //     itemId: selectedItem.id,
-  //     imageUrlId: selectedItem.imageUrlId,
-  //     name: selectedItem.name,
-  //     unitPrice: selectedItem.value,
-  //     quantity: selectedItem.quantity,
-  //     totalPrice: selectedItem.totalValue,
-  //     itemTypeId: selectedItem.typeId ?? null,
-  //     itemTypeName: selectedItem.typeName ?? null,
-  //     categoryId: selectedItem.categoryId ?? null,
-  //     categoryName: selectedItem.categoryName ?? null,
-  //   };
-  // }, [selectedItem]);
-
   return {
     running: runningAdapter,
     isLoading: running.isLoading || itemIsLoading,

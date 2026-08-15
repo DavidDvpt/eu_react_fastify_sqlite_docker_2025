@@ -1,4 +1,3 @@
-export { default as useInventoryMutation } from "./useInventoryMutation";
 export { default as useInventoryRefresh } from "./useInventoryRefresh";
 export { default as useNavLinks } from "./useNavLinks";
 export { default as usePedCard } from "./usePedcardData";

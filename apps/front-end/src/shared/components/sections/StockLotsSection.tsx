@@ -3,13 +3,14 @@ import { FormatTools } from "@/shared/tools/formatTools";
 import type { LotDto } from "@eu/types";
 
 interface StockLotInListProps {
-  lotList: LotDto[] | null;
+  lots: LotDto[] | null;
 }
 
-function StockLotInList({ lotList }: StockLotInListProps) {
-  if (!lotList) return null;
-  const visibleLots = lotList.filter((lot) => lot.isActive);
-  const soldOutLotsCount = lotList.filter(
+function StockLotsSection({ lots }: StockLotInListProps) {
+  if (!lots) return null;
+
+  const visibleLots = lots.filter((lot) => lot.isActive);
+  const soldOutLotsCount = lots.filter(
     (lot) => lot.quantityRemaining === 0,
   ).length;
 
@@ -52,4 +53,4 @@ function StockLotInList({ lotList }: StockLotInListProps) {
   );
 }
 
-export default StockLotInList;
+export default StockLotsSection;

@@ -1,6 +1,3 @@
-import type { CSSProperties } from "react";
-import type { StockRow } from "@/shared/types";
-
 import type { UseFormReturn } from "react-hook-form";
 import type { TransactionDto } from "@eu/types";
 import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
@@ -19,13 +16,6 @@ export type TransactionFormFieldsProps = Pick<
   "item" | "modalParams"
 >;
 
-export type TransactionFilterRow = StockRow & {
-  itemTypeId: string | null;
-  itemTypeName: string | null;
-  categoryId: string | null;
-  categoryName: string | null;
-};
-
 export type TransactionActionsProps = {
   onBuy: () => void;
   onSell: () => void;
@@ -35,24 +25,6 @@ export type TransactionActionsProps = {
   buttonClassName?: string;
   disableBuy?: boolean;
   disableSell?: boolean;
-};
-
-export type TransactionItemDetailsProps = {
-  itemName: string;
-  imageUrlId: string;
-  unitPrice: number;
-  quantity: number;
-  onBuy: () => void;
-  onSell: () => void;
-  onBack: () => void;
-  disableBuy?: boolean;
-  disableSell?: boolean;
-  actionsDirection?: "row" | "column";
-  actionsPlacement?: "bottom" | "right";
-  className?: string;
-  imageStyle?: CSSProperties;
-  actionsClassName?: string;
-  buttonClassName?: string;
 };
 
 export type TransactionPricingSnapshot = TransactionPricingValues & {

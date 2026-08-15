@@ -1,6 +1,11 @@
 import { useLocation } from "react-router-dom";
 import { NavButton } from "@/components/navbar";
-import type { VerticalNavProps } from "@/shared/types";
+import type { NavbarButtonType } from "@/shared/types";
+
+type VerticalNavProps = {
+  items: NavbarButtonType[];
+  className?: string;
+};
 
 function VerticalNav({ items }: VerticalNavProps) {
   const location = useLocation();
