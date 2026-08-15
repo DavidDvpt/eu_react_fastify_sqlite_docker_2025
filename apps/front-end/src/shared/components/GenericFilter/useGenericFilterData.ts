@@ -1,7 +1,7 @@
 // @shared/hooks/useGenericFilter.ts
 
 import { useMemo } from "react";
-import { selectOptionsHelper } from "@/shared/helpers/select.helper";
+import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
 import { useSystemDatas } from "@/shared/hooks";
 
 /**

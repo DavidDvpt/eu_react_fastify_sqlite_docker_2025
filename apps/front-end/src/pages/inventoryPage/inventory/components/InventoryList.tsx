@@ -2,13 +2,15 @@ import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import { GenericList } from "@/shared/components";
-import { stockColumns } from "../utils/stockColumns";
+
 import { FormatTools } from "@/shared/tools/formatTools";
-import { VIEW_MODE_PARAM_KEY } from "@/shared/contants";
 import type { GenericListViewMode } from "@/shared/types/genericListTypes";
 import type { ItemWithStock } from "@/shared/types";
 
 import useItemStock from "@/shared/hooks/useItemStock";
+import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
+
+const VIEW_MODE_PARAM_KEY = "viewMode";
 
 type InventoryListProps = {
   className?: string;

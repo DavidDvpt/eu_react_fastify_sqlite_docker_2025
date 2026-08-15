@@ -2,9 +2,7 @@ import type { GenericListColumn, ItemWithStock } from "@/shared/types";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools/formatTools";
 
-const stockColumns: GenericListColumn<
-  Pick<ItemWithStock, "imageUrlId" | "name" | "stock" | "value">
->[] = [
+const stockColumns: GenericListColumn<ItemWithStock>[] = [
   {
     key: "image",
     label: "Image",
