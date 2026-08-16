@@ -2,19 +2,17 @@ import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
 
-import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
-import useRunningTransactions from "@/shared/hooks/rqFetchHooks/useRunningTransactionsData";
-
 import { useNavigate } from "react-router-dom";
+import { useTransactionsData, useTransactionMutation } from "@/shared/hooks";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
-  const { rows, isLoading, isError } = useRunningTransactions({
-    status: "RUNNING",
+  const { running, isLoading, isError } = useTransactionsData({
+    runningProps: { status: "RUNNING" },
   });
 
-  const { statusMutation } = useTransactionsMutation();
-  const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
+  const { statusMutation } = useTransactionMutation();
+  const totalTtc = running.reduce((sum, row) => sum + row.ttc, 0);
 
   const columns = createRunningTransactionsColumns({
     isRowPending: () => statusMutation.isPending,
@@ -51,7 +49,7 @@ function RunningTransactionsSection() {
     <>
       <GenericList
         columns={columns}
-        rows={rows}
+        rows={running}
         getRowKey={(row) => row.id}
         hasHeader
         viewMode="list"

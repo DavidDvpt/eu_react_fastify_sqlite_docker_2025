@@ -1,7 +1,9 @@
+export { default as useInventoryList } from "./useInventoryList";
 export { default as useNavLinks } from "./useNavLinks";
 export { default as useQueryParams } from "./useQueryParams";
 export { default as useStockDetails } from "./useStockDetails";
 export { default as useTransactionAutoPricing } from "./useTransactionAutoPricing";
-export { default as useUpdateTransactionsStatus } from "./useTransactionsMutation";
+export { default as useTransactionMutation } from "./useTransactionMutation";
+export { default as useUpdateTransactionQueries } from "./useTransactionQueries";
 
 export * from "./rqFetchHooks";

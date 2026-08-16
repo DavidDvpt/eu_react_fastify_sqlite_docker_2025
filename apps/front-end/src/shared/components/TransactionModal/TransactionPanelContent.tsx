@@ -14,7 +14,7 @@ import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
 
 import type { ItemWithStock } from "@/shared/types";
-import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
+import useTransactionsMutation from "@/shared/hooks/useTransactionMutation";
 
 export type TransactionPanelProps = {
   item: ItemWithStock;

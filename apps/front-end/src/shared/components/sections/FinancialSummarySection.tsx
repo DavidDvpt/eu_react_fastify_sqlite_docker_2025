@@ -3,9 +3,8 @@ import { GenericList } from "@/shared/components";
 import FormatTools from "@/shared/tools/formatTools";
 import { useMemo } from "react";
 
-import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
 import type { PedCardSummaryRow } from "@/shared/types/pedcard";
-import { usePedcardData, useTransactionData } from "@/shared/hooks";
+import { usePedcardData, useTransactionsData } from "@/shared/hooks";
 import {
   pedCardSummaryBodyClassName,
   pedCardSummaryColumn,
@@ -15,10 +14,11 @@ import {
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
 } from "@/shared/components/GenericList/columnDefinition/pedcardSummaryColumns";
+import { useInventoryStockData } from "@/shared/hooks";
 
 function FinancialSummarySection() {
   const { balance } = usePedcardData();
-  const { running: runningRows } = useTransactionData({
+  const { running: runningRows } = useTransactionsData({
     runningProps: { status: "RUNNING" },
   });
   const { inventoryStockValue } = useInventoryStockData();
