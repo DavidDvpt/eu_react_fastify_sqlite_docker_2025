@@ -7,8 +7,8 @@ import { FormatTools } from "@/shared/tools/formatTools";
 import type { GenericListViewMode } from "@/shared/types/genericListTypes";
 import type { ItemWithStock } from "@/shared/types";
 
-import useItemStock from "@/shared/hooks/useItemStock";
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
+import useInventoryStockData from "@/shared/hooks/useInventoryStockData";
 
 const VIEW_MODE_PARAM_KEY = "viewMode";
 
@@ -22,7 +22,8 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const { itemsWithStock, isLoading, isError } = useItemStock({});
+  const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
+    useInventoryStockData({});
 
   const searchParams = useMemo(
     () => new URLSearchParams(location.search),
@@ -32,14 +33,14 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
 
   const visibleStock = useMemo(
     () =>
-      itemsWithStock
+      inventoryStock
         ?.filter((item) => showAllItems || item.stock !== 0)
         .filter(
           (f) =>
             (f.typeId === typeId || typeId === undefined) &&
             (f.type?.categoryId === categoryId || categoryId === undefined),
         ),
-    [itemsWithStock, showAllItems, categoryId, typeId],
+    [inventoryStock, showAllItems, categoryId, typeId],
   );
 
   const totalStockValue = useMemo(() => {
@@ -67,8 +68,8 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
       rows={visibleStock}
       getRowKey={(row) => row.id}
       onRowClick={(row) => onSelectedItem(row.id)}
-      isLoading={isLoading}
-      isError={isError}
+      isLoading={isInventoryStockLoading}
+      isError={isInventoryStockError}
       loadingMessage="Chargement de l'inventaire..."
       errorMessage={`Impossible de charger l'inventaire.`}
       emptyMessage={

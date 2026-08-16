@@ -3,14 +3,15 @@ import { useQuery } from "@tanstack/react-query";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import pedcardApi from "@/shared/services/pedCardApi";
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 function usePedCard() {
   const isLoggued = useAppSelector(selectIsLoggued);
-
+  const key = InvalidateQueryAndKeys;
   const ps = new pedcardApi();
 
   const balance = useQuery({
-    queryKey: ["pedcard", "balance"],
+    queryKey: key.getPedcardBalanceKey().keys,
     queryFn: ps.balance,
     enabled: isLoggued,
     staleTime: Infinity,
@@ -18,7 +19,7 @@ function usePedCard() {
   });
 
   const check = useQuery({
-    queryKey: ["pedcard", "check"],
+    queryKey: key.getPedcardCheckKey().keys,
     queryFn: ps.check,
     enabled: isLoggued,
     staleTime: Infinity,
@@ -26,7 +27,7 @@ function usePedCard() {
   });
 
   const canPay = useQuery({
-    queryKey: ["pedcard", "can-pay"],
+    queryKey: key.getPedcardCanPayKey().keys,
     queryFn: ps.canPay,
     enabled: isLoggued,
     staleTime: Infinity,

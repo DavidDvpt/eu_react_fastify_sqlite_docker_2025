@@ -1,10 +1,10 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
 import pedcardApi from "@/shared/services/pedCardApi";
 import { pedcardFormSchema } from "@eu/zod-schemas";
 import type { PedCardFormBody } from "@eu/types";
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 interface PedCardFormProps {
   initialized?: boolean;
@@ -19,21 +19,18 @@ function PedCardForm({
   submitLabel,
   onSuccess,
 }: PedCardFormProps) {
-  const queryClient = useQueryClient();
-
   const handleSubmit = async (data: PedCardFormBody) => {
     const currentBalance = balance;
     const isInitialBalance = initialized !== true;
     const value = isInitialBalance ? data.value : data.value - currentBalance;
+
     const ps = new pedcardApi();
     await ps.create({
       type: data.type,
       value,
     });
 
-    queryClient.invalidateQueries({
-      queryKey: ["pedcard-check", "pedcard-balance", "pedcard-can-pay"],
-    });
+    InvalidateQueryAndKeys.invalidatePedcard();
 
     onSuccess?.();
   };

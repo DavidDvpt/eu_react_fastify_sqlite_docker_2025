@@ -2,51 +2,55 @@ import { useQuery } from "@tanstack/react-query";
 
 import StockApi from "@/shared/services/inventoryApi";
 import type { StockQuery } from "@eu/types";
-import { ItemsApi } from "@/shared/services";
+
 import useSystemDatas from "@/shared/hooks/useSystemDatas";
 import { useMemo } from "react";
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import type { ItemWithStock } from "@/shared/types";
 
 function useInventoryStockData({ itemId }: StockQuery = {}) {
-  const { items } = useSystemDatas();
+  const {
+    items: { itemDatas, ...restItem },
+  } = useSystemDatas();
 
   const stockApi = new StockApi();
-  const itemApi = new ItemsApi();
-
-  const {
-    data: itemStock,
-    isLoading: isItemStockLoading,
-    isError: isItemStockError,
-  } = useQuery({
-    queryKey: ["stock", "item-stock", itemId],
-    queryFn: () => itemApi.getStock(itemId),
-    staleTime: 30_000,
-  });
 
   const {
     data: inventoryStock,
     isLoading: isItemsStockLoading,
     isError: isItemsStockError,
   } = useQuery({
-    queryKey: ["stock", "items-stock", itemId],
+    queryKey: [...InvalidateQueryAndKeys.getInventoryStockKey().keys, itemId],
     queryFn: () => stockApi.getStock(),
     staleTime: 30_000,
   });
 
+  const itemsWithStock = useMemo(() => {
+    if (!itemDatas || !inventoryStock) return [];
+
+    const map = itemDatas.map((item) => ({
+      ...item,
+      stock: inventoryStock[item.id] ?? 0,
+    })) as ItemWithStock[];
+
+    return map;
+  }, [inventoryStock, itemDatas]);
+
   const inventoryStockValue = useMemo(() => {
-    const total = items.data?.reduce((t, c) => {
+    const total = itemDatas?.reduce((t, c) => {
       const s = inventoryStock?.[c.id] ?? 0;
       const v = c.value * s;
 
       return t + v;
     }, 0);
     return total;
-  }, [items, inventoryStock]);
+  }, [itemDatas, inventoryStock]);
+
   return {
-    itemStock,
-    inventoryStock,
+    inventoryStock: itemsWithStock,
     inventoryStockValue: inventoryStockValue ?? 0,
-    isItemStockLoading: isItemStockLoading || isItemsStockLoading,
-    isItemStockError: isItemStockError || isItemsStockError,
+    isInventoryStockLoading: restItem.isLoading || isItemsStockLoading,
+    isInventoryStockError: restItem.isError || isItemsStockError,
   };
 }
 

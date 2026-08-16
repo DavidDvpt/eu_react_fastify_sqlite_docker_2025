@@ -6,7 +6,7 @@ import { Section } from "@/shared/components/Containers";
 import ItemDetail from "@/shared/components/ItemDetail/ItemDetail";
 
 import { useParams } from "react-router-dom";
-import useItemStock from "@/shared/hooks/useItemStock";
+import useItemStock from "@/shared/hooks/useItemStockData";
 import useItemLots from "@/shared/hooks/useItemLots";
 import { StockLotsSection } from "@/shared/components/sections";
 

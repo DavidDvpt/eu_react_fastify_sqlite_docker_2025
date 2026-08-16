@@ -6,6 +6,7 @@ import type { TransactionDto, TransactionBodyDto } from "@eu/types";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/useSystemDatas";
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 type UseTransactionProps = {
   id?: string;
@@ -13,11 +14,7 @@ type UseTransactionProps = {
   runningProps?: Partial<TransactionBodyDto>;
 };
 
-function useTransactionsData({
-  id,
-  action,
-  runningProps,
-}: UseTransactionProps) {
+function useTransactionsData({ runningProps }: UseTransactionProps) {
   const isLoggued = useAppSelector(selectIsLoggued);
   const ts = new TransactionsApi();
   // const { getItemData } = useInventoryList();
@@ -30,7 +27,10 @@ function useTransactionsData({
   } = useSystemDatas();
 
   const running = useQuery({
-    queryKey: ["running-transactions", runningProps],
+    queryKey: [
+      ...InvalidateQueryAndKeys.getRunningTransactionKey().keys,
+      runningProps,
+    ],
     queryFn: () => ts.get(runningProps),
     enabled: isLoggued,
     staleTime: 10_000,
@@ -52,8 +52,6 @@ function useTransactionsData({
     running: runningAdapter,
     isLoading: running.isLoading || itemIsLoading,
     isError: running.isError || itemIsError,
-    // transactionItem,
-    // isTransactionModalOpen,
   };
 }
 

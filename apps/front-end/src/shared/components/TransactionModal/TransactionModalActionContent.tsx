@@ -1,7 +1,7 @@
 import ItemSectionInfo from "./ItemSectionInfo";
 import TransactionPanelContent from "./TransactionPanelContent";
 import type { TransactionModalParams } from "@/shared/types/transactions";
-import useItemStock from "@/shared/hooks/useItemStock";
+import useItemStock from "@/shared/hooks/useItemStockData";
 
 interface TransactionModalActionContentProps {
   onClose: () => void;

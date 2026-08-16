@@ -1,14 +1,15 @@
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import { CategoriesApi, ItemsApi, TypesApi } from "@/shared/services";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store/reducers/auth";
 import type { ItemDtos } from "@eu/types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 
 export default function useSystemDatas() {
   const logged = useAppSelector(selectIsLoggued);
-  const queryClient = useQueryClient();
 
+  const keys = InvalidateQueryAndKeys;
   const catApi = new CategoriesApi();
   const typesApi = new TypesApi();
   const itemsApi = new ItemsApi();
@@ -19,14 +20,10 @@ export default function useSystemDatas() {
     enabled: logged,
     staleTime: Infinity,
   });
-  const invalidateCategories = useCallback(
-    () => queryClient.invalidateQueries({ queryKey: ["categories"] }),
-    [queryClient],
-  );
 
   /* TYPES */
   const t = useQuery({
-    queryKey: ["types"],
+    queryKey: keys.getTypesKey().keys,
     queryFn: () => typesApi.get(),
     enabled: logged,
     staleTime: Infinity,
@@ -41,10 +38,7 @@ export default function useSystemDatas() {
 
     return enrich;
   }, [categories, t.data]);
-  const invalidateTypes = useCallback(
-    () => queryClient.invalidateQueries({ queryKey: ["types"] }),
-    [queryClient],
-  );
+
   const typesByCategory = useMemo(
     () => (categoryId?: string) => {
       if (!categoryId) return types;
@@ -55,7 +49,7 @@ export default function useSystemDatas() {
 
   /* ITEMS */
   const i = useQuery({
-    queryKey: ["items"],
+    queryKey: keys.getItemsKey().keys,
     queryFn: () => itemsApi.get(),
     enabled: logged,
     staleTime: Infinity,
@@ -89,18 +83,10 @@ export default function useSystemDatas() {
       },
     [items],
   );
-  const invalidateItems = useCallback(
-    () => queryClient.invalidateQueries({ queryKey: ["items"] }),
-    [queryClient],
-  );
 
   return {
     categories,
     types: { ...t, typeDatas: types, typesByCategory },
     items: { ...i, itemDatas: items, filteredItems },
-
-    invalidateCategories,
-    invalidateTypes,
-    invalidateItems,
   };
 }
