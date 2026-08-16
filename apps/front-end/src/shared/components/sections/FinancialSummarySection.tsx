@@ -1,8 +1,11 @@
 import { GenericList } from "@/shared/components";
-import usePedCard from "@/shared/hooks/usePedcardData";
-import useRunningTransactions from "@/shared/hooks/useRunningTransactions";
+
 import FormatTools from "@/shared/tools/formatTools";
 import { useMemo } from "react";
+
+import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
+import type { PedCardSummaryRow } from "@/shared/types/pedcard";
+import { usePedcardData, useTransactionData } from "@/shared/hooks";
 import {
   pedCardSummaryBodyClassName,
   pedCardSummaryColumn,
@@ -11,14 +14,13 @@ import {
   pedCardSummaryRowBaseClassName,
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
-} from "../GenericList/columnDefinition/pedCardSummaryColumns";
-
-import useInventoryStockData from "@/shared/hooks/useInventoryStockData";
-import type { PedCardSummaryRow } from "@/shared/types/pedcard";
+} from "@/shared/components/GenericList/columnDefinition/pedcardSummaryColumns";
 
 function FinancialSummarySection() {
-  const { balance } = usePedCard();
-  const { rows: runningRows } = useRunningTransactions({ status: "RUNNING" });
+  const { balance } = usePedcardData();
+  const { running: runningRows } = useTransactionData({
+    runningProps: { status: "RUNNING" },
+  });
   const { inventoryStockValue } = useInventoryStockData();
 
   const totalRunningTransactionsTtc = useMemo(

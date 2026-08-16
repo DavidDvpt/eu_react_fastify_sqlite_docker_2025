@@ -6,8 +6,8 @@ import { Section } from "@/shared/components/Containers";
 import ItemDetail from "@/shared/components/ItemDetail/ItemDetail";
 
 import { useParams } from "react-router-dom";
-import useItemStock from "@/shared/hooks/useItemStockData";
-import useItemLots from "@/shared/hooks/useItemLots";
+import useItemStock from "@/shared/hooks/rqFetchHooks/useItemStockData";
+import useItemLots from "@/shared/hooks/rqFetchHooks/useItemLotsData";
 import { StockLotsSection } from "@/shared/components/sections";
 
 type StockDetailsPanelProps = {

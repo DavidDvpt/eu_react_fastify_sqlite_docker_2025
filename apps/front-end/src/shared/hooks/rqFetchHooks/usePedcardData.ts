@@ -5,7 +5,7 @@ import { selectIsLoggued } from "@/store";
 import pedcardApi from "@/shared/services/pedCardApi";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
-function usePedCard() {
+function usePedcard() {
   const isLoggued = useAppSelector(selectIsLoggued);
   const key = InvalidateQueryAndKeys;
   const ps = new pedcardApi();
@@ -41,4 +41,4 @@ function usePedCard() {
   };
 }
 
-export default usePedCard;
+export default usePedcard;

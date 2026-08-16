@@ -1,19 +1,24 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 
 import TransactionsApi from "@/shared/services/transactionsApi";
-import type { TransactionDto, TransactionStatusPatchDto } from "@eu/types";
-import type { OpenTransactionModal } from "@/shared/types";
+import type {
+  TransactionBodyDto,
+  TransactionDto,
+  TransactionStatusDto,
+  TransactionStatusPatchDto,
+  TransactionTypeDto,
+} from "@eu/types";
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import type {
+  AutoPricingFormValues,
+  ItemWithStock,
+  TransactionAction,
+} from "@/shared/types";
 
-interface UseTransactionsMutationProps {
-  onStatusMutationSuccess: ({ action, row }: OpenTransactionModal) => void;
-}
-function useTransactionsMutation({
-  onStatusMutationSuccess,
-}: UseTransactionsMutationProps) {
-  const queryClient = useQueryClient();
+function useTransactionsMutation() {
   const ts = new TransactionsApi();
 
-  return useMutation({
+  const statusMutation = useMutation({
     mutationFn: async ({
       row,
       status,
@@ -21,19 +26,44 @@ function useTransactionsMutation({
       row: TransactionDto;
       status: TransactionStatusPatchDto;
     }) => ts.updateStatus({ id: row.id, status }),
-    onSuccess: async (data, Variables) => {
-      const { status, row } = Variables;
-      const action = status === "SOLDED" ? "resell" : "sell";
-      await Promise.all([
-        queryClient.invalidateQueries({ queryKey: ["running-transactions"] }),
-        queryClient.invalidateQueries({ queryKey: ["items-stock"] }),
-        queryClient.invalidateQueries({ queryKey: ["stock", "details"] }),
-        queryClient.invalidateQueries({ queryKey: ["pedcard"] }),
-      ]);
-
-      onStatusMutationSuccess({ action, row });
+    onSuccess: async (data, { row }) => {
+      await InvalidateQueryAndKeys.transactionStatusMutation({
+        itemId: row.item?.id,
+      });
     },
   });
+
+  const createMutation = useMutation({
+    mutationFn: async ({
+      values,
+      item,
+      action,
+    }: {
+      values: AutoPricingFormValues & { status: TransactionStatusDto };
+      item: ItemWithStock;
+      action: TransactionAction;
+    }) => {
+      const ts = new TransactionsApi();
+      return ts.create({
+        transactionType: (action === "sell"
+          ? "SELL"
+          : "BUY") as TransactionTypeDto,
+        itemId: item.id,
+        quantity: values.quantity,
+        tt: values.quantity * item.value,
+        fee: values.fee,
+        ttc: values.ttc,
+        status: values.status,
+      } satisfies TransactionBodyDto);
+    },
+    onSuccess: async (data, { item }) => {
+      await InvalidateQueryAndKeys.createTransactionMutation({
+        itemId: item?.id,
+      });
+    },
+  });
+
+  return { statusMutation, createMutation };
 }
 
 export default useTransactionsMutation;

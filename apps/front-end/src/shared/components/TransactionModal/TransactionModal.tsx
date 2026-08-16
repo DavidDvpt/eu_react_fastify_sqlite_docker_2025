@@ -1,14 +1,15 @@
 import { ModalGeneric } from "../ModalGeneric";
 import TransactionResellContent from "./TransactionResellContent";
 import TransactionModalActionContent from "./TransactionModalActionContent";
-import { usePedCard } from "@/shared/hooks";
+
 import useTransactionQueries from "@/shared/hooks/useTransactionQueries";
 import PedCardForm from "../pedCardModal/PedCardForm";
 import { useQueryClient } from "@tanstack/react-query";
+import { usePedcardData } from "@/shared/hooks";
 
 function TransactionModal() {
   const { queries, updateQueries } = useTransactionQueries();
-  const { check, balance } = usePedCard();
+  const { check, balance } = usePedcardData();
   const queryClient = useQueryClient();
 
   if (!queries?.action || !queries?.itemId) return null;

@@ -8,7 +8,7 @@ import type { GenericListViewMode } from "@/shared/types/genericListTypes";
 import type { ItemWithStock } from "@/shared/types";
 
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
-import useInventoryStockData from "@/shared/hooks/useInventoryStockData";
+import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
 
 const VIEW_MODE_PARAM_KEY = "viewMode";
 

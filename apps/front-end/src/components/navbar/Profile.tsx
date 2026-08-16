@@ -10,8 +10,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import PedCardModal from "../../shared/components/pedCardModal/PedCardModal";
-import usePedCard from "@/shared/hooks/usePedcardData";
+
 import { authMeThunk } from "@/store";
+import { usePedcardData } from "@/shared/hooks";
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ function Profile() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const pseudo = useAppSelector((state) => state.auth.user.result?.pseudo);
-  const { pedCard } = usePedCard();
+  const { balance, check } = usePedcardData();
 
   const avatarLetter = (pseudo?.trim()?.[0] ?? "U").toUpperCase();
 
@@ -87,8 +88,8 @@ function Profile() {
       <PedCardModal
         open={isPedCardModalOpen}
         onOpenChange={handlePedCardModalOpenChange}
-        balance={pedCard?.balance ?? null}
-        hasInitialBalance={pedCard?.hasInitialBalance ?? null}
+        balance={balance ?? null}
+        hasInitialBalance={check ?? null}
       />
     </div>
   );

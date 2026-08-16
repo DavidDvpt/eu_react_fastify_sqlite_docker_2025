@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import StockApi from "@/shared/services/inventoryApi";
 import type { StockQuery } from "@eu/types";
 
-import useSystemDatas from "@/shared/hooks/useSystemDatas";
+import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type { ItemWithStock } from "@/shared/types";

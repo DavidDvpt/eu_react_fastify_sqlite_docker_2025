@@ -3,41 +3,47 @@ import { createRunningTransactionsColumns } from "@/shared/components/GenericLis
 import { FormatTools } from "@/shared/tools/formatTools";
 
 import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
-import useRunningTransactions from "@/shared/hooks/useRunningTransactions";
-import type { OpenTransactionModal } from "@/shared/types";
+import useRunningTransactions from "@/shared/hooks/rqFetchHooks/useRunningTransactionsData";
+
+import { useNavigate } from "react-router-dom";
 
 function RunningTransactionsSection() {
+  const navigate = useNavigate();
   const { rows, isLoading, isError } = useRunningTransactions({
     status: "RUNNING",
   });
 
-  const openTransactionModal = ({ action, row }: OpenTransactionModal) => {
-    const query = {
-      action,
-      itemId: row.item?.id,
-      ttc: row.ttc,
-      quantity: row.quantity,
-      closePath: "/home",
-    };
-
-    const search = new URLSearchParams();
-    search.set("transactionModal", JSON.stringify(query));
-
-    return search;
-  };
-
-  const { mutateAsync: patchTransaction, isPending } = useTransactionsMutation({
-    onStatusMutationSuccess: openTransactionModal,
-  });
+  const { statusMutation } = useTransactionsMutation();
   const totalTtc = rows.reduce((sum, row) => sum + row.ttc, 0);
 
   const columns = createRunningTransactionsColumns({
-    isRowPending: () => isPending,
+    isRowPending: () => statusMutation.isPending,
     onChange: ({ row, value }) => {
-      patchTransaction({
-        row,
-        status: value,
-      });
+      statusMutation.mutate(
+        {
+          row,
+          status: value,
+        },
+        {
+          onSuccess(data, { row }) {
+            const query = {
+              action: row.status === "SOLDED" ? "sell" : "resell",
+              itemId: row.item?.id,
+              ttc: row.ttc,
+              quantity: row.quantity,
+              closePath: "/home",
+            };
+
+            const search = new URLSearchParams();
+            search.set("transactionModal", JSON.stringify(query));
+
+            navigate({
+              pathname: "/home",
+              search: search.toString(),
+            });
+          },
+        },
+      );
     },
   });
 

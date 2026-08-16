@@ -5,7 +5,7 @@ import TransactionsApi from "@/shared/services/transactionsApi";
 import type { TransactionDto, TransactionBodyDto } from "@eu/types";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
-import useSystemDatas from "@/shared/hooks/useSystemDatas";
+import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 type UseTransactionProps = {
@@ -17,10 +17,6 @@ type UseTransactionProps = {
 function useTransactionsData({ runningProps }: UseTransactionProps) {
   const isLoggued = useAppSelector(selectIsLoggued);
   const ts = new TransactionsApi();
-  // const { getItemData } = useInventoryList();
-
-  // const selectedItem = getItemData(id);
-  // const isTransactionModalOpen = action === "buy" || action === "sell";
 
   const {
     items: { filteredItems, isLoading: itemIsLoading, isError: itemIsError },

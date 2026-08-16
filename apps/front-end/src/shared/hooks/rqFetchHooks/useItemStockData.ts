@@ -1,5 +1,5 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import useSystemDatas from "@/shared/hooks/useSystemDatas";
+import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { ItemsApi } from "@/shared/services";
 import type { ItemDto, StockQuery } from "@eu/types";
 import { useQuery } from "@tanstack/react-query";
@@ -12,7 +12,7 @@ export default function useItemStock({ itemId }: StockQuery = {}) {
   } = useSystemDatas();
 
   const { data: itemStock, ...rest } = useQuery({
-    queryKey: [...InvalidateQueryAndKeys.getItemStockKey().keys, itemId],
+    queryKey: InvalidateQueryAndKeys.getItemStockKey(itemId).keys,
     queryFn: () => itemsApi.getStock(itemId),
     staleTime: 30_000,
   });

@@ -1,10 +1,8 @@
 import { useMemo } from "react";
-import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
 import { Section } from "@/shared/components/Containers";
 import { GenericForm } from "@/shared/components/form/Genericform";
 
-import useInventoryRefresh from "@/shared/hooks/useInventoryRefresh";
 import type {
   AutoPricingFormValues,
   TransactionModalParams,
@@ -14,13 +12,9 @@ import { transactionFormSchema } from "./transactionSchemas";
 import { computeQuantityPricing } from "./transactionUtils";
 import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
-import type {
-  TransactionBodyDto,
-  TransactionStatusDto,
-  TransactionTypeDto,
-} from "@eu/types";
-import TransactionsApi from "@/shared/services/transactionsApi";
+
 import type { ItemWithStock } from "@/shared/types";
+import useTransactionsMutation from "@/shared/hooks/useTransactionsMutation";
 
 export type TransactionPanelProps = {
   item: ItemWithStock;
@@ -39,27 +33,7 @@ function TransactionPanelContent({
     return transactionFormSchema(item.stock, modalParams.action!);
   }, [modalParams, item]);
 
-  const refreshStock = useInventoryRefresh(item.id, onBack);
-
-  const mutation = useMutation({
-    mutationFn: async (
-      values: AutoPricingFormValues & { status: TransactionStatusDto },
-    ) => {
-      const ts = new TransactionsApi();
-      return ts.create({
-        transactionType: (action === "sell"
-          ? "SELL"
-          : "BUY") as TransactionTypeDto,
-        itemId: item.id,
-        quantity: values.quantity,
-        tt: values.quantity * item.value,
-        fee: values.fee,
-        ttc: values.ttc,
-        status: values.status,
-      } satisfies TransactionBodyDto);
-    },
-    onSuccess: refreshStock,
-  });
+  const { createMutation } = useTransactionsMutation();
 
   const initialValues = useMemo(() => {
     const mergedValues = {
@@ -92,7 +66,12 @@ function TransactionPanelContent({
       if (!shouldContinue) return;
     }
 
-    mutation.mutate({ ...values, status: "RUNNING" });
+    createMutation.mutate(
+      { values: { ...values, status: "RUNNING" }, item, action },
+      {
+        onSuccess: onBack,
+      },
+    );
   };
 
   return (
@@ -106,7 +85,7 @@ function TransactionPanelContent({
       >
         <TransactionFormContent item={item} modalParams={modalParams} />
 
-        {mutation.isError ? (
+        {createMutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">
             {PANEL_COPY[action].errorMessage}
           </p>
@@ -121,7 +100,7 @@ function TransactionPanelContent({
             size="sm"
             className="min-w-[110px] text-black"
             onClick={onBack}
-            disabled={mutation.isPending}
+            disabled={createMutation.isPending}
           >
             Retour
           </Button>
@@ -130,7 +109,7 @@ function TransactionPanelContent({
             variant="primary"
             size="sm"
             className="min-w-[110px]"
-            disabled={mutation.isPending}
+            disabled={createMutation.isPending}
           >
             {PANEL_COPY[action].submitLabel}
           </Button>

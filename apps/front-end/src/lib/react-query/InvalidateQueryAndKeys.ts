@@ -1,6 +1,6 @@
 import { queryClient } from "@/lib/react-query/queryClient";
 
-type InvalidateObject = { keys: string[] };
+type InvalidateObject = { keys: (string | undefined)[] };
 
 export class InvalidateQueryAndKeys {
   static getCategoriesKey(): InvalidateObject {
@@ -24,16 +24,44 @@ export class InvalidateQueryAndKeys {
   static getRunningTransactionKey(): InvalidateObject {
     return { keys: ["running-transactions"] };
   }
-  static getItemStockKey(): InvalidateObject {
-    return { keys: ["stock", "item-stock"] };
+  static getItemStockKey(itemId?: string): InvalidateObject {
+    return { keys: ["stock", "item-stock", itemId] };
   }
   static getInventoryStockKey(): InvalidateObject {
     return { keys: ["stock", "items-stock"] };
+  }
+  static getItemLotsKey(itemId?: string): InvalidateObject {
+    return { keys: ["item-lots", itemId] };
   }
 
   static async invalidatePedcard() {
     await queryClient.invalidateQueries({
       queryKey: ["pedcard"],
     });
+  }
+  static async transactionStatusMutation({ itemId }: { itemId?: string }) {
+    return await Promise.all([
+      this.createTransactionMutation({ itemId }),
+      queryClient.invalidateQueries({
+        queryKey: this.getRunningTransactionKey().keys,
+      }),
+    ]);
+  }
+  static async createTransactionMutation({ itemId }: { itemId?: string }) {
+    return await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryStockKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemStockKey(itemId).keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: ["stock", "details", itemId],
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemLotsKey().keys,
+      }),
+      queryClient.invalidateQueries({ queryKey: ["pedcard"] }),
+    ]);
   }
 }
