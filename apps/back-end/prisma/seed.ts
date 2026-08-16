@@ -9,7 +9,9 @@ const shouldSeedDevData = env.SEED_INCLUDE_DEV_DATA || env.NODE_ENV !== 'product
 
 const seedPatches: SeedPatchType[] = [new SeedSystemBase(prismaClient)];
 
-if (shouldSeedDevData) seedPatches.push(new SeedDevBase(prismaClient));
+if (shouldSeedDevData) {
+  seedPatches.push(new SeedDevBase(prismaClient));
+}
 
 const seedProcess = new SeedProcess(prismaClient);
 await seedProcess.init();
