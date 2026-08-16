@@ -1,8 +1,8 @@
 import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
-import { getItemImageUrl } from "@/pages/managePage/utils";
 import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
 import type { ItemDto } from "@eu/types";
+import { ImageService } from "@/shared/services";
 
 const createItemColumns = (
   currentUserId?: string,
@@ -14,8 +14,11 @@ const createItemColumns = (
     accessor: "imageUrlId",
     minWidth: 40,
     maxWidth: 40,
-    bodyCellClassName: "bg-white",
-    imageSrc: (value) => getItemImageUrl(String(value ?? "")) ?? "",
+    bodyCellClassName: "bg-transparent",
+    imageSrc: (value) =>
+      typeof value === "string" && value.trim() !== ""
+        ? (ImageService.getItemImageUrl(value, "micro") ?? "")
+        : "",
     imageAlt: (item) => item.name ?? "Image",
   },
   {
@@ -24,8 +27,7 @@ const createItemColumns = (
     kind: "text",
     accessor: "name",
     fillRemainingSpace: true,
-    bodyCellClassName: "text-black font-semibold",
-    value: (item) => item.name ?? "Unknown",
+    bodyCellClassName: "text-black font-semibold pl-1",
   },
   {
     key: "type",
@@ -52,18 +54,15 @@ const createItemColumns = (
     key: "stackable",
     label: "Stackable",
     kind: "text",
-    accessor: "type",
     minWidth: 60,
     maxWidth: 80,
     bodyCellClassName: "text-black",
-    value: (row) =>
-      "isStackable" in row ? (row.isStackable ? "Oui" : "Non") : "Non",
+    value: (row) => (row.type?.isStackable ? "Oui" : "Non"),
   },
   {
     key: "scope",
     label: "Scope",
     kind: "text",
-    accessor: "userId",
     minWidth: 60,
     maxWidth: 80,
     bodyCellClassName: "text-black",
@@ -74,7 +73,6 @@ const createItemColumns = (
     key: "value",
     label: "Valeur",
     kind: "number",
-    accessor: "value",
     minWidth: 80,
     maxWidth: 100,
     align: "right",

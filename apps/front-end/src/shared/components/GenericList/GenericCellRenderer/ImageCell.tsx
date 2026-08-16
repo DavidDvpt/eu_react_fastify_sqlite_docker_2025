@@ -1,12 +1,15 @@
-import ItemImage from "@/shared/components/itemImage/ItemImage";
+import ItemImage, {
+  type ItemImageProps,
+} from "@/shared/components/itemImage/ItemImage";
 
 type ImageCellProps = {
   imageUrl: string | null;
-  alt: string;
+  alt: ItemImageProps["alt"];
+  size?: ItemImageProps["size"];
 };
 
-function ImageCell({ imageUrl, alt }: ImageCellProps) {
-  return <ItemImage url={imageUrl} alt={alt} size="small" />;
+function ImageCell({ imageUrl, alt, size = "small" }: ImageCellProps) {
+  return <ItemImage url={imageUrl} alt={alt} size={size} />;
 }
 
 export { ImageCell };

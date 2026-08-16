@@ -63,7 +63,7 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
 
   return (
     <GenericList<ItemWithStock>
-      columns={stockColumns}
+      columns={stockColumns(urlViewMode === "card")}
       className={className}
       rows={visibleStock}
       getRowKey={(row) => row.id}

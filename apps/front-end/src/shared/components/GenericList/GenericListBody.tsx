@@ -1,9 +1,7 @@
 import { cn } from "@/lib/utils";
-import type {
-  GenericListBodyProps,
-  GenericListColumn,
-} from "../../types/genericListTypes";
+import type { GenericListBodyProps } from "../../types/genericListTypes";
 import { GenericCellRenderer } from "./GenericCellRenderer";
+import type { GenericListColumn } from "@/shared/types";
 
 const DEFAULT_ROW_CLASS =
   "grid items-stretch border-b border-table-row-divider text-black last:border-b-0 hover:bg-table-row-hover-bg";

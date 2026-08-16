@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import type { ItemImageProps } from "@/shared/components/itemImage/ItemImage";
 
 export type GenericListColumnKind =
   | "text"
@@ -38,6 +39,7 @@ export type GenericListColumn<T> = {
   disabled?: (row: T) => boolean;
   imageSrc?: (value: unknown, row: T) => string;
   imageAlt?: (row: T) => string;
+  imageSize?: ItemImageProps["size"];
   buttonLabel?: string;
   selectOptions?: Array<{ label: string; value: string }>;
   isRowPending?: (row: T) => boolean;

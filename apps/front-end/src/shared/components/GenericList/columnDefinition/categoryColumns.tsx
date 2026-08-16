@@ -13,12 +13,10 @@ const createCategoryColumns = (
     fillRemainingSpace: true,
     minWidth: 240,
     bodyCellClassName: "text-black",
-    value: (category) => category.name ?? "Unknow",
   },
   {
     key: "scope",
     label: "Scope",
-    accessor: "userId",
     minWidth: 140,
     maxWidth: 140,
     bodyCellClassName: "text-black",

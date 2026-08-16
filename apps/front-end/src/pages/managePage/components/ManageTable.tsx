@@ -30,7 +30,6 @@ function ManageTable({ activeTab }: ManageTableProps) {
         loadingMessage="Chargement des categories..."
         errorMessage={errorMessage}
         emptyMessage="Aucune categorie."
-        rowHeight={34}
         onRowClick={(row) => navigate(editRoute(row.id))}
       />
     </div>

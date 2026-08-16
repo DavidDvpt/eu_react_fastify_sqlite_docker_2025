@@ -1,10 +1,12 @@
 import { cn } from "@/lib/utils";
 import styles from "./itemImage.module.css";
 
-type ItemImageProps = {
+export type ItemImageSize = "small" | "medium" | "large";
+
+export type ItemImageProps = {
   url?: string | null;
   alt: string;
-  size?: "small" | "medium" | "large";
+  size?: ItemImageSize;
   classname?: string;
 };
 

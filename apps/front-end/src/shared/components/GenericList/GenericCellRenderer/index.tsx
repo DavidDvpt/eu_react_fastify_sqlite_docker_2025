@@ -43,6 +43,7 @@ function GenericCellRenderer<T>({ column, row }: GenericCellRendererProps<T>) {
               : null
           }
           alt={column.imageAlt ? column.imageAlt(row) : column.label}
+          size={column.imageSize}
         />
       );
     }
