@@ -1,16 +1,19 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { renderHook, waitFor } from "@testing-library/react";
+import { act, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import useUpdateTransactionsStatus from "../useTransactionMutation";
 
-const { updateTransactionStatusMock } = vi.hoisted(() => ({
-  updateTransactionStatusMock: vi.fn(),
+const { updateStatusMock } = vi.hoisted(() => ({
+  updateStatusMock: vi.fn(),
 }));
 
-vi.mock("@/lib/services/transactionApi", () => ({
-  updateTransactionStatus: updateTransactionStatusMock,
+vi.mock("@/shared/services/transactionsApi", () => ({
+  default: class {
+    updateStatus = updateStatusMock;
+  },
 }));
 
 function createWrapper(queryClient: QueryClient) {
@@ -22,25 +25,33 @@ function createWrapper(queryClient: QueryClient) {
 }
 
 describe("useUpdateTransactionsStatus", () => {
-  it("invalidates pedCard after a successful status update", async () => {
-    updateTransactionStatusMock.mockResolvedValue(undefined);
-
-    const queryClient = new QueryClient({
-      defaultOptions: { queries: { retry: false } },
-    });
-    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+  it("invalidates related queries after a successful status update", async () => {
+    updateStatusMock.mockResolvedValue(undefined);
+    const invalidateSpy = vi
+      .spyOn(InvalidateQueryAndKeys, "transactionStatusMutation")
+      .mockResolvedValue([]);
 
     const { result } = renderHook(() => useUpdateTransactionsStatus(), {
-      wrapper: createWrapper(queryClient),
+      wrapper: createWrapper(
+        new QueryClient({
+          defaultOptions: { queries: { retry: false } },
+        }),
+      ),
     });
 
-    result.current.mutate({
-      id: "transaction-1",
-      status: "SOLDED",
+    await act(async () => {
+      await result.current.statusMutation.mutateAsync({
+        row: { id: "transaction-1", item: { id: "item-1" } },
+        status: "SOLDED",
+      } as never);
     });
 
     await waitFor(() => {
-      expect(invalidateSpy).toHaveBeenCalledWith({ queryKey: ["pedCard"] });
+      expect(updateStatusMock).toHaveBeenCalledWith({
+        id: "transaction-1",
+        status: "SOLDED",
+      });
+      expect(invalidateSpy).toHaveBeenCalledWith({ itemId: "item-1" });
     });
   });
 });

@@ -7,22 +7,22 @@ import { MemoryRouter } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ApiStatus } from "@/lib/axios/ApiStatus";
-import authReducer from "@/modules/auth/authSlice";
+import authReducer from "@/store/reducers/auth/authSlice";
 import Profile from "../Profile";
 
-const { mockLogoutApi, mockAuthMeThunk, mockGetPedCard } = vi.hoisted(() => ({
+const { mockLogoutApi, mockAuthMeThunk, mockUsePedcardData } = vi.hoisted(() => ({
   mockLogoutApi: vi.fn(),
   mockAuthMeThunk: vi.fn(),
-  mockGetPedCard: vi.fn(),
+  mockUsePedcardData: vi.fn(),
 }));
 
 vi.mock("@/modules/auth/services/network/logoutApi", () => ({
   default: () => mockLogoutApi(),
 }));
 
-vi.mock("@/modules/auth", async () => {
-  const actual = await vi.importActual<typeof import("@/modules/auth")>(
-    "@/modules/auth"
+vi.mock("@/store", async () => {
+  const actual = await vi.importActual<typeof import("@/store")>(
+    "@/store",
   );
 
   return {
@@ -31,14 +31,14 @@ vi.mock("@/modules/auth", async () => {
   };
 });
 
-vi.mock("@/lib/services", async () => {
-  const actual = await vi.importActual<typeof import("@/lib/services")>(
-    "@/lib/services",
+vi.mock("@/shared/hooks", async () => {
+  const actual = await vi.importActual<typeof import("@/shared/hooks")>(
+    "@/shared/hooks",
   );
 
   return {
     ...actual,
-    getPedCard: mockGetPedCard,
+    usePedcardData: () => mockUsePedcardData(),
   };
 });
 
@@ -94,14 +94,13 @@ describe("Profile", () => {
 
   it("calls logout api then refreshes auth state", async () => {
     const user = userEvent.setup();
-    mockGetPedCard.mockResolvedValueOnce({
-      hasInitialBalance: true,
+    mockUsePedcardData.mockReturnValue({
+      check: true,
       balance: 115.5,
-      needsSetup: false,
     });
     renderProfile();
     mockLogoutApi.mockResolvedValueOnce({ message: "Logged out" });
-    mockAuthMeThunk.mockReturnValueOnce({ type: "auth/me" });
+    mockAuthMeThunk.mockReturnValueOnce(vi.fn());
 
     await user.click(screen.getByRole("button", { name: /open profile menu/i }));
     await user.click(screen.getByRole("button", { name: "Logout" }));
@@ -114,10 +113,9 @@ describe("Profile", () => {
 
   it("opens the pedcard modal and enables only the expected action", async () => {
     const user = userEvent.setup();
-    mockGetPedCard.mockResolvedValueOnce({
-      hasInitialBalance: false,
+    mockUsePedcardData.mockReturnValue({
+      check: false,
       balance: null,
-      needsSetup: true,
     });
     renderProfile();
 

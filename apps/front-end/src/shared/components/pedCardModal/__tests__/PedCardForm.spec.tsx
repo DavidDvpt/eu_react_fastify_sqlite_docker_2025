@@ -4,21 +4,18 @@ import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi, beforeEach } from "vitest";
 
+import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import PedCardForm from "../PedCardForm";
 
 const { mockCreatePedCardEntry } = vi.hoisted(() => ({
   mockCreatePedCardEntry: vi.fn(),
 }));
 
-vi.mock("@/lib/services", async () => {
-  const actual =
-    await vi.importActual<typeof import("@/lib/services")>("@/lib/services");
-
-  return {
-    ...actual,
-    createPedCardEntry: mockCreatePedCardEntry,
-  };
-});
+vi.mock("@/shared/services/pedCardApi", () => ({
+  default: class {
+    create = mockCreatePedCardEntry;
+  },
+}));
 
 vi.mock("../form/Genericform", () => ({
   GenericForm: ({
@@ -43,7 +40,7 @@ vi.mock("../form/Genericform", () => ({
 }));
 
 vi.mock("../form/Input/InputRHF", () => ({
-  default: () => <input aria-label="value" />,
+  default: () => <input aria-label="value" name="value" />,
 }));
 
 describe("PedCardForm", () => {
@@ -53,15 +50,20 @@ describe("PedCardForm", () => {
 
   it("initializes the pedcard when it is not initialized yet", async () => {
     const user = userEvent.setup();
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-      },
-    });
-    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+    const invalidateSpy = vi
+      .spyOn(InvalidateQueryAndKeys, "invalidatePedcard")
+      .mockResolvedValue(undefined);
 
     render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: {
+              queries: { retry: false },
+            },
+          })
+        }
+      >
         <PedCardForm initialized={false} balance={null} />
       </QueryClientProvider>,
     );
@@ -74,23 +76,26 @@ describe("PedCardForm", () => {
         type: "INITIAL_BALANCE",
         value: 0,
       });
-      expect(invalidateSpy).toHaveBeenCalledWith({
-        queryKey: ["pedCard"],
-      });
+      expect(invalidateSpy).toHaveBeenCalledOnce();
     });
   });
 
   it("creates an adjustment entry when the pedcard is already initialized", async () => {
     const user = userEvent.setup();
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-      },
-    });
-    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+    const invalidateSpy = vi
+      .spyOn(InvalidateQueryAndKeys, "invalidatePedcard")
+      .mockResolvedValue(undefined);
 
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: {
+              queries: { retry: false },
+            },
+          })
+        }
+      >
         <PedCardForm initialized={true} balance={100} />
       </QueryClientProvider>,
     );
@@ -110,24 +115,27 @@ describe("PedCardForm", () => {
         type: "ADJUSTMENT",
         value: 30,
       });
-      expect(invalidateSpy).toHaveBeenCalledWith({
-        queryKey: ["pedCard"],
-      });
+      expect(invalidateSpy).toHaveBeenCalledOnce();
     });
   });
 
   it("calls onSuccess after a successful submission", async () => {
     const user = userEvent.setup();
-    const queryClient = new QueryClient({
-      defaultOptions: {
-        queries: { retry: false },
-      },
-    });
-    const invalidateSpy = vi.spyOn(queryClient, "invalidateQueries");
+    const invalidateSpy = vi
+      .spyOn(InvalidateQueryAndKeys, "invalidatePedcard")
+      .mockResolvedValue(undefined);
     const onSuccess = vi.fn();
 
     const { container } = render(
-      <QueryClientProvider client={queryClient}>
+      <QueryClientProvider
+        client={
+          new QueryClient({
+            defaultOptions: {
+              queries: { retry: false },
+            },
+          })
+        }
+      >
         <PedCardForm initialized={true} balance={100} onSuccess={onSuccess} />
       </QueryClientProvider>,
     );
@@ -143,9 +151,7 @@ describe("PedCardForm", () => {
 
     await waitFor(() => {
       expect(mockCreatePedCardEntry).toHaveBeenCalledOnce();
-      expect(invalidateSpy).toHaveBeenCalledWith({
-        queryKey: ["pedCard"],
-      });
+      expect(invalidateSpy).toHaveBeenCalledOnce();
       expect(onSuccess).toHaveBeenCalledOnce();
     });
   });

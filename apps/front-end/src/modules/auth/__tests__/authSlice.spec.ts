@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { ApiStatus } from "@/lib/axios/ApiStatus";
-import authReducer, { authActions } from "@/modules/auth/authSlice";
+import authReducer, { authActions } from "@/store/reducers/auth/authSlice";
 
 describe("authSlice", () => {
   it("logout resets auth state to its initial values", () => {

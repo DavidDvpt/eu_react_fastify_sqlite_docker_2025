@@ -3,10 +3,9 @@ import { configureStore } from "@reduxjs/toolkit";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import { ApiStatus } from "@/lib/axios/ApiStatus";
-import authReducer, { authActions } from "@/modules/auth/authSlice";
-import { authMeThunk } from "@/modules/auth/authThunks";
+import authReducer, { authActions } from "@/store/reducers/auth/authSlice";
+import { authMeThunk } from "@/store/reducers/auth/authThunks";
 
-// ⚠️ adapte le chemin EXACT
 vi.mock("@/modules/auth/services/network/meApi", () => ({
   default: vi.fn(),
 }));
@@ -62,7 +61,6 @@ describe("authMeThunk", () => {
     expect(state.role).toBe("ADMIN");
   });
 
-  // decconexxion message if ay error
   it("dispatching meThunk handles error (rejected)", async () => {
     (meApi as any).mockRejectedValue(new Error("Unauthorized"));
 

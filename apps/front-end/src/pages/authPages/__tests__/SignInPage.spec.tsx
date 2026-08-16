@@ -6,7 +6,8 @@ import SignInPage from "../SignInPage";
 
 const mockDispatch = vi.fn();
 const mockSigninApi = vi.fn();
-const mockAuthMeThunk = vi.fn();
+const mockThunkAction = vi.fn();
+const mockAuthMeThunk = vi.fn(() => mockThunkAction);
 
 vi.mock("@/store/hooks", () => ({
   useAppDispatch: () => mockDispatch,
@@ -16,9 +17,14 @@ vi.mock("@/modules/auth/services/network/signinApi", () => ({
   default: (...args: unknown[]) => mockSigninApi(...args),
 }));
 
-vi.mock("@/modules/auth", () => ({
-  authMeThunk: () => mockAuthMeThunk(),
-}));
+vi.mock("@/store", async () => {
+  const actual = await vi.importActual<typeof import("@/store")>("@/store");
+
+  return {
+    ...actual,
+    authMeThunk: () => mockAuthMeThunk(),
+  };
+});
 
 vi.mock("../components/SignInForm", () => ({
   default: ({ onSubmit }: { onSubmit: (values: unknown) => Promise<void> }) => (
@@ -53,7 +59,6 @@ describe("SignInPage", () => {
 
   it("dispatches authMeThunk after successful signin", async () => {
     mockSigninApi.mockResolvedValueOnce({ message: "Success" });
-    mockAuthMeThunk.mockReturnValueOnce({ type: "auth/me" });
 
     render(
       <MemoryRouter>
@@ -70,7 +75,8 @@ describe("SignInPage", () => {
         pseudo: "fredericFrancois",
         password: "password123",
       });
-      expect(mockDispatch).toHaveBeenCalledWith({ type: "auth/me" });
+      expect(mockAuthMeThunk).toHaveBeenCalledOnce();
+      expect(mockDispatch).toHaveBeenCalledWith(mockThunkAction);
     });
   });
 });

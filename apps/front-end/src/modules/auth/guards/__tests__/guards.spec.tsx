@@ -8,8 +8,7 @@ import { describe, expect, it } from "vitest";
 import routes from "@/router/routes";
 import { ApiStatus } from "@/lib/axios/ApiStatus";
 
-// ✅ adapte l'import du reducer auth
-import authReducer from "@/modules/auth/authSlice";
+import authReducer from "@/store/reducers/auth/authSlice";
 
 // --- Mocks : layouts/pages ---
 // Le but : tester le routing, pas le contenu des pages.
