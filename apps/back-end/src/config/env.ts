@@ -23,14 +23,14 @@ const envSchema = z.object({
   SYSTEM_USER_PSEUDO: z.string(),
   SYSTEM_USER_EMAIL: z.string(),
   SYSTEM_USER_PASSWORD: z.string(),
-  DEV_DATA_USER_ID: z.string(),
-  DEV_DATA_USER_PSEUDO: z.string(),
-  DEV_DATA_USER_PASSWORD: z.string(),
-  DEV_DATA_USER_EMAIL: z.string(),
-  DEV_ADMIN_ID: z.string(),
-  DEV_ADMIN_PSEUDO: z.string(),
-  DEV_ADMIN_EMAIL: z.string(),
-  DEV_ADMIN_PASSWORD: z.string(),
+  DEV_DATA_USER_ID: z.string().optional(),
+  DEV_DATA_USER_PSEUDO: z.string().optional(),
+  DEV_DATA_USER_PASSWORD: z.string().optional(),
+  DEV_DATA_USER_EMAIL: z.string().optional(),
+  DEV_ADMIN_ID: z.string().optional(),
+  DEV_ADMIN_PSEUDO: z.string().optional(),
+  DEV_ADMIN_EMAIL: z.string().optional(),
+  DEV_ADMIN_PASSWORD: z.string().optional(),
   SEED_INCLUDE_DEV_DATA: z
     .enum(['true', 'false'])
     .optional()
@@ -49,6 +49,22 @@ if (!parsedEnv.success) {
 
 const flatEnv = parsedEnv.data;
 
+const shouldRequireDevSeedUsers = flatEnv.SEED_INCLUDE_DEV_DATA || flatEnv.NODE_ENV !== 'production';
+
+if (shouldRequireDevSeedUsers) {
+  const requiredDevFields = [
+    'DEV_DATA_USER_ID',
+    'DEV_DATA_USER_PSEUDO',
+    'DEV_DATA_USER_PASSWORD',
+    'DEV_DATA_USER_EMAIL',
+  ] as const;
+
+  const missingFields = requiredDevFields.filter((field) => !flatEnv[field]);
+  if (missingFields.length > 0) {
+    throw new Error(`Invalid environment variables:\n${missingFields.join('\n')}`);
+  }
+}
+
 export const env = {
   ...flatEnv,
   SYSTEM_USER: {
@@ -58,15 +74,15 @@ export const env = {
     password: flatEnv.SYSTEM_USER_PASSWORD,
   },
   DEV_USER: {
-    id: flatEnv.DEV_DATA_USER_ID,
-    pseudo: flatEnv.DEV_DATA_USER_PSEUDO,
-    email: flatEnv.DEV_DATA_USER_EMAIL,
-    password: flatEnv.DEV_DATA_USER_PASSWORD,
+    id: flatEnv.DEV_DATA_USER_ID ?? '',
+    pseudo: flatEnv.DEV_DATA_USER_PSEUDO ?? '',
+    email: flatEnv.DEV_DATA_USER_EMAIL ?? '',
+    password: flatEnv.DEV_DATA_USER_PASSWORD ?? '',
   },
   ADMIN_USER: {
-    id: flatEnv.DEV_ADMIN_ID,
-    pseudo: flatEnv.DEV_ADMIN_PSEUDO,
-    email: flatEnv.DEV_ADMIN_EMAIL,
-    password: flatEnv.DEV_ADMIN_PASSWORD,
+    id: flatEnv.DEV_ADMIN_ID ?? '',
+    pseudo: flatEnv.DEV_ADMIN_PSEUDO ?? '',
+    email: flatEnv.DEV_ADMIN_EMAIL ?? '',
+    password: flatEnv.DEV_ADMIN_PASSWORD ?? '',
   },
 };

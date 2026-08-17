@@ -1,3 +1,4 @@
+import argon2 from 'argon2';
 import type { RootDatabaseClient } from '#prisma/prismaClient.js';
 import {
   lotSeed,
@@ -27,6 +28,22 @@ export class SeedDevBase extends SeedPatchBase {
   }
 
   async run() {
+    if (!DEV_USER.id || !DEV_USER.pseudo || !DEV_USER.email || !DEV_USER.password) {
+      throw new Error('DEV_DATA_USER_* env values are required when SEED_INCLUDE_DEV_DATA=true.');
+    }
+
+    await this.prismaClient.user.create({
+      data: {
+        id: DEV_USER.id,
+        pseudo: DEV_USER.pseudo,
+        email: DEV_USER.email,
+        role: 'USER',
+        password_hash: await argon2.hash(DEV_USER.password),
+        date_created: new Date().toISOString(),
+        is_active: true,
+      },
+    });
+
     await this.prismaClient.lot.createMany({
       data: lotSeed(DEV_USER.id),
     });
@@ -47,6 +64,6 @@ export class SeedDevBase extends SeedPatchBase {
       data: transactionLotSellSeed(),
     });
 
-    super.run();
+    await super.run();
   }
 }

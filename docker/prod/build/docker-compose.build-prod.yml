@@ -1,11 +1,9 @@
 services:
   api:
     build:
-      context: ..
-      dockerfile: build/Dockerfile.api.prod
+      context: ../../..
+      dockerfile: docker/prod/build/Dockerfile.api.prod
     image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
-    env_file:
-      - ~/srv/apps/entropia-manager/docker/.env
     expose:
       - "8020"
     restart: unless-stopped
@@ -14,8 +12,8 @@ services:
 
   front:
     build:
-      context: ..
-      dockerfile: build/Dockerfile.front.prod
+      context: ../../..
+      dockerfile: docker/prod/build/Dockerfile.front.prod
     image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-front:${IMAGE_TAG:-latest}
     expose:
       - "8019"

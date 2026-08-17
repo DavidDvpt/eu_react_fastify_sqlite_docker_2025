@@ -8,6 +8,7 @@
   ],
   "main": "index.js",
   "scripts": {
+    "build:prod-image": "sh docker/prod/build/docker-build-push-prod.sh",
     "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
     "dev:start": "sh ./scripts/dev-start.sh",
     "dev:start:back": "sh ./scripts/dev-start.sh --skip-front",
@@ -22,7 +23,7 @@
     "dev:front:status": "sh ./scripts/dev-service.sh front status",
     "test:all": "sh ./scripts/test-all.sh",
     "package:create": "node ./scripts/create-package.mjs",
-    "prepare": "husky"
+    "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
   },
   "keywords": [],
   "author": "",

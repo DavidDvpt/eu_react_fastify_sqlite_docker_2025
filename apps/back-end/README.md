@@ -20,8 +20,8 @@ Les scripts Prisma utilisent `dotenv -e .env.dev`, donc ils chargent les variabl
 - `npm run prisma:seed`
   - Exécute le seed Prisma (`prisma db seed`).
   - Comportement:
-    - Toujours: seed `system` pour `category/type/item` + migration ownership vers `SYSTEM_USER_ID`.
-    - Dev seulement (`NODE_ENV=development` ou `SEED_INCLUDE_DEV_DATA=true`): seed `useruser` pour `session/lot/session_line`.
+    - Toujours: seed `system` pour `SYSTEM_USER` + `category/type/item`.
+    - Seulement si `NODE_ENV!=production` ou `SEED_INCLUDE_DEV_DATA=true`: seed `DEV_DATA_USER` + données perso (`lot/transaction/transaction_lot`).
 
 - `npm run prisma:reset`
   - Reset complet de la base + réapplication des migrations (`prisma migrate reset --force`).
@@ -60,7 +60,7 @@ Les scripts Prisma utilisent `dotenv -e .env.dev`, donc ils chargent les variabl
 - **CI / staging / production**
   1. `npm run prisma:deploy`
   2. `npm run prisma:generate` (si le build/runtime en a besoin)
-  3. `npm run prisma:seed` (seulement si ton process de déploiement le prévoit)
+  3. `npm run prisma:seed` (seulement si tu veux réellement réinjecter les données seed)
 
 - **Avant de valider une PR en local**
   1. `npm run prisma:deploy`
@@ -71,6 +71,7 @@ Les scripts Prisma utilisent `dotenv -e .env.dev`, donc ils chargent les variabl
 - `prisma:reset` ne doit pas être utilisé en production.
 - `prisma:migrate` sert à **créer** des migrations; `prisma:deploy` sert à **appliquer** des migrations existantes.
 - Si tu utilises une base de test dédiée, pense à surcharger `DATABASE_URL` dans la commande ou l'environnement.
+- En prod Docker, les migrations puis le seed tournent au boot. `SEED_INCLUDE_DEV_DATA` contrôle seulement l'injection des données perso/dev.
 
 ## Deploiement SER5 (Docker Hub)
 
@@ -93,6 +94,7 @@ SYSTEM_USER_ID=
 SYSTEM_USER_PSEUDO=system
 SYSTEM_USER_EMAIL=system@entropia.local
 SYSTEM_USER_PASSWORD=...
+SEED_INCLUDE_DEV_DATA=false
 ```
 
 3. Sur SER5, pull + run:

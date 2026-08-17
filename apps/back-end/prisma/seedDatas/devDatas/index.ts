@@ -28,6 +28,8 @@ export const transactionBuySeed = (userId: string): Prisma.TransactionCreateMany
 export const transactionSellSeed = (userId: string): Prisma.TransactionCreateManyInput[] =>
   TRANSACTION_SELL_RAW.concat(TRANSACTION_SELL_RAW_LATEST_TRUE).map((t) => ({
     ...t,
+    created_at: '2025-11-23T11:59:01.689Z',
+    updated_at: null,
     transaction_type: 'SELL',
     user_id: userId,
   }));

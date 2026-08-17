@@ -23,7 +23,7 @@ const DEV_USERS: SYSTEM_USER_TYPE[] = [
     id: env.DEV_DATA_USER_ID ?? '',
     firstname: 'Lucien',
     lastname: 'User',
-    pseudo: env.DEV_DATA_USER_LOGIN ?? '',
+    pseudo: env.DEV_DATA_USER_PSEUDO ?? '',
     email: env.DEV_DATA_USER_EMAIL ?? '',
     password_hash: await HashTools.hashPassword(env.DEV_DATA_USER_PASSWORD ?? ''),
     role: 'USER',
