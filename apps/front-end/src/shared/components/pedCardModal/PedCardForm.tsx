@@ -8,7 +8,7 @@ import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys
 
 interface PedCardFormProps {
   initialized?: boolean;
-  balance: number;
+  balance: number | null;
   submitLabel?: string;
   onSuccess?: () => void | Promise<void>;
 }
@@ -20,7 +20,7 @@ function PedCardForm({
   onSuccess,
 }: PedCardFormProps) {
   const handleSubmit = async (data: PedCardFormBody) => {
-    const currentBalance = balance;
+    const currentBalance = balance ?? 0;
     const isInitialBalance = initialized !== true;
     const value = isInitialBalance ? data.value : data.value - currentBalance;
 

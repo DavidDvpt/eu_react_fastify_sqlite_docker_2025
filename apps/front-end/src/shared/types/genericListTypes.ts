@@ -1,4 +1,4 @@
-import type { GenericListColumn } from "@/shared/types";
+import type { GenericListColumn } from "./genericListColumnType";
 import type { ComponentType, ReactNode } from "react";
 
 export type GenericListViewMode = "list" | "card";

@@ -23,7 +23,7 @@ function RunningTransactionsSection() {
           status: value,
         },
         {
-          onSuccess(data, { row }) {
+          onSuccess(_data, { row }) {
             const query = {
               action: row.status === "SOLDED" ? "sell" : "resell",
               itemId: row.item?.id,

@@ -1,2 +1,2 @@
 export { VerticalNav } from "./VerticalNav";
-export type { VerticalNavProps } from "@/shared/types";
+export type { VerticalNavProps } from "./VerticalNav";

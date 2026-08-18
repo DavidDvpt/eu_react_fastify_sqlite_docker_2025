@@ -7,7 +7,6 @@ import {
 } from "./common.js";
 import { typeDtoSchema } from "./typeSchemas.js";
 import { categoryDtoSchema } from "./categorySchemas.js";
-import { transactionTypeSchema } from "./transactionTypeSchema.js";
 
 export const itemSortSchema = z.enum([...dateSortKeySchema.options, "name"]);
 

@@ -4,9 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "build:packages": "npx tsc -b ../../tsconfig.packages.json",
     "dev": "env-cmd -f ./config/.env.dev vite",
-    "build": "env-cmd -f ./config/.env.prod tsc -b && env-cmd -f ./config/.env.prod vite build",
-    "build:docker": "env-cmd -f ./config/.env.prod vite build",
+    "build": "npm run build:packages && env-cmd -f ./config/.env.prod tsc -b && env-cmd -f ./config/.env.prod vite build",
+    "build:docker": "npm run build:packages && env-cmd -f ./config/.env.prod vite build",
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "env-cmd -f ./config/.env.test vitest",

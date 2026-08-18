@@ -29,7 +29,7 @@ describe("useUpdateTransactionsStatus", () => {
     updateStatusMock.mockResolvedValue(undefined);
     const invalidateSpy = vi
       .spyOn(InvalidateQueryAndKeys, "transactionStatusMutation")
-      .mockResolvedValue([]);
+      .mockResolvedValue(undefined as never);
 
     const { result } = renderHook(() => useUpdateTransactionsStatus(), {
       wrapper: createWrapper(

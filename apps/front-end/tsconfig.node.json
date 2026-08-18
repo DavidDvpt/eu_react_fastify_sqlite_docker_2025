@@ -24,7 +24,10 @@
     "noUncheckedSideEffectImports": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@eu/helpers": ["../../packages/helpers/src/index.ts"],
+      "@eu/types": ["../../packages/types/src/index.ts"],
+      "@eu/zod-schemas": ["../../packages/zodSchemas/src/index.ts"]
     }
   },
   "include": ["vite.config.ts"]

@@ -5,7 +5,6 @@ import {
   genericDateSchema,
   sortOrderEnum,
 } from "./common.js";
-import { transactionTypeSchema } from "./transactionTypeSchema.js";
 
 export const lotTypeSchema = z.enum([
   "MINING",
@@ -41,8 +40,8 @@ export const lotBodySchema = z.object({
 
 export const lotItemIdSchema = z.object({ itemId: z.string() });
 export const lotTransactionSchema = z.object({
-  transactionId: z.string,
-  quantity: z.coerce.number,
+  transactionId: z.string(),
+  quantity: z.coerce.number(),
 });
 
 export const lotDtoSchema = lotItemIdSchema.extend({

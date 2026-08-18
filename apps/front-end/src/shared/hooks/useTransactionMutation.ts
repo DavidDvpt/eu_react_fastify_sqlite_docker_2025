@@ -26,7 +26,7 @@ function useTransactionsMutation() {
       row: TransactionDto;
       status: TransactionStatusPatchDto;
     }) => ts.updateStatus({ id: row.id, status }),
-    onSuccess: async (data, { row }) => {
+    onSuccess: async (_data, { row }) => {
       await InvalidateQueryAndKeys.transactionStatusMutation({
         itemId: row.item?.id,
       });
@@ -56,7 +56,7 @@ function useTransactionsMutation() {
         status: values.status,
       } satisfies TransactionBodyDto);
     },
-    onSuccess: async (data, { item }) => {
+    onSuccess: async (_data, { item }) => {
       await InvalidateQueryAndKeys.createTransactionMutation({
         itemId: item?.id,
       });

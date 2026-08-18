@@ -1,9 +1,9 @@
 import { ImageService } from "@/shared/services";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { Item } from "@/shared/types";
+import type { ItemDto } from "@eu/types";
 
 interface ItemCardProps {
-  item: Item;
+  item: ItemDto;
   isManage: boolean;
 }
 function ItemCard({ item, isManage }: ItemCardProps) {
@@ -24,14 +24,12 @@ function ItemCard({ item, isManage }: ItemCardProps) {
           {item.name ?? "Unknown"}
         </h3>
         <p className="truncate text-xs text-muted-foreground my-0">
-          {item.typeName ?? item.typeId}
+          {item.type?.name ?? item.typeId}
         </p>
         <div className="mt-2 flex flex-wrap gap-2 text-xs text-table-body-text">
           <span>Valeur: {FormatTools.formatToThreeDecimals(item.value)}</span>
-          {item.supportsLimited && (
-            <span>Limited: {item.isLimited ? "Oui" : "Non"}</span>
-          )}
-          <span>Stackable: {item.isStackable ? "Oui" : "Non"}</span>
+          <span>Limited: {item.isLimited ? "Oui" : "Non"}</span>
+          <span>Stackable: {item.type?.isStackable ? "Oui" : "Non"}</span>
           {isManage && <span>Scope: {item.userId ? "Custom" : "Global"}</span>}
         </div>
       </div>

@@ -1,30 +1,49 @@
 FROM node:24-alpine3.22 AS deps
-WORKDIR /app/back-end
-COPY apps/back-end/package*.json ./
+WORKDIR /app
+
+COPY package*.json ./
+COPY apps/front-end/package*.json ./apps/front-end/
+COPY apps/back-end/package*.json ./apps/back-end/
+COPY packages/helpers/package.json ./packages/helpers/
+COPY packages/types/package.json ./packages/types/
+COPY packages/zodSchemas/package.json ./packages/zodSchemas/
+
 RUN npm ci
 
 FROM deps AS build
-WORKDIR /app/back-end
-COPY apps/back-end/ ./
-RUN npm run build
-RUN npx prisma generate
+WORKDIR /app
+COPY apps/back-end ./apps/back-end
+COPY packages ./packages
+COPY tsconfig.json ./tsconfig.json
+COPY tsconfig.packages.json ./tsconfig.packages.json
+COPY tsconfig.base.json ./tsconfig.base.json
+
+RUN npm run build --workspace apps/back-end
+RUN npm exec --workspace apps/back-end prisma generate
 
 FROM node:24-alpine3.22 AS runtime
-WORKDIR /app/back-end
+WORKDIR /app
 ENV NODE_ENV=production
 
 RUN apk update && apk upgrade --no-cache
 RUN apk add --no-cache postgresql-client
 
-COPY apps/back-end/package*.json ./
-RUN npm ci
+COPY package*.json ./
+COPY apps/front-end/package*.json ./apps/front-end/
+COPY apps/back-end/package*.json ./apps/back-end/
+COPY packages/helpers/package.json ./packages/helpers/
+COPY packages/types/package.json ./packages/types/
+COPY packages/zodSchemas/package.json ./packages/zodSchemas/
 
-COPY --from=build /app/back-end/dist ./dist
-COPY --from=build /app/back-end/prisma ./prisma
-COPY --from=build /app/back-end/prisma.config.ts ./prisma.config.ts
-COPY --from=build /app/back-end/src/config ./src/config
-COPY --from=build /app/back-end/scripts ./scripts
+RUN npm ci --omit=dev
+
+COPY --from=build /app/apps/back-end/dist ./apps/back-end/dist
+COPY --from=build /app/apps/back-end/prisma ./apps/back-end/prisma
+COPY --from=build /app/apps/back-end/prisma.config.ts ./apps/back-end/prisma.config.ts
+COPY --from=build /app/apps/back-end/src/config ./apps/back-end/src/config
+COPY --from=build /app/apps/back-end/scripts ./apps/back-end/scripts
+COPY --from=build /app/packages ./packages
 
 EXPOSE 8020
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/prisma/seed.js && node dist/src/server.js"]
+CMD ["sh", "-c", "cd apps/back-end && npx prisma migrate deploy && node dist/prisma/seed.js && node dist/src/server.js"]

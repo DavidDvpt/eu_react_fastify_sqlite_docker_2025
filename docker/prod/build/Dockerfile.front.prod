@@ -1,13 +1,26 @@
 FROM node:24-alpine3.22 AS build
-WORKDIR /app/front-end
-COPY apps/front-end/package*.json ./
+WORKDIR /app
+
+COPY package*.json ./
+COPY apps/front-end/package*.json ./apps/front-end/
+COPY apps/back-end/package*.json ./apps/back-end/
+COPY packages/helpers/package.json ./packages/helpers/
+COPY packages/types/package.json ./packages/types/
+COPY packages/zodSchemas/package.json ./packages/zodSchemas/
+
 RUN npm ci
-COPY apps/front-end/ ./
-RUN npm run build:docker
+
+COPY apps/front-end ./apps/front-end
+COPY packages ./packages
+COPY tsconfig.json ./tsconfig.json
+COPY tsconfig.packages.json ./tsconfig.packages.json
+COPY tsconfig.base.json ./tsconfig.base.json
+
+RUN npm run build:docker --workspace apps/front-end
 
 FROM node:24-alpine3.22 AS runtime
 WORKDIR /app
 RUN npm i -g serve
-COPY --from=build /app/front-end/dist ./dist
+COPY --from=build /app/apps/front-end/dist ./dist
 EXPOSE 8019
 CMD ["serve", "-s", "dist", "-l", "8019"]

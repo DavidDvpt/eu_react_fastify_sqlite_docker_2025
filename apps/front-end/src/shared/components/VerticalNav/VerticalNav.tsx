@@ -36,3 +36,4 @@ function VerticalNav({ items }: VerticalNavProps) {
 }
 
 export { VerticalNav };
+export type { VerticalNavProps };
