@@ -27,17 +27,25 @@ export function buildApp({
   logger?: boolean;
   registerRoutes?: boolean;
 }) {
+  const isProduction = env.NODE_ENV === 'production';
+  const loggerConfig =
+    logger === false
+      ? false
+      : isProduction
+        ? true
+        : {
+            transport: {
+              target: 'pino-pretty',
+              options: {
+                colorize: true,
+                translateTime: 'HH:MM:ss',
+                ignore: 'pid,hostname',
+              },
+            },
+          };
+
   const app = Fastify({
-    logger: {
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          colorize: true,
-          translateTime: 'HH:MM:ss',
-          ignore: 'pid,hostname',
-        },
-      },
-    },
+    logger: loggerConfig,
   }).withTypeProvider<ZodTypeProvider>();
 
   app.register(cookie);

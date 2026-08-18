@@ -1,4 +1,4 @@
-FROM node:24-alpine3.22 AS build
+FROM node:24-bookworm-slim AS build
 WORKDIR /app
 
 COPY package*.json ./
@@ -9,6 +9,13 @@ COPY packages/types/package.json ./packages/types/
 COPY packages/zodSchemas/package.json ./packages/zodSchemas/
 
 RUN npm ci
+# Force Linux-native optional binaries used by Rollup, Lightning CSS and Tailwind.
+# They are platform-specific and may be missing from the workspace install when the lockfile
+# was generated on another OS, which breaks the production build inside this Linux image.
+RUN ROLLUP_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/rollup"].version')" \
+  && LIGHTNINGCSS_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/lightningcss"].version')" \
+  && TAILWIND_OXIDE_VERSION="$(node -p 'require("./apps/front-end/package-lock.json").packages["node_modules/@tailwindcss/oxide"].version')" \
+  && npm install --no-save --ignore-scripts "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}" "lightningcss-linux-x64-gnu@${LIGHTNINGCSS_VERSION}" "@tailwindcss/oxide-linux-x64-gnu@${TAILWIND_OXIDE_VERSION}"
 
 COPY apps/front-end ./apps/front-end
 COPY packages ./packages
@@ -18,7 +25,7 @@ COPY tsconfig.base.json ./tsconfig.base.json
 
 RUN npm run build:docker --workspace apps/front-end
 
-FROM node:24-alpine3.22 AS runtime
+FROM node:24-bookworm-slim AS runtime
 WORKDIR /app
 RUN npm i -g serve
 COPY --from=build /app/apps/front-end/dist ./dist
