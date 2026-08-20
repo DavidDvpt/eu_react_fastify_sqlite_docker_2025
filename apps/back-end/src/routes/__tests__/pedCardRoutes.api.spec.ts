@@ -37,7 +37,7 @@ describe('pedCardRoutes', () => {
       });
     });
 
-    app.register(pedCardRoutes, { prefix: API_PREFIX });
+    app.register(pedCardRoutes, { prefix: `${API_PREFIX}/pedcard` });
 
     return { app };
   }
@@ -58,11 +58,11 @@ describe('pedCardRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(pedcardServiceMocks.hasInitialBalance).toHaveBeenCalledWith({ userId: 'user-1' });
-    expect(res.json()).toEqual({ message: 'PedCard initialized' });
+    expect(res.json()).toEqual({ initialized: true });
     await app.close();
   });
 
-  it('GET /api/v1/pedcard/check returns 400 when the user has no INITIAL_BALANCE row', async () => {
+  it('GET /api/v1/pedcard/check returns 200 when the user has no INITIAL_BALANCE row', async () => {
     const { app } = buildApp();
     vi.mocked(pedcardServiceMocks.hasInitialBalance).mockResolvedValueOnce(false);
 
@@ -72,9 +72,9 @@ describe('pedCardRoutes', () => {
       url: `${API_PREFIX}/pedcard/check`,
     });
 
-    expect(res.statusCode).toBe(400);
+    expect(res.statusCode).toBe(200);
     expect(pedcardServiceMocks.hasInitialBalance).toHaveBeenCalledWith({ userId: 'user-1' });
-    expect(res.json()).toEqual({ message: 'PedCard must be initialized' });
+    expect(res.json()).toEqual({ initialized: false });
     await app.close();
   });
 
@@ -106,7 +106,7 @@ describe('pedCardRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(pedcardServiceMocks.canPay).toHaveBeenCalledWith({ userId: 'user-1', value: 42 });
-    expect(res.json()).toEqual({ canPay: true });
+    expect(res.json()).toEqual({ authorized: true });
     await app.close();
   });
 

@@ -14,14 +14,10 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/check', async (request, reply) => {
     const userId = getRequestUserId(request);
 
-    const hasInitialBalance = await ps.hasInitialBalance({ userId });
-
-    if (!hasInitialBalance) {
-      return reply.code(200).send({ hasInitialBalance });
-    }
+    const initialized = await ps.hasInitialBalance({ userId });
 
     return reply.code(200).send({
-      initialized: true,
+      initialized,
     });
   });
 
@@ -46,10 +42,10 @@ const pedCardRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const userId = getRequestUserId(request);
 
-    const canPay = await ps.canPay({ userId, value: Number(value) });
+    const authorized = await ps.canPay({ userId, value: Number(value) });
 
     return reply.code(200).send({
-      canPay,
+      authorized,
     });
   });
 

@@ -170,7 +170,9 @@ describe('transactionRoutes', () => {
       headers: {
         'content-type': 'application/json',
       },
-      payload: JSON.stringify('SOLDED'),
+      payload: {
+        status: 'SOLDED',
+      },
     });
 
     expect(res.statusCode).toBe(200);
