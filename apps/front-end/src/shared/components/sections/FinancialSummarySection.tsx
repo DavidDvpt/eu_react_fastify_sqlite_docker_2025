@@ -13,7 +13,7 @@ import {
   pedCardSummaryRowBaseClassName,
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
-} from "@/shared/components/GenericList/columnDefinition/pedcardSummaryColumns";
+} from "@/shared/components/GenericList/columnDefinition/pedCardSummaryColumns";
 import { useInventoryStockData } from "@/shared/hooks";
 
 function FinancialSummarySection() {

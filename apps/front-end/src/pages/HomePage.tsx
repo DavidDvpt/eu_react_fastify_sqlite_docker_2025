@@ -4,6 +4,7 @@ import {
   FinancialSummarySection,
   RunningTransactionsSection,
 } from "@/shared/components";
+import FinancialReportSection from "@/shared/components/sections/FinancialReportSection";
 
 function HomePage() {
   return (
@@ -20,6 +21,7 @@ function HomePage() {
         shadow={false}
       >
         <FinancialSummarySection />
+        <FinancialReportSection />
       </Section>
 
       <TransactionModal />

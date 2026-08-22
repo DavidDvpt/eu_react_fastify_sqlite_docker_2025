@@ -87,7 +87,8 @@ function GenericList<T>({
         <GenericListFooter
           visible={
             view === "list" &&
-            (Boolean(footer) || Boolean(footerConfig?.cells?.length))
+            (footerConfig?.visible ??
+              (Boolean(footer) || Boolean(footerConfig?.cells?.length)))
           }
           rowClassName={footerConfig?.rowClassName}
           layout={footerConfig?.layout}

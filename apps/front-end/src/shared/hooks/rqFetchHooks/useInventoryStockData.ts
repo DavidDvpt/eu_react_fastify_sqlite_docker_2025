@@ -1,19 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 
-import StockApi from "@/shared/services/inventoryApi";
+import InventoryApi from "@/shared/services/inventoryApi";
 import type { StockQuery } from "@eu/types";
 
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type { ItemWithStock } from "@/shared/types";
+import { NumberHelper } from "@eu/helpers";
 
 function useInventoryStockData({ itemId }: StockQuery = {}) {
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
 
-  const stockApi = new StockApi();
+  const stockApi = new InventoryApi();
 
   const {
     data: inventoryStock,
@@ -48,7 +49,9 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
 
   return {
     inventoryStock: itemsWithStock,
-    inventoryStockValue: inventoryStockValue ?? 0,
+    inventoryStockValue: inventoryStockValue
+      ? NumberHelper.round(inventoryStockValue)
+      : 0,
     isInventoryStockLoading: restItem.isLoading || isItemsStockLoading,
     isInventoryStockError: restItem.isError || isItemsStockError,
   };

@@ -30,6 +30,9 @@ export class InvalidateQueryAndKeys {
   static getInventoryStockKey(): InvalidateObject {
     return { keys: ["stock", "items-stock"] };
   }
+  static getInventoryFinancialReportKey(): InvalidateObject {
+    return { keys: ["inventory", "financial-report"] };
+  }
   static getItemLotsKey(itemId?: string): InvalidateObject {
     return { keys: ["item-lots", itemId] };
   }
@@ -44,6 +47,9 @@ export class InvalidateQueryAndKeys {
       this.createTransactionMutation({ itemId }),
       queryClient.invalidateQueries({
         queryKey: this.getRunningTransactionKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryFinancialReportKey().keys,
       }),
     ]);
   }
@@ -62,6 +68,9 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getItemLotsKey().keys,
       }),
       queryClient.invalidateQueries({ queryKey: ["pedcard"] }),
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryFinancialReportKey().keys,
+      }),
     ]);
   }
 }
