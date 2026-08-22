@@ -1,6 +1,10 @@
+import { transactionEntriesSchema } from '@eu/zod-schemas';
+
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   PrismaMutationResponse,
+  TransactionEntries,
+  TransactionEntry,
   TransactionDto,
   TransactionBodyDto,
   TransactionCancelDto,
@@ -12,6 +16,7 @@ import type {
 import { LotService } from '#src/lib/services/prisma/lotService.js';
 import { PedcardService } from '#src/lib/services/prisma/pedcardService.js';
 import {
+  transactionEntriesInclude,
   transactionWithLinesInclude,
   type TransactionWithLines,
 } from '#src/types/prismaApi/transactions.js';
@@ -19,6 +24,32 @@ import {
 export class TransactionService {
   constructor(private readonly prisma: DatabaseClient) {}
 
+  private buildTransactionWhere({
+    userId,
+    itemId,
+    status,
+    transactionType,
+  }: {
+    userId: string;
+    itemId?: string;
+    status?: TransactionStatusDto;
+    transactionType?: TransactionTypeDto;
+  }) {
+    return {
+      user_id: userId,
+      status,
+      transaction_type: transactionType,
+      lines: itemId
+        ? {
+            some: {
+              lot: {
+                item_id: itemId,
+              },
+            },
+          }
+        : undefined,
+    };
+  }
   parser(t: TransactionWithLines): TransactionDto {
     const qty = t.lines.reduce((t, c) => {
       return t + c.quantity;
@@ -47,33 +78,62 @@ export class TransactionService {
     status,
     transactionType,
     itemId,
+    withItemId,
+    withLotId,
   }: {
     userId: string;
     itemId?: string;
     status?: TransactionStatusDto;
     transactionType?: TransactionTypeDto;
+    withItemId?: boolean;
+    withLotId?: boolean;
   }) {
     const rows = await this.prisma.transaction.findMany({
-      where: {
-        user_id: userId,
-        status: status,
-        transaction_type: transactionType,
-        lines: itemId
-          ? {
-              some: {
+      where: this.buildTransactionWhere({ userId, itemId, status, transactionType }),
+      include: {
+        ...transactionEntriesInclude,
+        lines: {
+          ...transactionEntriesInclude.lines,
+          where: itemId
+            ? {
                 lot: {
                   item_id: itemId,
                 },
-              },
-            }
-          : undefined,
+              }
+            : undefined,
+        },
       },
-      include: transactionWithLinesInclude,
     });
 
-    const parsed = rows.map((m) => this.parser(m));
+    const result: TransactionEntries = rows.flatMap((row) => {
+      if (withItemId || withLotId) {
+        return row.lines.map<TransactionEntry>((line) => ({
+          itemId: withItemId ? line.lot.item_id : null,
+          lotId: withLotId ? line.lot_id : null,
+          quantityLot: withLotId ? line.quantity : null,
+          transactionType: row.transaction_type,
+          status: row.status,
+          tt: Number(row.tt),
+          fee: Number(row.fee),
+          ttc: Number(row.ttc),
+        }));
+      }
 
-    return parsed;
+      return [
+        {
+          itemId: null,
+          lotId: null,
+          quantityLot: null,
+          transactionType: row.transaction_type,
+          status: row.status,
+          tt: Number(row.tt),
+          fee: Number(row.fee),
+          ttc: Number(row.ttc),
+        },
+      ];
+    });
+
+    return transactionEntriesSchema.parse(result);
   }
   async getById({ userId, id }: { userId: string; id: string }) {
     const row = await this.prisma.transaction.findUnique({
@@ -88,51 +148,7 @@ export class TransactionService {
 
     return parsed;
   }
-  // async getRunningTransactions({
-  //   userId,
-  //   status,
-  // }: {
-  //   userId: string;
-  //   status: TransactionStatusDto;
-  // }): Promise<TransactionRunningDto[]> {
-  //   const rows = await this.prisma.transaction.findMany({
-  //     where: { user_id: userId, status },
-  //     select: {
-  //       id: true,
-  //       tt: true,
-  //       fee: true,
-  //       ttc: true,
-  //       lines: {
-  //         select: {
-  //           quantity: true,
-  //           lot: {
-  //             select: {
-  //               item_id: true,
-  //             },
-  //           },
-  //         },
-  //       },
-  //     },
-  //   });
 
-  //   if (!rows) return [];
-
-  //   const result = rows.map((m) => {
-  //     const quantity = m.lines.reduce((total, line) => total + line.quantity, 0);
-  //     const itemId = m.lines[0]?.lot.item_id ?? null;
-
-  //     return {
-  //       id: m.id,
-  //       tt: Number(m.tt),
-  //       fee: Number(m.fee),
-  //       ttc: Number(m.ttc),
-  //       itemId,
-  //       quantity,
-  //     };
-  //   });
-
-  //   return result;
-  // }
   async buy({
     body,
     userId,

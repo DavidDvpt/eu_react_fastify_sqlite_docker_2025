@@ -20,9 +20,18 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/', async (request, reply) => {
     const userId = getRequestUserId(request);
-    const { status, type, itemId } = transactionQuerySchema.parse(request.query);
+    const { status, type, itemId, withItemId, withLotId } = transactionQuerySchema.parse(
+      request.query
+    );
 
-    const rows = await ts.getAll({ userId, status, transactionType: type, itemId });
+    const rows = await ts.getAll({
+      userId,
+      status,
+      transactionType: type,
+      itemId,
+      withItemId,
+      withLotId,
+    });
 
     return reply.code(200).send(rows);
   });

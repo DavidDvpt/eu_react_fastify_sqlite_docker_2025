@@ -61,12 +61,33 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
     const ts = new TransactionService(prismaClient);
-    const { status, type } = transactionQuerySchema.partial().parse(request.query);
+    const { status, type, withItemId, withLotId } = transactionQuerySchema.partial().parse(
+      request.query
+    );
 
-    const rows = await ts.getAll({ userId, itemId: id, status, transactionType: type });
+    const rows = await ts.getAll({
+      userId,
+      itemId: id,
+      status,
+      transactionType: type,
+      withItemId,
+      withLotId,
+    });
 
     return reply.code(200).send(rows);
   });
+  app.get('/:id/financial-report', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const { id } = getIdParam(request);
+    const { withLotId } = transactionQuerySchema.partial().parse(request.query);
+
+    const ts = new TransactionService(prismaClient);
+
+    const result = await ts.getAll({ userId, itemId: id, withLotId });
+
+    return reply.code(200).send(result);
+  });
+
   app.get('/:id', async (request, reply) => {
     const { id } = getIdParam(request);
 

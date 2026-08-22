@@ -120,7 +120,6 @@ export class ItemService {
 
     return stock;
   }
-
   async create({ body, userId }: { userId: string; body: ItemFormBody }) {
     const row = await this.prisma.item.create({
       data: {

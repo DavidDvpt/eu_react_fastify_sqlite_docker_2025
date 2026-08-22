@@ -1,6 +1,8 @@
 import { z } from "zod";
 import {
   transactionBodySchema,
+  transactionEntriesSchema,
+  transactionEntrySchema,
   transactionSchemaDto,
   transactionStatusPatchDtoSchema,
   transactionStatusDtoSchema,
@@ -18,12 +20,16 @@ export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
 export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
 
+export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
+export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
 export type TransactionDto = z.infer<typeof transactionSchemaDto>;
 
 export type TransactionWhereOptions = {
   status?: TransactionStatusDto;
   type?: TransactionTypeDto;
   itemId?: string;
+  withItemId?: boolean;
+  withLotId?: boolean;
 };
 
 export interface RunningTransactionDto {

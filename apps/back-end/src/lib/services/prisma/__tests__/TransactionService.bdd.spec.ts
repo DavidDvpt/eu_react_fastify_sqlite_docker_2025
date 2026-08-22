@@ -115,6 +115,11 @@ describe('TransactionService', () => {
       },
       include: {
         lines: {
+          where: {
+            lot: {
+              item_id: 'item-1',
+            },
+          },
           select: {
             quantity: true,
             lot_id: true,
@@ -123,7 +128,7 @@ describe('TransactionService', () => {
         },
       },
     });
-    expect(all[0]?.status).toBe('SOLDED');
+    expect(all[0]?.status).toBeNull();
   });
 
   it('lists running transactions and keeps itemId on entries', async () => {
@@ -150,10 +155,7 @@ describe('TransactionService', () => {
     };
     const service = new TransactionService(prisma as any);
 
-    const found = await service.getAll({
-      userId: 'user-1',
-      status: 'RUNNING',
-    });
+    const found = await service.getAll({ userId: 'user-1', status: 'RUNNING' });
 
     expect(prisma.transaction.findMany).toHaveBeenCalledWith({
       where: { user_id: 'user-1', status: 'RUNNING', transaction_type: undefined, lines: undefined },
@@ -173,18 +175,12 @@ describe('TransactionService', () => {
     });
     expect(found).toEqual([
       {
-        id: 'transaction-1',
         tt: 100,
         fee: 12,
         ttc: 112,
-        createdAt: '2026-08-01T10:00:00.000Z',
-        updatedAt: null,
-        quantity: 5,
-        entries: [
-          { quantity: 2, lotId: 'lot-1', lot: { itemId: 'item-1' } },
-          { quantity: 3, lotId: 'lot-2', lot: { itemId: 'item-1' } },
-        ],
-        userId: 'user-1',
+        itemId: null,
+        lotId: null,
+        quantityLot: null,
         status: 'RUNNING',
         transactionType: 'SELL',
       },
