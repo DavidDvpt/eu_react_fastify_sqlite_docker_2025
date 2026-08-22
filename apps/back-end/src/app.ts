@@ -73,7 +73,7 @@ export function buildApp({
     app.register(categoryRoutes, { prefix: `${API_PREFIX}/categories` });
     app.register(typeRoutes, { prefix: `${API_PREFIX}/types` });
     app.register(itemRoutes, { prefix: `${API_PREFIX}/items` });
-    app.register(inventoryRoutes, { prefix: API_PREFIX });
+    app.register(inventoryRoutes, { prefix: `${API_PREFIX}/inventory` });
     app.register(pedCardRoutes, { prefix: `${API_PREFIX}/pedcard` });
     app.register(transactionRoutes, { prefix: `${API_PREFIX}/transactions` });
   }

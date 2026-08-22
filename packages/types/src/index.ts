@@ -9,3 +9,4 @@ export type * from "./pedCard.js";
 export type * from "./stock.js";
 export type * from "./prismaService.js";
 export * from "./common.js";
+export * from "./financial.js";

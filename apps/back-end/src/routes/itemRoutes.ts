@@ -10,6 +10,7 @@ import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
+import { toItemFinancialReport } from '#src/lib/helpers/transactionFinancialReportHelper.js';
 import { ItemService, TransactionService } from '#src/lib/services/index.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
@@ -61,9 +62,9 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
     const ts = new TransactionService(prismaClient);
-    const { status, type, withItemId, withLotId } = transactionQuerySchema.partial().parse(
-      request.query
-    );
+    const { status, type, withItemId, withLotId } = transactionQuerySchema
+      .partial()
+      .parse(request.query);
 
     const rows = await ts.getAll({
       userId,
@@ -83,9 +84,11 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const ts = new TransactionService(prismaClient);
 
-    const result = await ts.getAll({ userId, itemId: id, withLotId });
+    const rows = await ts.getAll({ userId, itemId: id, withItemId: true, withLotId });
 
-    return reply.code(200).send(result);
+    const parsed = toItemFinancialReport(rows);
+
+    return reply.code(200).send({ [id]: parsed });
   });
 
   app.get('/:id', async (request, reply) => {
