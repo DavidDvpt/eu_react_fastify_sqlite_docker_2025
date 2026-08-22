@@ -8,6 +8,8 @@
   ],
   "main": "index.js",
   "scripts": {
+    "build:packages": "npx tsc -b tsconfig.packages.json",
+    "build:packages:watch": "npx tsc -b tsconfig.packages.json --watch --preserveWatchOutput",
     "build:prod-image": "sh docker/prod/build/docker-build-push-prod.sh",
     "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
     "dev:start": "sh ./scripts/dev-start.sh",

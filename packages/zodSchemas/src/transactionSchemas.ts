@@ -30,12 +30,14 @@ export const transactionQuerySchema = z.object({
   type: transactionTypeSchema.optional(),
 });
 
-export const transactionBodySchema = z.object({
-  itemId: z.string().min(1),
-  quantity: z.coerce.number().int().positive(),
+export const transactionValuesSchema = z.object({
   tt: z.coerce.number().nonnegative(),
   ttc: z.coerce.number().positive(),
   fee: z.coerce.number().nonnegative().optional(),
+});
+export const transactionBodySchema = transactionValuesSchema.extend({
+  itemId: z.string().min(1),
+  quantity: z.coerce.number().int().positive(),
   transactionType: transactionTypeSchema,
   status: transactionStatusDtoSchema,
 });

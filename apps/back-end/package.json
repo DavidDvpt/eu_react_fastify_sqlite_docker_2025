@@ -18,7 +18,7 @@
   "scripts": {
     "build:packages": "npx tsc -b ../../tsconfig.packages.json",
     "build": "npm run build:packages && tsc",
-    "dev": "NODE_OPTIONS=--conditions=development tsx watch src/server.ts",
+    "dev": "npx concurrently -k -n packages,api -c auto \"npm run build:packages -- --watch --preserveWatchOutput\" \"NODE_OPTIONS=--conditions=development tsx watch src/server.ts\"",
     "start": "node dist/src/server.js",
     "prisma:reset": "dotenv -e .env.dev -- npx prisma migrate reset --force",
     "prisma:migrate": "dotenv -e .env.dev -- npx prisma migrate dev --name",
