@@ -104,6 +104,9 @@ export function toInventoryFinancialReport(rows: TransactionEntries) {
     if (c.transactionType === 'SELL') {
       if (!c.status) return acc;
       if (c.status === 'SOLDED') addValues(acc.totalOut, values);
+      if (c.status === 'RETURNED') {
+        acc.totalOut.fee = NumberHelper.round(acc.totalOut.fee + values.fee);
+      }
 
       acc.outCount[c.status] += 1;
 
