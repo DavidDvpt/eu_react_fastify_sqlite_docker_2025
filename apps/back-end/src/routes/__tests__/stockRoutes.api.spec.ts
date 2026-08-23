@@ -35,7 +35,7 @@ describe('stockRoutes', () => {
       });
     });
 
-    app.register(stockRoutes, { prefix: API_PREFIX });
+    app.register(stockRoutes, { prefix: `${API_PREFIX}/inventory` });
 
     return { app };
   }
