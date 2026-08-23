@@ -27,6 +27,8 @@ DEFAULT_LOG_PATH = DEFAULT_LOG_DIR / "download-log.csv"
 class CliOptions:
     start_id: int
     end_id: int
+    session_name: str | None
+    batch_size: int | None
     overwrite: bool
     delay_ms: int
     log_path: Path
@@ -42,6 +44,14 @@ class AttemptResult:
     error_code: str
 
 
+@dataclass
+class SessionChunk:
+    session_name: str
+    start_id: int
+    end_id: int
+    range_end: int
+
+
 def get_download_base_url() -> str:
     """Load the download base URL from the local environment configuration."""
     return load_postgres_settings().download_base_url.rstrip("/")
@@ -52,6 +62,8 @@ def parse_args(argv: list[str]) -> CliOptions:
     parser = argparse.ArgumentParser()
     parser.add_argument("--start-id", type=int, required=True)
     parser.add_argument("--end-id", type=int, required=True)
+    parser.add_argument("--session-name")
+    parser.add_argument("--batch-size", type=int)
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--delay-ms", type=int, default=DEFAULT_DELAY_MS)
     parser.add_argument("--log-path", default=str(DEFAULT_LOG_PATH))
@@ -61,11 +73,17 @@ def parse_args(argv: list[str]) -> CliOptions:
         raise ValueError("--start-id and --end-id must be positive integers")
     if args.end_id < args.start_id:
         raise ValueError("--end-id must be greater than or equal to --start-id")
+    if (args.session_name is None) != (args.batch_size is None):
+        raise ValueError("--session-name and --batch-size must be provided together")
+    if args.batch_size is not None and args.batch_size <= 0:
+        raise ValueError("--batch-size must be a positive integer")
 
     delay_ms = args.delay_ms if isinstance(args.delay_ms, int) and args.delay_ms > 0 else DEFAULT_DELAY_MS
     return CliOptions(
         start_id=args.start_id,
         end_id=args.end_id,
+        session_name=args.session_name.strip() if isinstance(args.session_name, str) and args.session_name.strip() else None,
+        batch_size=args.batch_size,
         overwrite=args.overwrite,
         delay_ms=delay_ms,
         log_path=Path(args.log_path).expanduser().resolve(),
@@ -118,6 +136,154 @@ def log_attempt(writer: csv.DictWriter, result: AttemptResult) -> None:
     print(
         f"[{result.status}] id_image={result.id_image} file={result.file_name} error_code={result.error_code}"
     )
+
+
+def ensure_download_session(
+    connection: Connection,
+    session_name: str,
+    start_id: int,
+    end_id: int,
+    batch_size: int,
+) -> None:
+    """Create the logical download session if it does not exist and validate its immutable configuration."""
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+            INSERT INTO download_sessions (
+              session_name,
+              range_start,
+              range_end,
+              batch_size,
+              next_id_to_scan,
+              status
+            )
+            VALUES (%s, %s, %s, %s, %s, 'pending')
+            ON CONFLICT (session_name) DO NOTHING
+            """,
+            (session_name, start_id, end_id, batch_size, start_id),
+        )
+        cursor.execute(
+            """
+            SELECT range_start, range_end, batch_size
+            FROM download_sessions
+            WHERE session_name = %s
+            """,
+            (session_name,),
+        )
+        row = cursor.fetchone()
+    connection.commit()
+
+    if row is None:
+        raise RuntimeError(f"Unable to create or load session {session_name}")
+
+    existing_start_id, existing_end_id, existing_batch_size = row
+    if (
+        int(existing_start_id) != start_id
+        or int(existing_end_id) != end_id
+        or int(existing_batch_size) != batch_size
+    ):
+        raise RuntimeError(
+            f"Session {session_name} already exists with a different configuration "
+            f"(start={existing_start_id}, end={existing_end_id}, batch_size={existing_batch_size})"
+        )
+
+
+def acquire_session_chunk(
+    connection: Connection,
+    session_name: str,
+) -> SessionChunk | None:
+    """Lock the session row and reserve the next chunk of ids to process for the current run."""
+    with connection.cursor() as cursor:
+        cursor.execute("BEGIN")
+        cursor.execute(
+            """
+            SELECT range_end, batch_size, next_id_to_scan
+            FROM download_sessions
+            WHERE session_name = %s
+            FOR UPDATE
+            """,
+            (session_name,),
+        )
+        row = cursor.fetchone()
+        if row is None:
+            cursor.execute("ROLLBACK")
+            raise RuntimeError(f"Unknown session {session_name}")
+
+        range_end, batch_size, next_id_to_scan = (int(row[0]), int(row[1]), int(row[2]))
+        if next_id_to_scan > range_end:
+            cursor.execute(
+                """
+                UPDATE download_sessions
+                SET status = 'done',
+                    last_error = NULL,
+                    last_finished_at = NOW(),
+                    updated_at = NOW()
+                WHERE session_name = %s
+                """,
+                (session_name,),
+            )
+            cursor.execute("COMMIT")
+            return None
+
+        chunk_start = next_id_to_scan
+        chunk_end = min(range_end, chunk_start + batch_size - 1)
+        cursor.execute(
+            """
+            UPDATE download_sessions
+            SET status = 'running',
+                last_error = NULL,
+                last_started_at = NOW(),
+                updated_at = NOW()
+            WHERE session_name = %s
+            """,
+            (session_name,),
+        )
+        cursor.execute("COMMIT")
+
+    return SessionChunk(
+        session_name=session_name,
+        start_id=chunk_start,
+        end_id=chunk_end,
+        range_end=range_end,
+    )
+
+
+def mark_session_chunk_complete(connection: Connection, chunk: SessionChunk) -> None:
+    """Advance the session cursor after a successful batch and close the session when the full range is done."""
+    next_id_to_scan = chunk.end_id + 1
+    status = "done" if chunk.end_id >= chunk.range_end else "pending"
+
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+            UPDATE download_sessions
+            SET last_completed_id = %s,
+                next_id_to_scan = %s,
+                status = %s,
+                last_error = NULL,
+                last_finished_at = NOW(),
+                updated_at = NOW()
+            WHERE session_name = %s
+            """,
+            (chunk.end_id, next_id_to_scan, status, chunk.session_name),
+        )
+    connection.commit()
+
+
+def mark_session_chunk_failed(connection: Connection, session_name: str, error_message: str) -> None:
+    """Record a failed batch without advancing the session cursor so the next cron run retries the same range."""
+    with connection.cursor() as cursor:
+        cursor.execute(
+            """
+            UPDATE download_sessions
+            SET status = 'failed',
+                last_error = %s,
+                updated_at = NOW()
+            WHERE session_name = %s
+            """,
+            (error_message[:2000], session_name),
+        )
+    connection.commit()
 
 
 def insert_download_attempt(connection: Connection, result: AttemptResult) -> None:
@@ -301,27 +467,57 @@ def main(argv: list[str] | None = None) -> None:
     settings = load_postgres_settings()
     options.log_path.parent.mkdir(parents=True, exist_ok=True)
 
-    total_ids = options.end_id - options.start_id + 1
     with connect_database(settings) as connection, options.log_path.open("w", newline="", encoding="utf-8") as log_file:
+        if options.session_name and options.batch_size:
+            ensure_download_session(
+                connection=connection,
+                session_name=options.session_name,
+                start_id=options.start_id,
+                end_id=options.end_id,
+                batch_size=options.batch_size,
+            )
+            session_chunk = acquire_session_chunk(connection, options.session_name)
+            if session_chunk is None:
+                print(f"[done] session={options.session_name} already completed")
+                return
+            run_start_id = session_chunk.start_id
+            run_end_id = session_chunk.end_id
+            print(
+                f"[session] name={options.session_name} chunk={run_start_id}-{run_end_id} full_range={options.start_id}-{options.end_id}"
+            )
+        else:
+            session_chunk = None
+            run_start_id = options.start_id
+            run_end_id = options.end_id
+
+        total_ids = run_end_id - run_start_id + 1
         writer = csv.DictWriter(
             log_file,
             fieldnames=["id_image", "nom_fichier", "status", "error_code"],
         )
         writer.writeheader()
 
-        for offset, id_image in enumerate(range(options.start_id, options.end_id + 1), start=1):
-            print(f"[progress] {offset}/{total_ids} id_image={id_image}")
-            process_id(
-                connection=connection,
-                writer=writer,
-                id_image=id_image,
-                directories=directories,
-                overwrite=options.overwrite,
-            )
-            log_file.flush()
+        try:
+            for offset, id_image in enumerate(range(run_start_id, run_end_id + 1), start=1):
+                print(f"[progress] {offset}/{total_ids} id_image={id_image}")
+                process_id(
+                    connection=connection,
+                    writer=writer,
+                    id_image=id_image,
+                    directories=directories,
+                    overwrite=options.overwrite,
+                )
+                log_file.flush()
 
-            if offset < total_ids:
-                sleep(options.delay_ms)
+                if offset < total_ids:
+                    sleep(options.delay_ms)
+        except Exception as error:
+            if session_chunk is not None:
+                mark_session_chunk_failed(connection, session_chunk.session_name, str(error))
+            raise
+
+        if session_chunk is not None:
+            mark_session_chunk_complete(connection, session_chunk)
 
     print(f"[done] log written: {options.log_path}")
 

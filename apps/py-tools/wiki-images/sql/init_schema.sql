@@ -26,3 +26,21 @@ CREATE TABLE IF NOT EXISTS download_attempts (
 
 CREATE INDEX IF NOT EXISTS idx_download_attempts_id_image ON download_attempts (id_image);
 CREATE INDEX IF NOT EXISTS idx_download_attempts_variant ON download_attempts (variant);
+
+CREATE TABLE IF NOT EXISTS download_sessions (
+  id BIGSERIAL PRIMARY KEY,
+  session_name TEXT NOT NULL UNIQUE,
+  range_start BIGINT NOT NULL,
+  range_end BIGINT NOT NULL,
+  batch_size INTEGER NOT NULL CHECK (batch_size > 0),
+  next_id_to_scan BIGINT NOT NULL,
+  last_completed_id BIGINT,
+  status TEXT NOT NULL CHECK (status IN ('pending', 'running', 'done', 'failed')),
+  last_error TEXT,
+  last_started_at TIMESTAMPTZ,
+  last_finished_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_download_sessions_status ON download_sessions (status);
