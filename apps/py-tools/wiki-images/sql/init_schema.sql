@@ -3,12 +3,17 @@ CREATE TABLE IF NOT EXISTS images (
   id_image BIGINT NOT NULL,
   variant TEXT NOT NULL CHECK (variant IN ('micro', 'normal', 'original')),
   extension TEXT NOT NULL CHECK (extension IN ('jpg', 'png')),
+  image_type TEXT,
+  image_name TEXT,
   file_name TEXT NOT NULL,
   file_path TEXT NOT NULL,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE (id_image, variant)
 );
+
+ALTER TABLE images ADD COLUMN IF NOT EXISTS image_type TEXT;
+ALTER TABLE images ADD COLUMN IF NOT EXISTS image_name TEXT;
 
 CREATE INDEX IF NOT EXISTS idx_images_id_image ON images (id_image);
 CREATE INDEX IF NOT EXISTS idx_images_variant ON images (variant);

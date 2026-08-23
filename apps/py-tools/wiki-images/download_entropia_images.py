@@ -4,9 +4,11 @@ import argparse
 import csv
 import sys
 import time
+from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
+from urllib.parse import urlencode
 from urllib.request import urlopen
 
 from psycopg import Connection
@@ -50,6 +52,20 @@ class SessionChunk:
     start_id: int
     end_id: int
     range_end: int
+
+
+@dataclass
+class RunStats:
+    attempts: int = 0
+    status_counts: Counter[str] | None = None
+    error_counts: Counter[str] | None = None
+
+    def __post_init__(self) -> None:
+        """Initialize the in-memory counters used for the end-of-run summary."""
+        if self.status_counts is None:
+            self.status_counts = Counter()
+        if self.error_counts is None:
+            self.error_counts = Counter()
 
 
 def get_download_base_url() -> str:
@@ -135,6 +151,70 @@ def log_attempt(writer: csv.DictWriter, result: AttemptResult) -> None:
     )
     print(
         f"[{result.status}] id_image={result.id_image} file={result.file_name} error_code={result.error_code}"
+    )
+
+
+def record_attempt_stats(stats: RunStats, result: AttemptResult) -> None:
+    """Accumulate per-run attempt counters used for the Telegram summary."""
+    stats.attempts += 1
+    stats.status_counts[result.status] += 1
+    stats.error_counts[result.error_code] += 1
+
+
+def send_telegram_message(settings, message: str) -> None:
+    """Send a Telegram message when the bot token and chat id are configured."""
+    if not settings.telegram_bot_token or not settings.telegram_chat_id:
+        return
+
+    payload = urlencode(
+        {
+            "chat_id": settings.telegram_chat_id,
+            "text": message,
+        }
+    ).encode("utf-8")
+    url = f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage"
+    with urlopen(url, data=payload):
+        pass
+
+
+def build_session_summary_message(
+    settings,
+    run_start_id: int,
+    run_end_id: int,
+    stats: RunStats,
+    session_chunk: SessionChunk | None,
+) -> str:
+    """Build the human-readable Telegram summary sent after each batch or manual run."""
+    ok_200 = stats.error_counts["200"]
+    ko_404 = stats.error_counts["404"]
+    exists_count = stats.error_counts["exists"]
+    db_exists_count = stats.error_counts["db_exists"]
+    network_count = stats.error_counts["network"]
+    other_errors = sum(
+        count
+        for error_code, count in stats.error_counts.items()
+        if error_code not in {"200", "404", "exists", "db_exists", "network"}
+    )
+
+    if session_chunk is None:
+        title = f"🚀 Wiki images batch terminé\nRange: {run_start_id}-{run_end_id}"
+        progress = ""
+    else:
+        title = f"🚀 Wiki images session `{session_chunk.session_name}` terminée"
+        progress = (
+            f"\nChunk: {run_start_id}-{run_end_id}"
+            f"\nProgression: {min(run_end_id, session_chunk.range_end)}/{session_chunk.range_end}"
+        )
+
+    return (
+        f"{title}{progress}\n"
+        f"✅ HTTP 200: {ok_200}\n"
+        f"❌ HTTP 404: {ko_404}\n"
+        f"📁 Déjà sur disque: {exists_count}\n"
+        f"🗃️ Déjà en base: {db_exists_count}\n"
+        f"🌐 Réseau: {network_count}\n"
+        f"⚠️ Autres erreurs: {other_errors}\n"
+        f"🧪 Tentatives totales: {stats.attempts}"
     )
 
 
@@ -353,6 +433,7 @@ def insert_image_record_if_missing(
 def process_variant(
     connection: Connection,
     writer: csv.DictWriter,
+    stats: RunStats,
     id_image: int,
     variant: str,
     target_dir: Path,
@@ -372,6 +453,7 @@ def process_variant(
             error_code="db_exists",
         )
         log_attempt(writer, result)
+        record_attempt_stats(stats, result)
         return True, existing_extension
 
     base_url = get_download_base_url()
@@ -392,6 +474,7 @@ def process_variant(
                 error_code="exists",
             )
             log_attempt(writer, result)
+            record_attempt_stats(stats, result)
             insert_download_attempt(connection, result)
             insert_image_record_if_missing(connection, id_image, variant, extension, file_name)
             return True, extension
@@ -407,6 +490,7 @@ def process_variant(
             error_code=error_code,
         )
         log_attempt(writer, result)
+        record_attempt_stats(stats, result)
         insert_download_attempt(connection, result)
         if ok:
             insert_image_record_if_missing(connection, id_image, variant, extension, file_name)
@@ -423,6 +507,7 @@ def sleep(delay_ms: int) -> None:
 def process_id(
     connection: Connection,
     writer: csv.DictWriter,
+    stats: RunStats,
     id_image: int,
     directories: dict[str, Path],
     overwrite: bool,
@@ -431,6 +516,7 @@ def process_id(
     micro_ok, preferred_extension = process_variant(
         connection=connection,
         writer=writer,
+        stats=stats,
         id_image=id_image,
         variant="micro",
         target_dir=directories["micro"],
@@ -443,6 +529,7 @@ def process_id(
     process_variant(
         connection=connection,
         writer=writer,
+        stats=stats,
         id_image=id_image,
         variant="normal",
         target_dir=directories["normal"],
@@ -452,6 +539,7 @@ def process_id(
     process_variant(
         connection=connection,
         writer=writer,
+        stats=stats,
         id_image=id_image,
         variant="original",
         target_dir=directories["original"],
@@ -491,6 +579,7 @@ def main(argv: list[str] | None = None) -> None:
             run_end_id = options.end_id
 
         total_ids = run_end_id - run_start_id + 1
+        stats = RunStats()
         writer = csv.DictWriter(
             log_file,
             fieldnames=["id_image", "nom_fichier", "status", "error_code"],
@@ -503,6 +592,7 @@ def main(argv: list[str] | None = None) -> None:
                 process_id(
                     connection=connection,
                     writer=writer,
+                    stats=stats,
                     id_image=id_image,
                     directories=directories,
                     overwrite=options.overwrite,
@@ -518,6 +608,11 @@ def main(argv: list[str] | None = None) -> None:
 
         if session_chunk is not None:
             mark_session_chunk_complete(connection, session_chunk)
+
+        send_telegram_message(
+            settings,
+            build_session_summary_message(settings, run_start_id, run_end_id, stats, session_chunk),
+        )
 
     print(f"[done] log written: {options.log_path}")
 

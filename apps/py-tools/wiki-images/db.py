@@ -3,6 +3,7 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Optional
 from urllib.parse import quote_plus
 
 import psycopg
@@ -21,6 +22,8 @@ class PostgresSettings:
     user: str
     password: str
     download_base_url: str
+    telegram_bot_token: Optional[str]
+    telegram_chat_id: Optional[str]
 
 
 def load_dotenv(env_path: Path = ENV_PATH) -> None:
@@ -55,6 +58,8 @@ def load_postgres_settings() -> PostgresSettings:
         user=require_env("PY_IMAGE_DB_USER"),
         password=require_env("PY_IMAGE_DB_PASSWORD"),
         download_base_url=require_env("PY_IMAGE_DOWNLOAD_BASE_URL"),
+        telegram_bot_token=os.getenv("PY_IMAGE_TELEGRAM_BOT_TOKEN") or None,
+        telegram_chat_id=os.getenv("PY_IMAGE_TELEGRAM_CHAT_ID") or None,
     )
 
 
