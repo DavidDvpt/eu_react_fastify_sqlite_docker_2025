@@ -1,0 +1,1 @@
+"""Wiki image tools package."""
