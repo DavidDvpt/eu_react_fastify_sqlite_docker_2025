@@ -33,24 +33,22 @@ export const transactionQuerySchema = z.object({
   withLotId: z.coerce.boolean().optional(),
 });
 
-export const transactionEntrySchema = z.object({
+export const transactionValuesSchema = z.object({
+  tt: z.coerce.number().nonnegative(),
+  ttc: z.coerce.number().positive(),
+  fee: z.coerce.number().nonnegative(),
+});
+
+export const transactionEntrySchema = transactionValuesSchema.extend({
   itemId: z.string().nullable(),
   lotId: z.string().nullable(),
   quantityLot: z.coerce.number().nullable(),
   transactionType: transactionTypeSchema,
   status: transactionStatusDtoSchema.nullable(),
-  tt: z.coerce.number(),
-  fee: z.coerce.number().nonnegative(),
-  ttc: z.coerce.number(),
 });
 
 export const transactionEntriesSchema = transactionEntrySchema.array();
 
-export const transactionValuesSchema = z.object({
-  tt: z.coerce.number().nonnegative(),
-  ttc: z.coerce.number().positive(),
-  fee: z.coerce.number().nonnegative().optional(),
-});
 export const transactionBodySchema = transactionValuesSchema.extend({
   itemId: z.string().min(1),
   quantity: z.coerce.number().int().positive(),
@@ -58,12 +56,9 @@ export const transactionBodySchema = transactionValuesSchema.extend({
   status: transactionStatusDtoSchema,
 });
 
-export const transactionSchemaDto = z.object({
+export const transactionSchemaDto = transactionValuesSchema.extend({
   id: z.string(),
   quantity: z.coerce.number().int().positive(),
-  tt: z.coerce.number().nonnegative(),
-  ttc: z.coerce.number().positive(),
-  fee: z.coerce.number().nonnegative().optional(),
   transactionType: transactionTypeSchema,
   status: transactionStatusDtoSchema,
   userId: z.string(),
