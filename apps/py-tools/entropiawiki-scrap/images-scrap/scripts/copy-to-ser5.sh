@@ -2,7 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-APP_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+IMAGE_APP_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+APP_ROOT_DIR="$(cd -- "$IMAGE_APP_DIR/.." && pwd)"
 ENV_SCRIPT_FILE="$SCRIPT_DIR/.env.script"
 
 if [[ ! -f "$ENV_SCRIPT_FILE" ]]; then
@@ -19,7 +20,7 @@ set +a
 : "${SSH_TARGET:?SSH_TARGET is required}"
 : "${REMOTE_DIR:?REMOTE_DIR is required}"
 
-LOCAL_ENV_PROD="$APP_DIR/.env.prod"
+LOCAL_ENV_PROD="$APP_ROOT_DIR/.env.prod"
 
 if [[ ! -f "$LOCAL_ENV_PROD" ]]; then
   echo "Missing production env file: $LOCAL_ENV_PROD"
@@ -27,7 +28,7 @@ if [[ ! -f "$LOCAL_ENV_PROD" ]]; then
 fi
 
 TMP_DIR="$(mktemp -d)"
-STAGING_DIR="$TMP_DIR/wiki-images"
+STAGING_DIR="$TMP_DIR/images-scrap"
 
 cleanup() {
   rm -rf "$TMP_DIR"
@@ -37,24 +38,23 @@ trap cleanup EXIT
 mkdir -p "$STAGING_DIR"
 
 echo "Preparing staging directory..."
-cp "$APP_DIR/__init__.py" "$STAGING_DIR/"
-cp "$APP_DIR/build_storage_image_index.py" "$STAGING_DIR/"
-cp "$APP_DIR/db.py" "$STAGING_DIR/"
-cp "$APP_DIR/download_entropia_images.py" "$STAGING_DIR/"
-cp "$APP_DIR/generate_gallery.py" "$STAGING_DIR/"
-cp "$APP_DIR/init_db.py" "$STAGING_DIR/"
-cp "$APP_DIR/requirements.txt" "$STAGING_DIR/"
-cp "$APP_DIR/storage_image_index.py" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/build_storage_image_index.py" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/db.py" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/download_entropia_images.py" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/generate_gallery.py" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/init_db.py" "$STAGING_DIR/"
+cp "$APP_ROOT_DIR/requirements.txt" "$STAGING_DIR/"
+cp "$IMAGE_APP_DIR/storage_image_index.py" "$STAGING_DIR/"
 
 mkdir -p "$STAGING_DIR/sql"
-cp "$APP_DIR/sql/init_schema.sql" "$STAGING_DIR/sql/"
+cp "$IMAGE_APP_DIR/sql/init_schema.sql" "$STAGING_DIR/sql/"
 
 cp "$LOCAL_ENV_PROD" "$STAGING_DIR/.env"
 
 echo "Preparing remote directory..."
 ssh "$SSH_TARGET" "mkdir -p $REMOTE_DIR"
 
-echo "Copying wiki-images app..."
+echo "Copying images-scrap app..."
 scp -r "$STAGING_DIR/." "$SSH_TARGET:$REMOTE_DIR/"
 
 echo "Done."

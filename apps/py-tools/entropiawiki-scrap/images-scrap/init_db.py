@@ -106,7 +106,7 @@ def hydrate_existing_files() -> int:
 
 
 def main() -> None:
-    """Initialize PostgreSQL for wiki-images by creating the schema and hydrating existing files."""
+    """Initialize PostgreSQL for the image scraper by creating the schema and hydrating existing files."""
     settings = load_postgres_settings()
     create_tables()
     hydrated_count = hydrate_existing_files()

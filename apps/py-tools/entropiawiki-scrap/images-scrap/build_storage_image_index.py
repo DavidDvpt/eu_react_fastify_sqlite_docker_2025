@@ -10,7 +10,7 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 
 
 def main() -> None:
-    """Build the local image index JSON from the current wiki-images directory structure."""
+    """Build the local image index JSON from the current image scraper directory structure."""
     index = build_storage_image_index(SCRIPT_DIR)
     index_path = get_default_storage_index_path(SCRIPT_DIR)
     write_storage_image_index(SCRIPT_DIR, index, index_path)

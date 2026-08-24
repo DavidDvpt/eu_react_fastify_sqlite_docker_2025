@@ -11,7 +11,8 @@ from psycopg import Connection
 
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-ENV_PATH = SCRIPT_DIR / ".env"
+APP_ROOT_DIR = SCRIPT_DIR.parent
+ENV_PATH = APP_ROOT_DIR / ".env"
 
 
 @dataclass
@@ -49,7 +50,7 @@ def require_env(name: str) -> str:
 
 
 def load_postgres_settings() -> PostgresSettings:
-    """Load the wiki-images PostgreSQL settings from the local environment."""
+    """Load the image scraper PostgreSQL settings from the shared root environment."""
     load_dotenv()
     return PostgresSettings(
         host=require_env("PY_IMAGE_DB_HOST"),
@@ -72,5 +73,5 @@ def build_database_url(settings: PostgresSettings) -> str:
 
 
 def connect_database(settings: PostgresSettings) -> Connection:
-    """Open an application connection to the dedicated wiki-images PostgreSQL database."""
+    """Open an application connection to the dedicated image scraper PostgreSQL database."""
     return psycopg.connect(build_database_url(settings))
