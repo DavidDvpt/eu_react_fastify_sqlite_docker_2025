@@ -2,7 +2,7 @@
 Préparer une base PostgreSQL dédiée au scrap d'images tout en réutilisant l'instance locale Docker déjà utilisée par le back-end.
 
 **Variables**
-Le fichier local [`.env`](</Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/.env>) contient:
+Le fichier local [`.env`](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/.env) contient:
 
 - `PY_IMAGE_DB_HOST`
 - `PY_IMAGE_DB_PORT`
@@ -10,9 +10,9 @@ Le fichier local [`.env`](</Users/davidmosca/personalProjects/eu_react_fastify_d
 - `PY_IMAGE_DB_USER`
 - `PY_IMAGE_DB_PASSWORD`
 - `PY_IMAGE_DATABASE_URL`
-- `PY_IMAGE_DOWNLOAD_BASE_URL`
+- `PY_IMAGE_BASE_URL`
 
-Le modèle versionnable est [`.env.example`](</Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/.env.example>).
+Le modèle versionnable est [`.env.example`](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/.env.example).
 
 **Choix retenu**
 
@@ -21,7 +21,7 @@ Le modèle versionnable est [`.env.example`](</Users/davidmosca/personalProjects
 - user dédié: `py_image_user`
 
 **Connexion Python**
-Le module [db.py](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/images-scrap/db.py) charge le `.env` partagé au root et fournit:
+Le module [db.py](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/db.py) charge le `.env` partagé au root et fournit:
 
 - `load_postgres_settings()`
 - `build_database_url()`
@@ -32,10 +32,12 @@ Le driver Python utilisé en dev et en prod est déclaré dans [requirements.txt
 - `psycopg[binary]==3.2.12`
 
 **Init DB**
-Le script [init_db.py](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/images-scrap/init_db.py) fait maintenant l'initialisation complète:
+Le script [init_db.py](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/init_db.py) fait maintenant l'initialisation complète:
 
-- création des tables via [init_schema.sql](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/images-scrap/sql/init_schema.sql)
+- création des tables via [images-scrap.init_schema.sql](/Users/davidmosca/personalProjects/eu_react_fastify_docker/apps/py-tools/entropiawiki-scrap/sql/images-scrap.init_schema.sql)
 - hydratation de la table `images` depuis les fichiers déjà présents dans `micro/`, `normal/`, `original/`
+
+Depuis la racine partagée `entropiawiki-scrap/`, lance-le avec `--app images-scrap`.
 
 Le schéma créé contient:
 

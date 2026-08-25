@@ -58,9 +58,9 @@ def load_postgres_settings() -> PostgresSettings:
         database=require_env("PY_IMAGE_DB_NAME"),
         user=require_env("PY_IMAGE_DB_USER"),
         password=require_env("PY_IMAGE_DB_PASSWORD"),
-        download_base_url=require_env("PY_IMAGE_DOWNLOAD_BASE_URL"),
-        telegram_bot_token=os.getenv("PY_IMAGE_TELEGRAM_BOT_TOKEN") or None,
-        telegram_chat_id=os.getenv("PY_IMAGE_TELEGRAM_CHAT_ID") or None,
+        download_base_url=require_env("PY_IMAGE_BASE_URL"),
+        telegram_bot_token=os.getenv("TELEGRAM_BOT_TOKEN") or None,
+        telegram_chat_id=os.getenv("TELEGRAM_CHAT_ID") or None,
     )
 
 

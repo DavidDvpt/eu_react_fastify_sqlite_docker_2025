@@ -1,15 +1,28 @@
 from __future__ import annotations
 
+import argparse
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from db import connect_database, load_postgres_settings
-from storage_image_index import VARIANTS, parse_variant_file_name
-
 
 SCRIPT_DIR = Path(__file__).resolve().parent
-SCHEMA_SQL_PATH = SCRIPT_DIR / "sql" / "init_schema.sql"
+SQL_DIR = SCRIPT_DIR / "sql"
+
+if str(SCRIPT_DIR) not in sys.path:
+    sys.path.insert(0, str(SCRIPT_DIR))
+
+from db import connect_database, load_postgres_settings
+
+
+ITEM_APP_NAME = "item-scrap"
+IMAGE_APP_NAME = "images-scrap"
+
+
+@dataclass(frozen=True)
+class InitDbContext:
+    app_name: str
+    schema_sql_path: Path
 
 
 @dataclass
@@ -21,10 +34,32 @@ class ExistingImageRecord:
     file_path: str
 
 
-def create_tables() -> None:
-    """Create the application tables and indexes in the dedicated PostgreSQL database."""
+def parse_args(argv: list[str]) -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--app", choices=(ITEM_APP_NAME, IMAGE_APP_NAME))
+    return parser.parse_args(argv)
+
+
+def detect_app_name(runtime_dir: Path) -> str:
+    if (runtime_dir / "storage_image_index.py").is_file():
+        return IMAGE_APP_NAME
+    if (runtime_dir / "scrape_chart_metadata.py").is_file():
+        return ITEM_APP_NAME
+    raise RuntimeError("Unable to detect scraper app. Use --app item-scrap or --app images-scrap.")
+
+
+def resolve_context(args: argparse.Namespace) -> InitDbContext:
+    app_name = args.app or detect_app_name(SCRIPT_DIR)
+    schema_file_name = f"{app_name}.init_schema.sql"
+    schema_sql_path = SQL_DIR / schema_file_name
+    if not schema_sql_path.is_file():
+        raise FileNotFoundError(f"Missing schema file: {schema_sql_path}")
+    return InitDbContext(app_name=app_name, schema_sql_path=schema_sql_path)
+
+
+def create_tables(schema_sql_path: Path) -> None:
     settings = load_postgres_settings()
-    schema_sql = SCHEMA_SQL_PATH.read_text(encoding="utf-8")
+    schema_sql = schema_sql_path.read_text(encoding="utf-8")
 
     with connect_database(settings) as connection:
         with connection.cursor() as cursor:
@@ -32,12 +67,12 @@ def create_tables() -> None:
         connection.commit()
 
 
-def collect_existing_images() -> list[ExistingImageRecord]:
-    """Scan the local variant folders and return the existing image files ready to hydrate into PostgreSQL."""
-    records: list[ExistingImageRecord] = []
+def collect_existing_images(runtime_dir: Path) -> list[ExistingImageRecord]:
+    from storage_image_index import VARIANTS, parse_variant_file_name
 
+    records: list[ExistingImageRecord] = []
     for variant in VARIANTS:
-        variant_dir = SCRIPT_DIR / variant
+        variant_dir = runtime_dir / variant
         if not variant_dir.is_dir():
             continue
 
@@ -56,17 +91,16 @@ def collect_existing_images() -> list[ExistingImageRecord]:
                     variant=variant,
                     extension=extension,
                     file_name=entry.name,
-                    file_path=entry.relative_to(SCRIPT_DIR).as_posix(),
+                    file_path=entry.relative_to(runtime_dir).as_posix(),
                 )
             )
 
     return records
 
 
-def hydrate_existing_files() -> int:
-    """Upsert already-downloaded files from disk into the images table."""
+def hydrate_existing_files(runtime_dir: Path) -> int:
     settings = load_postgres_settings()
-    records = collect_existing_images()
+    records = collect_existing_images(runtime_dir)
     if not records:
         return 0
 
@@ -105,13 +139,19 @@ def hydrate_existing_files() -> int:
     return len(records)
 
 
-def main() -> None:
-    """Initialize PostgreSQL for the image scraper by creating the schema and hydrating existing files."""
+def main(argv: list[str] | None = None) -> None:
     settings = load_postgres_settings()
-    create_tables()
-    hydrated_count = hydrate_existing_files()
+    args = parse_args(argv or sys.argv[1:])
+    context = resolve_context(args)
+    create_tables(context.schema_sql_path)
+
+    hydrated_count = 0
+    if context.app_name == IMAGE_APP_NAME:
+        hydrated_count = hydrate_existing_files(SCRIPT_DIR)
+
     print(
-        f"[done] database initialized: db={settings.database} user={settings.user} hydrated_images={hydrated_count}"
+        f"[done] database initialized: app={context.app_name} "
+        f"db={settings.database} user={settings.user} hydrated_images={hydrated_count}"
     )
 
 
