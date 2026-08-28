@@ -3,28 +3,17 @@ from __future__ import annotations
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
+
 from urllib.parse import quote_plus
 
 import psycopg
 from psycopg import Connection
 
+from definitions import PostgresSettings
 
-SCRIPT_DIR = Path(__file__).resolve().parent
-APP_ROOT_DIR = SCRIPT_DIR.parent
-ENV_PATH = APP_ROOT_DIR / ".env"
-
-
-@dataclass
-class PostgresSettings:
-    host: str
-    port: int
-    database: str
-    user: str
-    password: str
-    download_base_url: str
-    telegram_bot_token: Optional[str]
-    telegram_chat_id: Optional[str]
+CURRENT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = CURRENT_DIR.parent
+ENV_PATH = ROOT_DIR / ".env"
 
 
 def load_dotenv(env_path: Path = ENV_PATH) -> None:

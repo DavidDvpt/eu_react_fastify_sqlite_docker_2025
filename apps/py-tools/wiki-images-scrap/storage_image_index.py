@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
@@ -10,9 +9,14 @@ from urllib.error import HTTPError, URLError
 from urllib.request import urlopen
 
 
-IMAGE_FILE_PATTERN = re.compile(r"^(\d+)(micro|normal|original)\.(jpg|png)$", re.IGNORECASE)
+
 INDEX_FILE_NAME = "image-index.json"
-VARIANTS = ("micro", "normal", "original")
+
+CURRENT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = CURRENT_DIR.parent
+ENV_PATH = CURRENT_DIR / ".env"
+
+from constants import VARIANTS
 
 
 @dataclass
@@ -36,17 +40,7 @@ def _iso_now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z")
 
 
-def parse_variant_file_name(file_name: str, expected_variant: str) -> tuple[str, str] | None:
-    """Parse one stored image file name and return its image id and extension when it matches the variant."""
-    match = IMAGE_FILE_PATTERN.match(file_name)
-    if not match:
-        return None
 
-    image_id, variant, extension = match.groups()
-    if variant.lower() != expected_variant.lower():
-        return None
-
-    return image_id, extension.lower()
 
 
 def format_variant_token(variant: str) -> str:

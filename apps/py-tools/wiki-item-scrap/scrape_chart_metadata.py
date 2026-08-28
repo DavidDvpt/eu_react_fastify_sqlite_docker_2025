@@ -16,6 +16,7 @@ sys.path.insert(0, str(PARENT_DIR))
 sys.path.insert(0, str(CURRENT_DIR))
 
 from db import PostgresSettings, connect_database, load_postgres_settings
+
 from definitions import ChartStats
 from telegram import build_chart_summary_message, send_telegram_message
 
