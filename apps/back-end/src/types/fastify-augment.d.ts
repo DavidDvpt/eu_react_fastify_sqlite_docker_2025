@@ -8,6 +8,7 @@ declare module 'fastify' {
     authenticate: preHandlerAsyncHookHandler;
     authenticateRefresh: preHandlerAsyncHookHandler;
     protect: (this: FastifyInstance) => void;
+    adminProtect: (this: FastifyInstance) => void;
 
     authorize: (allowedRoles: string[]) => preHandlerHookHandler;
 

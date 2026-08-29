@@ -8,3 +8,4 @@ export * from "./lotSchema.js";
 export * from "./common.js";
 export * from "./stockSchemas.js";
 export * from "./financialSchemas.js";
+export * from "./nexusSchemas.js";

@@ -61,6 +61,16 @@ const authPlugin: FastifyPluginAsync = async (app: FastifyInstance) => {
     });
   });
 
+  app.decorate('adminProtect', function (this: FastifyInstance) {
+    this.addHook('preHandler', async (request, reply) => {
+      const user = request.user;
+
+      if (user.role !== 'ADMIN') {
+        return reply.code(403).send({ message: 'Not authorized' });
+      }
+    });
+  });
+
   app.decorate('authenticateRefresh', async (request) => {
     await request.refreshVerify({ onlyCookie: true });
   });

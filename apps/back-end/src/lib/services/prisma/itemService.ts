@@ -2,7 +2,14 @@ import { SortHelper } from '@eu/helpers';
 
 import type { Item } from '#prisma/generated/client.js';
 import type { RootDatabaseClient } from '#prisma/prismaClient.js';
-import type { ItemFormBody, ItemDto, SortOptions, ItemSortKey, LotSortKey } from '@eu/types';
+import type {
+  ItemFormBody,
+  ItemDto,
+  SortOptions,
+  ItemSortKey,
+  LotSortKey,
+  ItemDetailEnum,
+} from '@eu/types';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';
 import { LotService } from '#src/lib/services/prisma/lotService.js';
@@ -11,7 +18,7 @@ const NEGATIVE_STOCK_ERROR = (itemId: string) =>
   `Invariant violated: negative stock for item ${itemId}`;
 
 export class ItemService {
-  constructor(private readonly prisma: RootDatabaseClient) {}
+  constructor(protected readonly prisma: RootDatabaseClient) {}
 
   parser(row: Item | null) {
     if (!row) return null;
@@ -27,6 +34,12 @@ export class ItemService {
       updatedAt: row.date_updated,
       typeId: row.type_id,
       value: Number(row.value),
+      isRare: row.is_rare ?? null,
+      isUntradeable: row.is_untradeable ?? null,
+      description: row.description ?? null,
+      decay: row.decay ? Number(row.decay) : null,
+      weight: row.weight ? Number(row.weight) : null,
+      nexusId: row.nexus_id ?? null,
     };
 
     return parsed;
@@ -37,11 +50,13 @@ export class ItemService {
     isActive,
     typeId,
     sort,
+    details,
   }: {
     userIds?: string[];
     sort?: SortOptions<ItemSortKey>;
     typeId?: string;
     isActive?: boolean;
+    details?: ItemDetailEnum;
   }) {
     const rows = await this.prisma.item.findMany({
       where: {
@@ -49,6 +64,7 @@ export class ItemService {
         type_id: typeId,
         is_active: isActive,
       },
+      include: details ? { [details]: true } : undefined,
     });
 
     const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);

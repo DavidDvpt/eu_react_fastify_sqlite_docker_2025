@@ -22,12 +22,10 @@ const transactionServiceMocks = {
 };
 
 vi.mock('../../lib/services/index.js', () => ({
-  ItemService: vi.fn(function MockItemService() {
-    return itemServiceMocks;
-  }),
   TransactionService: vi.fn(function MockTransactionService() {
     return transactionServiceMocks;
   }),
+  getItemService: vi.fn(() => itemServiceMocks),
 }));
 
 describe('itemRoutes', () => {
@@ -65,6 +63,7 @@ describe('itemRoutes', () => {
       isActive: undefined,
       typeId: undefined,
       sort: { key: 'name', order: undefined },
+      details: undefined,
     });
     await app.close();
   });

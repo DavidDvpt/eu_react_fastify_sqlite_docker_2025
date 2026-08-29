@@ -13,6 +13,7 @@ import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import { errorHandler } from '#src/plugins/errorHandler.js';
 import { categoryRoutes } from '#src/routes/categoryRoutes.js';
 import itemRoutes from '#src/routes/itemRoutes.js';
+import nexusRoutes from '#src/routes/nexusRoutes.js';
 import typeRoutes from '#src/routes/typeRoutes.js';
 
 const allowedOrigins = (env.CORS_ORIGIN ?? '')
@@ -76,6 +77,7 @@ export function buildApp({
     app.register(inventoryRoutes, { prefix: `${API_PREFIX}/inventory` });
     app.register(pedCardRoutes, { prefix: `${API_PREFIX}/pedcard` });
     app.register(transactionRoutes, { prefix: `${API_PREFIX}/transactions` });
+    app.register(nexusRoutes, { prefix: `${API_PREFIX}/nexus-tools` });
   }
 
   return app;

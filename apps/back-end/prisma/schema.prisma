@@ -87,9 +87,6 @@ model User {
   itemTypes      Type[]
   items          Item[]
   lots           Lot[]
-  sessions       Session[]
-  sessionLines   SessionLine[]
-  sessionLots    SessionLot[]
   transactions   Transaction[]
   pedCardEntries PedCard[]
 
@@ -110,76 +107,6 @@ model PedCard {
 
   @@unique([transaction_id, type])
   @@map("pedcard")
-}
-
-model Session {
-  id           String        @id @default(uuid())
-  cost_tt      Decimal       @default(0)
-  cost_ttc     Decimal       @default(0)
-  win_tt       Decimal       @default(0)
-  win_ttc      Decimal       @default(0)
-  session_type SessionType
-  clics        Int           @default(0)
-  status       SessionStatus @default(OPENNED)
-  user_id      String
-
-  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  lines SessionLine[]
-  lots  SessionLot[]
-
-  @@index([user_id])
-  @@map("session")
-}
-
-model SessionLine {
-  id               String             @id @default(uuid())
-  session_id       String
-  item_id          String
-  inventory_lot_id String?
-  quantity         Int
-  line_type        SessionLineType
-  line_status      SessionStatus      @default(OPENNED)
-  sale_status      TransactionStatus?
-  tt               Decimal            @default(0)
-  ttc              Decimal            @default(0)
-  user_id          String
-
-  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
-  item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  lot     Lot?    @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
-  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([session_id])
-  @@index([item_id])
-  @@index([inventory_lot_id])
-  @@index([user_id])
-  @@map("session_line")
-}
-
-model SessionLot {
-  id               String             @id @default(uuid())
-  session_id       String
-  item_id          String
-  inventory_lot_id String?
-  quantity         Int
-  line_type        SessionLineType
-  line_status      SessionStatus      @default(OPENNED)
-  sale_status      TransactionStatus?
-  tt               Decimal            @default(0)
-  ttc              Decimal            @default(0)
-  user_id          String
-
-  session Session @relation(fields: [session_id], references: [id], onDelete: Cascade)
-  item    Item    @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  lot     Lot?    @relation(fields: [inventory_lot_id], references: [id], onDelete: SetNull)
-  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
-
-  @@index([session_id])
-  @@index([item_id])
-  @@index([inventory_lot_id])
-  @@index([user_id])
-  @@map("session_lot")
 }
 
 model Transaction {
@@ -248,16 +175,22 @@ model Type {
 }
 
 model Item {
-  id           String  @id @default(uuid())
-  image_url_id String
-  value        Decimal
-  is_limited   Boolean
-  type_id      String
-  user_id      String
-  date_created String
-  date_updated String?
-  is_active    Boolean @default(true)
-  name         String  @unique
+  id             String   @id @default(uuid())
+  image_url_id   String
+  value          Decimal
+  is_limited     Boolean
+  type_id        String
+  user_id        String
+  date_created   String
+  date_updated   String?
+  is_active      Boolean  @default(true)
+  name           String   @unique
+  nexus_id       String?
+  description    String?
+  weight         Decimal?
+  decay          Decimal?
+  is_untradeable Boolean?
+  is_rare        Boolean?
 
   item_type Type @relation(fields: [type_id], references: [id], onDelete: Cascade)
 
@@ -265,10 +198,45 @@ model Item {
 
   lots Lot[]
 
-  session_lines SessionLine[]
-  session_lots  SessionLot[]
+  finderDetail    FinderDetail?
+  excavatorDetail ExcavatorDetail?
+  refinerDetail   RefinerDetail?
 
   @@map("item")
+}
+
+model FinderDetail {
+  id             String   @id
+  depth          Decimal?
+  use_per_minute Decimal?
+  nexus_url      String?
+  ammo_burn      Decimal?
+
+  item Item @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("finder_detail")
+}
+
+model ExcavatorDetail {
+  id             String   @id
+  Efficienty     Decimal?
+  range          Decimal?
+  use_per_minute Decimal?
+  nexus_url      String?
+
+  item Item @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("excavator_detail")
+}
+
+model RefinerDetail {
+  id             String   @id
+  use_per_minute Decimal?
+  nexus_url      String?
+
+  item Item @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("refiner_detail")
 }
 
 model Lot {
@@ -285,8 +253,6 @@ model Lot {
   user               User?   @relation(fields: [user_id], references: [id], onDelete: Cascade)
 
   item             Item             @relation(fields: [item_id], references: [id], onDelete: Cascade)
-  line             SessionLine[]
-  session_lots     SessionLot[]
   transaction_lots TransactionLot[]
 
   @@map("lot")

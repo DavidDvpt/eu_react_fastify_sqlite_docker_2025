@@ -73,6 +73,24 @@ export class TypeService {
 
     return { id: row.id };
   }
+  async isTypeExists({ id, name, userIds }: { id?: string; name?: string; userIds: string[] }) {
+    if ((!id && !name) || !userIds.length) {
+      return false;
+    }
+
+    const type = await this.prisma.type.findFirst({
+      where: {
+        user_id: { in: userIds },
+        id,
+        name: {
+          equals: name,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return Boolean(type);
+  }
 
   async update({
     id,

@@ -11,27 +11,28 @@ import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
 import { toItemFinancialReport } from '#src/lib/helpers/transactionFinancialReportHelper.js';
-import { ItemService, TransactionService } from '#src/lib/services/index.js';
+import { TransactionService, getItemService } from '#src/lib/services/index.js';
 
 const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
-  const is = new ItemService(prismaClient);
-
   app.protect();
 
   app.get('/', async (request, reply) => {
-    const { sortKey, sortOrder, typeId, isActive } = itemQuerySchema.parse(request.query);
+    const { sortKey, sortOrder, typeId, isActive, details } = itemQuerySchema.parse(request.query);
+    const is = getItemService(details);
 
     const rows = await is.getAll({
       userIds: getReadableUserIds(request),
       isActive: isActive,
       typeId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
+      details,
     });
 
     return reply.code(200).send(rows);
   });
 
   app.get('/:id/stock', async (request, reply) => {
+    const is = getItemService();
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
 
@@ -40,6 +41,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(stock);
   });
   app.get('/:id/lots', async (request, reply) => {
+    const is = getItemService();
     const userId = getRequestUserId(request);
     const { id } = getIdParam(request);
     const { sortKey, sortOrder, isActive, hasInitialValue } = lotQuerySchema
@@ -92,6 +94,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   });
 
   app.get('/:id', async (request, reply) => {
+    const is = getItemService();
     const { id } = getIdParam(request);
 
     const row = await is.getById({
@@ -104,6 +107,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   // Mutations
   app.post('/', async (request, reply) => {
+    const is = getItemService();
     const userId = getRequestUserId(request);
     const body = itemFormSchema.parse(request.body);
     const created = await is.create({ userId, body });
@@ -111,6 +115,7 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(201).send(created);
   });
   app.put('/:id', async (request, reply) => {
+    const is = getItemService();
     const { id } = getIdParam(request);
     const body = itemFormSchema.parse(request.body);
 

@@ -31,6 +31,7 @@ const envSchema = z.object({
   DEV_ADMIN_PSEUDO: z.string().optional(),
   DEV_ADMIN_EMAIL: z.string().optional(),
   DEV_ADMIN_PASSWORD: z.string().optional(),
+  NEXUS_API_URL: z.string().optional(),
   SEED_INCLUDE_DEV_DATA: z
     .enum(['true', 'false'])
     .optional()
@@ -49,7 +50,8 @@ if (!parsedEnv.success) {
 
 const flatEnv = parsedEnv.data;
 
-const shouldRequireDevSeedUsers = flatEnv.SEED_INCLUDE_DEV_DATA || flatEnv.NODE_ENV !== 'production';
+const shouldRequireDevSeedUsers =
+  flatEnv.SEED_INCLUDE_DEV_DATA || flatEnv.NODE_ENV !== 'production';
 
 if (shouldRequireDevSeedUsers) {
   const requiredDevFields = [
