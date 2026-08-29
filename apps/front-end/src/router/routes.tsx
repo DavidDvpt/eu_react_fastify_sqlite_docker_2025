@@ -4,7 +4,7 @@ import AuthLayout from "@/layouts/AuthLayout";
 import LeftMenuLayout from "@/layouts/LeftMenuLayout";
 import RootLayout from "@/layouts/RootLayout";
 import GuestOnly from "@/modules/auth/guards/GuestOnly";
-import RequireAuth from "@/modules/auth/guards/RequireAuth";
+import AuthGuard from "@/modules/auth/guards/AuthGuard";
 import HomePage from "@/pages/HomePage";
 import ManagePage from "@/pages/managePage/ManagePage";
 import NotFoundPage from "@/pages/NotFoundPage";
@@ -12,6 +12,8 @@ import { Navigate } from "react-router-dom";
 import InventoryPage from "@/pages/inventoryPage/InventoryPage";
 import SignInPage from "@/pages/authPages/SignInPage";
 import SignUpPage from "@/pages/authPages/SignUpPage";
+import NexusPage from "@/pages/nexusPage/NexusPage";
+import AdminGuard from "@/modules/auth/guards/AdminGuard";
 
 const routes = [
   {
@@ -33,7 +35,7 @@ const routes = [
       },
       { path: "admin", element: <Layout />, children: [] },
       {
-        element: <RequireAuth />,
+        element: <AuthGuard />,
         children: [
           {
             element: <AppLayout />,
@@ -62,6 +64,15 @@ const routes = [
                       { path: ":tab/create", element: <ManagePage /> },
                       { path: ":tab/:id/edit", element: <ManagePage /> },
                     ],
+                  },
+                ],
+              },
+              {
+                element: <AdminGuard />,
+                children: [
+                  {
+                    path: "nexus-dashboard",
+                    element: <NexusPage />,
                   },
                 ],
               },

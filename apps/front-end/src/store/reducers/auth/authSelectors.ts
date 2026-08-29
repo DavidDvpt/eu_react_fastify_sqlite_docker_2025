@@ -16,5 +16,11 @@ const selectIsAuthResolving = createSelector(
   [selectAuthStatus],
   (status) => status === ApiStatus.IDLE || status === ApiStatus.PENDING,
 );
+const selectIsAdmin = createSelector([getauthState], (auth) => auth.role);
 
-export { selectAuthStatus, selectIsAuthResolving, selectIsLoggued };
+export {
+  selectAuthStatus,
+  selectIsAuthResolving,
+  selectIsLoggued,
+  selectIsAdmin,
+};

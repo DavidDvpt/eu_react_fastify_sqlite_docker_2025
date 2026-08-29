@@ -49,6 +49,9 @@ vi.mock("@/pages/authPages/SignInPage", () => ({
 vi.mock("@/pages/authPages/SignUpPage", () => ({
   default: () => <div>SIGNUP</div>,
 }));
+vi.mock("@/pages/nexusPage/NexusPage", () => ({
+  default: () => <div>NEXUS_PAGE</div>,
+}));
 
 // 👉 Outlet utilisé dans les mocks de layout
 import { Outlet } from "react-router-dom";
@@ -60,13 +63,17 @@ function makeStore(preloadedAuth: any) {
   });
 }
 
-function makeAuthState(isLoggued: boolean, status: ApiStatus) {
+function makeAuthState(
+  isLoggued: boolean,
+  status: ApiStatus,
+  role: "USER" | "ADMIN" | null = isLoggued ? "USER" : null,
+) {
   return {
     isLoggued,
-    role: isLoggued ? "USER" : null,
+    role,
     user: {
       result: isLoggued
-        ? { id: "1", pseudo: "demo", role: "USER", isActive: true }
+        ? { id: "1", pseudo: "demo", role: role ?? "USER", isActive: true }
         : null,
       error: null,
       status,
@@ -179,5 +186,41 @@ describe("routes (real)", () => {
     expect(
       screen.getByText("Reconnexion en cours avant affichage de l'application.")
     ).toBeInTheDocument();
+  });
+
+  it("GET /nexus-dashboard -> redirects non-admin users to /home", async () => {
+    const store = makeStore(
+      makeAuthState(true, ApiStatus.FULFILLED, "USER"),
+    );
+
+    const router = createMemoryRouter(routes as any, {
+      initialEntries: ["/nexus-dashboard"],
+    });
+
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+
+    expect(await screen.findByText("HOME")).toBeInTheDocument();
+  });
+
+  it("GET /nexus-dashboard -> shows NexusPage for admins", async () => {
+    const store = makeStore(
+      makeAuthState(true, ApiStatus.FULFILLED, "ADMIN"),
+    );
+
+    const router = createMemoryRouter(routes as any, {
+      initialEntries: ["/nexus-dashboard"],
+    });
+
+    render(
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
+    );
+
+    expect(await screen.findByText("NEXUS_PAGE")).toBeInTheDocument();
   });
 });

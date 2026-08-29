@@ -3,7 +3,7 @@ import { selectIsAuthResolving, selectIsLoggued } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
-function RequireAuth() {
+function AuthGuard() {
   const isLoggued = useAppSelector(selectIsLoggued);
   const isAuthResolving = useAppSelector(selectIsAuthResolving);
   const location = useLocation();
@@ -24,4 +24,4 @@ function RequireAuth() {
   return <Outlet />;
 }
 
-export default RequireAuth;
+export default AuthGuard;
