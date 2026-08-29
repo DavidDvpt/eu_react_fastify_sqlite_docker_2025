@@ -25,7 +25,7 @@ interface IModalGenericProps extends PropsWithChildren {
   title?: { value: React.ReactNode; style?: string };
   description?: { value: React.ReactNode; style?: string };
   footer?: { value: React.ReactNode; style?: string };
-  noClose: boolean;
+  noClose?: boolean;
 }
 
 function ModalGeneric({

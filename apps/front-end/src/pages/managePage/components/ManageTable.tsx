@@ -1,8 +1,9 @@
 import { GenericList } from "@/shared/components";
 
-import { useNavigate } from "react-router-dom";
+import { useMatch, useNavigate } from "react-router-dom";
 import type { ManageTab } from "@/shared/types/managePageTypes";
 import useManageListData from "../hooks/useManageListData";
+import CreateEditModal from "@/pages/managePage/components/createEditModal/CreateEditModal";
 
 interface ManageTableProps {
   activeTab: ManageTab;
@@ -10,6 +11,7 @@ interface ManageTableProps {
 
 function ManageTable({ activeTab }: ManageTableProps) {
   const navigate = useNavigate();
+  const isCreateRoute = Boolean(useMatch("/manage/:tab/create"));
 
   const { list, columns, errorMessage, isError, isPending, editRoute } =
     useManageListData({
@@ -19,20 +21,23 @@ function ManageTable({ activeTab }: ManageTableProps) {
   type GenericListType = typeof list;
 
   return (
-    <div className="flex min-h-0 flex-1 flex-col pb-2">
-      <GenericList<GenericListType[number]>
-        columns={columns}
-        rows={list}
-        getRowKey={(row) => row.id}
-        hasHeader
-        isLoading={isPending}
-        isError={isError}
-        loadingMessage="Chargement des categories..."
-        errorMessage={errorMessage}
-        emptyMessage="Aucune categorie."
-        onRowClick={(row) => navigate(editRoute(row.id))}
-      />
-    </div>
+    <>
+      <div className="flex min-h-0 flex-1 flex-col pb-2">
+        <GenericList<GenericListType[number]>
+          columns={columns}
+          rows={list}
+          getRowKey={(row) => row.id}
+          hasHeader
+          isLoading={isPending}
+          isError={isError}
+          loadingMessage="Chargement des categories..."
+          errorMessage={errorMessage}
+          emptyMessage="Aucune categorie."
+          onRowClick={(row) => navigate(editRoute(row.id))}
+        />
+      </div>
+      {isCreateRoute && <CreateEditModal tab={activeTab} />}
+    </>
   );
 }
 

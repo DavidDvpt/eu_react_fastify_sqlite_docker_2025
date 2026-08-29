@@ -42,6 +42,11 @@ export class InvalidateQueryAndKeys {
       queryKey: ["pedcard"],
     });
   }
+  static async categoryMutation() {
+    await queryClient.invalidateQueries({
+      queryKey: this.getCategoriesKey().keys,
+    });
+  }
   static async transactionStatusMutation({ itemId }: { itemId?: string }) {
     return await Promise.all([
       this.createTransactionMutation({ itemId }),
