@@ -15,7 +15,7 @@ PARENT_DIR = CURRENT_DIR.parent
 sys.path.insert(0, str(PARENT_DIR))
 sys.path.insert(0, str(CURRENT_DIR))
 
-from db import PostgresSettings, connect_database, load_postgres_settings
+from py_tools_utils import get_db_connection, SETTINGS
 
 from definitions import ChartStats
 from telegram import build_chart_summary_message, send_telegram_message
@@ -256,7 +256,7 @@ def scrape_all_charts(
     """Scrape every chart, persist pages as they are read, and return items plus chart summaries."""
     chart_stats: list[ChartStats] = []
 
-    with connect_database(settings) as connection:
+    with get_db_connection() as connection:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             context = browser.new_context()
@@ -299,7 +299,7 @@ def raise_on_failed_charts(stats_by_chart: list[ChartStats]) -> None:
 
 # Run the full scrape flow from browser automation to DB upserts and JSON export.
 def main() -> None:
-    settings = load_postgres_settings()
+    settings = SETTINGS()
     items, chart_stats = scrape_all_charts(settings)
     save_results(items)
     print(f"Total unique items: {len(items)}")

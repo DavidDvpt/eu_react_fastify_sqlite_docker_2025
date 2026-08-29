@@ -8,9 +8,10 @@ sys.path.insert(0, str(DB_DIR))
 
 from db import connect_database, load_postgres_settings
 
+SETTINGS = load_postgres_settings()
+
 def get_db_connection():
     settings = load_postgres_settings()
-    print(f'{settings}')
     return connect_database(settings)
 
 
