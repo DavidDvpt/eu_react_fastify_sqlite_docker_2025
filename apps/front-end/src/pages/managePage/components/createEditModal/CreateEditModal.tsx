@@ -1,4 +1,5 @@
 import CategoryForm from "@/pages/managePage/components/createEditModal/CategoryForm";
+import TypeForm from "@/pages/managePage/components/createEditModal/TypeForm";
 import { ModalGeneric } from "@/shared/components";
 import type { ManageTab } from "@/shared/types/managePageTypes";
 import type { ItemDto, TypeDto } from "@eu/types";
@@ -20,10 +21,12 @@ function CreateEditModal({ tab, entity }: CreatEditModalProps) {
       title={{ value: entity ? "Edition" : "Creation" }}
     >
       {tab === "category" && (
-        <CategoryForm category={entity} onClose={onclose} />
+        <CategoryForm category={entity as CategoryDto} onClose={onclose} />
       )}
-      {tab === "type"}
-      {tab === "item"}
+      {tab === "type" && (
+        <TypeForm type={entity as TypeDto} onClose={onclose} />
+      )}
+      {/* {tab === "item"} */}
     </ModalGeneric>
   );
 }

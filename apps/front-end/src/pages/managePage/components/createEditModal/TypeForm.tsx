@@ -2,23 +2,30 @@ import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
 import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
+import CategorySelectRHF from "@/shared/components/form/Select/CategorySelectRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { CategoryDto, CategoryFormBody } from "@eu/types";
-import { categoryFormSchema } from "@eu/zod-schemas";
+import type { TypeDto, TypeFormBody } from "@eu/types";
+import { typeFormSchema } from "@eu/zod-schemas";
 
-interface CategoyFormProps {
-  category?: CategoryDto;
+interface TypeFormProps {
+  type?: TypeDto;
   onClose: () => void;
 }
 
-const defaultValues: CategoryFormBody = { name: "", isActive: true };
+const defaultValues: TypeFormBody = {
+  name: "",
+  isActive: true,
+  isStackable: false,
+  categoryId: "",
+};
 
-function CategoryForm({ category, onClose }: CategoyFormProps) {
-  const { categoryMutation } = useSystemMutation();
+function TypeForm({ type, onClose }: TypeFormProps) {
+  const { typeMutation } = useSystemMutation();
 
-  const handleSubmit = (values: CategoryFormBody) => {
-    categoryMutation.mutate(
-      { category, values },
+  const handleSubmit = (values: TypeFormBody) => {
+    console.log(values);
+    typeMutation.mutate(
+      { type, values },
       {
         onSuccess() {
           onClose();
@@ -30,7 +37,7 @@ function CategoryForm({ category, onClose }: CategoyFormProps) {
   return (
     <GenericForm
       onSubmit={handleSubmit}
-      schema={categoryFormSchema}
+      schema={typeFormSchema}
       defaultValues={defaultValues}
       className="flex flex-col gap-4"
     >
@@ -41,16 +48,18 @@ function CategoryForm({ category, onClose }: CategoyFormProps) {
           className="mt-2"
           placeholder="Nom obligatoire"
         />
+        <CategorySelectRHF label="Catégorie: " />
         <CheckboxRHF name="isActive" label="Actif" />
+        <CheckboxRHF name="isStackable" label="Stackable" />
       </div>
       <FormButtonsSection
-        submitDisabled={categoryMutation.isPending}
-        cancelDisabled={categoryMutation.isPending}
-        submitLabel={category ? "Modifier" : "Créer"}
+        submitDisabled={typeMutation.isPending}
+        cancelDisabled={typeMutation.isPending}
+        submitLabel={type ? "Modifier" : "Créer"}
         onCancel={onClose}
       />
     </GenericForm>
   );
 }
 
-export default CategoryForm;
+export default TypeForm;

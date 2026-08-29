@@ -38,14 +38,32 @@ export class InvalidateQueryAndKeys {
   }
 
   static async invalidatePedcard() {
-    await queryClient.invalidateQueries({
+    return await queryClient.invalidateQueries({
       queryKey: ["pedcard"],
     });
   }
   static async categoryMutation() {
-    await queryClient.invalidateQueries({
-      queryKey: this.getCategoriesKey().keys,
-    });
+    return await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: this.getCategoriesKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getTypesKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemsKey().keys,
+      }),
+    ]);
+  }
+  static async typeMutation() {
+    return await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: this.getTypesKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemsKey().keys,
+      }),
+    ]);
   }
   static async transactionStatusMutation({ itemId }: { itemId?: string }) {
     return await Promise.all([
