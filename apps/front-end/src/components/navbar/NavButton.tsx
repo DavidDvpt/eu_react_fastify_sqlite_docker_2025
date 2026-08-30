@@ -11,6 +11,8 @@ function NavButton(props: NavbarButtonType) {
 
   const isActive =
     pathname === props.route || pathname.startsWith(`${props.route}/`);
+  const shouldPreserveSearch =
+    pathname.startsWith("/manage") && props.route.startsWith("/manage");
 
   return (
     <Button
@@ -20,7 +22,14 @@ function NavButton(props: NavbarButtonType) {
       className={props.className}
       size="nav"
     >
-      <NavLink to={props.route}>{props.content}</NavLink>
+      <NavLink
+        to={{
+          pathname: props.route,
+          search: shouldPreserveSearch ? location.search : "",
+        }}
+      >
+        {props.content}
+      </NavLink>
     </Button>
   );
 }

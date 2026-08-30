@@ -15,6 +15,12 @@ const defaultValues: CategoryFormBody = { name: "", isActive: true };
 
 function CategoryForm({ category, onClose }: CategoyFormProps) {
   const { categoryMutation } = useSystemMutation();
+  const formValues: CategoryFormBody = category
+    ? {
+        name: category.name,
+        isActive: category.isActive,
+      }
+    : defaultValues;
 
   const handleSubmit = (values: CategoryFormBody) => {
     categoryMutation.mutate(
@@ -29,9 +35,10 @@ function CategoryForm({ category, onClose }: CategoyFormProps) {
 
   return (
     <GenericForm
+      key={category?.id ?? "create-category"}
       onSubmit={handleSubmit}
       schema={categoryFormSchema}
-      defaultValues={defaultValues}
+      defaultValues={formValues}
       className="flex flex-col gap-4"
     >
       <div className="flex-1 flex flex-col gap-2">

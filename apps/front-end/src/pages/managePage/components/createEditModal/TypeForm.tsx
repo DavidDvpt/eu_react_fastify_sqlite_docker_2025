@@ -21,9 +21,16 @@ const defaultValues: TypeFormBody = {
 
 function TypeForm({ type, onClose }: TypeFormProps) {
   const { typeMutation } = useSystemMutation();
+  const formValues: TypeFormBody = type
+    ? {
+        name: type.name,
+        isActive: type.isActive,
+        isStackable: type.isStackable,
+        categoryId: type.categoryId,
+      }
+    : defaultValues;
 
   const handleSubmit = (values: TypeFormBody) => {
-    console.log(values);
     typeMutation.mutate(
       { type, values },
       {
@@ -36,9 +43,10 @@ function TypeForm({ type, onClose }: TypeFormProps) {
 
   return (
     <GenericForm
+      key={type?.id ?? "create-type"}
       onSubmit={handleSubmit}
       schema={typeFormSchema}
-      defaultValues={defaultValues}
+      defaultValues={formValues}
       className="flex flex-col gap-4"
     >
       <div className="flex-1 flex flex-col gap-2">

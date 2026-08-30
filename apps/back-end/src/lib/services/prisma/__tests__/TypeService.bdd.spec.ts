@@ -51,19 +51,33 @@ describe('TypeService', () => {
   });
 
   it('updates a type', async () => {
+    const update = vi.fn().mockResolvedValue({ id: 'type-1' });
+    const findFirst = vi
+      .fn()
+      .mockResolvedValueOnce({
+        id: 'type-1',
+        name: 'Original Type',
+        category_id: 'category-1',
+        is_stackable: false,
+        is_active: true,
+        user_id: 'user-1',
+        date_created: '2026-08-01T10:00:00.000Z',
+        date_updated: null,
+      })
+      .mockResolvedValueOnce({
+        id: 'type-1',
+        name: 'Updated Type',
+        category_id: 'category-2',
+        is_stackable: true,
+        is_active: false,
+        user_id: 'user-1',
+        date_created: '2026-08-01T10:00:00.000Z',
+        date_updated: '2026-08-01T11:00:00.000Z',
+      });
     const prisma = {
       type: {
-        update: vi.fn().mockResolvedValue({ id: 'type-1' }),
-        findFirst: vi.fn().mockResolvedValue({
-          id: 'type-1',
-          name: 'Updated Type',
-          category_id: 'category-1',
-          is_stackable: true,
-          is_active: true,
-          user_id: 'user-1',
-          date_created: '2026-08-01T10:00:00.000Z',
-          date_updated: '2026-08-01T11:00:00.000Z',
-        }),
+        update,
+        findFirst,
       },
     };
     const service = new TypeService(prisma as any);
@@ -71,12 +85,58 @@ describe('TypeService', () => {
     const updated = await service.update({
       id: 'type-1',
       userId: 'user-1',
-      body: { name: 'Updated Type', categoryId: 'category-1', isStackable: true },
+      body: {
+        name: 'Updated Type',
+        categoryId: 'category-2',
+        isStackable: true,
+        isActive: false,
+      },
     });
     const found = await service.getById({ id: updated?.id ?? '', userIds: ['user-1'] });
 
     expect(updated).toEqual({ id: 'type-1' });
+    expect(update).toHaveBeenCalledWith({
+      where: { id: 'type-1' },
+      data: {
+        name: 'Updated Type',
+        category_id: 'category-2',
+        is_active: false,
+        is_stackable: true,
+        date_updated: expect.any(String),
+      },
+    });
     expect(found?.name).toBe('Updated Type');
+    expect(found?.categoryId).toBe('category-2');
+    expect(found?.isActive).toBe(false);
+  });
+
+  it('rejects type update when user does not own the row', async () => {
+    const prisma = {
+      type: {
+        update: vi.fn(),
+        findFirst: vi.fn().mockResolvedValue({
+          id: 'type-1',
+          name: 'Original Type',
+          category_id: 'category-1',
+          is_stackable: false,
+          is_active: true,
+          user_id: 'user-2',
+          date_created: '2026-08-01T10:00:00.000Z',
+          date_updated: null,
+        }),
+      },
+    };
+    const service = new TypeService(prisma as any);
+
+    await expect(
+      service.update({
+        id: 'type-1',
+        userId: 'user-1',
+        body: { name: 'Updated Type' },
+      }),
+    ).rejects.toThrow('Forbidden mutation: only the owner can update this row');
+
+    expect(prisma.type.update).not.toHaveBeenCalled();
   });
 
   it('lists parsed types', async () => {

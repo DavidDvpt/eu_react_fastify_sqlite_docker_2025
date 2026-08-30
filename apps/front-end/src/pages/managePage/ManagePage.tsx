@@ -22,10 +22,14 @@ function ManagePage() {
   const shouldShowTable =
     selectedTab === "category" ||
     (selectedTab === "type" && hasSelectedCategory) ||
-    (selectedTab === "item" && (hasSelectedCategory || hasSelectedType));
+    (selectedTab === "item" && hasSelectedType);
 
   const emptySelectionMessage =
-    selectedTab === "type" ? "Selectionner une categorie" : "Selectionner une categorie ou un type";
+    selectedTab === "type"
+      ? "Selectionner une categorie"
+      : selectedTab === "item"
+        ? "Selectionner un type"
+        : "Selectionner une categorie ou un type";
 
   return (
     <Panel className="min-h-0 gap-2">

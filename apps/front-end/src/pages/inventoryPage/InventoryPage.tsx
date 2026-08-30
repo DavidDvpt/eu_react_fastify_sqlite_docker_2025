@@ -16,13 +16,16 @@ function InventoryPage() {
   const navigate = useNavigate();
 
   const hasSelectedItem = Boolean(itemId);
+  const hasSelectedCategory =
+    typeof category === "string" && category.trim().length > 0;
   const hasSelectedType = typeof type === "string" && type.trim().length > 0;
+  const canShowInventory = hasSelectedCategory || hasSelectedType;
 
   return (
     <Panel className="min-h-0 gap-2 mx-0">
       <GenericFilter context="inventory" className="m-2" />
 
-      {hasSelectedType ? (
+      {canShowInventory ? (
         <Section
           className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
           shadow={false}
@@ -54,7 +57,7 @@ function InventoryPage() {
         </Section>
       ) : (
         <Section className="mx-2 flex min-h-0 flex-1 items-center justify-center text-center text-black">
-          Selectionner un type
+          Selectionner une categorie ou un type
         </Section>
       )}
 

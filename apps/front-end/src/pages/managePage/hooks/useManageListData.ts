@@ -19,6 +19,7 @@ type ManageListDataResult = {
   isError: boolean;
   errorMessage: string;
   editRoute: (id: string) => string;
+  findEntityById: (id?: string) => ManageListRow | undefined;
 };
 
 function useManageListData({
@@ -27,9 +28,15 @@ function useManageListData({
   const { params } = useGenericFilterParams();
 
   const {
-    items: { isPending: isItemsPending, isError: isItemsError, filteredItems },
+    items: {
+      isPending: isItemsPending,
+      isError: isItemsError,
+      filteredItems,
+      itemDatas,
+    },
     types: {
       typesByCategory,
+      typeDatas,
       isPending: isTypesPending,
       isError: isTypesError,
     },
@@ -39,6 +46,7 @@ function useManageListData({
       data: cat,
     },
   } = useSystemDatas();
+  const categories = cat ?? [];
 
   const contentValues = useMemo<ManageListDataResult>(() => {
     switch (activeTab) {
@@ -50,6 +58,7 @@ function useManageListData({
           columns: createTypeColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: "Impossible de charger les types.",
           editRoute: (id) => `/manage/type/${id}/edit`,
+          findEntityById: (id) => typeDatas?.find((row) => row.id === id),
         };
       }
       case "item":
@@ -63,29 +72,33 @@ function useManageListData({
           columns: createItemColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les items.`,
           editRoute: (id) => `/manage/item/${id}/edit`,
+          findEntityById: (id) => itemDatas?.find((row) => row.id === id),
         };
       default:
       case "category":
         return {
-          list: cat as ManageListRow[],
+          list: categories as ManageListRow[],
           isPending: isCategoriesPending,
           isError: isCategoriesError,
           columns: createCategoryColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les categories.`,
           editRoute: (id) => `/manage/category/${id}/edit`,
+          findEntityById: (id) => categories.find((row) => row.id === id),
         };
     }
   }, [
     activeTab,
     filteredItems,
     typesByCategory,
+    itemDatas,
+    typeDatas,
     isTypesPending,
     isItemsPending,
     isCategoriesPending,
     isTypesError,
     isItemsError,
     isCategoriesError,
-    cat,
+    categories,
     params,
   ]);
 

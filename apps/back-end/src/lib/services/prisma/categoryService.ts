@@ -66,9 +66,21 @@ export class CategoryService {
     userId: string;
     body: Partial<CategoryFormBody>;
   }) {
+    const existing = await this.prisma.category.findFirst({
+      where: { id },
+    });
+
+    if (!existing || existing.user_id !== userId) {
+      throw new Error('Forbidden mutation: only the owner can update this row');
+    }
+
     const cat = await this.prisma.category.update({
-      where: { id, user_id: userId },
-      data: { ...body, date_updated: new Date().toISOString() },
+      where: { id },
+      data: {
+        name: body.name,
+        is_active: body.isActive,
+        date_updated: new Date().toISOString(),
+      },
     });
 
     return { id: cat.id };

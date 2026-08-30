@@ -4,7 +4,7 @@ import { ModalGeneric } from "@/shared/components";
 import type { ManageTab } from "@/shared/types/managePageTypes";
 import type { ItemDto, TypeDto } from "@eu/types";
 import type { CategoryDto } from "@eu/types";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface CreatEditModalProps {
   tab: ManageTab;
@@ -12,8 +12,13 @@ interface CreatEditModalProps {
 }
 function CreateEditModal({ tab, entity }: CreatEditModalProps) {
   const navigate = useNavigate();
+  const location = useLocation();
 
-  const onclose = () => navigate(`/manage/${tab}`);
+  const onclose = () =>
+    navigate({
+      pathname: `/manage/${tab}`,
+      search: location.search,
+    });
   return (
     <ModalGeneric
       onOpenChange={onclose}

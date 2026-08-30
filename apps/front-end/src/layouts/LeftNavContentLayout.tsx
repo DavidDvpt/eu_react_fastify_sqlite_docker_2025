@@ -1,5 +1,5 @@
 import type { PropsWithChildren } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { VerticalNav } from "@/shared/components";
 
@@ -14,6 +14,7 @@ import {
 function LeftNavContentLayout({ children }: PropsWithChildren) {
   const links = useNavLinks();
   const navigate = useNavigate();
+  const location = useLocation();
   const { tab } = useParams();
 
   const selectedTab = isManageTab(tab) ? tab : "category";
@@ -37,7 +38,12 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
               variant="primary"
               size="nav"
               className="w-full"
-              onClick={() => navigate(`/manage/${selectedTab}/create`)}
+              onClick={() =>
+                navigate({
+                  pathname: `/manage/${selectedTab}/create`,
+                  search: location.search,
+                })
+              }
             >
               {createLabel}
             </Button>

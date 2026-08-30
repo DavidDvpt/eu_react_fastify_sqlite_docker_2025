@@ -112,12 +112,20 @@ export class TypeService {
     userId: string;
     body: Partial<Omit<TypeFormBody, 'id'>>;
   }) {
+    const existing = await this.prisma.type.findFirst({
+      where: { id },
+    });
+
+    if (!existing || existing.user_id !== userId) {
+      throw new Error('Forbidden mutation: only the owner can update this row');
+    }
+
     const row = await this.prisma.type.update({
-      where: { id, user_id: userId },
+      where: { id },
       data: {
         name: body.name,
         category_id: body.categoryId,
-        is_active: true,
+        is_active: body.isActive,
         is_stackable: body.isStackable,
         date_updated: new Date().toISOString(),
       },
