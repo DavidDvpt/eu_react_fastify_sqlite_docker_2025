@@ -33,6 +33,9 @@ export class InvalidateQueryAndKeys {
   static getInventoryFinancialReportKey(): InvalidateObject {
     return { keys: ["inventory", "financial-report"] };
   }
+  static getNexusKey(): InvalidateObject {
+    return { keys: ["nexus"] };
+  }
   static getItemLotsKey(itemId?: string): InvalidateObject {
     return { keys: ["item-lots", itemId] };
   }
