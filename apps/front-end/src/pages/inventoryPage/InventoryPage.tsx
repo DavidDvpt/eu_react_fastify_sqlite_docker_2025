@@ -16,41 +16,47 @@ function InventoryPage() {
   const navigate = useNavigate();
 
   const hasSelectedItem = Boolean(itemId);
+  const hasSelectedType = typeof type === "string" && type.trim().length > 0;
 
   return (
     <Panel className="min-h-0 gap-2 mx-0">
       <GenericFilter context="inventory" className="m-2" />
 
-      <Section
-        className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
-        shadow={false}
-      >
-        <InventoryListFilter />
-
+      {hasSelectedType ? (
         <Section
-          className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row"
+          className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
           shadow={false}
         >
-          <InventoryList
-            categoryId={category as string}
-            typeId={type as string}
-            className={cn(
-              "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
-              hasSelectedItem
-                ? "basis-1/2 max-w-[50%]"
-                : "basis-full max-w-full",
-              "max-lg:basis-full max-lg:max-w-full",
-            )}
-          />
+          <InventoryListFilter />
 
-          {hasSelectedItem && (
-            <StockDetailsPanel
-              className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
-              onClose={() => navigate("/inventory")}
+          <Section
+            className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row"
+            shadow={false}
+          >
+            <InventoryList
+              categoryId={category as string}
+              typeId={type as string}
+              className={cn(
+                "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
+                hasSelectedItem
+                  ? "basis-1/2 max-w-[50%]"
+                  : "basis-full max-w-full",
+                "max-lg:basis-full max-lg:max-w-full",
+              )}
             />
-          )}
+            {hasSelectedItem && (
+              <StockDetailsPanel
+                className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
+                onClose={() => navigate("/inventory")}
+              />
+            )}
+          </Section>
         </Section>
-      </Section>
+      ) : (
+        <Section className="mx-2 flex min-h-0 flex-1 items-center justify-center text-center text-black">
+          Selectionner un type
+        </Section>
+      )}
 
       <TransactionModal />
     </Panel>
