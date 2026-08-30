@@ -3,7 +3,7 @@ import { nexusDtoSchema } from '@eu/zod-schemas';
 import type { NexusUpdate } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusUpdateWithTypeName } from '#src/types/prismaApi/nexus.js';
-import type { NexusUpdateDto } from '@eu/types';
+import type { NexusFormBody, NexusUpdateDto } from '@eu/types';
 
 export class NexusService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -27,7 +27,7 @@ export class NexusService {
       id: row.id,
       name: row.type.name,
       nexusRequestType: row.nexus_request_type,
-      nexusName: row.type.name,
+      nexusName: row.nexus_name ?? row.type.name,
       itemCount: row.item_count,
       imageMissingCount: row.image_missing_count,
       changeCount: row.change_count,
@@ -62,5 +62,30 @@ export class NexusService {
     const data = values.map((value) => this.parserToPrisma(value));
 
     return this.prisma.nexusUpdate.createMany({ data });
+  }
+
+  async update({ id, body }: { id: string; body: NexusFormBody }) {
+    const updated = await this.prisma.nexusUpdate.update({
+      where: { id },
+      data: {
+        nexus_name: body.nexusName,
+        nexus_request_type: body.nexusRequestType,
+        updated_at: new Date().toISOString(),
+        type: {
+          update: {
+            name: body.name,
+          },
+        },
+      },
+      include: {
+        type: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+
+    return this.parserToDto(updated);
   }
 }

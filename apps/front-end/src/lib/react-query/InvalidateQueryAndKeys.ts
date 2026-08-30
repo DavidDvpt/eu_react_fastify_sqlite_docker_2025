@@ -73,6 +73,11 @@ export class InvalidateQueryAndKeys {
       queryKey: this.getNexusKey().keys,
     });
   }
+  static async nexusMutation() {
+    return await queryClient.invalidateQueries({
+      queryKey: this.getNexusKey().keys,
+    });
+  }
   static async transactionStatusMutation({ itemId }: { itemId?: string }) {
     return await Promise.all([
       this.createTransactionMutation({ itemId }),

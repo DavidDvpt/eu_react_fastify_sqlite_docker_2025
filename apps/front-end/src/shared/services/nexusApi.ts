@@ -1,7 +1,14 @@
 import { ApiService } from "@/shared/services/apiCrudService";
-import type { NexusUpdateDto } from "@eu/types";
+import type { NexusFormBody, NexusUpdateDto } from "@eu/types";
 
-export default class NexusApi extends ApiService<never, NexusUpdateDto[], never> {
+export default class NexusApi extends ApiService<
+  never,
+  NexusUpdateDto[],
+  never,
+  void,
+  NexusFormBody,
+  NexusUpdateDto
+> {
   protected route = "/nexus-tools";
 
   async init() {

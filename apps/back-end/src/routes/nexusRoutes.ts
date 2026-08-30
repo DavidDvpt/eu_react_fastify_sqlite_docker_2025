@@ -1,7 +1,7 @@
-import { nexusParamsSchema, nexusUpdateParamSchema } from '@eu/zod-schemas';
+import { idSchema, nexusFormSchema, nexusParamsSchema } from '@eu/zod-schemas';
 import axios from 'axios';
 
-import type { NexusUpdateDto } from '@eu/types';
+import type { NexusFormBody, NexusUpdateDto } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
@@ -14,19 +14,18 @@ const NEXUS_URL = env.NEXUS_API_URL;
 
 const authaurizedTypes = ['finders', 'excavators', 'refiners'];
 const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
+  const ns = new NexusService(prismaClient);
+
   app.protect();
   app.adminProtect();
 
   app.get('/', async (request, reply) => {
-    const ns = new NexusService(prismaClient);
-
     const response = await ns.getAll();
 
     return reply.code(200).send(response);
   });
 
   app.post('/init', async (request, reply) => {
-    const ns = new NexusService(prismaClient);
     const ts = new TypeService(prismaClient);
     const is = new ItemService(prismaClient);
 
@@ -62,8 +61,12 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(201).send(init.count);
   });
 
-  app.post('/update/:type', async (request, reply) => {
-    const { type } = nexusUpdateParamSchema.parse(request.body);
+  app.patch('/:id', async (request, reply) => {
+    const { id } = idSchema.parse(request.params);
+    const body: NexusFormBody = nexusFormSchema.parse(request.body);
+    const updated = await ns.update({ id, body });
+
+    return reply.code(200).send(updated);
   });
 
   app.get('/:type', async (request, reply) => {

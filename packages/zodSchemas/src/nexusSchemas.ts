@@ -28,6 +28,12 @@ export const nexusDtoSchema = z.object({
   updatedAt: z.string().nullable().default(null),
 });
 
+export const nexusFormSchema = z.object({
+  name: z.string().min(1),
+  nexusName: z.string(),
+  nexusRequestType: z.string(),
+});
+
 export const nexusUpdateParamSchema = z.object({
   type: nexusUpdateType,
 });

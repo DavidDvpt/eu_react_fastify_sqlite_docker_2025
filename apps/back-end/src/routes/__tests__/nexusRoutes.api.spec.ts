@@ -12,6 +12,7 @@ const nexusServiceMocks = {
   getAll: vi.fn(),
   count: vi.fn(),
   createMany: vi.fn(),
+  update: vi.fn(),
 };
 
 const typeServiceMocks = {
@@ -107,7 +108,7 @@ describe('nexusRoutes', () => {
       url: `${API_PREFIX}/nexus-tools/init`,
     });
 
-    expect(res.statusCode).toBe(200);
+    expect(res.statusCode).toBe(201);
     expect(res.json()).toBe(2);
     expect(nexusServiceMocks.createMany).toHaveBeenCalledWith({
       values: [
@@ -125,6 +126,52 @@ describe('nexusRoutes', () => {
         }),
       ],
     });
+    await app.close();
+  });
+
+  it('PATCH /api/v1/nexus-tools/:id updates the selected nexus row', async () => {
+    const { app } = buildApp();
+    vi.mocked(nexusServiceMocks.update).mockResolvedValueOnce({
+      id: 'type-1',
+      name: 'Finders Updated',
+      nexusName: 'Finder Mk2',
+      nexusRequestType: 'finders',
+      itemCount: 4,
+      imageMissingCount: 2,
+      changeCount: 0,
+      createdAt: '2026-08-30T10:00:00.000Z',
+      insertedAt: null,
+      updatedAt: '2026-08-30T11:00:00.000Z',
+    });
+
+    await app.ready();
+    const res = await app.inject({
+      method: 'PATCH',
+      url: `${API_PREFIX}/nexus-tools/type-1`,
+      payload: {
+        name: 'Finders Updated',
+        nexusName: 'Finder Mk2',
+        nexusRequestType: 'finders',
+      },
+    });
+
+    expect(res.statusCode).toBe(200);
+    expect(nexusServiceMocks.update).toHaveBeenCalledWith({
+      id: 'type-1',
+      body: {
+        name: 'Finders Updated',
+        nexusName: 'Finder Mk2',
+        nexusRequestType: 'finders',
+      },
+    });
+    expect(res.json()).toEqual(
+      expect.objectContaining({
+        id: 'type-1',
+        name: 'Finders Updated',
+        nexusName: 'Finder Mk2',
+        nexusRequestType: 'finders',
+      }),
+    );
     await app.close();
   });
 });
