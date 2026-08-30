@@ -13,20 +13,29 @@ function ManagePage() {
   const { params } = useGenericFilterParams();
 
   const selectedTab = (tab as ManageTab) ?? "category";
+  const hasSelectedCategory = Boolean(params.category);
   const hasSelectedType = Boolean(params.type);
 
   const context =
     `manage${StringTools.capitalizeFirstLetter(selectedTab)}` as GenericFilterContext;
 
+  const shouldShowTable =
+    selectedTab === "category" ||
+    (selectedTab === "type" && hasSelectedCategory) ||
+    (selectedTab === "item" && (hasSelectedCategory || hasSelectedType));
+
+  const emptySelectionMessage =
+    selectedTab === "type" ? "Selectionner une categorie" : "Selectionner une categorie ou un type";
+
   return (
     <Panel className="min-h-0 gap-2">
       <GenericFilter context={context} className="m-0" />
 
-      {hasSelectedType ? (
+      {shouldShowTable ? (
         <ManageTable activeTab={selectedTab} />
       ) : (
         <Section className="flex min-h-0 flex-1 items-center justify-center text-center text-black">
-          Selectionner un type
+          {emptySelectionMessage}
         </Section>
       )}
     </Panel>
