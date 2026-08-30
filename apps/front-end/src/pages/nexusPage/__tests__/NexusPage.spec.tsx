@@ -21,6 +21,12 @@ vi.mock("@/shared/hooks", () => ({
     isNexusLoading: false,
     isNexusError: false,
   }),
+  useNexusMutation: () => ({
+    initMutation: {
+      isPending: false,
+      mutate: vi.fn(),
+    },
+  }),
 }));
 
 describe("NexusPage", () => {
@@ -30,5 +36,6 @@ describe("NexusPage", () => {
     expect(screen.getByText("Type")).toBeInTheDocument();
     expect(screen.getByText("Finders")).toBeInTheDocument();
     expect(screen.getByText("Images KO")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Init" })).toBeDisabled();
   });
 });

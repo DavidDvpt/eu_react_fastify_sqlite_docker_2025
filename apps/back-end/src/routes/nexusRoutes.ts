@@ -1,7 +1,6 @@
 import { nexusParamsSchema } from '@eu/zod-schemas';
 import axios from 'axios';
 
-import type { NexusUpdate } from '#prisma/generated/client.js';
 import type { NexusUpdateDto } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -26,7 +25,7 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(response);
   });
 
-  app.get('/init', async (request, reply) => {
+  app.post('/init', async (request, reply) => {
     const ns = new NexusService(prismaClient);
     const ts = new TypeService(prismaClient);
     const is = new ItemService(prismaClient);
@@ -35,11 +34,11 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const countType = await ts.count();
 
     if (countNexus.count > 0) {
-      return reply.code(200).send('Table initialized');
+      return reply.code(204).send();
     }
 
     if (countType.count === 0) {
-      return reply.code(200).send('No type to add');
+      return reply.code(204).send();
     }
 
     const itemCountByType = (await is.groupByType()) ?? {};
@@ -49,6 +48,7 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const nexusArray: NexusUpdateDto[] = types.map((m) => ({
       id: m.id,
       name: m.name,
+      nexusName: m.name,
       itemCount: itemCountByType[m.id] ?? 0,
       imageMissingCount: itemWithoutImageCountByType[m.id] ?? 0,
       changeCount: 0,
@@ -59,7 +59,7 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const init = await ns.createMany({ values: nexusArray });
 
-    return reply.code(200).send(init);
+    return reply.code(201).send(init.count);
   });
 
   app.get('/:type', async (request, reply) => {

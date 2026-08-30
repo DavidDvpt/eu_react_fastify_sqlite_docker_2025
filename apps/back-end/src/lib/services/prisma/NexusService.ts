@@ -25,6 +25,7 @@ export class NexusService {
     return nexusDtoSchema.parse({
       id: row.id,
       name: row.type.name,
+      nexusName: row.type.name,
       itemCount: row.item_count,
       imageMissingCount: row.image_missing_count,
       changeCount: row.change_count,

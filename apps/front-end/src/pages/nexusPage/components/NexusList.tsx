@@ -1,23 +1,23 @@
 import { GenericList } from "@/shared/components";
 import { nexusColumns } from "@/shared/components/GenericList/columnDefinition";
-import { useNexusData } from "@/shared/hooks";
 import type { NexusUpdateDto } from "@eu/types";
 
 type NexusListProps = {
   className?: string;
+  rows: NexusUpdateDto[];
+  isLoading: boolean;
+  isError: boolean;
 };
 
-function NexusList({ className }: NexusListProps) {
-  const { nexusRows, isNexusLoading, isNexusError } = useNexusData();
-
+function NexusList({ className, rows, isLoading, isError }: NexusListProps) {
   return (
     <GenericList<NexusUpdateDto>
       columns={nexusColumns}
-      rows={nexusRows}
+      rows={rows}
       getRowKey={(row) => row.id}
       hasHeader
-      isLoading={isNexusLoading}
-      isError={isNexusError}
+      isLoading={isLoading}
+      isError={isError}
       loadingMessage="Chargement des updates Nexus..."
       errorMessage="Impossible de charger les updates Nexus."
       emptyMessage="Aucune update Nexus."
