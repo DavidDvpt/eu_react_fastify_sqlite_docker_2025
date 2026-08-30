@@ -32,7 +32,7 @@ vi.mock('../../lib/services/index.js', () => ({
 }));
 
 describe('typeRoutes', () => {
-  function buildApp() {
+  function buildApp(role: 'USER' | 'ADMIN' = 'USER') {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
@@ -40,7 +40,14 @@ describe('typeRoutes', () => {
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
-        request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
+        request.user = { id: 'user-1', role, pseudo: 'john' };
+      });
+    });
+    app.decorate('adminProtect', function (this: FastifyInstance) {
+      this.addHook('preHandler', async (request, reply) => {
+        if (request.user.role !== 'ADMIN') {
+          return reply.code(403).send({ message: 'Not authorized' });
+        }
       });
     });
 
@@ -62,8 +69,7 @@ describe('typeRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(typeServiceMocks.getAll).toHaveBeenCalledWith({
-      userIds: ['user-1', expect.any(String)],
-      isActive: undefined,
+      isActive: true,
       categoryId: undefined,
       sort: { key: 'name', order: undefined },
     });
@@ -71,7 +77,7 @@ describe('typeRoutes', () => {
   });
 
   it('POST /api/v1/types creates type for authenticated user', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(typeServiceMocks.create).mockResolvedValueOnce({ id: 'type-1' } as never);
 
     await app.ready();
@@ -88,7 +94,7 @@ describe('typeRoutes', () => {
 
     expect(res.statusCode).toBe(201);
     expect(typeServiceMocks.create).toHaveBeenCalledWith({
-      userId: 'user-1',
+      userId: expect.any(String),
       body: {
         name: 'Ore',
         categoryId: 'cat-1',
@@ -101,7 +107,7 @@ describe('typeRoutes', () => {
   });
 
   it('PATCH /api/v1/types/:id returns 403 when mutation is forbidden', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(typeServiceMocks.update).mockRejectedValueOnce(
       new Error('Forbidden mutation: only the owner can update this row')
     );

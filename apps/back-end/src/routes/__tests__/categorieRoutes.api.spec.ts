@@ -30,7 +30,7 @@ vi.mock('../../lib/services/index.js', () => ({
 }));
 
 describe('categorieRoutes', () => {
-  function buildApp() {
+  function buildApp(role: 'USER' | 'ADMIN' = 'USER') {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
@@ -39,7 +39,14 @@ describe('categorieRoutes', () => {
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
-        request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
+        request.user = { id: 'user-1', role, pseudo: 'john' };
+      });
+    });
+    app.decorate('adminProtect', function (this: FastifyInstance) {
+      this.addHook('preHandler', async (request, reply) => {
+        if (request.user.role !== 'ADMIN') {
+          return reply.code(403).send({ message: 'Not authorized' });
+        }
       });
     });
 
@@ -61,15 +68,14 @@ describe('categorieRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(categoryServiceMocks.getAll).toHaveBeenCalledWith({
-      userIds: ['user-1', expect.any(String)],
-      isActive: undefined,
+      isActive: true,
       sort: { key: 'name', order: undefined },
     });
     await app.close();
   });
 
   it('POST /api/v1/categories creates category for authenticated user', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(categoryServiceMocks.create).mockResolvedValueOnce({ id: 'cat-1' } as never);
 
     await app.ready();
@@ -81,7 +87,7 @@ describe('categorieRoutes', () => {
 
     expect(res.statusCode).toBe(201);
     expect(categoryServiceMocks.create).toHaveBeenCalledWith({
-      userId: 'user-1',
+      userId: expect.any(String),
       body: { name: 'Custom', isActive: true },
     });
     expect(res.json()).toEqual({ id: 'cat-1' });
@@ -98,13 +104,13 @@ describe('categorieRoutes', () => {
     expect(res.statusCode).toBe(404);
     expect(categoryServiceMocks.getById).toHaveBeenCalledWith({
       id: 'cat-x',
-      userIds: ['user-1', expect.any(String)],
+      userIds: [expect.any(String)],
     });
     await app.close();
   });
 
   it('PATCH /api/v1/categories/:id returns 403 when mutation is forbidden', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(categoryServiceMocks.update).mockRejectedValueOnce(
       new Error('Forbidden mutation: only the owner can update this row')
     );

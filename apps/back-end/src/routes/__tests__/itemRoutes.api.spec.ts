@@ -29,7 +29,7 @@ vi.mock('../../lib/services/index.js', () => ({
 }));
 
 describe('itemRoutes', () => {
-  function buildApp() {
+  function buildApp(role: 'USER' | 'ADMIN' = 'USER') {
     const app = Fastify({ logger: false }).withTypeProvider<ZodTypeProvider>();
     app.setValidatorCompiler(validatorCompiler);
     app.setSerializerCompiler(serializerCompiler);
@@ -37,7 +37,14 @@ describe('itemRoutes', () => {
     app.decorate('protect', function (this: FastifyInstance) {
       // eslint-disable-next-line @typescript-eslint/require-await
       this.addHook('preHandler', async (request) => {
-        request.user = { id: 'user-1', role: 'USER', pseudo: 'john' };
+        request.user = { id: 'user-1', role, pseudo: 'john' };
+      });
+    });
+    app.decorate('adminProtect', function (this: FastifyInstance) {
+      this.addHook('preHandler', async (request, reply) => {
+        if (request.user.role !== 'ADMIN') {
+          return reply.code(403).send({ message: 'Not authorized' });
+        }
       });
     });
 
@@ -59,8 +66,7 @@ describe('itemRoutes', () => {
 
     expect(res.statusCode).toBe(200);
     expect(itemServiceMocks.getAll).toHaveBeenCalledWith({
-      userIds: ['user-1', expect.any(String)],
-      isActive: undefined,
+      isActive: true,
       typeId: undefined,
       sort: { key: 'name', order: undefined },
       details: undefined,
@@ -69,7 +75,7 @@ describe('itemRoutes', () => {
   });
 
   it('POST /api/v1/items creates item for authenticated user', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(itemServiceMocks.create).mockResolvedValueOnce({ id: 'item-1' } as never);
 
     await app.ready();
@@ -88,7 +94,7 @@ describe('itemRoutes', () => {
 
     expect(res.statusCode).toBe(201);
     expect(itemServiceMocks.create).toHaveBeenCalledWith({
-      userId: 'user-1',
+      userId: expect.any(String),
       body: {
         name: 'Oil',
         imageUrlId: 'img-1',
@@ -103,7 +109,7 @@ describe('itemRoutes', () => {
   });
 
   it('PUT /api/v1/items/:id updates the item', async () => {
-    const { app } = buildApp();
+    const { app } = buildApp('ADMIN');
     vi.mocked(itemServiceMocks.update).mockResolvedValueOnce({ id: 'item-1' } as never);
 
     await app.ready();
@@ -123,7 +129,7 @@ describe('itemRoutes', () => {
     expect(res.statusCode).toBe(200);
     expect(itemServiceMocks.update).toHaveBeenCalledWith({
       id: 'item-1',
-      userId: 'user-1',
+      userId: expect.any(String),
       body: {
         name: 'Updated Item',
         imageUrlId: 'img-1',
