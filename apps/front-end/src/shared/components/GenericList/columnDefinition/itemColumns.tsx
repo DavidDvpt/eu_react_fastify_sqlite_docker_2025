@@ -1,12 +1,9 @@
-import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
 import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
 import type { ItemDto } from "@eu/types";
 import { ImageService } from "@/shared/services";
 
-const createItemColumns = (
-  currentUserId?: string,
-): GenericListColumn<ItemDto>[] => [
+const createItemColumns = (): GenericListColumn<ItemDto>[] => [
   {
     key: "image",
     label: "Image",
@@ -58,16 +55,6 @@ const createItemColumns = (
     maxWidth: 80,
     bodyCellClassName: "text-black",
     value: (row) => (row.type?.isStackable ? "Oui" : "Non"),
-  },
-  {
-    key: "scope",
-    label: "Scope",
-    kind: "text",
-    minWidth: 60,
-    maxWidth: 80,
-    bodyCellClassName: "text-black",
-    value: (row) =>
-      "userId" in row ? getScopeLabel(row.userId, currentUserId) : "System",
   },
   {
     key: "value",

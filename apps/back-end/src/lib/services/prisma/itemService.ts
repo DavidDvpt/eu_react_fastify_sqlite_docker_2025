@@ -46,13 +46,11 @@ export class ItemService {
   }
 
   async getAll({
-    userIds,
     isActive,
     typeId,
     sort,
     details,
   }: {
-    userIds?: string[];
     sort?: SortOptions<ItemSortKey>;
     typeId?: string;
     isActive?: boolean;
@@ -60,7 +58,6 @@ export class ItemService {
   }) {
     const rows = await this.prisma.item.findMany({
       where: {
-        user_id: { in: userIds },
         type_id: typeId,
         is_active: isActive,
       },
@@ -75,7 +72,7 @@ export class ItemService {
   }
   async getById({
     id,
-    userIds,
+    userIds: _userIds,
     includeLots,
     activeLotsOnly,
   }: {
@@ -85,7 +82,7 @@ export class ItemService {
     activeLotsOnly?: boolean;
   }) {
     const row = await this.prisma.item.findFirst({
-      where: { id, user_id: { in: userIds }, is_active: true },
+      where: { id, is_active: true },
       include: {
         lots: includeLots
           ? {

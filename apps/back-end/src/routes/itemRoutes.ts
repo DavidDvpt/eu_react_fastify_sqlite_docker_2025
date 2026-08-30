@@ -5,7 +5,12 @@ import {
   transactionQuerySchema,
 } from '@eu/zod-schemas';
 
-import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
+import {
+  getIdParam,
+  getRequestUserId,
+  getSystemReadableUserIds,
+  getSystemUserId,
+} from './utils.js';
 
 import type { FastifyPluginCallback } from 'fastify';
 
@@ -19,10 +24,10 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.get('/', async (request, reply) => {
     const { sortKey, sortOrder, typeId, isActive, details } = itemQuerySchema.parse(request.query);
     const is = getItemService(details);
+    const effectiveIsActive = request.user.role === 'ADMIN' ? isActive : true;
 
     const rows = await is.getAll({
-      userIds: getReadableUserIds(request),
-      isActive: isActive,
+      isActive: effectiveIsActive,
       typeId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
       details,
@@ -99,29 +104,33 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const row = await is.getById({
       id,
-      userIds: getReadableUserIds(request),
+      userIds: getSystemReadableUserIds(),
     });
 
     return reply.code(200).send(row);
   });
 
-  // Mutations
-  app.post('/', async (request, reply) => {
-    const is = getItemService();
-    const userId = getRequestUserId(request);
-    const body = itemFormSchema.parse(request.body);
-    const created = await is.create({ userId, body });
+  app.register((adminApp, _adminOpts, adminDone) => {
+    adminApp.adminProtect();
 
-    return reply.code(201).send(created);
-  });
-  app.put('/:id', async (request, reply) => {
-    const is = getItemService();
-    const { id } = getIdParam(request);
-    const body = itemFormSchema.parse(request.body);
+    adminApp.post('/', async (request, reply) => {
+      const is = getItemService();
+      const body = itemFormSchema.parse(request.body);
+      const created = await is.create({ userId: getSystemUserId(), body });
 
-    const updated = await is.update({ id, userId: request.user.id, body });
+      return reply.code(201).send(created);
+    });
+    adminApp.put('/:id', async (request, reply) => {
+      const is = getItemService();
+      const { id } = getIdParam(request);
+      const body = itemFormSchema.parse(request.body);
 
-    return reply.code(200).send(updated);
+      const updated = await is.update({ id, userId: getSystemUserId(), body });
+
+      return reply.code(200).send(updated);
+    });
+
+    adminDone();
   });
 
   done();

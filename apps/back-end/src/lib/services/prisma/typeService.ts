@@ -24,19 +24,16 @@ export class TypeService {
     return parsed;
   }
   async getAll({
-    userIds,
     sort,
     isActive,
     categoryId,
   }: {
-    userIds: string[];
     sort?: SortOptions<TypeSortKey>;
     isActive?: boolean;
     categoryId?: string;
   }) {
     const rows = await this.prisma.type.findMany({
       where: {
-        user_id: { in: userIds },
         is_active: isActive,
         category_id: categoryId,
       },
@@ -48,9 +45,9 @@ export class TypeService {
 
     return parsed;
   }
-  async getById({ id, userIds }: { id: string; userIds?: string[] }) {
+  async getById({ id, userIds: _userIds }: { id: string; userIds?: string[] }) {
     const row = await this.prisma.type.findFirst({
-      where: { id, user_id: { in: userIds }, is_active: true },
+      where: { id, is_active: true },
     });
 
     const parsed = this.parsePrismaToDto(row);
@@ -73,14 +70,21 @@ export class TypeService {
 
     return { id: row.id };
   }
-  async isTypeExists({ id, name, userIds }: { id?: string; name?: string; userIds: string[] }) {
-    if ((!id && !name) || !userIds.length) {
+  async isTypeExists({
+    id,
+    name,
+    userIds: _userIds,
+  }: {
+    id?: string;
+    name?: string;
+    userIds: string[];
+  }) {
+    if (!id && !name) {
       return false;
     }
 
     const type = await this.prisma.type.findFirst({
       where: {
-        user_id: { in: userIds },
         id,
         name: {
           equals: name,

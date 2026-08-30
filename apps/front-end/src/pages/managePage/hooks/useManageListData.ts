@@ -1,7 +1,5 @@
 import { useMemo } from "react";
 
-import { useAppSelector } from "@/store/hooks";
-
 import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
 
 import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
@@ -26,7 +24,6 @@ type ManageListDataResult = {
 function useManageListData({
   activeTab,
 }: UseManageListData): ManageListDataResult {
-  const currentUserId = useAppSelector((state) => state.auth.user.result?.id);
   const { params } = useGenericFilterParams();
 
   const {
@@ -50,11 +47,9 @@ function useManageListData({
           list: typesByCategory(params.category) as ManageListRow[],
           isPending: isTypesPending,
           isError: isTypesError,
-          columns: createTypeColumns(
-            currentUserId,
-          ) as GenericListColumn<ManageListRow>[],
+          columns: createTypeColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: "Impossible de charger les types.",
-          editRoute: (id) => `/types/${id}`,
+          editRoute: (id) => `/manage/type/${id}/edit`,
         };
       }
       case "item":
@@ -65,11 +60,9 @@ function useManageListData({
           }) as ManageListRow[],
           isPending: isItemsPending,
           isError: isItemsError,
-          columns: createItemColumns(
-            currentUserId,
-          ) as GenericListColumn<ManageListRow>[],
+          columns: createItemColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les items.`,
-          editRoute: (id) => `/items/${id}`,
+          editRoute: (id) => `/manage/item/${id}/edit`,
         };
       default:
       case "category":
@@ -77,11 +70,9 @@ function useManageListData({
           list: cat as ManageListRow[],
           isPending: isCategoriesPending,
           isError: isCategoriesError,
-          columns: createCategoryColumns(
-            currentUserId,
-          ) as GenericListColumn<ManageListRow>[],
+          columns: createCategoryColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les categories.`,
-          editRoute: (id) => `/categories/${id}`,
+          editRoute: (id) => `/manage/category/${id}/edit`,
         };
     }
   }, [
@@ -94,7 +85,6 @@ function useManageListData({
     isTypesError,
     isItemsError,
     isCategoriesError,
-    currentUserId,
     cat,
     params,
   ]);

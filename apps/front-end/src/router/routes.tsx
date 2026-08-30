@@ -51,25 +51,25 @@ const routes = [
               { path: "inventory/:itemId", element: <InventoryPage /> },
               { path: "inventory/:itemId/:action", element: <InventoryPage /> },
               {
-                element: <LeftMenuLayout />,
-                children: [
-                  {
-                    path: "manage",
-                    children: [
-                      {
-                        index: true,
-                        element: <Navigate to="/manage/category" replace />,
-                      },
-                      { path: ":tab", element: <ManagePage /> },
-                      { path: ":tab/create", element: <ManagePage /> },
-                      { path: ":tab/:id/edit", element: <ManagePage /> },
-                    ],
-                  },
-                ],
-              },
-              {
                 element: <AdminGuard />,
                 children: [
+                  {
+                    element: <LeftMenuLayout />,
+                    children: [
+                      {
+                        path: "manage",
+                        children: [
+                          {
+                            index: true,
+                            element: <Navigate to="/manage/category" replace />,
+                          },
+                          { path: ":tab", element: <ManagePage /> },
+                          { path: ":tab/create", element: <ManagePage /> },
+                          { path: ":tab/:id/edit", element: <ManagePage /> },
+                        ],
+                      },
+                    ],
+                  },
                   {
                     path: "nexus-dashboard",
                     element: <NexusPage />,

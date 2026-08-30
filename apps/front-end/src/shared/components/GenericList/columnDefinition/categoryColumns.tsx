@@ -1,10 +1,7 @@
-import { getScopeLabel } from "@/shared/components/GenericList/columnDefinition/scopeLabel";
 import type { GenericListColumn } from "@/shared/types";
 import type { CategoryDto } from "@eu/types";
 
-const createCategoryColumns = (
-  currentUserId?: string,
-): GenericListColumn<CategoryDto>[] => [
+const createCategoryColumns = (): GenericListColumn<CategoryDto>[] => [
   {
     key: "name",
     label: "Nom",
@@ -13,15 +10,6 @@ const createCategoryColumns = (
     fillRemainingSpace: true,
     minWidth: 240,
     bodyCellClassName: "text-black",
-  },
-  {
-    key: "scope",
-    label: "Scope",
-    minWidth: 140,
-    maxWidth: 140,
-    bodyCellClassName: "text-black",
-    kind: "text",
-    value: (category) => getScopeLabel(category.userId, currentUserId),
   },
 ];
 

@@ -6,7 +6,7 @@ import type { FastifyPluginCallback } from 'fastify';
 import prismaClient from '#prisma/prismaClient.js';
 import { env } from '#src/config/env.js';
 import { TypeService } from '#src/lib/services/index.js';
-import { getReadableUserIds } from '#src/routes/utils.js';
+import { getSystemReadableUserIds } from '#src/routes/utils.js';
 const NEXUS_URL = env.NEXUS_API_URL;
 
 const authaurizedTypes = ['finders', 'excavators', 'refiners'];
@@ -16,7 +16,6 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/:type', async (request, reply) => {
     const { type } = nexusParamsSchema.parse(request.params);
-    const userIds = getReadableUserIds(request);
 
     if (!NEXUS_URL || !type) {
       return reply.code(200).send([]);
@@ -24,7 +23,7 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const ts = new TypeService(prismaClient);
 
-    const typeExists = await ts.isTypeExists({ name: type, userIds: userIds });
+    const typeExists = await ts.isTypeExists({ name: type, userIds: getSystemReadableUserIds() });
 
     if (!typeExists) {
       reply.code(422).send({ message: "the type doesn't exists" });
@@ -36,7 +35,7 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const url = `${NEXUS_URL}/${type}`;
 
-    const response = await axios.get(url, {});
+    await axios.get(url, {});
 
     return reply.code(200).send({ message: 'end' });
   });

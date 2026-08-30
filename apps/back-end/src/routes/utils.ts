@@ -11,10 +11,12 @@ export function getRequestUserId(request: FastifyRequest): string {
   return idSchema.parse(request.user).id;
 }
 
-export function getReadableUserIds(request: FastifyRequest): string[] {
-  const userId = getRequestUserId(request);
+export function getSystemReadableUserIds(): string[] {
+  return [env.SYSTEM_USER_ID].filter(Boolean);
+}
 
-  return [...new Set([userId, env.SYSTEM_USER_ID].filter(Boolean))];
+export function getSystemUserId(): string {
+  return env.SYSTEM_USER_ID;
 }
 
 export function getIdParam(request: FastifyRequest): { id: string } {

@@ -20,18 +20,10 @@ export class CategoryService {
     return parsed;
   }
 
-  async getAll({
-    userIds,
-    sort,
-    isActive,
-  }: {
-    userIds?: string[];
-    sort?: SortOptions<CategorySortKey>;
-    isActive?: boolean;
-  }) {
+  async getAll({ sort, isActive }: { sort?: SortOptions<CategorySortKey>; isActive?: boolean }) {
     const sortKey = sort?.key ?? 'name';
     const rows = await this.prisma.category.findMany({
-      where: { user_id: { in: userIds }, is_active: isActive },
+      where: { is_active: isActive },
     });
     const parsed = rows.map((m) => this.parser(m));
 
@@ -39,9 +31,9 @@ export class CategoryService {
 
     return parsed;
   }
-  async getById({ id, userIds }: { id: string; userIds?: string[] }) {
+  async getById({ id, userIds: _userIds }: { id: string; userIds?: string[] }) {
     const category = await this.prisma.category.findFirst({
-      where: { id, user_id: { in: userIds }, is_active: true },
+      where: { id, is_active: true },
     });
 
     if (!category) return null;

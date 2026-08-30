@@ -1,6 +1,6 @@
 import { typeFormSchema, typeQuerySchema } from '@eu/zod-schemas';
 
-import { getIdParam, getReadableUserIds, getRequestUserId } from './utils.js';
+import { getIdParam, getSystemReadableUserIds, getSystemUserId } from './utils.js';
 
 import type { TypeFormBody } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
@@ -16,10 +16,10 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
   app.get('/', async (request, reply) => {
     const { sortKey, sortOrder, categoryId, isActive } = typeQuerySchema.parse(request.query);
+    const effectiveIsActive = request.user.role === 'ADMIN' ? isActive : true;
 
     const rows = await ts.getAll({
-      userIds: getReadableUserIds(request),
-      isActive: isActive,
+      isActive: effectiveIsActive,
       categoryId: categoryId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
     });
@@ -31,7 +31,7 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const row = await ts.getById({
       id,
-      userIds: getReadableUserIds(request),
+      userIds: getSystemReadableUserIds(),
     });
 
     if (!row) return reply.code(404).send({ message: 'Type not found' });
@@ -44,7 +44,6 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const is = new ItemService(prismaClient);
     const rows = await is.getAll({
-      userIds: getReadableUserIds(request),
       typeId: id,
       isActive: true,
     });
@@ -52,28 +51,31 @@ const typeRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(rows);
   });
 
-  app.post('/', async (request, reply) => {
-    const userId = getRequestUserId(request);
+  app.register((adminApp, _adminOpts, adminDone) => {
+    adminApp.adminProtect();
 
-    const body: TypeFormBody = typeFormSchema.parse(request.body);
-    const created = await ts.create({ userId, body });
-    return reply.code(201).send({ id: created.id });
-  });
+    adminApp.post('/', async (request, reply) => {
+      const body: TypeFormBody = typeFormSchema.parse(request.body);
+      const created = await ts.create({ userId: getSystemUserId(), body });
+      return reply.code(201).send({ id: created.id });
+    });
 
-  app.patch('/:id', async (request, reply) => {
-    try {
-      const { id } = getIdParam(request);
-      const userId = getRequestUserId(request);
+    adminApp.patch('/:id', async (request, reply) => {
+      try {
+        const { id } = getIdParam(request);
 
-      const body: Partial<TypeFormBody> = typeFormSchema.partial().parse(request.body);
-      const updated = await ts.update({ id, body, userId });
-      return reply.code(200).send(updated);
-    } catch (error) {
-      if (error instanceof Error && error.message.includes('Forbidden mutation')) {
-        return reply.code(403).send({ message: 'Forbidden' });
+        const body: Partial<TypeFormBody> = typeFormSchema.partial().parse(request.body);
+        const updated = await ts.update({ id, body, userId: getSystemUserId() });
+        return reply.code(200).send(updated);
+      } catch (error) {
+        if (error instanceof Error && error.message.includes('Forbidden mutation')) {
+          return reply.code(403).send({ message: 'Forbidden' });
+        }
+        throw error;
       }
-      throw error;
-    }
+    });
+
+    adminDone();
   });
 
   done();
