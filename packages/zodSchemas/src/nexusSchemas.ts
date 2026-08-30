@@ -12,6 +12,7 @@ export const nexusQuerySchema = z.object({
 export const nexusDtoSchema = z.object({
   id: z.string(),
   name: z.string(),
+  nexusName: z.string().optional(),
   itemCount: z.coerce.number().int().default(0),
   imageMissingCount: z.coerce.number().int().default(0),
   changeCount: z.coerce.number().int().default(0),

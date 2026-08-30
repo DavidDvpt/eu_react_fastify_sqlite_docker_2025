@@ -1,5 +1,6 @@
 import { nexusDtoSchema } from '@eu/zod-schemas';
 
+import type { NexusUpdate } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusUpdateWithTypeName } from '#src/types/prismaApi/nexus.js';
 import type { NexusUpdateDto } from '@eu/types';
@@ -7,9 +8,10 @@ import type { NexusUpdateDto } from '@eu/types';
 export class NexusService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  private parserToPrisma(value: NexusUpdateDto) {
+  private parserToPrisma(value: NexusUpdateDto): NexusUpdate {
     return {
       id: value.id,
+      nexus_name: value.nexusName ?? value.name,
       item_count: value.itemCount,
       image_missing_count: value.imageMissingCount,
       change_count: value.changeCount,
