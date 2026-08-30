@@ -14,8 +14,17 @@ const nexusColumns: GenericListColumn<NexusUpdateDto>[] = [
   },
   {
     key: "nexusName",
-    label: "NexusType",
+    label: "NexusSubType",
     accessor: "nexusName",
+    kind: "text",
+    fillRemainingSpace: true,
+    headerCellClassName: "px-3",
+    bodyCellClassName: "px-3 font-medium text-table-head-text",
+  },
+  {
+    key: "requestType",
+    label: "Type",
+    accessor: "nexusRequestType",
     kind: "text",
     fillRemainingSpace: true,
     headerCellClassName: "px-3",

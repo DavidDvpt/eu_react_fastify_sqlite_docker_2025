@@ -1,4 +1,4 @@
-import { nexusParamsSchema } from '@eu/zod-schemas';
+import { nexusParamsSchema, nexusUpdateParamSchema } from '@eu/zod-schemas';
 import axios from 'axios';
 
 import type { NexusUpdateDto } from '@eu/types';
@@ -60,6 +60,10 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const init = await ns.createMany({ values: nexusArray });
 
     return reply.code(201).send(init.count);
+  });
+
+  app.post('/update/:type', async (request, reply) => {
+    const { type } = nexusUpdateParamSchema.parse(request.body);
   });
 
   app.get('/:type', async (request, reply) => {

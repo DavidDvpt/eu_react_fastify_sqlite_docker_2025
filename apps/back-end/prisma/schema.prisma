@@ -261,6 +261,7 @@ model Lot {
 
 model NexusUpdate {
   id                  String  @id @unique
+  nexus_request_type  String?
   nexus_name          String?
   item_count          Int     @default(0)
   image_missing_count Int     @default(0)

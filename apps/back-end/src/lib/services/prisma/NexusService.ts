@@ -11,6 +11,7 @@ export class NexusService {
   private parserToPrisma(value: NexusUpdateDto): NexusUpdate {
     return {
       id: value.id,
+      nexus_request_type: value.nexusRequestType,
       nexus_name: value.nexusName ?? value.name,
       item_count: value.itemCount,
       image_missing_count: value.imageMissingCount,
@@ -25,6 +26,7 @@ export class NexusService {
     return nexusDtoSchema.parse({
       id: row.id,
       name: row.type.name,
+      nexusRequestType: row.nexus_request_type,
       nexusName: row.type.name,
       itemCount: row.item_count,
       imageMissingCount: row.image_missing_count,

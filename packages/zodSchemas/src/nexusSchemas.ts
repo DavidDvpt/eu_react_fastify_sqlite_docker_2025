@@ -1,6 +1,12 @@
 import z from "zod";
 import { booleanSchema } from "./common.js";
 
+export const nexusUpdateType = z.enum([
+  "Materials",
+  "Finders",
+  "Excavators",
+  "Refiners",
+]);
 export const nexusParamsSchema = z.object({
   type: z.string().optional(),
 });
@@ -12,6 +18,7 @@ export const nexusQuerySchema = z.object({
 export const nexusDtoSchema = z.object({
   id: z.string(),
   name: z.string(),
+  nexusRequestType: z.string().nullable().default(null),
   nexusName: z.string().optional(),
   itemCount: z.coerce.number().int().default(0),
   imageMissingCount: z.coerce.number().int().default(0),
@@ -19,4 +26,8 @@ export const nexusDtoSchema = z.object({
   createdAt: z.string(),
   insertedAt: z.string().nullable().default(null),
   updatedAt: z.string().nullable().default(null),
+});
+
+export const nexusUpdateParamSchema = z.object({
+  type: nexusUpdateType,
 });
