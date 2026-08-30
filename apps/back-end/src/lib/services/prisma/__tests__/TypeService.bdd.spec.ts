@@ -79,7 +79,7 @@ describe('TypeService', () => {
     expect(found?.name).toBe('Updated Type');
   });
 
-  it('lists parsed types for the current user', async () => {
+  it('lists parsed types', async () => {
     const prisma = {
       type: {
         findMany: vi.fn().mockResolvedValue([
@@ -108,11 +108,10 @@ describe('TypeService', () => {
     };
     const service = new TypeService(prisma as any);
 
-    const all = await service.getAll({ userIds: ['user-1'] });
+    const all = await service.getAll({});
 
     expect(prisma.type.findMany).toHaveBeenCalledWith({
       where: {
-        user_id: { in: ['user-1'] },
         is_active: undefined,
         category_id: undefined,
       },

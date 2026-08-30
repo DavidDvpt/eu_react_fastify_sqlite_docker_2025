@@ -66,7 +66,7 @@ describe('CategoryService', () => {
     expect(found?.name).toBe('Updated Category');
   });
 
-  it('lists parsed categories for the current user', async () => {
+  it('lists parsed categories', async () => {
     const prisma = {
       category: {
         findMany: vi.fn().mockResolvedValue([
@@ -91,10 +91,10 @@ describe('CategoryService', () => {
     };
     const service = new CategoryService(prisma as any);
 
-    const all = await service.getAll({ userIds: ['user-1'] });
+    const all = await service.getAll({});
 
     expect(prisma.category.findMany).toHaveBeenCalledWith({
-      where: { user_id: { in: ['user-1'] }, is_active: undefined },
+      where: { is_active: undefined },
     });
     expect(all.map((category) => category.name)).toEqual(['Alpha', 'Zeta']);
     expect(all.every((category) => category.userId === 'user-1')).toBe(true);

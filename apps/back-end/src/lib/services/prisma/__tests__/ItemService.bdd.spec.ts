@@ -18,6 +18,12 @@ describe('ItemService', () => {
       date_updated: null,
       type_id: 'type-1',
       value: 1.23,
+      nexus_id: null,
+      description: null,
+      weight: null,
+      decay: null,
+      is_untradeable: null,
+      is_rare: null,
     };
     const prisma = {
       item: {
@@ -52,6 +58,12 @@ describe('ItemService', () => {
       updatedAt: null,
       typeId: 'type-1',
       value: 1.23,
+      nexusId: null,
+      description: null,
+      weight: null,
+      decay: null,
+      isUntradeable: null,
+      isRare: null,
     });
   });
 
@@ -86,7 +98,7 @@ describe('ItemService', () => {
     expect(found?.name).toBe('Updated Item');
   });
 
-  it('lists parsed items for the current user', async () => {
+  it('lists parsed items', async () => {
     const prisma = {
       item: {
         findMany: vi.fn().mockResolvedValue([
@@ -101,6 +113,12 @@ describe('ItemService', () => {
             date_updated: null,
             type_id: 'type-1',
             value: 2.34,
+            nexus_id: null,
+            description: null,
+            weight: null,
+            decay: null,
+            is_untradeable: null,
+            is_rare: null,
           },
           {
             id: 'item-1',
@@ -113,20 +131,22 @@ describe('ItemService', () => {
             date_updated: null,
             type_id: 'type-1',
             value: 1.23,
+            nexus_id: null,
+            description: null,
+            weight: null,
+            decay: null,
+            is_untradeable: null,
+            is_rare: null,
           },
         ]),
       },
     };
     const service = new ItemService(prisma as any);
 
-    const all = await service.getAll({
-      userIds: ['user-1'],
-      sort: { key: 'name', order: 'asc' },
-    });
+    const all = await service.getAll({ sort: { key: 'name', order: 'asc' } });
 
     expect(prisma.item.findMany).toHaveBeenCalledWith({
       where: {
-        user_id: { in: ['user-1'] },
         type_id: undefined,
         is_active: undefined,
       },
