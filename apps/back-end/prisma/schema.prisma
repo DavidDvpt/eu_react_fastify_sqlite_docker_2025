@@ -263,7 +263,6 @@ model NexusUpdate {
   id                  String  @id @unique
   item_count          Int     @default(0)
   image_missing_count Int     @default(0)
-  detail_missing      Boolean @default(false)
   change_count        Int     @default(0)
   created_at          String
   inserted_at         String?

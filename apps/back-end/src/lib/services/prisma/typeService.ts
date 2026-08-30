@@ -23,6 +23,13 @@ export class TypeService {
 
     return parsed;
   }
+
+  async count() {
+    const result = await this.prisma.type.aggregate({ _count: true });
+
+    return { count: result._count };
+  }
+
   async getAll({
     sort,
     isActive,
@@ -31,7 +38,7 @@ export class TypeService {
     sort?: SortOptions<TypeSortKey>;
     isActive?: boolean;
     categoryId?: string;
-  }) {
+  } = {}) {
     const rows = await this.prisma.type.findMany({
       where: {
         is_active: isActive,

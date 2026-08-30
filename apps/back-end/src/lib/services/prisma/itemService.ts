@@ -55,7 +55,7 @@ export class ItemService {
     typeId?: string;
     isActive?: boolean;
     details?: ItemDetailEnum;
-  }) {
+  } = {}) {
     const rows = await this.prisma.item.findMany({
       where: {
         type_id: typeId,
@@ -96,6 +96,27 @@ export class ItemService {
     return parsed;
   }
 
+  async groupByType({ noImage }: { noImage?: boolean } = {}) {
+    try {
+      const result = await this.prisma.item.groupBy({
+        by: ['type_id'],
+        _count: { _all: true },
+        where: noImage ? { image_url_id: '' } : undefined,
+      });
+
+      const groups: Record<string, number> = {};
+      result.forEach((e) => {
+        const key = e.type_id;
+        const count = e._count._all;
+
+        groups[key] = count;
+      });
+
+      return groups;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   async getLots({
     userId,
     itemId,

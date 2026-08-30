@@ -15,7 +15,6 @@ export const nexusDtoSchema = z.object({
   itemCount: z.coerce.number().int().default(0),
   imageMissingCount: z.coerce.number().int().default(0),
   changeCount: z.coerce.number().int().default(0),
-  detailMissing: booleanSchema,
   createdAt: z.string(),
   insertedAt: z.string().nullable().default(null),
   updatedAt: z.string().nullable().default(null),

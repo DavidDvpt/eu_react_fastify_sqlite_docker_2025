@@ -7,20 +7,36 @@ import type { NexusUpdateDto } from '@eu/types';
 export class NexusService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  private parser(row: NexusUpdateWithTypeName): NexusUpdateDto {
+  private parserToPrisma(value: NexusUpdateDto) {
+    return {
+      id: value.id,
+      item_count: value.itemCount,
+      image_missing_count: value.imageMissingCount,
+      change_count: value.changeCount,
+      created_at: value.createdAt,
+      inserted_at: value.insertedAt,
+      updated_at: value.updatedAt,
+    };
+  }
+
+  private parserToDto(row: NexusUpdateWithTypeName): NexusUpdateDto {
     return nexusDtoSchema.parse({
       id: row.id,
       name: row.type.name,
       itemCount: row.item_count,
       imageMissingCount: row.image_missing_count,
       changeCount: row.change_count,
-      detailMissing: row.detail_missing,
       createdAt: row.created_at,
       insertedAt: row.inserted_at,
       updatedAt: row.updated_at,
     });
   }
 
+  async count() {
+    const result = await this.prisma.nexusUpdate.aggregate({ _count: true });
+
+    return { count: result._count };
+  }
   async getAll() {
     const rows = await this.prisma.nexusUpdate.findMany({
       include: {
@@ -32,8 +48,14 @@ export class NexusService {
       },
     });
 
-    const parsed = rows.map((row) => this.parser(row));
+    const parsed = rows.map((row) => this.parserToDto(row));
 
     return parsed;
+  }
+
+  async createMany({ values }: { values: NexusUpdateDto[] }) {
+    const data = values.map((value) => this.parserToPrisma(value));
+
+    return this.prisma.nexusUpdate.createMany({ data });
   }
 }

@@ -1,11 +1,13 @@
 import { nexusParamsSchema } from '@eu/zod-schemas';
 import axios from 'axios';
 
+import type { NexusUpdate } from '#prisma/generated/client.js';
+import type { NexusUpdateDto } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
 import { env } from '#src/config/env.js';
-import { TypeService } from '#src/lib/services/index.js';
+import { ItemService, TypeService } from '#src/lib/services/index.js';
 import { NexusService } from '#src/lib/services/prisma/NexusService.js';
 import { getSystemReadableUserIds } from '#src/routes/utils.js';
 
@@ -22,6 +24,42 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const response = await ns.getAll();
 
     return reply.code(200).send(response);
+  });
+
+  app.get('/init', async (request, reply) => {
+    const ns = new NexusService(prismaClient);
+    const ts = new TypeService(prismaClient);
+    const is = new ItemService(prismaClient);
+
+    const countNexus = await ns.count();
+    const countType = await ts.count();
+
+    if (countNexus.count > 0) {
+      return reply.code(200).send('Table initialized');
+    }
+
+    if (countType.count === 0) {
+      return reply.code(200).send('No type to add');
+    }
+
+    const itemCountByType = (await is.groupByType()) ?? {};
+    const itemWithoutImageCountByType = (await is.groupByType({ noImage: true })) ?? {};
+    const types = await ts.getAll();
+
+    const nexusArray: NexusUpdateDto[] = types.map((m) => ({
+      id: m.id,
+      name: m.name,
+      itemCount: itemCountByType[m.id] ?? 0,
+      imageMissingCount: itemWithoutImageCountByType[m.id] ?? 0,
+      changeCount: 0,
+      createdAt: new Date().toISOString(),
+      insertedAt: null,
+      updatedAt: null,
+    }));
+
+    const init = await ns.createMany({ values: nexusArray });
+
+    return reply.code(200).send(init);
   });
 
   app.get('/:type', async (request, reply) => {
