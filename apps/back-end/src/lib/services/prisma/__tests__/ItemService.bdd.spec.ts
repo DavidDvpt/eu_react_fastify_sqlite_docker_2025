@@ -64,6 +64,8 @@ describe('ItemService', () => {
       decay: null,
       isUntradeable: null,
       isRare: null,
+      type: null,
+      category: null,
     });
   });
 
