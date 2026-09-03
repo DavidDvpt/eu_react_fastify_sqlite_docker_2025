@@ -14,6 +14,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(8020),
   DATABASE_URL: z.string().min(1, 'DATABASE_URL is required'),
+  IMAGE_DATABASE_URL: z.string().min(1).optional(),
   CORS_ORIGIN: z.string().default(''),
   JWT_ACCESS_SECRET: z.string().min(1, 'JWT_ACCESS_SECRET is required'),
   JWT_ACCESS_EXPIRES_IN: z.string().default('24h'),
@@ -49,6 +50,7 @@ if (!parsedEnv.success) {
 }
 
 const flatEnv = parsedEnv.data;
+const imageDatabaseUrl = flatEnv.IMAGE_DATABASE_URL ?? process.env.PY_IMAGE_DATABASE_URL;
 
 const shouldRequireDevSeedUsers =
   flatEnv.SEED_INCLUDE_DEV_DATA || flatEnv.NODE_ENV !== 'production';
@@ -69,6 +71,7 @@ if (shouldRequireDevSeedUsers) {
 
 export const env = {
   ...flatEnv,
+  IMAGE_DATABASE_URL: imageDatabaseUrl,
   SYSTEM_USER: {
     id: flatEnv.SYSTEM_USER_ID,
     pseudo: flatEnv.SYSTEM_USER_PSEUDO,

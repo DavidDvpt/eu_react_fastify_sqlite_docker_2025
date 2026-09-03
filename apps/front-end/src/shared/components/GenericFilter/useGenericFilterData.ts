@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
 import { useSystemDatas } from "@/shared/hooks";
+import type { GenericFilterValues } from "@/shared/types";
 
 /**
  * Hook de gestion des données filtrées.
@@ -11,7 +12,7 @@ import { useSystemDatas } from "@/shared/hooks";
 export const useGenericFilterData = ({
   params,
 }: {
-  params: { category?: string; type?: string };
+  params: GenericFilterValues;
 }) => {
   const {
     categories,
@@ -25,12 +26,12 @@ export const useGenericFilterData = ({
   }, [categories.data]);
 
   const typesForSelect = useMemo(() => {
-    return selectOptionsHelper(typesByCategory(params.category));
-  }, [params.category, typesByCategory]);
+    return selectOptionsHelper(typesByCategory(params.categoryId));
+  }, [params.categoryId, typesByCategory]);
 
   const itemsForSelect = useMemo(() => {
     return selectOptionsHelper(
-      filteredItems({ categoryId: params.category, typeId: params.type }),
+      filteredItems({ categoryId: params.categoryId, typeId: params.typeId }),
     );
   }, [filteredItems, params]);
 

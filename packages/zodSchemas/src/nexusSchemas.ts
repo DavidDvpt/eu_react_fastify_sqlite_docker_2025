@@ -1,7 +1,7 @@
 import z from "zod";
 import { booleanSchema } from "./common.js";
 
-export const nexusUpdateType = z.enum([
+export const nexusRequestTypeSchema = z.enum([
   "Materials",
   "Finders",
   "Excavators",
@@ -17,7 +17,8 @@ export const nexusQuerySchema = z.object({
 
 export const nexusDtoSchema = z.object({
   id: z.string(),
-  name: z.string(),
+  appTypeName: z.string(),
+  appTypeId: z.string(),
   nexusRequestType: z.string().nullable().default(null),
   nexusName: z.string().optional(),
   itemCount: z.coerce.number().int().default(0),
@@ -29,11 +30,11 @@ export const nexusDtoSchema = z.object({
 });
 
 export const nexusFormSchema = z.object({
-  name: z.string().min(1),
+  appTypeName: z.string().min(1),
   nexusName: z.string(),
   nexusRequestType: z.string(),
 });
 
 export const nexusUpdateParamSchema = z.object({
-  type: nexusUpdateType,
+  type: nexusRequestTypeSchema,
 });

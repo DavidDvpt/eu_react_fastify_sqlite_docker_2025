@@ -14,7 +14,7 @@ vi.mock("@/shared/hooks", async (importOriginal) => {
       nexusRows: [
         {
           id: "1",
-          name: "Finders",
+          appTypeName: "Finders",
           nexusName: "Finder Alpha",
           nexusRequestType: "finders",
           itemCount: 12,

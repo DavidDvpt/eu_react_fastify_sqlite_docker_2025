@@ -1,4 +1,4 @@
-import type { GenericListColumn } from "../../types/genericListColumnType";
+import type { GenericListColumn } from "./columnDefinition/genericListColumnType";
 
 function toCssSize(value?: string | number): string | undefined {
   if (value === undefined || value === null) return undefined;

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import type { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 function attachPrivateRequestInterceptor(request: AxiosInstance) {
@@ -10,8 +9,7 @@ function attachPrivateRequestInterceptor(request: AxiosInstance) {
   );
 }
 
-// eslint-disable-next-line @typescript-eslint/no-empty-object-type
-function responseResult(res: AxiosResponse<any, any, {}>) {
+function responseResult<T>(res: AxiosResponse<T>) {
   return res;
 }
 

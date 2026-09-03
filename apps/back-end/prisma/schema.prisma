@@ -186,7 +186,7 @@ model Item {
   date_updated   String?
   is_active      Boolean  @default(true)
   name           String   @unique
-  nexus_id       String?
+  nexus_id       Int?
   description    String?
   weight         Decimal?
   decay          Decimal?

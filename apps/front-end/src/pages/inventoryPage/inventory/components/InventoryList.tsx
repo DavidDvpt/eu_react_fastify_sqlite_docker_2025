@@ -1,36 +1,31 @@
 import { useMemo } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import { GenericList } from "@/shared/components";
 
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { GenericListViewMode } from "@/shared/types/genericListTypes";
+import type { GenericListViewMode } from "@/shared/components/GenericList/genericListTypes";
 import type { ItemWithStock } from "@/shared/types";
 
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
 import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
+import type { InventoryPageQuery } from "@/pages/inventoryPage/inventoryPageSchema";
 
-const VIEW_MODE_PARAM_KEY = "viewMode";
-
-type InventoryListProps = {
+interface InventoryListProps extends InventoryPageQuery {
   className?: string;
-  categoryId?: string;
-  typeId?: string;
-};
+  onSelectedItem: (itemId: string) => void;
+}
 
-function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
-
+function InventoryList({
+  className,
+  categoryId,
+  typeId,
+  showAllItems,
+  urlViewMode,
+  onSelectedItem,
+}: InventoryListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
     useInventoryStockData({});
-
-  const searchParams = useMemo(
-    () => new URLSearchParams(location.search),
-    [location.search],
-  );
-  const showAllItems = searchParams.has("showAllItems");
-
+  console.log(typeId);
   const visibleStock = useMemo(
     () =>
       inventoryStock
@@ -49,17 +44,6 @@ function InventoryList({ className, categoryId, typeId }: InventoryListProps) {
       return n;
     }, 0);
   }, [visibleStock]);
-
-  const onSelectedItem = (itemId: string) => {
-    const path = `/inventory/${itemId}`;
-
-    navigate({
-      pathname: path,
-      search: location.search,
-    });
-  };
-
-  const urlViewMode = searchParams.get(VIEW_MODE_PARAM_KEY);
 
   return (
     <GenericList<ItemWithStock>

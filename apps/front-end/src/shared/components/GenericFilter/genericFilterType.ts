@@ -1,4 +1,6 @@
+import type { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
 import type { ItemDto } from "@eu/types";
+import type z from "zod";
 
 export type GenericFilterAvailability = {
   isPending: boolean;
@@ -6,11 +8,7 @@ export type GenericFilterAvailability = {
   count: number;
 };
 
-export type SelectedFilterValues = {
-  category?: string;
-  type?: string;
-  item?: string;
-};
+export type GenericFilterValues = z.infer<typeof genericFilterSchema>;
 
 export interface DisplayedFields {
   category: boolean;
@@ -28,4 +26,4 @@ export interface GenericFilterProps {
   onSelectedType?: (type: string) => void;
 }
 
-export type FilterKeys = keyof SelectedFilterValues | "reset";
+export type FilterKeys = keyof GenericFilterValues | "reset";

@@ -1,18 +1,14 @@
-import { idSchema, nexusFormSchema, nexusParamsSchema } from '@eu/zod-schemas';
-import axios from 'axios';
+import { idSchema, nexusFormSchema, nexusUpdateParamSchema } from '@eu/zod-schemas';
 
 import type { NexusFormBody, NexusUpdateDto } from '@eu/types';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';
-import { env } from '#src/config/env.js';
 import { ItemService, TypeService } from '#src/lib/services/index.js';
 import { NexusService } from '#src/lib/services/prisma/NexusService.js';
-import { getSystemReadableUserIds } from '#src/routes/utils.js';
+import { WikiDataToPrismaImportService } from '#src/lib/services/WikiDataToPrismaImportService.js';
+import { getRequestUserId } from '#src/routes/utils.js';
 
-const NEXUS_URL = env.NEXUS_API_URL;
-
-const authaurizedTypes = ['finders', 'excavators', 'refiners'];
 const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
   const ns = new NexusService(prismaClient);
 
@@ -46,8 +42,10 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     const nexusArray: NexusUpdateDto[] = types.map((m) => ({
       id: m.id,
-      name: m.name,
+      appTypeName: m.name,
+      appTypeId: m.id,
       nexusName: m.name,
+      nexusRequestType: null,
       itemCount: itemCountByType[m.id] ?? 0,
       imageMissingCount: itemWithoutImageCountByType[m.id] ?? 0,
       changeCount: 0,
@@ -61,38 +59,22 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(201).send(init.count);
   });
 
+  app.post('/update-base', async (request, reply) => {
+    const userId = getRequestUserId(request);
+    const { type } = nexusUpdateParamSchema.parse(request.body);
+    const ns = new WikiDataToPrismaImportService(prismaClient);
+
+    const count = await ns.importDatasFromNexus({ requestType: type, userId });
+
+    return reply.code(201).send({ count });
+  });
+
   app.patch('/:id', async (request, reply) => {
     const { id } = idSchema.parse(request.params);
     const body: NexusFormBody = nexusFormSchema.parse(request.body);
     const updated = await ns.update({ id, body });
 
     return reply.code(200).send(updated);
-  });
-
-  app.get('/:type', async (request, reply) => {
-    const { type } = nexusParamsSchema.parse(request.params);
-
-    if (!NEXUS_URL || !type) {
-      return reply.code(200).send([]);
-    }
-
-    const ts = new TypeService(prismaClient);
-
-    const typeExists = await ts.isTypeExists({ name: type, userIds: getSystemReadableUserIds() });
-
-    if (!typeExists) {
-      reply.code(422).send({ message: "the type doesn't exists" });
-    }
-
-    if (!authaurizedTypes.includes(type.toLocaleLowerCase())) {
-      reply.code(422).send({ message: 'this type not allowed' });
-    }
-
-    const url = `${NEXUS_URL}/${type}`;
-
-    await axios.get(url, {});
-
-    return reply.code(200).send({ message: 'end' });
   });
 
   done();

@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListFooterProps } from "../../types/genericListTypes";
+import type { GenericListFooterProps } from "./genericListTypes";
 
 function GenericListFooter({
   visible = true,

@@ -1,14 +1,16 @@
 import { SortHelper } from '@eu/helpers';
+import { itemDtoSchema } from '@eu/zod-schemas';
 
-import type { Item } from '#prisma/generated/client.js';
-import type { RootDatabaseClient } from '#prisma/prismaClient.js';
+import type { Item, Prisma } from '#prisma/generated/client.js';
+import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   ItemFormBody,
   ItemDto,
   SortOptions,
-  ItemSortKey,
+  ItemSortKeys,
   LotSortKey,
   ItemDetailEnum,
+  ItemFormBodyWithId,
 } from '@eu/types';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';
@@ -18,12 +20,12 @@ const NEGATIVE_STOCK_ERROR = (itemId: string) =>
   `Invariant violated: negative stock for item ${itemId}`;
 
 export class ItemService {
-  constructor(protected readonly prisma: RootDatabaseClient) {}
+  constructor(protected readonly prisma: DatabaseClient) {}
 
-  parser(row: Item | null) {
+  protected parsedToDto(row: Item | null): ItemDto | null {
     if (!row) return null;
 
-    const parsed: ItemDto = {
+    const parsed = {
       id: row.id,
       name: row.name,
       imageUrlId: row.image_url_id,
@@ -42,7 +44,55 @@ export class ItemService {
       nexusId: row.nexus_id ?? null,
     };
 
-    return parsed;
+    const validated = itemDtoSchema.parse(parsed);
+
+    return validated;
+  }
+
+  private parserToPrisma({
+    body,
+    userId,
+  }: {
+    body: ItemFormBody;
+    userId: string;
+  }): Prisma.ItemUncheckedCreateInput {
+    return {
+      name: body.name,
+      image_url_id: body.imageUrlId ?? '',
+      value: body.value,
+      is_limited: body.isLimited ?? false,
+      type_id: body.typeId,
+      is_active: body.isActive ?? true,
+      nexus_id: body.nexusId,
+      description: body.description,
+      weight: body.weight,
+      decay: body.decay,
+      is_untradeable: body.isUntradeable,
+      is_rare: body.isRare,
+      date_created: new Date().toISOString(),
+      date_updated: null,
+      user_id: userId,
+    };
+  }
+
+  private parserToPrismaUpdate(body: Partial<ItemFormBody>): Prisma.ItemUncheckedUpdateInput {
+    const isLimited =
+      body.isLimited === null || body.isLimited === undefined ? undefined : body.isLimited;
+    return {
+      name: body.name,
+      image_url_id: body.imageUrlId ?? undefined,
+      value: body.value,
+      is_limited: isLimited,
+      type_id: body.typeId,
+      is_active: body.isActive,
+      nexus_id: body.nexusId,
+      description: body.description,
+      weight: body.weight,
+      decay: body.decay,
+      is_untradeable: body.isUntradeable,
+      is_rare: body.isRare,
+      date_updated: new Date().toISOString(),
+    };
   }
 
   async getAll({
@@ -51,7 +101,7 @@ export class ItemService {
     sort,
     details,
   }: {
-    sort?: SortOptions<ItemSortKey>;
+    sort?: SortOptions<ItemSortKeys>;
     typeId?: string;
     isActive?: boolean;
     details?: ItemDetailEnum;
@@ -64,7 +114,7 @@ export class ItemService {
       include: details ? { [details]: true } : undefined,
     });
 
-    const parsed = rows.map((m) => this.parser(m)).filter((f) => f !== null);
+    const parsed = rows.map((m) => this.parsedToDto(m)).filter((f) => f !== null);
 
     SortHelper.sortByKey(parsed, sort?.key ?? 'name', sort?.order);
 
@@ -91,7 +141,7 @@ export class ItemService {
           : undefined,
       },
     });
-    const parsed = this.parser(row);
+    const parsed = this.parsedToDto(row);
 
     return parsed;
   }
@@ -156,34 +206,33 @@ export class ItemService {
   }
   async create({ body, userId }: { userId: string; body: ItemFormBody }) {
     const row = await this.prisma.item.create({
+      data: this.parserToPrisma({ body, userId }),
+    });
+
+    return { id: row.id };
+  }
+
+  async createWithId({ body, userId }: { userId: string; body: ItemFormBodyWithId }) {
+    const row = await this.prisma.item.create({
       data: {
-        name: body.name,
-        image_url_id: body.imageUrlId,
-        value: body.value,
-        is_limited: body.isLimited ?? false,
-        type_id: body.typeId,
-        is_active: body.isActive ?? true,
-        date_created: new Date().toISOString(),
-        date_updated: null,
-        user_id: userId,
+        ...this.parserToPrisma({ body, userId }),
+        id: body.id,
       },
     });
 
     return { id: row.id };
   }
 
+  async createMany({ body, userId }: { userId: string; body: ItemFormBody[] }) {
+    return this.prisma.item.createMany({
+      data: body.map((item) => this.parserToPrisma({ body: item, userId })),
+    });
+  }
+
   async update({ body, id, userId }: { id: string; userId: string; body: Partial<ItemFormBody> }) {
     const row = await this.prisma.item.update({
       where: { id, user_id: userId },
-      data: {
-        name: body.name,
-        image_url_id: body.imageUrlId,
-        value: body.value,
-        is_limited: body.isLimited,
-        type_id: body.typeId,
-        is_active: body.isActive,
-        date_updated: new Date().toISOString(),
-      },
+      data: this.parserToPrismaUpdate(body),
     });
 
     return { id: row.id };

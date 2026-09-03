@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListHeaderProps } from "../../types/genericListTypes";
+import type { GenericListHeaderProps } from "./genericListTypes";
 
 function getHeaderAlignClass(align?: "left" | "center" | "right") {
   if (align === "center") return "text-center";

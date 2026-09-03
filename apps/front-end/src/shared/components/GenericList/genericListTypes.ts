@@ -1,7 +1,9 @@
-import type { GenericListColumn } from "./genericListColumnType";
+import type z from "zod";
+import type { GenericListColumn } from "./columnDefinition/genericListColumnType";
 import type { ComponentType, ReactNode } from "react";
+import type { genericListViewModeSchema } from "@/shared/components/GenericList/genericListSchemas";
 
-export type GenericListViewMode = "list" | "card";
+export type GenericListViewMode = z.infer<typeof genericListViewModeSchema>;
 
 export type RowRendererProps<T> = {
   row: T;

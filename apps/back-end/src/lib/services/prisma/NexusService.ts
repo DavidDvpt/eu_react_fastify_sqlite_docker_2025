@@ -1,9 +1,9 @@
-import { nexusDtoSchema } from '@eu/zod-schemas';
+import { nexusDtoSchema, nexusRequestTypeSchema } from '@eu/zod-schemas';
 
 import type { NexusUpdate } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type { NexusUpdateWithTypeName } from '#src/types/prismaApi/nexus.js';
-import type { NexusFormBody, NexusUpdateDto } from '@eu/types';
+import type { NexusUpdateWithAppType } from '#src/types/prismaApi/nexus.js';
+import type { NexusFormBody, NexusUpdateDto, NexusRequestTypeEnum } from '@eu/types';
 
 export class NexusService {
   constructor(private readonly prisma: DatabaseClient) {}
@@ -12,7 +12,7 @@ export class NexusService {
     return {
       id: value.id,
       nexus_request_type: value.nexusRequestType,
-      nexus_name: value.nexusName ?? value.name,
+      nexus_name: value.nexusName ?? value.appTypeName,
       item_count: value.itemCount,
       image_missing_count: value.imageMissingCount,
       change_count: value.changeCount,
@@ -22,10 +22,11 @@ export class NexusService {
     };
   }
 
-  private parserToDto(row: NexusUpdateWithTypeName): NexusUpdateDto {
+  private parserToDto(row: NexusUpdateWithAppType): NexusUpdateDto {
     return nexusDtoSchema.parse({
       id: row.id,
-      name: row.type.name,
+      appTypeName: row.type.name,
+      appTypeId: row.type.id,
       nexusRequestType: row.nexus_request_type,
       nexusName: row.nexus_name ?? row.type.name,
       itemCount: row.item_count,
@@ -42,12 +43,16 @@ export class NexusService {
 
     return { count: result._count };
   }
-  async getAll() {
+  async getAll({ requestType }: { requestType?: NexusRequestTypeEnum } = {}) {
+    const veryfiedType = nexusRequestTypeSchema.optional().parse(requestType);
+
     const rows = await this.prisma.nexusUpdate.findMany({
+      where: { nexus_request_type: veryfiedType },
       include: {
         type: {
           select: {
             name: true,
+            id: true,
           },
         },
       },
@@ -73,7 +78,7 @@ export class NexusService {
         updated_at: new Date().toISOString(),
         type: {
           update: {
-            name: body.name,
+            name: body.appTypeName,
           },
         },
       },
@@ -81,6 +86,7 @@ export class NexusService {
         type: {
           select: {
             name: true,
+            id: true,
           },
         },
       },

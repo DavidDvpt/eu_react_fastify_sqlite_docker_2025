@@ -1,10 +1,11 @@
 // @shared/hooks/useQueryParams.tsx
 
-import type { SelectedFilterValues } from "@/shared/types";
+import type { GenericFilterValues } from "@/shared/types";
 import { useMemo } from "react";
 
 import { useLocation } from "react-router-dom";
 import { allOptionValue } from "./genericFilter.utils";
+import { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
 
 type QueryParamValues = string | number | boolean | undefined;
 
@@ -14,13 +15,14 @@ const useGenericFilterParams = () => {
   const params = useMemo(() => {
     const searchParams = new URLSearchParams(location.search);
 
-    const f: SelectedFilterValues = {
-      category: searchParams.get("category") || "",
-      type: searchParams.get("type") || "",
-      item: searchParams.get("item") || "",
+    const p: GenericFilterValues = {
+      categoryId: searchParams.get("categoryId") || "",
+      typeId: searchParams.get("typeId") || "",
+      itemId: searchParams.get("itemId") || "",
     };
 
-    return f;
+    const parse = genericFilterSchema.parse(p);
+    return parse;
   }, [location.search]);
 
   const constructQuery = (key: string, value: QueryParamValues): string => {

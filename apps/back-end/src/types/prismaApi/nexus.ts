@@ -1,7 +1,8 @@
 import type { NexusUpdate } from '#prisma/generated/client.js';
 
-export type NexusUpdateWithTypeName = NexusUpdate & {
+export type NexusUpdateWithAppType = NexusUpdate & {
   type: {
     name: string;
+    id: string;
   };
 };

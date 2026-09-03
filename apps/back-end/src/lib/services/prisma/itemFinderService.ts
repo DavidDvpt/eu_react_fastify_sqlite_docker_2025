@@ -12,8 +12,8 @@ export class ItemFinderService extends ItemService {
     super(prisma);
   }
 
-  parser(row: ItemWithFinderDetail): Finder | null {
-    const base = super.parser(row);
+  parsedToDto(row: ItemWithFinderDetail): Finder | null {
+    const base = super.parsedToDto(row);
     if (!base) return null;
 
     const parsed: Finder = {

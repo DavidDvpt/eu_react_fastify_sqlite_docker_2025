@@ -14,8 +14,8 @@ function NexusForm({ nexus, onClose }: NexusFormProps) {
   const { updateMutation } = useNexusMutation();
 
   const defaultValues: NexusFormBody = {
-    name: nexus.name,
-    nexusName: nexus.nexusName ?? nexus.name,
+    appTypeName: nexus.appTypeName,
+    nexusName: nexus.nexusName ?? nexus.appTypeName,
     nexusRequestType: nexus.nexusRequestType ?? "",
   };
 
@@ -39,7 +39,11 @@ function NexusForm({ nexus, onClose }: NexusFormProps) {
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col gap-2">
-        <InputRHF name="name" label="Nom" placeholder="Nom du type" />
+        <InputRHF
+          name="appTypeName"
+          label="Nom"
+          placeholder="Nom du type"
+        />
         <InputRHF
           name="nexusName"
           label="Nexus name"

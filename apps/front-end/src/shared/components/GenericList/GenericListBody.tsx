@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { GenericListBodyProps } from "../../types/genericListTypes";
+import type { GenericListBodyProps } from "./genericListTypes";
 import { GenericCellRenderer } from "./GenericCellRenderer";
 import type { GenericListColumn } from "@/shared/types";
 

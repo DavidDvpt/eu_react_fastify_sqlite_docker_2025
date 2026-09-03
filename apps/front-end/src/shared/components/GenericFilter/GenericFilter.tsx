@@ -47,9 +47,9 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={categoriesForSelect}
-              onValueChange={(value) => updateValue("category", value)}
+              onValueChange={(value) => updateValue("categoryId", value)}
               placeholder="Choisir une categorie ..."
-              value={params.category}
+              value={params.categoryId}
             />
           </div>
         )}
@@ -58,9 +58,9 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={typesForSelect}
-              onValueChange={(value) => updateValue("type", value)}
+              onValueChange={(value) => updateValue("typeId", value)}
               placeholder="Choisir un type ..."
-              value={params.type}
+              value={params.typeId}
             />
           </div>
         )}
@@ -69,9 +69,9 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={itemsForSelect}
-              onValueChange={(value) => updateValue("item", value)}
+              onValueChange={(value) => updateValue("itemId", value)}
               placeholder="Choisir un item"
-              value={params.item}
+              value={params.itemId}
               hasAutocomplete
             />
           </div>
