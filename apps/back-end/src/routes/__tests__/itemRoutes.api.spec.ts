@@ -89,6 +89,12 @@ describe('itemRoutes', () => {
         isLimited: false,
         typeId: 'type-1',
         isActive: true,
+        nexusId: null,
+        description: null,
+        weight: null,
+        decay: null,
+        isUntradeable: null,
+        isRare: null,
       },
     });
 
@@ -102,6 +108,12 @@ describe('itemRoutes', () => {
         isLimited: false,
         typeId: 'type-1',
         isActive: true,
+        nexusId: null,
+        description: null,
+        weight: null,
+        decay: null,
+        isUntradeable: null,
+        isRare: null,
       },
     });
     expect(res.json()).toEqual({ id: 'item-1' });
@@ -123,6 +135,12 @@ describe('itemRoutes', () => {
         isLimited: false,
         typeId: 'type-1',
         isActive: true,
+        nexusId: null,
+        description: null,
+        weight: null,
+        decay: null,
+        isUntradeable: null,
+        isRare: null,
       },
     });
 
@@ -137,6 +155,12 @@ describe('itemRoutes', () => {
         isLimited: false,
         typeId: 'type-1',
         isActive: true,
+        nexusId: null,
+        description: null,
+        weight: null,
+        decay: null,
+        isUntradeable: null,
+        isRare: null,
       },
     });
     await app.close();

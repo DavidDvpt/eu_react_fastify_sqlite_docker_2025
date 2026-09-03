@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { describe, expect, it, vi } from 'vitest';
 
-import { LotService } from '../lotService.js';
 import { ItemService } from '../itemService.js';
+import { LotService } from '../lotService.js';
 
 describe('ItemService', () => {
   it('creates and reads an item', async () => {
@@ -67,6 +67,43 @@ describe('ItemService', () => {
       type: null,
       category: null,
     });
+  });
+
+  it('creates an item with the supplied id', async () => {
+    const prisma = {
+      item: {
+        create: vi.fn().mockResolvedValue({ id: 'nexus-item-1' }),
+      },
+    };
+    const service = new ItemService(prisma as any);
+
+    const created = await service.createWithId({
+      userId: 'user-1',
+      body: {
+        id: 'nexus-item-1',
+        name: 'Nexus Oil',
+        imageUrlId: null,
+        value: 10,
+        nexusId: 42,
+        description: null,
+        weight: null,
+        decay: null,
+        isLimited: false,
+        isActive: true,
+        isUntradeable: null,
+        isRare: null,
+        typeId: 'type-1',
+      },
+    });
+
+    expect(prisma.item.create).toHaveBeenCalledWith({
+      data: expect.objectContaining({
+        id: 'nexus-item-1',
+        name: 'Nexus Oil',
+        user_id: 'user-1',
+      }),
+    });
+    expect(created).toEqual({ id: 'nexus-item-1' });
   });
 
   it('updates an item', async () => {

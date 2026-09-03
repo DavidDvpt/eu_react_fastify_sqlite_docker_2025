@@ -114,13 +114,13 @@ describe('nexusRoutes', () => {
       values: [
         expect.objectContaining({
           id: 'type-1',
-          name: 'Finders',
+          appTypeName: 'Finders',
           itemCount: 4,
           imageMissingCount: 2,
         }),
         expect.objectContaining({
           id: 'type-2',
-          name: 'Refiners',
+          appTypeName: 'Refiners',
           itemCount: 1,
           imageMissingCount: 0,
         }),
@@ -133,7 +133,8 @@ describe('nexusRoutes', () => {
     const { app } = buildApp();
     vi.mocked(nexusServiceMocks.update).mockResolvedValueOnce({
       id: 'type-1',
-      name: 'Finders Updated',
+      appTypeName: 'Finders Updated',
+      appTypeId: 'type-1',
       nexusName: 'Finder Mk2',
       nexusRequestType: 'finders',
       itemCount: 4,
@@ -149,7 +150,7 @@ describe('nexusRoutes', () => {
       method: 'PATCH',
       url: `${API_PREFIX}/nexus-tools/type-1`,
       payload: {
-        name: 'Finders Updated',
+        appTypeName: 'Finders Updated',
         nexusName: 'Finder Mk2',
         nexusRequestType: 'finders',
       },
@@ -159,7 +160,7 @@ describe('nexusRoutes', () => {
     expect(nexusServiceMocks.update).toHaveBeenCalledWith({
       id: 'type-1',
       body: {
-        name: 'Finders Updated',
+        appTypeName: 'Finders Updated',
         nexusName: 'Finder Mk2',
         nexusRequestType: 'finders',
       },
@@ -167,7 +168,7 @@ describe('nexusRoutes', () => {
     expect(res.json()).toEqual(
       expect.objectContaining({
         id: 'type-1',
-        name: 'Finders Updated',
+        appTypeName: 'Finders Updated',
         nexusName: 'Finder Mk2',
         nexusRequestType: 'finders',
       }),
