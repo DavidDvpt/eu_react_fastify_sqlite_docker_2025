@@ -2,7 +2,11 @@ import { useMutation } from "@tanstack/react-query";
 
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import NexusApi from "@/shared/services/nexusApi";
-import type { NexusFormBody, NexusUpdateDto } from "@eu/types";
+import type {
+  NexusFormBody,
+  NexusRequestTypeEnum,
+  NexusUpdateDto,
+} from "@eu/types";
 
 export default function useNexusMutation() {
   const initMutation = useMutation({
@@ -33,5 +37,19 @@ export default function useNexusMutation() {
     },
   });
 
-  return { initMutation, updateMutation };
+  const importMutation = useMutation({
+    mutationFn: async ({ type }: { type: NexusRequestTypeEnum }) => {
+      const api = new NexusApi();
+
+      return await api.importBase(type);
+    },
+    onSuccess: async () => {
+      await Promise.all([
+        InvalidateQueryAndKeys.nexusMutation(),
+        InvalidateQueryAndKeys.typeMutation(),
+      ]);
+    },
+  });
+
+  return { initMutation, updateMutation, importMutation };
 }

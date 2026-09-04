@@ -1,9 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
-import { describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 
 import NexusPage from "../NexusPage";
+
+const importMutate = vi.fn();
 
 vi.mock("@/shared/hooks", async (importOriginal) => {
   const actual = await importOriginal<typeof import("@/shared/hooks")>();
@@ -16,7 +18,7 @@ vi.mock("@/shared/hooks", async (importOriginal) => {
           id: "1",
           appTypeName: "Finders",
           nexusName: "Finder Alpha",
-          nexusRequestType: "finders",
+          nexusRequestType: "Finders",
           itemCount: 12,
           imageMissingCount: 2,
           changeCount: 3,
@@ -37,6 +39,10 @@ vi.mock("@/shared/hooks", async (importOriginal) => {
         isPending: false,
         mutate: vi.fn(),
       },
+      importMutation: {
+        isPending: false,
+        mutate: importMutate,
+      },
     }),
   };
 });
@@ -50,11 +56,15 @@ function renderPage(initialEntries: string[] = ["/nexus"]) {
 }
 
 describe("NexusPage", () => {
+  beforeEach(() => {
+    importMutate.mockClear();
+  });
+
   it("renders the page content", () => {
     renderPage();
 
     expect(screen.getAllByText("Type")).toHaveLength(2);
-    expect(screen.getByText("Finders")).toBeInTheDocument();
+    expect(screen.getAllByText("Finders")).toHaveLength(2);
     expect(screen.getByText("Images KO")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Init" })).toBeDisabled();
   });
@@ -63,11 +73,20 @@ describe("NexusPage", () => {
     const user = userEvent.setup();
     renderPage();
 
-    await user.click(screen.getByText("Finders"));
+    await user.click(screen.getAllByText("Finders")[0]);
 
     expect(screen.getByText("Edition")).toBeInTheDocument();
     expect(screen.getByLabelText("Nom")).toHaveValue("Finders");
     expect(screen.getByLabelText("Nexus name")).toHaveValue("Finder Alpha");
-    expect(screen.getByLabelText("Nexus request type")).toHaveValue("finders");
+    expect(screen.getByLabelText("Nexus request type")).toHaveValue("Finders");
+  });
+
+  it("imports the selected Nexus request type", async () => {
+    const user = userEvent.setup();
+    renderPage();
+
+    await user.click(screen.getByRole("button", { name: "Import" }));
+
+    expect(importMutate).toHaveBeenCalledWith({ type: "Finders" });
   });
 });

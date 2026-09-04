@@ -6,7 +6,7 @@ import type { GenericListColumn } from "@/shared/types";
 const DEFAULT_ROW_CLASS =
   "grid items-stretch border-b border-table-row-divider text-black last:border-b-0 hover:bg-table-row-hover-bg";
 
-const ACTION_KINDS = new Set(["button", "select", "checkbox", "custom"]);
+const CONTROL_KINDS = new Set(["button", "select", "checkbox"]);
 
 function GenericListBody<T>({
   columns,
@@ -96,9 +96,9 @@ function GenericListBody<T>({
               style={{ gridTemplateColumns: columnsTemplate }}
             >
               {columns.map((column) => {
-                const isActionCell =
-                  ACTION_KINDS.has(column.kind ?? "text") ||
-                  Boolean(column.onCellClick);
+                const hasCellClick = Boolean(column.onCellClick);
+                const isControlCell = CONTROL_KINDS.has(column.kind ?? "text");
+                const handlesCellClick = hasCellClick && !isControlCell;
 
                 return (
                   <div
@@ -107,17 +107,36 @@ function GenericListBody<T>({
                       "flex min-w-0 overflow-hidden text-black",
                       alignClass(column.align),
                       column.bodyCellClassName,
-                      !isActionCell && onRowClick ? "cursor-pointer" : "",
+                      hasCellClick ? "cursor-pointer" : "",
+                      !isControlCell && !hasCellClick && onRowClick
+                        ? "cursor-pointer"
+                        : "",
                     )}
+                    role={handlesCellClick ? "button" : undefined}
+                    tabIndex={handlesCellClick ? 0 : undefined}
                     onClick={
-                      isActionCell
+                      isControlCell
+                        ? (event) => event.stopPropagation()
+                        : handlesCellClick
+                          ? (event) => {
+                              event.stopPropagation();
+                              column.onCellClick?.(row);
+                            }
+                          : onRowClick
+                            ? () => onRowClick(row)
+                            : undefined
+                    }
+                    onKeyDown={
+                      handlesCellClick
                         ? (event) => {
+                            if (event.key !== "Enter" && event.key !== " ")
+                              return;
+
+                            event.preventDefault();
                             event.stopPropagation();
                             column.onCellClick?.(row);
                           }
-                        : onRowClick
-                          ? () => onRowClick(row)
-                          : undefined
+                        : undefined
                     }
                   >
                     <GenericCellRenderer column={column} row={row} />
