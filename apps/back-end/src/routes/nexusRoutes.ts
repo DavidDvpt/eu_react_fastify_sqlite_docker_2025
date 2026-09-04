@@ -26,11 +26,12 @@ const nexusRoutes: FastifyPluginCallback = (app, _opts, done) => {
     const is = new ItemService(prismaClient);
 
     const countNexus = await ns.count();
-    const countType = await ts.count();
 
     if (countNexus.count > 0) {
       return reply.code(204).send();
     }
+
+    const countType = await ts.count();
 
     if (countType.count === 0) {
       return reply.code(204).send();

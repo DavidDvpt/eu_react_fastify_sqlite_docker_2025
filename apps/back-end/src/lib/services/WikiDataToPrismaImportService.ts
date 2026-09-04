@@ -188,6 +188,23 @@ export class WikiDataToPrismaImportService {
 
       result.created = results.length;
 
+      const counts = await ns.getCounts();
+      const updatedNexus = await Promise.all(
+        nexusDatas.map((nexus) =>
+          ns.update({
+            id: nexus.id,
+            body: {
+              appTypeName: nexus.appTypeName,
+              nexusName: nexus.nexusName ?? nexus.appTypeName,
+              nexusRequestType: requestType,
+            },
+            counts: counts[nexus.appTypeName],
+          })
+        )
+      );
+
+      result.updated = updatedNexus.length;
+
       return result;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

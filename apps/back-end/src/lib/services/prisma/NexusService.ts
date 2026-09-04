@@ -5,6 +5,10 @@ import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusUpdateWithAppType } from '#src/types/prismaApi/nexus.js';
 import type { NexusFormBody, NexusUpdateDto, NexusRequestTypeEnum } from '@eu/types';
 
+import { ItemService } from '#src/lib/services/prisma/itemService.js';
+import { TypeService } from '#src/lib/services/prisma/typeService.js';
+import { nexusCountsSchema, type NexusCounts } from '#src/lib/zodSchemas/nexusSchemas.js';
+
 export class NexusService {
   constructor(private readonly prisma: DatabaseClient) {}
 
@@ -43,6 +47,30 @@ export class NexusService {
 
     return { count: result._count };
   }
+
+  async getCounts(): Promise<NexusCounts> {
+    const ts = new TypeService(this.prisma);
+    const is = new ItemService(this.prisma);
+
+    const [types, itemCountByType, itemWithoutImageCountByType] = await Promise.all([
+      ts.getAll(),
+      is.groupByType(),
+      is.groupByType({ noImage: true }),
+    ]);
+
+    return nexusCountsSchema.parse(
+      Object.fromEntries(
+        types.map((type) => [
+          type.name,
+          {
+            itemCount: itemCountByType?.[type.id] ?? 0,
+            itemCountWithoutImage: itemWithoutImageCountByType?.[type.id] ?? 0,
+          },
+        ])
+      )
+    );
+  }
+
   async getAll({ requestType }: { requestType?: NexusRequestTypeEnum } = {}) {
     const veryfiedType = nexusRequestTypeSchema.optional().parse(requestType);
 
@@ -69,12 +97,22 @@ export class NexusService {
     return this.prisma.nexusUpdate.createMany({ data });
   }
 
-  async update({ id, body }: { id: string; body: NexusFormBody }) {
+  async update({
+    id,
+    body,
+    counts,
+  }: {
+    id: string;
+    body: NexusFormBody;
+    counts?: NexusCounts[string];
+  }) {
     const updated = await this.prisma.nexusUpdate.update({
       where: { id },
       data: {
         nexus_name: body.nexusName,
         nexus_request_type: body.nexusRequestType,
+        item_count: counts?.itemCount,
+        image_missing_count: counts?.itemCountWithoutImage,
         updated_at: new Date().toISOString(),
         type: {
           update: {
