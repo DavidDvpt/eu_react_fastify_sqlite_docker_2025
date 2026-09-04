@@ -119,7 +119,7 @@ function createNexusColumns({
       minWidth: 80,
       maxWidth: 80,
       align: "center",
-      bodyCellClassName: "justify-center px-2 cursor-pointer",
+      bodyCellClassName: "justify-center px-2",
       buttonLabel: "Import",
       disabled: (row) =>
         isImportPending ||
