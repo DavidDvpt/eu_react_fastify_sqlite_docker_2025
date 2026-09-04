@@ -6,7 +6,9 @@ import { genericFilterSchema } from "@/shared/components/GenericFilter/genericFi
 export const inventoryPageQuerySchema = genericFilterSchema
   .omit({ itemId: true })
   .extend({
-    showAllItems: booleanSchema.optional(),
+    showAllItems: z
+      .preprocess((value) => (value === "1" ? true : value), booleanSchema)
+      .optional(),
     urlViewMode: genericListViewModeSchema.default("list"),
   });
 

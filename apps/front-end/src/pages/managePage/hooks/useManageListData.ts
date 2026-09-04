@@ -1,7 +1,5 @@
 import { useMemo } from "react";
 
-import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
-
 import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
 import type { GenericListColumn } from "@/shared/types";
 import { useSystemDatas } from "@/shared/hooks";
@@ -11,6 +9,8 @@ import { createCategoryColumns } from "@/shared/components/GenericList/columnDef
 
 interface UseManageListData {
   activeTab: ManageTab;
+  categoryId?: string;
+  typeId?: string;
 }
 type ManageListDataResult = {
   list: ManageListRow[];
@@ -24,9 +24,9 @@ type ManageListDataResult = {
 
 function useManageListData({
   activeTab,
+  categoryId,
+  typeId,
 }: UseManageListData): ManageListDataResult {
-  const { params } = useGenericFilterParams();
-
   const {
     items: {
       isPending: isItemsPending,
@@ -46,13 +46,12 @@ function useManageListData({
       data: cat,
     },
   } = useSystemDatas();
-  const categories = cat ?? [];
 
   const contentValues = useMemo<ManageListDataResult>(() => {
     switch (activeTab) {
       case "type": {
         return {
-          list: typesByCategory(params.category) as ManageListRow[],
+          list: typesByCategory(categoryId) as ManageListRow[],
           isPending: isTypesPending,
           isError: isTypesError,
           columns: createTypeColumns() as GenericListColumn<ManageListRow>[],
@@ -64,8 +63,8 @@ function useManageListData({
       case "item":
         return {
           list: filteredItems({
-            categoryId: params.category,
-            typeId: params.type,
+            categoryId,
+            typeId,
           }) as ManageListRow[],
           isPending: isItemsPending,
           isError: isItemsError,
@@ -77,13 +76,14 @@ function useManageListData({
       default:
       case "category":
         return {
-          list: categories as ManageListRow[],
+          list: (cat ?? []) as ManageListRow[],
           isPending: isCategoriesPending,
           isError: isCategoriesError,
-          columns: createCategoryColumns() as GenericListColumn<ManageListRow>[],
+          columns:
+            createCategoryColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les categories.`,
           editRoute: (id) => `/manage/category/${id}/edit`,
-          findEntityById: (id) => categories.find((row) => row.id === id),
+          findEntityById: (id) => (cat ?? []).find((row) => row.id === id),
         };
     }
   }, [
@@ -98,8 +98,9 @@ function useManageListData({
     isTypesError,
     isItemsError,
     isCategoriesError,
-    categories,
-    params,
+    cat,
+    categoryId,
+    typeId,
   ]);
 
   return contentValues;

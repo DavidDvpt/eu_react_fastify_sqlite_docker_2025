@@ -1,15 +1,21 @@
 import { GenericList } from "@/shared/components";
 
-import { useLocation, useMatch, useNavigate, useParams } from "react-router-dom";
+import {
+  useLocation,
+  useMatch,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import type { ManageTab } from "@/shared/types/managePageTypes";
 import useManageListData from "../hooks/useManageListData";
 import CreateEditModal from "@/pages/managePage/components/createEditModal/CreateEditModal";
+import type { ManagePageQuery } from "../managePageSchema";
 
-interface ManageTableProps {
+interface ManageTableProps extends ManagePageQuery {
   activeTab: ManageTab;
 }
 
-function ManageTable({ activeTab }: ManageTableProps) {
+function ManageTable({ activeTab, categoryId, typeId }: ManageTableProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -26,6 +32,8 @@ function ManageTable({ activeTab }: ManageTableProps) {
     findEntityById,
   } = useManageListData({
     activeTab,
+    categoryId,
+    typeId,
   });
   const editedEntity = findEntityById(id);
 
