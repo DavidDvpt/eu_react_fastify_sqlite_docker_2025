@@ -8,7 +8,6 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.error import HTTPError, URLError
-from urllib.parse import urlencode
 from urllib.request import urlopen
 
 from psycopg import Connection
@@ -18,8 +17,11 @@ PARENT_DIR = CURRENT_DIR.parent
 if str(PARENT_DIR) not in sys.path:
     sys.path.insert(0, str(PARENT_DIR))
 
+sys.path.insert(0, str(PARENT_DIR / "db"))
+
 from db import connect_database, load_postgres_settings
 from storage_image_index import format_variant_token
+from telegram import send_telegram_message
 
 
 SCRIPT_DIR = CURRENT_DIR
@@ -166,24 +168,7 @@ def record_attempt_stats(stats: RunStats, result: AttemptResult) -> None:
     stats.error_counts[result.error_code] += 1
 
 
-def send_telegram_message(settings, message: str) -> None:
-    """Send a Telegram message when the bot token and chat id are configured."""
-    if not settings.telegram_bot_token or not settings.telegram_chat_id:
-        return
-
-    payload = urlencode(
-        {
-            "chat_id": settings.telegram_chat_id,
-            "text": message,
-        }
-    ).encode("utf-8")
-    url = f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage"
-    with urlopen(url, data=payload):
-        pass
-
-
 def build_session_summary_message(
-    settings,
     run_start_id: int,
     run_end_id: int,
     stats: RunStats,
@@ -553,73 +538,71 @@ def process_id(
     )
 
 
-def main(argv: list[str] | None = None) -> None:
-    """Run the blind downloader on an inclusive id range and write the full attempt log to CSV."""
-    options = parse_args(argv if argv is not None else sys.argv[1:])
+def prepare_session_chunk(connection: Connection, options: CliOptions) -> SessionChunk | None:
+    """Create or resume a named session and return its next batch."""
+    ensure_download_session(
+        connection, options.session_name, options.start_id, options.end_id, options.batch_size
+    )
+    chunk = acquire_session_chunk(connection, options.session_name)
+    if chunk is None:
+        print(f"[done] session={options.session_name} already completed")
+    else:
+        print(
+            f"[session] name={chunk.session_name} chunk={chunk.start_id}-{chunk.end_id} "
+            f"full_range={options.start_id}-{options.end_id}"
+        )
+    return chunk
+
+
+def download_range(
+    connection: Connection, options: CliOptions, start_id: int, end_id: int
+) -> RunStats:
+    """Download an inclusive range, logging each attempt and collecting its summary."""
     directories = ensure_directories()
-    settings = load_postgres_settings()
     options.log_path.parent.mkdir(parents=True, exist_ok=True)
+    stats = RunStats()
+    total_ids = end_id - start_id + 1
 
-    with connect_database(settings) as connection, options.log_path.open("w", newline="", encoding="utf-8") as log_file:
-        if options.session_name and options.batch_size:
-            ensure_download_session(
-                connection=connection,
-                session_name=options.session_name,
-                start_id=options.start_id,
-                end_id=options.end_id,
-                batch_size=options.batch_size,
-            )
-            session_chunk = acquire_session_chunk(connection, options.session_name)
-            if session_chunk is None:
-                print(f"[done] session={options.session_name} already completed")
-                return
-            run_start_id = session_chunk.start_id
-            run_end_id = session_chunk.end_id
-            print(
-                f"[session] name={options.session_name} chunk={run_start_id}-{run_end_id} full_range={options.start_id}-{options.end_id}"
-            )
-        else:
-            session_chunk = None
-            run_start_id = options.start_id
-            run_end_id = options.end_id
-
-        total_ids = run_end_id - run_start_id + 1
-        stats = RunStats()
+    with options.log_path.open("w", newline="", encoding="utf-8") as log_file:
         writer = csv.DictWriter(
-            log_file,
-            fieldnames=["id_image", "nom_fichier", "status", "error_code"],
+            log_file, fieldnames=["id_image", "nom_fichier", "status", "error_code"]
         )
         writer.writeheader()
-
-        try:
-            for offset, id_image in enumerate(range(run_start_id, run_end_id + 1), start=1):
-                print(f"[progress] {offset}/{total_ids} id_image={id_image}")
-                process_id(
-                    connection=connection,
-                    writer=writer,
-                    stats=stats,
-                    id_image=id_image,
-                    directories=directories,
-                    overwrite=options.overwrite,
-                )
-                log_file.flush()
-
-                if offset < total_ids:
-                    sleep(options.delay_ms)
-        except Exception as error:
-            if session_chunk is not None:
-                mark_session_chunk_failed(connection, session_chunk.session_name, str(error))
-            raise
-
-        if session_chunk is not None:
-            mark_session_chunk_complete(connection, session_chunk)
-
-        send_telegram_message(
-            settings,
-            build_session_summary_message(settings, run_start_id, run_end_id, stats, session_chunk),
-        )
+        for offset, id_image in enumerate(range(start_id, end_id + 1), start=1):
+            print(f"[progress] {offset}/{total_ids} id_image={id_image}")
+            process_id(connection, writer, stats, id_image, directories, options.overwrite)
+            log_file.flush()
+            if offset < total_ids:
+                sleep(options.delay_ms)
 
     print(f"[done] log written: {options.log_path}")
+    return stats
+
+
+def main(argv: list[str] | None = None) -> None:
+    """Download the requested range or session batch, then send its Telegram summary."""
+    options = parse_args(argv if argv is not None else sys.argv[1:])
+    settings = load_postgres_settings()
+
+    with connect_database(settings) as connection:
+        chunk = prepare_session_chunk(connection, options) if options.session_name else None
+        if options.session_name and chunk is None:
+            return
+        start_id = chunk.start_id if chunk else options.start_id
+        end_id = chunk.end_id if chunk else options.end_id
+
+        try:
+            stats = download_range(connection, options, start_id, end_id)
+        except Exception as error:
+            if chunk is not None:
+                mark_session_chunk_failed(connection, chunk.session_name, str(error))
+            raise
+
+        if chunk is not None:
+            mark_session_chunk_complete(connection, chunk)
+        send_telegram_message(
+            settings, build_session_summary_message(start_id, end_id, stats, chunk)
+        )
 
 
 if __name__ == "__main__":

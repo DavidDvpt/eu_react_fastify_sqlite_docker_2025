@@ -3,6 +3,7 @@
   "python.analysis.extraPaths": [
     "${workspaceFolder}/apps/py-tools",
     "${workspaceFolder}/apps/py-tools/db",
-    "${workspaceFolder}/apps/py-tools/wiki-pages-scrap"
+    "${workspaceFolder}/apps/py-tools/wiki-pages-scrap",
+    "${workspaceFolder}/apps/py-tools/wiki-images-scrap"
   ]
 }
