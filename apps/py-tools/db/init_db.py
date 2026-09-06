@@ -20,7 +20,7 @@ from db import connect_database, load_postgres_settings
 from definitions import PostgresSettings
 
 FILES: list[str] = ["images-scrap", "item-scrap"]
-CREATE_DATABASE_FILE = "create_wiki_images_database.sql"
+CREATE_DATABASE_FILE = "item-scrap.init_schema.sql"
 ADMIN_DB_NAME = "postgres"
 ADMIN_DB_USER = os.getenv("PY_TOOLS_ADMIN_DB_USER", "postgres")
 ADMIN_DB_PASSWORD = os.getenv("PY_TOOLS_ADMIN_DB_PASSWORD", "postgres")

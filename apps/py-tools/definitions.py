@@ -9,6 +9,7 @@ class PostgresSettings:
     user: str
     password: str
     download_base_url: str
+    wiki_base_url:str
     telegram_bot_token: Optional[str]
     telegram_chat_id: Optional[str]
 

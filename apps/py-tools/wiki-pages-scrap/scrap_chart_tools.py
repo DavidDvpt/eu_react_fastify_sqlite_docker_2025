@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-import json
 import re
+import runpy
 import sys
 from pathlib import Path
 from urllib.parse import parse_qs, urlparse
@@ -12,50 +12,32 @@ from playwright.sync_api import Page, TimeoutError, sync_playwright
 
 CURRENT_DIR = Path(__file__).resolve().parent
 PARENT_DIR = CURRENT_DIR.parent
+DB_DIR = PARENT_DIR / 'db'
+sys.path.insert(0, str(DB_DIR))
 sys.path.insert(0, str(PARENT_DIR))
 sys.path.insert(0, str(CURRENT_DIR))
 
-from py_tools_utils import get_db_connection, SETTINGS
-
-from definitions import ChartStats
+from definitions import ChartStats,PostgresSettings
 from telegram import build_chart_summary_message, send_telegram_message
 
 from sql_requests import (
     load_all_items,
     should_skip_chart,
-    upsert_items_page,
+    start_scrape_run,
+    upsert_failed_page,
+    create_items_page,
     upsert_scraped_page,
 )
 
-CHARTS = [
-    "Material",
-    "Finder",
-    "FinderAmplifier",
-    "FinderEnhancer",
-    "Excavator",
-    "Refiners",
-    "Scanner",
-    "FAP",
-    "MedicalEnhancer",
-    "MiscTool",
-    "Weapon",
-    "Armor",
-    "ArmorItem",
-    "ArmorEnhancer",
-    "Plating",
-    "Clothes",
-    "Vehicle",
-    "SpaceShips",
-]
+
 
 TABLE_SELECTOR = "table#ctl00_ContentPlaceHolder1_DG1"
 ROW_SELECTOR = "tr.G, tr.GA"
 ITEM_LINK_SELECTOR = 'a[title^="ID="]'
 NEXT_PAGE_SELECTOR = 'a[title="Next page"]'
 ALL_SELECTOR = 'a:has-text("(All)")'
-OUTPUT_PATH = Path(__file__).resolve().parent / "chart-item-image-map.json"
 MAX_PAGES_PER_CHART = 100
-DEFAULT_TIMEOUT_MS = 120_000
+DEFAULT_TIMEOUT_MS = 300_000
 IMAGE_COLUMN_INDEX = 1
 ITEM_COLUMN_INDEX = 2
 IMAGE_ID_PATTERN = re.compile(r"/(\d+)(?:Micro)?\.(?:jpg|jpeg|png|gif)$", re.IGNORECASE)
@@ -185,8 +167,10 @@ def scrape_chart(
         return [], stats
 
     print(f"[{chart}] opening")
+    run_id: int | None = None
 
     try:
+        run_id = start_scrape_run(connection, chart)
         page.goto(build_chart_url(settings, chart), wait_until="domcontentloaded")
         wait_for_chart_table(page)
         click_all_if_available(page, chart)
@@ -209,9 +193,9 @@ def scrape_chart(
             stats.pages_scraped += 1
             stats.rows_read += len(page_items)
 
-            inserted_count, updated_count = upsert_items_page(connection, page_items)
+            inserted_count = create_items_page(connection, page_items)
             stats.rows_inserted += inserted_count
-            stats.rows_updated += updated_count
+            skipped_count = len(page_items) - inserted_count
 
             for item in page_items:
                 item_id = item["item_id"]
@@ -219,7 +203,7 @@ def scrape_chart(
                     items_by_id[item_id] = item
 
             print(
-                f"[{chart}] page {page_number}: read={len(page_items)} inserted={inserted_count} updated={updated_count}"
+                f"[{chart}] page {page_number}: read={len(page_items)} inserted={inserted_count} skipped={skipped_count}"
             )
 
             next_link = page.locator(NEXT_PAGE_SELECTOR).first
@@ -235,12 +219,30 @@ def scrape_chart(
             stats.errors.append(limit_message)
 
         stats.item_count = len(items_by_id)
-        upsert_scraped_page(connection, chart, stats.item_count)
-        print(f"[{chart}] completed: {len(items_by_id)} unique items")
+        if stats.errors:
+            upsert_failed_page(
+                connection, chart, run_id, stats.rows_inserted, stats.rows_updated,
+                "\n".join(stats.errors),
+            )
+            print(f"[{chart}] incomplete: {len(items_by_id)} unique items")
+        else:
+            upsert_scraped_page(
+                connection, chart, stats.item_count, run_id,
+                stats.rows_inserted, stats.rows_updated,
+            )
+            print(f"[{chart}] completed: {len(items_by_id)} unique items")
         return list(items_by_id.values()), stats
     except Exception as error:
         connection.rollback()
         stats.errors.append(str(error))
+        try:
+            upsert_failed_page(
+                connection, chart, run_id, stats.rows_inserted, stats.rows_updated,
+                "\n".join(stats.errors),
+            )
+        except Exception as tracking_error:
+            connection.rollback()
+            print(f"[{chart}] failure tracking failed: {tracking_error}", file=sys.stderr)
         raise
     finally:
         try:
@@ -251,12 +253,12 @@ def scrape_chart(
 
 # Iterate over the chart whitelist, merge all scraped items globally, and keep scraping after one chart failure.
 def scrape_all_charts(
-    settings: PostgresSettings,
+    dbConnection: Connection,settings: PostgresSettings, CHARTS: list[str]
 ) -> tuple[list[dict[str, int | str | None]], list[ChartStats]]:
     """Scrape every chart, persist pages as they are read, and return items plus chart summaries."""
     chart_stats: list[ChartStats] = []
 
-    with get_db_connection() as connection:
+    with dbConnection as connection:
         with sync_playwright() as playwright:
             browser = playwright.chromium.launch(headless=True)
             context = browser.new_context()
@@ -282,36 +284,9 @@ def scrape_all_charts(
     return items, chart_stats
 
 
-# Write the final deduplicated dataset to the local JSON output file.
-def save_results(items: list[dict[str, int | str | None]], output_path: Path = OUTPUT_PATH) -> None:
-    """Persist the final deduplicated result set to JSON."""
-    output_path.write_text(json.dumps(items, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"[done] results written: {output_path}")
-
-
 # Raise at the end if at least one chart failed so cron can mark the run as broken.
 def raise_on_failed_charts(stats_by_chart: list[ChartStats]) -> None:
     """Fail the process after completion when one or more charts produced a fatal error."""
     failed_charts = [stats.chart for stats in stats_by_chart if stats.pages_scraped == 0 and stats.errors]
     if failed_charts:
         raise RuntimeError(f"chart scrape failed: {', '.join(failed_charts)}")
-
-
-# Run the full scrape flow from browser automation to DB upserts and JSON export.
-def main() -> None:
-    settings = SETTINGS()
-    items, chart_stats = scrape_all_charts(settings)
-    save_results(items)
-    print(f"Total unique items: {len(items)}")
-    raise_on_failed_charts(chart_stats)
-
-
-if __name__ == "__main__":
-    try:
-        main()
-    except TimeoutError as error:
-        print(f"[fatal] timeout: {error}", file=sys.stderr)
-        raise SystemExit(1) from error
-    except Exception as error:
-        print(f"[fatal] {error}", file=sys.stderr)
-        raise SystemExit(1) from error
