@@ -3,7 +3,7 @@ type ImageSize = "micro" | "normal";
 
 class ImageService {
   static getItemImageUrl(
-    imageUrlId: string,
+    imageUrlId: string | null,
     size: ImageSize = "normal",
   ): string | null {
     const baseUrl = getImageBaseUrl();

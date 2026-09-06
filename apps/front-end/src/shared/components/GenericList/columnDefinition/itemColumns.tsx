@@ -14,7 +14,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     bodyCellClassName: "bg-transparent",
     imageSrc: (value) =>
       typeof value === "string" && value.trim() !== ""
-        ? (ImageService.getItemImageUrl(value, "micro") ?? "")
+        ? (ImageService.getItemImageUrl(value, "normal") ?? "")
         : "",
     imageAlt: (item) => item.name ?? "Image",
   },

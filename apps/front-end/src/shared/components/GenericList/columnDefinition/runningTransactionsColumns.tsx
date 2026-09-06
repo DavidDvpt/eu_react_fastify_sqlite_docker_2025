@@ -44,7 +44,7 @@ const createRunningTransactionsColumns = ({
       return (
         getItemImageUrl(
           String((row as ItemWithStock).imageUrlId ?? ""),
-          "micro",
+          "normal",
         ) ?? ""
       );
     },

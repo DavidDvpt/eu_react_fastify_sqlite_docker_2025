@@ -13,7 +13,7 @@ function ItemSectionInfo({ itemWithStock }: ItemSectionInfoProps) {
   const { imageUrlId, name, value, stock } = itemWithStock;
 
   const itemImageUrl = useMemo(
-    () => ImageService.getItemImageUrl(imageUrlId, "micro"),
+    () => ImageService.getItemImageUrl(imageUrlId, "normal"),
     [imageUrlId],
   );
 

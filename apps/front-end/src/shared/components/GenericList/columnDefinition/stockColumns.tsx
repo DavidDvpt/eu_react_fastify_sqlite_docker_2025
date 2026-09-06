@@ -17,10 +17,7 @@ const stockColumns = (
       imageSize: useCardImageSize ? "medium" : "small",
       imageSrc: (value) =>
         typeof value === "string" && value.trim() !== ""
-          ? (ImageService.getItemImageUrl(
-              value,
-              useCardImageSize ? "normal" : "micro",
-            ) ?? "")
+          ? (ImageService.getItemImageUrl(value, "normal") ?? "")
           : "",
       imageAlt: (item) => item.name,
     },

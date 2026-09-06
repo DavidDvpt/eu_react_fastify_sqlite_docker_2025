@@ -2,7 +2,7 @@ import { cn } from "@/lib/utils";
 import { ImageService } from "@/shared/services/imageService";
 import { FormatTools } from "@/shared/tools";
 import { TransactionActions } from "@/shared/components";
-import type { CSSProperties } from "react";
+import { useState, type CSSProperties } from "react";
 
 type TransactionItemDetailsProps = {
   itemName: string;
@@ -40,6 +40,8 @@ function TransactionItemDetails({
   buttonClassName,
 }: TransactionItemDetailsProps) {
   const image = ImageService.getItemImageUrl(imageUrlId, "normal");
+  const [failedImage, setFailedImage] = useState<string | null>(null);
+  const imageError = failedImage === image;
   const price = FormatTools.pedFormat().format(unitPrice);
 
   return (
@@ -53,14 +55,19 @@ function TransactionItemDetails({
     >
       <div className="flex flex-row gap-4 min-w-0">
         <div className="w-[40%]">
-          {image ? (
+          {image && !imageError ? (
             <img
               src={image}
               alt={itemName}
               className="rounded object-contain"
               style={imageStyle}
+              onError={() => setFailedImage(image)}
             />
-          ) : null}
+          ) : (
+            <div className="flex min-h-24 items-center justify-center bg-white text-black">
+              -
+            </div>
+          )}
         </div>
         <div className="w-[59%] min-w-0 flex flex-col">
           <h3 className="text-base font-semibold text-card-inner-title mt-0">

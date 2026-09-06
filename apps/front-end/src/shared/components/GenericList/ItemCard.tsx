@@ -1,4 +1,5 @@
 import { ImageService } from "@/shared/services";
+import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { FormatTools } from "@/shared/tools/formatTools";
 import type { ItemDto } from "@eu/types";
 
@@ -10,14 +11,12 @@ function ItemCard({ item, isManage }: ItemCardProps) {
   return (
     <article className="flex items-start gap-3">
       <div className="h-[100px] w-[100px] shrink-0">
-        {ImageService.getItemImageUrl(item.imageUrlId) ? (
-          <img
-            src={ImageService.getItemImageUrl(item.imageUrlId) ?? ""}
-            alt={item.name}
-            className="h-full w-full rounded object-contain"
-            loading="lazy"
-          />
-        ) : null}
+        <ItemImage
+          url={ImageService.getItemImageUrl(item.imageUrlId, "normal")}
+          alt={item.name}
+          size="medium"
+          classname="h-full w-full"
+        />
       </div>
       <div className="min-w-0 flex-1">
         <h3 className="truncate text-sm font-semibold text-table-head-text mt-0 mb-1">
