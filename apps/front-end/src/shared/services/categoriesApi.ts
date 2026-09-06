@@ -1,16 +1,17 @@
-import type { CategoryDto, CategoryFormBody } from "@eu/types";
-import { categoryQuerySchema } from "@eu/zod-schemas";
-import { z } from "zod";
+import type {
+  CategoryDto,
+  CategoryFormBody,
+  CategoryQuery,
+} from "@eu/zod-schemas";
+import { systemQuerySchema } from "@eu/zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
-type CategoryQuerySchema = z.infer<typeof categoryQuerySchema>;
-
 export default class CategoryApi extends ApiService<
-  CategoryQuerySchema,
+  CategoryQuery,
   CategoryDto[],
   CategoryFormBody
 > {
   protected route = "/categories";
-  protected querySchema = categoryQuerySchema;
+  protected querySchema = systemQuerySchema;
 }

@@ -6,12 +6,8 @@ import type { Item } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusApiItem } from '#src/types/nexusApi.js';
 import type { ImageListItem } from '#src/types/scraps/wikiItem.js';
-import type {
-  ItemFormBody,
-  ItemFormBodyWithId,
-  NexusImportResult,
-  NexusRequestTypeEnum,
-} from '@eu/types';
+import type { NexusImportResult, NexusRequestTypeEnum } from '@eu/types';
+import type { ItemForm } from '@eu/zod-schemas';
 
 import { WikiItemService } from '#src/lib/services/index.js';
 import { NexusApiService } from '#src/lib/services/NexusApiService.js';
@@ -65,8 +61,8 @@ export class WikiDataToPrismaImportService {
     return i.find((img) => img.itemName === itemName) || null;
   }
 
-  private getNullishItemUpdate(row: Item, body: ItemFormBody): Partial<ItemFormBody> {
-    const update: Partial<ItemFormBody> = {};
+  private getNullishItemUpdate(row: Item, body: ItemForm): Partial<ItemForm> {
+    const update: Partial<ItemForm> = {};
 
     if (row.nexus_id === null && body.nexusId !== null) update.nexusId = body.nexusId;
     if (row.image_url_id === '' && body.imageUrlId !== undefined)
@@ -112,7 +108,7 @@ export class WikiDataToPrismaImportService {
     try {
       const ns = new NexusService(this.prisma);
 
-      const itemsToAdd: ItemFormBodyWithId[] = [];
+      const itemsToAdd: (ItemForm & { id: string })[] = [];
       const notFoundItems: string[] = [];
       const itemNamesToAdd = new Set<string>();
 

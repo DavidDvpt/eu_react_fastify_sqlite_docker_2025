@@ -3,15 +3,8 @@ import { itemDtoSchema } from '@eu/zod-schemas';
 
 import type { Item, Prisma } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type {
-  ItemFormBody,
-  ItemDto,
-  SortOptions,
-  ItemSortKeys,
-  LotSortKey,
-  ItemDetailEnum,
-  ItemFormBodyWithId,
-} from '@eu/types';
+import type { LotSortKey } from '@eu/types';
+import type { ItemDetailEnum, ItemDto, ItemForm, ItemSortKeys, SortOptions } from '@eu/zod-schemas';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';
 import { LotService } from '#src/lib/services/prisma/lotService.js';
@@ -53,7 +46,7 @@ export class ItemService {
     body,
     userId,
   }: {
-    body: ItemFormBody;
+    body: ItemForm;
     userId: string;
   }): Prisma.ItemUncheckedCreateInput {
     return {
@@ -75,7 +68,7 @@ export class ItemService {
     };
   }
 
-  private parserToPrismaUpdate(body: Partial<ItemFormBody>): Prisma.ItemUncheckedUpdateInput {
+  private parserToPrismaUpdate(body: Partial<ItemForm>): Prisma.ItemUncheckedUpdateInput {
     const isLimited =
       body.isLimited === null || body.isLimited === undefined ? undefined : body.isLimited;
     return {
@@ -204,7 +197,7 @@ export class ItemService {
 
     return stock;
   }
-  async create({ body, userId }: { userId: string; body: ItemFormBody }) {
+  async create({ body, userId }: { userId: string; body: ItemForm }) {
     const row = await this.prisma.item.create({
       data: this.parserToPrisma({ body, userId }),
     });
@@ -212,7 +205,7 @@ export class ItemService {
     return { id: row.id };
   }
 
-  async createWithId({ body, userId }: { userId: string; body: ItemFormBodyWithId }) {
+  async createWithId({ body, userId }: { userId: string; body: ItemForm & { id: string } }) {
     const row = await this.prisma.item.create({
       data: {
         ...this.parserToPrisma({ body, userId }),
@@ -223,13 +216,13 @@ export class ItemService {
     return { id: row.id };
   }
 
-  async createMany({ body, userId }: { userId: string; body: ItemFormBody[] }) {
+  async createMany({ body, userId }: { userId: string; body: ItemForm[] }) {
     return this.prisma.item.createMany({
       data: body.map((item) => this.parserToPrisma({ body: item, userId })),
     });
   }
 
-  async update({ body, id, userId }: { id: string; userId: string; body: Partial<ItemFormBody> }) {
+  async update({ body, id, userId }: { id: string; userId: string; body: Partial<ItemForm> }) {
     const row = await this.prisma.item.update({
       where: { id, user_id: userId },
       data: this.parserToPrismaUpdate(body),

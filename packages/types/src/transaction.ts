@@ -36,6 +36,7 @@ export type TransactionWhereOptions = {
 export interface RunningTransactionDto {
   id: string;
   itemId: string;
+  lotId: string;
   quantity: number;
   tt: number;
   fee: number;

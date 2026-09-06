@@ -22,15 +22,15 @@ const itemRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.protect();
 
   app.get('/', async (request, reply) => {
-    const { sortKey, sortOrder, typeId, isActive, details } = itemQuerySchema.parse(request.query);
-    const is = getItemService(details);
+    const { sortKey, sortOrder, typeId, isActive, detail } = itemQuerySchema.parse(request.query);
+    const is = getItemService(detail);
     const effectiveIsActive = request.user.role === 'ADMIN' ? isActive : true;
 
     const rows = await is.getAll({
       isActive: effectiveIsActive,
       typeId,
       sort: { key: sortKey ?? 'name', order: sortOrder },
-      details,
+      details: detail,
     });
 
     return reply.code(200).send(rows);

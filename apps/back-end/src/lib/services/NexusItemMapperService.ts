@@ -1,7 +1,5 @@
 import type { NexusApiItem } from '#src/types/nexusApi.js';
-import type { ItemDto, ItemFormBody } from '@eu/types';
-
-import { env } from '#src/config/env.js';
+import type { ItemDto, ItemForm } from '@eu/zod-schemas';
 
 export class NexusItemMapperService {
   cosntructor() {}
@@ -45,11 +43,12 @@ export class NexusItemMapperService {
     row: NexusApiItem;
     typeId: string;
     imageId: string | null;
-  }): ItemFormBody | null {
+  }): ItemForm | null {
     if (!row || !typeId) return null;
     const isLimited = row.Name?.endsWith('(L)') ?? false;
 
-    const item: ItemFormBody = {
+    const item: ItemForm = {
+      id: null,
       name: row.Name,
       imageUrlId: imageId,
       value: row.Properties?.Economy?.MaxTT ?? 0,

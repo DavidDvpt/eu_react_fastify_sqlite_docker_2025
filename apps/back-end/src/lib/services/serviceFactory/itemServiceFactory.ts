@@ -1,4 +1,4 @@
-import type { ItemDetailEnum } from '@eu/types';
+import type { ItemDetailEnum } from '@eu/zod-schemas';
 
 import prismaClient from '#prisma/prismaClient.js';
 import { ItemFinderService } from '#src/lib/services/prisma/itemFinderService.js';

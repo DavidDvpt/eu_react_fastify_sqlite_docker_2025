@@ -13,3 +13,6 @@ export const genericDateSchema = z.object({
   createdAt: z.string(),
   updatedAt: z.string().nullable().default(null),
 });
+
+export type Order = z.infer<typeof sortOrderEnum>;
+export type SortOptions<T> = { key: T; order?: Order } | undefined;

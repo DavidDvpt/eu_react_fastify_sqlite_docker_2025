@@ -2,7 +2,10 @@ import { useMemo } from "react";
 
 import { useQuery } from "@tanstack/react-query";
 import TransactionsApi from "@/shared/services/transactionsApi";
-import type { TransactionDto, TransactionBodyDto } from "@eu/types";
+import type {
+  TransactionDto,
+  TransactionBodyDto,
+} from "@eu/types";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
@@ -34,6 +37,7 @@ function useTransactionsData({ runningProps }: UseTransactionProps) {
 
   const runningAdapter = useMemo(() => {
     const transactionMap = new Map<string, TransactionDto>();
+    if (!running.data) return [];
     for (const t of running.data ?? []) {
       const itemId = t.entries[0].lot.itemId;
       const item = filteredItems().find((item) => item.id === itemId)!;

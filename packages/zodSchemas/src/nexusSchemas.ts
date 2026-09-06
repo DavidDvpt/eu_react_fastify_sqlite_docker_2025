@@ -1,5 +1,4 @@
 import z from "zod";
-import { booleanSchema } from "./common.js";
 
 export const nexusRequestTypeSchema = z.enum([
   "Materials",

@@ -1,5 +1,5 @@
 import type { GenericListColumn } from "@/shared/types";
-import type { TypeDto } from "@eu/types";
+import type { TypeDto } from "@eu/zod-schemas";
 
 const createTypeColumns = (): GenericListColumn<TypeDto>[] => [
   {

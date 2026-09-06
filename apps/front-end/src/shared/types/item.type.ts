@@ -1,4 +1,4 @@
-import type { ItemDto } from "@eu/types";
+import type { ItemDto } from "@eu/zod-schemas";
 
 export type ItemWithStock = ItemDto & { stock: number };
 

@@ -1,5 +1,5 @@
 import type { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
-import type { ItemDto } from "@eu/types";
+import type { ItemDto } from "@eu/zod-schemas";
 import type z from "zod";
 
 export type GenericFilterAvailability = {

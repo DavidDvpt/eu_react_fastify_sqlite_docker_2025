@@ -2,8 +2,7 @@ import CategoryForm from "@/pages/managePage/components/createEditModal/Category
 import TypeForm from "@/pages/managePage/components/createEditModal/TypeForm";
 import { ModalGeneric } from "@/shared/components";
 import type { ManageTab } from "@/shared/types/managePageTypes";
-import type { ItemDto, TypeDto } from "@eu/types";
-import type { CategoryDto } from "@eu/types";
+import type { ItemDto, TypeDto, CategoryDto } from "@eu/zod-schemas";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface CreatEditModalProps {

@@ -1,5 +1,5 @@
 import z from "zod";
-import { itemDtoSchema } from "./itemSchemas.js";
+import { itemDtoSchema } from "./systemSchemas.js";
 
 export const finderDtoSchema = itemDtoSchema.extend({
   depth: z.number().nullable().default(null),

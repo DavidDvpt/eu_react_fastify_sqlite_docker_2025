@@ -17,7 +17,7 @@ function useInventoryList() {
     inventoryStock,
     isError,
     isLoading,
-    selectedItem: params.item,
+    selectedItem: params.itemId,
   };
 }
 

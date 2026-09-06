@@ -1,6 +1,6 @@
 import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
-import type { ItemDto } from "@eu/types";
+import type { ItemDto } from "@eu/zod-schemas";
 import { ImageService } from "@/shared/services";
 
 const createItemColumns = (): GenericListColumn<ItemDto>[] => [

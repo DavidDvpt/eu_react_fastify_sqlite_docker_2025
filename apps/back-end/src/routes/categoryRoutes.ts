@@ -1,4 +1,4 @@
-import { categoryFormSchema, categoryQuerySchema } from '@eu/zod-schemas';
+import { categoryFormSchema, systemQuerySchema } from '@eu/zod-schemas';
 
 import { getIdParam, getSystemReadableUserIds, getSystemUserId } from './utils.js';
 
@@ -13,7 +13,7 @@ export const categoryRoutes: FastifyPluginCallback = (app, _opts, done) => {
   app.protect();
 
   app.get('/', async (request, reply) => {
-    const { sortKey, sortOrder, isActive } = categoryQuerySchema.parse(request.query);
+    const { sortKey, sortOrder, isActive } = systemQuerySchema.parse(request.query);
     const effectiveIsActive = request.user.role === 'ADMIN' ? isActive : true;
     const rows = await cs.getAll({
       isActive: effectiveIsActive,

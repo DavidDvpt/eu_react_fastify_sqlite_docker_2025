@@ -6,7 +6,7 @@ import type {
   CategoryFormBody,
   TypeDto,
   TypeFormBody,
-} from "@eu/types";
+} from "@eu/zod-schemas";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useSystemMutation() {

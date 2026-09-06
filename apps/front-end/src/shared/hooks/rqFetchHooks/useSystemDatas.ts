@@ -2,7 +2,7 @@ import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys
 import { CategoriesApi, ItemsApi, TypesApi } from "@/shared/services";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store/reducers/auth";
-import type { ItemDtos } from "@eu/types";
+import type { ItemDtos } from "@eu/zod-schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 

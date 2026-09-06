@@ -4,7 +4,7 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import CategorySelectRHF from "@/shared/components/form/Select/CategorySelectRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { TypeDto, TypeFormBody } from "@eu/types";
+import type { TypeDto, TypeFormBody } from "@eu/zod-schemas";
 import { typeFormSchema } from "@eu/zod-schemas";
 
 interface TypeFormProps {

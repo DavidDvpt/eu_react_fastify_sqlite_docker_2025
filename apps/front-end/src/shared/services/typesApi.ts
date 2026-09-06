@@ -1,11 +1,11 @@
-import type { TypeDto, TypeFormBody, TypeQuerySchema } from "@eu/types";
+import type { typeDtos, TypeFormBody, TypeQuery } from "@eu/zod-schemas";
 import { typeQuerySchema } from "@eu/zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
 export default class TypesApi extends ApiService<
-  TypeQuerySchema,
-  TypeDto[],
+  TypeQuery,
+  typeDtos,
   TypeFormBody
 > {
   protected route = "/types";

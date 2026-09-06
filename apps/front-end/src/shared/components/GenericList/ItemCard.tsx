@@ -1,7 +1,7 @@
 import { ImageService } from "@/shared/services";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { ItemDto } from "@eu/types";
+import type { ItemDto } from "@eu/zod-schemas";
 
 interface ItemCardProps {
   item: ItemDto;

@@ -1,7 +1,7 @@
 import { SortHelper } from '@eu/helpers';
 
 import type { Type } from '#prisma/generated/client.js';
-import type { TypeFormBody, TypeDto, SortOptions, TypeSortKey } from '@eu/types';
+import type { TypeFormBody, TypeDto, TypeSortKey, SortOptions } from '@eu/zod-schemas';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 
@@ -19,6 +19,7 @@ export class TypeService {
       userId: row.user_id,
       createdAt: row.date_created,
       updatedAt: row.date_updated,
+      category: null,
     };
 
     return parsed;

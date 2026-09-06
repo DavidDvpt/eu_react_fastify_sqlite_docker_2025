@@ -2,7 +2,7 @@ import { typeFormSchema, typeQuerySchema } from '@eu/zod-schemas';
 
 import { getIdParam, getSystemReadableUserIds, getSystemUserId } from './utils.js';
 
-import type { TypeFormBody } from '@eu/types';
+import type { TypeFormBody } from '@eu/zod-schemas';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';

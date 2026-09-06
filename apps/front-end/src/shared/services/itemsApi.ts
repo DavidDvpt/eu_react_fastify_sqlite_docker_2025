@@ -1,20 +1,19 @@
 import {
-  type Stock,
   type ItemDto,
-  type ItemFormBody,
-  type ItemQuerySchema,
+  type ItemDtos,
+  type ItemForm,
+  type ItemQuery,
   type SortOptions,
-  type LotSortKey,
-  type LotDto,
-} from "@eu/types";
+} from "@eu/zod-schemas";
+import type { Stock, LotSortKey, LotDto } from "@eu/types";
 import { itemQuerySchema } from "@eu/zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
 export default class ItemsApi extends ApiService<
-  ItemQuerySchema,
-  ItemDto[],
-  ItemFormBody
+  ItemQuery,
+  ItemDtos,
+  ItemForm
 > {
   protected route = "/items";
   protected querySchema = itemQuerySchema;
