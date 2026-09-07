@@ -3,7 +3,7 @@ import {
   transactionBodySchema,
   transactionEntriesSchema,
   transactionEntrySchema,
-  transactionSchemaDto,
+  transactionDtoSchema,
   transactionStatusPatchDtoSchema,
   transactionStatusDtoSchema,
   transactionCancelDtoSchema,
@@ -23,7 +23,7 @@ export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
 
 export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
-export type TransactionDto = z.infer<typeof transactionSchemaDto>;
+// export type TransactionDto = z.infer<typeof transactionDtoSchema>;
 export type TransactionValues = z.infer<typeof transactionValuesSchema>;
 export type TransactionWhereOptions = {
   status?: TransactionStatusDto;
@@ -52,4 +52,4 @@ export type TransatcionPatchDto = Omit<TransactionBodyDto, "status"> & {
 };
 
 export type RunningTransactionDtos = RunningTransactionDto[];
-export type TransactionDtos = TransactionDto[];
+// export type TransactionDtos = TransactionDto[];

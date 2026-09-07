@@ -78,18 +78,13 @@ export class InvalidateQueryAndKeys {
       queryKey: this.getNexusKey().keys,
     });
   }
-  static async transactionStatusMutation({ itemId }: { itemId?: string }) {
-    return await Promise.all([
-      this.createTransactionMutation({ itemId }),
-      queryClient.invalidateQueries({
-        queryKey: this.getRunningTransactionKey().keys,
-      }),
-      queryClient.invalidateQueries({
-        queryKey: this.getInventoryFinancialReportKey().keys,
-      }),
-    ]);
-  }
-  static async createTransactionMutation({ itemId }: { itemId?: string }) {
+  static async transactionMutation({
+    itemId,
+    invalidatePedcard = true,
+  }: {
+    itemId?: string;
+    invalidatePedcard?: boolean;
+  }) {
     return await Promise.all([
       queryClient.invalidateQueries({
         queryKey: this.getInventoryStockKey().keys,
@@ -103,9 +98,14 @@ export class InvalidateQueryAndKeys {
       queryClient.invalidateQueries({
         queryKey: this.getItemLotsKey().keys,
       }),
-      queryClient.invalidateQueries({ queryKey: ["pedcard"] }),
+      ...(invalidatePedcard
+        ? [queryClient.invalidateQueries({ queryKey: ["pedcard"] })]
+        : []),
       queryClient.invalidateQueries({
         queryKey: this.getInventoryFinancialReportKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getRunningTransactionKey().keys,
       }),
     ]);
   }

@@ -1,11 +1,14 @@
 import type {
   PrismaMutationResponse,
   TransactionBodyDto,
-  TransactionDto,
   TransactionQuerySchema,
   TransactionStatusPatchDto,
 } from "@eu/types";
-import { transactionQuerySchema } from "@eu/zod-schemas";
+import {
+  transactionQuerySchema,
+  type TransactionDto,
+  type TransactionDtos,
+} from "@eu/zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
@@ -20,6 +23,9 @@ export default class TransactionsApi extends ApiService<
   protected route = "/transactions";
   protected querySchema = transactionQuerySchema;
 
+  async running() {
+    return await this.axios.get<TransactionDtos>(`${this.route}/running`);
+  }
   async updateStatus({
     id,
     status,

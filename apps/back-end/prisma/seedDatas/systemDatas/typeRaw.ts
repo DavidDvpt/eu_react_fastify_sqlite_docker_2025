@@ -8,12 +8,12 @@ export const TYPES_RAW_BASE: Omit<
   {
     id: '25F61687-F547-4712-8B91-786889BA6CF1',
     category_id: '88B86318-0F7B-4D68-B095-D0DC313324A5',
-    name: 'Ores',
+    name: 'Ore',
   },
   {
     id: '2E4D69AA-BBEC-44E7-B4A3-4F3EC17B6C78',
     category_id: '88B86318-0F7B-4D68-B095-D0DC313324A5',
-    name: 'Enmatters',
+    name: 'Enmatter',
   },
   {
     id: '2FE7B2D0-73CB-4E53-96A6-3BC32C5E7188',
@@ -28,12 +28,12 @@ export const TYPES_RAW_BASE: Omit<
   {
     id: '5DFA9973-5F3F-4FF5-A98B-BB585E1E39D5',
     category_id: '88B86318-0F7B-4D68-B095-D0DC313324A5',
-    name: 'Refined Enmatters',
+    name: 'Refined Enmatter',
   },
   {
     id: 'B274D976-0D05-4415-98C6-08798B14A6A2',
     category_id: '88B86318-0F7B-4D68-B095-D0DC313324A5',
-    name: 'Refined Ores',
+    name: 'Refined Ore',
   },
   {
     id: 'F39D2654-E076-4971-902F-B28511E12E48',

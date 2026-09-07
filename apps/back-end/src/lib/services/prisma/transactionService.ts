@@ -1,11 +1,14 @@
-import { transactionEntriesSchema } from '@eu/zod-schemas';
+import {
+  transactionDtoSchema,
+  transactionEntriesSchema,
+  type TransactionDto,
+} from '@eu/zod-schemas';
 
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type {
   PrismaMutationResponse,
   TransactionEntries,
   TransactionEntry,
-  TransactionDto,
   TransactionBodyDto,
   TransactionCancelDto,
   TransactionStatusDto,
@@ -59,6 +62,7 @@ export class TransactionService {
 
     const parsed: TransactionDto = {
       id: t.id,
+      itemId: '',
       tt: Number(t.tt),
       fee: Number(t.fee),
       ttc: Number(t.ttc),
@@ -66,7 +70,7 @@ export class TransactionService {
       updatedAt: t.updated_at ?? null,
       quantity: qty,
       entries: lines,
-      userId: t.user_id,
+      item: null,
       status: t.status ?? 'SOLDED',
       transactionType: t.transaction_type,
     };
@@ -104,7 +108,6 @@ export class TransactionService {
         },
       },
     });
-
     const result: TransactionEntries = rows.flatMap((row) => {
       if (withItemId || withLotId) {
         return row.lines.map<TransactionEntry>((line) => ({
@@ -121,7 +124,7 @@ export class TransactionService {
 
       return [
         {
-          itemId: null,
+          itemId: row.lines[0].lot.item_id,
           lotId: null,
           quantityLot: null,
           transactionType: row.transaction_type,
@@ -134,6 +137,38 @@ export class TransactionService {
     });
 
     return transactionEntriesSchema.parse(result);
+  }
+  async running({ userId }: { userId: string }) {
+    const rows = await this.prisma.transaction.findMany({
+      where: { user_id: userId, status: 'RUNNING' },
+      include: {
+        lines: {
+          select: {
+            quantity: true,
+            lot: { select: { item_id: true } },
+          },
+        },
+      },
+    });
+
+    const parsed = rows.map((m) =>
+      transactionDtoSchema.parse({
+        id: m.id,
+        itemId: m.lines[0].lot.item_id,
+        status: m.status,
+        transactionType: m.transaction_type,
+        quantity: m.lines.reduce((total, line) => total + Number(line.quantity), 0),
+        tt: Number(m.tt),
+        fee: Number(m.fee),
+        ttc: Number(m.ttc),
+        createdAt: m.created_at,
+        updatedAt: m.updated_at,
+        entries: null,
+        item: null,
+      })
+    );
+
+    return parsed;
   }
   async getById({ userId, id }: { userId: string; id: string }) {
     const row = await this.prisma.transaction.findUnique({

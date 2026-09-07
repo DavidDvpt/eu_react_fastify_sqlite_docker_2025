@@ -28,7 +28,7 @@ describe("useUpdateTransactionsStatus", () => {
   it("invalidates related queries after a successful status update", async () => {
     updateStatusMock.mockResolvedValue(undefined);
     const invalidateSpy = vi
-      .spyOn(InvalidateQueryAndKeys, "transactionStatusMutation")
+      .spyOn(InvalidateQueryAndKeys, "transactionMutation")
       .mockResolvedValue(undefined as never);
 
     const { result } = renderHook(() => useUpdateTransactionsStatus(), {
@@ -51,7 +51,10 @@ describe("useUpdateTransactionsStatus", () => {
         id: "transaction-1",
         status: "SOLDED",
       });
-      expect(invalidateSpy).toHaveBeenCalledWith({ itemId: "item-1" });
+      expect(invalidateSpy).toHaveBeenCalledWith({
+        itemId: "item-1",
+        invalidatePedcard: true,
+      });
     });
   });
 });

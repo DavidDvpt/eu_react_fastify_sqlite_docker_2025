@@ -2,7 +2,6 @@ import {
   transactionBodySchema,
   transactionQuerySchema,
   transactionCancelDtoSchema,
-  transactionStatusPatchDtoSchema,
   transactionStatusPatchSchema,
 } from '@eu/zod-schemas';
 
@@ -36,6 +35,15 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
     return reply.code(200).send(rows);
   });
 
+  app.get('/running', async (request, reply) => {
+    const userId = getRequestUserId(request);
+
+    const rows = await ts.running({
+      userId,
+    });
+
+    return reply.code(200).send(rows);
+  });
   app.get('/:id', async (request, reply) => {
     const userId = getRequestUserId(request);
     const { id } = request.params as { id: string };
@@ -44,11 +52,6 @@ const transactionRoutes: FastifyPluginCallback = (app, _opts, done) => {
 
     return reply.code(200).send(row);
   });
-
-  // app.get('/:id/running', async (request, reply) => {
-  //   const userId = getRequestUserId(request);
-  //   const { id } = request.params as { id: string };
-  // });
 
   app.post('/', async (request, reply) => {
     const userId = getRequestUserId(request);

@@ -3,7 +3,6 @@ import { useMutation } from "@tanstack/react-query";
 import TransactionsApi from "@/shared/services/transactionsApi";
 import type {
   TransactionBodyDto,
-  TransactionDto,
   TransactionStatusDto,
   TransactionStatusPatchDto,
   TransactionTypeDto,
@@ -14,6 +13,7 @@ import type {
   ItemWithStock,
   TransactionAction,
 } from "@/shared/types";
+import type { TransactionDto } from "@eu/zod-schemas";
 
 function useTransactionsMutation() {
   const ts = new TransactionsApi();
@@ -26,9 +26,10 @@ function useTransactionsMutation() {
       row: TransactionDto;
       status: TransactionStatusPatchDto;
     }) => ts.updateStatus({ id: row.id, status }),
-    onSuccess: async (_data, { row }) => {
-      await InvalidateQueryAndKeys.transactionStatusMutation({
+    onSuccess: async (_data, { row, status }) => {
+      await InvalidateQueryAndKeys.transactionMutation({
         itemId: row.item?.id,
+        invalidatePedcard: status !== "RETURNED",
       });
     },
   });
@@ -57,7 +58,7 @@ function useTransactionsMutation() {
       } satisfies TransactionBodyDto);
     },
     onSuccess: async (_data, { item }) => {
-      await InvalidateQueryAndKeys.createTransactionMutation({
+      await InvalidateQueryAndKeys.transactionMutation({
         itemId: item?.id,
       });
     },

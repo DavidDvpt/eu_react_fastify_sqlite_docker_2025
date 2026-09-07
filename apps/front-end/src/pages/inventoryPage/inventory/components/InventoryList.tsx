@@ -25,7 +25,7 @@ function InventoryList({
 }: InventoryListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
     useInventoryStockData({});
-  console.log(typeId);
+
   const visibleStock = useMemo(
     () =>
       inventoryStock

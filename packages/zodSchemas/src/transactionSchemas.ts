@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { genericDateSchema } from "./common.js";
+import { genericDateSchema, idSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
 import { transactionTypeSchema } from "./transactionTypeSchema.js";
 import { itemDtoSchema } from "./systemSchemas.js";
@@ -18,11 +18,15 @@ export const transactionStatusPatchSchema = z.object({
 export const transactionCancelDtoSchema = transactionStatusDtoSchema.extract([
   "CANCELED",
 ]);
-
+export const transactionValuesSchema = z.object({
+  tt: z.coerce.number().nonnegative(),
+  ttc: z.coerce.number().positive(),
+  fee: z.coerce.number().nonnegative(),
+});
 export const transactionLotSchema = z.object({
   lotId: z.string(),
   quantity: z.coerce.number(),
-  lot: lotItemIdSchema,
+  lot: lotItemIdSchema.nullable().default(null),
 });
 
 export const transactionQuerySchema = z.object({
@@ -31,12 +35,6 @@ export const transactionQuerySchema = z.object({
   type: transactionTypeSchema.optional(),
   withItemId: z.coerce.boolean().optional(),
   withLotId: z.coerce.boolean().optional(),
-});
-
-export const transactionValuesSchema = z.object({
-  tt: z.coerce.number().nonnegative(),
-  ttc: z.coerce.number().positive(),
-  fee: z.coerce.number().nonnegative(),
 });
 
 export const transactionEntrySchema = transactionValuesSchema.extend({
@@ -56,13 +54,16 @@ export const transactionBodySchema = transactionValuesSchema.extend({
   status: transactionStatusDtoSchema,
 });
 
-export const transactionSchemaDto = transactionValuesSchema.extend({
-  id: z.string(),
+export const transactionDtoSchema = transactionValuesSchema.extend({
+  ...idSchema.shape,
+  itemId: z.string(),
   quantity: z.coerce.number().int().positive(),
   transactionType: transactionTypeSchema,
   status: transactionStatusDtoSchema,
-  userId: z.string(),
+  entries: transactionLotSchema.array().nullable().default(null),
+  item: itemDtoSchema.nullable().default(null),
   ...genericDateSchema.shape,
-  entries: transactionLotSchema.array(),
-  item: itemDtoSchema.optional(),
 });
+
+export type TransactionDto = z.infer<typeof transactionDtoSchema>;
+export type TransactionDtos = TransactionDto[];

@@ -166,12 +166,14 @@ def scrape_chart(
             print(f"[{chart}] telegram failed: {telegram_error}", file=sys.stderr)
         return [], stats
 
-    print(f"[{chart}] opening")
+    print(f" opening {build_chart_url(settings, chart)}")
     run_id: int | None = None
 
     try:
         run_id = start_scrape_run(connection, chart)
-        page.goto(build_chart_url(settings, chart), wait_until="domcontentloaded")
+
+        page.goto(build_chart_url(settings, chart), 
+        wait_until="domcontentloaded")
         wait_for_chart_table(page)
         click_all_if_available(page, chart)
 
