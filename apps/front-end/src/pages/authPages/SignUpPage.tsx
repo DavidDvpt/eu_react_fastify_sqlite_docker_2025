@@ -4,12 +4,12 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles/signup.module.css";
 import { AppLink } from "@/shared/components/AppLink";
 import SignUpForm from "./components/SignUpForm";
-import type { UserSignUpFormOutputBody } from "@eu/types";
+import type { UserSignupFormBody } from "@eu/zod-schemas";
 
 function SignUpPage() {
   const navigate = useNavigate();
 
-  const handleSubmit = async (values: UserSignUpFormOutputBody) => {
+  const handleSubmit = async (values: UserSignupFormBody) => {
     try {
       await signupApi(values);
       navigate("/auth/signin", { replace: true });

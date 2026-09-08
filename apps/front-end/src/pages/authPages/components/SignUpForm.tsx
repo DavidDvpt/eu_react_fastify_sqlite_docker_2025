@@ -3,7 +3,7 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
 import { userSignUpFormSchema } from "@eu/zod-schemas";
-import type { UserSignUpFormOutputBody } from "@eu/types";
+import type { UserSignupFormBody } from "@eu/zod-schemas";
 
 const signUpDefaultValues = {
   pseudo: "",
@@ -15,7 +15,7 @@ const signUpDefaultValues = {
 
 interface ISignUpFormProps {
   className?: string;
-  onSubmit: (values: UserSignUpFormOutputBody) => void | Promise<void>;
+  onSubmit: (values: UserSignupFormBody) => void | Promise<void>;
 }
 
 function SignUpForm({ className, onSubmit }: ISignUpFormProps) {

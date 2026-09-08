@@ -4,13 +4,13 @@ import { AppLink } from "@/shared/components/AppLink";
 import { useAppDispatch } from "@/store/hooks";
 import SignInForm from "./components/SignInForm";
 import styles from "./styles/signin.module.css";
-import type { UserSignInFormOutputBody } from "@eu/types";
+import type { UserSignInFormBody } from "@eu/types";
 import { authMeThunk } from "@/store";
 
 function SignInPage() {
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (values: UserSignInFormOutputBody) => {
+  const handleSubmit = async (values: UserSignInFormBody) => {
     try {
       const response = await signinApi(values);
 

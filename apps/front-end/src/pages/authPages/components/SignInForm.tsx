@@ -3,12 +3,12 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
 import { userSignInFormSchema } from "@eu/zod-schemas";
-import type { UserSignInFormOutputBody } from "@eu/types";
+import type { UserSignInFormBody } from "@eu/types";
 
 const loginDefaultValues = { pseudo: "", password: "" };
 interface ILoginFormProps {
   className?: string;
-  onSubmit: (values: UserSignInFormOutputBody) => void | Promise<void>;
+  onSubmit: (values: UserSignInFormBody) => void | Promise<void>;
 }
 
 function SignInForm({ className, onSubmit }: ILoginFormProps) {

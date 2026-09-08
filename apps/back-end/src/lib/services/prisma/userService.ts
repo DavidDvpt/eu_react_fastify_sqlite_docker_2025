@@ -1,5 +1,5 @@
 import type { User } from '#prisma/generated/client.js';
-import type { UserDto, UserSignUpFormOutputBody } from '@eu/types';
+import type { UserDto, UserSignupFormBody } from '@eu/zod-schemas';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 
@@ -44,7 +44,7 @@ export class UserService {
     return this.userParser(row);
   }
 
-  async create({ body }: { body: Omit<UserSignUpFormOutputBody, 'id'> }) {
+  async create({ body }: { body: Omit<UserSignupFormBody, 'id'> }) {
     const parsed: Omit<User, 'id'> = {
       pseudo: body.pseudo,
       email: body.email,
