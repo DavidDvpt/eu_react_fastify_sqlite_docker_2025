@@ -12,5 +12,4 @@
     "tsBuildInfoFile": "./tsconfig.tsbuildinfo"
   },
   "include": ["src"],
-  "references": [{ "path": "../types" }]
 }

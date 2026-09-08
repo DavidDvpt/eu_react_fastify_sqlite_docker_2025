@@ -1,5 +1,5 @@
 import { ModalGeneric } from "@/shared/components";
-import type { NexusUpdateDto } from "@eu/types";
+import type { NexusUpdateDto } from "@eu/zod-schemas";
 import NexusForm from "./NexusForm";
 
 type NexusEditModalProps = {

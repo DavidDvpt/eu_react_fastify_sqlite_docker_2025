@@ -21,6 +21,6 @@
     }
   },
   "dependencies": {
-    "@eu/types": "*"
+    "@eu/zod-schemas": "*"
   }
 }

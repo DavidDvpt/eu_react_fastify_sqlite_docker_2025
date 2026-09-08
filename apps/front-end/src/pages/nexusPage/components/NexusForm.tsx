@@ -2,7 +2,7 @@ import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { useNexusMutation } from "@/shared/hooks";
-import type { NexusFormBody, NexusUpdateDto } from "@eu/types";
+import type { NexusFormBody, NexusUpdateDto } from "@eu/zod-schemas";
 import { nexusFormSchema } from "@eu/zod-schemas";
 
 type NexusFormProps = {

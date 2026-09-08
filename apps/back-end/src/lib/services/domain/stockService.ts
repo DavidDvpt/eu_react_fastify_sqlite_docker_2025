@@ -1,4 +1,4 @@
-import type { LotDto } from '@eu/types';
+import type { LotDto } from '@eu/zod-schemas';
 
 export class StockService {
   /**

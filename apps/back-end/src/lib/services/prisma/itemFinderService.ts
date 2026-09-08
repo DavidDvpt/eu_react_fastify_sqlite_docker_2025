@@ -1,6 +1,6 @@
 import type { Prisma } from '#prisma/generated/client.js';
 import type { RootDatabaseClient } from '#prisma/prismaClient.js';
-import type { Finder } from '@eu/types';
+import type { Finder } from '@eu/zod-schemas';
 
 import { ItemService } from '#src/lib/services/prisma/itemService.js';
 

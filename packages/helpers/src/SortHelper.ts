@@ -1,4 +1,4 @@
-import type { Order } from "@eu/types";
+import type { Order } from "@eu/zod-schemas";
 
 export class SortHelper {
   constructor() {}

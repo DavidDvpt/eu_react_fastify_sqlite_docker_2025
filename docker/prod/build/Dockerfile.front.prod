@@ -5,7 +5,6 @@ COPY package*.json ./
 COPY apps/front-end/package*.json ./apps/front-end/
 COPY apps/back-end/package*.json ./apps/back-end/
 COPY packages/helpers/package.json ./packages/helpers/
-COPY packages/types/package.json ./packages/types/
 COPY packages/zodSchemas/package.json ./packages/zodSchemas/
 
 RUN npm ci

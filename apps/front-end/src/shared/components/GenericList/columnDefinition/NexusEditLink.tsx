@@ -1,5 +1,5 @@
 import { AppLink } from "@/shared/components/AppLink";
-import type { NexusUpdateDto } from "@eu/types";
+import type { NexusUpdateDto } from "@eu/zod-schemas";
 import { useLocation } from "react-router-dom";
 
 type NexusEditLinkProps = {

@@ -1,5 +1,5 @@
 import type { UseFormReturn } from "react-hook-form";
-import type { TransactionDto } from "@eu/types";
+import type { TransactionDto } from "@eu/zod-schemas";
 import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
 
 export type TransactionFormValues = {

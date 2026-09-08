@@ -6,7 +6,6 @@ import { defineConfig } from "vitest/config";
 
 const packageSourceAliases = {
   "@eu/helpers": path.resolve(__dirname, "../../packages/helpers/src/index.ts"),
-  "@eu/types": path.resolve(__dirname, "../../packages/types/src/index.ts"),
   "@eu/zod-schemas": path.resolve(
     __dirname,
     "../../packages/zodSchemas/src/index.ts",

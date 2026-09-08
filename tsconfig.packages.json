@@ -2,7 +2,6 @@
   "files": [],
   "references": [
     { "path": "./packages/zodSchemas" },
-    { "path": "./packages/types" },
     { "path": "./packages/helpers" }
   ]
 }

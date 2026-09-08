@@ -6,7 +6,7 @@ import type {
   TransactionStatusDto,
   TransactionStatusPatchDto,
   TransactionTypeDto,
-} from "@eu/types";
+} from "@eu/zod-schemas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type {
   AutoPricingFormValues,

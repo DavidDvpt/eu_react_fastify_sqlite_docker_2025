@@ -4,7 +4,7 @@ import { AppLink } from "@/shared/components/AppLink";
 import { useAppDispatch } from "@/store/hooks";
 import SignInForm from "./components/SignInForm";
 import styles from "./styles/signin.module.css";
-import type { UserSignInFormBody } from "@eu/types";
+import type { UserSignInFormBody } from "@eu/zod-schemas";
 import { authMeThunk } from "@/store";
 
 function SignInPage() {

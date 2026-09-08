@@ -1,6 +1,6 @@
 import FormatTools from "@/shared/tools/formatTools";
 import type { GenericListColumn } from "@/shared/types";
-import type { NexusUpdateDto } from "@eu/types";
+import type { NexusUpdateDto } from "@eu/zod-schemas";
 import { nexusRequestTypeSchema } from "@eu/zod-schemas";
 
 function createNexusColumns({

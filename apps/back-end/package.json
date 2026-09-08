@@ -48,7 +48,6 @@
   "description": "",
   "dependencies": {
     "@eu/helpers": "*",
-    "@eu/types": "*",
     "@eu/zod-schemas": "*",
     "@fastify/cookie": "^11.0.2",
     "@fastify/cors": "^11.2.0",

@@ -3,7 +3,7 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
 import { userSignInFormSchema } from "@eu/zod-schemas";
-import type { UserSignInFormBody } from "@eu/types";
+import type { UserSignInFormBody } from "@eu/zod-schemas";
 
 const loginDefaultValues = { pseudo: "", password: "" };
 interface ILoginFormProps {

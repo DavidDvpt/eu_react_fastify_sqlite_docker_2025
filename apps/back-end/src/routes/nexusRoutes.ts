@@ -1,6 +1,6 @@
 import { idSchema, nexusFormSchema, nexusUpdateParamSchema } from '@eu/zod-schemas';
 
-import type { NexusFormBody, NexusUpdateDto } from '@eu/types';
+import type { NexusFormBody, NexusUpdateDto } from '@eu/zod-schemas';
 import type { FastifyPluginCallback } from 'fastify';
 
 import prismaClient from '#prisma/prismaClient.js';

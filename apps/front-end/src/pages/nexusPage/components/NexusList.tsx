@@ -1,6 +1,6 @@
 import { GenericList } from "@/shared/components";
 import { createNexusColumns } from "@/shared/components/GenericList/columnDefinition";
-import type { NexusUpdateDto } from "@eu/types";
+import type { NexusUpdateDto } from "@eu/zod-schemas";
 import { useLocation, useNavigate } from "react-router-dom";
 
 type NexusListProps = {
