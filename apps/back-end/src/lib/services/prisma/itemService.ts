@@ -3,7 +3,7 @@ import { itemDtoSchema } from '@eu/zod-schemas';
 
 import type { Item, Prisma } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type { LotSortKey } from '@eu/types';
+import type { LotSortKey } from '@eu/zod-schemas';
 import type { ItemDetailEnum, ItemDto, ItemForm, ItemSortKeys, SortOptions } from '@eu/zod-schemas';
 
 import { StockService } from '#src/lib/services/domain/stockService.js';

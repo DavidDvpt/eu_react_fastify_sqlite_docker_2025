@@ -1,9 +1,14 @@
-import { nexusDtoSchema, nexusRequestTypeSchema } from '@eu/zod-schemas';
+import {
+  nexusDtoSchema,
+  nexusRequestTypeSchema,
+  type NexusFormBody,
+  type NexusRequestTypeEnum,
+  type NexusUpdateDto,
+} from '@eu/zod-schemas';
 
 import type { NexusUpdate } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusUpdateWithAppType } from '#src/types/prismaApi/nexus.js';
-import type { NexusFormBody, NexusUpdateDto, NexusRequestTypeEnum } from '@eu/types';
 
 import { ItemService } from '#src/lib/services/prisma/itemService.js';
 import { TypeService } from '#src/lib/services/prisma/typeService.js';

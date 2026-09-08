@@ -1,12 +1,13 @@
 import {
-  type ItemDto,
+  itemQuerySchema,
   type ItemDtos,
   type ItemForm,
   type ItemQuery,
+  type LotDto,
+  type LotSortKey,
   type SortOptions,
+  type Stock,
 } from "@eu/zod-schemas";
-import type { Stock, LotSortKey, LotDto } from "@eu/types";
-import { itemQuerySchema } from "@eu/zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 

@@ -1,7 +1,7 @@
 import z from "zod";
-import { transactionTypeSchema } from "./transactionTypeSchema.js";
 import {
   transactionStatusDtoSchema,
+  transactionTypeSchema,
   transactionValuesSchema,
 } from "./transactionSchemas.js";
 
@@ -24,3 +24,8 @@ export const financialReportSchema = z.record(
   z.string(),
   financialItemReportSchema,
 );
+
+export type FinancialItemReport = z.infer<typeof financialItemReportSchema>;
+export type FinancialInventoryReport = z.infer<
+  typeof financialInventoryReportSchema
+>;

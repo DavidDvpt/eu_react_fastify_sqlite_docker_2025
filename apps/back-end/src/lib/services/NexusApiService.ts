@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import type { NexusApiItem } from '#src/types/nexusApi.js';
-import type { NexusRequestTypeEnum } from '@eu/types';
+import type { NexusRequestTypeEnum } from '@eu/zod-schemas';
 
 import { env } from '#src/config/env.js';
 import { nexusApiItemSchema } from '#src/lib/zodSchemas/nexusApiSchemas.js';

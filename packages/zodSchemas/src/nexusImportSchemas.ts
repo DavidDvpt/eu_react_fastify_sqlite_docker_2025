@@ -9,3 +9,5 @@ export const importResultSchema = z.object({
   notFound: z.string().array(),
   error: z.string().nullable().default(null),
 });
+
+export type NexusImportResult = z.infer<typeof importResultSchema>;

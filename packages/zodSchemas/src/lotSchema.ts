@@ -26,6 +26,7 @@ export const lotSortSchema = z.enum([
   "quantityRemaining",
   "lotType",
 ]);
+
 export const lotBodySchema = z.object({
   id: z.string(),
   quantityRemaining: z.coerce.number(),
@@ -63,3 +64,9 @@ export const lotQuerySchema = z.object({
   type: lotTransactionTypeSchema.optional(),
   hasInitialValue: booleanSchema.optional(),
 });
+
+export type LotFormBody = z.output<typeof lotBodySchema>;
+
+export type LotSortKey = z.infer<typeof lotSortSchema>;
+
+export type LotDto = z.infer<typeof lotDtoSchema>;

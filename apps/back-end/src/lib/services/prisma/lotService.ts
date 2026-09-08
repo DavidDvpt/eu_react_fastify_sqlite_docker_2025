@@ -1,7 +1,7 @@
 import { SortHelper } from '@eu/helpers';
 
 import type { Prisma } from '#prisma/generated/client.js';
-import type { LotDto, LotFormBody, LotSortKey, SortOptions } from '@eu/types';
+import type { LotDto, LotFormBody, LotSortKey, SortOptions } from '@eu/zod-schemas';
 
 import { type DatabaseClient } from '#prisma/prismaClient.js';
 import { lotWithTransactionLotsInclude, type LotWithLines } from '#src/types/prismaApi/lots.js';

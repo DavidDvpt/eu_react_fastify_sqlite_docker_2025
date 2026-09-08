@@ -6,8 +6,7 @@ import type { Item } from '#prisma/generated/client.js';
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { NexusApiItem } from '#src/types/nexusApi.js';
 import type { ImageListItem } from '#src/types/scraps/wikiItem.js';
-import type { NexusImportResult, NexusRequestTypeEnum } from '@eu/types';
-import type { ItemForm } from '@eu/zod-schemas';
+import type { ItemForm, NexusRequestTypeEnum, NexusImportResult } from '@eu/zod-schemas';
 
 import { WikiItemService } from '#src/lib/services/index.js';
 import { NexusApiService } from '#src/lib/services/NexusApiService.js';

@@ -37,3 +37,7 @@ export const nexusFormSchema = z.object({
 export const nexusUpdateParamSchema = z.object({
   type: nexusRequestTypeSchema,
 });
+
+export type NexusRequestTypeEnum = z.infer<typeof nexusRequestTypeSchema>;
+export type NexusUpdateDto = z.infer<typeof nexusDtoSchema>;
+export type NexusFormBody = z.output<typeof nexusFormSchema>;

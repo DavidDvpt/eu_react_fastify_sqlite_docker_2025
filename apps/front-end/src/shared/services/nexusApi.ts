@@ -1,10 +1,10 @@
 import { ApiService } from "@/shared/services/apiCrudService";
 import type {
   NexusFormBody,
-  NexusImportResult,
   NexusRequestTypeEnum,
   NexusUpdateDto,
-} from "@eu/types";
+  NexusImportResult,
+} from "@eu/zod-schemas";
 
 export default class NexusApi extends ApiService<
   never,

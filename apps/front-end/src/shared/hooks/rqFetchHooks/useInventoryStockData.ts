@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 
 import InventoryApi from "@/shared/services/inventoryApi";
-import type { StockQuery } from "@eu/types";
+import type { StockQuery } from "@eu/zod-schemas";
 
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";

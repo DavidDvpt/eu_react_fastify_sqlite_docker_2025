@@ -1,6 +1,6 @@
 import type { DatabaseClient } from '#prisma/prismaClient.js';
 import type { StockService } from '#src/lib/services/domain/stockService.js';
-import type { LotSortKey, SortOptions, TransactionTypeDto } from '@eu/types';
+import type { LotSortKey, SortOptions } from '@eu/zod-schemas';
 
 import { LotService } from '#src/lib/services/prisma/lotService.js';
 

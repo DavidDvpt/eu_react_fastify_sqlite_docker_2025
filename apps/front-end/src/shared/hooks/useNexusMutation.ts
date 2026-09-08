@@ -6,7 +6,7 @@ import type {
   NexusFormBody,
   NexusRequestTypeEnum,
   NexusUpdateDto,
-} from "@eu/types";
+} from "@eu/zod-schemas";
 
 export default function useNexusMutation() {
   const initMutation = useMutation({

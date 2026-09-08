@@ -5,7 +5,7 @@ import type {
   FinancialItemReport,
   TransactionEntries,
   TransactionValues,
-} from '@eu/types';
+} from '@eu/zod-schemas';
 
 const defaultValue: TransactionValues = { tt: 0, fee: 0, ttc: 0 };
 

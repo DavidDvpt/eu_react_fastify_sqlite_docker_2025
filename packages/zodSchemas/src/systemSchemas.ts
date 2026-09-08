@@ -96,3 +96,12 @@ export type ItemForm = z.infer<typeof itemFormSchema>;
 export type ItemQuery = z.infer<typeof itemQuerySchema>;
 export type ItemSortKeys = CategorySortKey;
 export type ItemDetailEnum = z.infer<typeof itemDetailsEnum>;
+
+export const finderDtoSchema = itemDtoSchema.extend({
+  depth: z.number().nullable().default(null),
+  usePerMinute: z.number().nullable().default(null),
+  nexusUrl: z.string().nullable().default(null),
+  ammoBurn: z.number().nullable().default(null),
+});
+
+export type Finder = z.infer<typeof finderDtoSchema>;
