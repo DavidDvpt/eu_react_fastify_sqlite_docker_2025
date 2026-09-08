@@ -85,7 +85,7 @@ export type TransactionStatusPatchDto = z.infer<
 >;
 export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
-export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
+export type TransactionQuery = z.infer<typeof transactionQuerySchema>;
 
 export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;

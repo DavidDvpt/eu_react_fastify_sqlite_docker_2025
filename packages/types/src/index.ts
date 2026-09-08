@@ -2,8 +2,6 @@
 export type * from "./itemFinder.js";
 export type * from "./lot.js";
 export type * from "./stock.js";
-export type * from "./prismaService.js";
-export * from "./common.js";
 export * from "./financial.js";
 export * from "./nexus.js";
 export * from "./nexusImport.js";

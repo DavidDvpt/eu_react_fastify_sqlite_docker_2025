@@ -1,6 +1,10 @@
 import type { PedCard } from '#prisma/generated/client.js';
-import type { PrismaMutationResponse } from '@eu/types';
-import type { PedcardDto, PedcardFormBody, PedcardTypeDto } from '@eu/zod-schemas';
+import type {
+  PedcardDto,
+  PedcardFormBody,
+  PedcardTypeDto,
+  PrismaMutationResponse,
+} from '@eu/zod-schemas';
 
 import { PedCardTupleType } from '#prisma/generated/enums.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';

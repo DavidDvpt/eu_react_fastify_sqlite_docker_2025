@@ -1,20 +1,18 @@
 import {
   transactionDtoSchema,
   transactionEntriesSchema,
+  type PrismaMutationResponse,
+  type TransactionEntries,
+  type TransactionEntry,
+  type TransactionBodyDto,
+  type TransactionCancelDto,
+  type TransactionStatusDto,
+  type TransactionStatusPatchDto,
+  type TransactionTypeDto,
   type TransactionDto,
 } from '@eu/zod-schemas';
 
 import type { DatabaseClient } from '#prisma/prismaClient.js';
-import type {
-  PrismaMutationResponse,
-  TransactionEntries,
-  TransactionEntry,
-  TransactionBodyDto,
-  TransactionCancelDto,
-  TransactionStatusDto,
-  TransactionStatusPatchDto,
-  TransactionTypeDto,
-} from '@eu/types';
 
 import { LotService } from '#src/lib/services/prisma/lotService.js';
 import { PedcardService } from '#src/lib/services/prisma/pedcardService.js';

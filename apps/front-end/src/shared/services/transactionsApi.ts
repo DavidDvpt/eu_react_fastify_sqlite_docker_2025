@@ -1,19 +1,16 @@
-import type {
-  PrismaMutationResponse,
-  TransactionBodyDto,
-  TransactionQuerySchema,
-  TransactionStatusPatchDto,
-} from "@eu/types";
+import { ApiService } from "@/shared/services/apiCrudService";
 import {
   transactionQuerySchema,
+  type PrismaMutationResponse,
+  type TransactionBodyDto,
   type TransactionDto,
   type TransactionDtos,
+  type TransactionQuery,
+  type TransactionStatusPatchDto,
 } from "@eu/zod-schemas";
 
-import { ApiService } from "@/shared/services/apiCrudService";
-
 export default class TransactionsApi extends ApiService<
-  TransactionQuerySchema,
+  TransactionQuery,
   TransactionDto[],
   TransactionBodyDto,
   PrismaMutationResponse,
