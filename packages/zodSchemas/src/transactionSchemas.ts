@@ -1,8 +1,18 @@
 import { z } from "zod";
 import { genericDateSchema, idSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
-import { transactionTypeSchema } from "./transactionTypeSchema.js";
 import { itemDtoSchema } from "./systemSchemas.js";
+
+export const transactionTypeSchema = z.enum([
+  "BUY",
+  "SELL",
+  "FOUND",
+  "GIFT",
+  "EXISTING_STOCK",
+  "SELL",
+  "GIVEN",
+]);
+export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
 
 export const transactionStatusDtoSchema = z.enum([
   "SOLDED",
@@ -10,6 +20,8 @@ export const transactionStatusDtoSchema = z.enum([
   "RETURNED",
   "CANCELED",
 ]);
+export type TransactionStatusDto = z.output<typeof transactionStatusDtoSchema>;
+
 export const transactionStatusPatchDtoSchema =
   transactionStatusDtoSchema.extract(["SOLDED", "RETURNED", "CANCELED"]);
 export const transactionStatusPatchSchema = z.object({
@@ -67,3 +79,17 @@ export const transactionDtoSchema = transactionValuesSchema.extend({
 
 export type TransactionDto = z.infer<typeof transactionDtoSchema>;
 export type TransactionDtos = TransactionDto[];
+
+export type TransactionStatusPatchDto = z.infer<
+  typeof transactionStatusPatchDtoSchema
+>;
+export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
+
+export type TransactionQuerySchema = z.infer<typeof transactionQuerySchema>;
+
+export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
+export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
+// export type TransactionDto = z.infer<typeof transactionDtoSchema>;
+export type TransactionValues = z.infer<typeof transactionValuesSchema>;
+
+export type TransactionBodyDto = z.infer<typeof transactionBodySchema>;

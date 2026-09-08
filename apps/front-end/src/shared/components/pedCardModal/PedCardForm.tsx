@@ -3,7 +3,7 @@ import InputRHF from "../form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
 import pedcardApi from "@/shared/services/pedCardApi";
 import { pedcardFormSchema } from "@eu/zod-schemas";
-import type { PedCardFormBody } from "@eu/types";
+import type { PedcardFormBody } from "@eu/zod-schemas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 interface PedCardFormProps {
@@ -19,7 +19,7 @@ function PedCardForm({
   submitLabel,
   onSuccess,
 }: PedCardFormProps) {
-  const handleSubmit = async (data: PedCardFormBody) => {
+  const handleSubmit = async (data: PedcardFormBody) => {
     const currentBalance = balance ?? 0;
     const isInitialBalance = initialized !== true;
     const value = isInitialBalance ? data.value : data.value - currentBalance;

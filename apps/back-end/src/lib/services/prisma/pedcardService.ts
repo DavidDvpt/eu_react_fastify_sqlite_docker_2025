@@ -1,10 +1,6 @@
 import type { PedCard } from '#prisma/generated/client.js';
-import type {
-  PedcardDto,
-  PedCardFormBody,
-  PedCardTypeDto,
-  PrismaMutationResponse,
-} from '@eu/types';
+import type { PrismaMutationResponse } from '@eu/types';
+import type { PedcardDto, PedcardFormBody, PedcardTypeDto } from '@eu/zod-schemas';
 
 import { PedCardTupleType } from '#prisma/generated/enums.js';
 import { type DatabaseClient } from '#prisma/prismaClient.js';
@@ -13,7 +9,7 @@ const PEDCARD_INSUFFICIENT_BALANCE_ERROR = 'PEDCARD_INSUFFICIENT_BALANCE';
 export class PedcardService {
   constructor(private readonly prisma: DatabaseClient) {}
 
-  private pedcardFormParse(b: PedCardFormBody) {
+  private pedcardFormParse(b: PedcardFormBody) {
     return {
       value: b.value,
       type: b.type,
@@ -26,7 +22,7 @@ export class PedcardService {
     const parsed: PedcardDto = {
       id: value.id,
       createdat: value.created_at,
-      type: value.type as PedCardTypeDto,
+      type: value.type as PedcardTypeDto,
       transactionId: value.transaction_id,
       userId: value.user_id,
       value: Number(value.value),
@@ -90,7 +86,7 @@ export class PedcardService {
     transactionId,
   }: {
     userId: string;
-    body: PedCardFormBody;
+    body: PedcardFormBody;
     transactionId?: string;
   }) {
     const row = await this.prisma.pedCard.create({
@@ -111,7 +107,7 @@ export class PedcardService {
   }: {
     userId: string;
     transactionId: string;
-    bodys: PedCardFormBody[];
+    bodys: PedcardFormBody[];
   }): Promise<PrismaMutationResponse[]> {
     const datas = bodys.map((b) => this.pedcardFormParse({ ...b }));
 
@@ -138,7 +134,7 @@ export class PedcardService {
   }: {
     id: string;
     userId: string;
-    body: Partial<PedCardFormBody>;
+    body: Partial<PedcardFormBody>;
   }) {
     const row = await this.prisma.pedCard.update({
       where: { user_id: userId, id },

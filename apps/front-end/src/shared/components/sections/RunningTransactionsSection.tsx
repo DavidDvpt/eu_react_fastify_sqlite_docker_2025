@@ -1,48 +1,62 @@
 import { GenericList } from "@/shared/components";
 import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
 import { FormatTools } from "@/shared/tools/formatTools";
+import {
+  transactionStatusPatchDtoSchema,
+  type TransactionDto,
+} from "@eu/zod-schemas";
 
 import { useNavigate } from "react-router-dom";
 import { useTransactionsData, useTransactionMutation } from "@/shared/hooks";
 
 function RunningTransactionsSection() {
   const navigate = useNavigate();
-  const { running, isLoading, isError } = useTransactionsData({
-    runningProps: { status: "RUNNING" },
-  });
+  const { running, isLoading, isError } = useTransactionsData();
 
   const { statusMutation } = useTransactionMutation();
   const totalTtc = running.reduce((sum, row) => sum + row.ttc, 0);
 
+  const handleStatusChange = ({
+    row,
+    value,
+  }: {
+    row: TransactionDto;
+    value: string;
+  }) => {
+    const result = transactionStatusPatchDtoSchema.safeParse(value);
+
+    if (!result.success) return;
+
+    statusMutation.mutate(
+      {
+        row,
+        status: result.data,
+      },
+      {
+        onSuccess(_data, { row }) {
+          const query = {
+            action: row.status === "SOLDED" ? "sell" : "resell",
+            itemId: row.item?.id,
+            ttc: row.ttc,
+            quantity: row.quantity,
+            closePath: "/home",
+          };
+
+          const search = new URLSearchParams();
+          search.set("transactionModal", JSON.stringify(query));
+
+          navigate({
+            pathname: "/home",
+            search: search.toString(),
+          });
+        },
+      },
+    );
+  };
+
   const columns = createRunningTransactionsColumns({
     isRowPending: () => statusMutation.isPending,
-    onChange: ({ row, value }) => {
-      statusMutation.mutate(
-        {
-          row,
-          status: value,
-        },
-        {
-          onSuccess(_data, { row }) {
-            const query = {
-              action: row.status === "SOLDED" ? "sell" : "resell",
-              itemId: row.item?.id,
-              ttc: row.ttc,
-              quantity: row.quantity,
-              closePath: "/home",
-            };
-
-            const search = new URLSearchParams();
-            search.set("transactionModal", JSON.stringify(query));
-
-            navigate({
-              pathname: "/home",
-              search: search.toString(),
-            });
-          },
-        },
-      );
-    },
+    onChange: handleStatusChange,
   });
 
   return (

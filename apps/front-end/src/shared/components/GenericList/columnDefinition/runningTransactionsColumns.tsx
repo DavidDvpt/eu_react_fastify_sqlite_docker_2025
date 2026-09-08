@@ -1,19 +1,14 @@
 import { getItemImageUrl } from "@/pages/managePage";
 import FormatTools from "@/shared/tools/formatTools";
-import type {
-  GenericColumnOnSelectChangeProps,
-  GenericListColumn,
-} from "@/shared/types";
-import type { TransactionStatusPatchDto } from "@eu/types";
+import type { GenericListColumn } from "@/shared/types";
 import {
-  transactionStatusPatchDtoSchema,
   type TransactionDto,
+  type TransactionStatusPatchDto,
 } from "@eu/zod-schemas";
 
 type RunningTransactionStatusChange = {
   row: TransactionDto;
-  accessor?: "status";
-  value: TransactionStatusPatchDto;
+  value: string;
 };
 
 const statusOptions: Array<{
@@ -44,12 +39,7 @@ const createRunningTransactionsColumns = ({
       headerCellClassName: "px-1",
       bodyCellClassName: "",
       imageSrc: (_item, row) => {
-        return (
-          getItemImageUrl(
-            row.item?.imageUrlId ?? "",
-            "normal",
-          ) ?? ""
-        );
+        return getItemImageUrl(row.item?.imageUrlId ?? "", "normal") ?? "";
       },
       imageAlt: (row) => row.item?.name ?? "Image",
     },
@@ -106,21 +96,7 @@ const createRunningTransactionsColumns = ({
       bodyCellClassName: "justify-end",
       selectOptions: statusOptions,
       disabled: (row) => isRowPending(row),
-      onSelectChange: ({
-        row,
-        accessor,
-        value,
-      }: GenericColumnOnSelectChangeProps<TransactionDto>) => {
-        const result = transactionStatusPatchDtoSchema.safeParse(value);
-
-        if (accessor !== "status" || !result.success) return;
-
-        onChange({
-          row,
-          accessor,
-          value: result.data,
-        });
-      },
+      onSelectChange: ({ row, value }) => onChange({ row, value }),
     },
   ];
 };

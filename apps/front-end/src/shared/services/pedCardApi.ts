@@ -7,15 +7,15 @@ import type {
   PedcardCanPay,
   PedcardCheck,
   PedcardDto,
-  PedCardFormBody,
-} from "@eu/types";
+  PedcardFormBody,
+} from "@eu/zod-schemas";
 
 const pedcardRoute = "/pedcard";
 
 export default class pedcardApi extends ApiService<
   Record<string, never>,
   PedcardDto[],
-  PedCardFormBody
+  PedcardFormBody
 > {
   protected route = `${pedcardRoute}`;
   protected querySchema = null;
