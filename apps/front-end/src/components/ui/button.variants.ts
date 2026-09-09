@@ -26,7 +26,7 @@ export const buttonVariants = {
   navVertical:
     "w-full justify-center border border-ternary-500 text-center text-sm text-black no-underline hover:bg-ternary-100 hover:borderternary-500 data-[active=true]:font-bold data-[active=true]:shadow-ambient-md",
   navHorizontal:
-    "inline-flex min-w-0 flex-1 items-center justify-center px-3 py-2 text-m font-medium text-black no-underline transition-colors hover:text-black hover:bg-ternary-100 data-[active=true]:font-bold",
+    "inline-flex min-w-0 flex-1 items-center justify-center text-m font-medium text-black no-underline transition-colors hover:text-black hover:bg-ternary-100 data-[active=true]:font-bold",
 } as const;
 
 export const buttonSizeClasses = {
@@ -34,5 +34,5 @@ export const buttonSizeClasses = {
   sm: "h-8 rounded-md px-3 text-sm",
   lg: "h-10 rounded-md px-8",
   icon: "h-9 w-9",
-  nav: "h-auto px-3 py-4 text-lg",
+  nav: "h-[100%] px-2 text-lg",
 } as const;
