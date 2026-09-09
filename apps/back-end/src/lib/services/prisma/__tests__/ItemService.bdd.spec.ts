@@ -65,7 +65,6 @@ describe('ItemService', () => {
       isUntradeable: null,
       isRare: null,
       type: null,
-      category: null,
     });
   });
 

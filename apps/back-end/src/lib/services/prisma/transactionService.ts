@@ -55,12 +55,12 @@ export class TransactionService {
     const qty = t.lines.reduce((t, c) => {
       return t + c.quantity;
     }, 0);
-    const itemId = t.lines[0].lot.item_id;
+    const itemId = t.lines[0]?.lot.item_id ?? '';
     const lines = t.lines.map((m) => ({ quantity: m.quantity, lotId: m.lot_id, lot: { itemId } }));
 
     const parsed: TransactionDto = {
       id: t.id,
-      itemId: '',
+      itemId,
       tt: Number(t.tt),
       fee: Number(t.fee),
       ttc: Number(t.ttc),

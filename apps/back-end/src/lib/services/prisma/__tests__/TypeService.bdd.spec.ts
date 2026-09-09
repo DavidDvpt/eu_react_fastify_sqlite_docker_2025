@@ -47,6 +47,7 @@ describe('TypeService', () => {
       userId: 'user-1',
       createdAt: '2026-08-01T10:00:00.000Z',
       updatedAt: null,
+      category: null,
     });
   });
 

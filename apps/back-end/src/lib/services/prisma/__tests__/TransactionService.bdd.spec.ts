@@ -66,7 +66,8 @@ describe('TransactionService', () => {
         { quantity: 2, lotId: 'lot-1', lot: { itemId: 'item-1' } },
         { quantity: 3, lotId: 'lot-2', lot: { itemId: 'item-1' } },
       ],
-      userId: 'user-1',
+      itemId: 'item-1',
+      item: null,
       status: 'RUNNING',
       transactionType: 'SELL',
     });
@@ -178,7 +179,7 @@ describe('TransactionService', () => {
         tt: 100,
         fee: 12,
         ttc: 112,
-        itemId: null,
+        itemId: 'item-1',
         lotId: null,
         quantityLot: null,
         status: 'RUNNING',

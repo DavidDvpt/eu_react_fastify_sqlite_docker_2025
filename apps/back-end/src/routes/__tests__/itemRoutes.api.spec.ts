@@ -102,6 +102,7 @@ describe('itemRoutes', () => {
     expect(itemServiceMocks.create).toHaveBeenCalledWith({
       userId: expect.any(String),
       body: {
+        id: null,
         name: 'Oil',
         imageUrlId: 'img-1',
         value: 10,
@@ -149,6 +150,7 @@ describe('itemRoutes', () => {
       id: 'item-1',
       userId: expect.any(String),
       body: {
+        id: null,
         name: 'Updated Item',
         imageUrlId: 'img-1',
         value: 10,
