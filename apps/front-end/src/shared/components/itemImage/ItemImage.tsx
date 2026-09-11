@@ -27,7 +27,7 @@ function ItemImage({ url, alt, size, classname }: ItemImageProps) {
           onError={() => setFailedUrl(url)}
         />
       ) : (
-        <span className="text-black" aria-label={`${alt} indisponible`}>
+        <span className="text-text" aria-label={`${alt} indisponible`}>
           -
         </span>
       )}

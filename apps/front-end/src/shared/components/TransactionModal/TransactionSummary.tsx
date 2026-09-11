@@ -22,7 +22,7 @@ function TransactionSummary({
     deltaValue < 0
       ? "text-destructive-700"
       : deltaValue === 0
-        ? "text-black"
+        ? "text-text"
         : "text-success-700",
   );
   return (

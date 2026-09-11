@@ -18,7 +18,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1px solid var(--L4C4);
+  border: 1px solid var(--black);
   overflow: hidden;
   background-color: var(--white);
   padding: 2px;

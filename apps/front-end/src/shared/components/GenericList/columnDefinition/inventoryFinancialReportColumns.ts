@@ -29,14 +29,13 @@ export const inventoryFinancialReportColumn: GenericListColumn<InventoryFinancia
     },
   ];
 
-export const inventoryFinancialReportListClassName =
-  "m-2 flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md";
+export const inventoryFinancialReportListClassName = "m-2";
 
 export const inventoryFinancialReportBodyClassName =
   "min-h-0 overflow-auto pr-1";
 
 export const inventoryFinancialReportRowBaseClassName =
-  "grid items-stretch text-black";
+  "grid items-stretch text-text";
 
 export const inventoryFinancialReportRowClassName =
   "border-b-0 last:border-b-0";

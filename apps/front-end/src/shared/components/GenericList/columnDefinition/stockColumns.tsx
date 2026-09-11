@@ -27,7 +27,7 @@ const stockColumns = (
       accessor: "name",
       fillRemainingSpace: true,
       minWidth: 280,
-      bodyCellClassName: "text-black font-semibold pl-1",
+      bodyCellClassName: "text-text font-semibold pl-1",
     },
     {
       key: "quantity",

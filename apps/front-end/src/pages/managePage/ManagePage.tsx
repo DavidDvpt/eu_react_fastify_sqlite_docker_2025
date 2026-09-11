@@ -40,7 +40,7 @@ function ManagePage() {
       {shouldShowTable ? (
         <ManageTable activeTab={selectedTab} {...queries} />
       ) : (
-        <Section className="flex min-h-0 flex-1 items-center justify-center text-center text-black">
+        <Section className="flex min-h-0 flex-1 items-center justify-center text-center text-text">
           {emptySelectionMessage}
         </Section>
       )}

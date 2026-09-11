@@ -34,14 +34,14 @@ function TransactionFormContent({
         quantityLabel="Quantite"
         feeLabel="Fee"
         totalLabel={action === "buy" ? "Achat" : "Vente"}
-        totalLabelClassName="text-sm text-black"
+        totalLabelClassName="text-sm text-text"
         feeReadOnly={isFeeReadOnly}
       />
 
       <CheckboxRHF
         name="autoCalculation"
         label="Calcul auto"
-        labelClassName="text-black"
+        labelClassName="text-text"
         onCheckedChange={applyAutoCalculationIfNeeded}
       />
 

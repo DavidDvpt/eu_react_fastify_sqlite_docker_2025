@@ -13,15 +13,14 @@
   padding: 1.4rem 1.6rem;
   border: 1px solid color-mix(in oklab, var(--color-border) 82%, white);
   border-radius: 1rem;
-  background:
-    linear-gradient(
-      135deg,
-      color-mix(in oklab, var(--color-card) 88%, white) 0%,
-      color-mix(in oklab, var(--color-info) 10%, var(--color-card)) 100%
-    );
+  background: linear-gradient(
+    135deg,
+    color-mix(in oklab, var(--color-card) 88%, white) 0%,
+    color-mix(in oklab, var(--color-info) 10%, var(--color-card)) 100%
+  );
   box-shadow:
-    0 18px 40px rgb(15 23 42 / 0.08),
-    inset 0 1px 0 rgb(255 255 255 / 0.65);
+    var(--shadow-surface),
+    inset 0 1px 0 rgb(216 225 232 / 8%);
 }
 
 .capsules {

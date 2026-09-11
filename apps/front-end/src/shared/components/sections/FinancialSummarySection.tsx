@@ -9,7 +9,6 @@ import {
   pedCardSummaryBodyClassName,
   pedCardSummaryColumn,
   pedCardSummaryFooterRowClassName,
-  pedCardSummaryListClassName,
   pedCardSummaryRowBaseClassName,
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
@@ -18,9 +17,7 @@ import { useInventoryStockData } from "@/shared/hooks";
 
 function FinancialSummarySection() {
   const { balance } = usePedcardData();
-  const { running: runningRows } = useTransactionsData({
-    runningProps: { status: "RUNNING" },
-  });
+  const { running: runningRows } = useTransactionsData();
   const { inventoryStockValue } = useInventoryStockData();
 
   const totalRunningTransactionsTtc = useMemo(
@@ -63,7 +60,6 @@ function FinancialSummarySection() {
       loadingMessage="Chargement du récapitulatif..."
       errorMessage="Erreur de chargement du récapitulatif."
       emptyMessage="Aucune donnée."
-      className={pedCardSummaryListClassName}
       bodyClassName={pedCardSummaryBodyClassName}
       rowBaseClassName={pedCardSummaryRowBaseClassName}
       rowClassName={pedCardSummaryRowClassName}

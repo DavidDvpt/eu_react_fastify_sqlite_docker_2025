@@ -1,4 +1,4 @@
-import { Panel, Section } from "@/shared/components/Containers";
+import { Panel } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
 import {
   FinancialSummarySection,
@@ -8,21 +8,22 @@ import FinancialReportSection from "@/shared/components/sections/FinancialReport
 
 function HomePage() {
   return (
-    <Panel className="mx-0 grid h-full min-h-0 w-full grid-cols-12 gap-4 p-4">
-      <Section
-        className="col-span-6 flex min-h-0 flex-col overflow-hidden p-0"
-        shadow={false}
-      >
+    <Panel
+      className="mx-0 grid h-full min-h-0 w-full grid-cols-12 gap-4 p-4"
+      shadow={false}
+    >
+      <Panel className="col-span-6" shadow={false}>
         <RunningTransactionsSection />
-      </Section>
+      </Panel>
 
-      <Section
-        className="col-span-6 flex min-h-0 flex-col overflow-hidden p-0"
-        shadow={false}
-      >
-        <FinancialSummarySection />
-        <FinancialReportSection />
-      </Section>
+      <Panel className="col-span-6" shadow={false}>
+        <Panel shadow={false} className="h-auto">
+          <FinancialSummarySection />
+        </Panel>
+        <Panel shadow={false} className="h-auto">
+          <FinancialReportSection />
+        </Panel>
+      </Panel>
 
       <TransactionModal />
     </Panel>

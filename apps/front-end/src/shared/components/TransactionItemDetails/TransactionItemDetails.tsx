@@ -64,7 +64,7 @@ function TransactionItemDetails({
               onError={() => setFailedImage(image)}
             />
           ) : (
-            <div className="flex min-h-24 items-center justify-center bg-white text-black">
+            <div className="flex min-h-24 items-center justify-center bg-surface text-text">
               -
             </div>
           )}

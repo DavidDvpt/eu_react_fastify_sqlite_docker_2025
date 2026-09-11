@@ -9,7 +9,7 @@ const createCategoryColumns = (): GenericListColumn<CategoryDto>[] => [
     accessor: "name",
     fillRemainingSpace: true,
     minWidth: 240,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
   },
 ];
 

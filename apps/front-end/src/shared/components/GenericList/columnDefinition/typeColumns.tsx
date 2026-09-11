@@ -9,7 +9,7 @@ const createTypeColumns = (): GenericListColumn<TypeDto>[] => [
     accessor: "name",
     fillRemainingSpace: true,
     minWidth: 320,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
   },
   {
     key: "category",
@@ -17,7 +17,7 @@ const createTypeColumns = (): GenericListColumn<TypeDto>[] => [
     kind: "text",
     minWidth: 320,
     maxWidth: 320,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
     value: (row) => row.category?.name ?? "unknown",
   },
 ];

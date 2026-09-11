@@ -24,7 +24,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     kind: "text",
     accessor: "name",
     fillRemainingSpace: true,
-    bodyCellClassName: "text-black font-semibold pl-1",
+    bodyCellClassName: "text-text font-semibold pl-1",
   },
   {
     key: "type",
@@ -32,7 +32,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     kind: "text",
     minWidth: 120,
     maxWidth: 200,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
     value: (row) => row.type?.name ?? "Unknown",
   },
 
@@ -43,7 +43,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     accessor: "isLimited",
     minWidth: 60,
     maxWidth: 80,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
     value: (row) =>
       "isLimited" in row ? (row.isLimited ? "Oui" : "Non") : "Non",
   },
@@ -53,7 +53,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     kind: "text",
     minWidth: 60,
     maxWidth: 80,
-    bodyCellClassName: "text-black",
+    bodyCellClassName: "text-text",
     value: (row) => (row.type?.isStackable ? "Oui" : "Non"),
   },
   {
@@ -63,7 +63,7 @@ const createItemColumns = (): GenericListColumn<ItemDto>[] => [
     minWidth: 80,
     maxWidth: 100,
     align: "right",
-    bodyCellClassName: "text-black font-semibold",
+    bodyCellClassName: "text-text font-semibold",
     value: (row) =>
       FormatTools.trimTrailingZeros(
         FormatTools.formatToDecimals("value" in row ? row.value : 0, 5),

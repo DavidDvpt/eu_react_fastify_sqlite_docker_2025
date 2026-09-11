@@ -6,7 +6,7 @@ export function AppLink({ className, ...props }: LinkProps) {
   return (
     <Link
       className={cn(
-        "text-button-tertiary-text hover:text-button-tertiary-hover-text underline-offset-4 hover:underline",
+        "text-primary-700 hover:text-primary-900 underline-offset-4",
         className,
       )}
       {...props}

@@ -98,7 +98,7 @@ function TransactionPanelContent({
             type="button"
             variant="secondary"
             size="sm"
-            className="min-w-[110px] text-black"
+            className="min-w-[110px] text-text"
             onClick={onBack}
             disabled={createMutation.isPending}
           >

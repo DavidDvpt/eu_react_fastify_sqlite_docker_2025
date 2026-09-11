@@ -24,12 +24,9 @@ export const pedCardSummaryColumn: GenericListColumn<PedCardSummaryRow>[] = [
   },
 ];
 
-export const pedCardSummaryListClassName =
-  "m-2 flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md";
-
 export const pedCardSummaryBodyClassName = "min-h-0 overflow-auto pr-1";
 
-export const pedCardSummaryRowBaseClassName = "grid items-stretch text-black";
+export const pedCardSummaryRowBaseClassName = "grid items-stretch text-text";
 
 export const pedCardSummaryRowClassName = "border-b-0 last:border-b-0";
 

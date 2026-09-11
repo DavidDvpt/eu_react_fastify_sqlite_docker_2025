@@ -26,15 +26,15 @@ function SelectCell<T>({ column, row, value }: SelectCellProps<T>) {
         })
       }
     >
-      <SelectTrigger className="h-8 w-full rounded-md border border-table-border bg-white px-2 text-sm shadow-sm">
+      <SelectTrigger className="h-8 w-full rounded-md border border-table-border bg-surface px-2 text-sm shadow-sm">
         <SelectValue />
       </SelectTrigger>
-      <SelectContent className="border border-border bg-white shadow-md">
+      <SelectContent className="border border-border bg-surface shadow-md">
         {(column.selectOptions ?? []).map((option) => (
           <SelectItem
             key={option.value}
             value={option.value}
-            className="bg-white"
+            className="bg-surface"
           >
             {option.label}
           </SelectItem>

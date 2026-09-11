@@ -82,7 +82,7 @@ function FinancialReportSection() {
       loadingMessage="Chargement du rapport financier..."
       errorMessage="Erreur de chargement du rapport financier."
       emptyMessage="Aucune donnée."
-      className={inventoryFinancialReportListClassName}
+      className="flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md"
       bodyClassName={inventoryFinancialReportBodyClassName}
       rowBaseClassName={inventoryFinancialReportRowBaseClassName}
       rowClassName={inventoryFinancialReportRowClassName}

@@ -4,7 +4,7 @@ import { GenericCellRenderer } from "./GenericCellRenderer";
 import type { GenericListColumn } from "@/shared/types";
 
 const DEFAULT_ROW_CLASS =
-  "grid items-stretch border-b border-table-row-divider text-black last:border-b-0 hover:bg-table-row-hover-bg";
+  "grid items-stretch border-b border-table-row-divider text-text last:border-b-0 hover:bg-table-row-hover-bg";
 
 const CONTROL_KINDS = new Set(["button", "select", "checkbox"]);
 
@@ -104,7 +104,7 @@ function GenericListBody<T>({
                   <div
                     key={column.key}
                     className={cn(
-                      "flex min-w-0 overflow-hidden text-black",
+                      "flex min-w-0 overflow-hidden text-text",
                       alignClass(column.align),
                       column.bodyCellClassName,
                       hasCellClick ? "cursor-pointer" : "",
