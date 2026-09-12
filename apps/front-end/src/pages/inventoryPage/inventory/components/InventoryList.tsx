@@ -4,12 +4,12 @@ import { GenericList } from "@/shared/components";
 import { Section } from "@/shared/components/Containers";
 
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { GenericListViewMode } from "@/shared/components/GenericList/genericListTypes";
 import type { ItemWithStock } from "@/shared/types";
 
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
 import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
 import type { InventoryPageQuery } from "@/pages/inventoryPage/inventoryPageSchema";
+import InventoryItemCard from "./InventoryItemCard";
 
 interface InventoryListProps extends InventoryPageQuery {
   className?: string;
@@ -21,7 +21,7 @@ function InventoryList({
   categoryId,
   typeId,
   showAllItems,
-  urlViewMode,
+  viewMode,
   onSelectedItem,
 }: InventoryListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
@@ -49,7 +49,7 @@ function InventoryList({
   return (
     <Section className={className}>
       <GenericList<ItemWithStock>
-        columns={stockColumns(urlViewMode === "card")}
+        columns={stockColumns(viewMode === "card")}
         rows={visibleStock}
         getRowKey={(row) => row.id}
         onRowClick={(row) => onSelectedItem(row.id)}
@@ -68,7 +68,8 @@ function InventoryList({
         hasHeader
         allowCardView
         showViewModeSwitch={false}
-        viewMode={urlViewMode as GenericListViewMode | null}
+        viewMode={viewMode}
+        CardComponent={InventoryItemCard}
         footerConfig={{
           rowClassName: "justify-end py-2 pr-3 font-semibold text-text",
           cells: [

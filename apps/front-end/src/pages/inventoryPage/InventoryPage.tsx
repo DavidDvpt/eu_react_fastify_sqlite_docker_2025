@@ -29,7 +29,7 @@ function InventoryPage() {
 
   return (
     <Panel className="min-h-0 gap-2 mx-0">
-      <GenericFilter context="inventory" className="m-2" />
+      <GenericFilter context="inventory" className="shadow-ambient-md" />
 
       <Section
         className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"

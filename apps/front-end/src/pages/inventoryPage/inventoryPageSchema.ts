@@ -9,7 +9,7 @@ export const inventoryPageQuerySchema = genericFilterSchema
     showAllItems: z
       .preprocess((value) => (value === "1" ? true : value), booleanSchema)
       .optional(),
-    urlViewMode: genericListViewModeSchema.default("list"),
+    viewMode: genericListViewModeSchema.default("list"),
   });
 
 export type InventoryPageQuery = z.infer<typeof inventoryPageQuerySchema>;

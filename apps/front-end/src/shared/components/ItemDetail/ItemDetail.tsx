@@ -64,7 +64,7 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
 
   return (
     <Section className="flex flex-col gap-4 p-2 m-2">
-      <h1 className="m-0 p-0">{item.name}</h1>
+      <h1 className="m-0 p-0 text-base">{item.name}</h1>
       <div className="flex">
         <ItemImage
           url={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
@@ -72,17 +72,33 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
           size="medium"
         />
 
-        <div className="px-4 gap-1 text-sm">
-          <p className="my-0 mb-2">
-            {`Prix unitaire: ${FormatTools.pedFormat().format(item.value)} Ped(s)`}
-          </p>
-          <p className="my-0 mb-2">Quantité: {item.stock}</p>
-          <p className="my-0">
-            {`Valeur: ${FormatTools.pedFormat().format(totalValue)} Ped(s)`}
-          </p>
+        <div className="grid grid-cols-2 content-start gap-x-4 gap-y-1 px-4 text-xs">
+          <span className="text-muted-foreground">Prix unitaire</span>
+          <span>
+            {FormatTools.pedFormat().format(item.value)} Ped(s)
+          </span>
+          <span className="text-muted-foreground">Weight</span>
+          <span>
+            {item.weight === null
+              ? "-"
+              : FormatTools.formatToThreeDecimals(item.weight)}
+          </span>
+          <span className="text-muted-foreground">Non échangeable</span>
+          <span>{item.isUntradeable ? "Oui" : "Non"}</span>
+          <span className="text-muted-foreground">Rare</span>
+          <span>{item.isRare ? "Oui" : "Non"}</span>
         </div>
       </div>
-      <div className="flex items-center justify-end gap-2">
+      <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
+        <span className="text-muted-foreground">Quantité</span>
+        <span>{item.stock}</span>
+        <span className="text-muted-foreground">Valeur</span>
+        <span>{FormatTools.pedFormat().format(totalValue)} Ped(s)</span>
+      </div>
+      {item.description && (
+        <p className="m-0 text-xs text-text">{item.description}</p>
+      )}
+      <div className="flex items-center justify-end gap-2 pt-1">
         {buyButton}
         {sellButton}
         {onBack && (

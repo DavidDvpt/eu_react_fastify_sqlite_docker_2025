@@ -80,7 +80,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
       <div className="flex flex-end">
         <Button
           type="button"
-          variant="ternary"
+          variant="primary"
           size="sm"
           className="ml-auto w-[100px]"
           onClick={() => updateValue("reset", undefined)}
