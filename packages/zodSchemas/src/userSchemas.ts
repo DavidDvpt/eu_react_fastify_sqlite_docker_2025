@@ -4,10 +4,10 @@ import { booleanSchema, genericDateSchema } from "./common.js";
 export const userRoleSchema = z.enum(["ADMIN", "USER"]);
 
 export const userSignInFormSchema = z.object({
-  pseudo: z.string().min(8, "Le pseudo doit être de 8 caractères minimim"),
+  pseudo: z.string().min(8, "Le pseudo doit être de 8 caractères minimum"),
   password: z
     .string()
-    .min(8, "Le mot de passe doit être de 8 caractères minimim"),
+    .min(8, "Le mot de passe doit être de 8 caractères minimum"),
 });
 
 export const userSignUpFormSchema = userSignInFormSchema.extend({

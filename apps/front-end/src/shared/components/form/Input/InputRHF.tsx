@@ -69,7 +69,7 @@ function InputRHF({
             className,
             inputClassName,
             fieldState.error
-              ? "border-destructive-300 ring-destructive-300"
+              ? "border-error-500 focus-visible:ring-error-500"
               : "",
             isPasswordField ? "pr-10" : "",
           )}
@@ -107,7 +107,7 @@ function InputRHF({
       {!hideErrorMessage && fieldState.error?.message ? (
         <p
           className={cn(
-            "m-0 text-[0.8rem] italic text-destructive-300",
+            "m-0 text-[0.8rem] italic text-error-500",
             errorClassName,
           )}
         >

@@ -43,6 +43,18 @@
 
   --color-input: var(--input-bg);
 
+  --color-primary-100: var(--primary-100);
+  --color-primary-300: var(--primary-300);
+  --color-primary-500: var(--primary-500);
+  --color-primary-700: var(--primary-700);
+  --color-primary-900: var(--primary-900);
+
+  --color-error-100: var(--error-100);
+  --color-error-300: var(--error-300);
+  --color-error-500: var(--error-500);
+  --color-error-700: var(--error-700);
+  --color-error-900: var(--error-900);
+
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: var(--radius);
   --radius-lg: calc(var(--radius) + 2px);
@@ -131,12 +143,6 @@
   --color-accent-foreground: var(--bg);
   --color-destructive: var(--danger);
 
-  --color-primary-100: var(--primary-100);
-  --color-primary-300: var(--primary-300);
-  --color-primary-500: var(--primary-500);
-  --color-primary-700: var(--primary-700);
-  --color-primary-900: var(--primary-900);
-
   --color-ternary-100: var(--surface-hover);
   --color-ternary-300: var(--border-active);
   --color-ternary-500: var(--border-active);
@@ -152,10 +158,10 @@
   --color-warning-500: var(--warning);
   --color-warning-700: var(--warning);
 
-  --color-destructive-100: var(--danger);
-  --color-destructive-300: var(--danger);
-  --color-destructive-500: var(--danger);
-  --color-destructive-700: var(--danger);
+  --color-destructive-100: var(--error-100);
+  --color-destructive-300: var(--error-300);
+  --color-destructive-500: var(--error-500);
+  --color-destructive-700: var(--error-700);
 
   /* Spacing scale used by the existing utility classes. */
 }
@@ -198,7 +204,13 @@
 
   --success: #4f9b72;
   --warning: #d6a348;
-  --danger: #b95656;
+  /* Error scale, based on the former destructive color. */
+  --error-100: #f4cccc;
+  --error-300: #dc8f8f;
+  --error-500: #c96565;
+  --error-700: #b84f4f;
+  --error-900: #853838;
+  --danger: var(--error-700);
 
   --input-bg: var(--blue-800);
 
@@ -227,7 +239,12 @@
   --primary-900: #9d4f16;
   --success: #3f7f5d;
   --warning: #a87822;
-  --danger: #a64747;
+  --error-100: #f4cccc;
+  --error-300: #dc8f8f;
+  --error-500: #c96565;
+  --error-700: #b84f4f;
+  --error-900: #853838;
+  --danger: var(--error-700);
 }
 
 @layer base {
