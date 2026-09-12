@@ -8,20 +8,14 @@ import FinancialReportSection from "@/shared/components/sections/FinancialReport
 
 function HomePage() {
   return (
-    <Panel
-      className="mx-0 grid h-full min-h-0 w-full grid-cols-12 gap-4 p-4"
-    >
+    <Panel className="mx-0 grid h-full min-h-0 w-full grid-cols-12 gap-0 p-4">
       <Panel className="col-span-6">
         <RunningTransactionsSection />
       </Panel>
 
-      <Panel className="col-span-6">
-        <Panel className="h-auto">
-          <FinancialSummarySection />
-        </Panel>
-        <Panel className="h-auto">
-          <FinancialReportSection />
-        </Panel>
+      <Panel className="col-span-6 flex flex-col space-y-4">
+        <FinancialSummarySection />
+        <FinancialReportSection />
       </Panel>
 
       <TransactionModal />

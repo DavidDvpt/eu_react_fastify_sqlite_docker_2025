@@ -217,7 +217,7 @@
   --radius: 0.375rem;
 
   --shadow-surface:
-    0 4px 16px rgba(4, 16, 122, 0.3), 0 0 0 1px rgb(49 89 121 / 12%);
+    0 5px 12px rgb(8 13 20 / 65%), 0 2px 14px rgb(49 89 121 / 30%);
   --shadow-active: 0 0 12px rgb(49 89 121 / 25%);
 }
 
@@ -237,6 +237,8 @@
   --primary-300: #e2a26b;
   --primary-100: #f4d8bd;
   --primary-900: #9d4f16;
+  --shadow-surface:
+    0 5px 12px rgb(13 26 44 / 20%), 0 2px 14px rgb(82 115 141 / 24%);
   --success: #3f7f5d;
   --warning: #a87822;
   --error-100: #f4cccc;

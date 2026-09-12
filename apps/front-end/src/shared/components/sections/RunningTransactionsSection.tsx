@@ -74,7 +74,6 @@ function RunningTransactionsSection({ className }: { className?: string }) {
         loadingMessage="Chargement des ventes en cours..."
         errorMessage="Erreur de chargement."
         emptyMessage="Aucune vente en cours."
-        className="flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md"
         headerClassName="bg-transparent min-h-0 "
         bodyClassName="min-h-0 overflow-auto pr-1"
         rowClassName="transition duration-150 ease-in-out  hover:bg-info/5  last:border-b"

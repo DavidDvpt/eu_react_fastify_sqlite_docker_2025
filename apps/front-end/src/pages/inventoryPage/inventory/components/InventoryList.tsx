@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 
 import { GenericList } from "@/shared/components";
+import { Section } from "@/shared/components/Containers";
 
 import { FormatTools } from "@/shared/tools/formatTools";
 import type { GenericListViewMode } from "@/shared/components/GenericList/genericListTypes";
@@ -46,27 +47,28 @@ function InventoryList({
   }, [visibleStock]);
 
   return (
-    <GenericList<ItemWithStock>
-      columns={stockColumns(urlViewMode === "card")}
-      className={className}
-      rows={visibleStock}
-      getRowKey={(row) => row.id}
-      onRowClick={(row) => onSelectedItem(row.id)}
-      isLoading={isInventoryStockLoading}
-      isError={isInventoryStockError}
-      loadingMessage="Chargement de l'inventaire..."
-      errorMessage={`Impossible de charger l'inventaire.`}
-      emptyMessage={
-        showAllItems
-          ? "Aucun item trouvé."
-          : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
-      }
-      hasHeader
-      allowCardView
-      showViewModeSwitch={false}
-      viewMode={urlViewMode as GenericListViewMode | null}
-      footer={`Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`}
-    />
+    <Section className={className}>
+      <GenericList<ItemWithStock>
+        columns={stockColumns(urlViewMode === "card")}
+        rows={visibleStock}
+        getRowKey={(row) => row.id}
+        onRowClick={(row) => onSelectedItem(row.id)}
+        isLoading={isInventoryStockLoading}
+        isError={isInventoryStockError}
+        loadingMessage="Chargement de l'inventaire..."
+        errorMessage={`Impossible de charger l'inventaire.`}
+        emptyMessage={
+          showAllItems
+            ? "Aucun item trouvé."
+            : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
+        }
+        hasHeader
+        allowCardView
+        showViewModeSwitch={false}
+        viewMode={urlViewMode as GenericListViewMode | null}
+        footer={`Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`}
+      />
+    </Section>
   );
 }
 

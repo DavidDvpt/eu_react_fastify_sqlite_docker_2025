@@ -1,4 +1,5 @@
 import { GenericList } from "@/shared/components";
+import { Section } from "@/shared/components/Containers";
 
 import {
   useLocation,
@@ -41,7 +42,7 @@ function ManageTable({ activeTab, categoryId, typeId }: ManageTableProps) {
 
   return (
     <>
-      <div className="flex min-h-0 flex-1 flex-col pb-2">
+      <Section className="min-h-0 flex-1 pb-2">
         <GenericList<GenericListType[number]>
           columns={columns}
           rows={list}
@@ -59,7 +60,7 @@ function ManageTable({ activeTab, categoryId, typeId }: ManageTableProps) {
             })
           }
         />
-      </div>
+      </Section>
       {(isCreateRoute || isEditRoute) && (
         <CreateEditModal tab={activeTab} entity={editedEntity} />
       )}

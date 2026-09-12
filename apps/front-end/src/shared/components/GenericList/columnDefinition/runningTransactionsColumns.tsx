@@ -93,7 +93,7 @@ const createRunningTransactionsColumns = ({
       minWidth: 110,
       maxWidth: 110,
       align: "right",
-      bodyCellClassName: "justify-end",
+      bodyCellClassName: "justify-end pl-2",
       selectOptions: statusOptions,
       disabled: (row) => isRowPending(row),
       onSelectChange: ({ row, value }) => onChange({ row, value }),

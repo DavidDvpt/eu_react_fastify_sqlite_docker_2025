@@ -1,4 +1,5 @@
 import { GenericList } from "@/shared/components";
+import { Section } from "@/shared/components/Containers";
 import { createNexusColumns } from "@/shared/components/GenericList/columnDefinition";
 import type { NexusUpdateDto } from "@eu/zod-schemas";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -33,23 +34,24 @@ function NexusList({
   };
 
   return (
-    <GenericList<NexusUpdateDto>
-      columns={createNexusColumns({
-        onCellClick: openNexusUpdate,
-        onImport,
-        isImportPending,
-      })}
-      rows={rows}
-      getRowKey={(row) => row.id}
-      hasHeader
-      isLoading={isLoading}
-      isError={isError}
-      loadingMessage="Chargement des updates Nexus..."
-      errorMessage="Impossible de charger les updates Nexus."
-      emptyMessage="Aucune update Nexus."
-      className={className}
-      rowHeight={48}
-    />
+    <Section className={className}>
+      <GenericList<NexusUpdateDto>
+        columns={createNexusColumns({
+          onCellClick: openNexusUpdate,
+          onImport,
+          isImportPending,
+        })}
+        rows={rows}
+        getRowKey={(row) => row.id}
+        hasHeader
+        isLoading={isLoading}
+        isError={isError}
+        loadingMessage="Chargement des updates Nexus..."
+        errorMessage="Impossible de charger les updates Nexus."
+        emptyMessage="Aucune update Nexus."
+        rowHeight={48}
+      />
+    </Section>
   );
 }
 

@@ -14,6 +14,7 @@ import {
   pedCardSummaryRowHeight,
 } from "@/shared/components/GenericList/columnDefinition/pedCardSummaryColumns";
 import { useInventoryStockData } from "@/shared/hooks";
+import { Section } from "../Containers";
 
 function FinancialSummarySection() {
   const { balance } = usePedcardData();
@@ -49,7 +50,8 @@ function FinancialSummarySection() {
   const total = rows.reduce((sum, row) => sum + row.amount, 0);
 
   return (
-    <GenericList<PedCardSummaryRow>
+    <Section>
+      <GenericList<PedCardSummaryRow>
       columns={pedCardSummaryColumn}
       rows={rows ?? []}
       getRowKey={(row) => row.key}
@@ -81,7 +83,8 @@ function FinancialSummarySection() {
           },
         ],
       }}
-    />
+      />
+    </Section>
   );
 }
 

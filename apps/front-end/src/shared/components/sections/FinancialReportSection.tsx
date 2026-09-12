@@ -2,12 +2,12 @@ import { GenericList } from "@/shared/components";
 import {
   inventoryFinancialReportBodyClassName,
   inventoryFinancialReportColumn,
-  inventoryFinancialReportListClassName,
   inventoryFinancialReportRowBaseClassName,
   inventoryFinancialReportRowClassName,
   inventoryFinancialReportRowHeight,
   type InventoryFinancialReportRow,
 } from "@/shared/components/GenericList/columnDefinition/inventoryFinancialReportColumns";
+import { Section } from "../Containers";
 import {
   useFinancialInventoryData,
   useInventoryStockData,
@@ -71,7 +71,8 @@ function FinancialReportSection() {
     [values],
   );
   return (
-    <GenericList<InventoryFinancialReportRow>
+    <Section>
+      <GenericList<InventoryFinancialReportRow>
       columns={inventoryFinancialReportColumn}
       rows={rows ?? []}
       getRowKey={(row) => row.key}
@@ -82,7 +83,6 @@ function FinancialReportSection() {
       loadingMessage="Chargement du rapport financier..."
       errorMessage="Erreur de chargement du rapport financier."
       emptyMessage="Aucune donnée."
-      className="flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md"
       bodyClassName={inventoryFinancialReportBodyClassName}
       rowBaseClassName={inventoryFinancialReportRowBaseClassName}
       rowClassName={inventoryFinancialReportRowClassName}
@@ -104,7 +104,8 @@ function FinancialReportSection() {
           },
         ],
       }}
-    />
+      />
+    </Section>
   );
 }
 

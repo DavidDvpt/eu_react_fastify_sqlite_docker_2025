@@ -1,7 +1,6 @@
 import { cn } from "@/lib/utils";
 import type { GenericListProps } from "./genericListTypes";
 
-import { Section } from "../Containers";
 import { GenericListFooter } from "./GenericListFooter";
 import GenericListBody from "./GenericListBody";
 import { getGridTemplateColumns } from "./gridTemplate";
@@ -38,9 +37,9 @@ function GenericList<T>({
   const view = allowCardView ? (viewMode ?? "list") : "list";
 
   return (
-    <Section
+    <div
       className={cn(
-        "flex min-h-0 flex-col rounded-md border border-table-border bg-table-bg text-sm shadow-ambient-md",
+        "flex min-h-0 flex-col",
         grow && "flex-1",
         className,
       )}
@@ -95,7 +94,7 @@ function GenericList<T>({
         cells={footerConfig?.cells}
         fallback={footer}
       />
-    </Section>
+    </div>
   );
 }
 
