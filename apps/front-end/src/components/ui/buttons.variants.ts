@@ -20,7 +20,7 @@ export const buttonVariants: Record<string | number | symbol, string> = {
   navVertical:
     "w-full justify-center bg-transparent border border-border text-center text-sm text-text-muted py-2 no-underline hover:bg-surface-hover hover:text-text hover:border-border-active data-[active=true]:border-border-active data-[active=true]:bg-surface-hover data-[active=true]:font-bold data-[active=true]:text-text data-[active=true]:shadow-ambient-md",
   navHorizontal:
-    "inline-flex min-w-0 flex-1 items-center justify-center text-m font-medium text-text no-underline transition-colors hover:text-text hover:bg-ternary-100 data-[active=true]:bg-ternary-100 data-[active=true]:font-bold",
+    "inline-flex min-w-0 flex-1 items-center justify-center text-m !font-normal text-text-muted no-underline transition-colors hover:text-primary-300 hover:bg-surface data-[active=true]:bg-surface data-[active=true]:!font-bold data-[active=true]:text-primary-700",
 } as const;
 
 export const buttonSizeClasses: Record<string | number | symbol, string> = {

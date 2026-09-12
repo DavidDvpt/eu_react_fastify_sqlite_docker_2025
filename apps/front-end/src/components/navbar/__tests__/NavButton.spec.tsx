@@ -37,4 +37,21 @@ describe("NavButton", () => {
       "false",
     );
   });
+
+  it("keeps the manage query string when navigating between manage links", () => {
+    render(
+      <MemoryRouter initialEntries={["/manage/type?categoryId=category-1"]}>
+        <NavButton
+          content="Item"
+          route="/manage/item"
+          variant="navVertical"
+        />
+      </MemoryRouter>,
+    );
+
+    expect(screen.getByRole("link", { name: "Item" })).toHaveAttribute(
+      "href",
+      "/manage/item?categoryId=category-1",
+    );
+  });
 });
