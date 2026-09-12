@@ -35,7 +35,8 @@ const stockColumns = (
       minWidth: 120,
       maxWidth: 120,
       align: "right",
-      bodyCellClassName: "text-right",
+      bodyCellClassName:
+        "text-right text-text-muted hover:text-text group-hover:text-text",
       headerCellClassName: "text-right",
       render: (item) => item.stock,
     },
@@ -47,7 +48,8 @@ const stockColumns = (
       align: "right",
       render: (item) =>
         `${FormatTools.pedFormat().format(item.stock * item.value)} Peds`,
-      bodyCellClassName: "text-right font-semibold",
+      bodyCellClassName:
+        "text-right font-semibold text-text-muted hover:text-text group-hover:text-text",
       headerCellClassName: "text-right",
     },
   ];

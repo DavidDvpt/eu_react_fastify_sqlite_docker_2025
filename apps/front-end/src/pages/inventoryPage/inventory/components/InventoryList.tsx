@@ -62,11 +62,22 @@ function InventoryList({
             ? "Aucun item trouvé."
             : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
         }
+        headerClassName="pr-3"
+        bodyClassName="pr-3"
+        rowClassName="group"
         hasHeader
         allowCardView
         showViewModeSwitch={false}
         viewMode={urlViewMode as GenericListViewMode | null}
-        footer={`Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`}
+        footerConfig={{
+          rowClassName: "justify-end py-2 pr-3 font-semibold text-text",
+          cells: [
+            {
+              key: "total-stock-value",
+              content: `Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`,
+            },
+          ],
+        }}
       />
     </Section>
   );
