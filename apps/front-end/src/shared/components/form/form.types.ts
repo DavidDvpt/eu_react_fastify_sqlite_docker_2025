@@ -75,6 +75,7 @@ export interface SelectRHFProps {
   hasAutocomplete?: boolean;
   wrapperClassName?: string;
   triggerClassName?: string;
+  labelClassName?: string;
   errorClassName?: string;
   hideErrorMessage?: boolean;
 }

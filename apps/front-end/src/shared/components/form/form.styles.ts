@@ -1,6 +1,6 @@
-export const formFieldWrapperClassName = "space-y-1";
+export const formFieldWrapperClassName = "flex flex-col";
 
-export const formLabelClassName = "text-sm text-input-label";
+export const formLabelClassName = "text-sm text-text-muted";
 
 export const formErrorClassName = "m-0 text-[0.8rem] italic text-error-500";
 

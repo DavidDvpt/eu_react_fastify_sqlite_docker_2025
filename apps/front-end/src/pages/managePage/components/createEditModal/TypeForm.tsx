@@ -50,12 +50,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
       className="flex flex-col gap-4"
     >
       <div className="flex-1 flex flex-col gap-2">
-        <InputRHF
-          name="name"
-          label="Nom: "
-          className="mt-2"
-          placeholder="Nom obligatoire"
-        />
+        <InputRHF name="name" label="Nom: " placeholder="Nom obligatoire" />
         <CategorySelectRHF label="Catégorie: " />
         <CheckboxRHF name="isActive" label="Actif" />
         <CheckboxRHF name="isStackable" label="Stackable" />

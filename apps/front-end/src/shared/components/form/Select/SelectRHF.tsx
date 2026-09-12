@@ -19,6 +19,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
   options,
   wrapperClassName,
   triggerClassName,
+  labelClassName,
   errorClassName,
   hideErrorMessage = false,
 }) => {
@@ -35,7 +36,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
       disabled={disabled}
       placeholder={placeholder}
       options={options}
-      triggerClassName={triggerClassName}
+      triggerClassName={cn(triggerClassName, label && "mt-1")}
       error={error}
     />
   );
@@ -52,7 +53,9 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
     return (
       <div className={cn(formFieldWrapperClassName, wrapperClassName)}>
         {label ? (
-          <label className={formLabelClassName}>{label}</label>
+          <label className={cn(formLabelClassName, labelClassName)}>
+            {label}
+          </label>
         ) : null}
         <Controller
           name={name}

@@ -23,14 +23,12 @@ function SignInForm({ className, onSubmit }: ILoginFormProps) {
         name="pseudo"
         label="Pseudo"
         type="text"
-        inputClassName="py-2"
       />
       <InputRHF
         name="password"
         label="Mot de passe"
         type="password"
         autoComplete="current-password"
-        inputClassName="py-2"
       />
       <Button type="submit" className="mt-4" variant="primary">
         Se connecter

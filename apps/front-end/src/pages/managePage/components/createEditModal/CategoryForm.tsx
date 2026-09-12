@@ -42,12 +42,7 @@ function CategoryForm({ category, onClose }: CategoyFormProps) {
       className="flex flex-col gap-4"
     >
       <div className="flex-1 flex flex-col gap-2">
-        <InputRHF
-          name="name"
-          label="Nom: "
-          className="mt-2"
-          placeholder="Nom obligatoire"
-        />
+        <InputRHF name="name" label="Nom: " placeholder="Nom obligatoire" />
         <CheckboxRHF name="isActive" label="Actif" />
       </div>
       <FormButtonsSection
