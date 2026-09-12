@@ -8,7 +8,13 @@ function useNavLinks(): NavbarButtonType[] {
   // Sécurisez le résultat de useLocation
   const pathname = location?.pathname || "/";
 
-  if (pathname.startsWith("/manage")) return [...MANAGE_NAV_LINKS];
+  if (pathname.startsWith("/manage")) {
+    return MANAGE_NAV_LINKS.map((link) => ({
+      ...link,
+      isActive:
+        pathname === link.route || pathname.startsWith(`${link.route}/`),
+    }));
+  }
 
   return [];
 }

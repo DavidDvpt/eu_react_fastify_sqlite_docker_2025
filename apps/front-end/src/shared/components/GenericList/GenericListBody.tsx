@@ -7,6 +7,7 @@ const DEFAULT_ROW_CLASS =
   "grid items-stretch border-b border-table-row-divider text-text last:border-b-0 hover:bg-table-row-hover-bg";
 
 const CONTROL_KINDS = new Set(["button", "select", "checkbox"]);
+const TEXT_KINDS = new Set(["text", "number", "date", "custom"]);
 
 function GenericListBody<T>({
   columns,
@@ -27,6 +28,18 @@ function GenericListBody<T>({
     if (align === "center") return "items-center justify-center text-center";
     if (align === "right") return "items-center justify-end text-right";
     return "items-center justify-start text-left";
+  };
+
+  const toneClass = (column: GenericListColumn<T>) => {
+    const kind = column.kind ?? "text";
+
+    if (!TEXT_KINDS.has(kind)) return "";
+
+    const isNameColumn = column.key === "name" || column.accessor === "name";
+
+    return isNameColumn
+      ? "text-text"
+      : "text-text-muted group-hover:text-text";
   };
 
   if (viewMode === "card") {
@@ -60,7 +73,11 @@ function GenericListBody<T>({
               {columns.map((column) => (
                 <div
                   key={column.key}
-                  className={cn("py-1", column.bodyCellClassName)}
+                  className={cn(
+                    "py-1",
+                    column.bodyCellClassName,
+                    toneClass(column),
+                  )}
                 >
                   <GenericCellRenderer column={column} row={row} />
                 </div>
@@ -88,7 +105,11 @@ function GenericListBody<T>({
         return (
           <div
             key={getRowKey(row)}
-            className={cn(rowBaseClassName ?? DEFAULT_ROW_CLASS, rowClassName)}
+            className={cn(
+              rowBaseClassName ?? DEFAULT_ROW_CLASS,
+              "group",
+              rowClassName,
+            )}
             style={{ minHeight: rowHeight, height: rowHeight }}
           >
             <div
@@ -107,6 +128,7 @@ function GenericListBody<T>({
                       "flex min-w-0 overflow-hidden text-text",
                       alignClass(column.align),
                       column.bodyCellClassName,
+                      toneClass(column),
                       hasCellClick ? "cursor-pointer" : "",
                       !isControlCell && !hasCellClick && onRowClick
                         ? "cursor-pointer"

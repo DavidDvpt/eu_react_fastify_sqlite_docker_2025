@@ -1,4 +1,7 @@
-import type { buttonSizeClasses, buttonVariants } from "./button.variants";
+import type {
+  buttonSizeClasses,
+  buttonVariants,
+} from "@/components/ui/buttons.variants";
 
 export type ButtonVariant = keyof typeof buttonVariants;
 export type ButtonSize = keyof typeof buttonSizeClasses;

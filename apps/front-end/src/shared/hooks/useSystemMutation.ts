@@ -1,9 +1,11 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import { TypesApi } from "@/shared/services";
+import { ItemsApi, TypesApi } from "@/shared/services";
 import CategoryApi from "@/shared/services/categoriesApi";
 import type {
   CategoryDto,
   CategoryFormBody,
+  ItemDto,
+  ItemForm,
   TypeDto,
   TypeFormBody,
 } from "@eu/zod-schemas";
@@ -50,5 +52,25 @@ export default function useSystemMutation() {
     },
   });
 
-  return { categoryMutation, typeMutation };
+  const itemMutation = useMutation({
+    mutationFn: async ({
+      item,
+      values,
+    }: {
+      item?: ItemDto;
+      values: ItemForm;
+    }) => {
+      const itemsApi = new ItemsApi();
+      if (item?.id) {
+        return await itemsApi.patch({ id: item.id, body: values });
+      }
+
+      return await itemsApi.create(values);
+    },
+    onSuccess: async () => {
+      await InvalidateQueryAndKeys.itemMutation();
+    },
+  });
+
+  return { categoryMutation, typeMutation, itemMutation };
 }

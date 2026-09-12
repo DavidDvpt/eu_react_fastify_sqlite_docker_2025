@@ -26,9 +26,8 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
         <div className="flex h-full min-h-0 flex-col">
           <VerticalNav
             items={links.map((link) => ({
+              ...link,
               key: `left-nav-link-${link.key}`,
-              content: link.content,
-              route: link.route,
               variant: "navVertical",
             }))}
           />
@@ -36,7 +35,7 @@ function LeftNavContentLayout({ children }: PropsWithChildren) {
           <div className="mt-auto">
             <Button
               variant="primary"
-              size="nav"
+              size="lg"
               className="w-full"
               onClick={() =>
                 navigate({

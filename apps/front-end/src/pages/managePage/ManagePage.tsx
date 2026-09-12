@@ -5,7 +5,7 @@ import { useQueryParams } from "@/shared/hooks";
 import type { GenericFilterContext } from "@/shared/types";
 import StringTools from "@/shared/tools/stringTools";
 import type { ManageTab } from "@/shared/types/managePageTypes";
-import { ManageTable } from "./components/ManageTable";
+import { ManageList } from "./components/ManageList";
 import { useParams } from "react-router-dom";
 import { managePageQuerySchema } from "./managePageSchema";
 
@@ -38,7 +38,7 @@ function ManagePage() {
       <GenericFilter context={context} className="m-0" />
 
       {shouldShowTable ? (
-        <ManageTable activeTab={selectedTab} {...queries} />
+        <ManageList activeTab={selectedTab} {...queries} />
       ) : (
         <Section className="flex min-h-0 flex-1 items-center justify-center text-center text-text">
           {emptySelectionMessage}

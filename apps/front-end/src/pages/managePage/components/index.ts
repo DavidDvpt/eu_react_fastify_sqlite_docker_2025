@@ -1,1 +1,1 @@
-export * from "./ManageTable";
+export * from "./ManageList";

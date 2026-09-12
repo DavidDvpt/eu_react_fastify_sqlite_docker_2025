@@ -9,8 +9,9 @@ function NavButton(props: NavbarButtonType) {
   // Sécurisez le résultat de useLocation
   const pathname = location?.pathname || "/";
 
-  const isActive =
+  const routeIsActive =
     pathname === props.route || pathname.startsWith(`${props.route}/`);
+  const isActive = props.isActive ?? routeIsActive;
   const shouldPreserveSearch =
     pathname.startsWith("/manage") && props.route.startsWith("/manage");
 

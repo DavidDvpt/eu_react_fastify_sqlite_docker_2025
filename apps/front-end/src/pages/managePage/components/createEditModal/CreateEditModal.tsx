@@ -1,4 +1,5 @@
 import CategoryForm from "@/pages/managePage/components/createEditModal/CategoryForm";
+import ManageItemForm from "@/pages/managePage/components/createEditModal/ItemForm";
 import TypeForm from "@/pages/managePage/components/createEditModal/TypeForm";
 import { ModalGeneric } from "@/shared/components";
 import type { ManageTab } from "@/shared/types/managePageTypes";
@@ -30,7 +31,9 @@ function CreateEditModal({ tab, entity }: CreatEditModalProps) {
       {tab === "type" && (
         <TypeForm type={entity as TypeDto} onClose={onclose} />
       )}
-      {/* {tab === "item"} */}
+      {tab === "item" && (
+        <ManageItemForm item={entity as ItemDto} onClose={onclose} />
+      )}
     </ModalGeneric>
   );
 }

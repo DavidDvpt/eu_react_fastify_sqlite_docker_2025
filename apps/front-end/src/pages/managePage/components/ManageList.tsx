@@ -12,11 +12,11 @@ import useManageListData from "../hooks/useManageListData";
 import CreateEditModal from "@/pages/managePage/components/createEditModal/CreateEditModal";
 import type { ManagePageQuery } from "../managePageSchema";
 
-interface ManageTableProps extends ManagePageQuery {
+interface ManageListProps extends ManagePageQuery {
   activeTab: ManageTab;
 }
 
-function ManageTable({ activeTab, categoryId, typeId }: ManageTableProps) {
+function ManageList({ activeTab, categoryId, typeId }: ManageListProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
@@ -68,4 +68,4 @@ function ManageTable({ activeTab, categoryId, typeId }: ManageTableProps) {
   );
 }
 
-export { ManageTable };
+export { ManageList };

@@ -68,6 +68,11 @@ export class InvalidateQueryAndKeys {
       }),
     ]);
   }
+  static async itemMutation() {
+    return await queryClient.invalidateQueries({
+      queryKey: this.getItemsKey().keys,
+    });
+  }
   static async nexusInitMutation() {
     return await queryClient.invalidateQueries({
       queryKey: this.getNexusKey().keys,
