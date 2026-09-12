@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 import type { CheckboxProps } from "./checkbox.types";
 import { Checkbox } from "@/components/ui/checkbox";
+import { formLabelClassName } from "../form.styles";
 
 function CheckboxApp({
   name,
@@ -17,7 +18,7 @@ function CheckboxApp({
       {label ? (
         <label
           htmlFor={name}
-          className={cn("text-sm text-input-label", labelClassName)}
+          className={cn(formLabelClassName, labelClassName)}
         >
           {label}
         </label>

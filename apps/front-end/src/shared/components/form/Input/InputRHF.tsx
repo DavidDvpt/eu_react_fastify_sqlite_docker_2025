@@ -5,6 +5,11 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormContext";
 import type { InputRHFProps } from "../form.types";
+import {
+  formErrorClassName,
+  formFieldWrapperClassName,
+  formLabelClassName,
+} from "../form.styles";
 
 function InputRHF({
   name,
@@ -48,11 +53,11 @@ function InputRHF({
   };
 
   return (
-    <div className={cn("space-y-1", wrapperClassName)}>
+    <div className={cn(formFieldWrapperClassName, wrapperClassName)}>
       {label ? (
         <label
           htmlFor={props.id ?? name}
-          className={cn("text-sm text-text-muted", labelClassName)}
+          className={cn(formLabelClassName, labelClassName)}
         >
           {label}
         </label>
@@ -107,7 +112,7 @@ function InputRHF({
       {!hideErrorMessage && fieldState.error?.message ? (
         <p
           className={cn(
-            "m-0 text-[0.8rem] italic text-error-500",
+            formErrorClassName,
             errorClassName,
           )}
         >

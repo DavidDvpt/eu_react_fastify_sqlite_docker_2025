@@ -23,7 +23,7 @@ function SelectCell<T>({ column, row, value }: SelectCellProps<T>) {
         })
       }
       contentClassName="border border-border shadow-md"
-      itemClassName="bg-surface"
+      itemClassName="bg-surface text-text-muted"
     />
   );
 }

@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/lib/utils";
+import { formControlClassName } from "@/shared/components/form/form.styles";
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
   ({ className, type, ...props }, ref) => {
@@ -8,10 +9,8 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
       <input
         type={type}
         className={cn(
-          `flex h-9 w-full rounded-md border border-border bg-input px-3
-          py-[6px] text-text transition-colors text-sm
-          file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-text placeholder:text-text-muted focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring
-          disabled:cursor-not-allowed disabled:opacity-50`,
+          formControlClassName,
+          "px-3 py-[6px] file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-text placeholder:text-text-muted",
           className,
         )}
         ref={ref}

@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import type { SelectOption } from "../form.types";
+import { formControlClassName } from "../form.styles";
 
 type AppSelectProps = {
   value?: string;
@@ -18,6 +19,7 @@ type AppSelectProps = {
   contentClassName?: string;
   itemClassName?: string;
   muted?: boolean;
+  error?: boolean;
 };
 
 function AppSelect({
@@ -30,13 +32,16 @@ function AppSelect({
   contentClassName,
   itemClassName,
   muted = false,
+  error = false,
 }: AppSelectProps) {
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled}>
       <SelectTrigger
         className={cn(
-          "mt-2 border border-input-border bg-surface data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
+          formControlClassName,
+          "px-3 py-2 data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
           muted && "text-text-muted",
+          error && "border-error-500 focus-visible:ring-error-500",
           triggerClassName,
         )}
       >

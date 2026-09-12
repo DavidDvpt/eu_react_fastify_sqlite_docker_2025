@@ -3,6 +3,11 @@ import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormCon
 import { Controller } from "react-hook-form";
 import type { SelectRHFProps } from "../form.types";
 import AppSelect from "./AppSelect";
+import {
+  formErrorClassName,
+  formFieldWrapperClassName,
+  formLabelClassName,
+} from "../form.styles";
 
 const SelectRHF: React.FC<SelectRHFProps> = ({
   name,
@@ -22,6 +27,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
   const renderSelect = (
     currentValue: string | undefined,
     onChange: (nextValue: string) => void,
+    error = false,
   ) => (
     <AppSelect
       value={currentValue}
@@ -30,6 +36,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
       placeholder={placeholder}
       options={options}
       triggerClassName={triggerClassName}
+      error={error}
     />
   );
 
@@ -43,9 +50,9 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
     const fieldState = rhf.getFieldState(name, rhf.formState);
 
     return (
-      <div className={cn("space-y-1", wrapperClassName)}>
+      <div className={cn(formFieldWrapperClassName, wrapperClassName)}>
         {label ? (
-          <label className="text-sm text-input-label">{label}</label>
+          <label className={formLabelClassName}>{label}</label>
         ) : null}
         <Controller
           name={name}
@@ -54,15 +61,13 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
             renderSelect(
               typeof field.value === "string" ? field.value : undefined,
               field.onChange,
+              Boolean(fieldState.error),
             )
           }
         />
         {!hideErrorMessage && fieldState.error?.message ? (
           <p
-            className={cn(
-              "m-0 text-[0.8rem] italic text-destructive-300",
-              errorClassName,
-            )}
+            className={cn(formErrorClassName, errorClassName)}
           >
             {String(fieldState.error.message)}
           </p>
