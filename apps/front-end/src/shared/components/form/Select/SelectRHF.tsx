@@ -1,14 +1,8 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { cn } from "@/lib/utils";
 import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormContext";
 import { Controller } from "react-hook-form";
 import type { SelectRHFProps } from "../form.types";
+import AppSelect from "./AppSelect";
 
 const SelectRHF: React.FC<SelectRHFProps> = ({
   name,
@@ -29,27 +23,14 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
     currentValue: string | undefined,
     onChange: (nextValue: string) => void,
   ) => (
-    <Select value={currentValue} onValueChange={onChange} disabled={disabled}>
-      <SelectTrigger
-        className={cn(
-          "mt-2 bg-surface border border-input-border data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
-          triggerClassName,
-        )}
-      >
-        <SelectValue placeholder={placeholder} />
-      </SelectTrigger>
-      <SelectContent className="bg-surface text-text max-h-[200px] min-w-[100px] overflow-auto">
-        {options.map((o) => (
-          <SelectItem
-            key={o.label}
-            value={o.value}
-            className="data-[highlighted]:bg-select-item-hover data-[highlighted]:text-text"
-          >
-            {o.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+    <AppSelect
+      value={currentValue}
+      onValueChange={onChange}
+      disabled={disabled}
+      placeholder={placeholder}
+      options={options}
+      triggerClassName={triggerClassName}
+    />
   );
 
   if (name) {

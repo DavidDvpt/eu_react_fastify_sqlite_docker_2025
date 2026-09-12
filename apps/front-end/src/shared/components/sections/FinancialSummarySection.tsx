@@ -8,7 +8,6 @@ import { usePedcardData, useTransactionsData } from "@/shared/hooks";
 import {
   pedCardSummaryBodyClassName,
   pedCardSummaryColumn,
-  pedCardSummaryFooterRowClassName,
   pedCardSummaryRowBaseClassName,
   pedCardSummaryRowClassName,
   pedCardSummaryRowHeight,
@@ -52,37 +51,37 @@ function FinancialSummarySection() {
   return (
     <Section>
       <GenericList<PedCardSummaryRow>
-      columns={pedCardSummaryColumn}
-      rows={rows ?? []}
-      getRowKey={(row) => row.key}
-      hasHeader={false}
-      grow={false}
-      isLoading={undefined}
-      isError={undefined}
-      loadingMessage="Chargement du récapitulatif..."
-      errorMessage="Erreur de chargement du récapitulatif."
-      emptyMessage="Aucune donnée."
-      bodyClassName={pedCardSummaryBodyClassName}
-      rowBaseClassName={pedCardSummaryRowBaseClassName}
-      rowClassName={pedCardSummaryRowClassName}
-      rowHeight={pedCardSummaryRowHeight}
-      footerConfig={{
-        rowClassName: pedCardSummaryFooterRowClassName,
-        cells: [
-          {
-            key: "total-summary",
-            content: (
-              <span>
-                Total:{" "}
-                <strong className="font-semibold">
-                  {FormatTools.pedFormat().format(total)}
-                </strong>{" "}
-                Peds
-              </span>
-            ),
-          },
-        ],
-      }}
+        columns={pedCardSummaryColumn}
+        rows={rows ?? []}
+        getRowKey={(row) => row.key}
+        hasHeader={false}
+        grow={false}
+        isLoading={undefined}
+        isError={undefined}
+        loadingMessage="Chargement du récapitulatif..."
+        errorMessage="Erreur de chargement du récapitulatif."
+        emptyMessage="Aucune donnée."
+        bodyClassName={pedCardSummaryBodyClassName}
+        rowBaseClassName={pedCardSummaryRowBaseClassName}
+        rowClassName={pedCardSummaryRowClassName}
+        rowHeight={pedCardSummaryRowHeight}
+        footerConfig={{
+          rowClassName: "justify-end py-2 text-table-body-text",
+          cells: [
+            {
+              key: "total-summary",
+              content: (
+                <span>
+                  Total:{" "}
+                  <strong className="font-semibold">
+                    {FormatTools.pedFormat().format(total)}
+                  </strong>{" "}
+                  Peds
+                </span>
+              ),
+            },
+          ],
+        }}
       />
     </Section>
   );

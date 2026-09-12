@@ -30,7 +30,4 @@ export const pedCardSummaryRowBaseClassName = "grid items-stretch text-text";
 
 export const pedCardSummaryRowClassName = "border-b-0 last:border-b-0";
 
-export const pedCardSummaryFooterRowClassName =
-  "justify-end px-4 py-2 text-table-body-text";
-
 export const pedCardSummaryRowHeight = 30;

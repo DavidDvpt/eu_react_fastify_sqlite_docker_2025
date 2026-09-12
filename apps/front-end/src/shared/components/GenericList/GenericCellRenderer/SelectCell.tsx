@@ -1,11 +1,5 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import type { GenericListColumn } from "@/shared/types";
+import AppSelect from "@/shared/components/form/Select/AppSelect";
 
 type SelectCellProps<T> = {
   column: GenericListColumn<T>;
@@ -15,9 +9,12 @@ type SelectCellProps<T> = {
 
 function SelectCell<T>({ column, row, value }: SelectCellProps<T>) {
   return (
-    <Select
+    <AppSelect
       value={String(value ?? "")}
       disabled={column.disabled?.(row)}
+      options={column.selectOptions ?? []}
+      muted
+      triggerClassName="mt-0 h-8 rounded-md border-table-border px-2 text-sm shadow-sm"
       onValueChange={(nextValue) =>
         column.onSelectChange?.({
           row,
@@ -25,22 +22,9 @@ function SelectCell<T>({ column, row, value }: SelectCellProps<T>) {
           value: nextValue,
         })
       }
-    >
-      <SelectTrigger className="h-8 w-full rounded-md border border-table-border bg-surface px-2 text-sm shadow-sm">
-        <SelectValue />
-      </SelectTrigger>
-      <SelectContent className="border border-border bg-surface shadow-md">
-        {(column.selectOptions ?? []).map((option) => (
-          <SelectItem
-            key={option.value}
-            value={option.value}
-            className="bg-surface"
-          >
-            {option.label}
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      contentClassName="border border-border shadow-md"
+      itemClassName="bg-surface"
+    />
   );
 }
 

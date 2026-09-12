@@ -73,37 +73,37 @@ function FinancialReportSection() {
   return (
     <Section>
       <GenericList<InventoryFinancialReportRow>
-      columns={inventoryFinancialReportColumn}
-      rows={rows ?? []}
-      getRowKey={(row) => row.key}
-      hasHeader={false}
-      grow={false}
-      isLoading={isLoading || isInventoryStockLoading}
-      isError={isError || isInventoryStockError}
-      loadingMessage="Chargement du rapport financier..."
-      errorMessage="Erreur de chargement du rapport financier."
-      emptyMessage="Aucune donnée."
-      bodyClassName={inventoryFinancialReportBodyClassName}
-      rowBaseClassName={inventoryFinancialReportRowBaseClassName}
-      rowClassName={inventoryFinancialReportRowClassName}
-      rowHeight={inventoryFinancialReportRowHeight}
-      footerConfig={{
-        rowClassName: "justify-end px-4 py-2 text-table-body-text",
-        cells: [
-          {
-            key: "profit-summary",
-            content: (
-              <span>
-                Profit global:{" "}
-                <strong className="font-semibold">
-                  {FormatTools.pedFormat().format(values?.profit ?? 0)}
-                </strong>{" "}
-                Peds
-              </span>
-            ),
-          },
-        ],
-      }}
+        columns={inventoryFinancialReportColumn}
+        rows={rows ?? []}
+        getRowKey={(row) => row.key}
+        hasHeader={false}
+        grow={false}
+        isLoading={isLoading || isInventoryStockLoading}
+        isError={isError || isInventoryStockError}
+        loadingMessage="Chargement du rapport financier..."
+        errorMessage="Erreur de chargement du rapport financier."
+        emptyMessage="Aucune donnée."
+        bodyClassName={inventoryFinancialReportBodyClassName}
+        rowBaseClassName={inventoryFinancialReportRowBaseClassName}
+        rowClassName={inventoryFinancialReportRowClassName}
+        rowHeight={inventoryFinancialReportRowHeight}
+        footerConfig={{
+          rowClassName: "justify-end py-2 text-table-body-text",
+          cells: [
+            {
+              key: "profit-summary",
+              content: (
+                <span>
+                  Profit global:{" "}
+                  <strong className="font-semibold">
+                    {FormatTools.pedFormat().format(values?.profit ?? 0)}
+                  </strong>{" "}
+                  Peds
+                </span>
+              ),
+            },
+          ],
+        }}
       />
     </Section>
   );

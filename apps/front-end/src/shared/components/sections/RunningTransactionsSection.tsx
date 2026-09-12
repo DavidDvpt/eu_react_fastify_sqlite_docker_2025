@@ -79,7 +79,7 @@ function RunningTransactionsSection({ className }: { className?: string }) {
         rowClassName="transition duration-150 ease-in-out  hover:bg-info/5  last:border-b"
         rowHeight={56}
         footerConfig={{
-          rowClassName: "justify-end px-4 py-3 text-table-body-text",
+          rowClassName: "justify-end py-3 text-table-body-text",
           cells: [
             {
               key: "total-ttc",
