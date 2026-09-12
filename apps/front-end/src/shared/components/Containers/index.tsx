@@ -1,7 +1,7 @@
-import type { ContainerBaseProps } from "@/shared/types";
+import type { ContainerBaseProps, PanelProps } from "@/shared/types";
 import Container from "./Container";
 
-export const Panel = (props: ContainerBaseProps) => (
+export const Panel = (props: PanelProps) => (
   <Container variant="panel" {...props} />
 );
 

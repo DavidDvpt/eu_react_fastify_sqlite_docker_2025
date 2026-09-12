@@ -22,7 +22,7 @@ function SignInPage() {
   };
 
   return (
-    <Panel aria-labelledby="signin-title" className="flex justify-center">
+    <Panel aria-labelledby="signin-title" className="items-center justify-center">
       <Section className="p-6 w-[400px]">
         <h1 id="signin-title" className="text-center">
           Connexion

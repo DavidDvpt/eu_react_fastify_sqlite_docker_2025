@@ -20,7 +20,7 @@ function SignUpPage() {
 
   return (
     <AppCard
-      className={styles.card}
+      className={`${styles.card} mx-auto`}
       title="Inscription"
       description="Creez votre compte utilisateur."
       content={

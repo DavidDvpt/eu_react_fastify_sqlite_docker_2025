@@ -22,7 +22,7 @@ function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
   const itemLots = useItemLots({ itemId });
 
   return (
-    <Section className={cn("relative min-h-0 p-0", className)} shadow={false}>
+    <Section className={cn("relative min-h-0 p-0", className)} disableShadow>
       <StockMessages
         isError={item.isError}
         isLoading={item.isLoading}

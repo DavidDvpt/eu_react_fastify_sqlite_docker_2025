@@ -33,13 +33,13 @@ function InventoryPage() {
 
       <Section
         className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
-        shadow={false}
+        disableShadow
       >
         <InventoryListFilter />
 
         <Section
           className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row"
-          shadow={false}
+          disableShadow
         >
           <InventoryList
             {...queries}

@@ -6,7 +6,7 @@ function InventoryListFilter({ className }: { className?: string }) {
   return (
     <Section
       className={cn("flex min-h-0 flex-row gap-4", className)}
-      shadow={false}
+      disableShadow
     >
       <UrlParamFlag
         kind="checkbox"
