@@ -12,7 +12,6 @@ import { Navigate } from "react-router-dom";
 import InventoryPage from "@/pages/inventoryPage/InventoryPage";
 import SignInPage from "@/pages/authPages/SignInPage";
 import SignUpPage from "@/pages/authPages/SignUpPage";
-import NexusPage from "@/pages/nexusPage/NexusPage";
 import AdminGuard from "@/modules/auth/guards/AdminGuard";
 
 const routes = [
@@ -69,10 +68,6 @@ const routes = [
                         ],
                       },
                     ],
-                  },
-                  {
-                    path: "nexus-dashboard",
-                    element: <NexusPage />,
                   },
                 ],
               },

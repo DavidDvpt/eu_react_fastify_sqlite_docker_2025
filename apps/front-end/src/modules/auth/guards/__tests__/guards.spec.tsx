@@ -49,10 +49,6 @@ vi.mock("@/pages/authPages/SignInPage", () => ({
 vi.mock("@/pages/authPages/SignUpPage", () => ({
   default: () => <div>SIGNUP</div>,
 }));
-vi.mock("@/pages/nexusPage/NexusPage", () => ({
-  default: () => <div>NEXUS_PAGE</div>,
-}));
-
 // 👉 Outlet utilisé dans les mocks de layout
 import { Outlet } from "react-router-dom";
 
@@ -188,39 +184,4 @@ describe("routes (real)", () => {
     ).toBeInTheDocument();
   });
 
-  it("GET /nexus-dashboard -> redirects non-admin users to /home", async () => {
-    const store = makeStore(
-      makeAuthState(true, ApiStatus.FULFILLED, "USER"),
-    );
-
-    const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/nexus-dashboard"],
-    });
-
-    render(
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    );
-
-    expect(await screen.findByText("HOME")).toBeInTheDocument();
-  });
-
-  it("GET /nexus-dashboard -> shows NexusPage for admins", async () => {
-    const store = makeStore(
-      makeAuthState(true, ApiStatus.FULFILLED, "ADMIN"),
-    );
-
-    const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/nexus-dashboard"],
-    });
-
-    render(
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
-    );
-
-    expect(await screen.findByText("NEXUS_PAGE")).toBeInTheDocument();
-  });
 });

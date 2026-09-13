@@ -33,9 +33,6 @@ export class InvalidateQueryAndKeys {
   static getInventoryFinancialReportKey(): InvalidateObject {
     return { keys: ["inventory", "financial-report"] };
   }
-  static getNexusKey(): InvalidateObject {
-    return { keys: ["nexus"] };
-  }
   static getItemLotsKey(itemId?: string): InvalidateObject {
     return { keys: ["item-lots", itemId] };
   }
@@ -71,16 +68,6 @@ export class InvalidateQueryAndKeys {
   static async itemMutation() {
     return await queryClient.invalidateQueries({
       queryKey: this.getItemsKey().keys,
-    });
-  }
-  static async nexusInitMutation() {
-    return await queryClient.invalidateQueries({
-      queryKey: this.getNexusKey().keys,
-    });
-  }
-  static async nexusMutation() {
-    return await queryClient.invalidateQueries({
-      queryKey: this.getNexusKey().keys,
     });
   }
   static async transactionMutation({

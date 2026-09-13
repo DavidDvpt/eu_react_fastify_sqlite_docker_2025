@@ -41,13 +41,6 @@ const navbarValues = [
     adminOnly: true,
     visible: true,
   },
-  {
-    content: "Nexus",
-    route: "/nexus-dashboard",
-    selected: false,
-    adminOnly: true,
-    visible: true,
-  },
 ];
 
 export { navbarValues };

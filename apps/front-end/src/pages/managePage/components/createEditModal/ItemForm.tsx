@@ -14,13 +14,12 @@ interface ItemFormProps {
   onClose: () => void;
 }
 
-const defaultValues: ItemForm = {
+const defaultValues = {
   id: null,
   name: "",
   typeId: "",
   imageUrlId: null,
   value: 0,
-  nexusId: null,
   description: null,
   weight: null,
   decay: null,
@@ -35,14 +34,13 @@ function ManageItemForm({ item, onClose }: ItemFormProps) {
   const { types } = useSystemDatas();
   const typeOptions = selectOptionsHelper(types.typeDatas);
 
-  const formValues: ItemForm = item
+  const formValues = item
     ? {
         id: item.id,
         name: item.name,
         typeId: item.typeId,
         imageUrlId: item.imageUrlId,
         value: item.value,
-        nexusId: item.nexusId,
         description: item.description,
         weight: item.weight,
         decay: item.decay,
