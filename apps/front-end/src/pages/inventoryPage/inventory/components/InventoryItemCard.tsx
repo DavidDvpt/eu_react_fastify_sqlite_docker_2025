@@ -22,23 +22,32 @@ function InventoryItemCard({ row, onRowClick }: RowRendererProps<ItemWithStock>)
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
-        <h3 className="m-0 truncate text-sm font-semibold text-table-head-text">
+        <h3 className="m-0 truncate text-sm font-semibold text-text">
           {row.name}
         </h3>
         {row.weight !== null && (
-          <p className="m-0 text-xs text-muted-foreground">
-            Poids: {FormatTools.formatToThreeDecimals(row.weight)}
+          <p className="m-0 text-xs">
+            <span className="text-text">Poids: </span>
+            <span className="text-text-muted">
+              {FormatTools.formatToThreeDecimals(row.weight)}
+            </span>
           </p>
         )}
         {row.description && (
-          <p className="m-0 line-clamp-2 text-xs text-muted-foreground">
+          <p className="m-0 line-clamp-2 text-xs text-text-muted">
             {row.description}
           </p>
         )}
-        <div className="mt-auto flex flex-col gap-1 pt-2 text-xs text-table-body-text">
-          <span>Quantité: {row.stock}</span>
+        <div className="mt-auto flex flex-col gap-1 pt-2 text-xs">
           <span>
-            Valeur: {FormatTools.pedFormat().format(row.stock * row.value)} Peds
+            <span className="text-text">Quantité: </span>
+            <span className="text-text-muted">{row.stock}</span>
+          </span>
+          <span>
+            <span className="text-text">Valeur: </span>
+            <span className="text-text-muted">
+              {FormatTools.pedFormat().format(row.stock * row.value)} Peds
+            </span>
           </span>
         </div>
       </div>

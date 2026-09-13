@@ -80,12 +80,9 @@
   --spacing-12: 3rem;
   --spacing-24: 6rem;
 
-  --color-foreground: var(--text);
   --color-background: var(--bg);
   --color-card: var(--surface);
-  --color-card-foreground: var(--text);
   --color-popover: var(--surface);
-  --color-popover-foreground: var(--text);
 
   --color-panel-bg: var(--surface);
   --color-panel-border: var(--border);
@@ -128,20 +125,9 @@
   --color-table-image-border: var(--border);
 
   --color-info: var(--border-active);
-  --color-info-foreground: var(--text);
-  --color-success: var(--success);
-  --color-success-foreground: var(--text);
-  --color-warning: var(--warning);
-  --color-warning-foreground: var(--bg);
   --color-danger: var(--danger);
-  --color-danger-foreground: var(--text);
   --color-primary: var(--primary-700);
-  --color-primary-foreground: var(--bg);
-  --color-secondary: var(--surface-hover);
-  --color-secondary-foreground: var(--text);
   --color-accent: var(--primary-500);
-  --color-accent-foreground: var(--bg);
-  --color-destructive: var(--danger);
 
   --color-ternary-100: var(--surface-hover);
   --color-ternary-300: var(--border-active);

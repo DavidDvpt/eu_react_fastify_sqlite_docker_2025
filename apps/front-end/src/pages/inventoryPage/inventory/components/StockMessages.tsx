@@ -8,7 +8,7 @@ function StockMessages({ details, isError, isLoading }: StockMessagesProps) {
   return (
     <div className="flex min-h-full flex-col gap-4 pr-1">
       {isLoading && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-text-muted">
           Chargement des details...
         </p>
       )}
@@ -18,7 +18,7 @@ function StockMessages({ details, isError, isLoading }: StockMessagesProps) {
         </p>
       )}
       {!details && (
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-text-muted">
           Selectionne un item dans la liste de stock.
         </p>
       )}

@@ -73,27 +73,31 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
         />
 
         <div className="grid grid-cols-2 content-start gap-x-4 gap-y-1 px-4 text-xs">
-          <span className="text-muted-foreground">Prix unitaire</span>
-          <span>
+          <span className="text-text">Prix unitaire</span>
+          <span className="text-text-muted">
             {FormatTools.pedFormat().format(item.value)} Ped(s)
           </span>
-          <span className="text-muted-foreground">Weight</span>
-          <span>
+          <span className="text-text">Weight</span>
+          <span className="text-text-muted">
             {item.weight === null
               ? "-"
               : FormatTools.formatToThreeDecimals(item.weight)}
           </span>
-          <span className="text-muted-foreground">Non échangeable</span>
-          <span>{item.isUntradeable ? "Oui" : "Non"}</span>
-          <span className="text-muted-foreground">Rare</span>
-          <span>{item.isRare ? "Oui" : "Non"}</span>
+          <span className="text-text">Non échangeable</span>
+          <span className="text-text-muted">
+            {item.isUntradeable ? "Oui" : "Non"}
+          </span>
+          <span className="text-text">Rare</span>
+          <span className="text-text-muted">{item.isRare ? "Oui" : "Non"}</span>
         </div>
       </div>
       <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
-        <span className="text-muted-foreground">Quantité</span>
-        <span>{item.stock}</span>
-        <span className="text-muted-foreground">Valeur</span>
-        <span>{FormatTools.pedFormat().format(totalValue)} Ped(s)</span>
+        <span className="text-text">Quantité</span>
+        <span className="text-text-muted">{item.stock}</span>
+        <span className="text-text">Valeur</span>
+        <span className="text-text-muted">
+          {FormatTools.pedFormat().format(totalValue)} Ped(s)
+        </span>
       </div>
       {item.description && (
         <p className="m-0 text-xs text-text">{item.description}</p>
@@ -106,7 +110,7 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
             onClick={onBack}
             className="w-[100px]"
             size="sm"
-            variant="primary"
+            variant="secondary"
           >
             Retour
           </Button>

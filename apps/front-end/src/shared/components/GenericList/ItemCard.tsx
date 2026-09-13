@@ -22,7 +22,7 @@ function ItemCard({ item, isManage }: ItemCardProps) {
         <h3 className="truncate text-sm font-semibold text-table-head-text mt-0 mb-1">
           {item.name ?? "Unknown"}
         </h3>
-        <p className="truncate text-xs text-muted-foreground my-0">
+        <p className="truncate text-xs text-text-muted my-0">
           {item.type?.name ?? item.typeId}
         </p>
         <div className="mt-2 flex flex-wrap gap-2 text-xs text-table-body-text">

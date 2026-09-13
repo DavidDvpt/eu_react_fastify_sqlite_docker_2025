@@ -2,11 +2,11 @@ export const baseClasses = `inline-flex items-center justify-center gap-2
 cursor-pointer whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0`;
 
 export const buttonVariants: Record<string | number | symbol, string> = {
-  default: "bg-primary text-primary-foreground shadow hover:bg-primary/90",
+  default: "bg-primary text-text shadow hover:bg-primary/90",
   destructive:
     "border border-button-destructive-border bg-button-destructive-bg text-button-destructive-text shadow hover:border-button-destructive-hover-border hover:bg-button-destructive-hover-bg hover:text-button-destructive-hover-text active:border-button-destructive-active-border active:bg-button-destructive-active-bg active:text-button-destructive-active-text disabled:border-button-destructive-disabled-border disabled:bg-button-destructive-disabled-bg disabled:opacity-100",
   outline:
-    "border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground",
+    "border border-input bg-background shadow-sm hover:bg-accent hover:text-text",
   link: "text-primary underline-offset-4 hover:underline",
   primary: `border border-primary-900 bg-primary-700 text-white shadow hover:not-active:border-primary-900 hover:not-active:bg-primary-900 active:border-primary-700 active:bg-primary-700 disabled:border-primary-300 disabled:bg-primary-300 disabled:opacity-100`,
   secondary:
