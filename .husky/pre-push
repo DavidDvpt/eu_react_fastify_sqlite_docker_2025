@@ -3,3 +3,63 @@
 
 echo "🔎 Running full test suite before push..."
 npm run test:all || exit 1
+
+# Tags are generated only when the main branch is pushed.
+CURRENT_BRANCH="$(git symbolic-ref --quiet --short HEAD 2>/dev/null || true)"
+MAIN_PUSHED="false"
+
+while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
+  if [ "$CURRENT_BRANCH" = "main" ] \
+    && [ "$REMOTE_REF" = "refs/heads/main" ] \
+    && [ "$LOCAL_SHA" != "0000000000000000000000000000000000000000" ]; then
+    MAIN_PUSHED="true"
+    break
+  fi
+done
+
+[ "$MAIN_PUSHED" = "true" ] || exit 0
+
+VERSION="$(node -p "JSON.parse(require('fs').readFileSync('package.json', 'utf8')).version" 2>/dev/null)" || {
+  echo "❌ Unable to read version from package.json."
+  exit 1
+}
+
+if [ -z "$VERSION" ]; then
+  echo "❌ package.json does not define a version."
+  exit 1
+fi
+
+TAG="v$VERSION"
+REMOTE_NAME="$1"
+
+if git rev-parse --verify --quiet "refs/tags/$TAG" >/dev/null; then
+  echo "❌ Tag $TAG already exists locally. Update package.json before pushing main."
+  exit 1
+fi
+
+if git ls-remote --exit-code --tags "$REMOTE_NAME" "refs/tags/$TAG" >/dev/null 2>&1; then
+  echo "❌ Tag $TAG already exists on $REMOTE_NAME. Update package.json before pushing main."
+  exit 1
+fi
+
+if [ ! -t 0 ] && [ ! -e /dev/tty ]; then
+  echo "❌ A terminal is required to enter the tag description."
+  exit 1
+fi
+
+printf "📝 Description for tag %s: " "$TAG" > /dev/tty
+IFS= read -r TAG_DESCRIPTION < /dev/tty
+
+if [ -z "$TAG_DESCRIPTION" ]; then
+  echo "❌ Tag description cannot be empty. Push cancelled."
+  exit 1
+fi
+
+echo "🏷️ Creating tag $TAG..."
+git tag -a "$TAG" -m "$TAG_DESCRIPTION" || exit 1
+
+echo "🚀 Pushing tag $TAG..."
+HUSKY=0 git push "$REMOTE_NAME" "refs/tags/$TAG" || {
+  echo "❌ Failed to push tag $TAG. Main push cancelled."
+  exit 1
+}
