@@ -21,7 +21,7 @@ describe("signInSchema", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.pseudo?.[0]).toBe(
-        "Le pseudo doit être de 8 caractères minimim"
+        "Le pseudo doit être de 8 caractères minimum"
       );
     }
   });
@@ -35,7 +35,7 @@ describe("signInSchema", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.password?.[0]).toBe(
-        "Le mot de passe doit être de 8 caractères minimim"
+        "Le mot de passe doit être de 8 caractères minimum"
       );
     }
   });
