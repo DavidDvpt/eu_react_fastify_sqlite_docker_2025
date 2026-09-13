@@ -1,6 +1,12 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
+# Git provides the refs being pushed through stdin. Save them before running
+# the test suite, because a child process may consume the hook's stdin.
+PUSH_REFS_FILE="$(mktemp "${TMPDIR:-/tmp}/husky-pre-push.XXXXXX")" || exit 1
+trap 'rm -f "$PUSH_REFS_FILE"' EXIT HUP INT TERM
+cat > "$PUSH_REFS_FILE"
+
 echo "🔎 Running full test suite before push..."
 npm run test:all || exit 1
 
@@ -15,7 +21,7 @@ while read -r LOCAL_REF LOCAL_SHA REMOTE_REF REMOTE_SHA; do
     MAIN_PUSHED="true"
     break
   fi
-done
+done < "$PUSH_REFS_FILE"
 
 [ "$MAIN_PUSHED" = "true" ] || exit 0
 
