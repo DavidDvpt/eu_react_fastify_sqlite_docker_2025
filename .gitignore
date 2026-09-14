@@ -29,3 +29,6 @@ docker-volumes/
 apps/back-end/prisma/generated/
 
 storage
+
+# Local planning notes
+todo/
