@@ -1,8 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/helpers/tsconfig.json" },
-    { "path": "./packages/zodSchemas/tsconfig.json" },
     { "path": "./apps/back-end/tsconfig.json" },
     { "path": "./apps/front-end/tsconfig.app.json" },
     { "path": "./apps/front-end/tsconfig.node.json" }

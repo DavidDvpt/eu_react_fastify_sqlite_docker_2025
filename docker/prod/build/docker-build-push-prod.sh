@@ -48,15 +48,7 @@ if ! docker buildx inspect >/dev/null 2>&1; then
 fi
 docker buildx inspect --bootstrap >/dev/null
 
-echo "[3/4] Building + pushing API image..."
-docker buildx build \
-  --platform "$PLATFORM" \
-  -f "$SCRIPT_DIR/Dockerfile.api.prod" \
-  -t "${DOCKERHUB_NAMESPACE}/entropia-manager-api:${IMAGE_TAG}" \
-  --push \
-  "$ROOT_DIR"
-
-echo "[4/4] Building + pushing Front image..."
+echo "[3/3] Building + pushing Front image..."
 docker buildx build \
   --platform "$PLATFORM" \
   -f "$SCRIPT_DIR/Dockerfile.front.prod" \
@@ -65,5 +57,4 @@ docker buildx build \
   "$ROOT_DIR"
 
 echo "✅ Build + push complete."
-echo "API   : ${DOCKERHUB_NAMESPACE}/entropia-manager-api:${IMAGE_TAG}"
 echo "Front : ${DOCKERHUB_NAMESPACE}/entropia-manager-front:${IMAGE_TAG}"

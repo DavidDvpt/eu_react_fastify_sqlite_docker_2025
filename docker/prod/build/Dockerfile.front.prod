@@ -3,13 +3,11 @@ WORKDIR /app
 
 COPY package*.json ./
 COPY apps/front-end/package*.json ./apps/front-end/
-COPY apps/back-end/package*.json ./apps/back-end/
-COPY packages/helpers/package.json ./packages/helpers/
-COPY packages/zodSchemas/package.json ./packages/zodSchemas/
 
 RUN npm ci
+RUN npm ci --prefix apps/front-end
 # Force Linux-native optional binaries used by Rollup, Lightning CSS and Tailwind.
-# They are platform-specific and may be missing from the workspace install when the lockfile
+# They are platform-specific and may be missing from the install when the lockfile
 # was generated on another OS, which breaks the production build inside this Linux image.
 RUN ROLLUP_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/rollup"].version')" \
   && LIGHTNINGCSS_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/lightningcss"].version')" \
@@ -17,12 +15,10 @@ RUN ROLLUP_VERSION="$(node -p 'require("./package-lock.json").packages["node_mod
   && npm install --no-save --ignore-scripts "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}" "lightningcss-linux-x64-gnu@${LIGHTNINGCSS_VERSION}" "@tailwindcss/oxide-linux-x64-gnu@${TAILWIND_OXIDE_VERSION}"
 
 COPY apps/front-end ./apps/front-end
-COPY packages ./packages
 COPY tsconfig.json ./tsconfig.json
-COPY tsconfig.packages.json ./tsconfig.packages.json
 COPY tsconfig.base.json ./tsconfig.base.json
 
-RUN npm run build:docker --workspace apps/front-end
+RUN npm run build:docker --prefix apps/front-end
 
 FROM node:24-bookworm-slim AS runtime
 WORKDIR /app

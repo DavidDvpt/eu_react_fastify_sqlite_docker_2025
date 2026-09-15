@@ -1,30 +1,18 @@
 {
-  "name": "eu_react_fastify_docker",
-  "version": "1.1.1",
+  "name": "entropia-manager-frontend",
+  "version": "2.0.0",
   "private": true,
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
   "main": "index.js",
   "scripts": {
-    "build:packages": "npx tsc -b tsconfig.packages.json",
-    "build:packages:watch": "npx tsc -b tsconfig.packages.json --watch --preserveWatchOutput",
     "build:prod-image": "sh docker/prod/build/docker-build-push-prod.sh",
     "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
     "dev:start": "sh ./scripts/dev-start.sh",
-    "dev:start:back": "sh ./scripts/dev-start.sh --skip-front",
     "dev:stop": "sh ./scripts/dev-stop.sh",
-    "dev:api:start": "sh ./scripts/dev-service.sh api start",
-    "dev:api:stop": "sh ./scripts/dev-service.sh api stop",
-    "dev:api:restart": "sh ./scripts/dev-service.sh api restart",
-    "dev:api:status": "sh ./scripts/dev-service.sh api status",
     "dev:front:start": "sh ./scripts/dev-service.sh front start",
     "dev:front:stop": "sh ./scripts/dev-service.sh front stop",
     "dev:front:restart": "sh ./scripts/dev-service.sh front restart",
     "dev:front:status": "sh ./scripts/dev-service.sh front status",
     "test:all": "sh ./scripts/test-all.sh",
-    "package:create": "node ./scripts/create-package.mjs",
     "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
   },
   "keywords": [],

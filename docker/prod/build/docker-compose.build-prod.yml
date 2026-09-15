@@ -1,15 +1,4 @@
 services:
-  api:
-    build:
-      context: ../../..
-      dockerfile: docker/prod/build/Dockerfile.api.prod
-    image: ${DOCKERHUB_NAMESPACE:?DOCKERHUB_NAMESPACE is required}/entropia-manager-api:${IMAGE_TAG:-latest}
-    expose:
-      - "8020"
-    restart: unless-stopped
-    networks:
-      - ser5-network
-
   front:
     build:
       context: ../../..
@@ -18,8 +7,6 @@ services:
     expose:
       - "8019"
     restart: unless-stopped
-    depends_on:
-      - api
     networks:
       - ser5-network
 
