@@ -3,7 +3,7 @@ import { PedcardType } from "@/api/generated/zod/model/pedcardType.zod";
 
 export const pedcardTypeSchema = PedcardType;
 
-export const pedcardDtoSchema = z.object({
+export const pedcardViewModelSchema = z.object({
   id: z.string(),
   userId: z.string(),
   transactionId: z.string().nullable(),
@@ -15,5 +15,5 @@ export const pedcardDtoSchema = z.object({
 export const pedcardBalanceSchema = z.object({ balance: z.number() });
 
 export type PedcardTypeDto = z.output<typeof pedcardTypeSchema>;
-export type PedcardViewModel = z.infer<typeof pedcardDtoSchema>;
+export type PedcardViewModel = z.infer<typeof pedcardViewModelSchema>;
 export type PedcardBalance = z.infer<typeof pedcardBalanceSchema>;

@@ -45,7 +45,7 @@ export const lotTransactionSchema = z.object({
   quantity: z.coerce.number(),
 });
 
-export const lotDtoSchema = lotItemIdSchema.extend({
+export const lotViewModelSchema = lotItemIdSchema.extend({
   id: z.string(),
   initialQuantity: z.coerce.number(),
   quantityRemaining: z.coerce.number(),
@@ -69,4 +69,4 @@ export type LotFormBody = z.output<typeof lotBodySchema>;
 
 export type LotSortKey = z.infer<typeof lotSortSchema>;
 
-export type LotViewModel = z.infer<typeof lotDtoSchema>;
+export type LotViewModel = z.infer<typeof lotViewModelSchema>;

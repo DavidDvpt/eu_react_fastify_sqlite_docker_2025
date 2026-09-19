@@ -13,17 +13,17 @@ const systemBaseSchema = idSchema.extend({
 });
 
 // CATEGORIES
-export const categoryDtoSchema = systemBaseSchema;
-export type CategoryViewModel = z.infer<typeof categoryDtoSchema>;
+export const categoryViewModelSchema = systemBaseSchema;
+export type CategoryViewModel = z.infer<typeof categoryViewModelSchema>;
 export type CategoryViewModels = CategoryViewModel[];
 
 // TYPES
-export const typeDtoSchema = systemBaseSchema.extend({
+export const typeViewModelSchema = systemBaseSchema.extend({
   categoryId: z.string(),
   isStackable: booleanSchema.default(false),
-  category: categoryDtoSchema.nullable().default(null),
+  category: categoryViewModelSchema.nullable().default(null),
 });
-export type TypeViewModel = z.infer<typeof typeDtoSchema>;
+export type TypeViewModel = z.infer<typeof typeViewModelSchema>;
 export type TypeViewModels = TypeViewModel[];
 
 // ITEMS
@@ -47,18 +47,18 @@ export const itemFormSchema = z.object({
   isUntradeable: booleanSchema.nullable().default(null),
   isRare: booleanSchema.nullable().default(null),
 });
-export const itemDtoSchema = itemFormSchema.omit({ id: true }).extend({
+export const itemViewModelSchema = itemFormSchema.omit({ id: true }).extend({
   id: z.string(),
   userId: z.string(),
   ...genericDateSchema.shape,
 
-  type: typeDtoSchema.nullable().default(null),
+  type: typeViewModelSchema.nullable().default(null),
 });
-export type ItemViewModel = z.infer<typeof itemDtoSchema>;
+export type ItemViewModel = z.infer<typeof itemViewModelSchema>;
 export type ItemViewModels = ItemViewModel[];
 export type ItemDetailEnum = z.infer<typeof itemDetailsEnum>;
 
-export const finderDtoSchema = itemDtoSchema.extend({
+export const finderDtoSchema = itemViewModelSchema.extend({
   depth: z.number().nullable().default(null),
   usePerMinute: z.number().nullable().default(null),
   nexusUrl: z.string().nullable().default(null),

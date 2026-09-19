@@ -3,7 +3,7 @@ import { TransactionStatus } from "@/api/generated/zod/model/transactionStatus.z
 import { TransactionType } from "@/api/generated/zod/model/transactionType.zod";
 import { genericDateSchema, idSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
-import { itemDtoSchema } from "./systemSchemas.js";
+import { itemViewModelSchema } from "./systemSchemas.js";
 
 export const transactionTypeSchema = TransactionType;
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
@@ -40,18 +40,18 @@ export const transactionEntrySchema = transactionValuesSchema.extend({
 
 export const transactionEntriesSchema = transactionEntrySchema.array();
 
-export const transactionDtoSchema = transactionValuesSchema.extend({
+export const transactionViewModelSchema = transactionValuesSchema.extend({
   ...idSchema.shape,
   itemId: z.string(),
   quantity: z.coerce.number().int().positive(),
   transactionType: transactionTypeSchema,
   status: transactionStatusDtoSchema,
   entries: transactionLotSchema.array().nullable().default(null),
-  item: itemDtoSchema.nullable().default(null),
+  item: itemViewModelSchema.nullable().default(null),
   ...genericDateSchema.shape,
 });
 
-export type TransactionViewModel = z.infer<typeof transactionDtoSchema>;
+export type TransactionViewModel = z.infer<typeof transactionViewModelSchema>;
 export type TransactionViewModels = TransactionViewModel[];
 
 export type TransactionStatusPatchDto = z.infer<
@@ -61,5 +61,5 @@ export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
 export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
-// export type TransactionViewModel = z.infer<typeof transactionDtoSchema>;
+// export type TransactionViewModel = z.infer<typeof transactionViewModelSchema>;
 export type TransactionValues = z.infer<typeof transactionValuesSchema>;
