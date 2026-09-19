@@ -1,5 +1,21 @@
 import { z } from "zod";
 
+/**
+ * Environment contract.
+ *
+ * Vite loads dotenv files from the frontend app root depending on the current
+ * mode:
+ *   - development -> .env.development
+ *   - production  -> .env.production
+ *   - test        -> .env.test
+ *
+ * `env` is the single source of truth to read those values in the app code:
+ *
+ *   import { env } from "@/config/env";
+ *
+ * Runtime overrides (injected by the server via `window.__APP_CONFIG__`) take
+ * precedence over these build-time values in `@/config/runtime`.
+ */
 const envSchema = z.object({
   VITE_API_URL: z.string().optional().refine(
     (value) => !value || value.startsWith("/") || URL.canParse(value),
@@ -17,4 +33,6 @@ if (!parsedEnv.success) {
   throw new Error(`Invalid environment variables:\n${errors}`);
 }
 
-export const env = parsedEnv.data;
+export type Env = z.infer<typeof envSchema>;
+
+export const env = parsedEnv.data as Env;

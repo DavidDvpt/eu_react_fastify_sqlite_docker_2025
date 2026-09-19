@@ -8,13 +8,8 @@
   ],
   "scripts": {
     "build:prod-image": "sh docker/prod/build/docker-build-push-prod.sh",
-    "dev:docker": "docker compose -p app_eu_dev -f docker/docker-compose.dev.yml up -d",
-    "dev:start": "sh ./scripts/dev-start.sh",
-    "dev:stop": "sh ./scripts/dev-stop.sh",
-    "dev:front:start": "sh ./scripts/dev-service.sh front start",
-    "dev:front:stop": "sh ./scripts/dev-service.sh front stop",
-    "dev:front:restart": "sh ./scripts/dev-service.sh front restart",
-    "dev:front:status": "sh ./scripts/dev-service.sh front status",
+    "dev": "npm run dev --workspace frontend",
+    "stop": "kill $(lsof -ti tcp:5173) 2>/dev/null || echo 'frontend not running'",
     "test:all": "sh ./scripts/test-all.sh",
     "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
   },
@@ -23,9 +18,7 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
-    "concurrently": "^9.2.1",
     "husky": "^9.1.7",
-    "lint-staged": "^16.2.7",
-    "wait-port": "^1.1.0"
+    "lint-staged": "^16.2.7"
   }
 }
