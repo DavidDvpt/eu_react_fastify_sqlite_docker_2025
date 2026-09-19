@@ -2,8 +2,8 @@ import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
 import pedcardApi from "@/shared/services/pedCardApi";
-import { pedcardFormSchema } from "@eu/zod-schemas";
-import type { PedcardFormBody } from "@eu/zod-schemas";
+import { pedcardFormSchema } from "@zod-schemas";
+import type { PedcardFormBody } from "@zod-schemas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 interface PedCardFormProps {

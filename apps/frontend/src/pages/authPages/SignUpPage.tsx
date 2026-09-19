@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./styles/signup.module.css";
 import { AppLink } from "@/shared/components/AppLink";
 import SignUpForm from "./components/SignUpForm";
-import type { UserSignupFormBody } from "@eu/zod-schemas";
+import type { UserSignupFormBody } from "@zod-schemas";
 
 function SignUpPage() {
   const navigate = useNavigate();

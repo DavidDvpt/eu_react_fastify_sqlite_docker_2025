@@ -1,5 +1,5 @@
 import z from "zod";
-import { booleanSchema } from "@eu/zod-schemas";
+import { booleanSchema } from "@zod-schemas";
 import { genericListViewModeSchema } from "@/shared/components/GenericList";
 import { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
 

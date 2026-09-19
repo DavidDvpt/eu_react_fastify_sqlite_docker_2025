@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { userSignInFormSchema } from "@eu/zod-schemas";
+import { userSignInFormSchema } from "@zod-schemas";
 
 describe("signInSchema", () => {
   it("accepts a valid payload", () => {

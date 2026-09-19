@@ -6,8 +6,8 @@ import SelectRHF from "@/shared/components/form/Select/SelectRHF";
 import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
 import { useSystemDatas } from "@/shared/hooks";
-import type { ItemDto, ItemForm } from "@eu/zod-schemas";
-import { itemFormSchema } from "@eu/zod-schemas";
+import type { ItemDto, ItemForm } from "@zod-schemas";
+import { itemFormSchema } from "@zod-schemas";
 
 interface ItemFormProps {
   item?: ItemDto;

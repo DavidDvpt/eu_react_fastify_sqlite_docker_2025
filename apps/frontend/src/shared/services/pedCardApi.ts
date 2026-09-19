@@ -8,7 +8,7 @@ import type {
   PedcardCheck,
   PedcardDto,
   PedcardFormBody,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 
 const pedcardRoute = "/pedcard";
 

@@ -2,8 +2,8 @@ import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
-import { userSignUpFormSchema } from "@eu/zod-schemas";
-import type { UserSignupFormBody } from "@eu/zod-schemas";
+import { userSignUpFormSchema } from "@zod-schemas";
+import type { UserSignupFormBody } from "@zod-schemas";
 
 const signUpDefaultValues = {
   pseudo: "",

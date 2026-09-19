@@ -4,7 +4,7 @@ import { FormatTools } from "@/shared/tools/formatTools";
 import {
   transactionStatusPatchDtoSchema,
   type TransactionDto,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 
 import { useNavigate } from "react-router-dom";
 import { useTransactionsData, useTransactionMutation } from "@/shared/hooks";

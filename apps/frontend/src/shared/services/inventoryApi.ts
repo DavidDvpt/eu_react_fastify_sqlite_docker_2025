@@ -1,7 +1,7 @@
 import { ApiService } from "@/shared/services/apiCrudService";
 
-import type { FinancialInventoryReport } from "@eu/zod-schemas";
-import type { Stock, StockQuery } from "@eu/zod-schemas";
+import type { FinancialInventoryReport } from "@zod-schemas";
+import type { Stock, StockQuery } from "@zod-schemas";
 
 export default class IventoryApi extends ApiService<StockQuery, Stock, never> {
   protected route = "/inventory";

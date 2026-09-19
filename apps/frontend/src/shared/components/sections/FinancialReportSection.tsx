@@ -13,7 +13,7 @@ import {
   useInventoryStockData,
 } from "@/shared/hooks";
 import { FormatTools } from "@/shared/tools";
-import { NumberHelper } from "@eu/helpers";
+import { NumberHelper } from "@/shared/helpers";
 import { useMemo } from "react";
 
 function FinancialReportSection() {

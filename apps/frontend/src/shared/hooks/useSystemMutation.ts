@@ -8,7 +8,7 @@ import type {
   ItemForm,
   TypeDto,
   TypeFormBody,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 import { useMutation } from "@tanstack/react-query";
 
 export default function useSystemMutation() {

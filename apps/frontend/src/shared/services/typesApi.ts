@@ -1,5 +1,5 @@
-import type { typeDtos, TypeFormBody, TypeQuery } from "@eu/zod-schemas";
-import { typeQuerySchema } from "@eu/zod-schemas";
+import type { typeDtos, TypeFormBody, TypeQuery } from "@zod-schemas";
+import { typeQuerySchema } from "@zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 

@@ -4,7 +4,7 @@ import type { GenericListColumn } from "@/shared/types";
 import {
   type TransactionDto,
   type TransactionStatusPatchDto,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 
 type RunningTransactionStatusChange = {
   row: TransactionDto;

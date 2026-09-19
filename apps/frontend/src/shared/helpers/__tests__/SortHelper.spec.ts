@@ -1,4 +1,4 @@
-import { SortHelper } from "../src/SortHelper.js";
+import { SortHelper } from "../SortHelper.js";
 
 describe("SortHelper", () => {
   describe("sortByKey", () => {

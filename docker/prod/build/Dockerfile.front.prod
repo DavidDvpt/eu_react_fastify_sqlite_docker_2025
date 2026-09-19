@@ -15,8 +15,6 @@ RUN ROLLUP_VERSION="$(node -p 'require("./package-lock.json").packages["node_mod
   && npm install --no-save --ignore-scripts "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}" "lightningcss-linux-x64-gnu@${LIGHTNINGCSS_VERSION}" "@tailwindcss/oxide-linux-x64-gnu@${TAILWIND_OXIDE_VERSION}"
 
 COPY apps/frontend ./apps/frontend
-COPY tsconfig.json ./tsconfig.json
-COPY tsconfig.base.json ./tsconfig.base.json
 
 RUN npm run build:docker --prefix apps/frontend
 

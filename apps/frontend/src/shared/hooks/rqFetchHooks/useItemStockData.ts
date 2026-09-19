@@ -1,7 +1,7 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { ItemsApi } from "@/shared/services";
-import type { ItemDto, StockQuery } from "@eu/zod-schemas";
+import type { ItemDto, StockQuery } from "@zod-schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 

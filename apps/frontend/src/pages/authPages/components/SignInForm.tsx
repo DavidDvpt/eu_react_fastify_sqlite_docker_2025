@@ -2,8 +2,8 @@ import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
-import { userSignInFormSchema } from "@eu/zod-schemas";
-import type { UserSignInFormBody } from "@eu/zod-schemas";
+import { userSignInFormSchema } from "@zod-schemas";
+import type { UserSignInFormBody } from "@zod-schemas";
 
 const loginDefaultValues = { pseudo: "", password: "" };
 interface ILoginFormProps {

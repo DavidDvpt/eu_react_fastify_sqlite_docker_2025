@@ -6,14 +6,14 @@ import type {
   TransactionStatusDto,
   TransactionStatusPatchDto,
   TransactionTypeDto,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type {
   AutoPricingFormValues,
   ItemWithStock,
   TransactionAction,
 } from "@/shared/types";
-import type { TransactionDto } from "@eu/zod-schemas";
+import type { TransactionDto } from "@zod-schemas";
 
 function useTransactionsMutation() {
   const ts = new TransactionsApi();

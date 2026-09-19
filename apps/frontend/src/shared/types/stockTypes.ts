@@ -1,4 +1,4 @@
-import type { ItemDto } from "@eu/zod-schemas";
+import type { ItemDto } from "@zod-schemas";
 
 export interface ItemInventory extends ItemDto {
   quantity: number;

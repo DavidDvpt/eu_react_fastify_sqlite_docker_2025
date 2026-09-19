@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 
 import InventoryApi from "@/shared/services/inventoryApi";
-import type { StockQuery } from "@eu/zod-schemas";
+import type { StockQuery } from "@zod-schemas";
 
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type { ItemWithStock } from "@/shared/types";
-import { NumberHelper } from "@eu/helpers";
+import { NumberHelper } from "@/shared/helpers";
 
 function useInventoryStockData({ itemId }: StockQuery = {}) {
   const {

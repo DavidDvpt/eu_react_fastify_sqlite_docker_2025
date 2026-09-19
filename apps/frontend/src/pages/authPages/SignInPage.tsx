@@ -3,7 +3,7 @@ import { Panel, Section } from "@/shared/components/Containers";
 import { AppLink } from "@/shared/components/AppLink";
 import { useAppDispatch } from "@/store/hooks";
 import SignInForm from "./components/SignInForm";
-import type { UserSignInFormBody } from "@eu/zod-schemas";
+import type { UserSignInFormBody } from "@zod-schemas";
 import { authMeThunk } from "@/store";
 
 function SignInPage() {

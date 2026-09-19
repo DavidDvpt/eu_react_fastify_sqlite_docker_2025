@@ -1,6 +1,6 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { UserSignupFormBody } from "@eu/zod-schemas";
+import type { UserSignupFormBody } from "@zod-schemas";
 
 async function signupApi(credentials: UserSignupFormBody) {
   try {

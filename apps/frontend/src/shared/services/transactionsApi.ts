@@ -7,7 +7,7 @@ import {
   type TransactionDtos,
   type TransactionQuery,
   type TransactionStatusPatchDto,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 
 export default class TransactionsApi extends ApiService<
   TransactionQuery,

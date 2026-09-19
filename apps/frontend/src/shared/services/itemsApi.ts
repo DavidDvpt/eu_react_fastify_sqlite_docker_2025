@@ -7,7 +7,7 @@ import {
   type LotSortKey,
   type SortOptions,
   type Stock,
-} from "@eu/zod-schemas";
+} from "@zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 

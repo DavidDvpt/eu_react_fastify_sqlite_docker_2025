@@ -1,4 +1,4 @@
-import { ObjectHelper } from "../src/ObjectHelper.js";
+import { ObjectHelper } from "../ObjectHelper.js";
 
 describe("ObjectHelper", () => {
   describe("omitUndefined", () => {
@@ -76,7 +76,11 @@ describe("ObjectHelper", () => {
 
     it("converts Prisma Decimal-like values with Number", () => {
       class Decimal {
-        constructor(private readonly value: string) {}
+        private readonly value: string;
+
+        constructor(value: string) {
+          this.value = value;
+        }
 
         valueOf(): number {
           return Number(this.value);

@@ -3,8 +3,8 @@ import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { CategoryDto, CategoryFormBody } from "@eu/zod-schemas";
-import { categoryFormSchema } from "@eu/zod-schemas";
+import type { CategoryDto, CategoryFormBody } from "@zod-schemas";
+import { categoryFormSchema } from "@zod-schemas";
 
 interface CategoyFormProps {
   category?: CategoryDto;

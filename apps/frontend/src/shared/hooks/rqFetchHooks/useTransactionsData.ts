@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { TransactionDto } from "@eu/zod-schemas";
+import type { TransactionDto } from "@zod-schemas";
 
 function useTransactionsData() {
   const isLoggued = useAppSelector(selectIsLoggued);

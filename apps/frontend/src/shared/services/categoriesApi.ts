@@ -2,8 +2,8 @@ import type {
   CategoryDto,
   CategoryFormBody,
   CategoryQuery,
-} from "@eu/zod-schemas";
-import { systemQuerySchema } from "@eu/zod-schemas";
+} from "@zod-schemas";
+import { systemQuerySchema } from "@zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
