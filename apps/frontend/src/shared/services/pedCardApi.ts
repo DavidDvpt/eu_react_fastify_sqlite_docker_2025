@@ -9,14 +9,14 @@ import type {
 } from "@/api/generated/model";
 import type {
   PedcardBalance,
-  PedcardDto,
+  PedcardViewModel,
 } from "@zod-schemas";
 
 const pedcardRoute = "/pedcard";
 
 export default class pedcardApi extends ApiService<
   Record<string, never>,
-  PedcardDto[],
+  PedcardViewModel[],
   PedcardForm,
   void,
   PedcardPatch

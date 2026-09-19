@@ -14,8 +14,8 @@ const systemBaseSchema = idSchema.extend({
 
 // CATEGORIES
 export const categoryDtoSchema = systemBaseSchema;
-export type CategoryDto = z.infer<typeof categoryDtoSchema>;
-export type CategoryDtos = CategoryDto[];
+export type CategoryViewModel = z.infer<typeof categoryDtoSchema>;
+export type CategoryViewModels = CategoryViewModel[];
 
 // TYPES
 export const typeDtoSchema = systemBaseSchema.extend({
@@ -23,8 +23,8 @@ export const typeDtoSchema = systemBaseSchema.extend({
   isStackable: booleanSchema.default(false),
   category: categoryDtoSchema.nullable().default(null),
 });
-export type TypeDto = z.infer<typeof typeDtoSchema>;
-export type typeDtos = TypeDto[];
+export type TypeViewModel = z.infer<typeof typeDtoSchema>;
+export type TypeViewModels = TypeViewModel[];
 
 // ITEMS
 export const itemDetailsEnum = z.enum([
@@ -54,8 +54,8 @@ export const itemDtoSchema = itemFormSchema.omit({ id: true }).extend({
 
   type: typeDtoSchema.nullable().default(null),
 });
-export type ItemDto = z.infer<typeof itemDtoSchema>;
-export type ItemDtos = ItemDto[];
+export type ItemViewModel = z.infer<typeof itemDtoSchema>;
+export type ItemViewModels = ItemViewModel[];
 export type ItemDetailEnum = z.infer<typeof itemDetailsEnum>;
 
 export const finderDtoSchema = itemDtoSchema.extend({

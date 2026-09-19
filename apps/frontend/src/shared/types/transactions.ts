@@ -1,5 +1,5 @@
 import type { UseFormReturn } from "react-hook-form";
-import type { TransactionDto } from "@zod-schemas";
+import type { TransactionViewModel } from "@zod-schemas";
 import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
 
 export type TransactionFormValues = {
@@ -89,5 +89,5 @@ export type UseTransactionQueriesResult = {
 
 export type OpenTransactionModal = {
   action: TransactionAction;
-  row: TransactionDto;
+  row: TransactionViewModel;
 };

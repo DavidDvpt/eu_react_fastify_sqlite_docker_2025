@@ -1,9 +1,9 @@
 import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
-import type { ItemDto } from "@zod-schemas";
+import type { ItemViewModel } from "@zod-schemas";
 import { ImageService } from "@/shared/services";
 
-const createItemColumns = (): GenericListColumn<ItemDto>[] => [
+const createItemColumns = (): GenericListColumn<ItemViewModel>[] => [
   {
     key: "image",
     label: "Image",

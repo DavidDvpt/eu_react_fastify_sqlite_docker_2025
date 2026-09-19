@@ -3,13 +3,13 @@ import type { ListTransactionsApiV2TransactionsGetParams } from "@/api/generated
 import { ListTransactionsApiV2TransactionsGetParams as listTransactionsParamsSchema } from "@/api/generated/zod/model/listTransactionsApiV2TransactionsGetParams.zod";
 import { ApiService } from "@/shared/services/apiCrudService";
 import {
-  type TransactionDto,
-  type TransactionDtos,
+  type TransactionViewModel,
+  type TransactionViewModels,
 } from "@zod-schemas";
 
 export default class TransactionsApi extends ApiService<
   ListTransactionsApiV2TransactionsGetParams,
-  TransactionDto[],
+  TransactionViewModel[],
   TransactionBody,
   IdResponse,
   Partial<TransactionBody>,
@@ -19,7 +19,7 @@ export default class TransactionsApi extends ApiService<
   protected querySchema = listTransactionsParamsSchema;
 
   async running() {
-    return await this.axios.get<TransactionDtos>(`${this.route}/running`);
+    return await this.axios.get<TransactionViewModels>(`${this.route}/running`);
   }
   async updateStatus({
     id,

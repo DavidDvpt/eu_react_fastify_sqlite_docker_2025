@@ -1,7 +1,7 @@
 import type { GenericListColumn } from "@/shared/types";
-import type { CategoryDto } from "@zod-schemas";
+import type { CategoryViewModel } from "@zod-schemas";
 
-const createCategoryColumns = (): GenericListColumn<CategoryDto>[] => [
+const createCategoryColumns = (): GenericListColumn<CategoryViewModel>[] => [
   {
     key: "name",
     label: "Nom",

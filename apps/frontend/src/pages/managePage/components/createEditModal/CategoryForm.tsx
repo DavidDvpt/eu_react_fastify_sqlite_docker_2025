@@ -3,14 +3,14 @@ import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { CategoryDto } from "@zod-schemas";
+import type { CategoryViewModel } from "@zod-schemas";
 import {
   CategoryCreate,
   type CategoryCreateOutput,
 } from "@/api/generated/zod/model/categoryCreate.zod";
 
 interface CategoyFormProps {
-  category?: CategoryDto;
+  category?: CategoryViewModel;
   onClose: () => void;
 }
 

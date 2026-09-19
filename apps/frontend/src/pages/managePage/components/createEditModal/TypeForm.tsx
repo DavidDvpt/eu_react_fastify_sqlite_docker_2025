@@ -4,14 +4,14 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import CategorySelectRHF from "@/shared/components/form/Select/CategorySelectRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { TypeDto } from "@zod-schemas";
+import type { TypeViewModel } from "@zod-schemas";
 import {
   TypeCreate,
   type TypeCreateOutput,
 } from "@/api/generated/zod/model/typeCreate.zod";
 
 interface TypeFormProps {
-  type?: TypeDto;
+  type?: TypeViewModel;
   onClose: () => void;
 }
 

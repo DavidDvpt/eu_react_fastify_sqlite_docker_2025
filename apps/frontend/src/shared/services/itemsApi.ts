@@ -3,8 +3,8 @@ import type { ListItemsApiV2ItemsGetParams } from "@/api/generated/model";
 import type { GetItemStockApiV2ItemsIdStockGet200 } from "@/api/generated/model";
 import { ListItemsApiV2ItemsGetParams as listItemsParamsSchema } from "@/api/generated/zod/model/listItemsApiV2ItemsGetParams.zod";
 import {
-  type ItemDtos,
-  type LotDto,
+  type ItemViewModels,
+  type LotViewModel,
   type LotSortKey,
   type SortOptions,
 } from "@zod-schemas";
@@ -13,7 +13,7 @@ import { ApiService } from "@/shared/services/apiCrudService";
 
 export default class ItemsApi extends ApiService<
   ListItemsApiV2ItemsGetParams,
-  ItemDtos,
+  ItemViewModels,
   ItemCreate,
   void,
   ItemPatch
@@ -37,7 +37,7 @@ export default class ItemsApi extends ApiService<
   }) {
     if (!itemId) return null;
 
-    return this.axios.get<LotDto[]>(`${this.route}/${itemId}/lots`, {
+    return this.axios.get<LotViewModel[]>(`${this.route}/${itemId}/lots`, {
       params: { isActive, sort, hasInitialValue: true },
     });
   }

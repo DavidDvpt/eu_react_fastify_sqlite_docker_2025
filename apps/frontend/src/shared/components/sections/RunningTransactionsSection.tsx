@@ -3,7 +3,7 @@ import { createRunningTransactionsColumns } from "@/shared/components/GenericLis
 import { FormatTools } from "@/shared/tools/formatTools";
 import {
   transactionStatusPatchDtoSchema,
-  type TransactionDto,
+  type TransactionViewModel,
 } from "@zod-schemas";
 
 import { useNavigate } from "react-router-dom";
@@ -21,7 +21,7 @@ function RunningTransactionsSection({ className }: { className?: string }) {
     row,
     value,
   }: {
-    row: TransactionDto;
+    row: TransactionViewModel;
     value: string;
   }) => {
     const result = transactionStatusPatchDtoSchema.safeParse(value);

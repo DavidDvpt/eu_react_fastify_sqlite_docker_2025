@@ -1,6 +1,6 @@
-import type { ItemDto } from "@zod-schemas";
+import type { ItemViewModel } from "@zod-schemas";
 
-export type ItemWithStock = ItemDto & { stock: number };
+export type ItemWithStock = ItemViewModel & { stock: number };
 
 export interface ItemDetailProps {
   item: ItemWithStock | null;

@@ -1,10 +1,10 @@
 import { ImageService } from "@/shared/services";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { ItemDto } from "@zod-schemas";
+import type { ItemViewModel } from "@zod-schemas";
 
 interface ItemCardProps {
-  item: ItemDto;
+  item: ItemViewModel;
   isManage: boolean;
 }
 function ItemCard({ item, isManage }: ItemCardProps) {

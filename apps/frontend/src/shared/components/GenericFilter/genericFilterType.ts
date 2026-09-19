@@ -1,5 +1,5 @@
 import type { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
-import type { ItemDto } from "@zod-schemas";
+import type { ItemViewModel } from "@zod-schemas";
 import type z from "zod";
 
 export type GenericFilterAvailability = {
@@ -20,7 +20,7 @@ export type GenericFilterContext =
   "manageCategory" | "manageType" | "manageItem" | "inventory" | "transaction";
 export interface GenericFilterProps {
   className?: string;
-  selectedItem?: ItemDto | null;
+  selectedItem?: ItemViewModel | null;
   context?: GenericFilterContext;
   onSelectedItem?: (item: string) => void;
   onSelectedType?: (type: string) => void;

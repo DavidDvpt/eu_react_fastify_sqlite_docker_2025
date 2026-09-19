@@ -6,14 +6,14 @@ import SelectRHF from "@/shared/components/form/Select/SelectRHF";
 import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
 import { useSystemDatas } from "@/shared/hooks";
-import type { ItemDto } from "@zod-schemas";
+import type { ItemViewModel } from "@zod-schemas";
 import {
   ItemCreate,
   type ItemCreateOutput,
 } from "@/api/generated/zod/model/itemCreate.zod";
 
 interface ItemFormProps {
-  item?: ItemDto;
+  item?: ItemViewModel;
   onClose: () => void;
 }
 

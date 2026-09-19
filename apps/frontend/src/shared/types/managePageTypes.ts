@@ -1,6 +1,6 @@
 import type { MANAGE_TABS } from "@/pages/managePage/utils";
-import type { CategoryDto, ItemDto, TypeDto } from "@zod-schemas";
+import type { CategoryViewModel, ItemViewModel, TypeViewModel } from "@zod-schemas";
 
 export type ManageTab = (typeof MANAGE_TABS)[number];
 
-export type ManageListRow = CategoryDto | TypeDto | ItemDto;
+export type ManageListRow = CategoryViewModel | TypeViewModel | ItemViewModel;

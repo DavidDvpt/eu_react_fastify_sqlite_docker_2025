@@ -51,8 +51,8 @@ export const transactionDtoSchema = transactionValuesSchema.extend({
   ...genericDateSchema.shape,
 });
 
-export type TransactionDto = z.infer<typeof transactionDtoSchema>;
-export type TransactionDtos = TransactionDto[];
+export type TransactionViewModel = z.infer<typeof transactionDtoSchema>;
+export type TransactionViewModels = TransactionViewModel[];
 
 export type TransactionStatusPatchDto = z.infer<
   typeof transactionStatusPatchDtoSchema
@@ -61,5 +61,5 @@ export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
 
 export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
-// export type TransactionDto = z.infer<typeof transactionDtoSchema>;
+// export type TransactionViewModel = z.infer<typeof transactionDtoSchema>;
 export type TransactionValues = z.infer<typeof transactionValuesSchema>;

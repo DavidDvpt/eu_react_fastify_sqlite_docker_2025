@@ -1,9 +1,9 @@
 import { Section } from "@/shared/components/Containers";
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { LotDto } from "@zod-schemas";
+import type { LotViewModel } from "@zod-schemas";
 
 interface StockLotInListProps {
-  lots: LotDto[] | null;
+  lots: LotViewModel[] | null;
 }
 
 function StockLotsSection({ lots }: StockLotInListProps) {

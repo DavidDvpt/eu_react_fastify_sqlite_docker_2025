@@ -7,11 +7,11 @@ import type {
   TypeResponse,
 } from "@/api/generated/model";
 import type {
-  CategoryDto,
-  ItemDto,
-  LotDto,
+  CategoryViewModel,
+  ItemViewModel,
+  LotViewModel,
   TransactionStatusPatchDto,
-  TypeDto,
+  TypeViewModel,
   UserSignupFormBody,
 } from "@zod-schemas";
 
@@ -24,10 +24,10 @@ type RequestBodies = Expect<SyncCheck<UserSignupFormBody, SignUpBody>>;
 type PatchBodies = Expect<EnumSync<TransactionStatusPatchDto, TransactionStatusPatchStatus>>;
 
 type ResponseDtos =
-  | Expect<SyncCheck<CategoryDto, CategoryResponse>>
-  | Expect<SyncCheck<TypeDto, TypeResponse>>
-  | Expect<SyncCheck<ItemDto, ItemResponse>>
-  | Expect<SyncCheck<LotDto, LotResponse>>;
+  | Expect<SyncCheck<CategoryViewModel, CategoryResponse>>
+  | Expect<SyncCheck<TypeViewModel, TypeResponse>>
+  | Expect<SyncCheck<ItemViewModel, ItemResponse>>
+  | Expect<SyncCheck<LotViewModel, LotResponse>>;
 
 export type ApiTypeSync = {
   requestBodies: RequestBodies;

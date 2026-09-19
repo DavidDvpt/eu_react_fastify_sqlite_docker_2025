@@ -13,7 +13,7 @@ import type {
   ItemWithStock,
   TransactionAction,
 } from "@/shared/types";
-import type { TransactionDto } from "@zod-schemas";
+import type { TransactionViewModel } from "@zod-schemas";
 
 function useTransactionsMutation() {
   const ts = new TransactionsApi();
@@ -23,7 +23,7 @@ function useTransactionsMutation() {
       row,
       status,
     }: {
-      row: TransactionDto;
+      row: TransactionViewModel;
       status: TransactionStatusPatchDto;
     }) => ts.updateStatus({ id: row.id, status }),
     onSuccess: async (_data, { row, status }) => {

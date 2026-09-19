@@ -6,7 +6,7 @@ import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { TransactionDto } from "@zod-schemas";
+import type { TransactionViewModel } from "@zod-schemas";
 
 function useTransactionsData() {
   const isLoggued = useAppSelector(selectIsLoggued);
@@ -24,7 +24,7 @@ function useTransactionsData() {
   });
 
   const runningAdapter = useMemo(() => {
-    const transactionMap = new Map<string, TransactionDto>();
+    const transactionMap = new Map<string, TransactionViewModel>();
     if (!running.data) return [];
 
     for (const t of running.data ?? []) {
@@ -32,7 +32,7 @@ function useTransactionsData() {
       const extendedItem = item ? { ...t, item } : t;
       transactionMap.set(extendedItem.id, extendedItem);
     }
-    const rows: TransactionDto[] = Array.from(transactionMap.values());
+    const rows: TransactionViewModel[] = Array.from(transactionMap.values());
 
     return rows;
   }, [running.data, filteredItems]);

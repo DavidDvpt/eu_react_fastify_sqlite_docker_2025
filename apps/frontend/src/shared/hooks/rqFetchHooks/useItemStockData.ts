@@ -1,7 +1,7 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { ItemsApi } from "@/shared/services";
-import type { ItemDto, StockQuery } from "@zod-schemas";
+import type { ItemViewModel, StockQuery } from "@zod-schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
@@ -20,7 +20,7 @@ export default function useItemStock({ itemId }: StockQuery = {}) {
   const itemWithStock = useMemo(() => {
     if (!itemDatas || !itemStock) return null;
 
-    const i = itemDatas.find((f) => f.id === itemId) as ItemDto;
+    const i = itemDatas.find((f) => f.id === itemId) as ItemViewModel;
 
     if (!i) return null;
 

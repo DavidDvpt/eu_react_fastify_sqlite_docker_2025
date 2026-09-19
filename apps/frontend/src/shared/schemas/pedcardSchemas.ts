@@ -15,5 +15,5 @@ export const pedcardDtoSchema = z.object({
 export const pedcardBalanceSchema = z.object({ balance: z.number() });
 
 export type PedcardTypeDto = z.output<typeof pedcardTypeSchema>;
-export type PedcardDto = z.infer<typeof pedcardDtoSchema>;
+export type PedcardViewModel = z.infer<typeof pedcardDtoSchema>;
 export type PedcardBalance = z.infer<typeof pedcardBalanceSchema>;

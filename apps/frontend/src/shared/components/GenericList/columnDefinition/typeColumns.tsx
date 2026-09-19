@@ -1,7 +1,7 @@
 import type { GenericListColumn } from "@/shared/types";
-import type { TypeDto } from "@zod-schemas";
+import type { TypeViewModel } from "@zod-schemas";
 
-const createTypeColumns = (): GenericListColumn<TypeDto>[] => [
+const createTypeColumns = (): GenericListColumn<TypeViewModel>[] => [
   {
     key: "name",
     label: "Nom",

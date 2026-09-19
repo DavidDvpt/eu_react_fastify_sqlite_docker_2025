@@ -2,12 +2,12 @@ import { getItemImageUrl } from "@/pages/managePage";
 import FormatTools from "@/shared/tools/formatTools";
 import type { GenericListColumn } from "@/shared/types";
 import {
-  type TransactionDto,
+  type TransactionViewModel,
   type TransactionStatusPatchDto,
 } from "@zod-schemas";
 
 type RunningTransactionStatusChange = {
-  row: TransactionDto;
+  row: TransactionViewModel;
   value: string;
 };
 
@@ -25,9 +25,9 @@ const createRunningTransactionsColumns = ({
   isRowPending,
   onChange,
 }: {
-  isRowPending: (row: TransactionDto) => boolean;
+  isRowPending: (row: TransactionViewModel) => boolean;
   onChange: (value: RunningTransactionStatusChange) => void;
-}): GenericListColumn<TransactionDto>[] => {
+}): GenericListColumn<TransactionViewModel>[] => {
   return [
     {
       key: "image",

@@ -3,12 +3,12 @@ import ManageItemForm from "@/pages/managePage/components/createEditModal/ItemFo
 import TypeForm from "@/pages/managePage/components/createEditModal/TypeForm";
 import { ModalGeneric } from "@/shared/components";
 import type { ManageTab } from "@/shared/types/managePageTypes";
-import type { ItemDto, TypeDto, CategoryDto } from "@zod-schemas";
+import type { ItemViewModel, TypeViewModel, CategoryViewModel } from "@zod-schemas";
 import { useLocation, useNavigate } from "react-router-dom";
 
 interface CreatEditModalProps {
   tab: ManageTab;
-  entity?: CategoryDto | TypeDto | ItemDto;
+  entity?: CategoryViewModel | TypeViewModel | ItemViewModel;
 }
 function CreateEditModal({ tab, entity }: CreatEditModalProps) {
   const navigate = useNavigate();
@@ -26,13 +26,13 @@ function CreateEditModal({ tab, entity }: CreatEditModalProps) {
       title={{ value: entity ? "Edition" : "Creation" }}
     >
       {tab === "category" && (
-        <CategoryForm category={entity as CategoryDto} onClose={onclose} />
+        <CategoryForm category={entity as CategoryViewModel} onClose={onclose} />
       )}
       {tab === "type" && (
-        <TypeForm type={entity as TypeDto} onClose={onclose} />
+        <TypeForm type={entity as TypeViewModel} onClose={onclose} />
       )}
       {tab === "item" && (
-        <ManageItemForm item={entity as ItemDto} onClose={onclose} />
+        <ManageItemForm item={entity as ItemViewModel} onClose={onclose} />
       )}
     </ModalGeneric>
   );

@@ -5,9 +5,9 @@ import type { CategoryCreateOutput } from "@/api/generated/zod/model/categoryCre
 import type { ItemCreateOutput } from "@/api/generated/zod/model/itemCreate.zod";
 import type { TypeCreateOutput } from "@/api/generated/zod/model/typeCreate.zod";
 import type {
-  CategoryDto,
-  ItemDto,
-  TypeDto,
+  CategoryViewModel,
+  ItemViewModel,
+  TypeViewModel,
 } from "@zod-schemas";
 import { useMutation } from "@tanstack/react-query";
 
@@ -17,7 +17,7 @@ export default function useSystemMutation() {
       category,
       values,
     }: {
-      category?: CategoryDto;
+      category?: CategoryViewModel;
       values: CategoryCreateOutput;
     }) => {
       const cs = new CategoryApi();
@@ -37,7 +37,7 @@ export default function useSystemMutation() {
       type,
       values,
     }: {
-      type?: TypeDto;
+      type?: TypeViewModel;
       values: TypeCreateOutput;
     }) => {
       const ts = new TypesApi();
@@ -57,7 +57,7 @@ export default function useSystemMutation() {
       item,
       values,
     }: {
-      item?: ItemDto;
+      item?: ItemViewModel;
       values: ItemCreateOutput;
     }) => {
       const itemsApi = new ItemsApi();
