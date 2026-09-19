@@ -1,4 +1,4 @@
-// eu_react_fastify_docker/front-end/src/shared/components/ItemDetails.tsx
+// eu_react_fastify_docker/frontend/src/shared/components/ItemDetails.tsx
 import type { ItemDetailProps, TransactionAction } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import { Section } from "../Containers";

@@ -3,11 +3,11 @@ module.exports = {
     "cd apps/back-end && npm run lint --if-present -- --fix",
     "cd apps/back-end && npm run format:fix --if-present",
   ],
-  "apps/front-end/**/*.{ts,tsx,js}": [
-    "cd apps/front-end && npm run lint --if-present -- --fix",
+  "apps/frontend/**/*.{ts,tsx,js}": [
+    "cd apps/frontend && npm run lint --if-present -- --fix",
   ],
   "*.{json,md}": [
     "cd apps/back-end && npm run format:fix --if-present",
-    "cd apps/front-end && npm run format:fix --if-present",
+    "cd apps/frontend && npm run format:fix --if-present",
   ],
 };

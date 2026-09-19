@@ -3,7 +3,7 @@
 set -e
 
 SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
-FRONTEND_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/../apps/front-end" && pwd)
+FRONTEND_DIR=$(CDPATH= cd -- "$SCRIPT_DIR/../apps/frontend" && pwd)
 FRONT_PORT=5173
 SERVICE="${1:-}"
 ACTION="${2:-}"

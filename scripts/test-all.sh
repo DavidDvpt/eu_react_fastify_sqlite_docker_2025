@@ -8,6 +8,6 @@ echo "***********************"
 echo "🧪 Running frontend tests..."
 echo "***********************"
 (
-  cd "$ROOT_DIR/apps/front-end"
+  cd "$ROOT_DIR/apps/frontend"
   npm run test:front
 )
