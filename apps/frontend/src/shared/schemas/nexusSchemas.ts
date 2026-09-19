@@ -6,31 +6,5 @@ export const nexusRequestTypeSchema = z.enum([
   "Excavators",
   "Refiners",
 ]);
-export const nexusParamsSchema = z.object({
-  type: z.string().optional(),
-});
-export const nexusQuerySchema = z.object({
-  id: z.string().optional(),
-  type: z.string().optional(),
-});
-
-export const nexusDtoSchema = z.object({
-  id: z.string(),
-  appTypeName: z.string(),
-  appTypeId: z.string(),
-  nexusRequestType: z.string().nullable().default(null),
-  nexusName: z.string().optional(),
-  itemCount: z.coerce.number().int().default(0),
-  imageMissingCount: z.coerce.number().int().default(0),
-  changeCount: z.coerce.number().int().default(0),
-  createdAt: z.string(),
-  insertedAt: z.string().nullable().default(null),
-  updatedAt: z.string().nullable().default(null),
-});
-
-export const nexusUpdateParamSchema = z.object({
-  type: nexusRequestTypeSchema,
-});
 
 export type NexusRequestTypeEnum = z.infer<typeof nexusRequestTypeSchema>;
-export type NexusUpdateDto = z.infer<typeof nexusDtoSchema>;

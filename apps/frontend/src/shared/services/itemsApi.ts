@@ -1,11 +1,11 @@
 import type { ItemCreate, ItemPatch } from "@/api/generated/model";
 import type { ListItemsApiV2ItemsGetParams } from "@/api/generated/model";
 import type { GetItemStockApiV2ItemsIdStockGet200 } from "@/api/generated/model";
+import type { GetItemLotsApiV2ItemsIdLotsGetSortKey } from "@/api/generated/model";
 import { ListItemsApiV2ItemsGetParams as listItemsParamsSchema } from "@/api/generated/zod/model/listItemsApiV2ItemsGetParams.zod";
 import {
   type ItemViewModels,
   type LotViewModel,
-  type LotSortKey,
   type SortOptions,
 } from "@zod-schemas";
 
@@ -33,7 +33,7 @@ export default class ItemsApi extends ApiService<
   }: {
     itemId?: string;
     isActive?: boolean;
-    sort?: SortOptions<LotSortKey>;
+    sort?: SortOptions<GetItemLotsApiV2ItemsIdLotsGetSortKey>;
   }) {
     if (!itemId) return null;
 
