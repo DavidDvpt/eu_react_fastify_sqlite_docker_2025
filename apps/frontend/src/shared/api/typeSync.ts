@@ -1,6 +1,4 @@
 import type {
-  CategoryCreate,
-  CategoryPatch,
   CategoryResponse,
   GetItemStockApiV2ItemsIdStockGet200,
   IdResponse,
@@ -12,19 +10,15 @@ import type {
   PedcardForm,
   PedcardPatch,
   PedcardType,
-  SignInBody,
   SignUpBody,
   TransactionBody,
   TransactionStatus,
   TransactionStatusPatchStatus,
   TransactionType,
-  TypeCreate,
-  TypePatch,
   TypeResponse,
 } from "@/api/generated/model";
 import type {
   CategoryDto,
-  CategoryFormBody,
   ItemDto,
   ItemForm,
   LotDto,
@@ -38,8 +32,6 @@ import type {
   TransactionStatusPatchDto,
   TransactionTypeDto,
   TypeDto,
-  TypeFormBody,
-  UserSignInFormBody,
   UserSignupFormBody,
 } from "@zod-schemas";
 
@@ -48,18 +40,13 @@ type EnumSync<TZod, TGenerated> = SyncCheck<TZod, TGenerated> & SyncCheck<TGener
 type Expect<T extends true> = T;
 
 type RequestBodies =
-  | Expect<SyncCheck<CategoryFormBody, CategoryCreate>>
-  | Expect<SyncCheck<TypeFormBody, TypeCreate>>
   | Expect<SyncCheck<ItemForm, ItemCreate>>
-  | Expect<SyncCheck<UserSignInFormBody, SignInBody>>
   | Expect<SyncCheck<UserSignupFormBody, SignUpBody>>
   | Expect<SyncCheck<TransactionBodyDto, TransactionBody>>
   | Expect<SyncCheck<PedcardFormBody, PedcardForm>>
   | Expect<SyncCheck<NexusFormBody, NexusForm>>;
 
 type PatchBodies =
-  | Expect<SyncCheck<CategoryFormBody, CategoryPatch>>
-  | Expect<SyncCheck<TypeFormBody, TypePatch>>
   | Expect<SyncCheck<ItemForm, ItemPatch>>
   | Expect<SyncCheck<PedcardFormBody, PedcardPatch>>
   | Expect<EnumSync<TransactionStatusPatchDto, TransactionStatusPatchStatus>>;

@@ -1,16 +1,10 @@
 import { z } from "zod";
+import { SignUpBody } from "@/api/generated/zod/model/signUpBody.zod";
 import { booleanSchema, genericDateSchema } from "./common.js";
 
 export const userRoleSchema = z.enum(["ADMIN", "USER"]);
 
-export const userSignInFormSchema = z.object({
-  pseudo: z.string().min(8, "Le pseudo doit être de 8 caractères minimum"),
-  password: z
-    .string()
-    .min(8, "Le mot de passe doit être de 8 caractères minimum"),
-});
-
-export const userSignUpFormSchema = userSignInFormSchema.extend({
+export const userSignUpFormSchema = SignUpBody.extend({
   firstname: z
     .string()
     .trim()
@@ -24,7 +18,6 @@ export const userSignUpFormSchema = userSignInFormSchema.extend({
     .or(z.literal(""))
     .transform((value) => (value ? value : undefined)),
   email: z.email("Email invalide"),
-  pseudo: z.string("invalide"),
 });
 
 export const userSchemaDto = userSignUpFormSchema.extend({
@@ -37,6 +30,5 @@ export const userSchemaDto = userSignUpFormSchema.extend({
 export type UserRole = z.infer<typeof userRoleSchema>;
 
 export type UserSignupFormBody = z.output<typeof userSignUpFormSchema>;
-export type UserSignInFormBody = z.output<typeof userSignInFormSchema>;
 
 export type UserDto = z.infer<typeof userSchemaDto>;

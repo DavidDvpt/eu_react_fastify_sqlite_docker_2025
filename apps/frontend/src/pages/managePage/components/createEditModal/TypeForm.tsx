@@ -4,15 +4,18 @@ import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import CategorySelectRHF from "@/shared/components/form/Select/CategorySelectRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { TypeDto, TypeFormBody } from "@zod-schemas";
-import { typeFormSchema } from "@zod-schemas";
+import type { TypeDto } from "@zod-schemas";
+import {
+  TypeCreate,
+  type TypeCreateOutput,
+} from "@/api/generated/zod/model/typeCreate.zod";
 
 interface TypeFormProps {
   type?: TypeDto;
   onClose: () => void;
 }
 
-const defaultValues: TypeFormBody = {
+const defaultValues: TypeCreateOutput = {
   name: "",
   isActive: true,
   isStackable: false,
@@ -21,7 +24,7 @@ const defaultValues: TypeFormBody = {
 
 function TypeForm({ type, onClose }: TypeFormProps) {
   const { typeMutation } = useSystemMutation();
-  const formValues: TypeFormBody = type
+  const formValues: TypeCreateOutput = type
     ? {
         name: type.name,
         isActive: type.isActive,
@@ -30,7 +33,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
       }
     : defaultValues;
 
-  const handleSubmit = (values: TypeFormBody) => {
+  const handleSubmit = (values: TypeCreateOutput) => {
     typeMutation.mutate(
       { type, values },
       {
@@ -45,7 +48,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
     <GenericForm
       key={type?.id ?? "create-type"}
       onSubmit={handleSubmit}
-      schema={typeFormSchema}
+      schema={TypeCreate}
       defaultValues={formValues}
       className="flex flex-col gap-4"
     >

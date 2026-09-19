@@ -2,19 +2,21 @@ import InputRHF from "@/shared/components/form/Input/InputRHF";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import { Button } from "@/components/ui/button";
 
-import { userSignInFormSchema } from "@zod-schemas";
-import type { UserSignInFormBody } from "@zod-schemas";
+import {
+  SignInBody,
+  type SignInBodyOutput,
+} from "@/api/generated/zod/model/signInBody.zod";
 
 const loginDefaultValues = { pseudo: "", password: "" };
 interface ILoginFormProps {
   className?: string;
-  onSubmit: (values: UserSignInFormBody) => void | Promise<void>;
+  onSubmit: (values: SignInBodyOutput) => void | Promise<void>;
 }
 
 function SignInForm({ className, onSubmit }: ILoginFormProps) {
   return (
     <GenericForm
-      schema={userSignInFormSchema}
+      schema={SignInBody}
       defaultValues={loginDefaultValues}
       onSubmit={onSubmit}
       className={`flex flex-col items-stretch justify-center space-y-3 ${className}`}

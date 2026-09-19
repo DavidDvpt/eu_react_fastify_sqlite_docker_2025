@@ -3,13 +3,13 @@ import { Panel, Section } from "@/shared/components/Containers";
 import { AppLink } from "@/shared/components/AppLink";
 import { useAppDispatch } from "@/store/hooks";
 import SignInForm from "./components/SignInForm";
-import type { UserSignInFormBody } from "@zod-schemas";
+import type { SignInBodyOutput } from "@/api/generated/zod/model/signInBody.zod";
 import { authMeThunk } from "@/store";
 
 function SignInPage() {
   const dispatch = useAppDispatch();
 
-  const handleSubmit = async (values: UserSignInFormBody) => {
+  const handleSubmit = async (values: SignInBodyOutput) => {
     try {
       const response = await signinApi(values);
 

@@ -3,26 +3,29 @@ import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
 import { GenericForm } from "@/shared/components/form/Genericform";
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import type { CategoryDto, CategoryFormBody } from "@zod-schemas";
-import { categoryFormSchema } from "@zod-schemas";
+import type { CategoryDto } from "@zod-schemas";
+import {
+  CategoryCreate,
+  type CategoryCreateOutput,
+} from "@/api/generated/zod/model/categoryCreate.zod";
 
 interface CategoyFormProps {
   category?: CategoryDto;
   onClose: () => void;
 }
 
-const defaultValues: CategoryFormBody = { name: "", isActive: true };
+const defaultValues: CategoryCreateOutput = { name: "", isActive: true };
 
 function CategoryForm({ category, onClose }: CategoyFormProps) {
   const { categoryMutation } = useSystemMutation();
-  const formValues: CategoryFormBody = category
+  const formValues: CategoryCreateOutput = category
     ? {
         name: category.name,
         isActive: category.isActive,
       }
     : defaultValues;
 
-  const handleSubmit = (values: CategoryFormBody) => {
+  const handleSubmit = (values: CategoryCreateOutput) => {
     categoryMutation.mutate(
       { category, values },
       {
@@ -37,7 +40,7 @@ function CategoryForm({ category, onClose }: CategoyFormProps) {
     <GenericForm
       key={category?.id ?? "create-category"}
       onSubmit={handleSubmit}
-      schema={categoryFormSchema}
+      schema={CategoryCreate}
       defaultValues={formValues}
       className="flex flex-col gap-4"
     >

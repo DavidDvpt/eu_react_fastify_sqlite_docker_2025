@@ -1,13 +1,13 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import { ItemsApi, TypesApi } from "@/shared/services";
 import CategoryApi from "@/shared/services/categoriesApi";
+import type { CategoryCreateOutput } from "@/api/generated/zod/model/categoryCreate.zod";
+import type { TypeCreateOutput } from "@/api/generated/zod/model/typeCreate.zod";
 import type {
   CategoryDto,
-  CategoryFormBody,
   ItemDto,
   ItemForm,
   TypeDto,
-  TypeFormBody,
 } from "@zod-schemas";
 import { useMutation } from "@tanstack/react-query";
 
@@ -18,7 +18,7 @@ export default function useSystemMutation() {
       values,
     }: {
       category?: CategoryDto;
-      values: CategoryFormBody;
+      values: CategoryCreateOutput;
     }) => {
       const cs = new CategoryApi();
       if (category?.id) {
@@ -38,7 +38,7 @@ export default function useSystemMutation() {
       values,
     }: {
       type?: TypeDto;
-      values: TypeFormBody;
+      values: TypeCreateOutput;
     }) => {
       const ts = new TypesApi();
       if (type?.id) {

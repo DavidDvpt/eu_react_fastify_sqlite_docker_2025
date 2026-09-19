@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 
+import "@/shared/validation/zodConfig";
 import { userSignUpFormSchema } from "@zod-schemas";
 
 describe("signUpSchema", () => {
@@ -40,7 +41,7 @@ describe("signUpSchema", () => {
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.password?.[0]).toBe(
-        "Le mot de passe doit être de 8 caractères minimum"
+        "Ce champ doit contenir au moins 8 caractères"
       );
     }
   });
