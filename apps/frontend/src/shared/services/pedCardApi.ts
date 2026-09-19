@@ -4,9 +4,11 @@ import { ApiService } from "@/shared/services/apiCrudService";
 
 import type { PedcardForm, PedcardPatch } from "@/api/generated/model";
 import type {
+  CanPayApiV2PedcardCanPayGet200,
+  CheckPedcardApiV2PedcardCheckGet200,
+} from "@/api/generated/model";
+import type {
   PedcardBalance,
-  PedcardCanPay,
-  PedcardCheck,
   PedcardDto,
 } from "@zod-schemas";
 
@@ -23,12 +25,12 @@ export default class pedcardApi extends ApiService<
   protected querySchema = null;
 
   async check() {
-    return axiosCrud(axiosInstance()).get<PedcardCheck>(
+    return axiosCrud(axiosInstance()).get<CheckPedcardApiV2PedcardCheckGet200>(
       `${pedcardRoute}/check`,
     );
   }
   async canPay() {
-    return axiosCrud(axiosInstance()).get<PedcardCanPay>(
+    return axiosCrud(axiosInstance()).get<CanPayApiV2PedcardCanPayGet200>(
       `${pedcardRoute}/can-pay`,
     );
   }

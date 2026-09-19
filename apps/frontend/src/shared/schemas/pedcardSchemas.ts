@@ -1,14 +1,7 @@
 import { z } from "zod";
-import { booleanSchema } from "./common.js";
+import { PedcardType } from "@/api/generated/zod/model/pedcardType.zod";
 
-export const pedcardTypeSchema = z.enum([
-  "INITIAL_BALANCE",
-  "BUY_TTC",
-  "BUY_FEE",
-  "SELL_TTC",
-  "SELL_FEE",
-  "ADJUSTMENT",
-]);
+export const pedcardTypeSchema = PedcardType;
 
 export const pedcardDtoSchema = z.object({
   id: z.string(),
@@ -19,12 +12,8 @@ export const pedcardDtoSchema = z.object({
   createdat: z.string(),
 });
 
-export const pedcardCheckSchema = z.object({ initialized: booleanSchema });
-export const pedcardCanPaySchema = z.object({ authorized: booleanSchema });
 export const pedcardBalanceSchema = z.object({ balance: z.number() });
 
 export type PedcardTypeDto = z.output<typeof pedcardTypeSchema>;
 export type PedcardDto = z.infer<typeof pedcardDtoSchema>;
-export type PedcardCheck = z.infer<typeof pedcardCheckSchema>;
-export type PedcardCanPay = z.infer<typeof pedcardCanPaySchema>;
 export type PedcardBalance = z.infer<typeof pedcardBalanceSchema>;

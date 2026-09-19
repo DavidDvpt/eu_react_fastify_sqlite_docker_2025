@@ -16,5 +16,3 @@ export const genericDateSchema = z.object({
 
 export type Order = z.infer<typeof sortOrderEnum>;
 export type SortOptions<T> = { key: T; order?: Order } | undefined;
-
-export type PrismaMutationResponse = z.infer<typeof idSchema>;

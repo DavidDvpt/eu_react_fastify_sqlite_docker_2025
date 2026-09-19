@@ -1,25 +1,14 @@
 import { z } from "zod";
+import { TransactionStatus } from "@/api/generated/zod/model/transactionStatus.zod";
+import { TransactionType } from "@/api/generated/zod/model/transactionType.zod";
 import { genericDateSchema, idSchema } from "./common.js";
 import { lotItemIdSchema } from "./lotSchema.js";
 import { itemDtoSchema } from "./systemSchemas.js";
 
-export const transactionTypeSchema = z.enum([
-  "BUY",
-  "SELL",
-  "FOUND",
-  "GIFT",
-  "EXISTING_STOCK",
-  "SELL",
-  "GIVEN",
-]);
+export const transactionTypeSchema = TransactionType;
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
 
-export const transactionStatusDtoSchema = z.enum([
-  "SOLDED",
-  "RUNNING",
-  "RETURNED",
-  "CANCELED",
-]);
+export const transactionStatusDtoSchema = TransactionStatus;
 export type TransactionStatusDto = z.output<typeof transactionStatusDtoSchema>;
 
 export const transactionStatusPatchDtoSchema =
@@ -39,14 +28,6 @@ export const transactionLotSchema = z.object({
   lotId: z.string(),
   quantity: z.coerce.number(),
   lot: lotItemIdSchema.nullable().default(null),
-});
-
-export const transactionQuerySchema = z.object({
-  itemId: z.string().optional(),
-  status: transactionStatusDtoSchema.optional(),
-  type: transactionTypeSchema.optional(),
-  withItemId: z.coerce.boolean().optional(),
-  withLotId: z.coerce.boolean().optional(),
 });
 
 export const transactionEntrySchema = transactionValuesSchema.extend({
@@ -77,8 +58,6 @@ export type TransactionStatusPatchDto = z.infer<
   typeof transactionStatusPatchDtoSchema
 >;
 export type TransactionCancelDto = z.infer<typeof transactionCancelDtoSchema>;
-
-export type TransactionQuery = z.infer<typeof transactionQuerySchema>;
 
 export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;

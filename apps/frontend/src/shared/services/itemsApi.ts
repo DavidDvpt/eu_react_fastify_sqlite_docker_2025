@@ -1,29 +1,29 @@
 import type { ItemCreate, ItemPatch } from "@/api/generated/model";
+import type { ListItemsApiV2ItemsGetParams } from "@/api/generated/model";
+import type { GetItemStockApiV2ItemsIdStockGet200 } from "@/api/generated/model";
+import { ListItemsApiV2ItemsGetParams as listItemsParamsSchema } from "@/api/generated/zod/model/listItemsApiV2ItemsGetParams.zod";
 import {
-  itemQuerySchema,
   type ItemDtos,
-  type ItemQuery,
   type LotDto,
   type LotSortKey,
   type SortOptions,
-  type Stock,
 } from "@zod-schemas";
 
 import { ApiService } from "@/shared/services/apiCrudService";
 
 export default class ItemsApi extends ApiService<
-  ItemQuery,
+  ListItemsApiV2ItemsGetParams,
   ItemDtos,
   ItemCreate,
   void,
   ItemPatch
 > {
   protected route = "/items";
-  protected querySchema = itemQuerySchema;
+  protected querySchema = listItemsParamsSchema;
 
   async getStock(itemId?: string) {
     if (!itemId) return {};
-    return this.axios.get<Stock>(`${this.route}/${itemId}/stock`);
+    return this.axios.get<GetItemStockApiV2ItemsIdStockGet200>(`${this.route}/${itemId}/stock`);
   }
 
   async getLots({

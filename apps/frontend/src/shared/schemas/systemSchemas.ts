@@ -1,13 +1,9 @@
 import { z } from "zod";
 import {
   booleanSchema,
-  dateSortKeySchema,
   genericDateSchema,
   idSchema,
-  sortOrderEnum,
 } from "./common.js";
-
-export const systemSortKey = z.enum([...dateSortKeySchema.options, "name"]);
 
 const systemBaseSchema = idSchema.extend({
   name: z.string().min(1),
@@ -16,15 +12,8 @@ const systemBaseSchema = idSchema.extend({
   ...genericDateSchema.shape,
 });
 
-export const systemQuerySchema = z.object({
-  isActive: booleanSchema.optional(),
-  sortKey: systemSortKey.optional(),
-  sortOrder: sortOrderEnum.optional(),
-});
-
 // CATEGORIES
 export const categoryDtoSchema = systemBaseSchema;
-export type CategorySortKey = z.infer<typeof systemSortKey>;
 export type CategoryDto = z.infer<typeof categoryDtoSchema>;
 export type CategoryDtos = CategoryDto[];
 
@@ -34,11 +23,6 @@ export const typeDtoSchema = systemBaseSchema.extend({
   isStackable: booleanSchema.default(false),
   category: categoryDtoSchema.nullable().default(null),
 });
-export const typeQuerySchema = systemQuerySchema.extend({
-  categoryId: z.string().optional(),
-});
-
-export type TypeSortKey = CategorySortKey;
 export type TypeDto = z.infer<typeof typeDtoSchema>;
 export type typeDtos = TypeDto[];
 
@@ -70,15 +54,8 @@ export const itemDtoSchema = itemFormSchema.omit({ id: true }).extend({
 
   type: typeDtoSchema.nullable().default(null),
 });
-export const itemQuerySchema = systemQuerySchema.extend({
-  typeId: z.string().optional(),
-  detail: itemDetailsEnum.optional(),
-});
-
 export type ItemDto = z.infer<typeof itemDtoSchema>;
 export type ItemDtos = ItemDto[];
-export type ItemQuery = z.infer<typeof itemQuerySchema>;
-export type ItemSortKeys = CategorySortKey;
 export type ItemDetailEnum = z.infer<typeof itemDetailsEnum>;
 
 export const finderDtoSchema = itemDtoSchema.extend({

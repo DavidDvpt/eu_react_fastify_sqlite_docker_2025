@@ -1,23 +1,22 @@
-import type { TransactionBody, TransactionStatusPatch, TransactionStatusPatchStatus } from "@/api/generated/model";
+import type { IdResponse, TransactionBody, TransactionStatusPatch, TransactionStatusPatchStatus } from "@/api/generated/model";
+import type { ListTransactionsApiV2TransactionsGetParams } from "@/api/generated/model";
+import { ListTransactionsApiV2TransactionsGetParams as listTransactionsParamsSchema } from "@/api/generated/zod/model/listTransactionsApiV2TransactionsGetParams.zod";
 import { ApiService } from "@/shared/services/apiCrudService";
 import {
-  transactionQuerySchema,
-  type PrismaMutationResponse,
   type TransactionDto,
   type TransactionDtos,
-  type TransactionQuery,
 } from "@zod-schemas";
 
 export default class TransactionsApi extends ApiService<
-  TransactionQuery,
+  ListTransactionsApiV2TransactionsGetParams,
   TransactionDto[],
   TransactionBody,
-  PrismaMutationResponse,
+  IdResponse,
   Partial<TransactionBody>,
   { transactionId: string }
 > {
   protected route = "/transactions";
-  protected querySchema = transactionQuerySchema;
+  protected querySchema = listTransactionsParamsSchema;
 
   async running() {
     return await this.axios.get<TransactionDtos>(`${this.route}/running`);
@@ -29,7 +28,7 @@ export default class TransactionsApi extends ApiService<
     id: string;
     status: TransactionStatusPatchStatus;
   }) {
-    return this.axios.patch<PrismaMutationResponse, TransactionStatusPatch>(
+    return this.axios.patch<IdResponse, TransactionStatusPatch>(
       `${this.route}/${id}/status`,
       { status },
     );
