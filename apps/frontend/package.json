@@ -8,6 +8,10 @@
     "build": "vite build",
     "build:docker": "vite build",
     "lint": "eslint .",
+    "api:fetch": "node scripts/fetch-openapi.mjs",
+    "api:generate": "npm run api:fetch && orval",
+    "typecheck": "tsc --noEmit",
+    "api:update": "npm run api:generate && npm run typecheck",
     "preview": "vite preview",
     "test": "vitest",
     "test:front": "vitest run"
@@ -51,6 +55,7 @@
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
     "jsdom": "^27.4.0",
+    "orval": "^8.34.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.3",

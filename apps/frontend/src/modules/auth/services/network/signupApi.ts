@@ -1,8 +1,8 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { UserSignupFormBody } from "@zod-schemas";
+import type { SignUpBody } from "@/api/generated/model";
 
-async function signupApi(credentials: UserSignupFormBody) {
+async function signupApi(credentials: SignUpBody) {
   try {
     if (!credentials) throw new Error("Params not found");
     if (!credentials.pseudo) throw new Error("Pseudo is undefined");
@@ -11,7 +11,7 @@ async function signupApi(credentials: UserSignupFormBody) {
 
     const response = await axiosCrud(axiosInstance()).post<
       { userId: string },
-      UserSignupFormBody
+      SignUpBody
     >("/auth/signup", credentials);
 
     // Some backends return `{ user, token? }`, others return the user directly.

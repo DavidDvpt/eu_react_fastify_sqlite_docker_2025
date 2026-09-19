@@ -1,8 +1,8 @@
 import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
-import type { UserSignInFormBody } from "@zod-schemas";
+import type { SignInBody } from "@/api/generated/model";
 
-async function signinApi(credentials: UserSignInFormBody) {
+async function signinApi(credentials: SignInBody) {
   try {
     if (!credentials) throw new Error("Params not found");
     if (!credentials.pseudo) throw new Error("Pseudo is undefined");
@@ -10,7 +10,7 @@ async function signinApi(credentials: UserSignInFormBody) {
 
     const response = await axiosCrud(axiosInstance()).post<
       { message: string },
-      UserSignInFormBody
+      SignInBody
     >("/auth/signin", credentials);
 
     return response;

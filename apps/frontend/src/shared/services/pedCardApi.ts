@@ -2,12 +2,12 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { ApiService } from "@/shared/services/apiCrudService";
 
+import type { PedcardForm, PedcardPatch } from "@/api/generated/model";
 import type {
   PedcardBalance,
   PedcardCanPay,
   PedcardCheck,
   PedcardDto,
-  PedcardFormBody,
 } from "@zod-schemas";
 
 const pedcardRoute = "/pedcard";
@@ -15,7 +15,9 @@ const pedcardRoute = "/pedcard";
 export default class pedcardApi extends ApiService<
   Record<string, never>,
   PedcardDto[],
-  PedcardFormBody
+  PedcardForm,
+  void,
+  PedcardPatch
 > {
   protected route = `${pedcardRoute}`;
   protected querySchema = null;

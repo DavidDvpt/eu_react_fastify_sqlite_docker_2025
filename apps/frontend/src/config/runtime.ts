@@ -33,7 +33,7 @@ function getRuntimeBaseUrl(
 }
 
 function getApiBaseUrl() {
-  return getRuntimeBaseUrl(runtimeConfig.API_URL, env.VITE_API_URL, "/api/v1");
+  return getRuntimeBaseUrl(runtimeConfig.API_URL, env.VITE_API_URL, "/api/v2");
 }
 
 function getImageBaseUrl() {

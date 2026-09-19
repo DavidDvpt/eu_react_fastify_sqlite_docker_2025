@@ -1,7 +1,7 @@
+import type { ItemCreate, ItemPatch } from "@/api/generated/model";
 import {
   itemQuerySchema,
   type ItemDtos,
-  type ItemForm,
   type ItemQuery,
   type LotDto,
   type LotSortKey,
@@ -14,7 +14,9 @@ import { ApiService } from "@/shared/services/apiCrudService";
 export default class ItemsApi extends ApiService<
   ItemQuery,
   ItemDtos,
-  ItemForm
+  ItemCreate,
+  void,
+  ItemPatch
 > {
   protected route = "/items";
   protected querySchema = itemQuerySchema;

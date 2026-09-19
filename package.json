@@ -11,7 +11,9 @@
     "dev": "npm run dev --workspace frontend",
     "stop": "kill $(lsof -ti tcp:5173) 2>/dev/null || echo 'frontend not running'",
     "test:all": "sh ./scripts/test-all.sh",
-    "prepare": "command -v husky >/dev/null 2>&1 && husky || true"
+    "prepare": "command -v husky >/dev/null 2>&1 && husky || true",
+    "openapi:fetch": "npm run --workspace frontend api:fetch",
+    "openapi:update": "npm run --workspace frontend  api:generate && npm run --workspace frontend typecheck"
   },
   "keywords": [],
   "author": "",
