@@ -10,18 +10,6 @@ export const pedcardTypeSchema = z.enum([
   "ADJUSTMENT",
 ]);
 
-export const pedcardFormSchema = z.object({
-  type: pedcardTypeSchema,
-  value: z.coerce.number(),
-  transactionId: z.string().optional(),
-});
-
-export const pedcardPatchSchema = pedcardFormSchema
-  .partial()
-  .refine((value) => value.type !== undefined || value.value !== undefined, {
-    message: "At least one field must be provided",
-  });
-
 export const pedcardDtoSchema = z.object({
   id: z.string(),
   userId: z.string(),
@@ -35,7 +23,6 @@ export const pedcardCheckSchema = z.object({ initialized: booleanSchema });
 export const pedcardCanPaySchema = z.object({ authorized: booleanSchema });
 export const pedcardBalanceSchema = z.object({ balance: z.number() });
 
-export type PedcardFormBody = z.output<typeof pedcardFormSchema>;
 export type PedcardTypeDto = z.output<typeof pedcardTypeSchema>;
 export type PedcardDto = z.infer<typeof pedcardDtoSchema>;
 export type PedcardCheck = z.infer<typeof pedcardCheckSchema>;

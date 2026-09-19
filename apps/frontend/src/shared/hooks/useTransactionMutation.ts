@@ -1,8 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
+import type { TransactionBody } from "@/api/generated/model";
 
 import TransactionsApi from "@/shared/services/transactionsApi";
 import type {
-  TransactionBodyDto,
   TransactionStatusDto,
   TransactionStatusPatchDto,
   TransactionTypeDto,
@@ -55,7 +55,7 @@ function useTransactionsMutation() {
         fee: values.fee,
         ttc: values.ttc,
         status: values.status,
-      } satisfies TransactionBodyDto);
+      } satisfies TransactionBody);
     },
     onSuccess: async (_data, { item }) => {
       await InvalidateQueryAndKeys.transactionMutation({

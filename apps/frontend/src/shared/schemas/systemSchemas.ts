@@ -77,7 +77,6 @@ export const itemQuerySchema = systemQuerySchema.extend({
 
 export type ItemDto = z.infer<typeof itemDtoSchema>;
 export type ItemDtos = ItemDto[];
-export type ItemForm = z.infer<typeof itemFormSchema>;
 export type ItemQuery = z.infer<typeof itemQuerySchema>;
 export type ItemSortKeys = CategorySortKey;
 export type ItemDetailEnum = z.infer<typeof itemDetailsEnum>;

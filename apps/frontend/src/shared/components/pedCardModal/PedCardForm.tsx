@@ -2,8 +2,10 @@ import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
 import pedcardApi from "@/shared/services/pedCardApi";
-import { pedcardFormSchema } from "@zod-schemas";
-import type { PedcardFormBody } from "@zod-schemas";
+import {
+  PedcardForm,
+  type PedcardFormOutput,
+} from "@/api/generated/zod/model/pedcardForm.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
 interface PedCardFormProps {
@@ -19,10 +21,12 @@ function PedCardForm({
   submitLabel,
   onSuccess,
 }: PedCardFormProps) {
-  const handleSubmit = async (data: PedcardFormBody) => {
+  const handleSubmit = async (data: PedcardFormOutput) => {
     const currentBalance = balance ?? 0;
     const isInitialBalance = initialized !== true;
-    const value = isInitialBalance ? data.value : data.value - currentBalance;
+    const value = isInitialBalance
+      ? Number(data.value)
+      : Number(data.value) - currentBalance;
 
     const ps = new pedcardApi();
     await ps.create({
@@ -37,7 +41,7 @@ function PedCardForm({
 
   return (
     <GenericForm
-      schema={pedcardFormSchema}
+      schema={PedcardForm}
       defaultValues={
         initialized
           ? { value: balance ?? 0, type: "ADJUSTMENT" }

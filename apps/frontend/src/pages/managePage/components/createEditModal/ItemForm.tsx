@@ -6,8 +6,11 @@ import SelectRHF from "@/shared/components/form/Select/SelectRHF";
 import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
 import useSystemMutation from "@/shared/hooks/useSystemMutation";
 import { useSystemDatas } from "@/shared/hooks";
-import type { ItemDto, ItemForm } from "@zod-schemas";
-import { itemFormSchema } from "@zod-schemas";
+import type { ItemDto } from "@zod-schemas";
+import {
+  ItemCreate,
+  type ItemCreateOutput,
+} from "@/api/generated/zod/model/itemCreate.zod";
 
 interface ItemFormProps {
   item?: ItemDto;
@@ -51,7 +54,7 @@ function ManageItemForm({ item, onClose }: ItemFormProps) {
       }
     : defaultValues;
 
-  const handleSubmit = (values: ItemForm) => {
+  const handleSubmit = (values: ItemCreateOutput) => {
     itemMutation.mutate(
       { item, values },
       {
@@ -66,7 +69,7 @@ function ManageItemForm({ item, onClose }: ItemFormProps) {
     <GenericForm
       key={item?.id ?? "create-item"}
       onSubmit={handleSubmit}
-      schema={itemFormSchema}
+      schema={ItemCreate}
       defaultValues={formValues}
       className="flex flex-col gap-4"
     >

@@ -59,13 +59,6 @@ export const transactionEntrySchema = transactionValuesSchema.extend({
 
 export const transactionEntriesSchema = transactionEntrySchema.array();
 
-export const transactionBodySchema = transactionValuesSchema.extend({
-  itemId: z.string().min(1),
-  quantity: z.coerce.number().int().positive(),
-  transactionType: transactionTypeSchema,
-  status: transactionStatusDtoSchema,
-});
-
 export const transactionDtoSchema = transactionValuesSchema.extend({
   ...idSchema.shape,
   itemId: z.string(),
@@ -91,5 +84,3 @@ export type TransactionEntry = z.infer<typeof transactionEntrySchema>;
 export type TransactionEntries = z.infer<typeof transactionEntriesSchema>;
 // export type TransactionDto = z.infer<typeof transactionDtoSchema>;
 export type TransactionValues = z.infer<typeof transactionValuesSchema>;
-
-export type TransactionBodyDto = z.infer<typeof transactionBodySchema>;

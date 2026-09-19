@@ -28,16 +28,9 @@ export const nexusDtoSchema = z.object({
   updatedAt: z.string().nullable().default(null),
 });
 
-export const nexusFormSchema = z.object({
-  appTypeName: z.string().min(1),
-  nexusName: z.string(),
-  nexusRequestType: z.string(),
-});
-
 export const nexusUpdateParamSchema = z.object({
   type: nexusRequestTypeSchema,
 });
 
 export type NexusRequestTypeEnum = z.infer<typeof nexusRequestTypeSchema>;
 export type NexusUpdateDto = z.infer<typeof nexusDtoSchema>;
-export type NexusFormBody = z.output<typeof nexusFormSchema>;

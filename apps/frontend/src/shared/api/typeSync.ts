@@ -2,16 +2,10 @@ import type {
   CategoryResponse,
   GetItemStockApiV2ItemsIdStockGet200,
   IdResponse,
-  ItemCreate,
-  ItemPatch,
   ItemResponse,
   LotResponse,
-  NexusForm,
-  PedcardForm,
-  PedcardPatch,
   PedcardType,
   SignUpBody,
-  TransactionBody,
   TransactionStatus,
   TransactionStatusPatchStatus,
   TransactionType,
@@ -20,14 +14,10 @@ import type {
 import type {
   CategoryDto,
   ItemDto,
-  ItemForm,
   LotDto,
-  NexusFormBody,
-  PedcardFormBody,
   PedcardTypeDto,
   PrismaMutationResponse,
   Stock,
-  TransactionBodyDto,
   TransactionStatusDto,
   TransactionStatusPatchDto,
   TransactionTypeDto,
@@ -40,15 +30,10 @@ type EnumSync<TZod, TGenerated> = SyncCheck<TZod, TGenerated> & SyncCheck<TGener
 type Expect<T extends true> = T;
 
 type RequestBodies =
-  | Expect<SyncCheck<ItemForm, ItemCreate>>
   | Expect<SyncCheck<UserSignupFormBody, SignUpBody>>
-  | Expect<SyncCheck<TransactionBodyDto, TransactionBody>>
-  | Expect<SyncCheck<PedcardFormBody, PedcardForm>>
-  | Expect<SyncCheck<NexusFormBody, NexusForm>>;
+  ;
 
 type PatchBodies =
-  | Expect<SyncCheck<ItemForm, ItemPatch>>
-  | Expect<SyncCheck<PedcardFormBody, PedcardPatch>>
   | Expect<EnumSync<TransactionStatusPatchDto, TransactionStatusPatchStatus>>;
 
 type Enums =
