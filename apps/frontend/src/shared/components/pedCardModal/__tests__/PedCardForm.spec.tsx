@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+} from "@tanstack/react-query";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { ReactNode } from "react";
@@ -11,11 +15,21 @@ const { mockCreatePedCardEntry } = vi.hoisted(() => ({
   mockCreatePedCardEntry: vi.fn(),
 }));
 
-vi.mock("@/shared/services/pedCardApi", () => ({
-  default: class {
-    create = mockCreatePedCardEntry;
-  },
-}));
+vi.mock("@/api/generated/react-query/entropiaManagerAPI", async () => {
+  const actual =
+    await vi.importActual<
+      typeof import("@/api/generated/react-query/entropiaManagerAPI")
+    >("@/api/generated/react-query/entropiaManagerAPI");
+
+  return {
+    ...actual,
+    useCreatePedcardApiV2PedcardPost: () =>
+      useMutation({
+        mutationFn: ({ data }: { data: unknown }) =>
+          mockCreatePedCardEntry(data),
+      }),
+  };
+});
 
 vi.mock("../form/Genericform", () => ({
   GenericForm: ({

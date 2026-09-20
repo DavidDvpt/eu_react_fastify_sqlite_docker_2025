@@ -1,7 +1,7 @@
 import { GenericForm } from "../form/Genericform";
 import InputRHF from "../form/Input/InputRHF";
 import { Button } from "@/components/ui/button";
-import pedcardApi from "@/shared/services/pedCardApi";
+import { useCreatePedcardApiV2PedcardPost } from "@/api/generated/react-query/entropiaManagerAPI";
 import {
   PedcardForm,
   type PedcardFormOutput,
@@ -21,6 +21,8 @@ function PedCardForm({
   submitLabel,
   onSuccess,
 }: PedCardFormProps) {
+  const createPedcard = useCreatePedcardApiV2PedcardPost();
+
   const handleSubmit = async (data: PedcardFormOutput) => {
     const currentBalance = balance ?? 0;
     const isInitialBalance = initialized !== true;
@@ -28,11 +30,10 @@ function PedCardForm({
       ? Number(data.value)
       : Number(data.value) - currentBalance;
 
-    const ps = new pedcardApi();
-    await ps.create({
+    await createPedcard.mutateAsync({ data: {
       type: data.type,
       value,
-    });
+    } });
 
     InvalidateQueryAndKeys.invalidatePedcard();
 
