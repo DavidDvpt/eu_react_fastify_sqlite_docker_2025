@@ -1,0 +1,18 @@
+services:
+  frontend:
+    build:
+      context: ../..
+      dockerfile: docker/prod/Dockerfile.frontend.prod
+      platforms:
+        - ${PLATFORM:-linux/amd64}
+    image: lamouche42/entropia-manager-frontend:latest
+    container_name: entropia-manager-frontend
+    expose:
+      - "8019"
+    restart: unless-stopped
+    networks:
+      - ser5-network
+
+networks:
+  ser5-network:
+    external: true

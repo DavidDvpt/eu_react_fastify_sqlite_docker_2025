@@ -5,13 +5,12 @@ COPY package*.json ./
 COPY apps/frontend/package*.json ./apps/frontend/
 
 RUN npm ci
-RUN npm ci --prefix apps/frontend
 # Force Linux-native optional binaries used by Rollup, Lightning CSS and Tailwind.
 # They are platform-specific and may be missing from the install when the lockfile
 # was generated on another OS, which breaks the production build inside this Linux image.
 RUN ROLLUP_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/rollup"].version')" \
   && LIGHTNINGCSS_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/lightningcss"].version')" \
-  && TAILWIND_OXIDE_VERSION="$(node -p 'require("./apps/frontend/package-lock.json").packages["node_modules/@tailwindcss/oxide"].version')" \
+  && TAILWIND_OXIDE_VERSION="$(node -p 'require("./package-lock.json").packages["node_modules/@tailwindcss/oxide"].version')" \
   && npm install --no-save --ignore-scripts "@rollup/rollup-linux-x64-gnu@${ROLLUP_VERSION}" "lightningcss-linux-x64-gnu@${LIGHTNINGCSS_VERSION}" "@tailwindcss/oxide-linux-x64-gnu@${TAILWIND_OXIDE_VERSION}"
 
 COPY apps/frontend ./apps/frontend
