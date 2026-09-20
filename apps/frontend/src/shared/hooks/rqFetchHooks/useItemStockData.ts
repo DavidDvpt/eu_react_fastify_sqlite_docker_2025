@@ -1,21 +1,24 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
-import { ItemsApi } from "@/shared/services";
+import { useGetItemStockApiV2ItemsIdStockGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import type { ItemViewModel, StockQuery } from "@zod-schemas";
-import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 
 export default function useItemStock({ itemId }: StockQuery = {}) {
-  const itemsApi = new ItemsApi();
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
 
-  const { data: itemStock, ...rest } = useQuery({
-    queryKey: InvalidateQueryAndKeys.getItemStockKey(itemId).keys,
-    queryFn: () => itemsApi.getStock(itemId),
-    staleTime: 30_000,
-  });
+  const { data: itemStock, ...rest } = useGetItemStockApiV2ItemsIdStockGet(
+    itemId ?? "",
+    {
+      query: {
+        queryKey: InvalidateQueryAndKeys.getItemStockKey(itemId).keys,
+        enabled: Boolean(itemId),
+        staleTime: 30_000,
+      },
+    },
+  );
 
   const itemWithStock = useMemo(() => {
     if (!itemDatas || !itemStock) return null;

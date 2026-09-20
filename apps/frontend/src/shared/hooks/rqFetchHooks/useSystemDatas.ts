@@ -1,43 +1,56 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import { CategoriesApi, ItemsApi, TypesApi } from "@/shared/services";
+import {
+  useListCategoriesApiV2CategoriesGet,
+  useListItemsApiV2ItemsGet,
+  useListTypesApiV2TypesGet,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store/reducers/auth";
-import type { ItemViewModels } from "@zod-schemas";
-import { useQuery } from "@tanstack/react-query";
+import type {
+  CategoryViewModels,
+  ItemViewModels,
+  TypeViewModels,
+} from "@zod-schemas";
 import { useMemo } from "react";
 
 export default function useSystemDatas() {
   const logged = useAppSelector(selectIsLoggued);
 
   const keys = InvalidateQueryAndKeys;
-  const catApi = new CategoriesApi();
-  const typesApi = new TypesApi();
-  const itemsApi = new ItemsApi();
+
   /* CATEGORIES */
-  const categories = useQuery({
-    queryKey: ["categories"],
-    queryFn: () => catApi.get(),
-    enabled: logged,
-    staleTime: Infinity,
+  const categories = useListCategoriesApiV2CategoriesGet(undefined, {
+    query: {
+      queryKey: keys.getCategoriesKey().keys,
+      enabled: logged,
+      staleTime: Infinity,
+    },
   });
 
   /* TYPES */
-  const t = useQuery({
-    queryKey: keys.getTypesKey().keys,
-    queryFn: () => typesApi.get(),
-    enabled: logged,
-    staleTime: Infinity,
+  const t = useListTypesApiV2TypesGet(undefined, {
+    query: {
+      queryKey: keys.getTypesKey().keys,
+      enabled: logged,
+      staleTime: Infinity,
+    },
   });
+
+  // The generated OpenAPI models describe the transport response. Keep the
+  // existing domain model at this boundary so the rest of the application
+  // keeps receiving the same normalized shape as before the migration.
+  const categoryData = categories.data as CategoryViewModels | undefined;
+  const typeData = t.data as TypeViewModels | undefined;
 
   const types = useMemo(() => {
     const enrich =
-      t.data?.map((m) => {
-        const c = categories.data?.find((f) => f.id === m.categoryId);
+      typeData?.map((m) => {
+        const c = categoryData?.find((f) => f.id === m.categoryId);
         return { ...m, category: c };
       }) ?? [];
 
     return enrich;
-  }, [categories, t.data]);
+  }, [categoryData, typeData]);
 
   const typesByCategory = useMemo(
     () => (categoryId?: string) => {
@@ -48,15 +61,17 @@ export default function useSystemDatas() {
   );
 
   /* ITEMS */
-  const i = useQuery({
-    queryKey: keys.getItemsKey().keys,
-    queryFn: () => itemsApi.get(),
-    enabled: logged,
-    staleTime: Infinity,
+  const i = useListItemsApiV2ItemsGet(undefined, {
+    query: {
+      queryKey: keys.getItemsKey().keys,
+      enabled: logged,
+      staleTime: Infinity,
+    },
   });
+  const itemData = i.data as ItemViewModels | undefined;
   const items = useMemo(() => {
     const enrich =
-      i.data?.map((m) => {
+      itemData?.map((m) => {
         const type = types?.find((ft) => m.typeId === ft.id);
 
         return {
@@ -66,7 +81,7 @@ export default function useSystemDatas() {
       }) ?? [];
 
     return enrich as ItemViewModels;
-  }, [i.data, types]);
+  }, [itemData, types]);
   const filteredItems = useMemo(
     () =>
       ({
@@ -85,7 +100,7 @@ export default function useSystemDatas() {
   );
 
   return {
-    categories,
+    categories: { ...categories, data: categoryData },
     types: { ...t, typeDatas: types, typesByCategory },
     items: { ...i, itemDatas: items, filteredItems },
   };

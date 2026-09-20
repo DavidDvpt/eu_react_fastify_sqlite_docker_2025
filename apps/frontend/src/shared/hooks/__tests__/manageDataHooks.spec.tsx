@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 import { renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { beforeEach, describe, expect, it, vi } from "vitest";
@@ -15,25 +19,23 @@ vi.mock("@/store/hooks", () => ({
   useAppSelector: () => true,
 }));
 
-vi.mock("@/shared/services", async () => {
-  const actual =
-    await vi.importActual<typeof import("@/shared/services")>(
-      "@/shared/services",
-    );
-
-  return {
-    ...actual,
-    CategoriesApi: class {
-      get = categoriesGetMock;
-    },
-    TypesApi: class {
-      get = typesGetMock;
-    },
-    ItemsApi: class {
-      get = itemsGetMock;
-    },
-  };
-});
+vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+  useListCategoriesApiV2CategoriesGet: () =>
+    useQuery({
+      queryKey: ["categories"],
+      queryFn: categoriesGetMock,
+    }),
+  useListTypesApiV2TypesGet: () =>
+    useQuery({
+      queryKey: ["types"],
+      queryFn: typesGetMock,
+    }),
+  useListItemsApiV2ItemsGet: () =>
+    useQuery({
+      queryKey: ["items"],
+      queryFn: itemsGetMock,
+    }),
+}));
 
 function createWrapper(queryClient: QueryClient) {
   return function Wrapper({ children }: { children: ReactNode }) {
