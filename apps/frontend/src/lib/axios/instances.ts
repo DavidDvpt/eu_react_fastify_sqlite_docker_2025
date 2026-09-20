@@ -10,7 +10,12 @@ const baseConfig = {
   timeout: 20_000,
 };
 
-const axiosPublicInstance = axios.create(baseConfig);
+// Public endpoints do not need the private auth interceptors, but signin must
+// still be allowed to receive the session cookie used by /auth/me.
+const axiosPublicInstance = axios.create({
+  ...baseConfig,
+  withCredentials: true,
+});
 
 function axiosInstance() {
   const instance = axios.create({

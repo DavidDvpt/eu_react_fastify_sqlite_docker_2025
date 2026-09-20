@@ -14,9 +14,9 @@ describe("axios instances", () => {
     expect(axiosPublicInstance.defaults.timeout).toBe(20_000);
   });
 
-  it("should set withCredentials only on private instance", () => {
+  it("should enable credentials on both instances", () => {
     expect(axiosInstance().defaults.withCredentials).toBe(true);
-    expect(axiosPublicInstance.defaults.withCredentials).toBeUndefined();
+    expect(axiosPublicInstance.defaults.withCredentials).toBe(true);
   });
 
   it("should be two different instances", () => {
