@@ -4,4 +4,6 @@
  * Entropia Manager API
  */
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGet200Item = { [key: string]: unknown };
+export type BalanceResponse = {
+  balance: number;
+};

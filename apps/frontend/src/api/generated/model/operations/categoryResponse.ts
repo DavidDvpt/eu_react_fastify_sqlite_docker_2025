@@ -5,10 +5,10 @@
  */
 
 export type CategoryResponse = {
-  id: unknown;
-  name: unknown;
-  userId?: unknown;
-  createdAt?: unknown;
-  updatedAt?: unknown;
-  isActive?: unknown;
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string | null;
+  isActive?: boolean | null;
 };

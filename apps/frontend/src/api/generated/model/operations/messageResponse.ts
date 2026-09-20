@@ -4,4 +4,6 @@
  * Entropia Manager API
  */
 
-export type ListTransactionsApiV2TransactionsGet200Item = { [key: string]: unknown };
+export type MessageResponse = {
+  message: string;
+};

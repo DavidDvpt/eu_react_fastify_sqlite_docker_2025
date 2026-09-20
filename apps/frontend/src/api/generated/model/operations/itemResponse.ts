@@ -3,27 +3,28 @@
  * Do not edit manually.
  * Entropia Manager API
  */
+import type { TypeResponse } from './typeResponse.ts';
 
 export type ItemResponse = {
-  id: unknown;
-  name: unknown;
-  imageUrlId?: unknown;
-  isLimited?: unknown;
-  userId?: unknown;
-  createdAt?: unknown;
-  updatedAt?: unknown;
-  typeId?: unknown;
-  value?: unknown;
-  isRare?: unknown;
-  isUntradeable?: unknown;
-  description?: unknown;
-  decay?: unknown;
-  weight?: unknown;
-  nexusId?: unknown;
-  type?: unknown;
-  isActive?: unknown;
-  depth?: unknown;
-  ammoBurn?: unknown;
-  nexusUrl?: unknown;
-  usePerMinute?: unknown;
+  id: string;
+  name: string;
+  imageUrlId: string;
+  isLimited: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string | null;
+  typeId: string;
+  value: number;
+  isRare: boolean | null;
+  isUntradeable: boolean | null;
+  description: string | null;
+  decay: number | null;
+  weight: number | null;
+  nexusId: number | null;
+  type: TypeResponse | null;
+  isActive?: boolean | null;
+  depth?: number | null;
+  ammoBurn?: number | null;
+  nexusUrl?: string | null;
+  usePerMinute?: number | null;
 };

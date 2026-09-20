@@ -4,6 +4,11 @@
  * Entropia Manager API
  */
 
-export type IdResponse = {
+export type PedcardResponse = {
   id: string;
+  userId: string;
+  transactionId: string | null;
+  type: string;
+  value: number;
+  createdat: string;
 };

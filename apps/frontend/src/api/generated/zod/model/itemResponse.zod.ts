@@ -4,29 +4,30 @@
  * Entropia Manager API
  */
 import * as zod from 'zod';
+import { TypeResponse } from './typeResponse.zod.ts';
 
 export const ItemResponse = zod.object({
-  "id": zod.unknown(),
-  "name": zod.unknown(),
-  "imageUrlId": zod.unknown().optional(),
-  "isLimited": zod.unknown().optional(),
-  "userId": zod.unknown().optional(),
-  "createdAt": zod.unknown().optional(),
-  "updatedAt": zod.unknown().optional(),
-  "typeId": zod.unknown().optional(),
-  "value": zod.unknown().optional(),
-  "isRare": zod.unknown().optional(),
-  "isUntradeable": zod.unknown().optional(),
-  "description": zod.unknown().optional(),
-  "decay": zod.unknown().optional(),
-  "weight": zod.unknown().optional(),
-  "nexusId": zod.unknown().optional(),
-  "type": zod.unknown().optional(),
-  "isActive": zod.unknown().optional(),
-  "depth": zod.unknown().optional(),
-  "ammoBurn": zod.unknown().optional(),
-  "nexusUrl": zod.unknown().optional(),
-  "usePerMinute": zod.unknown().optional()
+  "id": zod.string(),
+  "name": zod.string(),
+  "imageUrlId": zod.string(),
+  "isLimited": zod.boolean(),
+  "userId": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "typeId": zod.string(),
+  "value": zod.union([zod.int(),zod.number()]),
+  "isRare": zod.union([zod.boolean(),zod.null()]),
+  "isUntradeable": zod.union([zod.boolean(),zod.null()]),
+  "description": zod.union([zod.string(),zod.null()]),
+  "decay": zod.union([zod.int(),zod.number(),zod.null()]),
+  "weight": zod.union([zod.int(),zod.number(),zod.null()]),
+  "nexusId": zod.union([zod.int(),zod.null()]),
+  "type": zod.union([TypeResponse,zod.null()]),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "depth": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "ammoBurn": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
+  "usePerMinute": zod.union([zod.int(),zod.number(),zod.null()]).optional()
 });
 
 export type ItemResponse = zod.input<typeof ItemResponse>;

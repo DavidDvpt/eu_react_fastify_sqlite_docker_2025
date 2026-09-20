@@ -5,10 +5,6 @@
  */
 
 export type SignUpBody = {
-  /**
-     * @minLength 8
-     * @maxLength 50
-     */
   pseudo: string;
   /**
      * @minLength 8

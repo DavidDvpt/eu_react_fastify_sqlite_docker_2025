@@ -2,24 +2,27 @@ import { axiosCrud } from "@/lib/axios/crud";
 import { axiosInstance } from "@/lib/axios/instances";
 import { ApiService } from "@/shared/services/apiCrudService";
 
-import type { PedcardForm, PedcardPatch } from "@/api/generated/model";
+import type {
+  BalanceResponse,
+  IdResponse,
+  PedcardForm,
+  PedcardPatch,
+  PedcardResponse,
+} from "@/api/generated/model";
 import type {
   CanPayApiV2PedcardCanPayGet200,
   CheckPedcardApiV2PedcardCheckGet200,
 } from "@/api/generated/model";
-import type {
-  PedcardBalance,
-  PedcardViewModel,
-} from "@zod-schemas";
 
 const pedcardRoute = "/pedcard";
 
 export default class pedcardApi extends ApiService<
   Record<string, never>,
-  PedcardViewModel[],
+  PedcardResponse[],
   PedcardForm,
-  void,
-  PedcardPatch
+  IdResponse,
+  PedcardPatch,
+  IdResponse
 > {
   protected route = `${pedcardRoute}`;
   protected querySchema = null;
@@ -35,7 +38,7 @@ export default class pedcardApi extends ApiService<
     );
   }
   async balance() {
-    return axiosCrud(axiosInstance()).get<PedcardBalance>(
+    return axiosCrud(axiosInstance()).get<BalanceResponse>(
       `${pedcardRoute}/balance`,
     );
   }

@@ -6,16 +6,16 @@
 import * as zod from 'zod';
 
 export const LotResponse = zod.object({
-  "id": zod.unknown(),
-  "itemId": zod.unknown(),
-  "isActive": zod.unknown().optional(),
-  "priceRemaining": zod.unknown().optional(),
-  "quantityExported": zod.unknown().optional(),
-  "quantityRemaining": zod.unknown(),
-  "lotType": zod.unknown().optional(),
-  "createdAt": zod.unknown().optional(),
-  "updatedAt": zod.unknown().optional(),
-  "initialQuantity": zod.unknown().optional()
+  "id": zod.string(),
+  "itemId": zod.string(),
+  "isActive": zod.boolean(),
+  "priceRemaining": zod.union([zod.int(),zod.number()]),
+  "quantityExported": zod.int(),
+  "quantityRemaining": zod.int(),
+  "lotType": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "initialQuantity": zod.int()
 });
 
 export type LotResponse = zod.input<typeof LotResponse>;

@@ -14,7 +14,7 @@ export type ItemCreate = {
   isLimited?: boolean | null;
   isUntradeable?: boolean | null;
   isRare?: boolean | null;
-  id: string | null;
+  id?: string | null;
   name: string;
   typeId: string;
   isActive?: boolean;

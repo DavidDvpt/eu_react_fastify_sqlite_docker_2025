@@ -5,14 +5,14 @@
  */
 
 export type LotResponse = {
-  id: unknown;
-  itemId: unknown;
-  isActive?: unknown;
-  priceRemaining?: unknown;
-  quantityExported?: unknown;
-  quantityRemaining: unknown;
-  lotType?: unknown;
-  createdAt?: unknown;
-  updatedAt?: unknown;
-  initialQuantity?: unknown;
+  id: string;
+  itemId: string;
+  isActive: boolean;
+  priceRemaining: number;
+  quantityExported: number;
+  quantityRemaining: number;
+  lotType: string;
+  createdAt: string;
+  updatedAt: string | null;
+  initialQuantity: number;
 };

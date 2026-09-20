@@ -4,4 +4,8 @@
  * Entropia Manager API
  */
 
-export type CreateTransactionApiV2TransactionsPost201 = { [key: string]: unknown };
+export type MeResponse = {
+  id: string;
+  role: string;
+  pseudo: string;
+};

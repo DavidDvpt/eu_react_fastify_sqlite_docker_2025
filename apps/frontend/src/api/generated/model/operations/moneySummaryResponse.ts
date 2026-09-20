@@ -4,4 +4,8 @@
  * Entropia Manager API
  */
 
-export type PatchPedcardApiV2PedcardIdPatch200 = { [key: string]: unknown };
+export type MoneySummaryResponse = {
+  tt?: number;
+  fee?: number;
+  ttc?: number;
+};

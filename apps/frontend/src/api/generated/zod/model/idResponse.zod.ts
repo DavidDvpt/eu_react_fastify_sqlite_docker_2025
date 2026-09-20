@@ -6,7 +6,7 @@
 import * as zod from 'zod';
 
 export const IdResponse = zod.object({
-  "id": zod.unknown()
+  "id": zod.string()
 });
 
 export type IdResponse = zod.input<typeof IdResponse>;

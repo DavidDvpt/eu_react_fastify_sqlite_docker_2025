@@ -4,17 +4,18 @@
  * Entropia Manager API
  */
 import * as zod from 'zod';
+import { CategoryResponse } from './categoryResponse.zod.ts';
 
 export const TypeResponse = zod.object({
-  "id": zod.unknown(),
-  "name": zod.unknown(),
-  "categoryId": zod.unknown().optional(),
-  "isStackable": zod.unknown().optional(),
-  "userId": zod.unknown().optional(),
-  "createdAt": zod.unknown().optional(),
-  "updatedAt": zod.unknown().optional(),
-  "category": zod.unknown().optional(),
-  "isActive": zod.unknown().optional()
+  "id": zod.string(),
+  "name": zod.string(),
+  "categoryId": zod.string(),
+  "isStackable": zod.boolean(),
+  "userId": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "category": zod.union([CategoryResponse,zod.null()]),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
 });
 
 export type TypeResponse = zod.input<typeof TypeResponse>;

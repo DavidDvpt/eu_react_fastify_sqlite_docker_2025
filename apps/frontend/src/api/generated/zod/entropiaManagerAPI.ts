@@ -6,20 +6,29 @@
 import * as zod from 'zod';
 
 import {
+  BalanceResponse,
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
   IdResponse,
+  InventoryFinancialReportResponse,
   ItemCreate,
+  ItemFinancialReportEnvelope,
   ItemPatch,
   ItemResponse,
   LotResponse,
+  MeResponse,
+  MessageResponse,
   NexusForm,
+  NexusResponse,
   PedcardForm,
   PedcardPatch,
+  PedcardResponse,
   SignInBody,
   SignUpBody,
   TransactionBody,
+  TransactionEntryResponse,
+  TransactionResponse,
   TransactionStatusPatch,
   TypeCreate,
   TypePatch,
@@ -49,7 +58,7 @@ export const SigninApiV2AuthSigninPostBody = SignInBody
 export type SigninApiV2AuthSigninPostBody = zod.input<typeof SigninApiV2AuthSigninPostBody>;
 export type SigninApiV2AuthSigninPostBodyOutput = zod.output<typeof SigninApiV2AuthSigninPostBody>;
 
-export const SigninApiV2AuthSigninPostResponse = zod.unknown()
+export const SigninApiV2AuthSigninPostResponse = MessageResponse
 
 export type SigninApiV2AuthSigninPostResponse = zod.input<typeof SigninApiV2AuthSigninPostResponse>;
 export type SigninApiV2AuthSigninPostResponseOutput = zod.output<typeof SigninApiV2AuthSigninPostResponse>;
@@ -58,7 +67,7 @@ export type SigninApiV2AuthSigninPostResponseOutput = zod.output<typeof SigninAp
 /**
  * @summary Logout
  */
-export const LogoutApiV2AuthLogoutPostResponse = zod.unknown()
+export const LogoutApiV2AuthLogoutPostResponse = MessageResponse
 
 export type LogoutApiV2AuthLogoutPostResponse = zod.input<typeof LogoutApiV2AuthLogoutPostResponse>;
 export type LogoutApiV2AuthLogoutPostResponseOutput = zod.output<typeof LogoutApiV2AuthLogoutPostResponse>;
@@ -67,7 +76,7 @@ export type LogoutApiV2AuthLogoutPostResponseOutput = zod.output<typeof LogoutAp
 /**
  * @summary Me
  */
-export const MeApiV2AuthMeGetResponse = zod.unknown()
+export const MeApiV2AuthMeGetResponse = MeResponse
 
 export type MeApiV2AuthMeGetResponse = zod.input<typeof MeApiV2AuthMeGetResponse>;
 export type MeApiV2AuthMeGetResponseOutput = zod.output<typeof MeApiV2AuthMeGetResponse>;
@@ -400,7 +409,7 @@ export const GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams = zod.obj
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParamsOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
 
-export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem = zod.record(zod.string(), zod.unknown())
+export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem = TransactionEntryResponse
 
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItemOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
@@ -421,7 +430,7 @@ export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams = zod.ob
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams = zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParamsOutput = zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
 
-export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = zod.record(zod.string(), zod.unknown())
+export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = ItemFinancialReportEnvelope
 
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponseOutput = zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
@@ -552,7 +561,7 @@ export const InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams = zod.input<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams>;
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParamsOutput = zod.output<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams>;
 
-export const InventoryFinancialReportApiV2InventoryFinancialReportGetResponse = zod.record(zod.string(), zod.unknown())
+export const InventoryFinancialReportApiV2InventoryFinancialReportGetResponse = InventoryFinancialReportResponse
 
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponse = zod.input<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse>;
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponseOutput = zod.output<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse>;
@@ -570,7 +579,7 @@ export type CheckPedcardApiV2PedcardCheckGetResponseOutput = zod.output<typeof C
 /**
  * @summary Get Balance
  */
-export const GetBalanceApiV2PedcardBalanceGetResponse = zod.record(zod.string(), zod.unknown())
+export const GetBalanceApiV2PedcardBalanceGetResponse = BalanceResponse
 
 export type GetBalanceApiV2PedcardBalanceGetResponse = zod.input<typeof GetBalanceApiV2PedcardBalanceGetResponse>;
 export type GetBalanceApiV2PedcardBalanceGetResponseOutput = zod.output<typeof GetBalanceApiV2PedcardBalanceGetResponse>;
@@ -602,7 +611,7 @@ export const ListPedcardsApiV2PedcardGetQueryParams = zod.object({
 export type ListPedcardsApiV2PedcardGetQueryParams = zod.input<typeof ListPedcardsApiV2PedcardGetQueryParams>;
 export type ListPedcardsApiV2PedcardGetQueryParamsOutput = zod.output<typeof ListPedcardsApiV2PedcardGetQueryParams>;
 
-export const ListPedcardsApiV2PedcardGetResponseItem = zod.record(zod.string(), zod.unknown())
+export const ListPedcardsApiV2PedcardGetResponseItem = PedcardResponse
 
 export type ListPedcardsApiV2PedcardGetResponseItem = zod.input<typeof ListPedcardsApiV2PedcardGetResponseItem>;
 export type ListPedcardsApiV2PedcardGetResponseItemOutput = zod.output<typeof ListPedcardsApiV2PedcardGetResponseItem>;
@@ -621,7 +630,7 @@ export const CreatePedcardApiV2PedcardPostBody = PedcardForm
 export type CreatePedcardApiV2PedcardPostBody = zod.input<typeof CreatePedcardApiV2PedcardPostBody>;
 export type CreatePedcardApiV2PedcardPostBodyOutput = zod.output<typeof CreatePedcardApiV2PedcardPostBody>;
 
-export const CreatePedcardApiV2PedcardPostResponse = zod.record(zod.string(), zod.unknown())
+export const CreatePedcardApiV2PedcardPostResponse = IdResponse
 
 export type CreatePedcardApiV2PedcardPostResponse = zod.input<typeof CreatePedcardApiV2PedcardPostResponse>;
 export type CreatePedcardApiV2PedcardPostResponseOutput = zod.output<typeof CreatePedcardApiV2PedcardPostResponse>;
@@ -642,7 +651,7 @@ export const PatchPedcardApiV2PedcardIdPatchBody = PedcardPatch
 export type PatchPedcardApiV2PedcardIdPatchBody = zod.input<typeof PatchPedcardApiV2PedcardIdPatchBody>;
 export type PatchPedcardApiV2PedcardIdPatchBodyOutput = zod.output<typeof PatchPedcardApiV2PedcardIdPatchBody>;
 
-export const PatchPedcardApiV2PedcardIdPatchResponse = zod.record(zod.string(), zod.unknown())
+export const PatchPedcardApiV2PedcardIdPatchResponse = IdResponse
 
 export type PatchPedcardApiV2PedcardIdPatchResponse = zod.input<typeof PatchPedcardApiV2PedcardIdPatchResponse>;
 export type PatchPedcardApiV2PedcardIdPatchResponseOutput = zod.output<typeof PatchPedcardApiV2PedcardIdPatchResponse>;
@@ -678,7 +687,7 @@ export const ListTransactionsApiV2TransactionsGetQueryParams = zod.object({
 export type ListTransactionsApiV2TransactionsGetQueryParams = zod.input<typeof ListTransactionsApiV2TransactionsGetQueryParams>;
 export type ListTransactionsApiV2TransactionsGetQueryParamsOutput = zod.output<typeof ListTransactionsApiV2TransactionsGetQueryParams>;
 
-export const ListTransactionsApiV2TransactionsGetResponseItem = zod.record(zod.string(), zod.unknown())
+export const ListTransactionsApiV2TransactionsGetResponseItem = TransactionEntryResponse
 
 export type ListTransactionsApiV2TransactionsGetResponseItem = zod.input<typeof ListTransactionsApiV2TransactionsGetResponseItem>;
 export type ListTransactionsApiV2TransactionsGetResponseItemOutput = zod.output<typeof ListTransactionsApiV2TransactionsGetResponseItem>;
@@ -697,7 +706,7 @@ export const CreateTransactionApiV2TransactionsPostBody = TransactionBody
 export type CreateTransactionApiV2TransactionsPostBody = zod.input<typeof CreateTransactionApiV2TransactionsPostBody>;
 export type CreateTransactionApiV2TransactionsPostBodyOutput = zod.output<typeof CreateTransactionApiV2TransactionsPostBody>;
 
-export const CreateTransactionApiV2TransactionsPostResponse = zod.record(zod.string(), zod.unknown())
+export const CreateTransactionApiV2TransactionsPostResponse = IdResponse
 
 export type CreateTransactionApiV2TransactionsPostResponse = zod.input<typeof CreateTransactionApiV2TransactionsPostResponse>;
 export type CreateTransactionApiV2TransactionsPostResponseOutput = zod.output<typeof CreateTransactionApiV2TransactionsPostResponse>;
@@ -706,7 +715,7 @@ export type CreateTransactionApiV2TransactionsPostResponseOutput = zod.output<ty
 /**
  * @summary List Running
  */
-export const ListRunningApiV2TransactionsRunningGetResponseItem = zod.record(zod.string(), zod.unknown())
+export const ListRunningApiV2TransactionsRunningGetResponseItem = TransactionResponse
 
 export type ListRunningApiV2TransactionsRunningGetResponseItem = zod.input<typeof ListRunningApiV2TransactionsRunningGetResponseItem>;
 export type ListRunningApiV2TransactionsRunningGetResponseItemOutput = zod.output<typeof ListRunningApiV2TransactionsRunningGetResponseItem>;
@@ -727,7 +736,7 @@ export const GetTransactionApiV2TransactionsIdGetParams = zod.object({
 export type GetTransactionApiV2TransactionsIdGetParams = zod.input<typeof GetTransactionApiV2TransactionsIdGetParams>;
 export type GetTransactionApiV2TransactionsIdGetParamsOutput = zod.output<typeof GetTransactionApiV2TransactionsIdGetParams>;
 
-export const GetTransactionApiV2TransactionsIdGetResponse = zod.unknown()
+export const GetTransactionApiV2TransactionsIdGetResponse = TransactionResponse
 
 export type GetTransactionApiV2TransactionsIdGetResponse = zod.input<typeof GetTransactionApiV2TransactionsIdGetResponse>;
 export type GetTransactionApiV2TransactionsIdGetResponseOutput = zod.output<typeof GetTransactionApiV2TransactionsIdGetResponse>;
@@ -748,7 +757,7 @@ export const PatchStatusApiV2TransactionsIdStatusPatchBody = TransactionStatusPa
 export type PatchStatusApiV2TransactionsIdStatusPatchBody = zod.input<typeof PatchStatusApiV2TransactionsIdStatusPatchBody>;
 export type PatchStatusApiV2TransactionsIdStatusPatchBodyOutput = zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchBody>;
 
-export const PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.unknown()
+export const PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.void()
 
 export type PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.input<typeof PatchStatusApiV2TransactionsIdStatusPatchResponse>;
 export type PatchStatusApiV2TransactionsIdStatusPatchResponseOutput = zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchResponse>;
@@ -770,7 +779,7 @@ export const PatchCancelApiV2TransactionsIdCancelPatchBody = zod.string()
 export type PatchCancelApiV2TransactionsIdCancelPatchBody = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
 export type PatchCancelApiV2TransactionsIdCancelPatchBodyOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
 
-export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.unknown()
+export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.void()
 
 export type PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
 export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
@@ -779,7 +788,7 @@ export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output
 /**
  * @summary List Nexus
  */
-export const ListNexusApiV2NexusToolsGetResponseItem = zod.record(zod.string(), zod.unknown())
+export const ListNexusApiV2NexusToolsGetResponseItem = NexusResponse
 
 export type ListNexusApiV2NexusToolsGetResponseItem = zod.input<typeof ListNexusApiV2NexusToolsGetResponseItem>;
 export type ListNexusApiV2NexusToolsGetResponseItemOutput = zod.output<typeof ListNexusApiV2NexusToolsGetResponseItem>;
@@ -815,7 +824,7 @@ export const PatchNexusApiV2NexusToolsIdPatchBody = NexusForm
 export type PatchNexusApiV2NexusToolsIdPatchBody = zod.input<typeof PatchNexusApiV2NexusToolsIdPatchBody>;
 export type PatchNexusApiV2NexusToolsIdPatchBodyOutput = zod.output<typeof PatchNexusApiV2NexusToolsIdPatchBody>;
 
-export const PatchNexusApiV2NexusToolsIdPatchResponse = zod.unknown()
+export const PatchNexusApiV2NexusToolsIdPatchResponse = NexusResponse
 
 export type PatchNexusApiV2NexusToolsIdPatchResponse = zod.input<typeof PatchNexusApiV2NexusToolsIdPatchResponse>;
 export type PatchNexusApiV2NexusToolsIdPatchResponseOutput = zod.output<typeof PatchNexusApiV2NexusToolsIdPatchResponse>;

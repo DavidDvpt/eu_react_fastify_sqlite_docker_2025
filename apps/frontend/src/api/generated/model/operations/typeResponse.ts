@@ -3,15 +3,16 @@
  * Do not edit manually.
  * Entropia Manager API
  */
+import type { CategoryResponse } from './categoryResponse.ts';
 
 export type TypeResponse = {
-  id: unknown;
-  name: unknown;
-  categoryId?: unknown;
-  isStackable?: unknown;
-  userId?: unknown;
-  createdAt?: unknown;
-  updatedAt?: unknown;
-  category?: unknown;
-  isActive?: unknown;
+  id: string;
+  name: string;
+  categoryId: string;
+  isStackable: boolean;
+  userId: string;
+  createdAt: string;
+  updatedAt: string | null;
+  category: CategoryResponse | null;
+  isActive?: boolean | null;
 };

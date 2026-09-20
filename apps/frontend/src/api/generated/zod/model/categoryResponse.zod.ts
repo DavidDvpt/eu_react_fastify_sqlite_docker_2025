@@ -6,12 +6,12 @@
 import * as zod from 'zod';
 
 export const CategoryResponse = zod.object({
-  "id": zod.unknown(),
-  "name": zod.unknown(),
-  "userId": zod.unknown().optional(),
-  "createdAt": zod.unknown().optional(),
-  "updatedAt": zod.unknown().optional(),
-  "isActive": zod.unknown().optional()
+  "id": zod.string(),
+  "name": zod.string(),
+  "userId": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
 });
 
 export type CategoryResponse = zod.input<typeof CategoryResponse>;

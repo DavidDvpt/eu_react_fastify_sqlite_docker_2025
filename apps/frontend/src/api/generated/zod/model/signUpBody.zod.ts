@@ -5,16 +5,13 @@
  */
 import * as zod from 'zod';
 
-export const signUpBodyPseudoMin = 8;
-export const signUpBodyPseudoMax = 50;
-
 export const signUpBodyPasswordMin = 8;
 export const signUpBodyPasswordMax = 50;
 
 
 
 export const SignUpBody = zod.object({
-  "pseudo": zod.string().min(signUpBodyPseudoMin).max(signUpBodyPseudoMax),
+  "pseudo": zod.string(),
   "password": zod.string().min(signUpBodyPasswordMin).max(signUpBodyPasswordMax),
   "email": zod.email(),
   "firstname": zod.union([zod.string(),zod.null()]).optional(),

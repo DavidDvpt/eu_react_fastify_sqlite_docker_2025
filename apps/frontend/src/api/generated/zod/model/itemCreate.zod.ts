@@ -27,7 +27,7 @@ export const ItemCreate = zod.object({
   "isLimited": zod.union([zod.boolean(),zod.null()]).optional(),
   "isUntradeable": zod.union([zod.boolean(),zod.null()]).optional(),
   "isRare": zod.union([zod.boolean(),zod.null()]).optional(),
-  "id": zod.union([zod.string().min(1),zod.null()]),
+  "id": zod.union([zod.string().min(1),zod.null()]).optional(),
   "name": zod.string(),
   "typeId": zod.string(),
   "isActive": zod.boolean().default(itemCreateIsActiveDefault)
