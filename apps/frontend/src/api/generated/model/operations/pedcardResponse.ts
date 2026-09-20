@@ -10,5 +10,5 @@ export type PedcardResponse = {
   transactionId: string | null;
   type: string;
   value: number;
-  createdat: string;
+  createdAt: string;
 };

@@ -11,7 +11,7 @@ export const PedcardResponse = zod.object({
   "transactionId": zod.union([zod.string(),zod.null()]),
   "type": zod.string(),
   "value": zod.union([zod.int(),zod.number()]),
-  "createdat": zod.string()
+  "createdAt": zod.string()
 });
 
 export type PedcardResponse = zod.input<typeof PedcardResponse>;
