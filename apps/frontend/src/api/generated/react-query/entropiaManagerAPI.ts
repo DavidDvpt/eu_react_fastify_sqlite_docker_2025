@@ -4,16 +4,20 @@
  * Entropia Manager API
  */
 import {
+  useMutation,
   useQuery
 } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
   DefinedUseQueryResult,
+  MutationFunction,
   QueryClient,
   QueryFunction,
   QueryKey,
   UndefinedInitialDataOptions,
+  UseMutationOptions,
+  UseMutationResult,
   UseQueryOptions,
   UseQueryResult
 } from '@tanstack/react-query';
@@ -109,80 +113,53 @@ export const signupApiV2AuthSignupPost = (
 
 
 
-export const getSignupApiV2AuthSignupPostQueryKey = (signUpBody?: BodyType<SignUpBody>,) => {
-    return [
-    'POST', `/api/v2/auth/signup`, signUpBody
-    ] as const;
-    }
+export const getSignupApiV2AuthSignupPostMutationKey = () => ['signupApiV2AuthSignupPost'] as const;
 
+export const getSignupApiV2AuthSignupPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext> => {
 
-export const getSignupApiV2AuthSignupPostQueryOptions = <TData = Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError = ErrorType<HTTPValidationError>>(signUpBody: BodyType<SignUpBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getSignupApiV2AuthSignupPostQueryKey(signUpBody);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>> = ({ signal }) => signupApiV2AuthSignupPost(signUpBody, requestOptions, signal);
+const mutationKey = getSignupApiV2AuthSignupPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, SignupApiV2AuthSignupPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type SignupApiV2AuthSignupPostQueryResult = NonNullable<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>>
-export type SignupApiV2AuthSignupPostQueryError = ErrorType<HTTPValidationError>
+          return  signupApiV2AuthSignupPost(data,requestOptions)
+        }
 
 
-export function useSignupApiV2AuthSignupPost<TData = Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError = ErrorType<HTTPValidationError>>(
- signUpBody: BodyType<SignUpBody>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
-          TError,
-          Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSignupApiV2AuthSignupPost<TData = Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError = ErrorType<HTTPValidationError>>(
- signUpBody: BodyType<SignUpBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
-          TError,
-          Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSignupApiV2AuthSignupPost<TData = Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError = ErrorType<HTTPValidationError>>(
- signUpBody: BodyType<SignUpBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SignupApiV2AuthSignupPostMutationResult = NonNullable<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>>
+    export type SignupApiV2AuthSignupPostMutationBody = BodyType<SignUpBody>
+    export type SignupApiV2AuthSignupPostMutationError = ErrorType<HTTPValidationError>
+    export type SignupApiV2AuthSignupPostMutationVariables = {data: BodyType<SignUpBody>}
+
+    /**
  * @summary Signup
  */
-
-export function useSignupApiV2AuthSignupPost<TData = Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError = ErrorType<HTTPValidationError>>(
- signUpBody: BodyType<SignUpBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getSignupApiV2AuthSignupPostQueryOptions(signUpBody,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useSignupApiV2AuthSignupPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+        TError,
+        SignupApiV2AuthSignupPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSignupApiV2AuthSignupPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Signin
@@ -204,80 +181,53 @@ export const signinApiV2AuthSigninPost = (
 
 
 
-export const getSigninApiV2AuthSigninPostQueryKey = (signInBody?: BodyType<SignInBody>,) => {
-    return [
-    'POST', `/api/v2/auth/signin`, signInBody
-    ] as const;
-    }
+export const getSigninApiV2AuthSigninPostMutationKey = () => ['signinApiV2AuthSigninPost'] as const;
 
+export const getSigninApiV2AuthSigninPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext> => {
 
-export const getSigninApiV2AuthSigninPostQueryOptions = <TData = Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError = ErrorType<HTTPValidationError>>(signInBody: BodyType<SignInBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getSigninApiV2AuthSigninPostQueryKey(signInBody);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>> = ({ signal }) => signinApiV2AuthSigninPost(signInBody, requestOptions, signal);
+const mutationKey = getSigninApiV2AuthSigninPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, SigninApiV2AuthSigninPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type SigninApiV2AuthSigninPostQueryResult = NonNullable<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>>
-export type SigninApiV2AuthSigninPostQueryError = ErrorType<HTTPValidationError>
+          return  signinApiV2AuthSigninPost(data,requestOptions)
+        }
 
 
-export function useSigninApiV2AuthSigninPost<TData = Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError = ErrorType<HTTPValidationError>>(
- signInBody: BodyType<SignInBody>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
-          TError,
-          Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSigninApiV2AuthSigninPost<TData = Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError = ErrorType<HTTPValidationError>>(
- signInBody: BodyType<SignInBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
-          TError,
-          Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useSigninApiV2AuthSigninPost<TData = Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError = ErrorType<HTTPValidationError>>(
- signInBody: BodyType<SignInBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SigninApiV2AuthSigninPostMutationResult = NonNullable<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>>
+    export type SigninApiV2AuthSigninPostMutationBody = BodyType<SignInBody>
+    export type SigninApiV2AuthSigninPostMutationError = ErrorType<HTTPValidationError>
+    export type SigninApiV2AuthSigninPostMutationVariables = {data: BodyType<SignInBody>}
+
+    /**
  * @summary Signin
  */
-
-export function useSigninApiV2AuthSigninPost<TData = Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError = ErrorType<HTTPValidationError>>(
- signInBody: BodyType<SignInBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getSigninApiV2AuthSigninPostQueryOptions(signInBody,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useSigninApiV2AuthSigninPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+        TError,
+        SigninApiV2AuthSigninPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getSigninApiV2AuthSigninPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Logout
@@ -297,80 +247,53 @@ export const logoutApiV2AuthLogoutPost = (
 
 
 
-export const getLogoutApiV2AuthLogoutPostQueryKey = () => {
-    return [
-    'POST', `/api/v2/auth/logout`
-    ] as const;
-    }
+export const getLogoutApiV2AuthLogoutPostMutationKey = () => ['logoutApiV2AuthLogoutPost'] as const;
 
+export const getLogoutApiV2AuthLogoutPostMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext> => {
 
-export const getLogoutApiV2AuthLogoutPostQueryOptions = <TData = Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getLogoutApiV2AuthLogoutPostQueryKey();
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>> = ({ signal }) => logoutApiV2AuthLogoutPost(requestOptions, signal);
+const mutationKey = getLogoutApiV2AuthLogoutPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type LogoutApiV2AuthLogoutPostQueryResult = NonNullable<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>>
-export type LogoutApiV2AuthLogoutPostQueryError = ErrorType<unknown>
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, void> = () => {
 
 
-export function useLogoutApiV2AuthLogoutPost<TData = Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
-          TError,
-          Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useLogoutApiV2AuthLogoutPost<TData = Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
-          TError,
-          Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useLogoutApiV2AuthLogoutPost<TData = Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+          return  logoutApiV2AuthLogoutPost(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type LogoutApiV2AuthLogoutPostMutationResult = NonNullable<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>>
+
+    export type LogoutApiV2AuthLogoutPostMutationError = ErrorType<unknown>
+
+
+    /**
  * @summary Logout
  */
-
-export function useLogoutApiV2AuthLogoutPost<TData = Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getLogoutApiV2AuthLogoutPostQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useLogoutApiV2AuthLogoutPost = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getLogoutApiV2AuthLogoutPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Me
@@ -579,80 +502,53 @@ export const createCategoryApiV2CategoriesPost = (
 
 
 
-export const getCreateCategoryApiV2CategoriesPostQueryKey = (categoryCreate?: BodyType<CategoryCreate>,) => {
-    return [
-    'POST', `/api/v2/categories`, categoryCreate
-    ] as const;
-    }
+export const getCreateCategoryApiV2CategoriesPostMutationKey = () => ['createCategoryApiV2CategoriesPost'] as const;
 
+export const getCreateCategoryApiV2CategoriesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext> => {
 
-export const getCreateCategoryApiV2CategoriesPostQueryOptions = <TData = Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError = ErrorType<HTTPValidationError>>(categoryCreate: BodyType<CategoryCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getCreateCategoryApiV2CategoriesPostQueryKey(categoryCreate);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>> = ({ signal }) => createCategoryApiV2CategoriesPost(categoryCreate, requestOptions, signal);
+const mutationKey = getCreateCategoryApiV2CategoriesPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, CreateCategoryApiV2CategoriesPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CreateCategoryApiV2CategoriesPostQueryResult = NonNullable<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>>
-export type CreateCategoryApiV2CategoriesPostQueryError = ErrorType<HTTPValidationError>
+          return  createCategoryApiV2CategoriesPost(data,requestOptions)
+        }
 
 
-export function useCreateCategoryApiV2CategoriesPost<TData = Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError = ErrorType<HTTPValidationError>>(
- categoryCreate: BodyType<CategoryCreate>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
-          TError,
-          Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateCategoryApiV2CategoriesPost<TData = Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError = ErrorType<HTTPValidationError>>(
- categoryCreate: BodyType<CategoryCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
-          TError,
-          Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateCategoryApiV2CategoriesPost<TData = Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError = ErrorType<HTTPValidationError>>(
- categoryCreate: BodyType<CategoryCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateCategoryApiV2CategoriesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>>
+    export type CreateCategoryApiV2CategoriesPostMutationBody = BodyType<CategoryCreate>
+    export type CreateCategoryApiV2CategoriesPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateCategoryApiV2CategoriesPostMutationVariables = {data: BodyType<CategoryCreate>}
+
+    /**
  * @summary Create Category
  */
-
-export function useCreateCategoryApiV2CategoriesPost<TData = Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError = ErrorType<HTTPValidationError>>(
- categoryCreate: BodyType<CategoryCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getCreateCategoryApiV2CategoriesPostQueryOptions(categoryCreate,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useCreateCategoryApiV2CategoriesPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+        TError,
+        CreateCategoryApiV2CategoriesPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateCategoryApiV2CategoriesPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Get Category
@@ -768,86 +664,53 @@ export const patchCategoryApiV2CategoriesIdPatch = (
 
 
 
-export const getPatchCategoryApiV2CategoriesIdPatchQueryKey = (id: string,
-    categoryPatch?: BodyType<CategoryPatch>,) => {
-    return [
-    'PATCH', `/api/v2/categories/${id}`, categoryPatch
-    ] as const;
-    }
+export const getPatchCategoryApiV2CategoriesIdPatchMutationKey = () => ['patchCategoryApiV2CategoriesIdPatch'] as const;
 
+export const getPatchCategoryApiV2CategoriesIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext> => {
 
-export const getPatchCategoryApiV2CategoriesIdPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    categoryPatch: BodyType<CategoryPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchCategoryApiV2CategoriesIdPatchQueryKey(id,categoryPatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>> = ({ signal }) => patchCategoryApiV2CategoriesIdPatch(id,categoryPatch, requestOptions, signal);
+const mutationKey = getPatchCategoryApiV2CategoriesIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, PatchCategoryApiV2CategoriesIdPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchCategoryApiV2CategoriesIdPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>>
-export type PatchCategoryApiV2CategoriesIdPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchCategoryApiV2CategoriesIdPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchCategoryApiV2CategoriesIdPatch<TData = Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    categoryPatch: BodyType<CategoryPatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchCategoryApiV2CategoriesIdPatch<TData = Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    categoryPatch: BodyType<CategoryPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchCategoryApiV2CategoriesIdPatch<TData = Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    categoryPatch: BodyType<CategoryPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchCategoryApiV2CategoriesIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>>
+    export type PatchCategoryApiV2CategoriesIdPatchMutationBody = BodyType<CategoryPatch>
+    export type PatchCategoryApiV2CategoriesIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchCategoryApiV2CategoriesIdPatchMutationVariables = {id: string;data: BodyType<CategoryPatch>}
+
+    /**
  * @summary Patch Category
  */
-
-export function usePatchCategoryApiV2CategoriesIdPatch<TData = Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    categoryPatch: BodyType<CategoryPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchCategoryApiV2CategoriesIdPatchQueryOptions(id,categoryPatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchCategoryApiV2CategoriesIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+        TError,
+        PatchCategoryApiV2CategoriesIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchCategoryApiV2CategoriesIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Delete Category
@@ -867,80 +730,53 @@ export const deleteCategoryApiV2CategoriesIdDelete = (
 
 
 
-export const getDeleteCategoryApiV2CategoriesIdDeleteQueryKey = (id: string,) => {
-    return [
-    'DELETE', `/api/v2/categories/${id}`
-    ] as const;
-    }
+export const getDeleteCategoryApiV2CategoriesIdDeleteMutationKey = () => ['deleteCategoryApiV2CategoriesIdDelete'] as const;
 
+export const getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext> => {
 
-export const getDeleteCategoryApiV2CategoriesIdDeleteQueryOptions = <TData = Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getDeleteCategoryApiV2CategoriesIdDeleteQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>> = ({ signal }) => deleteCategoryApiV2CategoriesIdDelete(id, requestOptions, signal);
+const mutationKey = getDeleteCategoryApiV2CategoriesIdDeleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, DeleteCategoryApiV2CategoriesIdDeleteMutationVariables> = (props) => {
+          const {id} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DeleteCategoryApiV2CategoriesIdDeleteQueryResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>>
-export type DeleteCategoryApiV2CategoriesIdDeleteQueryError = ErrorType<HTTPValidationError>
+          return  deleteCategoryApiV2CategoriesIdDelete(id,requestOptions)
+        }
 
 
-export function useDeleteCategoryApiV2CategoriesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteCategoryApiV2CategoriesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteCategoryApiV2CategoriesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteCategoryApiV2CategoriesIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>>
+
+    export type DeleteCategoryApiV2CategoriesIdDeleteMutationError = ErrorType<HTTPValidationError>
+    export type DeleteCategoryApiV2CategoriesIdDeleteMutationVariables = {id: string}
+
+    /**
  * @summary Delete Category
  */
-
-export function useDeleteCategoryApiV2CategoriesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getDeleteCategoryApiV2CategoriesIdDeleteQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useDeleteCategoryApiV2CategoriesIdDelete = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+        TError,
+        DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Get Category Types
@@ -1149,80 +985,53 @@ export const createTypeApiV2TypesPost = (
 
 
 
-export const getCreateTypeApiV2TypesPostQueryKey = (typeCreate?: BodyType<TypeCreate>,) => {
-    return [
-    'POST', `/api/v2/types`, typeCreate
-    ] as const;
-    }
+export const getCreateTypeApiV2TypesPostMutationKey = () => ['createTypeApiV2TypesPost'] as const;
 
+export const getCreateTypeApiV2TypesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext> => {
 
-export const getCreateTypeApiV2TypesPostQueryOptions = <TData = Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError = ErrorType<HTTPValidationError>>(typeCreate: BodyType<TypeCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getCreateTypeApiV2TypesPostQueryKey(typeCreate);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>> = ({ signal }) => createTypeApiV2TypesPost(typeCreate, requestOptions, signal);
+const mutationKey = getCreateTypeApiV2TypesPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, CreateTypeApiV2TypesPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CreateTypeApiV2TypesPostQueryResult = NonNullable<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>>
-export type CreateTypeApiV2TypesPostQueryError = ErrorType<HTTPValidationError>
+          return  createTypeApiV2TypesPost(data,requestOptions)
+        }
 
 
-export function useCreateTypeApiV2TypesPost<TData = Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError = ErrorType<HTTPValidationError>>(
- typeCreate: BodyType<TypeCreate>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
-          TError,
-          Awaited<ReturnType<typeof createTypeApiV2TypesPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateTypeApiV2TypesPost<TData = Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError = ErrorType<HTTPValidationError>>(
- typeCreate: BodyType<TypeCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
-          TError,
-          Awaited<ReturnType<typeof createTypeApiV2TypesPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateTypeApiV2TypesPost<TData = Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError = ErrorType<HTTPValidationError>>(
- typeCreate: BodyType<TypeCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateTypeApiV2TypesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>>
+    export type CreateTypeApiV2TypesPostMutationBody = BodyType<TypeCreate>
+    export type CreateTypeApiV2TypesPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateTypeApiV2TypesPostMutationVariables = {data: BodyType<TypeCreate>}
+
+    /**
  * @summary Create Type
  */
-
-export function useCreateTypeApiV2TypesPost<TData = Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError = ErrorType<HTTPValidationError>>(
- typeCreate: BodyType<TypeCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getCreateTypeApiV2TypesPostQueryOptions(typeCreate,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useCreateTypeApiV2TypesPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+        TError,
+        CreateTypeApiV2TypesPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateTypeApiV2TypesPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Get Type
@@ -1338,86 +1147,53 @@ export const patchTypeApiV2TypesIdPatch = (
 
 
 
-export const getPatchTypeApiV2TypesIdPatchQueryKey = (id: string,
-    typePatch?: BodyType<TypePatch>,) => {
-    return [
-    'PATCH', `/api/v2/types/${id}`, typePatch
-    ] as const;
-    }
+export const getPatchTypeApiV2TypesIdPatchMutationKey = () => ['patchTypeApiV2TypesIdPatch'] as const;
 
+export const getPatchTypeApiV2TypesIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext> => {
 
-export const getPatchTypeApiV2TypesIdPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    typePatch: BodyType<TypePatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchTypeApiV2TypesIdPatchQueryKey(id,typePatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>> = ({ signal }) => patchTypeApiV2TypesIdPatch(id,typePatch, requestOptions, signal);
+const mutationKey = getPatchTypeApiV2TypesIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, PatchTypeApiV2TypesIdPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchTypeApiV2TypesIdPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>>
-export type PatchTypeApiV2TypesIdPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchTypeApiV2TypesIdPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchTypeApiV2TypesIdPatch<TData = Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    typePatch: BodyType<TypePatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchTypeApiV2TypesIdPatch<TData = Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    typePatch: BodyType<TypePatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchTypeApiV2TypesIdPatch<TData = Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    typePatch: BodyType<TypePatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchTypeApiV2TypesIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>>
+    export type PatchTypeApiV2TypesIdPatchMutationBody = BodyType<TypePatch>
+    export type PatchTypeApiV2TypesIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchTypeApiV2TypesIdPatchMutationVariables = {id: string;data: BodyType<TypePatch>}
+
+    /**
  * @summary Patch Type
  */
-
-export function usePatchTypeApiV2TypesIdPatch<TData = Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    typePatch: BodyType<TypePatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchTypeApiV2TypesIdPatchQueryOptions(id,typePatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchTypeApiV2TypesIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+        TError,
+        PatchTypeApiV2TypesIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchTypeApiV2TypesIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Delete Category
@@ -1437,80 +1213,53 @@ export const deleteCategoryApiV2TypesIdDelete = (
 
 
 
-export const getDeleteCategoryApiV2TypesIdDeleteQueryKey = (id: string,) => {
-    return [
-    'DELETE', `/api/v2/types/${id}`
-    ] as const;
-    }
+export const getDeleteCategoryApiV2TypesIdDeleteMutationKey = () => ['deleteCategoryApiV2TypesIdDelete'] as const;
 
+export const getDeleteCategoryApiV2TypesIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext> => {
 
-export const getDeleteCategoryApiV2TypesIdDeleteQueryOptions = <TData = Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getDeleteCategoryApiV2TypesIdDeleteQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>> = ({ signal }) => deleteCategoryApiV2TypesIdDelete(id, requestOptions, signal);
+const mutationKey = getDeleteCategoryApiV2TypesIdDeleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, DeleteCategoryApiV2TypesIdDeleteMutationVariables> = (props) => {
+          const {id} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DeleteCategoryApiV2TypesIdDeleteQueryResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>>
-export type DeleteCategoryApiV2TypesIdDeleteQueryError = ErrorType<HTTPValidationError>
+          return  deleteCategoryApiV2TypesIdDelete(id,requestOptions)
+        }
 
 
-export function useDeleteCategoryApiV2TypesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteCategoryApiV2TypesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteCategoryApiV2TypesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteCategoryApiV2TypesIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>>
+
+    export type DeleteCategoryApiV2TypesIdDeleteMutationError = ErrorType<HTTPValidationError>
+    export type DeleteCategoryApiV2TypesIdDeleteMutationVariables = {id: string}
+
+    /**
  * @summary Delete Category
  */
-
-export function useDeleteCategoryApiV2TypesIdDelete<TData = Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getDeleteCategoryApiV2TypesIdDeleteQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useDeleteCategoryApiV2TypesIdDelete = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+        TError,
+        DeleteCategoryApiV2TypesIdDeleteMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeleteCategoryApiV2TypesIdDeleteMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Get Type Items
@@ -1719,80 +1468,53 @@ export const createItemApiV2ItemsPost = (
 
 
 
-export const getCreateItemApiV2ItemsPostQueryKey = (itemCreate?: BodyType<ItemCreate>,) => {
-    return [
-    'POST', `/api/v2/items`, itemCreate
-    ] as const;
-    }
+export const getCreateItemApiV2ItemsPostMutationKey = () => ['createItemApiV2ItemsPost'] as const;
 
+export const getCreateItemApiV2ItemsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext> => {
 
-export const getCreateItemApiV2ItemsPostQueryOptions = <TData = Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError = ErrorType<HTTPValidationError>>(itemCreate: BodyType<ItemCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getCreateItemApiV2ItemsPostQueryKey(itemCreate);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>> = ({ signal }) => createItemApiV2ItemsPost(itemCreate, requestOptions, signal);
+const mutationKey = getCreateItemApiV2ItemsPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, CreateItemApiV2ItemsPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CreateItemApiV2ItemsPostQueryResult = NonNullable<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>>
-export type CreateItemApiV2ItemsPostQueryError = ErrorType<HTTPValidationError>
+          return  createItemApiV2ItemsPost(data,requestOptions)
+        }
 
 
-export function useCreateItemApiV2ItemsPost<TData = Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError = ErrorType<HTTPValidationError>>(
- itemCreate: BodyType<ItemCreate>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
-          TError,
-          Awaited<ReturnType<typeof createItemApiV2ItemsPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateItemApiV2ItemsPost<TData = Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError = ErrorType<HTTPValidationError>>(
- itemCreate: BodyType<ItemCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
-          TError,
-          Awaited<ReturnType<typeof createItemApiV2ItemsPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateItemApiV2ItemsPost<TData = Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError = ErrorType<HTTPValidationError>>(
- itemCreate: BodyType<ItemCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateItemApiV2ItemsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>>
+    export type CreateItemApiV2ItemsPostMutationBody = BodyType<ItemCreate>
+    export type CreateItemApiV2ItemsPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateItemApiV2ItemsPostMutationVariables = {data: BodyType<ItemCreate>}
+
+    /**
  * @summary Create Item
  */
-
-export function useCreateItemApiV2ItemsPost<TData = Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError = ErrorType<HTTPValidationError>>(
- itemCreate: BodyType<ItemCreate>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getCreateItemApiV2ItemsPostQueryOptions(itemCreate,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useCreateItemApiV2ItemsPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+        TError,
+        CreateItemApiV2ItemsPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateItemApiV2ItemsPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Get Item Stock
@@ -2296,86 +2018,53 @@ export const patchItemApiV2ItemsIdPatch = (
 
 
 
-export const getPatchItemApiV2ItemsIdPatchQueryKey = (id: string,
-    itemPatch?: BodyType<ItemPatch>,) => {
-    return [
-    'PATCH', `/api/v2/items/${id}`, itemPatch
-    ] as const;
-    }
+export const getPatchItemApiV2ItemsIdPatchMutationKey = () => ['patchItemApiV2ItemsIdPatch'] as const;
 
+export const getPatchItemApiV2ItemsIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext> => {
 
-export const getPatchItemApiV2ItemsIdPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchItemApiV2ItemsIdPatchQueryKey(id,itemPatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>> = ({ signal }) => patchItemApiV2ItemsIdPatch(id,itemPatch, requestOptions, signal);
+const mutationKey = getPatchItemApiV2ItemsIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, PatchItemApiV2ItemsIdPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchItemApiV2ItemsIdPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>>
-export type PatchItemApiV2ItemsIdPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchItemApiV2ItemsIdPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchItemApiV2ItemsIdPatch<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchItemApiV2ItemsIdPatch<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchItemApiV2ItemsIdPatch<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchItemApiV2ItemsIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>>
+    export type PatchItemApiV2ItemsIdPatchMutationBody = BodyType<ItemPatch>
+    export type PatchItemApiV2ItemsIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchItemApiV2ItemsIdPatchMutationVariables = {id: string;data: BodyType<ItemPatch>}
+
+    /**
  * @summary Patch Item
  */
-
-export function usePatchItemApiV2ItemsIdPatch<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchItemApiV2ItemsIdPatchQueryOptions(id,itemPatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchItemApiV2ItemsIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+        TError,
+        PatchItemApiV2ItemsIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchItemApiV2ItemsIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Patch Item
@@ -2398,86 +2087,53 @@ export const patchItemApiV2ItemsIdPut = (
 
 
 
-export const getPatchItemApiV2ItemsIdPutQueryKey = (id: string,
-    itemPatch?: BodyType<ItemPatch>,) => {
-    return [
-    'PUT', `/api/v2/items/${id}`, itemPatch
-    ] as const;
-    }
+export const getPatchItemApiV2ItemsIdPutMutationKey = () => ['patchItemApiV2ItemsIdPut'] as const;
 
+export const getPatchItemApiV2ItemsIdPutMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext> => {
 
-export const getPatchItemApiV2ItemsIdPutQueryOptions = <TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchItemApiV2ItemsIdPutQueryKey(id,itemPatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>> = ({ signal }) => patchItemApiV2ItemsIdPut(id,itemPatch, requestOptions, signal);
+const mutationKey = getPatchItemApiV2ItemsIdPutMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, PatchItemApiV2ItemsIdPutMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchItemApiV2ItemsIdPutQueryResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>>
-export type PatchItemApiV2ItemsIdPutQueryError = ErrorType<HTTPValidationError>
+          return  patchItemApiV2ItemsIdPut(id,data,requestOptions)
+        }
 
 
-export function usePatchItemApiV2ItemsIdPut<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
-          TError,
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchItemApiV2ItemsIdPut<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
-          TError,
-          Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchItemApiV2ItemsIdPut<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchItemApiV2ItemsIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>>
+    export type PatchItemApiV2ItemsIdPutMutationBody = BodyType<ItemPatch>
+    export type PatchItemApiV2ItemsIdPutMutationError = ErrorType<HTTPValidationError>
+    export type PatchItemApiV2ItemsIdPutMutationVariables = {id: string;data: BodyType<ItemPatch>}
+
+    /**
  * @summary Patch Item
  */
-
-export function usePatchItemApiV2ItemsIdPut<TData = Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    itemPatch: BodyType<ItemPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchItemApiV2ItemsIdPutQueryOptions(id,itemPatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchItemApiV2ItemsIdPut = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+        TError,
+        PatchItemApiV2ItemsIdPutMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchItemApiV2ItemsIdPutMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Delete Item
@@ -2497,80 +2153,53 @@ export const deleteItemApiV2ItemsIdDelete = (
 
 
 
-export const getDeleteItemApiV2ItemsIdDeleteQueryKey = (id: string,) => {
-    return [
-    'DELETE', `/api/v2/items/${id}`
-    ] as const;
-    }
+export const getDeleteItemApiV2ItemsIdDeleteMutationKey = () => ['deleteItemApiV2ItemsIdDelete'] as const;
 
+export const getDeleteItemApiV2ItemsIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext> => {
 
-export const getDeleteItemApiV2ItemsIdDeleteQueryOptions = <TData = Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getDeleteItemApiV2ItemsIdDeleteQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>> = ({ signal }) => deleteItemApiV2ItemsIdDelete(id, requestOptions, signal);
+const mutationKey = getDeleteItemApiV2ItemsIdDeleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, DeleteItemApiV2ItemsIdDeleteMutationVariables> = (props) => {
+          const {id} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DeleteItemApiV2ItemsIdDeleteQueryResult = NonNullable<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>>
-export type DeleteItemApiV2ItemsIdDeleteQueryError = ErrorType<HTTPValidationError>
+          return  deleteItemApiV2ItemsIdDelete(id,requestOptions)
+        }
 
 
-export function useDeleteItemApiV2ItemsIdDelete<TData = Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteItemApiV2ItemsIdDelete<TData = Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeleteItemApiV2ItemsIdDelete<TData = Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeleteItemApiV2ItemsIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>>
+
+    export type DeleteItemApiV2ItemsIdDeleteMutationError = ErrorType<HTTPValidationError>
+    export type DeleteItemApiV2ItemsIdDeleteMutationVariables = {id: string}
+
+    /**
  * @summary Delete Item
  */
-
-export function useDeleteItemApiV2ItemsIdDelete<TData = Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getDeleteItemApiV2ItemsIdDeleteQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useDeleteItemApiV2ItemsIdDelete = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+        TError,
+        DeleteItemApiV2ItemsIdDeleteMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeleteItemApiV2ItemsIdDeleteMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary List Inventory Lots
@@ -3248,80 +2877,53 @@ export const createPedcardApiV2PedcardPost = (
 
 
 
-export const getCreatePedcardApiV2PedcardPostQueryKey = (pedcardForm?: BodyType<PedcardForm>,) => {
-    return [
-    'POST', `/api/v2/pedcard`, pedcardForm
-    ] as const;
-    }
+export const getCreatePedcardApiV2PedcardPostMutationKey = () => ['createPedcardApiV2PedcardPost'] as const;
 
+export const getCreatePedcardApiV2PedcardPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError,CreatePedcardApiV2PedcardPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError,CreatePedcardApiV2PedcardPostMutationVariables, TContext> => {
 
-export const getCreatePedcardApiV2PedcardPostQueryOptions = <TData = Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError = ErrorType<HTTPValidationError>>(pedcardForm: BodyType<PedcardForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getCreatePedcardApiV2PedcardPostQueryKey(pedcardForm);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>> = ({ signal }) => createPedcardApiV2PedcardPost(pedcardForm, requestOptions, signal);
+const mutationKey = getCreatePedcardApiV2PedcardPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, CreatePedcardApiV2PedcardPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CreatePedcardApiV2PedcardPostQueryResult = NonNullable<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>>
-export type CreatePedcardApiV2PedcardPostQueryError = ErrorType<HTTPValidationError>
+          return  createPedcardApiV2PedcardPost(data,requestOptions)
+        }
 
 
-export function useCreatePedcardApiV2PedcardPost<TData = Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError = ErrorType<HTTPValidationError>>(
- pedcardForm: BodyType<PedcardForm>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>,
-          TError,
-          Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreatePedcardApiV2PedcardPost<TData = Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError = ErrorType<HTTPValidationError>>(
- pedcardForm: BodyType<PedcardForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>,
-          TError,
-          Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreatePedcardApiV2PedcardPost<TData = Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError = ErrorType<HTTPValidationError>>(
- pedcardForm: BodyType<PedcardForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreatePedcardApiV2PedcardPostMutationResult = NonNullable<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>>
+    export type CreatePedcardApiV2PedcardPostMutationBody = BodyType<PedcardForm>
+    export type CreatePedcardApiV2PedcardPostMutationError = ErrorType<HTTPValidationError>
+    export type CreatePedcardApiV2PedcardPostMutationVariables = {data: BodyType<PedcardForm>}
+
+    /**
  * @summary Create Pedcard
  */
-
-export function useCreatePedcardApiV2PedcardPost<TData = Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError = ErrorType<HTTPValidationError>>(
- pedcardForm: BodyType<PedcardForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getCreatePedcardApiV2PedcardPostQueryOptions(pedcardForm,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useCreatePedcardApiV2PedcardPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>, TError,CreatePedcardApiV2PedcardPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createPedcardApiV2PedcardPost>>,
+        TError,
+        CreatePedcardApiV2PedcardPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreatePedcardApiV2PedcardPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Patch Pedcard
@@ -3344,86 +2946,53 @@ export const patchPedcardApiV2PedcardIdPatch = (
 
 
 
-export const getPatchPedcardApiV2PedcardIdPatchQueryKey = (id: string,
-    pedcardPatch?: BodyType<PedcardPatch>,) => {
-    return [
-    'PATCH', `/api/v2/pedcard/${id}`, pedcardPatch
-    ] as const;
-    }
+export const getPatchPedcardApiV2PedcardIdPatchMutationKey = () => ['patchPedcardApiV2PedcardIdPatch'] as const;
 
+export const getPatchPedcardApiV2PedcardIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError,PatchPedcardApiV2PedcardIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError,PatchPedcardApiV2PedcardIdPatchMutationVariables, TContext> => {
 
-export const getPatchPedcardApiV2PedcardIdPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    pedcardPatch: BodyType<PedcardPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchPedcardApiV2PedcardIdPatchQueryKey(id,pedcardPatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>> = ({ signal }) => patchPedcardApiV2PedcardIdPatch(id,pedcardPatch, requestOptions, signal);
+const mutationKey = getPatchPedcardApiV2PedcardIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, PatchPedcardApiV2PedcardIdPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchPedcardApiV2PedcardIdPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>>
-export type PatchPedcardApiV2PedcardIdPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchPedcardApiV2PedcardIdPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchPedcardApiV2PedcardIdPatch<TData = Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    pedcardPatch: BodyType<PedcardPatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchPedcardApiV2PedcardIdPatch<TData = Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    pedcardPatch: BodyType<PedcardPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchPedcardApiV2PedcardIdPatch<TData = Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    pedcardPatch: BodyType<PedcardPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchPedcardApiV2PedcardIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>>
+    export type PatchPedcardApiV2PedcardIdPatchMutationBody = BodyType<PedcardPatch>
+    export type PatchPedcardApiV2PedcardIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchPedcardApiV2PedcardIdPatchMutationVariables = {id: string;data: BodyType<PedcardPatch>}
+
+    /**
  * @summary Patch Pedcard
  */
-
-export function usePatchPedcardApiV2PedcardIdPatch<TData = Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    pedcardPatch: BodyType<PedcardPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchPedcardApiV2PedcardIdPatchQueryOptions(id,pedcardPatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchPedcardApiV2PedcardIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>, TError,PatchPedcardApiV2PedcardIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchPedcardApiV2PedcardIdPatch>>,
+        TError,
+        PatchPedcardApiV2PedcardIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchPedcardApiV2PedcardIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Delete Pedcard
@@ -3443,80 +3012,53 @@ export const deletePedcardApiV2PedcardIdDeleteDelete = (
 
 
 
-export const getDeletePedcardApiV2PedcardIdDeleteDeleteQueryKey = (id: string,) => {
-    return [
-    'DELETE', `/api/v2/pedcard/${id}/delete`
-    ] as const;
-    }
+export const getDeletePedcardApiV2PedcardIdDeleteDeleteMutationKey = () => ['deletePedcardApiV2PedcardIdDeleteDelete'] as const;
 
+export const getDeletePedcardApiV2PedcardIdDeleteDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError,DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError,DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables, TContext> => {
 
-export const getDeletePedcardApiV2PedcardIdDeleteDeleteQueryOptions = <TData = Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getDeletePedcardApiV2PedcardIdDeleteDeleteQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>> = ({ signal }) => deletePedcardApiV2PedcardIdDeleteDelete(id, requestOptions, signal);
+const mutationKey = getDeletePedcardApiV2PedcardIdDeleteDeleteMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables> = (props) => {
+          const {id} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DeletePedcardApiV2PedcardIdDeleteDeleteQueryResult = NonNullable<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>>
-export type DeletePedcardApiV2PedcardIdDeleteDeleteQueryError = ErrorType<HTTPValidationError>
+          return  deletePedcardApiV2PedcardIdDeleteDelete(id,requestOptions)
+        }
 
 
-export function useDeletePedcardApiV2PedcardIdDeleteDelete<TData = Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeletePedcardApiV2PedcardIdDeleteDelete<TData = Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>,
-          TError,
-          Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useDeletePedcardApiV2PedcardIdDeleteDelete<TData = Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type DeletePedcardApiV2PedcardIdDeleteDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>>
+
+    export type DeletePedcardApiV2PedcardIdDeleteDeleteMutationError = ErrorType<HTTPValidationError>
+    export type DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables = {id: string}
+
+    /**
  * @summary Delete Pedcard
  */
-
-export function useDeletePedcardApiV2PedcardIdDeleteDelete<TData = Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getDeletePedcardApiV2PedcardIdDeleteDeleteQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useDeletePedcardApiV2PedcardIdDeleteDelete = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>, TError,DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof deletePedcardApiV2PedcardIdDeleteDelete>>,
+        TError,
+        DeletePedcardApiV2PedcardIdDeleteDeleteMutationVariables,
+        TContext
+      > => {
+      return useMutation(getDeletePedcardApiV2PedcardIdDeleteDeleteMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary List Transactions
@@ -3632,80 +3174,53 @@ export const createTransactionApiV2TransactionsPost = (
 
 
 
-export const getCreateTransactionApiV2TransactionsPostQueryKey = (transactionBody?: BodyType<TransactionBody>,) => {
-    return [
-    'POST', `/api/v2/transactions`, transactionBody
-    ] as const;
-    }
+export const getCreateTransactionApiV2TransactionsPostMutationKey = () => ['createTransactionApiV2TransactionsPost'] as const;
 
+export const getCreateTransactionApiV2TransactionsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext> => {
 
-export const getCreateTransactionApiV2TransactionsPostQueryOptions = <TData = Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError = ErrorType<HTTPValidationError>>(transactionBody: BodyType<TransactionBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getCreateTransactionApiV2TransactionsPostQueryKey(transactionBody);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>> = ({ signal }) => createTransactionApiV2TransactionsPost(transactionBody, requestOptions, signal);
+const mutationKey = getCreateTransactionApiV2TransactionsPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, CreateTransactionApiV2TransactionsPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CreateTransactionApiV2TransactionsPostQueryResult = NonNullable<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>>
-export type CreateTransactionApiV2TransactionsPostQueryError = ErrorType<HTTPValidationError>
+          return  createTransactionApiV2TransactionsPost(data,requestOptions)
+        }
 
 
-export function useCreateTransactionApiV2TransactionsPost<TData = Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError = ErrorType<HTTPValidationError>>(
- transactionBody: BodyType<TransactionBody>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
-          TError,
-          Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateTransactionApiV2TransactionsPost<TData = Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError = ErrorType<HTTPValidationError>>(
- transactionBody: BodyType<TransactionBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
-          TError,
-          Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useCreateTransactionApiV2TransactionsPost<TData = Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError = ErrorType<HTTPValidationError>>(
- transactionBody: BodyType<TransactionBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateTransactionApiV2TransactionsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>>
+    export type CreateTransactionApiV2TransactionsPostMutationBody = BodyType<TransactionBody>
+    export type CreateTransactionApiV2TransactionsPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateTransactionApiV2TransactionsPostMutationVariables = {data: BodyType<TransactionBody>}
+
+    /**
  * @summary Create Transaction
  */
-
-export function useCreateTransactionApiV2TransactionsPost<TData = Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError = ErrorType<HTTPValidationError>>(
- transactionBody: BodyType<TransactionBody>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getCreateTransactionApiV2TransactionsPostQueryOptions(transactionBody,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useCreateTransactionApiV2TransactionsPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+        TError,
+        CreateTransactionApiV2TransactionsPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateTransactionApiV2TransactionsPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary List Running
@@ -3914,86 +3429,53 @@ export const patchStatusApiV2TransactionsIdStatusPatch = (
 
 
 
-export const getPatchStatusApiV2TransactionsIdStatusPatchQueryKey = (id: string,
-    transactionStatusPatch?: BodyType<TransactionStatusPatch>,) => {
-    return [
-    'PATCH', `/api/v2/transactions/${id}/status`, transactionStatusPatch
-    ] as const;
-    }
+export const getPatchStatusApiV2TransactionsIdStatusPatchMutationKey = () => ['patchStatusApiV2TransactionsIdStatusPatch'] as const;
 
+export const getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext> => {
 
-export const getPatchStatusApiV2TransactionsIdStatusPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchStatusApiV2TransactionsIdStatusPatchQueryKey(id,transactionStatusPatch);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>> = ({ signal }) => patchStatusApiV2TransactionsIdStatusPatch(id,transactionStatusPatch, requestOptions, signal);
+const mutationKey = getPatchStatusApiV2TransactionsIdStatusPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, PatchStatusApiV2TransactionsIdStatusPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchStatusApiV2TransactionsIdStatusPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>>
-export type PatchStatusApiV2TransactionsIdStatusPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchStatusApiV2TransactionsIdStatusPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchStatusApiV2TransactionsIdStatusPatch<TData = Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchStatusApiV2TransactionsIdStatusPatch<TData = Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchStatusApiV2TransactionsIdStatusPatch<TData = Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchStatusApiV2TransactionsIdStatusPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>>
+    export type PatchStatusApiV2TransactionsIdStatusPatchMutationBody = BodyType<TransactionStatusPatch>
+    export type PatchStatusApiV2TransactionsIdStatusPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchStatusApiV2TransactionsIdStatusPatchMutationVariables = {id: string;data: BodyType<TransactionStatusPatch>}
+
+    /**
  * @summary Patch Status
  */
-
-export function usePatchStatusApiV2TransactionsIdStatusPatch<TData = Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchStatusApiV2TransactionsIdStatusPatchQueryOptions(id,transactionStatusPatch,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchStatusApiV2TransactionsIdStatusPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+        TError,
+        PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * Legacy ``PATCH /:id/cancel`` sent the raw string ``"CANCELED"`` as the body.
@@ -4017,86 +3499,53 @@ export const patchCancelApiV2TransactionsIdCancelPatch = (
 
 
 
-export const getPatchCancelApiV2TransactionsIdCancelPatchQueryKey = (id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody?: string,) => {
-    return [
-    'PATCH', `/api/v2/transactions/${id}/cancel`, patchCancelApiV2TransactionsIdCancelPatchBody
-    ] as const;
-    }
+export const getPatchCancelApiV2TransactionsIdCancelPatchMutationKey = () => ['patchCancelApiV2TransactionsIdCancelPatch'] as const;
 
+export const getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext> => {
 
-export const getPatchCancelApiV2TransactionsIdCancelPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError = ErrorType<HTTPValidationError>>(id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchCancelApiV2TransactionsIdCancelPatchQueryKey(id,patchCancelApiV2TransactionsIdCancelPatchBody);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>> = ({ signal }) => patchCancelApiV2TransactionsIdCancelPatch(id,patchCancelApiV2TransactionsIdCancelPatchBody, requestOptions, signal);
+const mutationKey = getPatchCancelApiV2TransactionsIdCancelPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, PatchCancelApiV2TransactionsIdCancelPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchCancelApiV2TransactionsIdCancelPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>>
-export type PatchCancelApiV2TransactionsIdCancelPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchCancelApiV2TransactionsIdCancelPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchCancelApiV2TransactionsIdCancelPatch<TData = Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchCancelApiV2TransactionsIdCancelPatch<TData = Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchCancelApiV2TransactionsIdCancelPatch<TData = Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchCancelApiV2TransactionsIdCancelPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>>
+    export type PatchCancelApiV2TransactionsIdCancelPatchMutationBody = BodyType<string>
+    export type PatchCancelApiV2TransactionsIdCancelPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchCancelApiV2TransactionsIdCancelPatchMutationVariables = {id: string;data: BodyType<string>}
+
+    /**
  * @summary Patch Cancel
  */
-
-export function usePatchCancelApiV2TransactionsIdCancelPatch<TData = Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: BodyType<string>,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchCancelApiV2TransactionsIdCancelPatchQueryOptions(id,patchCancelApiV2TransactionsIdCancelPatchBody,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchCancelApiV2TransactionsIdCancelPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+        TError,
+        PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary List Nexus
@@ -4210,80 +3659,53 @@ export const initNexusApiV2NexusToolsInitPost = (
 
 
 
-export const getInitNexusApiV2NexusToolsInitPostQueryKey = () => {
-    return [
-    'POST', `/api/v2/nexus-tools/init`
-    ] as const;
-    }
+export const getInitNexusApiV2NexusToolsInitPostMutationKey = () => ['initNexusApiV2NexusToolsInitPost'] as const;
 
+export const getInitNexusApiV2NexusToolsInitPostMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError,void, TContext> => {
 
-export const getInitNexusApiV2NexusToolsInitPostQueryOptions = <TData = Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getInitNexusApiV2NexusToolsInitPostQueryKey();
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>> = ({ signal }) => initNexusApiV2NexusToolsInitPost(requestOptions, signal);
+const mutationKey = getInitNexusApiV2NexusToolsInitPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type InitNexusApiV2NexusToolsInitPostQueryResult = NonNullable<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>>
-export type InitNexusApiV2NexusToolsInitPostQueryError = ErrorType<unknown>
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, void> = () => {
 
 
-export function useInitNexusApiV2NexusToolsInitPost<TData = Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>,
-          TError,
-          Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInitNexusApiV2NexusToolsInitPost<TData = Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>,
-          TError,
-          Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInitNexusApiV2NexusToolsInitPost<TData = Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+          return  initNexusApiV2NexusToolsInitPost(requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type InitNexusApiV2NexusToolsInitPostMutationResult = NonNullable<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>>
+
+    export type InitNexusApiV2NexusToolsInitPostMutationError = ErrorType<unknown>
+
+
+    /**
  * @summary Init Nexus
  */
-
-export function useInitNexusApiV2NexusToolsInitPost<TData = Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getInitNexusApiV2NexusToolsInitPostQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const useInitNexusApiV2NexusToolsInitPost = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof initNexusApiV2NexusToolsInitPost>>,
+        TError,
+        void,
+        TContext
+      > => {
+      return useMutation(getInitNexusApiV2NexusToolsInitPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Patch Nexus
@@ -4306,86 +3728,53 @@ export const patchNexusApiV2NexusToolsIdPatch = (
 
 
 
-export const getPatchNexusApiV2NexusToolsIdPatchQueryKey = (id: string,
-    nexusForm?: BodyType<NexusForm>,) => {
-    return [
-    'PATCH', `/api/v2/nexus-tools/${id}`, nexusForm
-    ] as const;
-    }
+export const getPatchNexusApiV2NexusToolsIdPatchMutationKey = () => ['patchNexusApiV2NexusToolsIdPatch'] as const;
 
+export const getPatchNexusApiV2NexusToolsIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError,PatchNexusApiV2NexusToolsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError,PatchNexusApiV2NexusToolsIdPatchMutationVariables, TContext> => {
 
-export const getPatchNexusApiV2NexusToolsIdPatchQueryOptions = <TData = Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    nexusForm: BodyType<NexusForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getPatchNexusApiV2NexusToolsIdPatchQueryKey(id,nexusForm);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>> = ({ signal }) => patchNexusApiV2NexusToolsIdPatch(id,nexusForm, requestOptions, signal);
+const mutationKey = getPatchNexusApiV2NexusToolsIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
 
 
 
 
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, PatchNexusApiV2NexusToolsIdPatchMutationVariables> = (props) => {
+          const {id,data} = props ?? {};
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PatchNexusApiV2NexusToolsIdPatchQueryResult = NonNullable<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>>
-export type PatchNexusApiV2NexusToolsIdPatchQueryError = ErrorType<HTTPValidationError>
+          return  patchNexusApiV2NexusToolsIdPatch(id,data,requestOptions)
+        }
 
 
-export function usePatchNexusApiV2NexusToolsIdPatch<TData = Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    nexusForm: BodyType<NexusForm>, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData>> & Pick<
-        DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchNexusApiV2NexusToolsIdPatch<TData = Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    nexusForm: BodyType<NexusForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData>> & Pick<
-        UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>,
-          TError,
-          Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function usePatchNexusApiV2NexusToolsIdPatch<TData = Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    nexusForm: BodyType<NexusForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-/**
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchNexusApiV2NexusToolsIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>>
+    export type PatchNexusApiV2NexusToolsIdPatchMutationBody = BodyType<NexusForm>
+    export type PatchNexusApiV2NexusToolsIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchNexusApiV2NexusToolsIdPatchMutationVariables = {id: string;data: BodyType<NexusForm>}
+
+    /**
  * @summary Patch Nexus
  */
-
-export function usePatchNexusApiV2NexusToolsIdPatch<TData = Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    nexusForm: BodyType<NexusForm>, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-  const queryOptions = getPatchNexusApiV2NexusToolsIdPatchQueryOptions(id,nexusForm,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return withQueryKey(query, queryOptions.queryKey);
-}
-
-
-
-
-
-
+export const usePatchNexusApiV2NexusToolsIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>, TError,PatchNexusApiV2NexusToolsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchNexusApiV2NexusToolsIdPatch>>,
+        TError,
+        PatchNexusApiV2NexusToolsIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchNexusApiV2NexusToolsIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Health

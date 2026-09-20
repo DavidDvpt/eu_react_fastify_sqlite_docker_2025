@@ -1,9 +1,15 @@
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import { ItemsApi, TypesApi } from "@/shared/services";
-import CategoryApi from "@/shared/services/categoriesApi";
 import type { CategoryCreateOutput } from "@/api/generated/zod/model/categoryCreate.zod";
 import type { ItemCreateOutput } from "@/api/generated/zod/model/itemCreate.zod";
 import type { TypeCreateOutput } from "@/api/generated/zod/model/typeCreate.zod";
+import {
+  useCreateCategoryApiV2CategoriesPost,
+  useCreateItemApiV2ItemsPost,
+  useCreateTypeApiV2TypesPost,
+  usePatchCategoryApiV2CategoriesIdPatch,
+  usePatchItemApiV2ItemsIdPatch,
+  usePatchTypeApiV2TypesIdPatch,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import type {
   CategoryViewModel,
   ItemViewModel,
@@ -12,6 +18,13 @@ import type {
 import { useMutation } from "@tanstack/react-query";
 
 export default function useSystemMutation() {
+  const createCategory = useCreateCategoryApiV2CategoriesPost();
+  const patchCategory = usePatchCategoryApiV2CategoriesIdPatch();
+  const createType = useCreateTypeApiV2TypesPost();
+  const patchType = usePatchTypeApiV2TypesIdPatch();
+  const createItem = useCreateItemApiV2ItemsPost();
+  const patchItem = usePatchItemApiV2ItemsIdPatch();
+
   const categoryMutation = useMutation({
     mutationFn: async ({
       category,
@@ -20,12 +33,10 @@ export default function useSystemMutation() {
       category?: CategoryViewModel;
       values: CategoryCreateOutput;
     }) => {
-      const cs = new CategoryApi();
       if (category?.id) {
-        return await cs.patch({ id: category?.id, body: values });
-      } else {
-        return await cs.create(values);
+        return await patchCategory.mutateAsync({ id: category.id, data: values });
       }
+      return await createCategory.mutateAsync({ data: values });
     },
     onSuccess: async () => {
       await InvalidateQueryAndKeys.categoryMutation();
@@ -40,12 +51,10 @@ export default function useSystemMutation() {
       type?: TypeViewModel;
       values: TypeCreateOutput;
     }) => {
-      const ts = new TypesApi();
       if (type?.id) {
-        return await ts.patch({ id: type?.id, body: values });
-      } else {
-        return await ts.create(values);
+        return await patchType.mutateAsync({ id: type.id, data: values });
       }
+      return await createType.mutateAsync({ data: values });
     },
     onSuccess: async () => {
       await InvalidateQueryAndKeys.typeMutation();
@@ -60,12 +69,11 @@ export default function useSystemMutation() {
       item?: ItemViewModel;
       values: ItemCreateOutput;
     }) => {
-      const itemsApi = new ItemsApi();
       if (item?.id) {
-        return await itemsApi.patch({ id: item.id, body: values });
+        return await patchItem.mutateAsync({ id: item.id, data: values });
       }
 
-      return await itemsApi.create(values);
+      return await createItem.mutateAsync({ data: values });
     },
     onSuccess: async () => {
       await InvalidateQueryAndKeys.itemMutation();

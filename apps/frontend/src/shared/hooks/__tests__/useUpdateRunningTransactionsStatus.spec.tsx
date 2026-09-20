@@ -1,4 +1,8 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useMutation,
+} from "@tanstack/react-query";
 import { act, renderHook, waitFor } from "@testing-library/react";
 import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -10,11 +14,23 @@ const { updateStatusMock } = vi.hoisted(() => ({
   updateStatusMock: vi.fn(),
 }));
 
-vi.mock("@/shared/services/transactionsApi", () => ({
-  default: class {
-    updateStatus = updateStatusMock;
-  },
-}));
+vi.mock("@/api/generated/react-query/entropiaManagerAPI", async () => {
+  const actual =
+    await vi.importActual<
+      typeof import("@/api/generated/react-query/entropiaManagerAPI")
+    >("@/api/generated/react-query/entropiaManagerAPI");
+
+  return {
+    ...actual,
+    usePatchStatusApiV2TransactionsIdStatusPatch: () =>
+      useMutation({
+        mutationFn: ({ id, data }: { id: string; data: { status: string } }) =>
+          updateStatusMock({ id, status: data.status }),
+      }),
+    useCreateTransactionApiV2TransactionsPost: () =>
+      useMutation({ mutationFn: vi.fn() }),
+  };
+});
 
 function createWrapper(queryClient: QueryClient) {
   return function Wrapper({ children }: { children: ReactNode }) {

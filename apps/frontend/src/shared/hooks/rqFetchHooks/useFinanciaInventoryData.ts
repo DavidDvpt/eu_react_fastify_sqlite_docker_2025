@@ -1,14 +1,16 @@
-import { useQuery } from "@tanstack/react-query";
-import InventoryApi from "@/shared/services/inventoryApi";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import { useInventoryFinancialReportApiV2InventoryFinancialReportGet } from "@/api/generated/react-query/entropiaManagerAPI";
+import type { FinancialInventoryReport } from "@zod-schemas";
 export default function useFinancialInventoryData() {
-  const api = new InventoryApi();
+  const { data, isLoading, isError } =
+    useInventoryFinancialReportApiV2InventoryFinancialReportGet(undefined, {
+      query: {
+        queryKey: [...InvalidateQueryAndKeys.getInventoryFinancialReportKey().keys],
+        staleTime: 30_000,
+      },
+    });
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: [...InvalidateQueryAndKeys.getInventoryFinancialReportKey().keys],
-    queryFn: () => api.getInventoryReport(),
-    staleTime: 30_000,
-  });
-
-  return { data, isLoading, isError };
+  // Keep the domain report contract used by the financial sections while the
+  // generated model remains the transport-level contract.
+  return { data: data as FinancialInventoryReport | undefined, isLoading, isError };
 }

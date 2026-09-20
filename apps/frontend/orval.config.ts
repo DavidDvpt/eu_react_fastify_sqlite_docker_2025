@@ -64,7 +64,6 @@ export default defineConfig({
           name: "customInstance",
         },
         query: {
-          useQuery: true,
           useSuspenseQuery: false,
         },
         header: (info) => [

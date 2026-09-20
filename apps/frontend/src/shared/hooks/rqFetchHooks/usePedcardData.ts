@@ -1,31 +1,39 @@
 import { useQuery } from "@tanstack/react-query";
-
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import pedcardApi from "@/shared/services/pedCardApi";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import {
+  useCheckPedcardApiV2PedcardCheckGet,
+  useGetBalanceApiV2PedcardBalanceGet,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 
 function usePedcard() {
   const isLoggued = useAppSelector(selectIsLoggued);
   const key = InvalidateQueryAndKeys;
   const ps = new pedcardApi();
 
-  const balance = useQuery({
-    queryKey: key.getPedcardBalanceKey().keys,
-    queryFn: ps.balance,
-    enabled: isLoggued,
-    staleTime: Infinity,
-    refetchOnMount: true,
+  const balance = useGetBalanceApiV2PedcardBalanceGet({
+    query: {
+      queryKey: key.getPedcardBalanceKey().keys,
+      enabled: isLoggued,
+      staleTime: Infinity,
+      refetchOnMount: true,
+    },
   });
 
-  const check = useQuery({
-    queryKey: key.getPedcardCheckKey().keys,
-    queryFn: ps.check,
-    enabled: isLoggued,
-    staleTime: Infinity,
-    refetchOnMount: false,
+  const check = useCheckPedcardApiV2PedcardCheckGet({
+    query: {
+      queryKey: key.getPedcardCheckKey().keys,
+      enabled: isLoggued,
+      staleTime: Infinity,
+      refetchOnMount: false,
+    },
   });
 
+  // The current OpenAPI contract requires a `value` parameter, while the
+  // existing business flow asks for the authorization without one. Keep this
+  // call on the legacy service until the backend contract is clarified.
   const canPay = useQuery({
     queryKey: key.getPedcardCanPayKey().keys,
     queryFn: ps.canPay,

@@ -1,7 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-
-import InventoryApi from "@/shared/services/inventoryApi";
 import type { StockQuery } from "@zod-schemas";
+import { useListInventoryStockApiV2InventoryStockGet } from "@/api/generated/react-query/entropiaManagerAPI";
 
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";
@@ -14,16 +12,15 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
 
-  const stockApi = new InventoryApi();
-
   const {
     data: inventoryStock,
     isLoading: isItemsStockLoading,
     isError: isItemsStockError,
-  } = useQuery({
-    queryKey: [...InvalidateQueryAndKeys.getInventoryStockKey().keys, itemId],
-    queryFn: () => stockApi.getStock(),
-    staleTime: 30_000,
+  } = useListInventoryStockApiV2InventoryStockGet(undefined, {
+    query: {
+      queryKey: [...InvalidateQueryAndKeys.getInventoryStockKey().keys, itemId],
+      staleTime: 30_000,
+    },
   });
 
   const itemsWithStock = useMemo(() => {

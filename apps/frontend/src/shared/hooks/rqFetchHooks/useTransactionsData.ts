@@ -1,33 +1,35 @@
 import { useMemo } from "react";
 
-import { useQuery } from "@tanstack/react-query";
-import TransactionsApi from "@/shared/services/transactionsApi";
+import { useListRunningApiV2TransactionsRunningGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import { useAppSelector } from "@/store/hooks";
 import { selectIsLoggued } from "@/store";
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { TransactionViewModel } from "@zod-schemas";
+import type {
+  TransactionViewModel,
+  TransactionViewModels,
+} from "@zod-schemas";
 
 function useTransactionsData() {
   const isLoggued = useAppSelector(selectIsLoggued);
-  const ts = new TransactionsApi();
-
   const {
     items: { filteredItems, isLoading: itemIsLoading, isError: itemIsError },
   } = useSystemDatas();
 
-  const running = useQuery({
-    queryKey: [...InvalidateQueryAndKeys.getRunningTransactionKey().keys],
-    queryFn: () => ts.running(),
-    enabled: isLoggued,
-    staleTime: 10_000,
+  const running = useListRunningApiV2TransactionsRunningGet({
+    query: {
+      queryKey: [...InvalidateQueryAndKeys.getRunningTransactionKey().keys],
+      enabled: isLoggued,
+      staleTime: 10_000,
+    },
   });
 
   const runningAdapter = useMemo(() => {
     const transactionMap = new Map<string, TransactionViewModel>();
-    if (!running.data) return [];
+    const runningData = running.data as TransactionViewModels | undefined;
+    if (!runningData) return [];
 
-    for (const t of running.data ?? []) {
+    for (const t of runningData) {
       const item = filteredItems().find((item) => item.id === t.itemId)!;
       const extendedItem = item ? { ...t, item } : t;
       transactionMap.set(extendedItem.id, extendedItem);

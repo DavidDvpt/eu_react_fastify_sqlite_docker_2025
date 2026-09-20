@@ -1,7 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import type { TransactionBody } from "@/api/generated/model";
-
-import TransactionsApi from "@/shared/services/transactionsApi";
+import {
+  useCreateTransactionApiV2TransactionsPost,
+  usePatchStatusApiV2TransactionsIdStatusPatch,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import type {
   TransactionStatusDto,
   TransactionStatusPatchDto,
@@ -16,7 +18,8 @@ import type {
 import type { TransactionViewModel } from "@zod-schemas";
 
 function useTransactionsMutation() {
-  const ts = new TransactionsApi();
+  const statusApi = usePatchStatusApiV2TransactionsIdStatusPatch();
+  const createApi = useCreateTransactionApiV2TransactionsPost();
 
   const statusMutation = useMutation({
     mutationFn: async ({
@@ -25,7 +28,7 @@ function useTransactionsMutation() {
     }: {
       row: TransactionViewModel;
       status: TransactionStatusPatchDto;
-    }) => ts.updateStatus({ id: row.id, status }),
+    }) => statusApi.mutateAsync({ id: row.id, data: { status } }),
     onSuccess: async (_data, { row, status }) => {
       await InvalidateQueryAndKeys.transactionMutation({
         itemId: row.item?.id,
@@ -44,8 +47,7 @@ function useTransactionsMutation() {
       item: ItemWithStock;
       action: TransactionAction;
     }) => {
-      const ts = new TransactionsApi();
-      return ts.create({
+      return createApi.mutateAsync({ data: {
         transactionType: (action === "sell"
           ? "SELL"
           : "BUY") as TransactionTypeDto,
@@ -55,7 +57,7 @@ function useTransactionsMutation() {
         fee: values.fee,
         ttc: values.ttc,
         status: values.status,
-      } satisfies TransactionBody);
+      } satisfies TransactionBody });
     },
     onSuccess: async (_data, { item }) => {
       await InvalidateQueryAndKeys.transactionMutation({
