@@ -23,10 +23,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
 
-    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@zod-schemas": ["src/shared/schemas/index.ts"]
+      "@/*": ["./src/*"],
+      "@zod-schemas": ["./src/shared/schemas/index.ts"]
     }
   },
   "include": ["src", "vite.config.ts"]

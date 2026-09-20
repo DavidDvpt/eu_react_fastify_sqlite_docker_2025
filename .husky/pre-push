@@ -1,6 +1,3 @@
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
-
 # Git provides the refs being pushed through stdin. Save them before running
 # the test suite, because a child process may consume the hook's stdin.
 PUSH_REFS_FILE="$(mktemp "${TMPDIR:-/tmp}/husky-pre-push.XXXXXX")" || exit 1

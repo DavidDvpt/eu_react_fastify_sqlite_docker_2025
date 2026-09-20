@@ -7,7 +7,6 @@ module.exports = {
     "cd apps/frontend && npm run lint --if-present -- --fix",
   ],
   "*.{json,md}": [
-    "cd apps/back-end && npm run format:fix --if-present",
     "cd apps/frontend && npm run format:fix --if-present",
   ],
 };
