@@ -1,5 +1,4 @@
-import { axiosCrud } from "@/lib/axios/crud";
-import { axiosInstance } from "@/lib/axios/instances";
+import { signinApiV2AuthSigninPost } from "@/api/generated/react-query/entropiaManagerAPI";
 import type { SignInBody } from "@/api/generated/model";
 
 async function signinApi(credentials: SignInBody) {
@@ -8,10 +7,7 @@ async function signinApi(credentials: SignInBody) {
     if (!credentials.pseudo) throw new Error("Pseudo is undefined");
     if (!credentials.password) throw new Error("Password is undefined");
 
-    const response = await axiosCrud(axiosInstance()).post<
-      { message: string },
-      SignInBody
-    >("/auth/signin", credentials);
+    const response = await signinApiV2AuthSigninPost(credentials);
 
     return response;
   } catch (error) {

@@ -1,17 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockPost, mockAxiosCrud, mockAxiosInstance } = vi.hoisted(() => ({
-  mockPost: vi.fn(),
-  mockAxiosCrud: vi.fn(),
-  mockAxiosInstance: vi.fn(),
+const { mockSignin } = vi.hoisted(() => ({
+  mockSignin: vi.fn(),
 }));
 
-vi.mock("@/lib/axios/crud", () => ({
-  axiosCrud: (...args: unknown[]) => mockAxiosCrud(...args),
-}));
-
-vi.mock("@/lib/axios/instances", () => ({
-  axiosInstance: () => mockAxiosInstance(),
+vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+  signinApiV2AuthSigninPost: mockSignin,
 }));
 
 import signinApi from "../signinApi";
@@ -19,8 +13,7 @@ import signinApi from "../signinApi";
 describe("signinApi", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockAxiosInstance.mockReturnValue({});
-    mockAxiosCrud.mockReturnValue({ post: mockPost });
+    mockSignin.mockReset();
   });
 
   it("rejects when pseudo is missing", async () => {
@@ -42,15 +35,14 @@ describe("signinApi", () => {
   });
 
   it("posts signin payload to auth/signin", async () => {
-    mockPost.mockResolvedValueOnce({ message: "Success" });
+    mockSignin.mockResolvedValueOnce({ message: "Success" });
 
     await signinApi({
       pseudo: "john-doe",
       password: "password123",
     });
 
-    expect(mockPost).toHaveBeenCalledWith(
-      "/auth/signin",
+    expect(mockSignin).toHaveBeenCalledWith(
       {
         pseudo: "john-doe",
         password: "password123",
@@ -59,7 +51,7 @@ describe("signinApi", () => {
   });
 
   it("returns backend response as-is", async () => {
-    mockPost.mockResolvedValueOnce({ message: "Success" });
+    mockSignin.mockResolvedValueOnce({ message: "Success" });
 
     const result = await signinApi({
       pseudo: "john-doe",

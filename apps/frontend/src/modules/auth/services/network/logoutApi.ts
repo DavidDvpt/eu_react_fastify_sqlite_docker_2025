@@ -1,12 +1,8 @@
-import { axiosCrud } from "@/lib/axios/crud";
-import { axiosInstance } from "@/lib/axios/instances";
+import { logoutApiV2AuthLogoutPost } from "@/api/generated/react-query/entropiaManagerAPI";
 
 async function logoutApi() {
   try {
-    const response = await axiosCrud(axiosInstance()).post<
-      { message: string },
-      Record<string, never>
-    >("/auth/logout", {});
+    const response = await logoutApiV2AuthLogoutPost();
 
     return response;
   } catch (error) {

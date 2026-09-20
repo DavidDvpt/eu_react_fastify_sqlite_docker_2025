@@ -1,17 +1,11 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-const { mockPost, mockAxiosCrud, mockAxiosInstance } = vi.hoisted(() => ({
-  mockPost: vi.fn(),
-  mockAxiosCrud: vi.fn(),
-  mockAxiosInstance: vi.fn(),
+const { mockSignup } = vi.hoisted(() => ({
+  mockSignup: vi.fn(),
 }));
 
-vi.mock("@/lib/axios/crud", () => ({
-  axiosCrud: (...args: unknown[]) => mockAxiosCrud(...args),
-}));
-
-vi.mock("@/lib/axios/instances", () => ({
-  axiosInstance: () => mockAxiosInstance(),
+vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+  signupApiV2AuthSignupPost: mockSignup,
 }));
 
 import signupApi from "../signupApi";
@@ -19,8 +13,7 @@ import signupApi from "../signupApi";
 describe("signupApi", () => {
   beforeEach(() => {
     vi.clearAllMocks();
-    mockAxiosInstance.mockReturnValue({});
-    mockAxiosCrud.mockReturnValue({ post: mockPost });
+    mockSignup.mockReset();
   });
 
   it("rejects when pseudo is missing", async () => {
@@ -48,7 +41,7 @@ describe("signupApi", () => {
   });
 
   it("posts required payload without undefined optional fields", async () => {
-    mockPost.mockResolvedValueOnce({
+    mockSignup.mockResolvedValueOnce({
       user: { id: "1", pseudo: "john", email: "john@test.com", role: "USER" },
     });
 
@@ -60,8 +53,7 @@ describe("signupApi", () => {
       password: "password123",
     });
 
-    expect(mockPost).toHaveBeenCalledWith(
-      "/auth/signup",
+    expect(mockSignup).toHaveBeenCalledWith(
       {
         pseudo: "john",
         email: "john@test.com",
@@ -71,7 +63,7 @@ describe("signupApi", () => {
   });
 
   it("includes optional names when provided", async () => {
-    mockPost.mockResolvedValueOnce({
+    mockSignup.mockResolvedValueOnce({
       user: { id: "1", pseudo: "john", email: "john@test.com", role: "USER" },
     });
 
@@ -83,8 +75,7 @@ describe("signupApi", () => {
       password: "password123",
     });
 
-    expect(mockPost).toHaveBeenCalledWith(
-      "/auth/signup",
+    expect(mockSignup).toHaveBeenCalledWith(
       {
         pseudo: "john",
         firstname: "John",
@@ -96,7 +87,7 @@ describe("signupApi", () => {
   });
 
   it("normalizes direct user response into { user } shape", async () => {
-    mockPost.mockResolvedValueOnce({
+    mockSignup.mockResolvedValueOnce({
       id: "1",
       pseudo: "john",
       email: "john@test.com",

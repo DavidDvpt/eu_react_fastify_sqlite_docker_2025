@@ -1,4 +1,14 @@
-async function meParser(data: UserApi) {
+type MeApiResponse = {
+  id: string;
+  pseudo: string;
+  role: UserRoleType | string | null;
+  email?: string;
+  date_created?: string;
+  is_active?: boolean;
+  isActive?: boolean;
+};
+
+async function meParser(data: MeApiResponse) {
   try {
     if (!data) throw new Error("No data found");
     if (!data.id) throw new Error("No userId found");
@@ -8,8 +18,9 @@ async function meParser(data: UserApi) {
     const user = {
       id: data.id,
       pseudo: data.pseudo,
-      role: data.role,
-      isActive: data.is_active,
+      role: data.role as UserRoleType,
+      // The generated MeResponse does not currently expose the active flag.
+      isActive: data.is_active ?? data.isActive ?? true,
     };
 
     return user;

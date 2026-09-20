@@ -1,12 +1,9 @@
-import { axiosCrud } from "@/lib/axios/crud";
-import { axiosInstance } from "@/lib/axios/instances";
+import { meApiV2AuthMeGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import { meParser } from "../../authParser";
 
 async function meApi() {
   try {
-    const response = await axiosCrud(axiosInstance()).get<UserApi>(
-      "/auth/me",
-    );
+    const response = await meApiV2AuthMeGet();
 
     const parsed = await meParser(response);
 
