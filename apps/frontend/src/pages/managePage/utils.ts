@@ -1,9 +1,7 @@
 import { FormatTools } from "@/shared/tools/formatTools";
-import { ImageService } from "@/shared/services/imageService";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 
 const formatToFiveDecimals = FormatTools.formatToFiveDecimals;
-
-const getItemImageUrl = ImageService.getItemImageUrl;
 
 export { formatToFiveDecimals, getItemImageUrl };
 

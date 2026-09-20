@@ -2,7 +2,7 @@
 import type { ItemDetailProps, TransactionAction } from "@/shared/types";
 import { Button } from "@/components/ui/button";
 import { Section } from "../Containers";
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
@@ -67,7 +67,7 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
       <h1 className="m-0 p-0 text-base">{item.name}</h1>
       <div className="flex">
         <ItemImage
-          url={ImageService.getItemImageUrl(item.imageUrlId, "normal") ?? ""}
+          url={getItemImageUrl(item.imageUrlId, "normal") ?? ""}
           alt={item.name}
           size="medium"
         />

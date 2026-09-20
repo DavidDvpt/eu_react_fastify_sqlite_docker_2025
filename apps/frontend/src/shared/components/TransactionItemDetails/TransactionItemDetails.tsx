@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import { ImageService } from "@/shared/services/imageService";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
 import { TransactionActions } from "@/shared/components";
 import { useState, type CSSProperties } from "react";
@@ -39,7 +39,7 @@ function TransactionItemDetails({
   actionsClassName,
   buttonClassName,
 }: TransactionItemDetailsProps) {
-  const image = ImageService.getItemImageUrl(imageUrlId, "normal");
+  const image = getItemImageUrl(imageUrlId, "normal");
   const [failedImage, setFailedImage] = useState<string | null>(null);
   const imageError = failedImage === image;
   const price = FormatTools.pedFormat().format(unitPrice);

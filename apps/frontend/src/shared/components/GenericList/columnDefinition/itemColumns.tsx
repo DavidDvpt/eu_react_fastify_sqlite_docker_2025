@@ -1,7 +1,7 @@
 import type { GenericListColumn } from "@/shared/types";
 import { FormatTools } from "@/shared/tools";
 import type { ItemViewModel } from "@zod-schemas";
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 
 const createItemColumns = (): GenericListColumn<ItemViewModel>[] => [
   {
@@ -14,7 +14,7 @@ const createItemColumns = (): GenericListColumn<ItemViewModel>[] => [
     bodyCellClassName: "bg-transparent",
     imageSrc: (value) =>
       typeof value === "string" && value.trim() !== ""
-        ? (ImageService.getItemImageUrl(value, "normal") ?? "")
+          ? (getItemImageUrl(value, "normal") ?? "")
         : "",
     imageAlt: (item) => item.name ?? "Image",
   },

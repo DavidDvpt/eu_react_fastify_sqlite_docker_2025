@@ -1,6 +1,6 @@
 import { Section } from "@/shared/components/Containers";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools/formatTools";
 import type { ItemWithStock } from "@/shared/types";
 import { useMemo } from "react";
@@ -13,7 +13,7 @@ function ItemSectionInfo({ itemWithStock }: ItemSectionInfoProps) {
   const { imageUrlId, name, value, stock } = itemWithStock;
 
   const itemImageUrl = useMemo(
-    () => ImageService.getItemImageUrl(imageUrlId, "normal"),
+    () => getItemImageUrl(imageUrlId, "normal"),
     [imageUrlId],
   );
 

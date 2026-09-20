@@ -1,4 +1,4 @@
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { FormatTools } from "@/shared/tools/formatTools";
 import type { ItemViewModel } from "@zod-schemas";
@@ -12,7 +12,7 @@ function ItemCard({ item, isManage }: ItemCardProps) {
     <article className="flex items-start gap-3">
       <div className="h-[100px] w-[100px] shrink-0">
         <ItemImage
-          url={ImageService.getItemImageUrl(item.imageUrlId, "normal")}
+          url={getItemImageUrl(item.imageUrlId, "normal")}
           alt={item.name}
           size="medium"
           classname="h-full w-full"

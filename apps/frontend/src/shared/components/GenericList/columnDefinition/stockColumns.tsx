@@ -1,5 +1,5 @@
 import type { GenericListColumn, ItemWithStock } from "@/shared/types";
-import { ImageService } from "@/shared/services/imageService";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 const stockColumns = (
@@ -17,7 +17,7 @@ const stockColumns = (
       imageSize: useCardImageSize ? "medium" : "small",
       imageSrc: (value) =>
         typeof value === "string" && value.trim() !== ""
-          ? (ImageService.getItemImageUrl(value, "normal") ?? "")
+          ? (getItemImageUrl(value, "normal") ?? "")
           : "",
       imageAlt: (item) => item.name,
     },

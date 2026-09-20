@@ -1,6 +1,6 @@
 import type { RowRendererProps } from "@/shared/components/GenericList/genericListTypes";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { ImageService } from "@/shared/services";
+import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
 import type { ItemWithStock } from "@/shared/types";
 
@@ -14,7 +14,7 @@ function InventoryItemCard({ row, onRowClick }: RowRendererProps<ItemWithStock>)
     >
       <div className="h-[100px] w-[100px] shrink-0">
         <ItemImage
-          url={ImageService.getItemImageUrl(row.imageUrlId, "normal")}
+          url={getItemImageUrl(row.imageUrlId, "normal")}
           alt={row.name}
           size="medium"
           classname="h-full w-full"
