@@ -4,6 +4,8 @@
  * Entropia Manager API
  */
 
+export * from './averageBuyMarkupResponse.ts';
+export * from './averageBuyMarkupScopeResponse.ts';
 export * from './balanceResponse.ts';
 export * from './canPayApiV2PedcardCanPayGetParams.ts';
 export * from './categoryResponse.ts';

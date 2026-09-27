@@ -1,4 +1,5 @@
 export { default as useInventoryStockData } from "./useInventoryStockData";
+export { default as useItemAverageBuyMarkup } from "./useItemAverageBuyMarkupData";
 export { default as itemLotsData } from "./useItemLotsData";
 export { default as itemStockData } from "./useItemStockData";
 export { default as usePedcardData } from "./usePedcardData";

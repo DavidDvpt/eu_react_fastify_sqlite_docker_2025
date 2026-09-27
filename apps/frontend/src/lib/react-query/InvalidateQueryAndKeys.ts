@@ -36,6 +36,9 @@ export class InvalidateQueryAndKeys {
   static getItemLotsKey(itemId?: string): InvalidateObject {
     return { keys: ["item-lots", itemId] };
   }
+  static getItemAverageBuyMarkupKey(itemId?: string): InvalidateObject {
+    return { keys: ["item-average-buy-markup", itemId] };
+  }
 
   static async invalidatePedcard() {
     return await queryClient.invalidateQueries({
@@ -89,6 +92,9 @@ export class InvalidateQueryAndKeys {
       }),
       queryClient.invalidateQueries({
         queryKey: this.getItemLotsKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemAverageBuyMarkupKey().keys,
       }),
       ...(invalidatePedcard
         ? [queryClient.invalidateQueries({ queryKey: ["pedcard"] })]

@@ -4,6 +4,8 @@
  * Entropia Manager API
  */
 
+export * from './averageBuyMarkupResponse.zod.ts';
+export * from './averageBuyMarkupScopeResponse.zod.ts';
 export * from './balanceResponse.zod.ts';
 export * from './canPayApiV2PedcardCanPayGet200.zod.ts';
 export * from './canPayApiV2PedcardCanPayGetParams.zod.ts';

@@ -7,10 +7,14 @@ import { FormatTools } from "@/shared/tools";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
+import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup";
+import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
 
 function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
+
+  const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
   const totalValue = useMemo(() => {
     if (!item) return 0;
@@ -99,6 +103,10 @@ function ItemDetail({ item, onBack = () => {} }: ItemDetailProps) {
           {FormatTools.pedFormat().format(totalValue)} Ped(s)
         </span>
       </div>
+      <ItemAverageBuyMarkup
+        averageBuyMarkup={averageBuyMarkup}
+        className="border-t border-table-border pt-2"
+      />
       {item.description && (
         <p className="m-0 text-xs text-text">{item.description}</p>
       )}

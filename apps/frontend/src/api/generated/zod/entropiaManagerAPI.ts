@@ -6,6 +6,7 @@
 import * as zod from 'zod';
 
 import {
+  AverageBuyMarkupResponse,
   BalanceResponse,
   CategoryCreate,
   CategoryPatch,
@@ -434,6 +435,22 @@ export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = Item
 
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponseOutput = zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
+
+
+/**
+ * @summary Get Item Average Buy Markup
+ */
+export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams = zod.object({
+  "id": zod.string()
+})
+
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams = zod.input<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams>;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParamsOutput = zod.output<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams>;
+
+export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse = AverageBuyMarkupResponse
+
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse = zod.input<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse>;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponseOutput = zod.output<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse>;
 
 
 /**
