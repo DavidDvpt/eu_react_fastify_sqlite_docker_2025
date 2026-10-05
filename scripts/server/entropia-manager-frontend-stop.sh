@@ -3,7 +3,7 @@ set -Eeuo pipefail
 
 cd /opt/docker
 
-COMPOSE_FILE="/opt/docker/entropia-manager-frontend.compose.yaml"
+COMPOSE_FILE="/opt/docker/entropia-manager-frontend.yaml"
 COMPOSE_PROJECT="entropia-manager-frontend"
 
 if [[ ! -f "$COMPOSE_FILE" ]]; then

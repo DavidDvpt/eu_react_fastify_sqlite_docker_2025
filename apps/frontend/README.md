@@ -43,6 +43,25 @@ export default defineConfig([
 ])
 ```
 
+## Production Docker deployment
+
+Production is built directly on the server with a local Docker image. Nothing
+is pushed to Docker Hub.
+
+```sh
+# Build only
+IMAGE_TAG=2.0.0 ./scripts/docker-build-frontend.sh
+
+# Build, install the server files, and start the frontend on SER5
+IMAGE_TAG=2.0.0 ./scripts/server/entropia-manager-frontend-deploy.sh
+```
+
+The production Compose file is
+`docker/prod/entropia-manager-frontend.yaml`. Deployment installs it as
+`/opt/docker/entropia-manager-frontend.yaml` and installs the start/stop
+scripts in `$HOME/scripts`. A versioned build updates both the version tag and
+the `latest` tag; the server always starts `latest`.
+
 You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
 ```js

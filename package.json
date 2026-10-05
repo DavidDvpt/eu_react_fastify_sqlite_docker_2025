@@ -7,10 +7,9 @@
     "apps/*"
   ],
   "scripts": {
-    "build:front-image": "bash ./scripts/build-front-image.sh",
-    "push:front-image": "bash ./scripts/push-front-image.sh",
-    "build-and-push:front-image": "bash ./scripts/build-and-push-front-image.sh",
-    "build:prod-image": "npm run build-and-push:front-image",
+    "docker:build:frontend": "sh ./scripts/docker-build-frontend.sh",
+    "build:front-image": "npm run docker:build:frontend",
+    "build:prod-image": "npm run docker:build:frontend",
     "dev": "npm run dev --workspace frontend",
     "stop": "kill $(lsof -ti tcp:5173) 2>/dev/null || echo 'frontend not running'",
     "test:all": "sh ./scripts/test-all.sh",

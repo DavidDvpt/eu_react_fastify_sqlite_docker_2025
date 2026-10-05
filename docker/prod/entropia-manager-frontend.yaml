@@ -1,11 +1,7 @@
 services:
   frontend:
-    build:
-      context: ../..
-      dockerfile: docker/prod/Dockerfile.frontend.prod
-      platforms:
-        - ${PLATFORM:-linux/amd64}
-    image: lamouche42/entropia-manager-frontend:latest
+    image: entropia-manager-frontend:${IMAGE_TAG:-latest}
+    pull_policy: never
     container_name: entropia-manager-frontend
     expose:
       - "8019"
