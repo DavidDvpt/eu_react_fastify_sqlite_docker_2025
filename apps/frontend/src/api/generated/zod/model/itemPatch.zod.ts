@@ -22,7 +22,6 @@ export const ItemPatch = zod.object({
   "value": zod.union([zod.number().min(itemPatchValueOneMin),zod.string().regex(itemPatchValueTwoRegExp),zod.null()]).optional(),
   "weight": zod.union([zod.number().min(itemPatchWeightOneMin),zod.string().regex(itemPatchWeightTwoRegExp),zod.null()]).optional(),
   "decay": zod.union([zod.number().min(itemPatchDecayOneMin),zod.string().regex(itemPatchDecayTwoRegExp),zod.null()]).optional(),
-  "nexusId": zod.union([zod.int(),zod.null()]).optional(),
   "description": zod.union([zod.string(),zod.null()]).optional(),
   "isLimited": zod.union([zod.boolean(),zod.null()]).optional(),
   "isUntradeable": zod.union([zod.boolean(),zod.null()]).optional(),

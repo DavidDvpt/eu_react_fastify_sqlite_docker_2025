@@ -7,7 +7,7 @@ import * as zod from 'zod';
 import { TransactionStatus } from './transactionStatus.zod.ts';
 import { TransactionType } from './transactionType.zod.ts';
 
-export const transactionBodyQuantityMin = 0;
+export const transactionBodyQuantityExclusiveMin = 0;
 
 export const transactionBodyTtOneMin = 0;
 
@@ -22,7 +22,8 @@ export const transactionBodyFeeTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\
 
 export const TransactionBody = zod.object({
   "itemId": zod.string(),
-  "quantity": zod.int().min(transactionBodyQuantityMin),
+  "quantity": zod.int().gt(transactionBodyQuantityExclusiveMin),
+  "lotId": zod.union([zod.string(),zod.null()]).optional(),
   "transactionType": TransactionType,
   "status": zod.union([TransactionStatus,zod.null()]),
   "tt": zod.union([zod.number().min(transactionBodyTtOneMin),zod.string().regex(transactionBodyTtTwoRegExp)]),

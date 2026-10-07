@@ -9,7 +9,7 @@ export const LotResponse = zod.object({
   "id": zod.string(),
   "itemId": zod.string(),
   "isActive": zod.boolean(),
-  "priceRemaining": zod.union([zod.int(),zod.number()]),
+  "ttRemaining": zod.union([zod.int(),zod.number()]),
   "quantityExported": zod.int(),
   "quantityRemaining": zod.int(),
   "lotType": zod.string(),

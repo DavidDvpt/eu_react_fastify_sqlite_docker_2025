@@ -9,6 +9,8 @@ export type ListItemsApiV2ItemsGetDetail = typeof ListItemsApiV2ItemsGetDetail[k
 
 export const ListItemsApiV2ItemsGetDetail = {
   finderDetail: 'finderDetail',
+  finderAmplifierDetails: 'finderAmplifierDetails',
   excavatorDetail: 'excavatorDetail',
   refinerDetail: 'refinerDetail',
+  enhancerDetails: 'enhancerDetails',
 } as const;

@@ -14,5 +14,6 @@ export type TypeResponse = {
   createdAt: string;
   updatedAt: string | null;
   category: CategoryResponse | null;
+  nexusName?: string | null;
   isActive?: boolean | null;
 };

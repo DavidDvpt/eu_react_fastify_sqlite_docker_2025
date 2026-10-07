@@ -10,7 +10,7 @@ export const ListItemsApiV2ItemsGetParams = zod.object({
   "typeId": zod.union([zod.string(),zod.null()]).optional(),
   "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
   "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
-  "detail": zod.union([zod.enum(['finderDetail', 'excavatorDetail', 'refinerDetail']),zod.null()]).optional()
+  "detail": zod.union([zod.enum(['finderDetail', 'finderAmplifierDetails', 'excavatorDetail', 'refinerDetail', 'enhancerDetails']),zod.null()]).optional()
 })
 
 export type ListItemsApiV2ItemsGetParams = zod.input<typeof ListItemsApiV2ItemsGetParams>;

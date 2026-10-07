@@ -8,7 +8,7 @@ export interface LotResponse {
   id: string;
   itemId: string;
   isActive: boolean;
-  priceRemaining: number;
+  ttRemaining: number;
   quantityExported: number;
   quantityRemaining: number;
   lotType: string;

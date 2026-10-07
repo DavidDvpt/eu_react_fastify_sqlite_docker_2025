@@ -20,11 +20,17 @@ export interface ItemResponse {
   description: string | null;
   decay: number | null;
   weight: number | null;
-  nexusId: number | null;
   type: TypeResponse | null;
   isActive?: boolean | null;
   depth?: number | null;
   ammoBurn?: number | null;
+  efficiency?: number | null;
+  range?: number | null;
+  minProfessionLevel?: number | null;
+  minTt?: number | null;
+  socket?: number | null;
+  tool?: string | null;
+  itemType?: string | null;
   nexusUrl?: string | null;
   usePerMinute?: number | null;
 }

@@ -8,8 +8,9 @@ import type { TransactionType } from './transactionType.ts';
 
 export interface TransactionBody {
   itemId: string;
-  /** @minimum 0 */
+  /** @exclusiveMinimum 0 */
   quantity: number;
+  lotId?: string | null;
   transactionType: TransactionType;
   status: TransactionStatus | null;
   tt: number | string;

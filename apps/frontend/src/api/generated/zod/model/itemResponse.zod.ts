@@ -21,11 +21,17 @@ export const ItemResponse = zod.object({
   "description": zod.union([zod.string(),zod.null()]),
   "decay": zod.union([zod.int(),zod.number(),zod.null()]),
   "weight": zod.union([zod.int(),zod.number(),zod.null()]),
-  "nexusId": zod.union([zod.int(),zod.null()]),
   "type": zod.union([TypeResponse,zod.null()]),
   "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
   "depth": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "ammoBurn": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "efficiency": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "range": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "minProfessionLevel": zod.union([zod.int(),zod.null()]).optional(),
+  "minTt": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "socket": zod.union([zod.int(),zod.null()]).optional(),
+  "tool": zod.union([zod.string(),zod.null()]).optional(),
+  "itemType": zod.union([zod.string(),zod.null()]).optional(),
   "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
   "usePerMinute": zod.union([zod.int(),zod.number(),zod.null()]).optional()
 });

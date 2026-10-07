@@ -10,4 +10,5 @@ export interface TypeCreate {
   categoryId: string;
   isActive: boolean;
   isStackable?: boolean;
+  nexusName?: string | null;
 }

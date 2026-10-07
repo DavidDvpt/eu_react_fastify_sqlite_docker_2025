@@ -9,7 +9,6 @@ export interface ItemPatch {
   value?: number | string | null;
   weight?: number | string | null;
   decay?: number | string | null;
-  nexusId?: number | null;
   description?: string | null;
   isLimited?: boolean | null;
   isUntradeable?: boolean | null;

@@ -288,22 +288,22 @@ export type DeleteCategoryApiV2TypesIdDeleteResponseOutput = zod.output<typeof D
 /**
  * @summary Get Type Items
  */
-export const GetTypeItemsApiV2TypesIdItemsGetParams = zod.object({
-  "id": zod.string()
+export const GetTypeItemsApiV2TypesTypeRefItemsGetParams = zod.object({
+  "type_ref": zod.string()
 })
 
-export type GetTypeItemsApiV2TypesIdItemsGetParams = zod.input<typeof GetTypeItemsApiV2TypesIdItemsGetParams>;
-export type GetTypeItemsApiV2TypesIdItemsGetParamsOutput = zod.output<typeof GetTypeItemsApiV2TypesIdItemsGetParams>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetParams = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetParamsOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams>;
 
-export const GetTypeItemsApiV2TypesIdItemsGetResponseItem = ItemResponse
+export const GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = ItemResponse
 
-export type GetTypeItemsApiV2TypesIdItemsGetResponseItem = zod.input<typeof GetTypeItemsApiV2TypesIdItemsGetResponseItem>;
-export type GetTypeItemsApiV2TypesIdItemsGetResponseItemOutput = zod.output<typeof GetTypeItemsApiV2TypesIdItemsGetResponseItem>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItemOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem>;
 
-export const GetTypeItemsApiV2TypesIdItemsGetResponse = zod.array(GetTypeItemsApiV2TypesIdItemsGetResponseItem)
+export const GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.array(GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem)
 
-export type GetTypeItemsApiV2TypesIdItemsGetResponse = zod.input<typeof GetTypeItemsApiV2TypesIdItemsGetResponse>;
-export type GetTypeItemsApiV2TypesIdItemsGetResponseOutput = zod.output<typeof GetTypeItemsApiV2TypesIdItemsGetResponse>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse>;
 
 
 /**
@@ -314,7 +314,7 @@ export const ListItemsApiV2ItemsGetQueryParams = zod.object({
   "typeId": zod.union([zod.string(),zod.null()]).optional(),
   "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
   "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
-  "detail": zod.union([zod.enum(['finderDetail', 'excavatorDetail', 'refinerDetail']),zod.null()]).optional()
+  "detail": zod.union([zod.enum(['finderDetail', 'finderAmplifierDetails', 'excavatorDetail', 'refinerDetail', 'enhancerDetails']),zod.null()]).optional()
 })
 
 export type ListItemsApiV2ItemsGetQueryParams = zod.input<typeof ListItemsApiV2ItemsGetQueryParams>;

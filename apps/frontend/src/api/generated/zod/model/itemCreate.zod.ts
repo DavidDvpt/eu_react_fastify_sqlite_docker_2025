@@ -22,7 +22,6 @@ export const ItemCreate = zod.object({
   "value": zod.union([zod.number().min(itemCreateValueOneMin),zod.string().regex(itemCreateValueTwoRegExp),zod.null()]).optional(),
   "weight": zod.union([zod.number().min(itemCreateWeightOneMin),zod.string().regex(itemCreateWeightTwoRegExp),zod.null()]).optional(),
   "decay": zod.union([zod.number().min(itemCreateDecayOneMin),zod.string().regex(itemCreateDecayTwoRegExp),zod.null()]).optional(),
-  "nexusId": zod.union([zod.int(),zod.null()]).optional(),
   "description": zod.union([zod.string(),zod.null()]).optional(),
   "isLimited": zod.union([zod.boolean(),zod.null()]).optional(),
   "isUntradeable": zod.union([zod.boolean(),zod.null()]).optional(),

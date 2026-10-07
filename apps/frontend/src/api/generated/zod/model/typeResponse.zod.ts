@@ -15,6 +15,7 @@ export const TypeResponse = zod.object({
   "createdAt": zod.string(),
   "updatedAt": zod.union([zod.string(),zod.null()]),
   "category": zod.union([CategoryResponse,zod.null()]),
+  "nexusName": zod.union([zod.string(),zod.null()]).optional(),
   "isActive": zod.union([zod.boolean(),zod.null()]).optional()
 });
 

@@ -1265,14 +1265,14 @@ export const useDeleteCategoryApiV2TypesIdDelete = <TError = ErrorType<HTTPValid
 /**
  * @summary Get Type Items
  */
-export const getTypeItemsApiV2TypesIdItemsGet = (
-    id: string,
+export const getTypeItemsApiV2TypesTypeRefItemsGet = (
+    typeRef: string,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
       return customInstance<ItemResponse[]>(
-      {url: `/api/v2/types/${id}/items`, method: 'GET', signal
+      {url: `/api/v2/types/${typeRef}/items`, method: 'GET', signal
     },
       options);
     }
@@ -1280,69 +1280,69 @@ export const getTypeItemsApiV2TypesIdItemsGet = (
 
 
 
-export const getGetTypeItemsApiV2TypesIdItemsGetQueryKey = (id: string,) => {
+export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey = (typeRef: string,) => {
     return [
-    `/api/v2/types/${id}/items`
+    `/api/v2/types/${typeRef}/items`
     ] as const;
     }
 
 
-export const getGetTypeItemsApiV2TypesIdItemsGetQueryOptions = <TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions = <TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetTypeItemsApiV2TypesIdItemsGetQueryKey(id);
+  const queryKey =  queryOptions?.queryKey ?? getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey(typeRef);
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>> = ({ signal }) => getTypeItemsApiV2TypesIdItemsGet(id, requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>> = ({ signal }) => getTypeItemsApiV2TypesTypeRefItemsGet(typeRef, requestOptions, signal);
 
 
 
 
 
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, enabled: typeRef !== null && typeRef !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type GetTypeItemsApiV2TypesIdItemsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>>
-export type GetTypeItemsApiV2TypesIdItemsGetQueryError = ErrorType<HTTPValidationError>
+export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>>
+export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryError = ErrorType<HTTPValidationError>
 
 
-export function useGetTypeItemsApiV2TypesIdItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData>> & Pick<
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
+ typeRef: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>,
+          Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
           TError,
-          Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>
+          Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeItemsApiV2TypesIdItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData>> & Pick<
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
+ typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>,
+          Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
           TError,
-          Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>
+          Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeItemsApiV2TypesIdItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
+ typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
  * @summary Get Type Items
  */
 
-export function useGetTypeItemsApiV2TypesIdItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesIdItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
+ typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getGetTypeItemsApiV2TypesIdItemsGetQueryOptions(id,options)
+  const queryOptions = getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions(typeRef,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -12,7 +12,8 @@ export const TypePatch = zod.object({
   "name": zod.union([zod.string().min(1),zod.null()]).optional(),
   "categoryId": zod.union([zod.string(),zod.null()]).optional(),
   "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
-  "isStackable": zod.union([zod.boolean(),zod.null()]).optional()
+  "isStackable": zod.union([zod.boolean(),zod.null()]).optional(),
+  "nexusName": zod.union([zod.string(),zod.null()]).optional()
 });
 
 export type TypePatch = zod.input<typeof TypePatch>;
