@@ -56,6 +56,9 @@ describe("manage forms", () => {
     render(<TypeForm onClose={vi.fn()} />);
 
     expect(screen.getByRole("textbox", { name: "Nom:" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: "Nom Nexus:" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Catégorie:")).toBeInTheDocument();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
     expect(screen.getByText("Stackable")).toBeInTheDocument();

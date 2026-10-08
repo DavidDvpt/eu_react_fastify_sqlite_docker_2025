@@ -20,6 +20,7 @@ const defaultValues: TypeCreateOutput = {
   isActive: true,
   isStackable: false,
   categoryId: "",
+  nexusName: null,
 };
 
 function TypeForm({ type, onClose }: TypeFormProps) {
@@ -30,12 +31,19 @@ function TypeForm({ type, onClose }: TypeFormProps) {
         isActive: type.isActive,
         isStackable: type.isStackable,
         categoryId: type.categoryId,
+        nexusName: type.nexusName ?? null,
       }
     : defaultValues;
 
   const handleSubmit = (values: TypeCreateOutput) => {
     typeMutation.mutate(
-      { type, values },
+      {
+        type,
+        values: {
+          ...values,
+          nexusName: values.nexusName?.trim() || null,
+        },
+      },
       {
         onSuccess() {
           onClose();
@@ -54,6 +62,11 @@ function TypeForm({ type, onClose }: TypeFormProps) {
     >
       <div className="flex-1 flex flex-col gap-2">
         <InputRHF name="name" label="Nom: " placeholder="Nom obligatoire" />
+        <InputRHF
+          name="nexusName"
+          label="Nom Nexus: "
+          placeholder="Nom Nexus optionnel"
+        />
         <CategorySelectRHF label="Catégorie: " />
         <CheckboxRHF name="isActive" label="Actif" />
         <CheckboxRHF name="isStackable" label="Stackable" />
