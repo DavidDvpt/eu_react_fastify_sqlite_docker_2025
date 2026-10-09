@@ -37,6 +37,7 @@ export type AutoPricingFormValues = {
   quantity: number;
   fee: number;
   ttc: number;
+  tierLevel?: number;
 };
 
 export type TransactionModalParams = {

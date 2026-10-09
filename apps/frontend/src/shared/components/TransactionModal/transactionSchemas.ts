@@ -37,6 +37,12 @@ export function transactionFormSchema(
           ? "Le prix d'achat doit etre superieur a 0."
           : "Le TTC doit etre superieur a 0.",
       ),
+    tierLevel: z.coerce
+      .number()
+      .int("Le tier doit etre un entier.")
+      .min(0, "Le tier doit etre superieur ou egal a 0.")
+      .max(10, "Le tier doit etre inferieur ou egal a 10.")
+      .optional(),
   });
 }
 

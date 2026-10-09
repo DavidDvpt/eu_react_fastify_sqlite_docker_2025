@@ -14,9 +14,10 @@ export const lotViewModelSchema = lotItemIdSchema.extend({
   initialQuantity: z.coerce.number(),
   quantityRemaining: z.coerce.number(),
   quantityExported: z.coerce.number(),
-  priceRemaining: z.coerce.number(),
+  ttRemaining: z.coerce.number(),
+  tierLevel: z.coerce.number().int().min(0).max(10).nullable().optional(),
 
-  lotType: lotTypeSchema,
+  lotType: z.string(),
   isActive: booleanSchema,
   ...genericDateSchema.shape,
 });

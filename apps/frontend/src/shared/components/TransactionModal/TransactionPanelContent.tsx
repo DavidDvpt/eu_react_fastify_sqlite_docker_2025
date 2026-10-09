@@ -16,6 +16,27 @@ import { PANEL_COPY } from "./constants";
 import type { ItemWithStock } from "@/shared/types";
 import useTransactionsMutation from "@/shared/hooks/useTransactionMutation";
 
+function getTransactionErrorMessage(error: unknown, fallback: string) {
+  const responseData = (error as { response?: { data?: unknown } })?.response
+    ?.data;
+  if (!responseData || typeof responseData !== "object") return fallback;
+
+  const detail = (responseData as { detail?: unknown }).detail;
+  if (typeof detail === "string") return detail;
+  if (Array.isArray(detail)) {
+    const messages = detail
+      .map((entry) =>
+        typeof entry === "object" && entry !== null && "msg" in entry
+          ? String(entry.msg)
+          : null,
+      )
+      .filter((message): message is string => Boolean(message));
+    if (messages.length > 0) return messages.join(" ");
+  }
+
+  return fallback;
+}
+
 export type TransactionPanelProps = {
   item: ItemWithStock;
   onBack: () => void;
@@ -40,6 +61,9 @@ function TransactionPanelContent({
       quantity: quantity ?? 1,
       fee: 0,
       ttc: ttc ?? item.value,
+      ...(action === "buy" && item.type?.hasTierOption && !item.type.isStackable
+        ? { tierLevel: 0 }
+        : {}),
     };
 
     return {
@@ -53,7 +77,13 @@ function TransactionPanelContent({
         unitPrice: item.value,
       }),
     };
-  }, [action, quantity, ttc, item.value]);
+  }, [
+    action,
+    quantity,
+    ttc,
+    item.value,
+    item.type,
+  ]);
 
   if (!item) return null;
 
@@ -87,7 +117,10 @@ function TransactionPanelContent({
 
         {createMutation.isError ? (
           <p className="m-0 text-sm text-destructive-300">
-            {PANEL_COPY[action].errorMessage}
+            {getTransactionErrorMessage(
+              createMutation.error,
+              PANEL_COPY[action].errorMessage,
+            )}
           </p>
         ) : null}
 

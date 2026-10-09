@@ -39,6 +39,16 @@ export class InvalidateQueryAndKeys {
   static getItemAverageBuyMarkupKey(itemId?: string): InvalidateObject {
     return { keys: ["item-average-buy-markup", itemId] };
   }
+  static async lotTierMutation(itemId?: string) {
+    return await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: this.getItemLotsKey(itemId).keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: ["inventory", "lots"],
+      }),
+    ]);
+  }
 
   static async invalidatePedcard() {
     return await queryClient.invalidateQueries({

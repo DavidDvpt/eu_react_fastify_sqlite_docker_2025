@@ -35,6 +35,8 @@ export * from './listPedcardsApiV2PedcardGetParams.zod.ts';
 export * from './listTransactionsApiV2TransactionsGetParams.zod.ts';
 export * from './listTypesApiV2TypesGetParams.zod.ts';
 export * from './lotResponse.zod.ts';
+export * from './lotTierResponse.zod.ts';
+export * from './lotTierUpdate.zod.ts';
 export * from './meResponse.zod.ts';
 export * from './messageResponse.zod.ts';
 export * from './moneySummaryResponse.zod.ts';

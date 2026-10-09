@@ -1,4 +1,5 @@
 import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
+import InputRHF from "@/shared/components/form/Input/InputRHF";
 import useTransactionAutoPricing from "@/shared/hooks/useTransactionAutoPricing";
 import type {
   AutoPricingFormValues,
@@ -37,6 +38,22 @@ function TransactionFormContent({
         totalLabelClassName="text-sm text-text"
         feeReadOnly={isFeeReadOnly}
       />
+
+      {action === "buy" &&
+      item.type?.hasTierOption &&
+      !item.type.isStackable ? (
+        <InputRHF
+          name="tierLevel"
+          type="number"
+          min={0}
+          max={10}
+          step={1}
+          registerOptions={{ valueAsNumber: true }}
+          label="Tier"
+          labelClassName="text-sm"
+          wrapperClassName="w-1/3"
+        />
+      ) : null}
 
       <CheckboxRHF
         name="autoCalculation"

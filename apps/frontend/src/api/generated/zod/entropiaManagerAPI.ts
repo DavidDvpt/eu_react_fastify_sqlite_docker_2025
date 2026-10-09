@@ -18,6 +18,8 @@ import {
   ItemPatch,
   ItemResponse,
   LotResponse,
+  LotTierResponse,
+  LotTierUpdate,
   MeResponse,
   MessageResponse,
   NexusForm,
@@ -548,6 +550,27 @@ export const ListInventoryLotsApiV2InventoryLotsGetResponse = zod.array(ListInve
 
 export type ListInventoryLotsApiV2InventoryLotsGetResponse = zod.input<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
 export type ListInventoryLotsApiV2InventoryLotsGetResponseOutput = zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
+
+
+/**
+ * @summary Update Inventory Lot Tier
+ */
+export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams = zod.object({
+  "lot_id": zod.string()
+})
+
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams>;
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParamsOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams>;
+
+export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody = LotTierUpdate
+
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody>;
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBodyOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody>;
+
+export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse = LotTierResponse
+
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse>;
+export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponseOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse>;
 
 
 /**

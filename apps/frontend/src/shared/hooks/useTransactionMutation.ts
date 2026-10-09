@@ -47,6 +47,10 @@ function useTransactionsMutation() {
       item: ItemWithStock;
       action: TransactionAction;
     }) => {
+      const isTierable = Boolean(
+        item.type?.hasTierOption && !item.type.isStackable,
+      );
+
       return createApi.mutateAsync({ data: {
         transactionType: (action === "sell"
           ? "SELL"
@@ -57,6 +61,9 @@ function useTransactionsMutation() {
         fee: values.fee,
         ttc: values.ttc,
         status: values.status,
+        ...(action === "buy" && isTierable
+          ? { tierLevel: values.tierLevel ?? 0 }
+          : {}),
       } satisfies TransactionBody });
     },
     onSuccess: async (_data, { item }) => {

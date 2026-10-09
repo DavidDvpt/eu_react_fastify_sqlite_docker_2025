@@ -21,6 +21,7 @@ export type CategoryViewModels = CategoryViewModel[];
 export const typeViewModelSchema = systemBaseSchema.extend({
   categoryId: z.string(),
   isStackable: booleanSchema.default(false),
+  hasTierOption: booleanSchema.default(false),
   category: categoryViewModelSchema.nullable().default(null),
   nexusName: z.string().nullable().optional(),
 });

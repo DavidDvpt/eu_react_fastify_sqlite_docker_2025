@@ -1,5 +1,6 @@
 import { getItemImageUrl } from "@/pages/managePage";
 import FormatTools from "@/shared/tools/formatTools";
+import { formatItemNameWithTier } from "@/shared/helpers";
 import type { GenericListColumn } from "@/shared/types";
 import {
   type TransactionViewModel,
@@ -51,7 +52,21 @@ const createRunningTransactionsColumns = ({
       fillRemainingSpace: true,
       minWidth: 140,
       bodyCellClassName: "font-medium text-table-head-text pl-1",
-      value: (row) => row.item?.name ?? row.item!.name,
+      value: (row) => {
+        const item = row.item;
+        if (!item) return row.item!.name;
+
+        const tierLevel = row.entries
+          ?.map((entry) => entry.lot?.tierLevel)
+          .find((tier): tier is number => tier !== null && tier !== undefined);
+
+        return formatItemNameWithTier({
+          name: item.name,
+          hasTierOption: item.type?.hasTierOption,
+          isStackable: item.type?.isStackable,
+          tierLevel,
+        });
+      },
     },
     {
       key: "quantity",

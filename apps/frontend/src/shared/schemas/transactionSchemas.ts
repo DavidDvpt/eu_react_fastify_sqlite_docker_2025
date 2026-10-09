@@ -2,7 +2,7 @@ import { z } from "zod";
 import { TransactionStatus } from "@/api/generated/zod/model/transactionStatus.zod";
 import { TransactionType } from "@/api/generated/zod/model/transactionType.zod";
 import { genericDateSchema, idSchema } from "./common.js";
-import { lotItemIdSchema } from "./lotSchema.js";
+import { lotViewModelSchema } from "./lotSchema.js";
 import { itemViewModelSchema } from "./systemSchemas.js";
 
 export const transactionTypeSchema = TransactionType;
@@ -27,7 +27,7 @@ export const transactionValuesSchema = z.object({
 export const transactionLotSchema = z.object({
   lotId: z.string(),
   quantity: z.coerce.number(),
-  lot: lotItemIdSchema.nullable().default(null),
+  lot: lotViewModelSchema.nullable().default(null),
 });
 
 export const transactionEntrySchema = transactionValuesSchema.extend({

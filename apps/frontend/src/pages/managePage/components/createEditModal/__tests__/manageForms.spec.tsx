@@ -14,9 +14,8 @@ vi.mock("@/shared/hooks/useSystemMutation", () => ({
 }));
 
 vi.mock("@/shared/hooks", async () => {
-  const actual = await vi.importActual<typeof import("@/shared/hooks")>(
-    "@/shared/hooks",
-  );
+  const actual =
+    await vi.importActual<typeof import("@/shared/hooks")>("@/shared/hooks");
 
   return {
     ...actual,
@@ -62,6 +61,7 @@ describe("manage forms", () => {
     expect(screen.getByText("Catégorie:")).toBeInTheDocument();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
     expect(screen.getByText("Stackable")).toBeInTheDocument();
+    expect(screen.getByText("Tierable")).toBeInTheDocument();
   });
 
   it("renders the item form with its type selector and flags", () => {
@@ -70,7 +70,9 @@ describe("manage forms", () => {
     expect(screen.getByRole("textbox", { name: "Nom:" })).toBeInTheDocument();
     expect(screen.getByText("Type:")).toBeInTheDocument();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
-    expect(screen.getByRole("spinbutton", { name: "Valeur:" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("spinbutton", { name: "Valeur:" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Non échangeable")).toBeInTheDocument();
     expect(screen.getByText("Rare")).toBeInTheDocument();
   });

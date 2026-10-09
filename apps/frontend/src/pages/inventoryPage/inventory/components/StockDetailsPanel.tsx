@@ -29,7 +29,11 @@ function StockDetailsPanel({ onClose, className }: StockDetailsPanelProps) {
         details={Boolean(itemId)}
       />
 
-      <ItemDetail onBack={onClose} item={item.itemWithStock} />
+      <ItemDetail
+        onBack={onClose}
+        item={item.itemWithStock}
+        lots={itemLots?.lots ?? null}
+      />
 
       <StockLotsSection lots={itemLots?.lots ?? null} />
     </Section>

@@ -52,6 +52,8 @@ export * from './listTypesApiV2TypesGetParams.ts';
 export * from './listTypesApiV2TypesGetSortKey.ts';
 export * from './listTypesApiV2TypesGetSortOrder.ts';
 export * from './lotResponse.ts';
+export * from './lotTierResponse.ts';
+export * from './lotTierUpdate.ts';
 export * from './meResponse.ts';
 export * from './messageResponse.ts';
 export * from './moneySummaryResponse.ts';
