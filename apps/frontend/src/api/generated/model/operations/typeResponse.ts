@@ -10,6 +10,7 @@ export type TypeResponse = {
   name: string;
   categoryId: string;
   isStackable: boolean;
+  hasTierOption?: boolean;
   userId: string;
   createdAt: string;
   updatedAt: string | null;

@@ -11,6 +11,7 @@ export type TransactionBody = {
   /** @exclusiveMinimum 0 */
   quantity: number;
   lotId?: string | null;
+  tierLevel?: number | null;
   transactionType: TransactionType;
   status: TransactionStatus | null;
   tt: number | string;

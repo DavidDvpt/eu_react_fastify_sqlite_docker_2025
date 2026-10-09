@@ -9,5 +9,6 @@ export type TypePatch = {
   categoryId?: string | null;
   isActive?: boolean | null;
   isStackable?: boolean | null;
+  hasTierOption?: boolean | null;
   nexusName?: string | null;
 };

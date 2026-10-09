@@ -9,6 +9,9 @@ import { TransactionType } from './transactionType.zod.ts';
 
 export const transactionBodyQuantityExclusiveMin = 0;
 
+export const transactionBodyTierLevelOneMin = 0;
+export const transactionBodyTierLevelOneMax = 10;
+
 export const transactionBodyTtOneMin = 0;
 
 export const transactionBodyTtTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
@@ -24,6 +27,7 @@ export const TransactionBody = zod.object({
   "itemId": zod.string(),
   "quantity": zod.int().gt(transactionBodyQuantityExclusiveMin),
   "lotId": zod.union([zod.string(),zod.null()]).optional(),
+  "tierLevel": zod.union([zod.int().min(transactionBodyTierLevelOneMin).max(transactionBodyTierLevelOneMax),zod.null()]).optional(),
   "transactionType": TransactionType,
   "status": zod.union([TransactionStatus,zod.null()]),
   "tt": zod.union([zod.number().min(transactionBodyTtOneMin),zod.string().regex(transactionBodyTtTwoRegExp)]),

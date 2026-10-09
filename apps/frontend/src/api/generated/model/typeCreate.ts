@@ -10,5 +10,6 @@ export type TypeCreate = {
   categoryId: string;
   isActive: boolean;
   isStackable?: boolean;
+  hasTierOption?: boolean;
   nexusName?: string | null;
 };

@@ -13,6 +13,7 @@ export const TypePatch = zod.object({
   "categoryId": zod.union([zod.string(),zod.null()]).optional(),
   "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
   "isStackable": zod.union([zod.boolean(),zod.null()]).optional(),
+  "hasTierOption": zod.union([zod.boolean(),zod.null()]).optional(),
   "nexusName": zod.union([zod.string(),zod.null()]).optional()
 });
 

@@ -9,6 +9,7 @@ export interface LotResponse {
   itemId: string;
   isActive: boolean;
   ttRemaining: number;
+  tierLevel?: number | null;
   quantityExported: number;
   quantityRemaining: number;
   lotType: string;

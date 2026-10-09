@@ -7,12 +7,14 @@ import * as zod from 'zod';
 
 
 export const typeCreateIsStackableDefault = false;
+export const typeCreateHasTierOptionDefault = false;
 
 export const TypeCreate = zod.object({
   "name": zod.string().min(1),
   "categoryId": zod.string(),
   "isActive": zod.boolean(),
   "isStackable": zod.boolean().default(typeCreateIsStackableDefault),
+  "hasTierOption": zod.boolean().default(typeCreateHasTierOptionDefault),
   "nexusName": zod.union([zod.string(),zod.null()]).optional()
 });
 

@@ -6,11 +6,14 @@
 import * as zod from 'zod';
 import { CategoryResponse } from './categoryResponse.zod.ts';
 
+export const typeResponseHasTierOptionDefault = false;
+
 export const TypeResponse = zod.object({
   "id": zod.string(),
   "name": zod.string(),
   "categoryId": zod.string(),
   "isStackable": zod.boolean(),
+  "hasTierOption": zod.boolean().default(typeResponseHasTierOptionDefault),
   "userId": zod.string(),
   "createdAt": zod.string(),
   "updatedAt": zod.union([zod.string(),zod.null()]),
