@@ -2,18 +2,12 @@ import { cn } from "@/lib/utils";
 import { UrlParamFlag } from "@/shared/components";
 import { Section } from "@/shared/components/Containers";
 
-function InventoryListFilter({ className }: { className?: string }) {
+function ItemFilter({ className }: { className?: string }) {
   return (
     <Section
       className={cn("flex min-h-0 flex-row gap-4", className)}
       disableShadow
     >
-      <UrlParamFlag
-        kind="checkbox"
-        paramKey="showAllItems"
-        checkboxLabel="Tous les objets"
-      />
-
       <UrlParamFlag
         kind="switch"
         paramKey="viewMode"
@@ -27,4 +21,4 @@ function InventoryListFilter({ className }: { className?: string }) {
   );
 }
 
-export default InventoryListFilter;
+export default ItemFilter;

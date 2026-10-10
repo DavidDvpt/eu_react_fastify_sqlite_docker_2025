@@ -16,8 +16,14 @@ const useGenericFilterParams = () => {
     const searchParams = new URLSearchParams(location.search);
 
     const p: GenericFilterValues = {
-      categoryId: searchParams.get("categoryId") || "",
-      typeId: searchParams.get("typeId") || "",
+      categoryId:
+        searchParams.get("categoryId") === allOptionValue
+          ? ""
+          : searchParams.get("categoryId") || "",
+      typeId:
+        searchParams.get("typeId") === allOptionValue
+          ? ""
+          : searchParams.get("typeId") || "",
       itemId: searchParams.get("itemId") || "",
     };
 
@@ -30,7 +36,11 @@ const useGenericFilterParams = () => {
 
     if (key === undefined) return "";
 
-    searchParams.set(key, value?.toString() ?? "");
+    if (!value || value === allOptionValue) {
+      searchParams.delete(key);
+    } else {
+      searchParams.set(key, value.toString());
+    }
 
     return searchParams.toString() ?? "";
   };

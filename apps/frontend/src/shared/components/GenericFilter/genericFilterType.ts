@@ -17,7 +17,12 @@ export interface DisplayedFields {
 }
 
 export type GenericFilterContext =
-  "manageCategory" | "manageType" | "manageItem" | "inventory" | "transaction";
+  | "manageCategory"
+  | "manageType"
+  | "manageItem"
+  | "inventory"
+  | "store"
+  | "transaction";
 export interface GenericFilterProps {
   className?: string;
   selectedItem?: ItemViewModel | null;

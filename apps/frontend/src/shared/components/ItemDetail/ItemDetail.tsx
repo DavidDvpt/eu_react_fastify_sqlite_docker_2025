@@ -17,7 +17,7 @@ import { useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch } from "@/api
 import { LotTierUpdate } from "@/api/generated/zod/model/lotTierUpdate.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
-function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDetailProps) {
+function ItemDetail({ item, lots, focusedLot = null, onBack = () => {}, variant = "stock" }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,6 +29,7 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDe
   const isInstanceView = Boolean(
     focusedLot && item?.type && !item.type.isStackable,
   );
+  const isStoreView = variant === "store";
 
   const displayName = useMemo(() => {
     if (!item) return "";
@@ -40,12 +41,17 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDe
         tierLevel: focusedLot.tierLevel,
       });
     }
-    return item.name;
-  }, [item, isInstanceView, focusedLot]);
+    return formatItemNameWithTier({
+      name: item.name,
+      hasTierOption: item.type?.hasTierOption,
+      isStackable: item.type?.isStackable,
+      tierLevel: isStoreView && item.type?.hasTierOption ? 0 : null,
+    });
+  }, [item, isInstanceView, focusedLot, isStoreView]);
 
-  const displayStock = isInstanceView ? 1 : (item?.stock ?? 0);
+  const displayStock = isStoreView || isInstanceView ? 1 : (item?.stock ?? 0);
 
-  const canEditTier = Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
+  const canEditTier = !isStoreView && Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
   const [isEditingTier, setIsEditingTier] = useState(false);
 
   const totalValue = useMemo(() => {
@@ -54,8 +60,6 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDe
   }, [item, displayStock]);
 
   if (!item) return null;
-
-  const itemId = item.id;
 
   const openTransactionModal = (action: TransactionAction) => {
     const query = {
@@ -68,7 +72,7 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDe
       ...(action === "sell" && isInstanceView && focusedLot
         ? { lotId: focusedLot.id }
         : {}),
-      closePath: `/inventory/${itemId ?? ""}`,
+      closePath: location.pathname,
     };
 
     const search = new URLSearchParams();
@@ -174,7 +178,7 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDe
       )}
       <div className="flex items-center justify-end gap-2 pt-1">
         {buyButton}
-        {sellButton}
+        {!isStoreView && sellButton}
         {onBack && (
           <Button
             onClick={onBack}

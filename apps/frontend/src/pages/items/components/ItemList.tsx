@@ -10,34 +10,49 @@ import { stockColumns } from "@/shared/components/GenericList/columnDefinition/s
 import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
 import { buildStockRows } from "@/shared/helpers";
 import type { InventoryPageQuery } from "@/pages/inventoryPage/inventoryPageSchema";
-import InventoryItemCard from "./InventoryItemCard";
+import InventoryItemCard from "@/pages/inventoryPage/inventory/components/InventoryItemCard";
+import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 
-interface InventoryListProps extends InventoryPageQuery {
+interface ItemListProps extends InventoryPageQuery {
   className?: string;
   onSelectedItem: (itemId: string, lotId?: string | null) => void;
+  mode?: "inventory" | "store";
 }
 
-function InventoryList({
+function ItemList({
   className,
   categoryId,
   typeId,
-  showAllItems,
   viewMode,
   onSelectedItem,
-}: InventoryListProps) {
+  mode = "inventory",
+}: ItemListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
-    useInventoryStockData();
+    useInventoryStockData({ enabled: mode === "inventory" });
+  const {
+    items: { itemDatas, isLoading: isItemsLoading, isError: isItemsError },
+  } = useSystemDatas();
 
   const visibleStock = useMemo(
-    () =>
-      buildStockRows(inventoryStock)
-        ?.filter((item) => showAllItems || item.stock !== 0)
+    () => {
+      const rows = mode === "store"
+        ? (itemDatas ?? []).map((item) => ({
+            ...item,
+            stock: 1,
+            lots: [],
+            lotId: null,
+            tierLevel: item.type?.hasTierOption ? 0 : null,
+          }))
+        : buildStockRows(inventoryStock).filter((item) => item.stock > 0);
+
+      return rows
         .filter(
           (f) =>
             (f.typeId === typeId || typeId === undefined) &&
             (f.type?.categoryId === categoryId || categoryId === undefined),
-        ),
-    [inventoryStock, showAllItems, categoryId, typeId],
+        );
+    },
+    [inventoryStock, itemDatas, mode, categoryId, typeId],
   );
 
   const totalStockValue = useMemo(() => {
@@ -54,15 +69,11 @@ function InventoryList({
         rows={visibleStock}
         getRowKey={(row) => row.lotId ?? row.id}
         onRowClick={(row) => onSelectedItem(row.id, row.lotId)}
-        isLoading={isInventoryStockLoading}
-        isError={isInventoryStockError}
-        loadingMessage="Chargement de l'inventaire..."
-        errorMessage={`Impossible de charger l'inventaire.`}
-        emptyMessage={
-          showAllItems
-            ? "Aucun item trouvé."
-            : 'Aucun item en stock. Cochez "Tous les objets" pour voir aussi les stocks à 0.'
-        }
+        isLoading={mode === "store" ? isItemsLoading : isInventoryStockLoading}
+        isError={mode === "store" ? isItemsError : isInventoryStockError}
+        loadingMessage={mode === "store" ? "Chargement du magasin..." : "Chargement de l'inventaire..."}
+        errorMessage={mode === "store" ? "Impossible de charger le magasin." : "Impossible de charger l'inventaire."}
+        emptyMessage={mode === "store" ? "Aucun item trouvé." : "Aucun item en stock."}
         headerClassName="pr-3"
         bodyClassName="pr-3"
         rowClassName="group"
@@ -76,7 +87,7 @@ function InventoryList({
           cells: [
             {
               key: "total-stock-value",
-              content: `Total: ${FormatTools.pedFormat().format(totalStockValue)} Peds`,
+              content: `${mode === "store" ? "Prix total" : "Total"}: ${FormatTools.pedFormat().format(totalStockValue)} Peds`,
             },
           ],
         }}
@@ -85,4 +96,4 @@ function InventoryList({
   );
 }
 
-export default InventoryList;
+export default ItemList;

@@ -3,7 +3,7 @@ import { useGetItemLotsApiV2ItemsIdLotsGet } from "@/api/generated/react-query/e
 import type { GetItemLotsApiV2ItemsIdLotsGetParams } from "@/api/generated/react-query/model";
 import type { LotViewModel } from "@zod-schemas";
 
-export default function useItemLotsDatas({ itemId }: { itemId?: string }) {
+export default function useItemLotsDatas({ itemId, enabled = true }: { itemId?: string; enabled?: boolean }) {
   const { data, ...rest } = useGetItemLotsApiV2ItemsIdLotsGet(
     itemId ?? "",
     // The backend supports this legacy parameter, but the checked-in OpenAPI
@@ -13,7 +13,7 @@ export default function useItemLotsDatas({ itemId }: { itemId?: string }) {
     {
       query: {
         queryKey: InvalidateQueryAndKeys.getItemLotsKey(itemId).keys,
-        enabled: Boolean(itemId),
+        enabled: Boolean(itemId) && enabled,
         staleTime: 30_000,
       },
     },

@@ -28,6 +28,13 @@ const navbarValues = [
     visible: true,
   },
   {
+    content: "Magasin",
+    route: "/store",
+    selected: false,
+    adminOnly: false,
+    visible: true,
+  },
+  {
     content: "Stats",
     route: "/stats",
     selected: false,

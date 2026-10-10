@@ -13,6 +13,7 @@ import InventoryPage from "@/pages/inventoryPage/InventoryPage";
 import SignInPage from "@/pages/authPages/SignInPage";
 import SignUpPage from "@/pages/authPages/SignUpPage";
 import AdminGuard from "@/modules/auth/guards/AdminGuard";
+import StorePage from "@/pages/storePage/StorePage";
 
 const routes = [
   {
@@ -49,6 +50,8 @@ const routes = [
               { path: "inventory", element: <InventoryPage /> },
               { path: "inventory/:itemId", element: <InventoryPage /> },
               { path: "inventory/:itemId/:action", element: <InventoryPage /> },
+              { path: "store", element: <StorePage /> },
+              { path: "store/:itemId", element: <StorePage /> },
               {
                 element: <AdminGuard />,
                 children: [

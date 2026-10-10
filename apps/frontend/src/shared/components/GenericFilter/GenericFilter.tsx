@@ -9,6 +9,7 @@ import type { FilterKeys, GenericFilterProps } from "@/shared/types";
 import useGenericFilterContext from "./useGenericFilterContext";
 import useGenericFilterParams from "./useGenericFilterParams";
 import { useGenericFilterData } from "./useGenericFilterData";
+import { allOptionValue } from "./genericFilter.utils";
 
 function GenericFilter({ className, context }: GenericFilterProps) {
   const { params, constructQuery } = useGenericFilterParams();
@@ -20,15 +21,26 @@ function GenericFilter({ className, context }: GenericFilterProps) {
   const navigate = useNavigate();
 
   const updateValue = (key: FilterKeys, value: string | undefined) => {
-    let q = "";
+    if (key === "reset") {
+      navigate({ pathname: location.pathname, search: "" });
+      return;
+    }
 
-    if (key !== "reset") {
-      q = constructQuery(key, value);
+    const q = constructQuery(key, value);
+    const searchParams = new URLSearchParams(q);
+
+    if (key === "categoryId") {
+      // A category change invalidates both the selected type and item.
+      searchParams.delete("typeId");
+      searchParams.delete("itemId");
+    } else if (key === "typeId") {
+      // A type change invalidates the selected item.
+      searchParams.delete("itemId");
     }
 
     navigate({
       pathname: location.pathname,
-      search: q,
+      search: searchParams.toString(),
     });
   };
 
@@ -49,7 +61,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
               options={categoriesForSelect}
               onValueChange={(value) => updateValue("categoryId", value)}
               placeholder="Choisir une categorie ..."
-              value={params.categoryId}
+              value={params.categoryId || allOptionValue}
             />
           </div>
         )}
@@ -60,7 +72,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
               options={typesForSelect}
               onValueChange={(value) => updateValue("typeId", value)}
               placeholder="Choisir un type ..."
-              value={params.typeId}
+              value={params.typeId || allOptionValue}
             />
           </div>
         )}

@@ -5,9 +5,9 @@ import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
 
-import InventoryList from "./inventory/components/InventoryList";
+import ItemList from "@/pages/items/components/ItemList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
-import InventoryListFilter from "./inventory/components/InventoryListFilter";
+import ItemFilter from "@/pages/items/components/ItemFilter";
 import { useQueryParams } from "@/shared/hooks";
 import { inventoryPageQuerySchema } from "@/pages/inventoryPage/inventoryPageSchema";
 
@@ -42,14 +42,15 @@ function InventoryPage() {
         className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col px-0"
         disableShadow
       >
-        <InventoryListFilter />
+        <ItemFilter />
 
         <Section
           className="flex min-h-0 flex-1 overflow-hidden max-lg:flex-col flex-row"
           disableShadow
         >
-          <InventoryList
+          <ItemList
             {...queries}
+            mode="inventory"
             onSelectedItem={handleSelectedItem}
             className={cn(
               "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
@@ -59,6 +60,7 @@ function InventoryPage() {
           />
           {Boolean(itemId) && (
             <StockDetailsPanel
+              mode="inventory"
               className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
               onClose={() => {
                 const search = new URLSearchParams(location.search);

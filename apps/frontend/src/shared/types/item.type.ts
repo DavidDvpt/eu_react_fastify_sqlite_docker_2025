@@ -10,5 +10,5 @@ export interface ItemDetailProps {
   /** Single instance this detail refers to (from a stock row click). */
   focusedLot?: LotViewModel | null;
   onBack?: () => void;
-  variant?: "transaction" | "stock" | "manage"; // Nouvelle prop pour la variante
+  variant?: "transaction" | "stock" | "manage" | "store";
 }

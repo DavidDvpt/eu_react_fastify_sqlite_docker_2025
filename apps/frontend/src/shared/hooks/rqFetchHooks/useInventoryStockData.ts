@@ -12,7 +12,7 @@ import {
   NumberHelper,
 } from "@/shared/helpers";
 
-function useInventoryStockData() {
+function useInventoryStockData({ enabled = true }: { enabled?: boolean } = {}) {
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
@@ -24,6 +24,7 @@ function useInventoryStockData() {
   } = useListInventoryStockApiV2InventoryStockGet(undefined, {
     query: {
       queryKey: InvalidateQueryAndKeys.getInventoryStockKey().keys,
+      enabled,
       staleTime: 30_000,
     },
   });

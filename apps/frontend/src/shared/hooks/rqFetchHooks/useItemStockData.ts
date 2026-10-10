@@ -12,7 +12,7 @@ import { useMemo } from "react";
  * Opening details from the list renders instantly with no extra request;
  * a direct deep link (empty cache) fetches normally.
  */
-export default function useItemStock({ itemId }: StockQuery = {}) {
+export default function useItemStock({ itemId, enabled = true }: StockQuery & { enabled?: boolean } = {}) {
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
@@ -30,7 +30,7 @@ export default function useItemStock({ itemId }: StockQuery = {}) {
     {
       query: {
         queryKey: InvalidateQueryAndKeys.getItemStockKey(itemId).keys,
-        enabled: Boolean(itemId),
+        enabled: Boolean(itemId) && enabled,
         staleTime: 30_000,
         initialData: seedFromInventoryCache,
         initialDataUpdatedAt: () =>
