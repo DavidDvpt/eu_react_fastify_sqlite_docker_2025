@@ -31,8 +31,10 @@ export type TypeViewModels = TypeViewModel[];
 // ITEMS
 export const itemDetailsEnum = z.enum([
   "finderDetail",
+  "finderAmplifierDetails",
   "excavatorDetail",
   "refinerDetail",
+  "enhancerDetails",
 ]);
 export const itemFormSchema = z.object({
   id: z.string().nullable().default(null),
@@ -48,6 +50,18 @@ export const itemFormSchema = z.object({
   isActive: booleanSchema.optional().default(true),
   isUntradeable: booleanSchema.nullable().default(null),
   isRare: booleanSchema.nullable().default(null),
+  // These fields are populated by the API when an item detail is requested.
+  depth: z.number().nullable().optional(),
+  ammoBurn: z.number().nullable().optional(),
+  efficiency: z.number().nullable().optional(),
+  range: z.number().nullable().optional(),
+  minProfessionLevel: z.number().int().nullable().optional(),
+  minTt: z.number().nullable().optional(),
+  socket: z.number().int().nullable().optional(),
+  tool: z.string().nullable().optional(),
+  itemType: z.string().nullable().optional(),
+  nexusUrl: z.string().nullable().optional(),
+  usePerMinute: z.number().int().nullable().optional(),
 });
 export const itemViewModelSchema = itemFormSchema.omit({ id: true }).extend({
   id: z.string(),

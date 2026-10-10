@@ -68,20 +68,68 @@ export default function useSystemDatas() {
       staleTime: Infinity,
     },
   });
+  // Detail fields are exposed by the same OpenAPI endpoint through the
+  // `detail` query parameter. Each detail query only returns values for the
+  // matching item type, so merge them into the base item collection below.
+  const finderDetails = useListItemsApiV2ItemsGet(
+    { detail: "finderDetail" },
+    { query: { enabled: logged, staleTime: Infinity } },
+  );
+  const finderAmplifierDetails = useListItemsApiV2ItemsGet(
+    { detail: "finderAmplifierDetails" },
+    { query: { enabled: logged, staleTime: Infinity } },
+  );
+  const excavatorDetails = useListItemsApiV2ItemsGet(
+    { detail: "excavatorDetail" },
+    { query: { enabled: logged, staleTime: Infinity } },
+  );
+  const refinerDetails = useListItemsApiV2ItemsGet(
+    { detail: "refinerDetail" },
+    { query: { enabled: logged, staleTime: Infinity } },
+  );
+  const enhancerDetails = useListItemsApiV2ItemsGet(
+    { detail: "enhancerDetails" },
+    { query: { enabled: logged, staleTime: Infinity } },
+  );
   const itemData = i.data as ItemViewModels | undefined;
   const items = useMemo(() => {
+    const detailsById = new Map<string, ItemViewModels[number]>();
+    const detailData = [
+      finderDetails.data,
+      finderAmplifierDetails.data,
+      excavatorDetails.data,
+      refinerDetails.data,
+      enhancerDetails.data,
+    ];
+    detailData.forEach((itemsWithDetails) => {
+      itemsWithDetails?.forEach((detailItem) => {
+        detailsById.set(detailItem.id, detailItem as ItemViewModels[number]);
+      });
+    });
+
     const enrich =
       itemData?.map((m) => {
         const type = types?.find((ft) => m.typeId === ft.id);
+        const detail = detailsById.get(m.id);
 
         return {
           ...m,
+          ...detail,
+          // Detail responses intentionally omit the item type relation.
           type,
         };
       }) ?? [];
 
     return enrich as ItemViewModels;
-  }, [itemData, types]);
+  }, [
+    itemData,
+    types,
+    finderDetails.data,
+    finderAmplifierDetails.data,
+    excavatorDetails.data,
+    refinerDetails.data,
+    enhancerDetails.data,
+  ]);
   const filteredItems = useMemo(
     () =>
       ({

@@ -25,7 +25,9 @@ vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
 
 function LocationProbe() {
   const location = useLocation();
-  return <div data-testid="location">{`${location.pathname}${location.search}`}</div>;
+  return (
+    <div data-testid="location">{`${location.pathname}${location.search}`}</div>
+  );
 }
 
 function renderDetail(ui: ReactNode) {
@@ -85,28 +87,73 @@ describe("ItemDetail", () => {
   it("shows the raw name and total stock in aggregated mode", () => {
     renderDetail(<ItemDetail item={ITEM as never} lots={LOTS as never} />);
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Sword");
-    expect(screen.getByText("Quantité").nextElementSibling).toHaveTextContent("2");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Sword",
+    );
+    expect(screen.getByText("Quantité").nextElementSibling).toHaveTextContent(
+      "2",
+    );
+  });
+
+  it("shows the available type-specific detail values", () => {
+    renderDetail(
+      <ItemDetail
+        item={
+          {
+            ...ITEM,
+            depth: 105.56,
+            ammoBurn: 10.9,
+            nexusUrl: "https://example.com/finder",
+          } as never
+        }
+        lots={[]}
+      />,
+    );
+
+    expect(
+      screen.getByText("Profondeur").nextElementSibling,
+    ).toHaveTextContent("105.6 m");
+    expect(
+      screen.getByText("Consommation de munitions").nextElementSibling,
+    ).toHaveTextContent("10 / 20");
+    expect(
+      screen.getByRole("link", { name: "https://example.com/finder" }),
+    ).toBeInTheDocument();
   });
 
   it("shows MY instance with its tiered name and a quantity of 1", () => {
     renderDetail(
-      <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[0] as never} />,
+      <ItemDetail
+        item={ITEM as never}
+        lots={LOTS as never}
+        focusedLot={LOTS[0] as never}
+      />,
     );
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Sword T3");
-    expect(screen.getByText("Quantité").nextElementSibling).toHaveTextContent("1");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Sword T3",
+    );
+    expect(screen.getByText("Quantité").nextElementSibling).toHaveTextContent(
+      "1",
+    );
 
     // The tier editor stays closed until the pencil is clicked.
     expect(screen.queryByText("Modifier le tier")).toBeNull();
   });
 
-    it("opens the editor on the focused lot only via the pencil", async () => {    const user = userEvent.setup();
+  it("opens the editor on the focused lot only via the pencil", async () => {
+    const user = userEvent.setup();
     renderDetail(
-      <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[0] as never} />,
+      <ItemDetail
+        item={ITEM as never}
+        lots={LOTS as never}
+        focusedLot={LOTS[0] as never}
+      />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Modifier les tiers" }));
+    await user.click(
+      screen.getByRole("button", { name: "Modifier les tiers" }),
+    );
 
     await waitFor(() => {
       expect(screen.getByText("Modifier le tier")).toBeInTheDocument();
@@ -119,7 +166,9 @@ describe("ItemDetail", () => {
     const user = userEvent.setup();
     renderDetail(<ItemDetail item={ITEM as never} lots={LOTS as never} />);
 
-    await user.click(screen.getByRole("button", { name: "Modifier les tiers" }));
+    await user.click(
+      screen.getByRole("button", { name: "Modifier les tiers" }),
+    );
 
     expect(screen.getByText("Tier actuel : T3")).toBeInTheDocument();
     expect(screen.getByText("Tier actuel : T5")).toBeInTheDocument();
@@ -128,19 +177,31 @@ describe("ItemDetail", () => {
   it("stays aggregated when the focused lot belongs to a stackable item", () => {
     renderDetail(
       <ItemDetail
-        item={{ ...ITEM, stock: 10, type: { hasTierOption: false, isStackable: true } } as never}
+        item={
+          {
+            ...ITEM,
+            stock: 10,
+            type: { hasTierOption: false, isStackable: true },
+          } as never
+        }
         lots={[]}
         focusedLot={{ id: "lot-9", tierLevel: 4 } as never}
       />,
     );
 
-    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent("Sword");
+    expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
+      "Sword",
+    );
   });
 
   it("passes the focused lot to the sell transaction", async () => {
     const user = userEvent.setup();
     renderDetail(
-      <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[1] as never} />,
+      <ItemDetail
+        item={ITEM as never}
+        lots={LOTS as never}
+        focusedLot={LOTS[1] as never}
+      />,
     );
 
     await user.click(screen.getByRole("button", { name: "Vente" }));
@@ -171,10 +232,16 @@ describe("ItemDetail", () => {
     const user = userEvent.setup();
     updateTierMock.mockResolvedValue({ id: "lot-1", tierLevel: 4 });
     renderDetail(
-      <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[0] as never} />,
+      <ItemDetail
+        item={ITEM as never}
+        lots={LOTS as never}
+        focusedLot={LOTS[0] as never}
+      />,
     );
 
-    await user.click(screen.getByRole("button", { name: "Modifier les tiers" }));
+    await user.click(
+      screen.getByRole("button", { name: "Modifier les tiers" }),
+    );
     const input = screen.getByLabelText("Nouveau tier du lot lot-1");
     await user.clear(input);
     await user.type(input, "4");

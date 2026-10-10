@@ -17,7 +17,30 @@ import { useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch } from "@/api
 import { LotTierUpdate } from "@/api/generated/zod/model/lotTierUpdate.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
-function ItemDetail({ item, lots, focusedLot = null, onBack = () => {}, variant = "stock" }: ItemDetailProps) {
+function formatDetailValue(label: string, value: number): string {
+  if (label === "Profondeur moyenne") {
+    return `${FormatTools.formatToDecimals(value, 1)} m`;
+  }
+
+  if (label === "Consommation de munitions") {
+    const ammoBurn = Math.trunc(value);
+    return `${ammoBurn} / ${ammoBurn * 2}`;
+  }
+
+  if (label === "Utilisation par minute") {
+    return String(Math.trunc(value));
+  }
+
+  return FormatTools.formatToThreeDecimals(value);
+}
+
+function ItemDetail({
+  item,
+  lots,
+  focusedLot = null,
+  onBack = () => {},
+  variant = "stock",
+}: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -51,7 +74,9 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {}, variant 
 
   const displayStock = isStoreView || isInstanceView ? 1 : (item?.stock ?? 0);
 
-  const canEditTier = !isStoreView && Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
+  const canEditTier =
+    !isStoreView &&
+    Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
   const [isEditingTier, setIsEditingTier] = useState(false);
 
   const totalValue = useMemo(() => {
@@ -60,6 +85,22 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {}, variant 
   }, [item, displayStock]);
 
   if (!item) return null;
+
+  const detailRows = [
+    ["Profondeur moyenne", item.depth],
+    ["Consommation de munitions", item.ammoBurn],
+    ["Efficacité", item.efficiency],
+    ["Portée", item.range],
+    ["Niveau de profession minimum", item.minProfessionLevel],
+    ["TT minimum", item.minTt],
+    ["Socket", item.socket],
+    ["Outil", item.tool],
+    ["Type d’item", item.itemType],
+    ["Utilisation par minute", item.usePerMinute],
+    ["Nexus", item.nexusUrl],
+  ].filter(
+    ([, value]) => value !== null && value !== undefined && value !== "",
+  );
 
   const openTransactionModal = (action: TransactionAction) => {
     const query = {
@@ -159,6 +200,22 @@ function ItemDetail({ item, lots, focusedLot = null, onBack = () => {}, variant 
           </span>
           <span className="text-text">Rare</span>
           <span className="text-text-muted">{item.isRare ? "Oui" : "Non"}</span>
+          {detailRows.map(([label, value]) => (
+            <span key={label} className="contents">
+              <span className="text-text">{label}</span>
+              <span className="text-text-muted">
+                {label === "Nexus" ? (
+                  <a href={String(value)} target="_blank" rel="noreferrer">
+                    {String(value)}
+                  </a>
+                ) : typeof value === "number" ? (
+                  formatDetailValue(String(label), value)
+                ) : (
+                  String(value)
+                )}
+              </span>
+            </span>
+          ))}
         </div>
       </div>
       <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
@@ -208,9 +265,7 @@ function ItemTierEditor({
   const updateTierMutation =
     useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch();
   const [tierValues, setTierValues] = useState<Record<string, number>>(() =>
-    Object.fromEntries(
-      (lots ?? []).map((lot) => [lot.id, lot.tierLevel ?? 0]),
-    ),
+    Object.fromEntries((lots ?? []).map((lot) => [lot.id, lot.tierLevel ?? 0])),
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -228,7 +283,11 @@ function ItemTierEditor({
       return;
     }
 
-    if (lot.tierLevel !== null && lot.tierLevel !== undefined && tierLevel < lot.tierLevel) {
+    if (
+      lot.tierLevel !== null &&
+      lot.tierLevel !== undefined &&
+      tierLevel < lot.tierLevel
+    ) {
       setError("Le tier ne peut pas diminuer.");
       return;
     }
@@ -256,7 +315,9 @@ function ItemTierEditor({
         </Button>
       </div>
       {editableLots.length === 0 ? (
-        <p className="m-0 text-xs text-text-muted">Aucun lot actif à modifier.</p>
+        <p className="m-0 text-xs text-text-muted">
+          Aucun lot actif à modifier.
+        </p>
       ) : (
         editableLots.map((lot) => {
           const currentTier = lot.tierLevel ?? 0;
@@ -308,7 +369,9 @@ function ItemTierEditor({
           );
         })
       )}
-      {error ? <p className="m-0 text-sm text-destructive-300">{error}</p> : null}
+      {error ? (
+        <p className="m-0 text-sm text-destructive-300">{error}</p>
+      ) : null}
     </div>
   );
 }
