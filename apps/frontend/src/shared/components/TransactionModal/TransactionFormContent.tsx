@@ -54,33 +54,33 @@ function TransactionFormContent({
         isAuction={isAuctionEnabled}
       />
 
-      {action === "buy" &&
-      item.type?.hasTierOption &&
-      !item.type.isStackable ? (
-        <InputRHF
-          name="tierLevel"
-          type="number"
-          min={0}
-          max={10}
-          step={1}
-          registerOptions={{ valueAsNumber: true }}
-          label="Tier"
-          labelClassName="text-sm"
-          wrapperClassName="w-1/3"
-        />
-      ) : null}
-
       {action === "buy" && isNonStackable ? (
-        <InputRHF
-          name="lotCount"
-          type="number"
-          min={1}
-          step={1}
-          registerOptions={{ valueAsNumber: true }}
-          label="Nb de lots"
-          labelClassName="text-sm"
-          wrapperClassName="w-1/3"
-        />
+        <div className="flex items-start justify-between">
+          {item.type?.hasTierOption ? (
+            <InputRHF
+              name="tierLevel"
+              type="number"
+              min={0}
+              max={10}
+              step={1}
+              registerOptions={{ valueAsNumber: true }}
+              label="Tier"
+              labelClassName="text-sm"
+              wrapperClassName="w-[23%] min-w-0"
+            />
+          ) : null}
+
+          <InputRHF
+            name="lotCount"
+            type="number"
+            min={1}
+            step={1}
+            registerOptions={{ valueAsNumber: true }}
+            label="Nb de lots"
+            labelClassName="text-sm"
+            wrapperClassName="w-[23%] min-w-0"
+          />
+        </div>
       ) : null}
 
       <CheckboxRHF

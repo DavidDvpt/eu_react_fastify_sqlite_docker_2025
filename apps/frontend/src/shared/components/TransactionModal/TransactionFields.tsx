@@ -25,6 +25,8 @@ export function TransactionFields({
   isNonStackable = false,
   ttReadOnly = false,
 }: TransactionFieldRowProps) {
+  const fieldWidthClassName = isNonStackable ? "w-[23%]" : "w-[30%]";
+
   return (
     <div className="flex items-start justify-between">
       <InputRHF
@@ -36,7 +38,7 @@ export function TransactionFields({
         readOnly={quantityReadOnly}
         label={quantityLabel}
         labelClassName="text-sm"
-        wrapperClassName="w-[30%] min-w-0"
+        wrapperClassName={`${isNonStackable ? "w-[20%]" : fieldWidthClassName} min-w-0`}
       />
 
       {isNonStackable ? (
@@ -49,7 +51,7 @@ export function TransactionFields({
           placeholder="ex. 22.00000"
           label="TT"
           labelClassName="text-sm"
-          wrapperClassName="w-[30%] min-w-0"
+          wrapperClassName={`${fieldWidthClassName} min-w-0`}
           suffix={<StepperButtons name="tt" step={1} decimals={5} disabled={ttReadOnly} />}
         />
       ) : null}
@@ -62,7 +64,7 @@ export function TransactionFields({
         selectOnFocus
         label={feeLabel}
         labelClassName="text-sm"
-        wrapperClassName="w-[30%] min-w-0"
+        wrapperClassName={`${fieldWidthClassName} min-w-0`}
         suffix={
           <StepperButtons name="fee" step={1} decimals={2} disabled={feeReadOnly} />
         }
@@ -76,7 +78,7 @@ export function TransactionFields({
         placeholder={isAuction ? undefined : "ex. 24.20000"}
         label={totalLabel}
         labelClassName={totalLabelClassName}
-        wrapperClassName="w-[30%] min-w-0"
+        wrapperClassName={`${fieldWidthClassName} min-w-0`}
         suffix={<StepperButtons name="ttc" step={1} decimals={5} />}
       />
     </div>
