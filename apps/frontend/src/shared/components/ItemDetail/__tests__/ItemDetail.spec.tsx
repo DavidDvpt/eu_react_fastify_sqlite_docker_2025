@@ -111,7 +111,7 @@ describe("ItemDetail", () => {
     );
 
     expect(
-      screen.getByText("Profondeur").nextElementSibling,
+      screen.getByText("Profondeur moyenne").nextElementSibling,
     ).toHaveTextContent("105.6 m");
     expect(
       screen.getByText("Consommation de munitions").nextElementSibling,
