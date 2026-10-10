@@ -3,22 +3,14 @@ import TransactionResellContent from "./TransactionResellContent";
 import TransactionModalActionContent from "./TransactionModalActionContent";
 
 import useTransactionQueries from "@/shared/hooks/useTransactionQueries";
-import PedCardForm from "../pedCardModal/PedCardForm";
-import { useQueryClient } from "@tanstack/react-query";
-import { usePedcardData } from "@/shared/hooks";
 
 function TransactionModal() {
   const { queries, updateQueries } = useTransactionQueries();
-  const { check, balance } = usePedcardData();
-  const queryClient = useQueryClient();
 
   if (!queries?.action || !queries?.itemId) return null;
 
   const handleClose = () => updateQueries(null);
 
-  const handlePedcardSucces = () => {
-    queryClient.invalidateQueries({ queryKey: ["pedcard"] });
-  };
   return (
     <ModalGeneric
       dialogType="form"
@@ -40,19 +32,12 @@ function TransactionModal() {
         />
       )}
 
-      {(queries.action === "sell" || queries.action === "buy") &&
-        (!check ? (
-          <PedCardForm
-            initialized={check}
-            balance={balance}
-            onSuccess={handlePedcardSucces}
-          />
-        ) : (
-          <TransactionModalActionContent
-            onClose={handleClose}
-            modalParams={queries}
-          />
-        ))}
+      {(queries.action === "sell" || queries.action === "buy") && (
+        <TransactionModalActionContent
+          onClose={handleClose}
+          modalParams={queries}
+        />
+      )}
     </ModalGeneric>
   );
 }

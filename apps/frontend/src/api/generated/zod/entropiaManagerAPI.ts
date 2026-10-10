@@ -7,7 +7,6 @@ import * as zod from 'zod';
 
 import {
   AverageBuyMarkupResponse,
-  BalanceResponse,
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
@@ -22,11 +21,6 @@ import {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
-  NexusForm,
-  NexusResponse,
-  PedcardForm,
-  PedcardPatch,
-  PedcardResponse,
   SignInBody,
   SignUpBody,
   StockLineResponse,
@@ -619,115 +613,6 @@ export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponseOutp
 
 
 /**
- * @summary Check Pedcard
- */
-export const CheckPedcardApiV2PedcardCheckGetResponse = zod.record(zod.string(), zod.boolean())
-
-export type CheckPedcardApiV2PedcardCheckGetResponse = zod.input<typeof CheckPedcardApiV2PedcardCheckGetResponse>;
-export type CheckPedcardApiV2PedcardCheckGetResponseOutput = zod.output<typeof CheckPedcardApiV2PedcardCheckGetResponse>;
-
-
-/**
- * @summary Get Balance
- */
-export const GetBalanceApiV2PedcardBalanceGetResponse = BalanceResponse
-
-export type GetBalanceApiV2PedcardBalanceGetResponse = zod.input<typeof GetBalanceApiV2PedcardBalanceGetResponse>;
-export type GetBalanceApiV2PedcardBalanceGetResponseOutput = zod.output<typeof GetBalanceApiV2PedcardBalanceGetResponse>;
-
-
-/**
- * @summary Can Pay
- */
-export const canPayApiV2PedcardCanPayGetQueryValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
-
-
-export const CanPayApiV2PedcardCanPayGetQueryParams = zod.object({
-  "value": zod.union([zod.number(),zod.string().regex(canPayApiV2PedcardCanPayGetQueryValueTwoRegExp)])
-})
-
-export type CanPayApiV2PedcardCanPayGetQueryParams = zod.input<typeof CanPayApiV2PedcardCanPayGetQueryParams>;
-export type CanPayApiV2PedcardCanPayGetQueryParamsOutput = zod.output<typeof CanPayApiV2PedcardCanPayGetQueryParams>;
-
-export const CanPayApiV2PedcardCanPayGetResponse = zod.record(zod.string(), zod.boolean())
-
-export type CanPayApiV2PedcardCanPayGetResponse = zod.input<typeof CanPayApiV2PedcardCanPayGetResponse>;
-export type CanPayApiV2PedcardCanPayGetResponseOutput = zod.output<typeof CanPayApiV2PedcardCanPayGetResponse>;
-
-
-/**
- * @summary List Pedcards
- */
-export const ListPedcardsApiV2PedcardGetQueryParams = zod.object({
-  "withItemId": zod.union([zod.boolean(),zod.null()]).optional()
-})
-
-export type ListPedcardsApiV2PedcardGetQueryParams = zod.input<typeof ListPedcardsApiV2PedcardGetQueryParams>;
-export type ListPedcardsApiV2PedcardGetQueryParamsOutput = zod.output<typeof ListPedcardsApiV2PedcardGetQueryParams>;
-
-export const ListPedcardsApiV2PedcardGetResponseItem = PedcardResponse
-
-export type ListPedcardsApiV2PedcardGetResponseItem = zod.input<typeof ListPedcardsApiV2PedcardGetResponseItem>;
-export type ListPedcardsApiV2PedcardGetResponseItemOutput = zod.output<typeof ListPedcardsApiV2PedcardGetResponseItem>;
-
-export const ListPedcardsApiV2PedcardGetResponse = zod.array(ListPedcardsApiV2PedcardGetResponseItem)
-
-export type ListPedcardsApiV2PedcardGetResponse = zod.input<typeof ListPedcardsApiV2PedcardGetResponse>;
-export type ListPedcardsApiV2PedcardGetResponseOutput = zod.output<typeof ListPedcardsApiV2PedcardGetResponse>;
-
-
-/**
- * @summary Create Pedcard
- */
-export const CreatePedcardApiV2PedcardPostBody = PedcardForm
-
-export type CreatePedcardApiV2PedcardPostBody = zod.input<typeof CreatePedcardApiV2PedcardPostBody>;
-export type CreatePedcardApiV2PedcardPostBodyOutput = zod.output<typeof CreatePedcardApiV2PedcardPostBody>;
-
-export const CreatePedcardApiV2PedcardPostResponse = IdResponse
-
-export type CreatePedcardApiV2PedcardPostResponse = zod.input<typeof CreatePedcardApiV2PedcardPostResponse>;
-export type CreatePedcardApiV2PedcardPostResponseOutput = zod.output<typeof CreatePedcardApiV2PedcardPostResponse>;
-
-
-/**
- * @summary Patch Pedcard
- */
-export const PatchPedcardApiV2PedcardIdPatchParams = zod.object({
-  "id": zod.string()
-})
-
-export type PatchPedcardApiV2PedcardIdPatchParams = zod.input<typeof PatchPedcardApiV2PedcardIdPatchParams>;
-export type PatchPedcardApiV2PedcardIdPatchParamsOutput = zod.output<typeof PatchPedcardApiV2PedcardIdPatchParams>;
-
-export const PatchPedcardApiV2PedcardIdPatchBody = PedcardPatch
-
-export type PatchPedcardApiV2PedcardIdPatchBody = zod.input<typeof PatchPedcardApiV2PedcardIdPatchBody>;
-export type PatchPedcardApiV2PedcardIdPatchBodyOutput = zod.output<typeof PatchPedcardApiV2PedcardIdPatchBody>;
-
-export const PatchPedcardApiV2PedcardIdPatchResponse = IdResponse
-
-export type PatchPedcardApiV2PedcardIdPatchResponse = zod.input<typeof PatchPedcardApiV2PedcardIdPatchResponse>;
-export type PatchPedcardApiV2PedcardIdPatchResponseOutput = zod.output<typeof PatchPedcardApiV2PedcardIdPatchResponse>;
-
-
-/**
- * @summary Delete Pedcard
- */
-export const DeletePedcardApiV2PedcardIdDeleteDeleteParams = zod.object({
-  "id": zod.string()
-})
-
-export type DeletePedcardApiV2PedcardIdDeleteDeleteParams = zod.input<typeof DeletePedcardApiV2PedcardIdDeleteDeleteParams>;
-export type DeletePedcardApiV2PedcardIdDeleteDeleteParamsOutput = zod.output<typeof DeletePedcardApiV2PedcardIdDeleteDeleteParams>;
-
-export const DeletePedcardApiV2PedcardIdDeleteDeleteResponse = zod.void()
-
-export type DeletePedcardApiV2PedcardIdDeleteDeleteResponse = zod.input<typeof DeletePedcardApiV2PedcardIdDeleteDeleteResponse>;
-export type DeletePedcardApiV2PedcardIdDeleteDeleteResponseOutput = zod.output<typeof DeletePedcardApiV2PedcardIdDeleteDeleteResponse>;
-
-
-/**
  * @summary List Transactions
  */
 export const ListTransactionsApiV2TransactionsGetQueryParams = zod.object({
@@ -837,51 +722,6 @@ export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.void()
 
 export type PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
 export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
-
-
-/**
- * @summary List Nexus
- */
-export const ListNexusApiV2NexusToolsGetResponseItem = NexusResponse
-
-export type ListNexusApiV2NexusToolsGetResponseItem = zod.input<typeof ListNexusApiV2NexusToolsGetResponseItem>;
-export type ListNexusApiV2NexusToolsGetResponseItemOutput = zod.output<typeof ListNexusApiV2NexusToolsGetResponseItem>;
-
-export const ListNexusApiV2NexusToolsGetResponse = zod.array(ListNexusApiV2NexusToolsGetResponseItem)
-
-export type ListNexusApiV2NexusToolsGetResponse = zod.input<typeof ListNexusApiV2NexusToolsGetResponse>;
-export type ListNexusApiV2NexusToolsGetResponseOutput = zod.output<typeof ListNexusApiV2NexusToolsGetResponse>;
-
-
-/**
- * Seed the nexus rows from the types/items tables (legacy ``POST /init``).
- * @summary Init Nexus
- */
-export const InitNexusApiV2NexusToolsInitPostResponse = zod.unknown()
-
-export type InitNexusApiV2NexusToolsInitPostResponse = zod.input<typeof InitNexusApiV2NexusToolsInitPostResponse>;
-export type InitNexusApiV2NexusToolsInitPostResponseOutput = zod.output<typeof InitNexusApiV2NexusToolsInitPostResponse>;
-
-
-/**
- * @summary Patch Nexus
- */
-export const PatchNexusApiV2NexusToolsIdPatchParams = zod.object({
-  "id": zod.string()
-})
-
-export type PatchNexusApiV2NexusToolsIdPatchParams = zod.input<typeof PatchNexusApiV2NexusToolsIdPatchParams>;
-export type PatchNexusApiV2NexusToolsIdPatchParamsOutput = zod.output<typeof PatchNexusApiV2NexusToolsIdPatchParams>;
-
-export const PatchNexusApiV2NexusToolsIdPatchBody = NexusForm
-
-export type PatchNexusApiV2NexusToolsIdPatchBody = zod.input<typeof PatchNexusApiV2NexusToolsIdPatchBody>;
-export type PatchNexusApiV2NexusToolsIdPatchBodyOutput = zod.output<typeof PatchNexusApiV2NexusToolsIdPatchBody>;
-
-export const PatchNexusApiV2NexusToolsIdPatchResponse = NexusResponse
-
-export type PatchNexusApiV2NexusToolsIdPatchResponse = zod.input<typeof PatchNexusApiV2NexusToolsIdPatchResponse>;
-export type PatchNexusApiV2NexusToolsIdPatchResponseOutput = zod.output<typeof PatchNexusApiV2NexusToolsIdPatchResponse>;
 
 
 /**

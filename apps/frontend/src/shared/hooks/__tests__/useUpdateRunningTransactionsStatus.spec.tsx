@@ -69,7 +69,6 @@ describe("useUpdateTransactionsStatus", () => {
       });
       expect(invalidateSpy).toHaveBeenCalledWith({
         itemId: "item-1",
-        invalidatePedcard: true,
       });
     });
   });

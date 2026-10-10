@@ -12,15 +12,6 @@ export class InvalidateQueryAndKeys {
   static getItemsKey(): InvalidateObject {
     return { keys: ["items"] };
   }
-  static getPedcardBalanceKey(): InvalidateObject {
-    return { keys: ["pedcard", "balance"] };
-  }
-  static getPedcardCheckKey(): InvalidateObject {
-    return { keys: ["pedcard", "check"] };
-  }
-  static getPedcardCanPayKey(): InvalidateObject {
-    return { keys: ["pedcard", "can-pay"] };
-  }
   static getRunningTransactionKey(): InvalidateObject {
     return { keys: ["running-transactions"] };
   }
@@ -58,11 +49,6 @@ export class InvalidateQueryAndKeys {
     ]);
   }
 
-  static async invalidatePedcard() {
-    return await queryClient.invalidateQueries({
-      queryKey: ["pedcard"],
-    });
-  }
   static async categoryMutation() {
     return await Promise.all([
       queryClient.invalidateQueries({
@@ -93,10 +79,8 @@ export class InvalidateQueryAndKeys {
   }
   static async transactionMutation({
     itemId,
-    invalidatePedcard = true,
   }: {
     itemId?: string;
-    invalidatePedcard?: boolean;
   }) {
     return await Promise.all([
       queryClient.invalidateQueries({
@@ -114,9 +98,6 @@ export class InvalidateQueryAndKeys {
       queryClient.invalidateQueries({
         queryKey: this.getItemAverageBuyMarkupKey().keys,
       }),
-      ...(invalidatePedcard
-        ? [queryClient.invalidateQueries({ queryKey: ["pedcard"] })]
-        : []),
       queryClient.invalidateQueries({
         queryKey: this.getInventoryFinancialReportKey().keys,
       }),

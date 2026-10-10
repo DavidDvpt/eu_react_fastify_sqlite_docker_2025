@@ -29,10 +29,9 @@ function useTransactionsMutation() {
       row: TransactionViewModel;
       status: TransactionStatusPatchDto;
     }) => statusApi.mutateAsync({ id: row.id, data: { status } }),
-    onSuccess: async (_data, { row, status }) => {
+    onSuccess: async (_data, { row }) => {
       await InvalidateQueryAndKeys.transactionMutation({
         itemId: row.item?.id,
-        invalidatePedcard: status !== "RETURNED",
       });
     },
   });

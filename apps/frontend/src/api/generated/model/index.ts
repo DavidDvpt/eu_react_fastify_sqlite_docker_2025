@@ -4,10 +4,8 @@
  * Entropia Manager API
  */
 
-export * from './canPayApiV2PedcardCanPayGet200.ts';
 export * from './categoryCreate.ts';
 export * from './categoryPatch.ts';
-export * from './checkPedcardApiV2PedcardCheckGet200.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortKey.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortOrder.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetStatus.ts';
@@ -31,10 +29,6 @@ export * from './listTransactionsApiV2TransactionsGetType.ts';
 export * from './listTypesApiV2TypesGetSortKey.ts';
 export * from './listTypesApiV2TypesGetSortOrder.ts';
 export * from './lotTierUpdate.ts';
-export * from './nexusForm.ts';
-export * from './pedcardForm.ts';
-export * from './pedcardPatch.ts';
-export * from './pedcardType.ts';
 export * from './signupApiV2AuthSignupPost201.ts';
 export * from './transactionStatus.ts';
 export * from './transactionStatusPatch.ts';

@@ -18,7 +18,6 @@ const item: ItemWithStock = {
   typeId: "type-1",
   imageUrlId: "belkar",
   value: 12.5,
-  nexusId: null,
   description: null,
   weight: null,
   decay: null,
