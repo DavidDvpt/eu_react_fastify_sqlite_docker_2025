@@ -42,7 +42,6 @@ export const itemFormSchema = z.object({
   typeId: z.string(),
   imageUrlId: z.string().default(""),
   value: z.coerce.number().nonnegative(),
-  nexusId: z.number().nullable().default(null),
   description: z.string().nullable().default(null),
   weight: z.number().nullable().default(null),
   decay: z.number().nullable().default(null),
