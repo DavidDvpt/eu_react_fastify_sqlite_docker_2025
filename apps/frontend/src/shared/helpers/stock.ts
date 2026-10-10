@@ -5,6 +5,7 @@ import type { ItemWithStock } from "@/shared/types";
 export interface StockLot {
   lotId: string;
   tierLevel: number | null;
+  ttRemaining?: number | null;
 }
 
 export interface GroupedStock {
@@ -38,7 +39,13 @@ export function groupStockLines(
     const entry = grouped[line.itemId] ?? { quantity: 0, lots: [] as StockLot[] };
     entry.quantity += line.quantity;
     if (!line.isStackable && line.lotId != null) {
-      entry.lots.push({ lotId: line.lotId, tierLevel: line.tierLevel ?? null });
+      entry.lots.push({
+        lotId: line.lotId,
+        tierLevel: line.tierLevel ?? null,
+        ...(line.ttRemaining !== null && line.ttRemaining !== undefined
+          ? { ttRemaining: line.ttRemaining }
+          : {}),
+      });
     }
     grouped[line.itemId] = entry;
   }
@@ -47,6 +54,16 @@ export function groupStockLines(
 
 export function getStockForItem(grouped: GroupedStocks, itemId: string): number {
   return grouped[itemId]?.quantity ?? 0;
+}
+
+export function getItemStockValue(item: ItemWithStock): number {
+  if (item.type?.isStackable === false && item.lots?.length) {
+    return item.lots.reduce(
+      (total, lot) => total + (lot.ttRemaining ?? item.value),
+      0,
+    );
+  }
+  return item.stock * item.value;
 }
 
 export function getLotsForItem(grouped: GroupedStocks, itemId: string): StockLot[] {

@@ -88,3 +88,59 @@ describe("TransactionPanelContent instance sell", () => {
     expect(screen.getByLabelText("Quantite")).not.toHaveAttribute("readonly");
   });
 });
+
+describe("TransactionPanelContent free mode", () => {
+  const BUY_PARAMS = {
+    action: "buy" as const,
+    itemId: "sword",
+    quantity: 1,
+    ttc: 100,
+  };
+
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  async function switchToFreeMode(user: ReturnType<typeof userEvent.setup>) {
+    render(
+      <TransactionPanelContent
+        item={ITEM as never}
+        onBack={() => {}}
+        modalParams={BUY_PARAMS}
+      />,
+    );
+    await user.click(screen.getByRole("checkbox", { name: "Auction" }));
+  }
+
+  it("accepts a decimal TTC once auction is unchecked", async () => {
+    const user = userEvent.setup();
+    await switchToFreeMode(user);
+
+    const ttcInput = screen.getByLabelText("Achat");
+    await user.clear(ttcInput);
+    await user.type(ttcInput, "124.2");
+    await user.click(screen.getByRole("button", { name: "Acheter" }));
+
+    await waitFor(() => {
+      expect(mutateMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          values: expect.objectContaining({ ttc: 124.2, isAuction: false }),
+        }),
+        expect.anything(),
+      );
+    });
+  });
+
+  it("nudges the TTC with the stepper buttons", async () => {
+    const user = userEvent.setup();
+    await switchToFreeMode(user);
+
+    const incrementButtons = screen.getAllByRole("button", {
+      name: "Augmenter",
+    });
+    // Fee stepper first, TTC stepper second.
+    await user.click(incrementButtons[2]);
+
+    expect(screen.getByLabelText("Achat")).toHaveValue("101");
+  });
+});

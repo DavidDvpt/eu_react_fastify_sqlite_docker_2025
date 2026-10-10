@@ -4,7 +4,7 @@ import { GenericList } from "@/shared/components";
 import { Section } from "@/shared/components/Containers";
 
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { StockRow } from "@/shared/helpers/stock";
+import { getItemStockValue, type StockRow } from "@/shared/helpers/stock";
 
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
 import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
@@ -42,7 +42,7 @@ function InventoryList({
 
   const totalStockValue = useMemo(() => {
     return visibleStock.reduce((t, c) => {
-      const n = t + c.stock * c.value;
+      const n = t + getItemStockValue(c);
       return n;
     }, 0);
   }, [visibleStock]);

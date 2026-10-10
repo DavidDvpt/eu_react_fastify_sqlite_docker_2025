@@ -6,6 +6,7 @@ export { formatItemNameWithTier, formatTierLevel } from "./tier";
 export {
   buildStockRows,
   getLotsForItem,
+  getItemStockValue,
   getStockForItem,
   groupStockLines,
   type GroupedStock,

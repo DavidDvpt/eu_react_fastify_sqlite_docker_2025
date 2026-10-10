@@ -19,4 +19,5 @@ export type StockLineResponse = {
   isStackable: boolean;
   lotId?: string | null;
   tierLevel?: number | null;
+  ttRemaining?: number | null;
 };

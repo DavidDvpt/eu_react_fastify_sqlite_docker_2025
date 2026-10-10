@@ -14,7 +14,7 @@ import type {
   UseTransactionAutoPricingParams,
   UseTransactionAutoPricingResult,
 } from "@/shared/types/transactions";
-import { FormatTools } from "../tools";
+import { parseDecimalInput } from "@/shared/helpers/transactionHelpers";
 
 function areSameSnapshot(
   previous: TransactionPricingSnapshot,
@@ -22,9 +22,10 @@ function areSameSnapshot(
 ) {
   return (
     previous.quantity === current.quantity &&
+    previous.tt === current.tt &&
     previous.fee === current.fee &&
     previous.ttc === current.ttc &&
-    previous.autoCalculation === current.autoCalculation
+    previous.isAuction === current.isAuction
   );
 }
 
@@ -33,6 +34,7 @@ function detectChangedField(
   current: TransactionPricingSnapshot,
 ): TransactionPricingField | null {
   if (previous.quantity !== current.quantity) return "quantity";
+  if (previous.tt !== current.tt) return "tt";
   if (previous.fee !== current.fee) return "fee";
   if (previous.ttc !== current.ttc) return "ttc";
   return null;
@@ -42,6 +44,7 @@ function useTransactionAutoPricing({
   action,
   form,
   unitPrice,
+  isNonStackable = false,
 }: UseTransactionAutoPricingParams<AutoPricingFormValues>): UseTransactionAutoPricingResult {
   const quantity = useWatch({
     control: form.control,
@@ -55,18 +58,21 @@ function useTransactionAutoPricing({
     control: form.control,
     name: "ttc" as never,
   });
-  const autoCalculation = useWatch({
+  const tt = useWatch({ control: form.control, name: "tt" as never });
+  const isAuction = useWatch({
     control: form.control,
-    name: "autoCalculation" as never,
+    name: "isAuction" as never,
   });
 
-  const isAutoCalculationEnabled = Boolean(autoCalculation);
+  const isAuctionEnabled = Boolean(isAuction);
   const isBuy = action === "buy";
-  const isFeeReadOnly = !isBuy;
+  // Free mode: fee is always user-editable (no auto computation).
+  const isFeeReadOnly = isAuctionEnabled ? !isBuy : false;
 
-  const quantityValue = FormatTools.toSafeNumber(quantity);
-  const feeValue = FormatTools.toSafeNumber(fee);
-  const totalValue = FormatTools.toSafeNumber(ttc);
+  const quantityValue = parseDecimalInput(quantity);
+  const feeValue = parseDecimalInput(fee);
+  const totalValue = parseDecimalInput(ttc);
+  const ttValue = parseDecimalInput(tt) || unitPrice;
 
   const snapshotRef = useRef<TransactionPricingSnapshot | null>(null);
   const skipNextEffectRef = useRef(false);
@@ -75,11 +81,12 @@ function useTransactionAutoPricing({
   const currentSnapshot = useMemo<TransactionPricingSnapshot>(
     () => ({
       quantity: quantityValue,
+      tt: ttValue,
       fee: feeValue,
       ttc: totalValue,
-      autoCalculation: isAutoCalculationEnabled,
+      isAuction: isAuctionEnabled,
     }),
-    [feeValue, isAutoCalculationEnabled, quantityValue, totalValue],
+    [feeValue, isAuctionEnabled, quantityValue, totalValue, ttValue],
   );
 
   const syncValues = useCallback(
@@ -88,6 +95,9 @@ function useTransactionAutoPricing({
       form.setValue("quantity" as never, nextValues.quantity as never, {
         shouldDirty: true,
       });
+      if (nextValues.tt !== undefined) {
+        form.setValue("tt" as never, nextValues.tt as never, { shouldDirty: true });
+      }
       form.setValue("fee" as never, nextValues.fee as never, {
         shouldDirty: true,
       });
@@ -96,53 +106,77 @@ function useTransactionAutoPricing({
       });
       snapshotRef.current = {
         ...nextValues,
-        autoCalculation: isAutoCalculationEnabled,
+        isAuction: isAuctionEnabled,
       };
     },
-    [form, isAutoCalculationEnabled],
+    [form, isAuctionEnabled],
   );
 
   const computeNextValues = useCallback(
     (sourceField: TransactionPricingField): TransactionPricingValues => {
       const baseValues = {
         quantity: currentSnapshot.quantity,
+        tt: currentSnapshot.tt,
         fee: currentSnapshot.fee,
         ttc: currentSnapshot.ttc,
+        isAuction: isAuctionEnabled,
       };
+
+      const pricingQuantity = isNonStackable ? 1 : baseValues.quantity;
+      const pricingUnit: number = isNonStackable
+        ? (baseValues.tt ?? unitPrice)
+        : unitPrice;
+
+      if (isNonStackable && sourceField === "tt") {
+        return computeQuantityPricing({
+          action,
+          quantity: 1,
+          fee: baseValues.fee,
+          ttc: baseValues.ttc,
+          unitPrice: pricingUnit,
+          isAuction: baseValues.isAuction,
+        });
+      }
 
       if (sourceField === "quantity") {
         return computeQuantityPricing({
           action,
-          quantity: baseValues.quantity,
+          quantity: pricingQuantity,
           fee: baseValues.fee,
           ttc: baseValues.ttc,
-          unitPrice,
+          unitPrice: pricingUnit,
+          isAuction: baseValues.isAuction,
         });
       }
 
       if (sourceField === "fee") {
         return computeFeePricing({
           action,
-          quantity: baseValues.quantity,
+          quantity: pricingQuantity,
           fee: baseValues.fee,
           ttc: baseValues.ttc,
-          unitPrice,
+          unitPrice: pricingUnit,
+          isAuction: baseValues.isAuction,
         });
       }
 
       return computeTtcPricing({
         action,
-        quantity: baseValues.quantity,
+        quantity: pricingQuantity,
         fee: baseValues.fee,
         ttc: baseValues.ttc,
-        unitPrice,
+        unitPrice: pricingUnit,
+        isAuction: baseValues.isAuction,
       });
     },
     [
       action,
       currentSnapshot.fee,
       currentSnapshot.quantity,
+      currentSnapshot.tt,
       currentSnapshot.ttc,
+      isAuctionEnabled,
+      isNonStackable,
       unitPrice,
     ],
   );
@@ -160,20 +194,20 @@ function useTransactionAutoPricing({
       return;
     }
 
-    if (!isAutoCalculationEnabled) {
+    if (!isAuctionEnabled) {
       snapshotRef.current = currentSnapshot;
       return;
     }
 
     if (
-      previousSnapshot.autoCalculation !== currentSnapshot.autoCalculation &&
-      currentSnapshot.autoCalculation
+      previousSnapshot.isAuction !== currentSnapshot.isAuction &&
+      currentSnapshot.isAuction
     ) {
       const nextValues = computeNextValues(lastEditedFieldRef.current);
       if (
         !areSameSnapshot(currentSnapshot, {
           ...nextValues,
-          autoCalculation: true,
+          isAuction: true,
         })
       ) {
         syncValues(nextValues);
@@ -197,7 +231,7 @@ function useTransactionAutoPricing({
     const nextValues = computeNextValues(changedField);
 
     if (
-      areSameSnapshot(currentSnapshot, { ...nextValues, autoCalculation: true })
+      areSameSnapshot(currentSnapshot, { ...nextValues, isAuction: true })
     ) {
       snapshotRef.current = currentSnapshot;
       return;
@@ -207,11 +241,11 @@ function useTransactionAutoPricing({
   }, [
     computeNextValues,
     currentSnapshot,
-    isAutoCalculationEnabled,
+    isAuctionEnabled,
     syncValues,
   ]);
 
-  const applyAutoCalculationIfNeeded = useCallback(
+  const applyAuctionIfNeeded = useCallback(
     (checked: boolean) => {
       if (!checked) {
         return;
@@ -225,9 +259,9 @@ function useTransactionAutoPricing({
   );
 
   return {
-    applyAutoCalculationIfNeeded,
+    applyAuctionIfNeeded,
     feeValue,
-    isAutoCalculationEnabled,
+    isAuctionEnabled,
     isFeeReadOnly,
     quantityValue,
     totalValue,

@@ -1,6 +1,6 @@
 import type { GenericListColumn } from "@/shared/types";
 import type { StockRow } from "@/shared/helpers/stock";
-import { formatItemNameWithTier } from "@/shared/helpers";
+import { formatItemNameWithTier, getItemStockValue } from "@/shared/helpers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools/formatTools";
 
@@ -58,7 +58,7 @@ const stockColumns = (
       maxWidth: 160,
       align: "right",
       render: (item) =>
-        `${FormatTools.pedFormat().format(item.stock * item.value)} Peds`,
+        `${FormatTools.pedFormat().format(getItemStockValue(item))} Peds`,
       bodyCellClassName:
         "text-right font-semibold text-text-muted hover:text-text group-hover:text-text",
       headerCellClassName: "text-right",

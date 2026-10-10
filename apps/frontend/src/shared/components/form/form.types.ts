@@ -1,4 +1,4 @@
-import type { ChangeEvent, InputHTMLAttributes } from "react";
+import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
 import type {
   Control,
   FieldErrors,
@@ -57,6 +57,8 @@ export interface InputRHFProps extends Omit<
   selectOnFocus?: boolean;
   hideErrorMessage?: boolean;
   registerOptions?: RegisterOptions<FieldValues, string>;
+  /** Extra controls rendered inside the input (right side). */
+  suffix?: ReactNode;
 }
 
 export interface SelectOption {

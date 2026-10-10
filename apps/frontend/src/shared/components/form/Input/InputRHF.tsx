@@ -24,6 +24,7 @@ function InputRHF({
   selectOnFocus = false,
   hideErrorMessage = false,
   registerOptions,
+  suffix,
   ...props
 }: InputRHFProps) {
   const rhf = useSafeFormContext({ required: true });
@@ -77,6 +78,7 @@ function InputRHF({
               ? "border-error-500 focus-visible:ring-error-500"
               : "",
             isPasswordField ? "pr-10" : "",
+            suffix ? "pr-8" : "",
           )}
           onBlur={(event) => {
             onRegistrationBlur(event);
@@ -90,6 +92,8 @@ function InputRHF({
             props.onFocus?.(event);
           }}
         />
+
+        {suffix}
 
         {isPasswordField ? (
           <button

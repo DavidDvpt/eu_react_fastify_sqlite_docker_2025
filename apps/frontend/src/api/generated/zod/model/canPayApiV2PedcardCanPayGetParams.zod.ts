@@ -5,8 +5,10 @@
  */
 import * as zod from 'zod';
 
+export const canPayApiV2PedcardCanPayGetParamsValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 export const CanPayApiV2PedcardCanPayGetParams = zod.object({
-  "value": zod.number()
+  "value": zod.union([zod.number(),zod.string().regex(canPayApiV2PedcardCanPayGetParamsValueTwoRegExp)])
 })
 
 export type CanPayApiV2PedcardCanPayGetParams = zod.input<typeof CanPayApiV2PedcardCanPayGetParams>;

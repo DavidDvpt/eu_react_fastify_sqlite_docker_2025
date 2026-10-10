@@ -6,6 +6,7 @@ import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys
 import type { ItemWithStock } from "@/shared/types";
 import {
   getLotsForItem,
+  getItemStockValue,
   getStockForItem,
   groupStockLines,
   NumberHelper,
@@ -47,7 +48,12 @@ function useInventoryStockData() {
   const inventoryStockValue = useMemo(() => {
     const total = itemDatas?.reduce((t, c) => {
       const s = getStockForItem(groupedStocks, c.id);
-      const v = c.value * s;
+      const lots = getLotsForItem(groupedStocks, c.id);
+      const v = getItemStockValue({
+        ...c,
+        stock: s,
+        lots,
+      });
 
       return t + v;
     }, 0);

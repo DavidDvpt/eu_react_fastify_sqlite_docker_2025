@@ -28,7 +28,7 @@ const ITEM = {
 
 const VALUES = {
   action: "sell",
-  autoCalculation: true,
+  isAuction: true,
   quantity: 1,
   fee: 0,
   ttc: 100,
@@ -80,6 +80,22 @@ describe("useTransactionsMutation create", () => {
     await waitFor(() => {
       expect(createMutateMock).toHaveBeenCalledWith({
         data: expect.not.objectContaining({ lotId: expect.anything() }),
+      });
+    });
+  });
+
+  it("forwards the auction flag to the API", async () => {
+    const { result } = renderMutationHook();
+
+    await result.current.createMutation.mutateAsync({
+      values: { ...VALUES, isAuction: false },
+      item: ITEM as never,
+      action: "sell",
+    });
+
+    await waitFor(() => {
+      expect(createMutateMock).toHaveBeenCalledWith({
+        data: expect.objectContaining({ isAuction: false }),
       });
     });
   });

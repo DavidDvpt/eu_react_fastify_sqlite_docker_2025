@@ -639,8 +639,11 @@ export type GetBalanceApiV2PedcardBalanceGetResponseOutput = zod.output<typeof G
 /**
  * @summary Can Pay
  */
+export const canPayApiV2PedcardCanPayGetQueryValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
+
 export const CanPayApiV2PedcardCanPayGetQueryParams = zod.object({
-  "value": zod.number()
+  "value": zod.union([zod.number(),zod.string().regex(canPayApiV2PedcardCanPayGetQueryValueTwoRegExp)])
 })
 
 export type CanPayApiV2PedcardCanPayGetQueryParams = zod.input<typeof CanPayApiV2PedcardCanPayGetQueryParams>;

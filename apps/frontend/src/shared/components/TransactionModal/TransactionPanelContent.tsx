@@ -10,10 +10,12 @@ import type {
 } from "@/shared/types/transactions";
 import { transactionFormSchema } from "./transactionSchemas";
 import { computeQuantityPricing } from "./transactionUtils";
+import { canBuyMultipleLots } from "@/shared/helpers/transactionHelpers";
 import TransactionFormContent from "./TransactionFormContent";
 import { PANEL_COPY } from "./constants";
 
 import type { ItemWithStock } from "@/shared/types";
+import type { LotViewModel } from "@zod-schemas";
 import useTransactionsMutation from "@/shared/hooks/useTransactionMutation";
 
 function getTransactionErrorMessage(error: unknown, fallback: string) {
@@ -41,6 +43,7 @@ export type TransactionPanelProps = {
   item: ItemWithStock;
   onBack: () => void;
   modalParams: TransactionModalParams;
+  lot?: LotViewModel | null;
   defaultValues?: Partial<Pick<AutoPricingFormValues, TransactionPricingField>>;
 };
 
@@ -48,18 +51,21 @@ function TransactionPanelContent({
   item,
   onBack,
   modalParams,
+  lot,
 }: TransactionPanelProps) {
   const { action, quantity, ttc, lotId } = modalParams;
   // Selling MY single instance: exactly this lot, quantity locked to 1.
-  const isInstanceSell =
-    action === "sell" &&
-    lotId != null &&
-    item.type != null &&
-    !item.type.isStackable;
+  const isNonStackable = item.type != null && !item.type.isStackable;
+  const isInstanceSell = action === "sell" && isNonStackable;
   const schema = useMemo(() => {
     return transactionFormSchema(
       isInstanceSell ? 1 : item.stock,
       modalParams.action!,
+      {
+        isStackable: item.type?.isStackable,
+        itemValue: item.value,
+        allowBulk: canBuyMultipleLots(),
+      },
     );
   }, [isInstanceSell, modalParams, item]);
 
@@ -67,23 +73,30 @@ function TransactionPanelContent({
 
   const initialValues = useMemo(() => {
     const mergedValues = {
-      quantity: quantity ?? 1,
+      quantity: isNonStackable ? 1 : quantity ?? 1,
+      tt: lot?.ttRemaining ?? item.value,
       fee: 0,
       ttc: ttc ?? item.value,
+      lotCount: 1,
       ...(action === "buy" && item.type?.hasTierOption && !item.type.isStackable
         ? { tierLevel: 0 }
         : {}),
     };
 
     return {
-      autoCalculation: true,
+      isAuction: true,
       action,
+      ...(mergedValues.tierLevel !== undefined
+        ? { tierLevel: mergedValues.tierLevel }
+        : {}),
+      ...mergedValues,
       ...computeQuantityPricing({
         action,
-        quantity: mergedValues.quantity,
+        quantity: isNonStackable ? 1 : mergedValues.quantity,
         fee: mergedValues.fee,
         ttc: mergedValues.ttc,
         unitPrice: item.value,
+        isAuction: true,
       }),
     };
   }, [
@@ -92,12 +105,14 @@ function TransactionPanelContent({
     ttc,
     item.value,
     item.type,
+    isNonStackable,
+    lot?.ttRemaining,
   ]);
 
   if (!item) return null;
 
   const onSubmit = (values: AutoPricingFormValues) => {
-    const tt = values.quantity * item.value;
+    const tt = isNonStackable ? values.tt ?? item.value : values.quantity * item.value;
     if (action === "buy" && values.ttc < tt) {
       const shouldContinue = window.confirm(
         "Le prix d'achat est inférieur au TT. Confirmer l'achat dans cet état ?",
@@ -121,7 +136,7 @@ function TransactionPanelContent({
   return (
     <Section variant="modal" className="p-2">
       <GenericForm
-        key={`${action}-${item.id}-${item.value}-${initialValues.quantity}-${initialValues.ttc}`}
+        key={`${action}-${item.id}-${item.value}-${initialValues.quantity}-${initialValues.ttc}-${initialValues.tt}`}
         schema={schema}
         defaultValues={initialValues}
         className="space-y-2"

@@ -3,7 +3,7 @@ import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { formatItemNameWithTier } from "@/shared/helpers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
-import type { StockRow } from "@/shared/helpers/stock";
+import { getItemStockValue, type StockRow } from "@/shared/helpers/stock";
 
 function InventoryItemCard({ row, onRowClick }: RowRendererProps<StockRow>) {
   return (
@@ -52,7 +52,7 @@ function InventoryItemCard({ row, onRowClick }: RowRendererProps<StockRow>) {
           <span>
             <span className="text-text">Valeur: </span>
             <span className="text-text-muted">
-              {FormatTools.pedFormat().format(row.stock * row.value)} Peds
+              {FormatTools.pedFormat().format(getItemStockValue(row))} Peds
             </span>
           </span>
         </div>

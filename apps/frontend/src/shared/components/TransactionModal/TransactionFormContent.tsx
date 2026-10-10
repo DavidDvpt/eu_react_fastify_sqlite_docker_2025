@@ -20,11 +20,13 @@ function TransactionFormContent({
     lotId != null &&
     item.type != null &&
     !item.type.isStackable;
+  const isNonStackable = item.type != null && !item.type.isStackable;
   const form = useFormContext<AutoPricingFormValues>();
 
   const {
-    applyAutoCalculationIfNeeded,
+    applyAuctionIfNeeded,
     feeValue,
+    isAuctionEnabled,
     isFeeReadOnly,
     quantityValue,
     totalValue,
@@ -32,7 +34,11 @@ function TransactionFormContent({
     action,
     form,
     unitPrice: item.value,
+    isNonStackable,
   });
+
+  const lotCount = Number(form.watch("lotCount")) || 1;
+  const tt = Number(form.watch("tt")) || item.value;
 
   return (
     <>
@@ -43,6 +49,9 @@ function TransactionFormContent({
         totalLabelClassName="text-sm text-text"
         feeReadOnly={isFeeReadOnly}
         quantityReadOnly={isInstanceSell}
+        isNonStackable={isNonStackable}
+        ttReadOnly={action === "sell"}
+        isAuction={isAuctionEnabled}
       />
 
       {action === "buy" &&
@@ -61,17 +70,31 @@ function TransactionFormContent({
         />
       ) : null}
 
+      {action === "buy" && isNonStackable ? (
+        <InputRHF
+          name="lotCount"
+          type="number"
+          min={1}
+          step={1}
+          registerOptions={{ valueAsNumber: true }}
+          label="Nb de lots"
+          labelClassName="text-sm"
+          wrapperClassName="w-1/3"
+        />
+      ) : null}
+
       <CheckboxRHF
-        name="autoCalculation"
-        label="Calcul auto"
+        name="isAuction"
+        label="Auction"
         labelClassName="text-text"
-        onCheckedChange={applyAutoCalculationIfNeeded}
+        onCheckedChange={applyAuctionIfNeeded}
       />
 
       <TransactionSummary
-        ttValue={quantityValue * item.value}
+        ttValue={isNonStackable ? tt : quantityValue * item.value}
         feeValue={feeValue}
         ttcValue={totalValue}
+        lotCount={action === "buy" && isNonStackable ? lotCount : undefined}
       />
     </>
   );

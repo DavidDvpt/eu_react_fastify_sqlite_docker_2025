@@ -101,8 +101,7 @@ describe("ItemDetail", () => {
     expect(screen.queryByText("Modifier le tier")).toBeNull();
   });
 
-  it("opens the editor on the focused lot only via the pencil", async () => {
-    const user = userEvent.setup();
+    it("opens the editor on the focused lot only via the pencil", async () => {    const user = userEvent.setup();
     renderDetail(
       <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[0] as never} />,
     );
@@ -166,5 +165,28 @@ describe("ItemDetail", () => {
     const modal = JSON.parse(params.get("transactionModal") ?? "{}");
     expect(modal.action).toBe("sell");
     expect(modal.lotId).toBeUndefined();
+  });
+
+  it("saves the tier typed in the number input without crashing", async () => {
+    const user = userEvent.setup();
+    updateTierMock.mockResolvedValue({ id: "lot-1", tierLevel: 4 });
+    renderDetail(
+      <ItemDetail item={ITEM as never} lots={LOTS as never} focusedLot={LOTS[0] as never} />,
+    );
+
+    await user.click(screen.getByRole("button", { name: "Modifier les tiers" }));
+    const input = screen.getByLabelText("Nouveau tier du lot lot-1");
+    await user.clear(input);
+    await user.type(input, "4");
+    await user.click(
+      screen.getByRole("button", { name: "Enregistrer le tier du lot lot-1" }),
+    );
+
+    await waitFor(() => {
+      expect(updateTierMock).toHaveBeenCalledWith({
+        lotId: "lot-1",
+        data: { tierLevel: 4 },
+      });
+    });
   });
 });

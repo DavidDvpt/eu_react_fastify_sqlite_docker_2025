@@ -1,6 +1,7 @@
 import {
   getMinimumBuyTtc,
   getMinimumTtcWithFee,
+  parseDecimalInput,
   sanitizeNonNegative,
 } from "@/shared/helpers/transactionHelpers";
 import type {
@@ -16,16 +17,40 @@ function sanitizeEditableQuantity(value: number) {
   return Math.floor(value);
 }
 
+/**
+ * Free mode: no auction rules, user inputs are kept as-is
+ * (sanitized). Quantity stays an integer, fee/TTC pass through.
+ */
+function passThroughFreePricing(
+  quantity: number,
+  fee: number,
+  ttc: number,
+): TransactionPricingValues {
+  const nextQuantity = sanitizeEditableQuantity(parseDecimalInput(quantity));
+  if (nextQuantity === 0) {
+    return { quantity: 0, fee: 0, ttc: 0 };
+  }
+  return {
+    quantity: nextQuantity,
+    fee: parseDecimalInput(fee),
+    ttc: parseDecimalInput(ttc),
+  };
+}
+
 export function computeQuantityPricing({
   action,
   fee,
+  isAuction = true,
   quantity,
   ttc,
   unitPrice,
 }: TransactionPricingInput): TransactionPricingValues {
+  if (!isAuction) {
+    return passThroughFreePricing(quantity, fee, ttc);
+  }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-    return { quantity: 0, fee: 0, ttc: 0 };
+      return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;
@@ -46,10 +71,7 @@ export function computeQuantityPricing({
     };
   }
 
-  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(
-    tt,
-    currentTtc,
-  );
+  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(tt, currentTtc);
   const nextTtc = tt + nextFee > currentTtc ? suggestedTtc : currentTtc;
 
   return {
@@ -62,13 +84,17 @@ export function computeQuantityPricing({
 export function computeFeePricing({
   action,
   fee,
+  isAuction = true,
   quantity,
   ttc,
   unitPrice,
 }: TransactionPricingInput): TransactionPricingValues {
+  if (!isAuction) {
+    return passThroughFreePricing(quantity, fee, ttc);
+  }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-    return { quantity: 0, fee: 0, ttc: 0 };
+      return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;
@@ -89,10 +115,7 @@ export function computeFeePricing({
     };
   }
 
-  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(
-    tt,
-    currentTtc,
-  );
+  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(tt, currentTtc);
   const nextTtc = tt + nextFee > currentTtc ? suggestedTtc : currentTtc;
 
   return {
@@ -105,13 +128,17 @@ export function computeFeePricing({
 export function computeTtcPricing({
   action,
   fee,
+  isAuction = true,
   quantity,
   ttc,
   unitPrice,
 }: TransactionPricingInput): TransactionPricingValues {
+  if (!isAuction) {
+    return passThroughFreePricing(quantity, fee, ttc);
+  }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-    return { quantity: 0, fee: 0, ttc: 0 };
+      return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;

@@ -5,17 +5,22 @@ interface TransactionSummaryProps {
   ttValue: number;
   feeValue: number;
   ttcValue: number;
+  lotCount?: number;
 }
 
 function TransactionSummary({
   ttValue,
   feeValue,
   ttcValue,
+  lotCount,
 }: TransactionSummaryProps) {
   const deltaValue = ttcValue - ttValue;
   const markup = ttValue > 0 ? (ttcValue / ttValue) * 100 : 0;
   const netMarkup =
     ttValue > 0 && ttcValue > 0 ? ((ttcValue - feeValue) / ttValue) * 100 : 0;
+  const showTotals = typeof lotCount === "number" && Number.isInteger(lotCount) && lotCount > 1;
+  const ttcTotal = showTotals ? ttcValue * (lotCount as number) : ttcValue;
+  const ttTotal = showTotals ? ttValue * (lotCount as number) : ttValue;
 
   const deltaStyle = cn(
     "m-0",
@@ -45,6 +50,14 @@ function TransactionSummary({
           Delta : {FormatTools.pedFormat().format(deltaValue - feeValue)} Ped
         </p>
       </div>
+      {showTotals ? (
+        <div className="flex justify-between fle-row">
+          <p className="m-0">Total TT : {FormatTools.pedFormat().format(ttTotal)} Ped</p>
+          <p className={deltaStyle}>
+            Total TTC : {FormatTools.pedFormat().format(ttcTotal)} Ped
+          </p>
+        </div>
+      ) : null}
     </div>
   );
 }

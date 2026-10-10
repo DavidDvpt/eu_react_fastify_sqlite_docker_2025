@@ -21,6 +21,12 @@ export const transactionBodyTtcTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\
 export const transactionBodyFeeOneMin = 0;
 
 export const transactionBodyFeeTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const transactionBodyIsAuctionDefault = true;
+export const transactionBodyTtRemainingOneMin = 0;
+
+export const transactionBodyTtRemainingTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const transactionBodyLotCountDefault = 1;
+
 
 
 export const TransactionBody = zod.object({
@@ -32,7 +38,10 @@ export const TransactionBody = zod.object({
   "status": zod.union([TransactionStatus,zod.null()]),
   "tt": zod.union([zod.number().min(transactionBodyTtOneMin),zod.string().regex(transactionBodyTtTwoRegExp)]),
   "ttc": zod.union([zod.number().min(transactionBodyTtcOneMin),zod.string().regex(transactionBodyTtcTwoRegExp)]),
-  "fee": zod.union([zod.number().min(transactionBodyFeeOneMin),zod.string().regex(transactionBodyFeeTwoRegExp)])
+  "fee": zod.union([zod.number().min(transactionBodyFeeOneMin),zod.string().regex(transactionBodyFeeTwoRegExp)]),
+  "isAuction": zod.boolean().default(transactionBodyIsAuctionDefault),
+  "ttRemaining": zod.union([zod.number().min(transactionBodyTtRemainingOneMin),zod.string().regex(transactionBodyTtRemainingTwoRegExp),zod.null()]).optional(),
+  "lotCount": zod.int().min(1).default(transactionBodyLotCountDefault)
 });
 
 export type TransactionBody = zod.input<typeof TransactionBody>;

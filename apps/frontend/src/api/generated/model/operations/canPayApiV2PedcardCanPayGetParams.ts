@@ -5,5 +5,5 @@
  */
 
 export type CanPayApiV2PedcardCanPayGetParams = {
-value: number;
+value: number | string;
 };

@@ -3,12 +3,12 @@ import type { TransactionViewModel } from "@zod-schemas";
 import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
 
 export type TransactionFormValues = {
-  autoCalculation: boolean;
+  isAuction: boolean;
   quantity: number;
   fee: number;
   buyPrice: number;
 };
-export type TransactionPricingField = "quantity" | "fee" | "ttc";
+export type TransactionPricingField = "quantity" | "fee" | "ttc" | "tt";
 export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
 
 export type TransactionFormFieldsProps = Pick<
@@ -28,15 +28,17 @@ export type TransactionActionsProps = {
 };
 
 export type TransactionPricingSnapshot = TransactionPricingValues & {
-  autoCalculation: boolean;
+  isAuction: boolean;
 };
 
 export type AutoPricingFormValues = {
   action: TransactionAction;
-  autoCalculation: boolean;
+  isAuction: boolean;
   quantity: number;
+  tt?: number;
   fee: number;
   ttc: number;
+  lotCount?: number;
   tierLevel?: number;
 };
 
@@ -55,26 +57,34 @@ export type UseTransactionAutoPricingParams<
   form: UseFormReturn<TFormValues>;
   action: TransactionAction;
   unitPrice: number;
+  isNonStackable?: boolean;
 };
 
 export type UseTransactionAutoPricingResult = {
-  applyAutoCalculationIfNeeded: (checked: boolean) => void;
+  applyAuctionIfNeeded: (checked: boolean) => void;
   feeValue: number;
   isFeeReadOnly: boolean;
-  isAutoCalculationEnabled: boolean;
+  isAuctionEnabled: boolean;
   quantityValue: number;
   totalValue: number;
 };
 
 export type TransactionPricingValues = {
   quantity: number;
+  tt?: number;
   fee: number;
   ttc: number;
 };
 
-export type TransactionPricingInput = TransactionPricingValues & {
+export type TransactionPricingInput = Omit<TransactionPricingValues, "tt"> & {
+  tt?: number;
   action: TransactionAction;
   unitPrice: number;
+  /**
+   * Auction mode (default true) applies the Entropia auction fee rules
+   * (integer TTC). Free mode returns user inputs untouched.
+   */
+  isAuction?: boolean;
 };
 
 export type TransactionModalQueries = {

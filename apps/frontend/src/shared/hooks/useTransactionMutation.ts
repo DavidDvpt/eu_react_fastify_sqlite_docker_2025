@@ -59,10 +59,17 @@ function useTransactionsMutation() {
           : "BUY") as TransactionTypeDto,
         itemId: item.id,
         quantity: values.quantity,
-        tt: values.quantity * item.value,
+        tt: values.tt ?? item.value,
         fee: values.fee,
         ttc: values.ttc,
+        ttRemaining:
+          action === "buy" && !item.type?.isStackable ? values.tt ?? item.value : undefined,
+        lotCount:
+          action === "buy" && !item.type?.isStackable ? values.lotCount ?? 1 : 1,
         status: values.status,
+        // Auction (default) vs free pricing; the API rejects bulk
+        // non-stackable buys in auction mode.
+        isAuction: values.isAuction,
         ...(action === "buy" && isTierable
           ? { tierLevel: values.tierLevel ?? 0 }
           : {}),

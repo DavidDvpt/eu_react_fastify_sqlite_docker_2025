@@ -1,4 +1,5 @@
 import InputRHF from "@/shared/components/form/Input/InputRHF";
+import StepperButtons from "./StepperButtons";
 
 type TransactionFieldRowProps = {
   quantityLabel: string;
@@ -7,6 +8,10 @@ type TransactionFieldRowProps = {
   totalLabelClassName: string;
   feeReadOnly?: boolean;
   quantityReadOnly?: boolean;
+  /** Free mode allows decimal TTC (5 decimals max). Defaults to auction. */
+  isAuction?: boolean;
+  isNonStackable?: boolean;
+  ttReadOnly?: boolean;
 };
 
 export function TransactionFields({
@@ -16,6 +21,9 @@ export function TransactionFields({
   totalLabelClassName,
   feeReadOnly = false,
   quantityReadOnly = false,
+  isAuction = true,
+  isNonStackable = false,
+  ttReadOnly = false,
 }: TransactionFieldRowProps) {
   return (
     <div className="flex items-start justify-between">
@@ -31,29 +39,45 @@ export function TransactionFields({
         wrapperClassName="w-[30%] min-w-0"
       />
 
+      {isNonStackable ? (
+        <InputRHF
+          name="tt"
+          type="text"
+          inputMode="decimal"
+          readOnly={ttReadOnly}
+          selectOnFocus
+          placeholder="ex. 22.00000"
+          label="TT"
+          labelClassName="text-sm"
+          wrapperClassName="w-[30%] min-w-0"
+          suffix={<StepperButtons name="tt" step={1} decimals={5} disabled={ttReadOnly} />}
+        />
+      ) : null}
+
       <InputRHF
         name="fee"
-        type="number"
-        min={0}
-        max={100}
-        step="0.01"
+        type="text"
+        inputMode="decimal"
         readOnly={feeReadOnly}
-        registerOptions={{ valueAsNumber: true }}
         selectOnFocus
         label={feeLabel}
         labelClassName="text-sm"
         wrapperClassName="w-[30%] min-w-0"
+        suffix={
+          <StepperButtons name="fee" step={1} decimals={2} disabled={feeReadOnly} />
+        }
       />
 
       <InputRHF
         name="ttc"
-        type="number"
-        step="1"
-        registerOptions={{ valueAsNumber: true }}
+        type="text"
+        inputMode="decimal"
         selectOnFocus
+        placeholder={isAuction ? undefined : "ex. 24.20000"}
         label={totalLabel}
         labelClassName={totalLabelClassName}
         wrapperClassName="w-[30%] min-w-0"
+        suffix={<StepperButtons name="ttc" step={1} decimals={5} />}
       />
     </div>
   );

@@ -17,4 +17,8 @@ export type TransactionBody = {
   tt: number | string;
   ttc: number | string;
   fee: number | string;
+  isAuction?: boolean;
+  ttRemaining?: number | string | null;
+  /** @minimum 1 */
+  lotCount?: number;
 };

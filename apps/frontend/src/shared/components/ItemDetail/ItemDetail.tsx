@@ -278,12 +278,15 @@ function ItemTierEditor({
                     max={10}
                     step={1}
                     value={tierValues[lot.id] ?? currentTier}
-                    onChange={(event) =>
+                    onChange={(event) => {
+                      // Read synchronously: currentTarget is nullified once
+                      // the event handler returns (spinner buttons included).
+                      const nextTier = event.currentTarget.valueAsNumber;
                       setTierValues((values) => ({
                         ...values,
-                        [lot.id]: event.currentTarget.valueAsNumber,
-                      }))
-                    }
+                        [lot.id]: nextTier,
+                      }));
+                    }}
                   />
                 </label>
                 <Button
