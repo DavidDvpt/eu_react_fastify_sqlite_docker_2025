@@ -6,8 +6,6 @@
 
 export * from './averageBuyMarkupResponse.ts';
 export * from './averageBuyMarkupScopeResponse.ts';
-export * from './balanceResponse.ts';
-export * from './canPayApiV2PedcardCanPayGetParams.ts';
 export * from './categoryResponse.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetParams.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetParams.ts';
@@ -20,7 +18,6 @@ export * from './listCategoriesApiV2CategoriesGetParams.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetParams.ts';
 export * from './listInventoryStockApiV2InventoryStockGetParams.ts';
 export * from './listItemsApiV2ItemsGetParams.ts';
-export * from './listPedcardsApiV2PedcardGetParams.ts';
 export * from './listTransactionsApiV2TransactionsGetParams.ts';
 export * from './listTypesApiV2TypesGetParams.ts';
 export * from './lotResponse.ts';
@@ -28,8 +25,6 @@ export * from './lotTierResponse.ts';
 export * from './meResponse.ts';
 export * from './messageResponse.ts';
 export * from './moneySummaryResponse.ts';
-export * from './nexusResponse.ts';
-export * from './pedcardResponse.ts';
 export * from './signInBody.ts';
 export * from './signUpBody.ts';
 export * from './stockLineResponse.ts';

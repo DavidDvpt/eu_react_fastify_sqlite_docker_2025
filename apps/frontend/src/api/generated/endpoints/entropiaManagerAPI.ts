@@ -12,13 +12,9 @@ import type {
 
 import type {
   AverageBuyMarkupResponse,
-  BalanceResponse,
-  CanPayApiV2PedcardCanPayGet200,
-  CanPayApiV2PedcardCanPayGetParams,
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
-  CheckPedcardApiV2PedcardCheckGet200,
   GetItemLotsApiV2ItemsIdLotsGetParams,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   HealthHealthGet200,
@@ -33,7 +29,6 @@ import type {
   ListInventoryLotsApiV2InventoryLotsGetParams,
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
-  ListPedcardsApiV2PedcardGetParams,
   ListTransactionsApiV2TransactionsGetParams,
   ListTypesApiV2TypesGetParams,
   LotResponse,
@@ -41,11 +36,6 @@ import type {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
-  NexusForm,
-  NexusResponse,
-  PedcardForm,
-  PedcardPatch,
-  PedcardResponse,
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
@@ -813,174 +803,6 @@ const getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl = (params?:
 }
 
 /**
- * @summary Check Pedcard
- */
-const checkPedcardApiV2PedcardCheckGet = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<CheckPedcardApiV2PedcardCheckGet200>> => {
-    return axiosInstance.get(
-      `/api/v2/pedcard/check`,options
-    );
-  }
-const getCheckPedcardApiV2PedcardCheckGetUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard/check`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Get Balance
- */
-const getBalanceApiV2PedcardBalanceGet = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<BalanceResponse>> => {
-    return axiosInstance.get(
-      `/api/v2/pedcard/balance`,options
-    );
-  }
-const getGetBalanceApiV2PedcardBalanceGetUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard/balance`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Can Pay
- */
-const canPayApiV2PedcardCanPayGet = (
-    params: CanPayApiV2PedcardCanPayGetParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<CanPayApiV2PedcardCanPayGet200>> => {
-    return axiosInstance.get(
-      `/api/v2/pedcard/can-pay`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-const getCanPayApiV2PedcardCanPayGetUrl = (params: CanPayApiV2PedcardCanPayGetParams,) => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard/can-pay`,
-    baseURL: '',
-    params,
-
-  });
-}
-
-/**
- * @summary List Pedcards
- */
-const listPedcardsApiV2PedcardGet = (
-    params?: ListPedcardsApiV2PedcardGetParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<PedcardResponse[]>> => {
-    return axiosInstance.get(
-      `/api/v2/pedcard`,{
-    ...options,
-        params: {...params, ...options?.params},}
-    );
-  }
-const getListPedcardsApiV2PedcardGetUrl = (params?: ListPedcardsApiV2PedcardGetParams,) => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard`,
-    baseURL: '',
-    params,
-
-  });
-}
-
-/**
- * @summary Create Pedcard
- */
-const createPedcardApiV2PedcardPost = (
-    pedcardForm: PedcardForm, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.post(
-      `/api/v2/pedcard`,
-      pedcardForm,options
-    );
-  }
-const getCreatePedcardApiV2PedcardPostUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Patch Pedcard
- */
-const patchPedcardApiV2PedcardIdPatch = (
-    id: string,
-    pedcardPatch: PedcardPatch, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.patch(
-      `/api/v2/pedcard/${id}`,
-      pedcardPatch,options
-    );
-  }
-const getPatchPedcardApiV2PedcardIdPatchUrl = (id: string,) => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard/${id}`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Delete Pedcard
- */
-const deletePedcardApiV2PedcardIdDeleteDelete = (
-    id: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<void>> => {
-    return axiosInstance.delete(
-      `/api/v2/pedcard/${id}/delete`,options
-    );
-  }
-const getDeletePedcardApiV2PedcardIdDeleteDeleteUrl = (id: string,) => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/pedcard/${id}/delete`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
  * @summary List Transactions
  */
 const listTransactionsApiV2TransactionsGet = (
@@ -1127,79 +949,6 @@ const getPatchCancelApiV2TransactionsIdCancelPatchUrl = (id: string,) => {
 }
 
 /**
- * @summary List Nexus
- */
-const listNexusApiV2NexusToolsGet = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<NexusResponse[]>> => {
-    return axiosInstance.get(
-      `/api/v2/nexus-tools`,options
-    );
-  }
-const getListNexusApiV2NexusToolsGetUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/nexus-tools`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * Seed the nexus rows from the types/items tables (legacy ``POST /init``).
- * @summary Init Nexus
- */
-const initNexusApiV2NexusToolsInitPost = (
-     options?: AxiosRequestConfig
- ): Promise<AxiosResponse<unknown>> => {
-    return axiosInstance.post(
-      `/api/v2/nexus-tools/init`,
-      undefined,options
-    );
-  }
-const getInitNexusApiV2NexusToolsInitPostUrl = () => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/nexus-tools/init`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
- * @summary Patch Nexus
- */
-const patchNexusApiV2NexusToolsIdPatch = (
-    id: string,
-    nexusForm: NexusForm, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<NexusResponse>> => {
-    return axiosInstance.patch(
-      `/api/v2/nexus-tools/${id}`,
-      nexusForm,options
-    );
-  }
-const getPatchNexusApiV2NexusToolsIdPatchUrl = (id: string,) => {
-
-  return axiosInstance.create({
-    baseURL: '',
-    params: null,
-  }).getUri({
-    url: `/api/v2/nexus-tools/${id}`,
-    baseURL: '',
-
-
-  });
-}
-
-/**
  * @summary Health
  */
 const healthHealthGet = (
@@ -1222,7 +971,7 @@ const getHealthHealthGetUrl = () => {
   });
 }
 
-return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,checkPedcardApiV2PedcardCheckGet,getBalanceApiV2PedcardBalanceGet,canPayApiV2PedcardCanPayGet,listPedcardsApiV2PedcardGet,createPedcardApiV2PedcardPost,patchPedcardApiV2PedcardIdPatch,deletePedcardApiV2PedcardIdDeleteDelete,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,listNexusApiV2NexusToolsGet,initNexusApiV2NexusToolsInitPost,patchNexusApiV2NexusToolsIdPatch,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getCheckPedcardApiV2PedcardCheckGetUrl,getGetBalanceApiV2PedcardBalanceGetUrl,getCanPayApiV2PedcardCanPayGetUrl,getListPedcardsApiV2PedcardGetUrl,getCreatePedcardApiV2PedcardPostUrl,getPatchPedcardApiV2PedcardIdPatchUrl,getDeletePedcardApiV2PedcardIdDeleteDeleteUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getListNexusApiV2NexusToolsGetUrl,getInitNexusApiV2NexusToolsInitPostUrl,getPatchNexusApiV2NexusToolsIdPatchUrl,getHealthHealthGetUrl}};
+return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getHealthHealthGetUrl}};
 export type SignupApiV2AuthSignupPostResult = AxiosResponse<SignupApiV2AuthSignupPost201>
 export type SigninApiV2AuthSigninPostResult = AxiosResponse<MessageResponse>
 export type LogoutApiV2AuthLogoutPostResult = AxiosResponse<MessageResponse>
@@ -1254,20 +1003,10 @@ export type ListInventoryLotsApiV2InventoryLotsGetResult = AxiosResponse<LotResp
 export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResult = AxiosResponse<LotTierResponse>
 export type ListInventoryStockApiV2InventoryStockGetResult = AxiosResponse<StockLineResponse[]>
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetResult = AxiosResponse<InventoryFinancialReportResponse>
-export type CheckPedcardApiV2PedcardCheckGetResult = AxiosResponse<CheckPedcardApiV2PedcardCheckGet200>
-export type GetBalanceApiV2PedcardBalanceGetResult = AxiosResponse<BalanceResponse>
-export type CanPayApiV2PedcardCanPayGetResult = AxiosResponse<CanPayApiV2PedcardCanPayGet200>
-export type ListPedcardsApiV2PedcardGetResult = AxiosResponse<PedcardResponse[]>
-export type CreatePedcardApiV2PedcardPostResult = AxiosResponse<IdResponse>
-export type PatchPedcardApiV2PedcardIdPatchResult = AxiosResponse<IdResponse>
-export type DeletePedcardApiV2PedcardIdDeleteDeleteResult = AxiosResponse<void>
 export type ListTransactionsApiV2TransactionsGetResult = AxiosResponse<TransactionEntryResponse[]>
 export type CreateTransactionApiV2TransactionsPostResult = AxiosResponse<IdResponse>
 export type ListRunningApiV2TransactionsRunningGetResult = AxiosResponse<TransactionResponse[]>
 export type GetTransactionApiV2TransactionsIdGetResult = AxiosResponse<TransactionResponse>
 export type PatchStatusApiV2TransactionsIdStatusPatchResult = AxiosResponse<void>
 export type PatchCancelApiV2TransactionsIdCancelPatchResult = AxiosResponse<void>
-export type ListNexusApiV2NexusToolsGetResult = AxiosResponse<NexusResponse[]>
-export type InitNexusApiV2NexusToolsInitPostResult = AxiosResponse<unknown>
-export type PatchNexusApiV2NexusToolsIdPatchResult = AxiosResponse<NexusResponse>
 export type HealthHealthGetResult = AxiosResponse<HealthHealthGet200>
