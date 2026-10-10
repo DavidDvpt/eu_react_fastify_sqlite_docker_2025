@@ -29,6 +29,7 @@ import {
   PedcardResponse,
   SignInBody,
   SignUpBody,
+  StockLineResponse,
   TransactionBody,
   TransactionEntryResponse,
   TransactionResponse,
@@ -357,7 +358,12 @@ export const GetItemStockApiV2ItemsIdStockGetParams = zod.object({
 export type GetItemStockApiV2ItemsIdStockGetParams = zod.input<typeof GetItemStockApiV2ItemsIdStockGetParams>;
 export type GetItemStockApiV2ItemsIdStockGetParamsOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetParams>;
 
-export const GetItemStockApiV2ItemsIdStockGetResponse = zod.record(zod.string(), zod.int())
+export const GetItemStockApiV2ItemsIdStockGetResponseItem = StockLineResponse
+
+export type GetItemStockApiV2ItemsIdStockGetResponseItem = zod.input<typeof GetItemStockApiV2ItemsIdStockGetResponseItem>;
+export type GetItemStockApiV2ItemsIdStockGetResponseItemOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetResponseItem>;
+
+export const GetItemStockApiV2ItemsIdStockGetResponse = zod.array(GetItemStockApiV2ItemsIdStockGetResponseItem)
 
 export type GetItemStockApiV2ItemsIdStockGetResponse = zod.input<typeof GetItemStockApiV2ItemsIdStockGetResponse>;
 export type GetItemStockApiV2ItemsIdStockGetResponseOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetResponse>;
@@ -585,7 +591,12 @@ export const ListInventoryStockApiV2InventoryStockGetQueryParams = zod.object({
 export type ListInventoryStockApiV2InventoryStockGetQueryParams = zod.input<typeof ListInventoryStockApiV2InventoryStockGetQueryParams>;
 export type ListInventoryStockApiV2InventoryStockGetQueryParamsOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetQueryParams>;
 
-export const ListInventoryStockApiV2InventoryStockGetResponse = zod.record(zod.string(), zod.int())
+export const ListInventoryStockApiV2InventoryStockGetResponseItem = StockLineResponse
+
+export type ListInventoryStockApiV2InventoryStockGetResponseItem = zod.input<typeof ListInventoryStockApiV2InventoryStockGetResponseItem>;
+export type ListInventoryStockApiV2InventoryStockGetResponseItemOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetResponseItem>;
+
+export const ListInventoryStockApiV2InventoryStockGetResponse = zod.array(ListInventoryStockApiV2InventoryStockGetResponseItem)
 
 export type ListInventoryStockApiV2InventoryStockGetResponse = zod.input<typeof ListInventoryStockApiV2InventoryStockGetResponse>;
 export type ListInventoryStockApiV2InventoryStockGetResponseOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetResponse>;

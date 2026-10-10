@@ -49,10 +49,19 @@ function TransactionPanelContent({
   onBack,
   modalParams,
 }: TransactionPanelProps) {
-  const { action, quantity, ttc } = modalParams;
+  const { action, quantity, ttc, lotId } = modalParams;
+  // Selling MY single instance: exactly this lot, quantity locked to 1.
+  const isInstanceSell =
+    action === "sell" &&
+    lotId != null &&
+    item.type != null &&
+    !item.type.isStackable;
   const schema = useMemo(() => {
-    return transactionFormSchema(item.stock, modalParams.action!);
-  }, [modalParams, item]);
+    return transactionFormSchema(
+      isInstanceSell ? 1 : item.stock,
+      modalParams.action!,
+    );
+  }, [isInstanceSell, modalParams, item]);
 
   const { createMutation } = useTransactionsMutation();
 
@@ -97,7 +106,12 @@ function TransactionPanelContent({
     }
 
     createMutation.mutate(
-      { values: { ...values, status: "RUNNING" }, item, action },
+      {
+        values: { ...values, status: "RUNNING" },
+        item,
+        action,
+        lotId: isInstanceSell ? lotId : undefined,
+      },
       {
         onSuccess: onBack,
       },

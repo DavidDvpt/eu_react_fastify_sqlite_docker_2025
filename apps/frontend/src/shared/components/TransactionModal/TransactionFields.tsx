@@ -6,6 +6,7 @@ type TransactionFieldRowProps = {
   totalLabel: string;
   totalLabelClassName: string;
   feeReadOnly?: boolean;
+  quantityReadOnly?: boolean;
 };
 
 export function TransactionFields({
@@ -14,6 +15,7 @@ export function TransactionFields({
   totalLabel,
   totalLabelClassName,
   feeReadOnly = false,
+  quantityReadOnly = false,
 }: TransactionFieldRowProps) {
   return (
     <div className="flex items-start justify-between">
@@ -23,6 +25,7 @@ export function TransactionFields({
         step={1}
         registerOptions={{ valueAsNumber: true }}
         selectOnFocus
+        readOnly={quantityReadOnly}
         label={quantityLabel}
         labelClassName="text-sm"
         wrapperClassName="w-[30%] min-w-0"

@@ -45,6 +45,8 @@ export type TransactionModalParams = {
   itemId: string;
   quantity: number;
   ttc: number;
+  /** Selling MY single instance: this lot is consumed (required by the API). */
+  lotId?: string;
 };
 
 export type UseTransactionAutoPricingParams<
@@ -80,6 +82,7 @@ export type TransactionModalQueries = {
   itemId: string;
   quantity: number;
   ttc: number;
+  lotId?: string;
   closePath: string;
 };
 

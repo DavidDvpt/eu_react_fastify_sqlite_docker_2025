@@ -20,7 +20,6 @@ import type {
   CategoryResponse,
   CheckPedcardApiV2PedcardCheckGet200,
   GetItemLotsApiV2ItemsIdLotsGetParams,
-  GetItemStockApiV2ItemsIdStockGet200,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   HealthHealthGet200,
   IdResponse,
@@ -32,7 +31,6 @@ import type {
   ItemResponse,
   ListCategoriesApiV2CategoriesGetParams,
   ListInventoryLotsApiV2InventoryLotsGetParams,
-  ListInventoryStockApiV2InventoryStockGet200,
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
   ListPedcardsApiV2PedcardGetParams,
@@ -51,6 +49,7 @@ import type {
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
+  StockLineResponse,
   TransactionBody,
   TransactionEntryResponse,
   TransactionResponse,
@@ -499,7 +498,7 @@ const getCreateItemApiV2ItemsPostUrl = () => {
  */
 const getItemStockApiV2ItemsIdStockGet = (
     id: string, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<GetItemStockApiV2ItemsIdStockGet200>> => {
+ ): Promise<AxiosResponse<StockLineResponse[]>> => {
     return axiosInstance.get(
       `/api/v2/items/${id}/stock`,options
     );
@@ -768,7 +767,7 @@ const getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl = (lotId: str
  */
 const listInventoryStockApiV2InventoryStockGet = (
     params?: ListInventoryStockApiV2InventoryStockGetParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<ListInventoryStockApiV2InventoryStockGet200>> => {
+ ): Promise<AxiosResponse<StockLineResponse[]>> => {
     return axiosInstance.get(
       `/api/v2/inventory/stock`,{
     ...options,
@@ -1242,7 +1241,7 @@ export type DeleteCategoryApiV2TypesIdDeleteResult = AxiosResponse<IdResponse>
 export type GetTypeItemsApiV2TypesTypeRefItemsGetResult = AxiosResponse<ItemResponse[]>
 export type ListItemsApiV2ItemsGetResult = AxiosResponse<ItemResponse[]>
 export type CreateItemApiV2ItemsPostResult = AxiosResponse<IdResponse>
-export type GetItemStockApiV2ItemsIdStockGetResult = AxiosResponse<GetItemStockApiV2ItemsIdStockGet200>
+export type GetItemStockApiV2ItemsIdStockGetResult = AxiosResponse<StockLineResponse[]>
 export type GetItemLotsApiV2ItemsIdLotsGetResult = AxiosResponse<LotResponse[]>
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetResult = AxiosResponse<TransactionEntryResponse[]>
 export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResult = AxiosResponse<ItemFinancialReportEnvelope>
@@ -1253,7 +1252,7 @@ export type PatchItemApiV2ItemsIdPutResult = AxiosResponse<IdResponse>
 export type DeleteItemApiV2ItemsIdDeleteResult = AxiosResponse<IdResponse>
 export type ListInventoryLotsApiV2InventoryLotsGetResult = AxiosResponse<LotResponse[]>
 export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResult = AxiosResponse<LotTierResponse>
-export type ListInventoryStockApiV2InventoryStockGetResult = AxiosResponse<ListInventoryStockApiV2InventoryStockGet200>
+export type ListInventoryStockApiV2InventoryStockGetResult = AxiosResponse<StockLineResponse[]>
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetResult = AxiosResponse<InventoryFinancialReportResponse>
 export type CheckPedcardApiV2PedcardCheckGetResult = AxiosResponse<CheckPedcardApiV2PedcardCheckGet200>
 export type GetBalanceApiV2PedcardBalanceGetResult = AxiosResponse<BalanceResponse>

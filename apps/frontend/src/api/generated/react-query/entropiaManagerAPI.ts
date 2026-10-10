@@ -32,7 +32,6 @@ import type {
   CategoryResponse,
   CheckPedcardApiV2PedcardCheckGet200,
   GetItemLotsApiV2ItemsIdLotsGetParams,
-  GetItemStockApiV2ItemsIdStockGet200,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   HTTPValidationError,
   HealthHealthGet200,
@@ -45,7 +44,6 @@ import type {
   ItemResponse,
   ListCategoriesApiV2CategoriesGetParams,
   ListInventoryLotsApiV2InventoryLotsGetParams,
-  ListInventoryStockApiV2InventoryStockGet200,
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
   ListPedcardsApiV2PedcardGetParams,
@@ -64,6 +62,7 @@ import type {
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
+  StockLineResponse,
   TransactionBody,
   TransactionEntryResponse,
   TransactionResponse,
@@ -1528,7 +1527,7 @@ export const getItemStockApiV2ItemsIdStockGet = (
 ) => {
 
 
-      return customInstance<GetItemStockApiV2ItemsIdStockGet200>(
+      return customInstance<StockLineResponse[]>(
       {url: `/api/v2/items/${id}/stock`, method: 'GET', signal
     },
       options);
@@ -2469,7 +2468,7 @@ export const listInventoryStockApiV2InventoryStockGet = (
 ) => {
 
 
-      return customInstance<ListInventoryStockApiV2InventoryStockGet200>(
+      return customInstance<StockLineResponse[]>(
       {url: `/api/v2/inventory/stock`, method: 'GET',
         params, signal
     },

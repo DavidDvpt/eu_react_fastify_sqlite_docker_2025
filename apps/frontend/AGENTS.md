@@ -14,6 +14,21 @@ Panel > Section > SubSection
 - `SubSection` is the leaf container and must not contain `Panel` or `Section` components.
 - Overlay components rendered through a portal, such as modals, are exempt from the visual hierarchy when they do not render inside the panel DOM tree.
 
+## Tierable item names (display only)
+
+Items whose type has `hasTierOption` and which are not stackable are displayed
+with the suffix ` T<tierLevel>` (one space, capital T, tier integer), e.g.
+`Sword T5`. This is a display-only rule:
+
+- Always go through `formatItemNameWithTier` (`src/shared/helpers/tier.ts`).
+  Never persist the suffix, never send it to the API.
+- Applies to inventory stock rows (table + card, one row per non-stackable
+  instance via `buildStockRows`) and to the item detail title in instance
+  mode (the detail of MY single stock instance, resolved from `?lotId=`).
+- The aggregated item view, the manage forms and the transaction lists keep
+  the raw item name; per-lot tiers also live in the tier editor and in the
+  `StockLotsSection` Tier column.
+
 ## Production Docker deployment
 
 The production image is built locally on the target server. It is not pushed to

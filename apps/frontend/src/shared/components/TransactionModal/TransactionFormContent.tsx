@@ -14,7 +14,12 @@ function TransactionFormContent({
   item,
   modalParams,
 }: TransactionFormFieldsProps) {
-  const { action } = modalParams;
+  const { action, lotId } = modalParams;
+  const isInstanceSell =
+    action === "sell" &&
+    lotId != null &&
+    item.type != null &&
+    !item.type.isStackable;
   const form = useFormContext<AutoPricingFormValues>();
 
   const {
@@ -37,6 +42,7 @@ function TransactionFormContent({
         totalLabel={action === "buy" ? "Achat" : "Vente"}
         totalLabelClassName="text-sm text-text"
         feeReadOnly={isFeeReadOnly}
+        quantityReadOnly={isInstanceSell}
       />
 
       {action === "buy" &&

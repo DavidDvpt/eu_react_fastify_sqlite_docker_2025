@@ -32,6 +32,7 @@ export * from './nexusResponse.ts';
 export * from './pedcardResponse.ts';
 export * from './signInBody.ts';
 export * from './signUpBody.ts';
+export * from './stockLineResponse.ts';
 export * from './transactionBody.ts';
 export * from './transactionEntryResponse.ts';
 export * from './transactionLotResponse.ts';

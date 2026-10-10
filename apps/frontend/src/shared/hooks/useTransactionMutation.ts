@@ -42,10 +42,12 @@ function useTransactionsMutation() {
       values,
       item,
       action,
+      lotId,
     }: {
       values: AutoPricingFormValues & { status: TransactionStatusDto };
       item: ItemWithStock;
       action: TransactionAction;
+      lotId?: string;
     }) => {
       const isTierable = Boolean(
         item.type?.hasTierOption && !item.type.isStackable,
@@ -64,6 +66,8 @@ function useTransactionsMutation() {
         ...(action === "buy" && isTierable
           ? { tierLevel: values.tierLevel ?? 0 }
           : {}),
+        // Non-stackable sales consume one explicit instance.
+        ...(action === "sell" && lotId ? { lotId } : {}),
       } satisfies TransactionBody });
     },
     onSuccess: async (_data, { item }) => {

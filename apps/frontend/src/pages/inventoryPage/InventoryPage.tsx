@@ -17,12 +17,19 @@ function InventoryPage() {
   const { itemId } = useParams();
   const navigate = useNavigate();
 
-  const handleSelectedItem = (itemId: string) => {
+  const handleSelectedItem = (itemId: string, lotId?: string | null) => {
     const path = `/inventory/${itemId}`;
+
+    const search = new URLSearchParams(location.search);
+    if (lotId) {
+      search.set("lotId", lotId);
+    } else {
+      search.delete("lotId");
+    }
 
     navigate({
       pathname: path,
-      search: location.search,
+      search: search.toString(),
     });
   };
   // const hasSelectedItem = Boolean(itemId);
@@ -53,12 +60,14 @@ function InventoryPage() {
           {Boolean(itemId) && (
             <StockDetailsPanel
               className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
-              onClose={() =>
+              onClose={() => {
+                const search = new URLSearchParams(location.search);
+                search.delete("lotId");
                 navigate({
                   pathname: "/inventory",
-                  search: location.search,
-                })
-              }
+                  search: search.toString(),
+                });
+              }}
             />
           )}
         </Section>

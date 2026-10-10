@@ -1,10 +1,11 @@
 import type { RowRendererProps } from "@/shared/components/GenericList/genericListTypes";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
+import { formatItemNameWithTier } from "@/shared/helpers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
-import type { ItemWithStock } from "@/shared/types";
+import type { StockRow } from "@/shared/helpers/stock";
 
-function InventoryItemCard({ row, onRowClick }: RowRendererProps<ItemWithStock>) {
+function InventoryItemCard({ row, onRowClick }: RowRendererProps<StockRow>) {
   return (
     <article
       className={`flex items-start gap-3 rounded-md border border-table-border p-3 ${
@@ -23,7 +24,12 @@ function InventoryItemCard({ row, onRowClick }: RowRendererProps<ItemWithStock>)
 
       <div className="flex min-w-0 flex-1 flex-col gap-1">
         <h3 className="m-0 truncate text-sm font-semibold text-text">
-          {row.name}
+          {formatItemNameWithTier({
+            name: row.name,
+            hasTierOption: row.type?.hasTierOption,
+            isStackable: row.type?.isStackable,
+            tierLevel: row.tierLevel,
+          })}
         </h3>
         {row.weight !== null && (
           <p className="m-0 text-xs">

@@ -4,16 +4,17 @@ import { GenericList } from "@/shared/components";
 import { Section } from "@/shared/components/Containers";
 
 import { FormatTools } from "@/shared/tools/formatTools";
-import type { ItemWithStock } from "@/shared/types";
+import type { StockRow } from "@/shared/helpers/stock";
 
 import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
 import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
+import { buildStockRows } from "@/shared/helpers";
 import type { InventoryPageQuery } from "@/pages/inventoryPage/inventoryPageSchema";
 import InventoryItemCard from "./InventoryItemCard";
 
 interface InventoryListProps extends InventoryPageQuery {
   className?: string;
-  onSelectedItem: (itemId: string) => void;
+  onSelectedItem: (itemId: string, lotId?: string | null) => void;
 }
 
 function InventoryList({
@@ -25,11 +26,11 @@ function InventoryList({
   onSelectedItem,
 }: InventoryListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
-    useInventoryStockData({});
+    useInventoryStockData();
 
   const visibleStock = useMemo(
     () =>
-      inventoryStock
+      buildStockRows(inventoryStock)
         ?.filter((item) => showAllItems || item.stock !== 0)
         .filter(
           (f) =>
@@ -48,11 +49,11 @@ function InventoryList({
 
   return (
     <Section className={className}>
-      <GenericList<ItemWithStock>
+      <GenericList<StockRow>
         columns={stockColumns(viewMode === "card")}
         rows={visibleStock}
-        getRowKey={(row) => row.id}
-        onRowClick={(row) => onSelectedItem(row.id)}
+        getRowKey={(row) => row.lotId ?? row.id}
+        onRowClick={(row) => onSelectedItem(row.id, row.lotId)}
         isLoading={isInventoryStockLoading}
         isError={isInventoryStockError}
         loadingMessage="Chargement de l'inventaire..."

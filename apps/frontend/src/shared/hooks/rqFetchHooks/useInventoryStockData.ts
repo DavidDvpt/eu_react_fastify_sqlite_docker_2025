@@ -1,13 +1,17 @@
-import type { StockQuery } from "@zod-schemas";
 import { useListInventoryStockApiV2InventoryStockGet } from "@/api/generated/react-query/entropiaManagerAPI";
 
 import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 import { useMemo } from "react";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import type { ItemWithStock } from "@/shared/types";
-import { NumberHelper } from "@/shared/helpers";
+import {
+  getLotsForItem,
+  getStockForItem,
+  groupStockLines,
+  NumberHelper,
+} from "@/shared/helpers";
 
-function useInventoryStockData({ itemId }: StockQuery = {}) {
+function useInventoryStockData() {
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
@@ -18,31 +22,37 @@ function useInventoryStockData({ itemId }: StockQuery = {}) {
     isError: isItemsStockError,
   } = useListInventoryStockApiV2InventoryStockGet(undefined, {
     query: {
-      queryKey: [...InvalidateQueryAndKeys.getInventoryStockKey().keys, itemId],
+      queryKey: InvalidateQueryAndKeys.getInventoryStockKey().keys,
       staleTime: 30_000,
     },
   });
 
+  const groupedStocks = useMemo(
+    () => groupStockLines(inventoryStock),
+    [inventoryStock],
+  );
+
   const itemsWithStock = useMemo(() => {
-    if (!itemDatas || !inventoryStock) return [];
+    if (!itemDatas) return [];
 
     const map = itemDatas.map((item) => ({
       ...item,
-      stock: inventoryStock[item.id] ?? 0,
+      stock: getStockForItem(groupedStocks, item.id),
+      lots: getLotsForItem(groupedStocks, item.id),
     })) as ItemWithStock[];
 
     return map;
-  }, [inventoryStock, itemDatas]);
+  }, [groupedStocks, itemDatas]);
 
   const inventoryStockValue = useMemo(() => {
     const total = itemDatas?.reduce((t, c) => {
-      const s = inventoryStock?.[c.id] ?? 0;
+      const s = getStockForItem(groupedStocks, c.id);
       const v = c.value * s;
 
       return t + v;
     }, 0);
     return total;
-  }, [itemDatas, inventoryStock]);
+  }, [itemDatas, groupedStocks]);
 
   return {
     inventoryStock: itemsWithStock,

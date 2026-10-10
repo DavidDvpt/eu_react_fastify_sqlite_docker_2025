@@ -1,10 +1,12 @@
-import type { GenericListColumn, ItemWithStock } from "@/shared/types";
+import type { GenericListColumn } from "@/shared/types";
+import type { StockRow } from "@/shared/helpers/stock";
+import { formatItemNameWithTier } from "@/shared/helpers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools/formatTools";
 
 const stockColumns = (
   useCardImageSize?: boolean,
-): GenericListColumn<ItemWithStock>[] => {
+): GenericListColumn<StockRow>[] => {
   return [
     {
       key: "image",
@@ -28,6 +30,15 @@ const stockColumns = (
       fillRemainingSpace: true,
       minWidth: 280,
       bodyCellClassName: "text-text font-semibold pl-1",
+      // Display-only tier suffix for tierable non-stackable instances
+      // (e.g. "Sword T3"). Never persisted, never sent to the API.
+      render: (item) =>
+        formatItemNameWithTier({
+          name: item.name,
+          hasTierOption: item.type?.hasTierOption,
+          isStackable: item.type?.isStackable,
+          tierLevel: item.tierLevel,
+        }),
     },
     {
       key: "quantity",

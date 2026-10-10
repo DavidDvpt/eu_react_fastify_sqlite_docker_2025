@@ -47,6 +47,14 @@ export class InvalidateQueryAndKeys {
       queryClient.invalidateQueries({
         queryKey: ["inventory", "lots"],
       }),
+      // Stock lines carry tierLevel: refresh them right away so the list,
+      // the details and the tier editor never show a stale tier.
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryStockKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemStockKey(itemId).keys,
+      }),
     ]);
   }
 

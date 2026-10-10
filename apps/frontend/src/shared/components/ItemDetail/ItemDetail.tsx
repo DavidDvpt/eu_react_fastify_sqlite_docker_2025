@@ -9,6 +9,7 @@ import { useMemo, useState } from "react";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup";
 import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
+import { formatItemNameWithTier } from "@/shared/helpers";
 import type { LotViewModel } from "@zod-schemas";
 import { Pencil, Save, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
@@ -16,17 +17,41 @@ import { useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch } from "@/api
 import { LotTierUpdate } from "@/api/generated/zod/model/lotTierUpdate.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 
-function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
+function ItemDetail({ item, lots, focusedLot = null, onBack = () => {} }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isEditingTier, setIsEditingTier] = useState(false);
 
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
+  // Instance view: the detail refers to MY single stock instance (one lot),
+  // which carries its own characteristics — including its tiered name.
+  // Aggregated view (stackable, no lot selected): the generic item.
+  const isInstanceView = Boolean(
+    focusedLot && item?.type && !item.type.isStackable,
+  );
+
+  const displayName = useMemo(() => {
+    if (!item) return "";
+    if (isInstanceView && focusedLot) {
+      return formatItemNameWithTier({
+        name: item.name,
+        hasTierOption: item.type?.hasTierOption,
+        isStackable: false,
+        tierLevel: focusedLot.tierLevel,
+      });
+    }
+    return item.name;
+  }, [item, isInstanceView, focusedLot]);
+
+  const displayStock = isInstanceView ? 1 : (item?.stock ?? 0);
+
+  const canEditTier = Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
+  const [isEditingTier, setIsEditingTier] = useState(false);
+
   const totalValue = useMemo(() => {
     if (!item) return 0;
-    return item.stock * item.value;
-  }, [item]);
+    return displayStock * item.value;
+  }, [item, displayStock]);
 
   if (!item) return null;
 
@@ -38,6 +63,11 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
       itemId: item.id,
       ttc: 0,
       quantity: 1,
+      // Selling MY instance consumes exactly this lot (the backend
+      // requires lot_id for non-stackable sales).
+      ...(action === "sell" && isInstanceView && focusedLot
+        ? { lotId: focusedLot.id }
+        : {}),
       closePath: `/inventory/${itemId ?? ""}`,
     };
 
@@ -64,7 +94,7 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
   const sellButton = (
     <Button
       onClick={() => openTransactionModal("sell")}
-      disabled={item.stock <= 0}
+      disabled={displayStock <= 0}
       className="w-[100px]"
       size="sm"
       variant="primary"
@@ -73,12 +103,10 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
     </Button>
   );
 
-  const canEditTier = Boolean(item.type?.hasTierOption && !item.type.isStackable);
-
   return (
     <Section className="flex flex-col gap-4 p-2 m-2">
       <div className="flex items-center justify-between gap-2">
-        <h1 className="m-0 p-0 text-base">{item.name}</h1>
+        <h1 className="m-0 p-0 text-base">{displayName}</h1>
         {canEditTier ? (
           <Button
             type="button"
@@ -87,10 +115,9 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
             className="h-8 w-8 rounded-md p-0"
             aria-label="Modifier les tiers"
             title="Modifier les tiers"
+            icon={isEditingTier ? X : Pencil}
             onClick={() => setIsEditingTier((editing) => !editing)}
-          >
-            {isEditingTier ? <X /> : <Pencil />}
-          </Button>
+          />
         ) : null}
       </div>
       {isEditingTier && canEditTier ? (
@@ -100,6 +127,7 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
             .join("|")}
           itemId={item.id}
           lots={lots ?? null}
+          focusedLotId={focusedLot?.id ?? null}
           onClose={() => setIsEditingTier(false)}
         />
       ) : null}
@@ -131,7 +159,7 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
       </div>
       <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
         <span className="text-text">Quantité</span>
-        <span className="text-text-muted">{item.stock}</span>
+        <span className="text-text-muted">{displayStock}</span>
         <span className="text-text">Valeur</span>
         <span className="text-text-muted">
           {FormatTools.pedFormat().format(totalValue)} Ped(s)
@@ -165,10 +193,12 @@ function ItemDetail({ item, lots, onBack = () => {} }: ItemDetailProps) {
 function ItemTierEditor({
   itemId,
   lots,
+  focusedLotId = null,
   onClose,
 }: {
   itemId: string;
   lots: LotViewModel[] | null;
+  focusedLotId?: string | null;
   onClose: () => void;
 }) {
   const updateTierMutation =
@@ -180,7 +210,10 @@ function ItemTierEditor({
   );
   const [error, setError] = useState<string | null>(null);
 
-  const editableLots = (lots ?? []).filter((lot) => lot.isActive);
+  // Instance view: edit MY single lot only. Aggregated view: all active lots.
+  const editableLots = (lots ?? []).filter((lot) =>
+    focusedLotId != null ? lot.id === focusedLotId : lot.isActive,
+  );
 
   const updateTier = async (lot: LotViewModel) => {
     const tierLevel = tierValues[lot.id] ?? lot.tierLevel ?? 0;
@@ -211,7 +244,9 @@ function ItemTierEditor({
   return (
     <div className="flex flex-col gap-2 rounded-md border border-table-border p-2">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-semibold">Modifier les tiers</span>
+        <span className="text-sm font-semibold">
+          {focusedLotId != null ? "Modifier le tier" : "Modifier les tiers"}
+        </span>
         <Button type="button" variant="link" size="sm" onClick={onClose}>
           Fermer
         </Button>
@@ -221,10 +256,13 @@ function ItemTierEditor({
       ) : (
         editableLots.map((lot) => {
           const currentTier = lot.tierLevel ?? 0;
+          const isFocused = focusedLotId != null && lot.id === focusedLotId;
           return (
             <div
               key={lot.id}
-              className="flex items-end justify-between gap-2 border-t border-table-border pt-2"
+              className={`flex items-end justify-between gap-2 border-t border-table-border pt-2${
+                isFocused ? " border-primary-500" : ""
+              }`}
             >
               <div className="text-xs text-text-muted">
                 <div>Lot du {FormatTools.dateFrShort(lot.createdAt)}</div>
@@ -252,12 +290,12 @@ function ItemTierEditor({
                   type="button"
                   variant="primary"
                   size="icon"
+                  className="h-8 w-8 rounded-md p-0"
                   aria-label={`Enregistrer le tier du lot ${lot.id}`}
+                  icon={Save}
                   disabled={updateTierMutation.isPending}
                   onClick={() => updateTier(lot)}
-                >
-                  <Save />
-                </Button>
+                />
               </div>
             </div>
           );

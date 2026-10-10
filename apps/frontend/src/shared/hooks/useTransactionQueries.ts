@@ -27,6 +27,9 @@ function parseTransactionModalQuery(
       itemId: params.itemId || "",
       quantity: Number(params.quantity) || 0,
       ttc: Number(params.ttc) || 0,
+      ...(typeof params.lotId === "string" && params.lotId !== ""
+        ? { lotId: params.lotId }
+        : {}),
       closePath: params.closePath,
     };
   } catch {
