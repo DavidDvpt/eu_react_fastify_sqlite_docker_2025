@@ -36,8 +36,8 @@ import type {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
-  RefinageRecipeCreate,
   RefinageRecipeResponse,
+  RefinageSessionCreate,
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
@@ -951,23 +951,23 @@ const getPatchCancelApiV2TransactionsIdCancelPatchUrl = (id: string,) => {
 }
 
 /**
- * @summary Create Refinage Recipe
+ * @summary Create Refinage Session
  */
-const createRefinageRecipeApiV2RefiningRecipesPost = (
-    refinageRecipeCreate: RefinageRecipeCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<RefinageRecipeResponse>> => {
+const createRefinageSessionApiV2RefinageCreatePost = (
+    refinageSessionCreate: RefinageSessionCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
     return axiosInstance.post(
-      `/api/v2/refining-recipes`,
-      refinageRecipeCreate,options
+      `/api/v2/refinage/create`,
+      refinageSessionCreate,options
     );
   }
-const getCreateRefinageRecipeApiV2RefiningRecipesPostUrl = () => {
+const getCreateRefinageSessionApiV2RefinageCreatePostUrl = () => {
 
   return axiosInstance.create({
     baseURL: '',
     params: null,
   }).getUri({
-    url: `/api/v2/refining-recipes`,
+    url: `/api/v2/refinage/create`,
     baseURL: '',
 
 
@@ -977,20 +977,20 @@ const getCreateRefinageRecipeApiV2RefiningRecipesPostUrl = () => {
 /**
  * @summary Get Results By Origin
  */
-const getResultsByOriginApiV2RefiningRecipesOriginItemIdGet = (
+const getResultsByOriginApiV2RefinageRecipeOriginItemIdGet = (
     itemId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<string[]>> => {
     return axiosInstance.get(
-      `/api/v2/refining-recipes/origin/${itemId}`,options
+      `/api/v2/refinage/recipe/origin/${itemId}`,options
     );
   }
-const getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetUrl = (itemId: string,) => {
+const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl = (itemId: string,) => {
 
   return axiosInstance.create({
     baseURL: '',
     params: null,
   }).getUri({
-    url: `/api/v2/refining-recipes/origin/${itemId}`,
+    url: `/api/v2/refinage/recipe/origin/${itemId}`,
     baseURL: '',
 
 
@@ -1000,20 +1000,20 @@ const getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetUrl = (itemId: str
 /**
  * @summary Get Recipe By Result
  */
-const getRecipeByResultApiV2RefiningRecipesResultItemIdGet = (
+const getRecipeByResultApiV2RefinageRecipeResultItemIdGet = (
     itemId: string, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<RefinageRecipeResponse[]>> => {
     return axiosInstance.get(
-      `/api/v2/refining-recipes/result/${itemId}`,options
+      `/api/v2/refinage/recipe/result/${itemId}`,options
     );
   }
-const getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetUrl = (itemId: string,) => {
+const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl = (itemId: string,) => {
 
   return axiosInstance.create({
     baseURL: '',
     params: null,
   }).getUri({
-    url: `/api/v2/refining-recipes/result/${itemId}`,
+    url: `/api/v2/refinage/recipe/result/${itemId}`,
     baseURL: '',
 
 
@@ -1043,7 +1043,7 @@ const getHealthHealthGetUrl = () => {
   });
 }
 
-return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,createRefinageRecipeApiV2RefiningRecipesPost,getResultsByOriginApiV2RefiningRecipesOriginItemIdGet,getRecipeByResultApiV2RefiningRecipesResultItemIdGet,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getCreateRefinageRecipeApiV2RefiningRecipesPostUrl,getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetUrl,getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetUrl,getHealthHealthGetUrl}};
+return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,createRefinageSessionApiV2RefinageCreatePost,getResultsByOriginApiV2RefinageRecipeOriginItemIdGet,getRecipeByResultApiV2RefinageRecipeResultItemIdGet,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getCreateRefinageSessionApiV2RefinageCreatePostUrl,getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl,getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl,getHealthHealthGetUrl}};
 export type SignupApiV2AuthSignupPostResult = AxiosResponse<SignupApiV2AuthSignupPost201>
 export type SigninApiV2AuthSigninPostResult = AxiosResponse<MessageResponse>
 export type LogoutApiV2AuthLogoutPostResult = AxiosResponse<MessageResponse>
@@ -1081,7 +1081,7 @@ export type ListRunningApiV2TransactionsRunningGetResult = AxiosResponse<Transac
 export type GetTransactionApiV2TransactionsIdGetResult = AxiosResponse<TransactionResponse>
 export type PatchStatusApiV2TransactionsIdStatusPatchResult = AxiosResponse<void>
 export type PatchCancelApiV2TransactionsIdCancelPatchResult = AxiosResponse<void>
-export type CreateRefinageRecipeApiV2RefiningRecipesPostResult = AxiosResponse<RefinageRecipeResponse>
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResult = AxiosResponse<string[]>
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResult = AxiosResponse<RefinageRecipeResponse[]>
+export type CreateRefinageSessionApiV2RefinageCreatePostResult = AxiosResponse<IdResponse>
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResult = AxiosResponse<string[]>
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResult = AxiosResponse<RefinageRecipeResponse[]>
 export type HealthHealthGetResult = AxiosResponse<HealthHealthGet200>

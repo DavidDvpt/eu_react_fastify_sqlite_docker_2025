@@ -21,8 +21,8 @@ import {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
-  RefinageRecipeCreate,
   RefinageRecipeResponse,
+  RefinageSessionCreate,
   SignInBody,
   SignUpBody,
   StockLineResponse,
@@ -727,59 +727,59 @@ export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output
 
 
 /**
- * @summary Create Refinage Recipe
+ * @summary Create Refinage Session
  */
-export const CreateRefinageRecipeApiV2RefiningRecipesPostBody = RefinageRecipeCreate
+export const CreateRefinageSessionApiV2RefinageCreatePostBody = RefinageSessionCreate
 
-export type CreateRefinageRecipeApiV2RefiningRecipesPostBody = zod.input<typeof CreateRefinageRecipeApiV2RefiningRecipesPostBody>;
-export type CreateRefinageRecipeApiV2RefiningRecipesPostBodyOutput = zod.output<typeof CreateRefinageRecipeApiV2RefiningRecipesPostBody>;
+export type CreateRefinageSessionApiV2RefinageCreatePostBody = zod.input<typeof CreateRefinageSessionApiV2RefinageCreatePostBody>;
+export type CreateRefinageSessionApiV2RefinageCreatePostBodyOutput = zod.output<typeof CreateRefinageSessionApiV2RefinageCreatePostBody>;
 
-export const CreateRefinageRecipeApiV2RefiningRecipesPostResponse = RefinageRecipeResponse
+export const CreateRefinageSessionApiV2RefinageCreatePostResponse = IdResponse
 
-export type CreateRefinageRecipeApiV2RefiningRecipesPostResponse = zod.input<typeof CreateRefinageRecipeApiV2RefiningRecipesPostResponse>;
-export type CreateRefinageRecipeApiV2RefiningRecipesPostResponseOutput = zod.output<typeof CreateRefinageRecipeApiV2RefiningRecipesPostResponse>;
+export type CreateRefinageSessionApiV2RefinageCreatePostResponse = zod.input<typeof CreateRefinageSessionApiV2RefinageCreatePostResponse>;
+export type CreateRefinageSessionApiV2RefinageCreatePostResponseOutput = zod.output<typeof CreateRefinageSessionApiV2RefinageCreatePostResponse>;
 
 
 /**
  * @summary Get Results By Origin
  */
-export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams = zod.object({
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams = zod.object({
   "item_id": zod.string()
 })
 
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams>;
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParamsOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParamsOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
 
-export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem = zod.string()
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem = zod.string()
 
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem>;
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItemOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItemOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem>;
 
-export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse = zod.array(GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem)
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse = zod.array(GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem)
 
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse>;
-export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse>;
 
 
 /**
  * @summary Get Recipe By Result
  */
-export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams = zod.object({
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams = zod.object({
   "item_id": zod.string()
 })
 
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams>;
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParamsOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParamsOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
 
-export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem = RefinageRecipeResponse
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem = RefinageRecipeResponse
 
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem>;
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItemOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItemOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem>;
 
-export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse = zod.array(GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem)
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.array(GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem)
 
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse>;
-export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
 
 
 /**

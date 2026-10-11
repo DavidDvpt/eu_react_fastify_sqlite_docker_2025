@@ -4,8 +4,7 @@
  * Entropia Manager API
  */
 
-export type RefinageRecipeCreate = {
-  result: string;
+export type RefinageOrigin = {
   origin: string;
   /** @exclusiveMinimum 0 */
   quantity: number;
