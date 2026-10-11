@@ -106,4 +106,27 @@ export class InvalidateQueryAndKeys {
       }),
     ]);
   }
+  static async refiningMutation({
+    itemId,
+  }: {
+    itemId?: string;
+  }) {
+    return await Promise.all([
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryStockKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemStockKey(itemId).keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: ["stock", "details", itemId],
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getItemLotsKey().keys,
+      }),
+      queryClient.invalidateQueries({
+        queryKey: this.getInventoryFinancialReportKey().keys,
+      }),
+    ]);
+  }
 }

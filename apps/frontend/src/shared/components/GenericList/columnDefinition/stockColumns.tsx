@@ -3,11 +3,15 @@ import type { StockRow } from "@/shared/helpers/stock";
 import { formatItemNameWithTier, getItemStockValue } from "@/shared/helpers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools/formatTools";
+import { RefineActionCell } from "@/shared/components/Refining";
 
 const stockColumns = (
   useCardImageSize?: boolean,
+  options?: { onRefine?: (row: StockRow) => void },
 ): GenericListColumn<StockRow>[] => {
-  return [
+  const onRefine = options?.onRefine;
+
+  const columns: GenericListColumn<StockRow>[] = [
     {
       key: "image",
       label: "Image",
@@ -64,6 +68,26 @@ const stockColumns = (
       headerCellClassName: "text-right",
     },
   ];
+
+  // Icône « refiner » réservée aux items stackables (un raffinage agrège des
+  // ressources) et sans requête par ligne : la modale gère elle-même le cas
+  // « aucune recette ».
+  if (onRefine) {
+    columns.push({
+      key: "refiner",
+      label: "",
+      kind: "button",
+      minWidth: 44,
+      maxWidth: 44,
+      align: "center",
+      render: (row) =>
+        row.type?.isStackable ? (
+          <RefineActionCell item={row} onRefine={onRefine} />
+        ) : null,
+    });
+  }
+
+  return columns;
 };
 
 export { stockColumns };

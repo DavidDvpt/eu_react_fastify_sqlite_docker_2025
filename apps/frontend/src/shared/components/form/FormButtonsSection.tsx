@@ -13,15 +13,18 @@ interface FormButtonSection {
 function FormButtonsSection(props: FormButtonSection) {
   return (
     <div className="flex justify-center m-4">
-      <Button
-        type="reset"
-        variant="secondary"
-        onClick={props.onCancel}
-        size="lg"
-        className="w-[140px] mr-4"
-      >
-        {props.cancelLabel ?? "Annuler"}
-      </Button>
+      {props.cancelVisible !== false && (
+        <Button
+          type="reset"
+          variant="secondary"
+          onClick={props.onCancel}
+          disabled={props.cancelDisabled}
+          size="lg"
+          className="w-[140px] mr-4"
+        >
+          {props.cancelLabel ?? "Annuler"}
+        </Button>
+      )}
       <Button
         type="submit"
         variant="primary"

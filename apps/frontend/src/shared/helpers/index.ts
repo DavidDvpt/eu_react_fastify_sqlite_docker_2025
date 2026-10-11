@@ -14,3 +14,12 @@ export {
   type StockLot,
   type StockRow,
 } from "./stock";
+export {
+  REFINING_PROVENANCES,
+  buildRefinageOriginPayload,
+  computeRefinageMaxClickCount,
+  getRecipePpcm,
+  isRecipeRefinable,
+  type RefiningProvenance,
+  type StockByItemId,
+} from "./refining";

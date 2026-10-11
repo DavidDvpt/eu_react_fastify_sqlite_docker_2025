@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import type { StockRow } from "@/shared/helpers/stock";
 import { stockColumns } from "../stockColumns";
@@ -62,5 +62,32 @@ describe("stockColumns name", () => {
         }),
       ),
     ).toBe("Sword");
+  });
+});
+
+describe("stockColumns refiner action", () => {
+  it("adds a button column when onRefine is provided", () => {
+    const columns = stockColumns(false, { onRefine: vi.fn() });
+
+    const refinerColumn = columns.find((column) => column.key === "refiner");
+    expect(refinerColumn).toBeDefined();
+    expect(refinerColumn?.kind).toBe("button");
+  });
+
+  it("does not add a refiner column without onRefine", () => {
+    expect(
+      stockColumns(false).find((column) => column.key === "refiner"),
+    ).toBeUndefined();
+  });
+
+  it("renders the action only for stackable items", () => {
+    const columns = stockColumns(false, { onRefine: vi.fn() });
+    const refinerColumn = columns.find((column) => column.key === "refiner");
+
+    const stackable = row({ type: { isStackable: true } as never });
+    const instance = row({ type: { isStackable: false } as never });
+
+    expect(refinerColumn?.render?.(stackable)).not.toBeNull();
+    expect(refinerColumn?.render?.(instance)).toBeNull();
   });
 });

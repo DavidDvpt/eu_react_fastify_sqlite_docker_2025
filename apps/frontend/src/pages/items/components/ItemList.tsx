@@ -16,6 +16,7 @@ import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
 interface ItemListProps extends InventoryPageQuery {
   className?: string;
   onSelectedItem: (itemId: string, lotId?: string | null) => void;
+  onRefine?: (row: StockRow) => void;
   mode?: "inventory" | "store";
 }
 
@@ -25,6 +26,7 @@ function ItemList({
   typeId,
   viewMode,
   onSelectedItem,
+  onRefine,
   mode = "inventory",
 }: ItemListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
@@ -65,7 +67,9 @@ function ItemList({
   return (
     <Section className={className}>
       <GenericList<StockRow>
-        columns={stockColumns(viewMode === "card")}
+        columns={stockColumns(viewMode === "card", {
+          onRefine: mode === "inventory" ? onRefine : undefined,
+        })}
         rows={visibleStock}
         getRowKey={(row) => row.lotId ?? row.id}
         onRowClick={(row) => onSelectedItem(row.id, row.lotId)}

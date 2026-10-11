@@ -1,9 +1,14 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useMemo } from "react";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 
 import { cn } from "@/lib/utils";
 import { Panel, Section } from "@/shared/components/Containers";
 import TransactionModal from "@/shared/components/TransactionModal";
 import { GenericFilter } from "@/shared/components/GenericFilter/GenericFilter";
+import { RefiningModal } from "@/shared/components/Refining";
+import type { StockRow } from "@/shared/helpers/stock";
+import { buildStockRows } from "@/shared/helpers";
+import { useInventoryStockData } from "@/shared/hooks/rqFetchHooks";
 
 import ItemList from "@/pages/items/components/ItemList";
 import StockDetailsPanel from "./inventory/components/StockDetailsPanel";
@@ -16,6 +21,13 @@ function InventoryPage() {
   const queries = inventoryPageQuerySchema.parse(params);
   const { itemId } = useParams();
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const { inventoryStock } = useInventoryStockData();
+  const refineItemId = searchParams.get("refiningModal");
+  const refineTarget = useMemo(
+    () => buildStockRows(inventoryStock).find((row) => row.id === refineItemId),
+    [inventoryStock, refineItemId],
+  );
 
   const handleSelectedItem = (itemId: string, lotId?: string | null) => {
     const path = `/inventory/${itemId}`;
@@ -31,6 +43,18 @@ function InventoryPage() {
       pathname: path,
       search: search.toString(),
     });
+  };
+
+  const handleRefine = (row: StockRow) => {
+    const nextSearch = new URLSearchParams(searchParams);
+    nextSearch.set("refiningModal", row.id);
+    setSearchParams(nextSearch);
+  };
+
+  const closeRefining = () => {
+    const nextSearch = new URLSearchParams(searchParams);
+    nextSearch.delete("refiningModal");
+    setSearchParams(nextSearch);
   };
   // const hasSelectedItem = Boolean(itemId);
 
@@ -52,6 +76,7 @@ function InventoryPage() {
             {...queries}
             mode="inventory"
             onSelectedItem={handleSelectedItem}
+            onRefine={handleRefine}
             className={cn(
               "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
               itemId ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
@@ -76,6 +101,12 @@ function InventoryPage() {
       </Section>
 
       <TransactionModal />
+      {refineTarget && (
+        <RefiningModal
+          item={refineTarget}
+          onClose={closeRefining}
+        />
+      )}
     </Panel>
   );
 }
