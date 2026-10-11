@@ -11,7 +11,7 @@ const { createMutateMock, invalidationMock } = vi.hoisted(() => ({
 }));
 
 vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
-  useCreateRefinageSessionApiV2RefinageCreatePost: () => ({
+  useCreateRefiningSessionApiV2SessionsRefinagePost: () => ({
     mutateAsync: createMutateMock,
   }),
 }));
@@ -33,30 +33,30 @@ function renderMutationHook() {
 }
 
 describe("useRefiningMutation", () => {
-  it("posts a refining session with result, clickCount, origin and provenance", async () => {
+  it("posts a refining session with its result and lot costs", async () => {
     const { result } = renderMutationHook();
 
     await result.current.refineMutation.mutateAsync({
       itemId: "ore-a",
-      result: "gold-bars",
+      resultItemId: "gold-bars",
       clickCount: 6,
-      origin: [
-        { origin: "ore-a", quantity: 3 },
-        { origin: "ore-b", quantity: 2 },
+      resultQuantity: 6,
+      costs: [
+        { lotId: "lot-a", quantity: 18 },
+        { lotId: "lot-b", quantity: 12 },
       ],
-      provenance: ["TRADE", "MINING"],
     });
 
     await waitFor(() => {
       expect(createMutateMock).toHaveBeenCalledWith({
         data: {
-          result: "gold-bars",
+          resultItemId: "gold-bars",
           clickCount: 6,
-          origin: [
-            { origin: "ore-a", quantity: 3 },
-            { origin: "ore-b", quantity: 2 },
+          resultQuantity: 6,
+          costs: [
+            { lotId: "lot-a", quantity: 18 },
+            { lotId: "lot-b", quantity: 12 },
           ],
-          provenance: ["TRADE", "MINING"],
         },
       });
     });
@@ -67,10 +67,10 @@ describe("useRefiningMutation", () => {
 
     await result.current.refineMutation.mutateAsync({
       itemId: "ore-a",
-      result: "gold-bars",
+      resultItemId: "gold-bars",
       clickCount: 6,
-      origin: [{ origin: "ore-a", quantity: 3 }],
-      provenance: [],
+      resultQuantity: 6,
+      costs: [{ lotId: "lot-a", quantity: 18 }],
     });
 
     await waitFor(() => {

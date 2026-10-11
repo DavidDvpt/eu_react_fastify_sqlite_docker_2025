@@ -1,8 +1,11 @@
 import { NumberHelper } from "./NumberHelper.js";
 import type {
-  RefinageOrigin,
+  RefinageOriginStockResponse,
   RefinageRecipeResponse,
+  SessionLineCostCreate,
 } from "@/api/generated/react-query/model";
+
+export type RefinageOrigin = { origin: string; quantity: number };
 
 /**
  * Provenances proposées lors d'un raffinage depuis l'inventaire. `REFINING`
@@ -55,6 +58,25 @@ export function computeRefinageMaxClickCount(
   return maxByStock - (maxByStock % ppcm);
 }
 
+export function computeRefinageMaxClickCountFromOriginStock(
+  originStocks: RefinageOriginStockResponse[],
+): number {
+  if (originStocks.length === 0) return 0;
+
+  const maxByStock = originStocks.reduce(
+    (min, stock) =>
+      stock.quantityRequired > 0
+        ? Math.min(
+            min,
+            Math.floor(stock.quantityAvailable / stock.quantityRequired),
+          )
+        : min,
+    Infinity,
+  );
+
+  return Number.isFinite(maxByStock) ? maxByStock : 0;
+}
+
 /** Recette faisable si un raffinage valide (multiple du PPCM) est possible. */
 export function isRecipeRefinable(
   ingredientLines: RefinageRecipeResponse[],
@@ -75,4 +97,22 @@ export function buildRefinageOriginPayload(
     origin: line.origin,
     quantity: line.quantity,
   }));
+}
+
+/** Répartit les quantités nécessaires sur les lots que le backend doit débiter. */
+export function buildRefinageCosts(
+  originStocks: RefinageOriginStockResponse[],
+  clickCount: number,
+): SessionLineCostCreate[] {
+  return originStocks.flatMap((stock) => {
+    let remaining = stock.quantityRequired * clickCount;
+
+    return stock.lots.flatMap((lot) => {
+      if (remaining <= 0) return [];
+
+      const quantity = Math.min(remaining, lot.quantityRemaining);
+      remaining -= quantity;
+      return quantity > 0 ? [{ lotId: lot.lotId, quantity }] : [];
+    });
+  });
 }

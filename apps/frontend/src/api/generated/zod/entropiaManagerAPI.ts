@@ -24,7 +24,11 @@ import {
   MessageResponse,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
-  RefinageSessionCreate,
+  RefiningSessionCreate,
+  RefiningSessionResponse,
+  SessionCreate,
+  SessionResponse,
+  SessionType,
   SignInBody,
   SignUpBody,
   StockLineResponse,
@@ -377,11 +381,9 @@ export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zo
 export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
 export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
 
-
-
-
 export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.object({
-  "origin": zod.array(zod.string()).min(1)
+  "origin": zod.union([zod.array(zod.string()),zod.null()]).optional(),
+  "origin[]": zod.union([zod.array(zod.string()),zod.null()]).optional()
 })
 
 export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams>;
@@ -808,20 +810,6 @@ export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output
 
 
 /**
- * @summary Create Refinage Session
- */
-export const CreateRefinageSessionApiV2RefinageCreatePostBody = RefinageSessionCreate
-
-export type CreateRefinageSessionApiV2RefinageCreatePostBody = zod.input<typeof CreateRefinageSessionApiV2RefinageCreatePostBody>;
-export type CreateRefinageSessionApiV2RefinageCreatePostBodyOutput = zod.output<typeof CreateRefinageSessionApiV2RefinageCreatePostBody>;
-
-export const CreateRefinageSessionApiV2RefinageCreatePostResponse = IdResponse
-
-export type CreateRefinageSessionApiV2RefinageCreatePostResponse = zod.input<typeof CreateRefinageSessionApiV2RefinageCreatePostResponse>;
-export type CreateRefinageSessionApiV2RefinageCreatePostResponseOutput = zod.output<typeof CreateRefinageSessionApiV2RefinageCreatePostResponse>;
-
-
-/**
  * @summary Get Results By Origin
  */
 export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams = zod.object({
@@ -861,6 +849,66 @@ export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.a
 
 export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
 export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
+
+
+/**
+ * @summary Get Current Session
+ */
+export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({
+  "type": zod.union([SessionType,zod.null()]).optional()
+})
+
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryParamsOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
+
+export const GetCurrentSessionApiV2SessionsCurrentGetResponse = SessionResponse
+
+export type GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
+export type GetCurrentSessionApiV2SessionsCurrentGetResponseOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
+
+
+/**
+ * @summary Create Session
+ */
+export const CreateSessionApiV2SessionsPostBody = SessionCreate
+
+export type CreateSessionApiV2SessionsPostBody = zod.input<typeof CreateSessionApiV2SessionsPostBody>;
+export type CreateSessionApiV2SessionsPostBodyOutput = zod.output<typeof CreateSessionApiV2SessionsPostBody>;
+
+export const CreateSessionApiV2SessionsPostResponse = SessionResponse
+
+export type CreateSessionApiV2SessionsPostResponse = zod.input<typeof CreateSessionApiV2SessionsPostResponse>;
+export type CreateSessionApiV2SessionsPostResponseOutput = zod.output<typeof CreateSessionApiV2SessionsPostResponse>;
+
+
+/**
+ * @summary Create Refining Session
+ */
+export const CreateRefiningSessionApiV2SessionsRefinagePostBody = RefiningSessionCreate
+
+export type CreateRefiningSessionApiV2SessionsRefinagePostBody = zod.input<typeof CreateRefiningSessionApiV2SessionsRefinagePostBody>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostBodyOutput = zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostBody>;
+
+export const CreateRefiningSessionApiV2SessionsRefinagePostResponse = RefiningSessionResponse
+
+export type CreateRefiningSessionApiV2SessionsRefinagePostResponse = zod.input<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostResponseOutput = zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+
+
+/**
+ * @summary Close Session
+ */
+export const CloseSessionApiV2SessionsSessionIdPatchParams = zod.object({
+  "session_id": zod.string()
+})
+
+export type CloseSessionApiV2SessionsSessionIdPatchParams = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
+export type CloseSessionApiV2SessionsSessionIdPatchParamsOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
+
+export const CloseSessionApiV2SessionsSessionIdPatchResponse = SessionResponse
+
+export type CloseSessionApiV2SessionsSessionIdPatchResponse = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
+export type CloseSessionApiV2SessionsSessionIdPatchResponseOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
 
 
 /**

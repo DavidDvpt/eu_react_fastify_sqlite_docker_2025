@@ -19,7 +19,7 @@ function RefiningRecipeOption({
   return (
     <button
       type="button"
-      disabled={!refinable}
+      disabled={!refinable && !selected}
       aria-pressed={selected}
       title={refinable ? name : `${name} (stock insuffisant)`}
       onClick={() => onSelect(resultId)}

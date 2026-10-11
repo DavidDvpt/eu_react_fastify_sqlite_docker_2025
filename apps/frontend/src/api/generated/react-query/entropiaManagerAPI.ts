@@ -27,6 +27,7 @@ import type {
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
+  GetCurrentSessionApiV2SessionsCurrentGetParams,
   GetItemLotsApiV2ItemsIdLotsGetParams,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
@@ -55,7 +56,10 @@ import type {
   MessageResponse,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
-  RefinageSessionCreate,
+  RefiningSessionCreate,
+  RefiningSessionResponse,
+  SessionCreate,
+  SessionResponse,
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
@@ -1613,7 +1617,7 @@ export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<t
  */
 export const getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet = (
     id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
@@ -1637,7 +1641,7 @@ export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey
 
 
 export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions = <TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
@@ -1661,7 +1665,7 @@ export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryError =
 
 export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
  id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+    params: undefined |  GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
           TError,
@@ -1672,7 +1676,7 @@ export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TDat
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
  id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
           TError,
@@ -1683,7 +1687,7 @@ export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TDat
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
  id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
@@ -1692,7 +1696,7 @@ export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TDat
 
 export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
  id: string,
-    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
@@ -3428,74 +3432,6 @@ export const usePatchCancelApiV2TransactionsIdCancelPatch = <TError = ErrorType<
     }
 
 /**
- * @summary Create Refinage Session
- */
-export const createRefinageSessionApiV2RefinageCreatePost = (
-    refinageSessionCreate: BodyType<RefinageSessionCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/refinage/create`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refinageSessionCreate, signal
-    },
-      options);
-    }
-
-
-
-
-export const getCreateRefinageSessionApiV2RefinageCreatePostMutationKey = () => ['createRefinageSessionApiV2RefinageCreatePost'] as const;
-
-export const getCreateRefinageSessionApiV2RefinageCreatePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>, TError,CreateRefinageSessionApiV2RefinageCreatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>, TError,CreateRefinageSessionApiV2RefinageCreatePostMutationVariables, TContext> => {
-
-const mutationKey = getCreateRefinageSessionApiV2RefinageCreatePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>, CreateRefinageSessionApiV2RefinageCreatePostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createRefinageSessionApiV2RefinageCreatePost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateRefinageSessionApiV2RefinageCreatePostMutationResult = NonNullable<Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>>
-    export type CreateRefinageSessionApiV2RefinageCreatePostMutationBody = BodyType<RefinageSessionCreate>
-    export type CreateRefinageSessionApiV2RefinageCreatePostMutationError = ErrorType<HTTPValidationError>
-    export type CreateRefinageSessionApiV2RefinageCreatePostMutationVariables = {data: BodyType<RefinageSessionCreate>}
-
-    /**
- * @summary Create Refinage Session
- */
-export const useCreateRefinageSessionApiV2RefinageCreatePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>, TError,CreateRefinageSessionApiV2RefinageCreatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createRefinageSessionApiV2RefinageCreatePost>>,
-        TError,
-        CreateRefinageSessionApiV2RefinageCreatePostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateRefinageSessionApiV2RefinageCreatePostMutationOptions(options), queryClient);
-    }
-
-/**
  * @summary Get Results By Origin
  */
 export const getResultsByOriginApiV2RefinageRecipeOriginItemIdGet = (
@@ -3680,6 +3616,302 @@ export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = A
 
 
 
+
+/**
+ * @summary Get Current Session
+ */
+export const getCurrentSessionApiV2SessionsCurrentGet = (
+    params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionResponse>(
+      {url: `/api/v2/sessions/current`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetCurrentSessionApiV2SessionsCurrentGetQueryKey = (params?: GetCurrentSessionApiV2SessionsCurrentGetParams,) => {
+    return [
+    `/api/v2/sessions/current`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetCurrentSessionApiV2SessionsCurrentGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>> = ({ signal }) => getCurrentSessionApiV2SessionsCurrentGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>>
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: undefined |  GetCurrentSessionApiV2SessionsCurrentGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+          TError,
+          Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+          TError,
+          Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Current Session
+ */
+
+export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Create Session
+ */
+export const createSessionApiV2SessionsPost = (
+    sessionCreate: BodyType<SessionCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionResponse>(
+      {url: `/api/v2/sessions`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: sessionCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateSessionApiV2SessionsPostMutationKey = () => ['createSessionApiV2SessionsPost'] as const;
+
+export const getCreateSessionApiV2SessionsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext> => {
+
+const mutationKey = getCreateSessionApiV2SessionsPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, CreateSessionApiV2SessionsPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createSessionApiV2SessionsPost(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateSessionApiV2SessionsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>>
+    export type CreateSessionApiV2SessionsPostMutationBody = BodyType<SessionCreate>
+    export type CreateSessionApiV2SessionsPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateSessionApiV2SessionsPostMutationVariables = {data: BodyType<SessionCreate>}
+
+    /**
+ * @summary Create Session
+ */
+export const useCreateSessionApiV2SessionsPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+        TError,
+        CreateSessionApiV2SessionsPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateSessionApiV2SessionsPostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Create Refining Session
+ */
+export const createRefiningSessionApiV2SessionsRefinagePost = (
+    refiningSessionCreate: BodyType<RefiningSessionCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<RefiningSessionResponse>(
+      {url: `/api/v2/sessions/refinage`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: refiningSessionCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey = () => ['createRefiningSessionApiV2SessionsRefinagePost'] as const;
+
+export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext> => {
+
+const mutationKey = getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createRefiningSessionApiV2SessionsRefinagePost(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationResult = NonNullable<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>>
+    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationBody = BodyType<RefiningSessionCreate>
+    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationError = ErrorType<HTTPValidationError>
+    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables = {data: BodyType<RefiningSessionCreate>}
+
+    /**
+ * @summary Create Refining Session
+ */
+export const useCreateRefiningSessionApiV2SessionsRefinagePost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>,
+        TError,
+        CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Close Session
+ */
+export const closeSessionApiV2SessionsSessionIdPatch = (
+    sessionId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionResponse>(
+      {url: `/api/v2/sessions/${sessionId}`, method: 'PATCH', signal
+    },
+      options);
+    }
+
+
+
+
+export const getCloseSessionApiV2SessionsSessionIdPatchMutationKey = () => ['closeSessionApiV2SessionsSessionIdPatch'] as const;
+
+export const getCloseSessionApiV2SessionsSessionIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext> => {
+
+const mutationKey = getCloseSessionApiV2SessionsSessionIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, CloseSessionApiV2SessionsSessionIdPatchMutationVariables> = (props) => {
+          const {sessionId} = props ?? {};
+
+          return  closeSessionApiV2SessionsSessionIdPatch(sessionId,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CloseSessionApiV2SessionsSessionIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>>
+
+    export type CloseSessionApiV2SessionsSessionIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type CloseSessionApiV2SessionsSessionIdPatchMutationVariables = {sessionId: string}
+
+    /**
+ * @summary Close Session
+ */
+export const useCloseSessionApiV2SessionsSessionIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+        TError,
+        CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCloseSessionApiV2SessionsSessionIdPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Health

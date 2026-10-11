@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export interface RefinageOrigin {
-  origin: string;
-  /** @exclusiveMinimum 0 */
-  quantity: number;
+export interface SessionLineCostCreate {
+  lotId: string;
+  quantity?: number | null;
+  decay?: number | string | null;
 }

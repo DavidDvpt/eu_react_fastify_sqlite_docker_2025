@@ -3,9 +3,13 @@ import { useMemo } from "react";
 
 import {
   getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions,
+  getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions,
   useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet,
 } from "@/api/generated/react-query/entropiaManagerAPI";
-import type { RefinageRecipeResponse } from "@/api/generated/react-query/model";
+import type {
+  RefinageOriginStockResponse,
+  RefinageRecipeResponse,
+} from "@/api/generated/react-query/model";
 
 /** Résultats qui utilisent l'item comme ingrédient (`GET /refinage/recipe/origin`). */
 export function useRefinageResultsByOrigin(
@@ -46,5 +50,34 @@ export function useRefinageRecipeLines(resultIds: string[]) {
     recipeLinesByResult,
     isLinesLoading: queries.some((query) => query.isLoading),
     isLinesError: queries.some((query) => query.isError),
+  };
+}
+
+export function useRefinageOriginStocks(
+  resultIds: string[],
+  provenances: string[],
+) {
+  const queries = useQueries({
+    queries: resultIds.map((resultId) => {
+      return getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions(
+        resultId,
+        { origin: provenances },
+        { query: { enabled: provenances.length > 0, staleTime: 30_000 } },
+      );
+    }),
+  });
+
+  const originStocksByResult = useMemo(() => {
+    const map = new Map<string, RefinageOriginStockResponse[]>();
+    resultIds.forEach((resultId, index) => {
+      map.set(resultId, queries[index]?.data ?? []);
+    });
+    return map;
+  }, [queries, resultIds]);
+
+  return {
+    originStocksByResult,
+    isOriginStocksLoading: queries.some((query) => query.isLoading),
+    isOriginStocksError: queries.some((query) => query.isError),
   };
 }

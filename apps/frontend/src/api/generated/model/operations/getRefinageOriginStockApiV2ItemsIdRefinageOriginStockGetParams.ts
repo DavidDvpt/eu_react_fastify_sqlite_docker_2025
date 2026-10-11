@@ -5,8 +5,6 @@
  */
 
 export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = {
-/**
- * @minItems 1
- */
-origin: string[];
+origin?: string[] | null;
+'origin[]'?: string[] | null;
 };

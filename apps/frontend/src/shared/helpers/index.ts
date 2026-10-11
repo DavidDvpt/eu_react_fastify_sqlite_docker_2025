@@ -16,8 +16,10 @@ export {
 } from "./stock";
 export {
   REFINING_PROVENANCES,
+  buildRefinageCosts,
   buildRefinageOriginPayload,
   computeRefinageMaxClickCount,
+  computeRefinageMaxClickCountFromOriginStock,
   getRecipePpcm,
   isRecipeRefinable,
   type RefiningProvenance,
