@@ -29,6 +29,8 @@ import type {
   CategoryResponse,
   GetItemLotsApiV2ItemsIdLotsGetParams,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
   HTTPValidationError,
   HealthHealthGet200,
   IdResponse,
@@ -42,13 +44,16 @@ import type {
   ListInventoryLotsApiV2InventoryLotsGetParams,
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
+  ListLotOriginsApiV2InventoryLotsOriginGetParams,
   ListTransactionsApiV2TransactionsGetParams,
   ListTypesApiV2TypesGetParams,
+  LotOriginResponse,
   LotResponse,
   LotTierResponse,
   LotTierUpdate,
   MeResponse,
   MessageResponse,
+  RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefinageSessionCreate,
   SignInBody,
@@ -1604,6 +1609,107 @@ export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<t
 
 
 /**
+ * @summary Get Refinage Origin Stock
+ */
+export const getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet = (
+    id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<RefinageOriginStockResponse[]>(
+      {url: `/api/v2/items/${id}/refinage/origin-stock`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey = (id: string,
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,) => {
+    return [
+    `/api/v2/items/${id}/refinage/origin-stock`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions = <TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey(id,params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>> = ({ signal }) => getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet(id,params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryResult = NonNullable<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>>
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
+ id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
+ id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
+ id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Refinage Origin Stock
+ */
+
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
+ id: string,
+    params: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions(id,params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
  * @summary Get Item Lots
  */
 export const getItemLotsApiV2ItemsIdLotsGet = (
@@ -2370,6 +2476,201 @@ export function useListInventoryLotsApiV2InventoryLotsGet<TData = Awaited<Return
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getListInventoryLotsApiV2InventoryLotsGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary List Lot Origins
+ */
+export const listLotOriginsApiV2InventoryLotsOriginGet = (
+    params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<LotOriginResponse[]>(
+      {url: `/api/v2/inventory/lots/origin`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getListLotOriginsApiV2InventoryLotsOriginGetQueryKey = (params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,) => {
+    return [
+    `/api/v2/inventory/lots/origin`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions = <TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListLotOriginsApiV2InventoryLotsOriginGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>> = ({ signal }) => listLotOriginsApiV2InventoryLotsOriginGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryResult = NonNullable<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>>
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: undefined |  ListLotOriginsApiV2InventoryLotsOriginGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+          TError,
+          Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+          TError,
+          Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Lot Origins
+ */
+
+export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Get Lot Origin
+ */
+export const getLotOriginApiV2InventoryLotsLotIdOriginGet = (
+    lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<LotOriginResponse>(
+      {url: `/api/v2/inventory/lots/${lotId}/origin`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey = (lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,) => {
+    return [
+    `/api/v2/inventory/lots/${lotId}/origin`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions = <TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey(lotId,params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>> = ({ signal }) => getLotOriginApiV2InventoryLotsLotIdOriginGet(lotId,params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: lotId !== null && lotId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryResult = NonNullable<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>>
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ lotId: string,
+    params: undefined |  GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>,
+          TError,
+          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>,
+          TError,
+          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Lot Origin
+ */
+
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
+ lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions(lotId,params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

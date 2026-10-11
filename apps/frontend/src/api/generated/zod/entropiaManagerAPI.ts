@@ -16,11 +16,13 @@ import {
   ItemFinancialReportEnvelope,
   ItemPatch,
   ItemResponse,
+  LotOriginResponse,
   LotResponse,
   LotTierResponse,
   LotTierUpdate,
   MeResponse,
   MessageResponse,
+  RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefinageSessionCreate,
   SignInBody,
@@ -366,6 +368,37 @@ export type GetItemStockApiV2ItemsIdStockGetResponseOutput = zod.output<typeof G
 
 
 /**
+ * @summary Get Refinage Origin Stock
+ */
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.object({
+  "id": zod.string()
+})
+
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
+
+
+
+
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.object({
+  "origin": zod.array(zod.string()).min(1)
+})
+
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams>;
+
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem = RefinageOriginStockResponse
+
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItemOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem>;
+
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse = zod.array(GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem)
+
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse>;
+
+
+/**
  * @summary Get Item Lots
  */
 export const GetItemLotsApiV2ItemsIdLotsGetParams = zod.object({
@@ -552,6 +585,54 @@ export const ListInventoryLotsApiV2InventoryLotsGetResponse = zod.array(ListInve
 
 export type ListInventoryLotsApiV2InventoryLotsGetResponse = zod.input<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
 export type ListInventoryLotsApiV2InventoryLotsGetResponseOutput = zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
+
+
+/**
+ * @summary List Lot Origins
+ */
+export const listLotOriginsApiV2InventoryLotsOriginGetQueryAllDefault = false;
+
+export const ListLotOriginsApiV2InventoryLotsOriginGetQueryParams = zod.object({
+  "all": zod.boolean().default(listLotOriginsApiV2InventoryLotsOriginGetQueryAllDefault)
+})
+
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParams = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParamsOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams>;
+
+export const ListLotOriginsApiV2InventoryLotsOriginGetResponseItem = LotOriginResponse
+
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItem = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItemOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem>;
+
+export const ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.array(ListLotOriginsApiV2InventoryLotsOriginGetResponseItem)
+
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse>;
+
+
+/**
+ * @summary Get Lot Origin
+ */
+export const GetLotOriginApiV2InventoryLotsLotIdOriginGetParams = zod.object({
+  "lot_id": zod.string()
+})
+
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParams = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParamsOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams>;
+
+export const getLotOriginApiV2InventoryLotsLotIdOriginGetQueryAllDefault = false;
+
+export const GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams = zod.object({
+  "all": zod.boolean().default(getLotOriginApiV2InventoryLotsLotIdOriginGetQueryAllDefault)
+})
+
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParamsOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams>;
+
+export const GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse = LotOriginResponse
+
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponseOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse>;
 
 
 /**
