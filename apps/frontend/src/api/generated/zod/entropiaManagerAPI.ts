@@ -21,6 +21,8 @@ import {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
+  RefinageRecipeCreate,
+  RefinageRecipeResponse,
   SignInBody,
   SignUpBody,
   StockLineResponse,
@@ -722,6 +724,62 @@ export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.void()
 
 export type PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
 export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
+
+
+/**
+ * @summary Create Refinage Recipe
+ */
+export const CreateRefinageRecipeApiV2RefiningRecipesPostBody = RefinageRecipeCreate
+
+export type CreateRefinageRecipeApiV2RefiningRecipesPostBody = zod.input<typeof CreateRefinageRecipeApiV2RefiningRecipesPostBody>;
+export type CreateRefinageRecipeApiV2RefiningRecipesPostBodyOutput = zod.output<typeof CreateRefinageRecipeApiV2RefiningRecipesPostBody>;
+
+export const CreateRefinageRecipeApiV2RefiningRecipesPostResponse = RefinageRecipeResponse
+
+export type CreateRefinageRecipeApiV2RefiningRecipesPostResponse = zod.input<typeof CreateRefinageRecipeApiV2RefiningRecipesPostResponse>;
+export type CreateRefinageRecipeApiV2RefiningRecipesPostResponseOutput = zod.output<typeof CreateRefinageRecipeApiV2RefiningRecipesPostResponse>;
+
+
+/**
+ * @summary Get Results By Origin
+ */
+export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams = zod.object({
+  "item_id": zod.string()
+})
+
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams>;
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParamsOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetParams>;
+
+export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem = zod.string()
+
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem>;
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItemOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem>;
+
+export const GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse = zod.array(GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseItem)
+
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse = zod.input<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse>;
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponseOutput = zod.output<typeof GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetResponse>;
+
+
+/**
+ * @summary Get Recipe By Result
+ */
+export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams = zod.object({
+  "item_id": zod.string()
+})
+
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams>;
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParamsOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetParams>;
+
+export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem = RefinageRecipeResponse
+
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem>;
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItemOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem>;
+
+export const GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse = zod.array(GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseItem)
+
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse = zod.input<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse>;
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponseOutput = zod.output<typeof GetRecipeByResultApiV2RefiningRecipesResultItemIdGetResponse>;
 
 
 /**

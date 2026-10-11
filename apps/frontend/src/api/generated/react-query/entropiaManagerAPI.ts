@@ -49,6 +49,8 @@ import type {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
+  RefinageRecipeCreate,
+  RefinageRecipeResponse,
   SignInBody,
   SignUpBody,
   SignupApiV2AuthSignupPost201,
@@ -3123,6 +3125,260 @@ export const usePatchCancelApiV2TransactionsIdCancelPatch = <TError = ErrorType<
       > => {
       return useMutation(getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions(options), queryClient);
     }
+
+/**
+ * @summary Create Refinage Recipe
+ */
+export const createRefinageRecipeApiV2RefiningRecipesPost = (
+    refinageRecipeCreate: BodyType<RefinageRecipeCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<RefinageRecipeResponse>(
+      {url: `/api/v2/refining-recipes`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: refinageRecipeCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateRefinageRecipeApiV2RefiningRecipesPostMutationKey = () => ['createRefinageRecipeApiV2RefiningRecipesPost'] as const;
+
+export const getCreateRefinageRecipeApiV2RefiningRecipesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>, TError,CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>, TError,CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables, TContext> => {
+
+const mutationKey = getCreateRefinageRecipeApiV2RefiningRecipesPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>, CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createRefinageRecipeApiV2RefiningRecipesPost(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateRefinageRecipeApiV2RefiningRecipesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>>
+    export type CreateRefinageRecipeApiV2RefiningRecipesPostMutationBody = BodyType<RefinageRecipeCreate>
+    export type CreateRefinageRecipeApiV2RefiningRecipesPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables = {data: BodyType<RefinageRecipeCreate>}
+
+    /**
+ * @summary Create Refinage Recipe
+ */
+export const useCreateRefinageRecipeApiV2RefiningRecipesPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>, TError,CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createRefinageRecipeApiV2RefiningRecipesPost>>,
+        TError,
+        CreateRefinageRecipeApiV2RefiningRecipesPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateRefinageRecipeApiV2RefiningRecipesPostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Get Results By Origin
+ */
+export const getResultsByOriginApiV2RefiningRecipesOriginItemIdGet = (
+    itemId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<string[]>(
+      {url: `/api/v2/refining-recipes/origin/${itemId}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryKey = (itemId: string,) => {
+    return [
+    `/api/v2/refining-recipes/origin/${itemId}`
+    ] as const;
+    }
+
+
+export const getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryKey(itemId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>> = ({ signal }) => getResultsByOriginApiV2RefiningRecipesOriginItemIdGet(itemId, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: itemId !== null && itemId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>>
+export type GetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetResultsByOriginApiV2RefiningRecipesOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>,
+          TError,
+          Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetResultsByOriginApiV2RefiningRecipesOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>,
+          TError,
+          Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetResultsByOriginApiV2RefiningRecipesOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Results By Origin
+ */
+
+export function useGetResultsByOriginApiV2RefiningRecipesOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefiningRecipesOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetResultsByOriginApiV2RefiningRecipesOriginItemIdGetQueryOptions(itemId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Get Recipe By Result
+ */
+export const getRecipeByResultApiV2RefiningRecipesResultItemIdGet = (
+    itemId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<RefinageRecipeResponse[]>(
+      {url: `/api/v2/refining-recipes/result/${itemId}`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryKey = (itemId: string,) => {
+    return [
+    `/api/v2/refining-recipes/result/${itemId}`
+    ] as const;
+    }
+
+
+export const getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryKey(itemId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>> = ({ signal }) => getRecipeByResultApiV2RefiningRecipesResultItemIdGet(itemId, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: itemId !== null && itemId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>>
+export type GetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetRecipeByResultApiV2RefiningRecipesResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRecipeByResultApiV2RefiningRecipesResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>,
+          TError,
+          Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetRecipeByResultApiV2RefiningRecipesResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Recipe By Result
+ */
+
+export function useGetRecipeByResultApiV2RefiningRecipesResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
+ itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefiningRecipesResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetRecipeByResultApiV2RefiningRecipesResultItemIdGetQueryOptions(itemId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 /**
  * @summary Health
