@@ -8,7 +8,9 @@ COMPOSE_SOURCE="$ROOT_DIR/docker/prod/entropia-manager-frontend.yaml"
 COMPOSE_DIR="/opt/docker"
 COMPOSE_FILE="$COMPOSE_DIR/entropia-manager-frontend.yaml"
 SCRIPTS_DIR="$HOME/scripts"
-IMAGE_TAG="${IMAGE_TAG:-latest}"
+PACKAGE_JSON="$ROOT_DIR/package.json"
+PACKAGE_VERSION="$(sed -n 's/^[[:space:]]*"version"[[:space:]]*:[[:space:]]*"\([^"]*\)"[[:space:]]*,*[[:space:]]*$/\1/p' "$PACKAGE_JSON" | head -n 1)"
+IMAGE_TAG="${1:-${IMAGE_TAG:-$PACKAGE_VERSION}}"
 IMAGE="entropia-manager-frontend:$IMAGE_TAG"
 PLATFORM="${PLATFORM:-linux/amd64}"
 
@@ -24,6 +26,11 @@ fi
 
 if [ ! -f "$COMPOSE_SOURCE" ]; then
   echo "error: compose file not found: $COMPOSE_SOURCE" >&2
+  exit 1
+fi
+
+if [ -z "$IMAGE_TAG" ]; then
+  echo "error: unable to determine image tag from $PACKAGE_JSON" >&2
   exit 1
 fi
 

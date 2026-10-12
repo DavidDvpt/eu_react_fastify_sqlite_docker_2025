@@ -56,15 +56,17 @@ Naming conventions follow the backend project:
 - Server control scripts: `scripts/server/entropia-manager-frontend-start.sh` and
   `scripts/server/entropia-manager-frontend-stop.sh`
 
-Run the deployment script from a frontend checkout on SER5:
+Run the deployment script from a frontend checkout on SER5. The image version
+is read automatically from the root `package.json`:
 
 ```sh
-IMAGE_TAG=2.0.0 ./scripts/server/entropia-manager-frontend-deploy.sh
+./scripts/server/entropia-manager-frontend-deploy.sh
 ```
 
-The script builds `entropia-manager-frontend:${IMAGE_TAG:-latest}` and, when
-the tag is versioned, also updates `entropia-manager-frontend:latest`. It then
-installs the Compose file at `/opt/docker/entropia-manager-frontend.yaml`,
-copies the control scripts to `$HOME/scripts`, and starts the frontend using
-the stable `latest` tag. The host must already have Docker Buildx and the
-external `ser5-network` Docker network.
+The script builds `entropia-manager-frontend:<version>` and also updates
+`entropia-manager-frontend:latest`, preserving the versioned image for history.
+An image version can still be passed explicitly when needed.
+It then installs the Compose file at
+`/opt/docker/entropia-manager-frontend.yaml`, copies the control scripts to
+`$HOME/scripts`, and starts the frontend using the versioned image. The host
+must already have Docker Buildx and the external `ser5-network` Docker network.
