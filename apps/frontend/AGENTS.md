@@ -14,6 +14,20 @@ Panel > Section > SubSection
 - `SubSection` is the leaf container and must not contain `Panel` or `Section` components.
 - Overlay components rendered through a portal, such as modals, are exempt from the visual hierarchy when they do not render inside the panel DOM tree.
 
+## Form architecture
+
+- Every form must be built with `GenericForm` and the corresponding RHF-aware
+  components (`InputRHF`, `SelectRHF`, etc.). Do not create an independent
+  form state or bind raw inputs directly when an RHF component is available.
+- Keep one React component per file. Supporting types, constants, and helper
+  functions are allowed, but additional React component definitions belong in
+  their own files.
+- Complex form controls that own or need their own data source (for example,
+  a select or tooltip with data-fetching, transformation, or selection logic)
+  must be wrapped in a dedicated component. That wrapper owns the data and
+  behavior, while the underlying generic form control remains reusable and
+  focused on rendering/form binding.
+
 ## Tierable item names (display only)
 
 Items whose type has `hasTierOption` and which are not stackable are displayed
