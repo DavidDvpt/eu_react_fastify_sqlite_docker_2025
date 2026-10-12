@@ -1,5 +1,5 @@
-#!/usr/bin/env bash
-set -Eeuo pipefail
+#!/bin/sh
+set -eu
 
 cd /opt/docker
 
@@ -8,7 +8,7 @@ export IMAGE_TAG
 COMPOSE_FILE="/opt/docker/entropia-manager-frontend.yaml"
 COMPOSE_PROJECT="entropia-manager-frontend"
 
-if [[ ! -f "$COMPOSE_FILE" ]]; then
+if [ ! -f "$COMPOSE_FILE" ]; then
   echo "error: compose file not found: $COMPOSE_FILE" >&2
   exit 1
 fi

@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
-set -euo pipefail
+#!/bin/sh
+set -eu
 
-SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
-ROOT_DIR="$(cd -- "$SCRIPT_DIR/.." && pwd)"
+SCRIPT_DIR="$(CDPATH= cd "$(dirname "$0")" && pwd)"
+ROOT_DIR="$(CDPATH= cd "$SCRIPT_DIR/.." && pwd)"
 DOCKERFILE="$ROOT_DIR/docker/prod/Dockerfile.frontend.prod"
 IMAGE_TAG="${IMAGE_TAG:-latest}"
 IMAGE="entropia-manager-frontend:$IMAGE_TAG"
@@ -18,19 +18,20 @@ if ! docker buildx version >/dev/null 2>&1; then
 fi
 
 echo "Building $IMAGE..."
-BUILD_ARGS=(
-  --platform "${PLATFORM:-linux/amd64}"
-  --load
-  --pull
-  -f "$DOCKERFILE"
-  -t "$IMAGE"
-)
+build_image() {
+  docker buildx build \
+    --platform "${PLATFORM:-linux/amd64}" \
+    --load \
+    --pull \
+    -f "$DOCKERFILE" \
+    -t "$IMAGE" \
+    "$@" \
+    "$ROOT_DIR"
+}
 
-if [[ "$IMAGE_TAG" != "latest" ]]; then
-  BUILD_ARGS+=( -t "entropia-manager-frontend:latest" )
+if [ "$IMAGE_TAG" != "latest" ]; then
+  build_image -t "entropia-manager-frontend:latest"
+else
+  build_image
 fi
-
-docker buildx build \
-  "${BUILD_ARGS[@]}" \
-  "$ROOT_DIR"
 echo "Build complete."
