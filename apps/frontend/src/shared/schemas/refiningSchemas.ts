@@ -9,6 +9,7 @@ import { REFINING_PROVENANCES } from "@/shared/helpers/refining";
  */
 export const refiningFormSchema = z.object({
   result: z.string().min(1, "Sélectionnez une recette"),
+  refinerLotId: z.string().min(1, "Sélectionnez un raffineur"),
   clickCount: z
     .number()
     .int("Quantité invalide")

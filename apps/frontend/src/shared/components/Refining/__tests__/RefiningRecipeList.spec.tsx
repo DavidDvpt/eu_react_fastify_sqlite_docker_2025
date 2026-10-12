@@ -59,7 +59,7 @@ describe("RefiningRecipeList", () => {
       <RefiningRecipeList {...BASE_PROPS} onSelect={vi.fn()} />,
     );
 
-    expect(screen.getByText(/max 6 résultats/)).toBeInTheDocument();
+    expect(screen.getByText("max 6")).toBeInTheDocument();
   });
 
   it("selects the recipe on click", async () => {

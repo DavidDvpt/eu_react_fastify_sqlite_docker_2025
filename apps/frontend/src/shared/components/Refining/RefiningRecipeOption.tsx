@@ -24,7 +24,7 @@ function RefiningRecipeOption({
       title={refinable ? name : `${name} (stock insuffisant)`}
       onClick={() => onSelect(resultId)}
       className={cn(
-        "flex w-full items-center gap-3 rounded-md border border-border bg-surface px-3 py-2 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
+        "flex h-[40px] w-full items-center gap-3 rounded-md border border-transparent bg-surface pl-1.5 pr-3 py-0 text-left transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring",
         selected
           ? "border-primary-500 bg-surface-hover"
           : "hover:bg-surface-hover",
@@ -37,10 +37,10 @@ function RefiningRecipeOption({
         size="small"
         classname="shrink-0"
       />
-      <span className="min-w-0 flex-1 truncate text-text">{name}</span>
+      <span className={cn("min-w-0 flex-1 truncate", selected ? "text-black" : "text-text")}>{name}</span>
       {refinable && (
-        <span className="shrink-0 text-sm text-text-muted">
-          max {maxClickCount} résultat{maxClickCount > 1 ? "s" : ""}
+        <span className={cn("shrink-0 text-sm", selected ? "text-black" : "text-text-muted")}>
+          max {maxClickCount}
         </span>
       )}
     </button>

@@ -63,7 +63,7 @@ export interface InputRHFProps extends Omit<
 
 export interface SelectOption {
   value: string;
-  label: string;
+  label: ReactNode;
 }
 
 export interface SelectRHFProps {

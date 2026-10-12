@@ -22,7 +22,7 @@ function RefiningRecipeList({
 }: RefiningRecipeListProps) {
   return (
     <div className="flex flex-col gap-2">
-      <h3 className={formLabelClassName}>Recettes</h3>
+      <span className={formLabelClassName}>Recettes</span>
 
       {isPending ? (
         <div className="flex h-12 items-center justify-center">
@@ -41,7 +41,7 @@ function RefiningRecipeList({
           Aucune recette disponible pour cet item.
         </p>
       ) : (
-        <div className="flex max-h-56 flex-col gap-1 overflow-y-auto pr-1">
+        <div className="flex h-[132px] flex-col gap-1 overflow-y-auto rounded-md border border-border">
           {options.map((option) => (
             <RefiningRecipeOption
               key={option.resultId}
