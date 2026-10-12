@@ -21,6 +21,7 @@ import {
 import { useInventoryStockData } from "@/shared/hooks/rqFetchHooks";
 import useRefiningMutation from "@/shared/hooks/useRefiningMutation";
 import { refiningFormSchema, type RefiningFormValues } from "@/shared/schemas";
+import { FormatTools } from "@/shared/tools";
 
 import RefiningProvenanceFields from "./RefiningProvenanceFields";
 import RefiningQuantityField from "./RefiningQuantityField";
@@ -65,7 +66,6 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
             : null,
           maxClickCount,
           refinable: maxClickCount > 0,
-          ttValue: itemData?.value,
         };
       }),
     [resultIds, recipeLinesByResult, originStocksByResult, itemDatas],
@@ -88,22 +88,30 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
         return (stockItem.lots ?? []).map((lot) => ({
           value: lot.lotId,
           decay: stockItem.decay ?? 0,
+          ttRemaining: lot.ttRemaining ?? null,
           label: (
-            <span className="flex items-center gap-2">
-              {stockItem.imageUrlId ? (
-                <img
-                  src={
-                    getItemImageUrl(stockItem.imageUrlId, "micro") ?? undefined
-                  }
-                  alt=""
-                  className="h-7 w-7 rounded object-contain"
-                />
-              ) : (
-                <span className="flex h-7 w-7 items-center justify-center rounded bg-surface-hover text-xs text-text-muted">
-                  -
+            <span className="flex min-w-0 flex-1 items-center justify-between gap-2">
+              <span className="flex min-w-0 items-center gap-2">
+                {stockItem.imageUrlId ? (
+                  <img
+                    src={
+                      getItemImageUrl(stockItem.imageUrlId, "micro") ?? undefined
+                    }
+                    alt=""
+                    className="h-7 w-7 rounded object-contain"
+                  />
+                ) : (
+                  <span className="flex h-7 w-7 items-center justify-center rounded bg-surface-hover text-xs text-text-muted">
+                    -
+                  </span>
+                )}
+                <span className="truncate">{stockItem.name}</span>
+              </span>
+              {lot.ttRemaining !== null && lot.ttRemaining !== undefined ? (
+                <span className="shrink-0 text-sm text-text-muted">
+                  TT {FormatTools.pedFormat().format(lot.ttRemaining)} PED
                 </span>
-              )}
-              <span className="truncate">{stockItem.name}</span>
+              ) : null}
             </span>
           ),
         }));
