@@ -1,14 +1,16 @@
 import { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 
 import InputRHF from "@/shared/components/form/Input/InputRHF";
 import type { RefiningFormValues } from "@/shared/schemas";
+import { FormatTools } from "@/shared/tools";
 
 type RefiningQuantityFieldProps = {
   selectedResultId: string | null;
   linesPending: boolean;
   ppcm: number;
   maxClickCount: number;
+  refinerDecays: ReadonlyMap<string, number>;
 };
 
 function RefiningQuantityField({
@@ -16,8 +18,18 @@ function RefiningQuantityField({
   linesPending,
   ppcm,
   maxClickCount,
+  refinerDecays,
 }: RefiningQuantityFieldProps) {
   const { getValues, setValue } = useFormContext<RefiningFormValues>();
+  const clickCount = useWatch<RefiningFormValues, "clickCount">({
+    name: "clickCount",
+  });
+  const refinerLotId = useWatch<RefiningFormValues, "refinerLotId">({
+    name: "refinerLotId",
+  });
+  const refiningDecay = refinerDecays.get(refinerLotId) ?? 0;
+  const refiningCost =
+    refiningDecay * (typeof clickCount === "number" ? clickCount : 0);
 
   useEffect(() => {
     if (selectedResultId && !linesPending) {
@@ -40,7 +52,15 @@ function RefiningQuantityField({
         registerOptions={{ valueAsNumber: true }}
       />
       <p className="m-0 text-xs text-text-muted">
-        Multiple de {ppcm} — maximum {maxClickCount} résultat{maxClickCount > 1 ? "s" : ""}
+        Multiple de {ppcm} — maximum {maxClickCount} résultat
+        {maxClickCount > 1 ? "s" : ""}
+      </p>
+      <p className="m-0 text-xs text-text-muted">
+        Coût decay total :{" "}
+        {FormatTools.pedFormat({ decimalMini: 2, decimalMaxi: 5 }).format(
+          refiningCost,
+        )}{" "}
+        PED
       </p>
     </div>
   );

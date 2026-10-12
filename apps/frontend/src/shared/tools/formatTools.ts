@@ -45,11 +45,11 @@ class FormatTools {
     return FormatTools.formatToDecimals(value, 3);
   }
 
-  static pedFormat() {
+  static pedFormat(props?: { decimalMini: number; decimalMaxi: number }) {
     return new Intl.NumberFormat("fr-FR", {
       style: "decimal",
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2,
+      minimumFractionDigits: props?.decimalMini ?? 2,
+      maximumFractionDigits: props?.decimalMaxi ?? 2,
     });
   }
 

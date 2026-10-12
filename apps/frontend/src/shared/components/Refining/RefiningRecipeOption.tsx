@@ -11,6 +11,7 @@ function RefiningRecipeOption({
   resultId,
   name,
   imageUrl,
+  ttValue,
   maxClickCount,
   refinable,
   selected,
@@ -38,6 +39,9 @@ function RefiningRecipeOption({
         classname="shrink-0"
       />
       <span className={cn("min-w-0 flex-1 truncate", selected ? "text-black" : "text-text")}>{name}</span>
+      <span className={cn("shrink-0 text-right text-sm", selected ? "text-black" : "text-text-muted")}>
+        {ttValue !== undefined ? `TT ${ttValue.toFixed(2)} PED` : null}
+      </span>
       {refinable && (
         <span className={cn("shrink-0 text-sm", selected ? "text-black" : "text-text-muted")}>
           max {maxClickCount}

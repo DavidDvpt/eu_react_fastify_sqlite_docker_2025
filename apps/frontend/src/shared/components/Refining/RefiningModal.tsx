@@ -65,6 +65,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
             : null,
           maxClickCount,
           refinable: maxClickCount > 0,
+          ttValue: itemData?.value,
         };
       }),
     [resultIds, recipeLinesByResult, originStocksByResult, itemDatas],
@@ -86,6 +87,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
 
         return (stockItem.lots ?? []).map((lot) => ({
           value: lot.lotId,
+          decay: stockItem.decay ?? 0,
           label: (
             <span className="flex items-center gap-2">
               {stockItem.imageUrlId ? (
@@ -107,6 +109,10 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
         }));
       }),
     [inventoryStock],
+  );
+  const refinerDecays = useMemo(
+    () => new Map(refinerOptions.map((option) => [option.value, option.decay])),
+    [refinerOptions],
   );
 
   const selectedOption = recipeOptions.find(
@@ -202,6 +208,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
                 linesPending={isLinesLoading || isOriginStocksLoading}
                 ppcm={ppcm}
                 maxClickCount={selectedOption?.maxClickCount ?? 0}
+                refinerDecays={refinerDecays}
               />
             </div>
           ) : null}
