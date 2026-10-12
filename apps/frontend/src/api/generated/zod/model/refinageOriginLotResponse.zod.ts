@@ -5,11 +5,14 @@
  */
 import * as zod from 'zod';
 
+export const refinageOriginLotResponseLotMarkupDefault = 100;
+
 export const RefinageOriginLotResponse = zod.object({
   "lotId": zod.string(),
   "itemId": zod.string(),
   "quantityRemaining": zod.int(),
-  "origin": zod.string()
+  "origin": zod.string(),
+  "lotMarkup": zod.union([zod.int(),zod.number()]).default(refinageOriginLotResponseLotMarkupDefault)
 });
 
 export type RefinageOriginLotResponse = zod.input<typeof RefinageOriginLotResponse>;

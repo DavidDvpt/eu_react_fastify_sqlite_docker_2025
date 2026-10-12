@@ -10,4 +10,5 @@ export interface LotOriginResponse {
   quantityRemaining: number;
   isActive: boolean;
   origin: string | null;
+  lotMarkup?: number;
 }

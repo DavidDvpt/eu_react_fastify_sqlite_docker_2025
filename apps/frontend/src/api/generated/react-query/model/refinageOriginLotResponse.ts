@@ -9,4 +9,5 @@ export interface RefinageOriginLotResponse {
   itemId: string;
   quantityRemaining: number;
   origin: string;
+  lotMarkup?: number;
 }

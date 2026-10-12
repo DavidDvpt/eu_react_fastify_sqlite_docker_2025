@@ -10,7 +10,7 @@ export interface LotResponse {
   isActive: boolean;
   ttRemaining: number;
   tierLevel?: number | null;
-  quantityExported: number;
+  lotMarkup?: number;
   quantityRemaining: number;
   lotType: string;
   createdAt: string;
