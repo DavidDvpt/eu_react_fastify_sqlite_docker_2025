@@ -14,6 +14,7 @@ import SignInPage from "@/pages/authPages/SignInPage";
 import SignUpPage from "@/pages/authPages/SignUpPage";
 import AdminGuard from "@/modules/auth/guards/AdminGuard";
 import StorePage from "@/pages/storePage/StorePage";
+import ImagesPage from "@/pages/imagesPage/ImagesPage";
 
 const routes = [
   {
@@ -55,6 +56,7 @@ const routes = [
               {
                 element: <AdminGuard />,
                 children: [
+                  { path: "images", element: <ImagesPage /> },
                   {
                     element: <LeftMenuLayout />,
                     children: [

@@ -714,6 +714,31 @@ export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponseOutp
 
 
 /**
+ * Return the image catalog page requested by the frontend.
+ * @summary List Images
+ */
+export const listImagesApiV2ImagesGetQueryPageDefault = 1;
+
+export const listImagesApiV2ImagesGetQueryPageSizeDefault = 100;
+export const listImagesApiV2ImagesGetQueryPageSizeMax = 300;
+
+
+
+export const ListImagesApiV2ImagesGetQueryParams = zod.object({
+  "page": zod.int().min(1).default(listImagesApiV2ImagesGetQueryPageDefault),
+  "pageSize": zod.int().min(1).max(listImagesApiV2ImagesGetQueryPageSizeMax).default(listImagesApiV2ImagesGetQueryPageSizeDefault)
+})
+
+export type ListImagesApiV2ImagesGetQueryParams = zod.input<typeof ListImagesApiV2ImagesGetQueryParams>;
+export type ListImagesApiV2ImagesGetQueryParamsOutput = zod.output<typeof ListImagesApiV2ImagesGetQueryParams>;
+
+export const ListImagesApiV2ImagesGetResponse = zod.record(zod.string(), zod.unknown())
+
+export type ListImagesApiV2ImagesGetResponse = zod.input<typeof ListImagesApiV2ImagesGetResponse>;
+export type ListImagesApiV2ImagesGetResponseOutput = zod.output<typeof ListImagesApiV2ImagesGetResponse>;
+
+
+/**
  * @summary List Transactions
  */
 export const ListTransactionsApiV2TransactionsGetQueryParams = zod.object({

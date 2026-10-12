@@ -31,6 +31,8 @@ export * from './itemResponse.ts';
 export * from './listCategoriesApiV2CategoriesGetParams.ts';
 export * from './listCategoriesApiV2CategoriesGetSortKey.ts';
 export * from './listCategoriesApiV2CategoriesGetSortOrder.ts';
+export * from './listImagesApiV2ImagesGet200.ts';
+export * from './listImagesApiV2ImagesGetParams.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetParams.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetSortKey.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetSortOrder.ts';

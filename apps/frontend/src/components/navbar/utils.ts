@@ -48,6 +48,13 @@ const navbarValues = [
     adminOnly: true,
     visible: true,
   },
+  {
+    content: "Images",
+    route: "/images",
+    selected: false,
+    adminOnly: true,
+    visible: true,
+  },
 ];
 
 export { navbarValues };

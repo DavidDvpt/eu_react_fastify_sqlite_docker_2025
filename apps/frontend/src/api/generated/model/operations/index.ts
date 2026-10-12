@@ -18,6 +18,7 @@ export * from './inventoryFinancialReportResponse.ts';
 export * from './itemFinancialReportResponse.ts';
 export * from './itemResponse.ts';
 export * from './listCategoriesApiV2CategoriesGetParams.ts';
+export * from './listImagesApiV2ImagesGetParams.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetParams.ts';
 export * from './listInventoryStockApiV2InventoryStockGetParams.ts';
 export * from './listItemsApiV2ItemsGetParams.ts';

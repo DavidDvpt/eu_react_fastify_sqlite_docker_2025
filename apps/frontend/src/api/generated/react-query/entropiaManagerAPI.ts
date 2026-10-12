@@ -42,6 +42,8 @@ import type {
   ItemPatch,
   ItemResponse,
   ListCategoriesApiV2CategoriesGetParams,
+  ListImagesApiV2ImagesGet200,
+  ListImagesApiV2ImagesGetParams,
   ListInventoryLotsApiV2InventoryLotsGetParams,
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
@@ -2998,6 +3000,101 @@ export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<TDat
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * Return the image catalog page requested by the frontend.
+ * @summary List Images
+ */
+export const listImagesApiV2ImagesGet = (
+    params?: ListImagesApiV2ImagesGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ListImagesApiV2ImagesGet200>(
+      {url: `/api/v2/images`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getListImagesApiV2ImagesGetQueryKey = (params?: ListImagesApiV2ImagesGetParams,) => {
+    return [
+    `/api/v2/images`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getListImagesApiV2ImagesGetQueryOptions = <TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListImagesApiV2ImagesGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>> = ({ signal }) => listImagesApiV2ImagesGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListImagesApiV2ImagesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>>
+export type ListImagesApiV2ImagesGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: undefined |  ListImagesApiV2ImagesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Images
+ */
+
+export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListImagesApiV2ImagesGetQueryOptions(params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

@@ -17,6 +17,7 @@ export * from './itemFinancialReportEnvelope.ts';
 export * from './itemPatch.ts';
 export * from './listCategoriesApiV2CategoriesGetSortKey.ts';
 export * from './listCategoriesApiV2CategoriesGetSortOrder.ts';
+export * from './listImagesApiV2ImagesGet200.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetSortKey.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetSortOrder.ts';
 export * from './listInventoryStockApiV2InventoryStockGetSortKey.ts';

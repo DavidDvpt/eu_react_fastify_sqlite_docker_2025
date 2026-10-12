@@ -25,6 +25,8 @@ export * from './itemFinancialReportResponse.zod.ts';
 export * from './itemPatch.zod.ts';
 export * from './itemResponse.zod.ts';
 export * from './listCategoriesApiV2CategoriesGetParams.zod.ts';
+export * from './listImagesApiV2ImagesGet200.zod.ts';
+export * from './listImagesApiV2ImagesGetParams.zod.ts';
 export * from './listInventoryLotsApiV2InventoryLotsGetParams.zod.ts';
 export * from './listInventoryStockApiV2InventoryStockGetParams.zod.ts';
 export * from './listItemsApiV2ItemsGetParams.zod.ts';
