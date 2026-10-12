@@ -55,7 +55,9 @@ export default function useSystemDatas() {
   const typesByCategory = useMemo(
     () => (categoryId?: string) => {
       if (!categoryId) return types;
-      return types.filter((f) => f.categoryId === categoryId);
+      return types.filter(
+        (f) => f.categoryId === categoryId || f.category?.id === categoryId,
+      );
     },
     [types],
   );
@@ -140,7 +142,11 @@ export default function useSystemDatas() {
           return items.filter((f) => f.typeId === typeId);
         }
         if (categoryId) {
-          return items.filter((f) => f.type?.categoryId === categoryId);
+          return items.filter(
+            (f) =>
+              f.type?.categoryId === categoryId ||
+              f.type?.category?.id === categoryId,
+          );
         }
         return items;
       },

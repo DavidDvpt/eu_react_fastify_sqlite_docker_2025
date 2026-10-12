@@ -312,6 +312,22 @@ export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseOutput = zod.output<typ
 
 
 /**
+ * @summary Request Nexus Update
+ */
+export const RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams = zod.object({
+  "id": zod.string()
+})
+
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams = zod.input<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParamsOutput = zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams>;
+
+export const RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = IdResponse
+
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = zod.input<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponseOutput = zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse>;
+
+
+/**
  * @summary List Items
  */
 export const ListItemsApiV2ItemsGetQueryParams = zod.object({

@@ -1358,6 +1358,72 @@ export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnT
 
 
 /**
+ * @summary Request Nexus Update
+ */
+export const requestNexusUpdateApiV2TypesIdNexusUpdatePost = (
+    id: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<IdResponse>(
+      {url: `/api/v2/types/${id}/nexus-update`, method: 'POST', signal
+    },
+      options);
+    }
+
+
+
+
+export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey = () => ['requestNexusUpdateApiV2TypesIdNexusUpdatePost'] as const;
+
+export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext> => {
+
+const mutationKey = getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables> = (props) => {
+          const {id} = props ?? {};
+
+          return  requestNexusUpdateApiV2TypesIdNexusUpdatePost(id,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationResult = NonNullable<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>>
+
+    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationError = ErrorType<HTTPValidationError>
+    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables = {id: string}
+
+    /**
+ * @summary Request Nexus Update
+ */
+export const useRequestNexusUpdateApiV2TypesIdNexusUpdatePost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+        TError,
+        RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions(options), queryClient);
+    }
+
+/**
  * @summary List Items
  */
 export const listItemsApiV2ItemsGet = (

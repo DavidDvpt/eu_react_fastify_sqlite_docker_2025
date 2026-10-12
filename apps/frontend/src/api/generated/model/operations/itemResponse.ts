@@ -25,7 +25,6 @@ export type ItemResponse = {
   depth?: number | null;
   ammoBurn?: number | null;
   efficiency?: number | null;
-  range?: number | null;
   minProfessionLevel?: number | null;
   minTt?: number | null;
   socket?: number | null;

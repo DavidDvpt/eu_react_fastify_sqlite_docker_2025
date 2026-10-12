@@ -26,7 +26,6 @@ export const ItemResponse = zod.object({
   "depth": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "ammoBurn": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "efficiency": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
-  "range": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "minProfessionLevel": zod.union([zod.int(),zod.null()]).optional(),
   "minTt": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "socket": zod.union([zod.int(),zod.null()]).optional(),
