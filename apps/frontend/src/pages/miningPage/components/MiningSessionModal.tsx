@@ -21,6 +21,17 @@ function MiningSessionModal() {
   } = useSystemDatas();
   const [finderLotId, setFinderLotId] = useState<string>();
   const [excavatorLotId, setExcavatorLotId] = useState<string>();
+  const [clickCount, setClickCount] = useState(1);
+  const [isEnmatterSelected, setIsEnmatterSelected] = useState(false);
+  const [isOresSelected, setIsOresSelected] = useState(false);
+  const searchType =
+    isEnmatterSelected && isOresSelected
+      ? 3
+      : isEnmatterSelected
+        ? 1
+        : isOresSelected
+          ? 2
+          : undefined;
 
   const onClose = () => navigate("/mining");
   const available = availableQuery.data;
@@ -62,43 +73,99 @@ function MiningSessionModal() {
 
         {available && (
           <div className="flex flex-col gap-4">
-            <div className="grid gap-4 sm:grid-cols-2">
-              <MiningEquipmentSelect
-                label="Finder"
-                placeholder="Sélectionner un finder"
-                lots={finderLots}
-                itemById={itemById}
-                value={finderLotId}
-                onValueChange={setFinderLotId}
-                disabled={isItemsLoading}
-                enhancersBySocket={available.finderEnhancers}
-                target="FINDER"
-              />
-              <MiningEquipmentSelect
-                label="Excavateur"
-                placeholder="Sélectionner un excavateur"
-                lots={excavatorLots}
-                itemById={itemById}
-                value={excavatorLotId}
-                onValueChange={setExcavatorLotId}
-                disabled={isItemsLoading}
-                enhancersBySocket={available.excavatorEnhancers}
-                target="EXCAVATOR"
-              />
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div className="flex flex-col gap-2">
+                <label htmlFor="mining-click-count" className="text-sm font-medium text-text">
+                  Nombre de clics
+                </label>
+                <input
+                  id="mining-click-count"
+                  type="number"
+                  min={1}
+                  max={9999}
+                  value={clickCount}
+                  onChange={(event) => setClickCount(Math.min(9999, Math.max(1, event.currentTarget.valueAsNumber || 1)))}
+                  className="h-9 w-24 rounded-md border border-border bg-input px-3 py-2 text-sm text-text focus:outline-none focus:ring-1 focus:ring-ring"
+                />
+              </div>
+              <div className="flex flex-col gap-2">
+                <span className="text-sm font-medium text-text">Type</span>
+                <div className="flex gap-2">
+                  <Button
+                    type="button"
+                    variant={isEnmatterSelected ? "primary" : "secondary"}
+                    className="w-[calc(70px+3rem)]"
+                    aria-pressed={isEnmatterSelected}
+                    onClick={() => setIsEnmatterSelected((selected) => !selected)}
+                  >
+                    Enmatter
+                  </Button>
+                  <Button
+                    type="button"
+                    variant={isOresSelected ? "primary" : "secondary"}
+                    className="w-[calc(70px+3rem)]"
+                    aria-pressed={isOresSelected}
+                    onClick={() => setIsOresSelected((selected) => !selected)}
+                  >
+                    Ores
+                  </Button>
+                </div>
+                <span className="sr-only">Type Mining : {searchType ?? "non sélectionné"}</span>
+              </div>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
-              <InventoryGroup label="Amplificateurs" count={available.finderAmplifier.length} />
-              <InventoryGroup label="Enhancers" count={Object.values(available.finderEnhancers).flat().length} />
-              <InventoryGroup label="Munitions" count={available.ammo.length} />
-            </div>
+
+            <section className="flex flex-col gap-4 rounded-md border border-border p-4">
+              <h3 className="m-0 mb-[10px] text-base font-medium text-text">Session Finder</h3>
+              <div className="flex flex-col gap-2">
+                <MiningEquipmentSelect
+                  label="Finder"
+                  placeholder="Sélectionner un finder"
+                  lots={finderLots}
+                  itemById={itemById}
+                  value={finderLotId}
+                  onValueChange={setFinderLotId}
+                  disabled={isItemsLoading}
+                  enhancersBySocket={available.finderEnhancers}
+                  target="FINDER"
+                  title="Enhancers"
+                />
+              </div>
+              <InventoryGroup label="Finder amplifier" count={available.finderAmplifier.length} />
+            </section>
+
+            <section className="flex flex-col gap-4 rounded-md border border-border p-4">
+              <h3 className="m-0 mb-[10px] text-base font-medium text-text">Session Excavator</h3>
+              <div className="flex flex-col gap-2">
+                <MiningEquipmentSelect
+                  label="Excavateur"
+                  placeholder="Sélectionner un excavateur"
+                  lots={excavatorLots}
+                  itemById={itemById}
+                  value={excavatorLotId}
+                  onValueChange={setExcavatorLotId}
+                  disabled={isItemsLoading}
+                  enhancersBySocket={available.excavatorEnhancers}
+                  target="EXCAVATOR"
+                  title="Enhancers"
+                />
+              </div>
+            </section>
           </div>
         )}
 
         <div className="flex justify-end gap-2 border-t border-border pt-4">
-          <Button variant="secondary" onClick={onClose}>
+          <Button
+            variant="secondary"
+            className="w-[calc(120px+3rem)]"
+            onClick={onClose}
+          >
             Annuler
           </Button>
-          <Button variant="primary" disabled>
+          <Button
+            variant="primary"
+            className="w-[calc(120px+3rem)]"
+            disabled
+          >
             Créer la session
           </Button>
         </div>
@@ -117,6 +184,7 @@ type MiningEquipmentSelectProps = {
   disabled?: boolean;
   enhancersBySocket: Record<string, MiningAvailableStackResponse[]>;
   target: "FINDER" | "EXCAVATOR";
+  title: string;
 };
 
 function MiningEquipmentSelect({
@@ -129,6 +197,7 @@ function MiningEquipmentSelect({
   disabled = false,
   enhancersBySocket,
   target,
+  title,
 }: MiningEquipmentSelectProps) {
   const options = lots
     .filter((lot) => lot.lotId)
@@ -166,6 +235,7 @@ function MiningEquipmentSelect({
           enhancersBySocket={enhancersBySocket}
           itemById={itemById}
           target={target}
+          title={title}
         />
       )}
     </div>
@@ -182,11 +252,13 @@ function EnhancerSockets({
   enhancersBySocket,
   itemById,
   target,
+  title,
 }: {
   tierLevel?: number | null;
   enhancersBySocket: Record<string, MiningAvailableStackResponse[]>;
   itemById: Map<string, ItemViewModel>;
   target: "FINDER" | "EXCAVATOR";
+  title: string;
 }) {
   const [activeSocket, setActiveSocket] = useState<number>();
   const [lastSelectedSocket, setLastSelectedSocket] = useState<number>();
@@ -225,8 +297,8 @@ function EnhancerSockets({
   const displayedSocket = activeSocket ?? lastSelectedSocket;
 
   return (
-    <div className="flex flex-col gap-2 rounded-md border border-border bg-surface p-3">
-      <div className="text-sm font-medium text-text">Enhancers</div>
+    <div className="flex flex-col gap-2">
+      <div className="text-sm font-medium text-text">{title}</div>
       <div className="flex flex-wrap gap-2">
         {Array.from({ length: 10 }, (_, index) => index + 1).map((socket) => {
           const isEnabled = socket <= enabledSockets;
