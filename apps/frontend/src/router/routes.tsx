@@ -15,6 +15,9 @@ import SignUpPage from "@/pages/authPages/SignUpPage";
 import AdminGuard from "@/modules/auth/guards/AdminGuard";
 import StorePage from "@/pages/storePage/StorePage";
 import ImagesPage from "@/pages/imagesPage/ImagesPage";
+import MiningPage from "@/pages/miningPage/MiningPage";
+import ManageLeftNav from "@/pages/managePage/components/ManageLeftNav";
+import MiningLeftNav from "@/pages/miningPage/components/MiningLeftNav";
 
 const routes = [
   {
@@ -58,7 +61,7 @@ const routes = [
                 children: [
                   { path: "images", element: <ImagesPage /> },
                   {
-                    element: <LeftMenuLayout />,
+                    element: <LeftMenuLayout leftNav={<ManageLeftNav />} />,
                     children: [
                       {
                         path: "manage",
@@ -72,6 +75,14 @@ const routes = [
                           { path: ":tab/:id/edit", element: <ManagePage /> },
                         ],
                       },
+                    ],
+                  },
+                  {
+                    element: <LeftMenuLayout leftNav={<MiningLeftNav />} />,
+                    children: [
+                      { path: "mining", element: <MiningPage /> },
+                      { path: "mining/create", element: <MiningPage /> },
+                      { path: "mining/:id/session", element: <MiningPage /> },
                     ],
                   },
                 ],

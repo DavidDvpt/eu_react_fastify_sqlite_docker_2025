@@ -17,6 +17,7 @@ function VerticalNav({ items }: VerticalNavProps) {
             content={item.content}
             route={item.route}
             isActive={item.isActive}
+            disabled={item.disabled}
           ></NavButton>
         );
       })}

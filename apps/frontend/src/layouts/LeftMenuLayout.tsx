@@ -1,9 +1,10 @@
+import type { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import LeftNavContentLayout from "./LeftNavContentLayout";
 
-function LeftMenuLayout() {
+function LeftMenuLayout({ leftNav }: { leftNav: ReactNode }) {
   return (
-    <LeftNavContentLayout>
+    <LeftNavContentLayout leftNav={leftNav}>
       <Outlet />
     </LeftNavContentLayout>
   );

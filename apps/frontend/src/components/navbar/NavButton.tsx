@@ -17,20 +17,25 @@ function NavButton(props: NavbarButtonType) {
 
   return (
     <Button
-      asChild
       variant={props.variant}
       data-active={isActive}
       className={props.className}
       size="nav"
+      disabled={props.disabled}
+      asChild={!props.disabled}
     >
-      <NavLink
-        to={{
-          pathname: props.route,
-          search: shouldPreserveSearch ? location.search : "",
-        }}
-      >
-        {props.content}
-      </NavLink>
+      {props.disabled ? (
+        props.content
+      ) : (
+        <NavLink
+          to={{
+            pathname: props.route,
+            search: shouldPreserveSearch ? location.search : "",
+          }}
+        >
+          {props.content}
+        </NavLink>
+      )}
     </Button>
   );
 }

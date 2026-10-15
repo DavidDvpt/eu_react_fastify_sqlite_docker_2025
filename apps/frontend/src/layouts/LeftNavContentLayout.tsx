@@ -1,52 +1,18 @@
-import type { PropsWithChildren } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { VerticalNav } from "@/shared/components";
+import type { PropsWithChildren, ReactNode } from "react";
 
 import { Panel } from "@/shared/components/Containers";
 
-import useNavLinks from "@/shared/hooks/useNavLinks";
-import {
-  getManageCreateLabel,
-  isManageTab,
-} from "@/pages/managePage/manageLeftNav";
+type LeftNavContentLayoutProps = PropsWithChildren<{
+  leftNav: ReactNode;
+}>;
 
-function LeftNavContentLayout({ children }: PropsWithChildren) {
-  const links = useNavLinks();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { tab } = useParams();
-
-  const selectedTab = isManageTab(tab) ? tab : "category";
-  const createLabel = getManageCreateLabel(selectedTab);
+function LeftNavContentLayout({ children, leftNav }: LeftNavContentLayoutProps) {
 
   return (
     <div className="h-full min-h-0 p-2">
       <Panel className="grid h-full min-h-0 grid-cols-[220px_minmax(0,1fr)] gap-2 overflow-hidden m-0">
         <div className="flex h-full min-h-0 flex-col">
-          <VerticalNav
-            items={links.map((link) => ({
-              ...link,
-              key: `left-nav-link-${link.key}`,
-              variant: "navVertical",
-            }))}
-          />
-
-          <div className="mt-auto">
-            <Button
-              variant="primary"
-              size="lg"
-              className="w-full"
-              onClick={() =>
-                navigate({
-                  pathname: `/manage/${selectedTab}/create`,
-                  search: location.search,
-                })
-              }
-            >
-              {createLabel}
-            </Button>
-          </div>
+          {leftNav}
         </div>
 
         {children}

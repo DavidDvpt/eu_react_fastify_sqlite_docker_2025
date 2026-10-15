@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes, useLocation } from "react-router-dom";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import LeftNavContentLayout from "../LeftNavContentLayout";
+import ManageLeftNav from "@/pages/managePage/components/ManageLeftNav";
 
 const mockUseSystemMutation = vi.fn();
 const mockUseSystemDatas = vi.fn();
@@ -31,7 +32,7 @@ function renderManageRoute(tab: "category" | "type" | "item") {
         <Route
           path="/manage/:tab/*"
           element={
-            <LeftNavContentLayout>
+            <LeftNavContentLayout leftNav={<ManageLeftNav />}>
               <>
                 <div>Manage content</div>
                 <LocationProbe />
