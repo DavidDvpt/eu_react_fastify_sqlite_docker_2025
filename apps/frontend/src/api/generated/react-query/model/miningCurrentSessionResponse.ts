@@ -5,6 +5,7 @@
  */
 import type { MiningCurrentSessionResponseExcavatorEnhancers } from './miningCurrentSessionResponseExcavatorEnhancers.ts';
 import type { MiningCurrentSessionResponseFinderEnhancers } from './miningCurrentSessionResponseFinderEnhancers.ts';
+import type { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.ts';
 import type { SessionType } from './sessionType.ts';
 
 export interface MiningCurrentSessionResponse {
@@ -15,9 +16,11 @@ export interface MiningCurrentSessionResponse {
   createdAt: string;
   endedAt: string | null;
   finderItemId?: string | null;
+  finderLot?: MiningCurrentToolLotResponse | null;
   amplifierItemId?: string | null;
   finderEnhancers?: MiningCurrentSessionResponseFinderEnhancers;
   excavatorItemIds?: string[];
+  excavatorLots?: MiningCurrentToolLotResponse[];
   excavatorEnhancers?: MiningCurrentSessionResponseExcavatorEnhancers;
   costTt?: number;
   costTtc?: number;

@@ -5,6 +5,7 @@
  */
 import * as zod from 'zod';
 import { MiningCurrentEnhancerResponse } from './miningCurrentEnhancerResponse.zod.ts';
+import { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.zod.ts';
 import { SessionType } from './sessionType.zod.ts';
 
 export const miningCurrentSessionResponseCostTtDefault = 0;
@@ -20,9 +21,11 @@ export const MiningCurrentSessionResponse = zod.object({
   "createdAt": zod.iso.datetime({"offset":true}),
   "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()]),
   "finderItemId": zod.union([zod.string(),zod.null()]).optional(),
+  "finderLot": zod.union([MiningCurrentToolLotResponse,zod.null()]).optional(),
   "amplifierItemId": zod.union([zod.string(),zod.null()]).optional(),
   "finderEnhancers": zod.record(zod.string(), MiningCurrentEnhancerResponse).optional(),
   "excavatorItemIds": zod.array(zod.string()).optional(),
+  "excavatorLots": zod.array(MiningCurrentToolLotResponse).optional(),
   "excavatorEnhancers": zod.record(zod.string(), MiningCurrentEnhancerResponse).optional(),
   "costTt": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtDefault),
   "costTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtcDefault),
