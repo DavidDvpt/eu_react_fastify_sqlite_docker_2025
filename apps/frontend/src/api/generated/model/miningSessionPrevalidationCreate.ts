@@ -15,8 +15,9 @@ export type MiningSessionPrevalidationCreate = {
      * @maximum 3
      */
   type: number;
-  /** @minItems 1 */
-  ammoLotIds: string[];
+  ammoItemId: string;
+  /** @exclusiveMinimum 0 */
+  ammoQuantity: number;
   /** @minItems 1 */
   finderLotIds: string[];
   ampLotIds?: string[];

@@ -9,6 +9,7 @@ export const miningSessionPrevalidationCreateClicksExclusiveMin = 0;
 
 export const miningSessionPrevalidationCreateTypeMax = 3;
 
+export const miningSessionPrevalidationCreateAmmoQuantityExclusiveMin = 0;
 
 
 
@@ -16,7 +17,8 @@ export const miningSessionPrevalidationCreateTypeMax = 3;
 export const MiningSessionPrevalidationCreate = zod.object({
   "clicks": zod.int().gt(miningSessionPrevalidationCreateClicksExclusiveMin),
   "type": zod.int().min(1).max(miningSessionPrevalidationCreateTypeMax),
-  "ammoLotIds": zod.array(zod.string()).min(1),
+  "ammoItemId": zod.string(),
+  "ammoQuantity": zod.int().gt(miningSessionPrevalidationCreateAmmoQuantityExclusiveMin),
   "finderLotIds": zod.array(zod.string()).min(1),
   "ampLotIds": zod.array(zod.string()).optional()
 }).describe('Inventory lots selected by the mining-session form.');
