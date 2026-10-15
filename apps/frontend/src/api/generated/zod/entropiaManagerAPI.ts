@@ -23,6 +23,7 @@ import {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
@@ -944,7 +945,7 @@ export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({
 export type GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
 export type GetCurrentSessionApiV2SessionsCurrentGetQueryParamsOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
 
-export const GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.union([SessionResponse,zod.null()])
+export const GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.union([MiningCurrentSessionResponse,SessionResponse,zod.null()])
 
 export type GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
 export type GetCurrentSessionApiV2SessionsCurrentGetResponseOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;

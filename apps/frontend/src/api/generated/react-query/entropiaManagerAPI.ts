@@ -57,6 +57,7 @@ import type {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
@@ -4048,7 +4049,7 @@ export const getCurrentSessionApiV2SessionsCurrentGet = (
 ) => {
 
 
-      return customInstance<SessionResponse | null>(
+      return customInstance<MiningCurrentSessionResponse | SessionResponse | null>(
       {url: `/api/v2/sessions/current`, method: 'GET',
         params, signal
     },

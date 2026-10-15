@@ -33,6 +33,8 @@ export * from './messageResponse.ts';
 export * from './miningAvailableLotResponse.ts';
 export * from './miningAvailableResponse.ts';
 export * from './miningAvailableStackResponse.ts';
+export * from './miningCurrentEnhancerResponse.ts';
+export * from './miningCurrentSessionResponse.ts';
 export * from './miningPrevalidationLineResponse.ts';
 export * from './miningPrevalidationResponse.ts';
 export * from './miningPrevalidationTotalsResponse.ts';

@@ -44,6 +44,7 @@ import type {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
@@ -1216,7 +1217,7 @@ const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl = () => {
  */
 const getCurrentSessionApiV2SessionsCurrentGet = (
     params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<SessionResponse | null>> => {
+ ): Promise<AxiosResponse<MiningCurrentSessionResponse | SessionResponse | null>> => {
     return axiosInstance.get(
       `/api/v2/sessions/current`,{
     ...options,
@@ -1403,7 +1404,7 @@ export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResult = AxiosRes
 export type GetMiningSessionsApiV2SessionsMiningGetResult = AxiosResponse<MiningSessionHistoryResponse[]>
 export type CreateMiningSessionApiV2SessionsMiningPostResult = AxiosResponse<SessionResponse>
 export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResult = AxiosResponse<MiningAvailableResponse>
-export type GetCurrentSessionApiV2SessionsCurrentGetResult = AxiosResponse<SessionResponse | null>
+export type GetCurrentSessionApiV2SessionsCurrentGetResult = AxiosResponse<MiningCurrentSessionResponse | SessionResponse | null>
 export type CreateSessionApiV2SessionsPostResult = AxiosResponse<SessionResponse>
 export type CreateRefiningSessionApiV2SessionsRefinagePostResult = AxiosResponse<RefiningSessionResponse>
 export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResult = AxiosResponse<MiningPrevalidationResponse>
