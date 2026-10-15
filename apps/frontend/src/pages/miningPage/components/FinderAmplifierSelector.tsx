@@ -11,8 +11,11 @@ type AmplifierAllocation = {
   isFullTT: boolean;
 };
 
+const NO_AMPLIFIER = "__none__";
+
 export type AmplifierSelection = {
   itemId: string;
+  lotIds: string[];
   allocations: AmplifierAllocation[];
 };
 
@@ -59,7 +62,11 @@ function FinderAmplifierSelector({
   useEffect(() => {
     onSelectionChange?.(
       selectedItem && selectedType
-        ? { itemId: selectedItem.id, allocations }
+        ? {
+            itemId: selectedItem.id,
+            lotIds: selectedType.lots.flatMap((lot) => lot.lotId ? [lot.lotId] : []),
+            allocations,
+          }
         : undefined,
     );
   }, [allocations, onSelectionChange, selectedItem, selectedType]);
@@ -67,20 +74,26 @@ function FinderAmplifierSelector({
   return (
     <div className="flex flex-col gap-3">
       <label className="text-sm font-medium text-text">Finder amplifier</label>
-      <AppSelect
-        value={itemId}
-        options={amplifierTypes.map(({ item, lots: itemLots }) => ({
-          value: item?.id ?? itemLots[0].itemId,
-          label: <MiningItemOption item={item} quantity={itemLots.length} />,
-        }))}
-        onValueChange={setItemId}
-        placeholder={
-          amplifierTypes.length
-            ? "Sélectionner un type d’amplificateur"
-            : "Aucun amplificateur disponible"
-        }
-        disabled={disabled || !amplifierTypes.length}
-      />
+      <div className="flex items-center gap-2">
+        <AppSelect
+          value={itemId}
+          options={[
+            { value: NO_AMPLIFIER, label: <span className="flex h-[38px] items-center">Aucun amplificateur</span> },
+            ...amplifierTypes.map(({ item, lots: itemLots }) => ({
+              value: item?.id ?? itemLots[0].itemId,
+              label: <MiningItemOption item={item} quantity={itemLots.length} />,
+            })),
+          ]}
+          onValueChange={(value) => setItemId(value === NO_AMPLIFIER ? undefined : value)}
+          placeholder={
+            amplifierTypes.length
+              ? "Sélectionner un type d’amplificateur"
+              : "Aucun amplificateur disponible"
+          }
+          disabled={disabled || !amplifierTypes.length}
+          triggerClassName="h-14"
+        />
+      </div>
       {selectedItem && (
         <div className="flex flex-col gap-2">
           <p className="m-0 max-w-2xl text-xs leading-4 text-text-muted">

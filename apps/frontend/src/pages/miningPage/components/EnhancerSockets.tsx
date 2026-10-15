@@ -9,6 +9,8 @@ import styles from "./MiningSessionModal.module.css";
 
 export type SelectedEnhancer = { socket: number; itemId: string; quantity: number };
 
+const NO_ENHANCER = "__none__";
+
 function EnhancerSockets({
   tierLevel,
   enhancersBySocket,
@@ -33,7 +35,7 @@ function EnhancerSockets({
   const enhancers = activeSocket
     ? enhancersBySocket[String(activeSocket)] ?? []
     : [];
-  const options = enhancers.map((enhancer) => ({
+  const enhancerOptions = enhancers.map((enhancer) => ({
     value: enhancer.itemId,
     label: (
       <MiningItemOption
@@ -42,6 +44,10 @@ function EnhancerSockets({
       />
     ),
   }));
+  const options = [
+    { value: NO_ENHANCER, label: <span className="flex h-[38px] items-center">Aucun enhancer</span> },
+    ...enhancerOptions,
+  ];
 
   const selectEnhancer = (socket: number, itemId: string) => {
     const available = enhancers.find((enhancer) => enhancer.itemId === itemId);
@@ -98,20 +104,32 @@ function EnhancerSockets({
         })}
       </div>
       {displayedSocket && (
-        <AppSelect
-          key={`mining-enhancer-select-${displayedSocket}-${activeSocket ? "active" : "disabled"}`}
-          options={options}
-          placeholder={
-            options.length
-              ? `Enhancer pour le socket ${displayedSocket}`
-              : `Aucun enhancer disponible pour ce ${target.toLowerCase()}`
-          }
-          value={selectedEnhancers[displayedSocket]?.itemId}
-          onValueChange={(itemId) => {
-            if (activeSocket) selectEnhancer(activeSocket, itemId);
-          }}
-          disabled={!activeSocket || !options.length}
-        />
+        <div className="flex items-center gap-2">
+          <AppSelect
+            key={`mining-enhancer-select-${displayedSocket}-${activeSocket ? "active" : "disabled"}`}
+            options={options}
+            placeholder={
+              options.length
+                ? `Enhancer pour le socket ${displayedSocket}`
+                : `Aucun enhancer disponible pour ce ${target.toLowerCase()}`
+            }
+            value={selectedEnhancers[displayedSocket]?.itemId}
+            onValueChange={(itemId) => {
+              if (!activeSocket) return;
+              if (itemId === NO_ENHANCER) {
+                setSelectedEnhancers((current) => {
+                  const next = { ...current };
+                  delete next[activeSocket];
+                  return next;
+                });
+                return;
+              }
+              selectEnhancer(activeSocket, itemId);
+            }}
+            disabled={!activeSocket || !enhancerOptions.length}
+            triggerClassName="h-14"
+          />
+        </div>
       )}
     </div>
   );

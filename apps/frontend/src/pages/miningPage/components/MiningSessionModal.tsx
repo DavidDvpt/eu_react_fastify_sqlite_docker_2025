@@ -1,6 +1,8 @@
 import { useCallback, useMemo, useState, type ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet } from "@/api/generated/react-query/entropiaManagerAPI";
+import { usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost } from "@/api/generated/react-query/entropiaManagerAPI";
+import type { MiningPrevalidationResponse } from "@/api/generated/react-query/model/miningPrevalidationResponse";
 import { Button } from "@/components/ui/button";
 import { ModalGeneric } from "@/shared/components";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
@@ -33,7 +35,38 @@ function SummaryItem({
           classname="shrink-0"
         />
       )}
-      <span>{label} : <span className="text-text">{item?.name ?? "—"}</span>{children && ` — ${children}`}</span>
+      <span>{label} : <span className="text-text">{item?.name ?? "—"}</span></span>
+      {children && <span className="ml-auto text-right text-text">{children}</span>}
+    </div>
+  );
+}
+
+function SummaryCostItem({
+  item,
+  label,
+  costTt,
+  costTtc,
+}: {
+  item?: { name: string; imageUrlId: string };
+  label: string;
+  costTt: number;
+  costTtc: number;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      {item && (
+        <ItemImage
+          url={getItemImageUrl(item.imageUrlId, "normal")}
+          alt={item.name}
+          size="small"
+          classname="shrink-0"
+        />
+      )}
+      <span>{label} : <span className="text-text">{item?.name ?? "—"}</span></span>
+      <span className="ml-auto grid grid-cols-2 gap-4 text-right text-text">
+        <span>{new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(costTt)} PED</span>
+        <span>{new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(costTtc)} PED</span>
+      </span>
     </div>
   );
 }
@@ -41,6 +74,7 @@ function SummaryItem({
 function MiningSessionModal() {
   const navigate = useNavigate();
   const availableQuery = useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet();
+  const prevalidateMutation = usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost();
   const {
     items: { itemDatas, isLoading: isItemsLoading },
   } = useSystemDatas();
@@ -54,6 +88,7 @@ function MiningSessionModal() {
   const [excavatorEnhancers, setExcavatorEnhancers] = useState<SelectedEnhancer[]>([]);
   const [amplifierSelection, setAmplifierSelection] = useState<AmplifierSelection>();
   const [showSummary, setShowSummary] = useState(false);
+  const [prevalidation, setPrevalidation] = useState<MiningPrevalidationResponse>();
   const searchType = isEnmatterSelected && isOresSelected ? 3 : isEnmatterSelected ? 1 : isOresSelected ? 2 : undefined;
   const available = availableQuery.data;
   const itemById = useMemo(
@@ -78,6 +113,7 @@ function MiningSessionModal() {
       searchType &&
       selectedFinder &&
       excavatorLotId &&
+      ammoSelection &&
       finderDecay &&
       (selectedFinder.ttRemaining ?? 0) > finderDecay * clickCount,
   );
@@ -93,24 +129,39 @@ function MiningSessionModal() {
   const onAmplifierSelectionChange = useCallback((selection?: AmplifierSelection) => {
     setAmplifierSelection(selection);
   }, []);
-  const formatPed = (value: number) => `${value.toFixed(3)} PED`;
+  const formatAmount = (value: number) => new Intl.NumberFormat("fr-FR", {
+    maximumFractionDigits: 3,
+  }).format(value);
+  const formatPercent = (value: number) => new Intl.NumberFormat("fr-FR", {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
+  const formatPed = (value: number) => `${formatAmount(value)} PED`;
   const selectedAmmoItem = ammoSelection ? itemById.get(ammoSelection.itemId) : undefined;
   const ammoCost = clickCount && searchType ? clickCount * 0.5 * searchType : 0;
-  const ammoRequiredQuantity = selectedAmmoItem?.value
+  const ammoQuantity = selectedAmmoItem?.value
     ? Math.ceil(ammoCost / selectedAmmoItem.value)
     : 0;
-  const finderCost = clickCount && finderDecay ? clickCount * finderDecay : 0;
-  const selectedAmplifierItem = amplifierSelection
-    ? itemById.get(amplifierSelection.itemId)
-    : undefined;
-  const amplifierClicks = amplifierSelection?.allocations.reduce(
-    (total, allocation) => total + allocation.clicks,
-    0,
-  ) ?? 0;
-  const amplifierCost = selectedAmplifierItem?.decay && searchType
-    ? selectedAmplifierItem.decay * amplifierClicks * searchType
+  const totalTtc = prevalidation
+    ? prevalidation.total.costTtc
     : 0;
   const onClose = () => navigate("/mining");
+  const onPrevalidate = async () => {
+    if (!available || !clickCount || !searchType || !finderLotId || !ammoSelection) return;
+
+    const result = await prevalidateMutation.mutateAsync({
+      data: {
+        clicks: clickCount,
+        type: searchType,
+        ammoItemId: ammoSelection.itemId,
+        ammoQuantity,
+        finderLotIds: [finderLotId],
+        ampLotIds: amplifierSelection?.lotIds,
+      },
+    });
+    setPrevalidation(result);
+    setShowSummary(true);
+  };
 
   return (
     <ModalGeneric
@@ -169,34 +220,63 @@ function MiningSessionModal() {
         {showSummary && (
           <section className="flex flex-col gap-3 rounded-md border border-border p-4">
             <h3 className="m-0 text-base font-medium text-text">Récapitulatif</h3>
-            <div className="grid gap-2 text-sm text-text-muted">
+              <div className="grid gap-2 text-sm text-text-muted">
               <div>Nombre de clics : <span className="text-text">{clickCount}</span></div>
               <div>Types sélectionnés : <span className="text-text">{[isEnmatterSelected && "Enmatter", isOresSelected && "Ores"].filter(Boolean).join(" + ")}</span></div>
-              <SummaryItem item={selectedAmmoItem} label="Munitions">
-                {ammoRequiredQuantity} requis — {formatPed(ammoCost)}
-              </SummaryItem>
-              <SummaryItem item={selectedFinderItem} label="Finder">
-                decay {formatPed(finderCost)}
-              </SummaryItem>
+              {prevalidation?.ammo.map((line) => (
+                <SummaryCostItem key={`ammo-${line.itemId}`} item={itemById.get(line.itemId)} label="Munitions" costTt={line.costTt} costTtc={line.costTtc} />
+              ))}
+              {prevalidation?.finder.map((line) => (
+                <SummaryCostItem key={`finder-${line.lotId}`} item={itemById.get(line.itemId)} label="Finder" costTt={line.costTt} costTtc={line.costTtc} />
+              ))}
               {finderEnhancers.map((enhancer) => (
                 <SummaryItem key={`finder-enhancer-${enhancer.socket}`} item={itemById.get(enhancer.itemId)} label={`Enhancer finder · socket ${enhancer.socket}`} indent />
               ))}
-              {selectedAmplifierItem && (
-                <SummaryItem item={selectedAmplifierItem} label="Amplificateur">
-                  {amplifierSelection?.allocations.find((allocation) => allocation.isFullTT)?.quantity ?? 0} full TT — decay {formatPed(amplifierCost)}
-                </SummaryItem>
-              )}
+              {prevalidation?.amp.map((line) => (
+                <SummaryCostItem key={line.lotId} item={itemById.get(line.itemId)} label="Amplificateur" costTt={line.costTt} costTtc={line.costTtc} />
+              ))}
               <SummaryItem item={selectedExcavatorItem} label="Excavateur" />
               {excavatorEnhancers.map((enhancer) => (
                 <SummaryItem key={`excavator-enhancer-${enhancer.socket}`} item={itemById.get(enhancer.itemId)} label={`Enhancer excavateur · socket ${enhancer.socket}`} indent />
               ))}
             </div>
+            {prevalidateMutation.isError && <div className="text-sm text-error-300">Impossible de prévalider cette session.</div>}
+            {prevalidation && (
+              <table className="w-full border-collapse text-right text-sm">
+                <thead>
+                  <tr className="border-b border-border text-text-muted">
+                    <th className="px-2 py-2 text-left font-medium">Clics</th>
+                    <th className="px-2 py-2 font-medium">TT</th>
+                    <th className="px-2 py-2 font-medium">TTC</th>
+                    <th className="px-2 py-2 font-medium">Clic TT</th>
+                    <th className="px-2 py-2 font-medium">Clic TTC</th>
+                    <th className="px-2 py-2 font-medium">%</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr className="text-text">
+                    <td className="px-2 py-2 text-left">{clickCount}</td>
+                    <td className="px-2 py-2">{formatPed(prevalidation.total.costTt)}</td>
+                    <td className="px-2 py-2">{formatPed(totalTtc)}</td>
+                    <td className="px-2 py-2">{formatPed(prevalidation.total.costTt / (clickCount ?? 1))}</td>
+                    <td className="px-2 py-2">{formatPed(totalTtc / (clickCount ?? 1))}</td>
+                    <td className="px-2 py-2">{formatPercent((totalTtc / prevalidation.total.costTt) * 100)}%</td>
+                  </tr>
+                </tbody>
+              </table>
+            )}
           </section>
         )}
         <div className="flex justify-end gap-2 border-t border-border pt-4">
-          <Button variant="secondary" className="w-[calc(120px+3rem)]" onClick={onClose}>Annuler</Button>
+          <Button
+            variant="secondary"
+            className="w-[calc(120px+3rem)]"
+            onClick={showSummary ? () => setShowSummary(false) : onClose}
+          >
+            {showSummary ? "Retour" : "Annuler"}
+          </Button>
           {!showSummary ? (
-            <Button variant="primary" className="w-[calc(120px+3rem)]" disabled={!formReady} onClick={() => setShowSummary(true)}>Valider</Button>
+            <Button variant="primary" className="w-[calc(120px+3rem)]" disabled={!formReady || prevalidateMutation.isPending} onClick={onPrevalidate}>{prevalidateMutation.isPending ? "Validation..." : "Valider"}</Button>
           ) : (
             <Button variant="primary" className="w-[calc(120px+3rem)]">Valider</Button>
           )}
