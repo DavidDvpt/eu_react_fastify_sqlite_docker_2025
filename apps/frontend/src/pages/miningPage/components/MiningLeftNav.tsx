@@ -1,8 +1,10 @@
 import { VerticalNav } from "@/shared/components";
 import useNavLinks from "@/shared/hooks/useNavLinks";
 import { useGetMiningSessionsApiV2SessionsMiningGet } from "@/api/generated/react-query/entropiaManagerAPI";
+import { useLocation } from "react-router-dom";
 
 function MiningLeftNav() {
+  const location = useLocation();
   const links = useNavLinks();
   const sessionsQuery = useGetMiningSessionsApiV2SessionsMiningGet();
   const hasCurrentSession = sessionsQuery.data?.some((session) => session.endedAt == null) ?? false;
@@ -13,7 +15,12 @@ function MiningLeftNav() {
         ...link,
         key: `mining-left-nav-link-${link.key}`,
         variant: "navVertical",
-        disabled: link.route === "/mining/create" ? hasCurrentSession : link.disabled,
+        disabled:
+          link.route === "/mining/current"
+            ? location.pathname === "/mining/current"
+            : link.route === "/mining/create"
+              ? hasCurrentSession
+              : link.disabled,
       }))}
     />
   );
