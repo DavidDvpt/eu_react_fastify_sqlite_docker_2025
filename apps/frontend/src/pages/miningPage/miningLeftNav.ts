@@ -13,6 +13,12 @@ const MINING_NAV_LINKS: NavbarButtonType[] = [
     route: "/mining",
     variant: "navVertical",
   },
+  {
+    key: "En cours",
+    content: "En cours",
+    route: "/mining/current",
+    variant: "navVertical",
+  },
 ];
 
 export { MINING_NAV_LINKS };

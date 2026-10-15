@@ -82,6 +82,7 @@ const routes = [
                     children: [
                       { path: "mining", element: <MiningPage /> },
                       { path: "mining/create", element: <MiningPage /> },
+                      { path: "mining/current", element: <MiningPage /> },
                       { path: "mining/:id/session", element: <MiningPage /> },
                     ],
                   },

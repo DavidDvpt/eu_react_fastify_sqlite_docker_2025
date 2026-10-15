@@ -1,7 +1,12 @@
 import { useCallback, useMemo, useState, type ReactNode } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import { usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost } from "@/api/generated/react-query/entropiaManagerAPI";
+import {
+  useCreateMiningSessionApiV2SessionsMiningPost,
+  getGetMiningSessionsApiV2SessionsMiningGetQueryKey,
+  usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import type { MiningPrevalidationResponse } from "@/api/generated/react-query/model/miningPrevalidationResponse";
 import { Button } from "@/components/ui/button";
 import { ModalGeneric } from "@/shared/components";
@@ -73,8 +78,10 @@ function SummaryCostItem({
 
 function MiningSessionModal() {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const availableQuery = useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet();
   const prevalidateMutation = usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost();
+  const createSessionMutation = useCreateMiningSessionApiV2SessionsMiningPost();
   const {
     items: { itemDatas, isLoading: isItemsLoading },
   } = useSystemDatas();
@@ -162,6 +169,41 @@ function MiningSessionModal() {
     setPrevalidation(result);
     setShowSummary(true);
   };
+  const onCreateSession = async () => {
+    if (!clickCount || !searchType || !finderLotId || !excavatorLotId || !ammoSelection) return;
+
+    await createSessionMutation.mutateAsync({
+      data: {
+        clickCount,
+        searchType,
+        finderLotId,
+        ammoItemId: ammoSelection.itemId,
+        ammoQuantityInitial: ammoQuantity,
+        amplifierLotIds: amplifierSelection?.lotIds,
+        excavatorLotIds: [excavatorLotId],
+        enhancers: [
+          ...finderEnhancers.map((enhancer) => ({
+            itemId: enhancer.itemId,
+            target: "FINDER" as const,
+            targetLotId: finderLotId,
+            socket: enhancer.socket,
+            quantityInitial: enhancer.quantity,
+          })),
+          ...excavatorEnhancers.map((enhancer) => ({
+            itemId: enhancer.itemId,
+            target: "EXCAVATOR" as const,
+            targetLotId: excavatorLotId,
+            socket: enhancer.socket,
+            quantityInitial: enhancer.quantity,
+          })),
+        ],
+      },
+    });
+    await queryClient.invalidateQueries({
+      queryKey: getGetMiningSessionsApiV2SessionsMiningGetQueryKey(),
+    });
+    onClose();
+  };
 
   return (
     <ModalGeneric
@@ -241,6 +283,7 @@ function MiningSessionModal() {
               ))}
             </div>
             {prevalidateMutation.isError && <div className="text-sm text-error-300">Impossible de prévalider cette session.</div>}
+            {createSessionMutation.isError && <div className="text-sm text-error-300">Impossible de créer cette session.</div>}
             {prevalidation && (
               <table className="w-full border-collapse text-right text-sm">
                 <thead>
@@ -278,7 +321,14 @@ function MiningSessionModal() {
           {!showSummary ? (
             <Button variant="primary" className="w-[calc(120px+3rem)]" disabled={!formReady || prevalidateMutation.isPending} onClick={onPrevalidate}>{prevalidateMutation.isPending ? "Validation..." : "Valider"}</Button>
           ) : (
-            <Button variant="primary" className="w-[calc(120px+3rem)]">Valider</Button>
+            <Button
+              variant="primary"
+              className="w-[calc(120px+3rem)]"
+              disabled={createSessionMutation.isPending}
+              onClick={onCreateSession}
+            >
+              {createSessionMutation.isPending ? "Création..." : "Valider"}
+            </Button>
           )}
         </div>
       </div>
