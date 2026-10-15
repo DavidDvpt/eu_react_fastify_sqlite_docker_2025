@@ -86,7 +86,9 @@ function MiningPage() {
                 ? "border-b border-border bg-white !text-black [&_*]:!text-black"
                 : "border-b border-border"
             }
-            onRowClick={(row) => navigate(`/mining/${row.number}/session`)}
+            onRowClick={(row) =>
+              navigate(row.endedAt == null ? "/mining/current" : `/mining/${row.number}/session`)
+            }
             rowHeight={32}
           />
         </div>
