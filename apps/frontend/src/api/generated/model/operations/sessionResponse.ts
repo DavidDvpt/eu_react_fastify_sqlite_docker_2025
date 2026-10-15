@@ -9,6 +9,7 @@ export type SessionResponse = {
   id: string;
   type: SessionType;
   clickCount: number | null;
+  searchType?: number | null;
   createdAt: string;
   endedAt: string | null;
 };

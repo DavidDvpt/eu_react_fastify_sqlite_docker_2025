@@ -28,7 +28,6 @@ export type ItemResponse = {
   minProfessionLevel?: number | null;
   minTt?: number | null;
   socket?: number | null;
-  tool?: string | null;
   itemType?: string | null;
   nexusUrl?: string | null;
   usePerMinute?: number | null;

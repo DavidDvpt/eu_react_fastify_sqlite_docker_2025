@@ -29,7 +29,6 @@ export const ItemResponse = zod.object({
   "minProfessionLevel": zod.union([zod.int(),zod.null()]).optional(),
   "minTt": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
   "socket": zod.union([zod.int(),zod.null()]).optional(),
-  "tool": zod.union([zod.string(),zod.null()]).optional(),
   "itemType": zod.union([zod.string(),zod.null()]).optional(),
   "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
   "usePerMinute": zod.union([zod.int(),zod.number(),zod.null()]).optional()

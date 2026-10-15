@@ -12,4 +12,5 @@ export interface TypeCreate {
   isStackable?: boolean;
   hasTierOption?: boolean;
   nexusName?: string | null;
+  requestName?: string | null;
 }

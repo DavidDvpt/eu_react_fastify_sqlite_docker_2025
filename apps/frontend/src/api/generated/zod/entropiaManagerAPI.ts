@@ -22,6 +22,8 @@ import {
   LotTierUpdate,
   MeResponse,
   MessageResponse,
+  MiningAvailableResponse,
+  MiningSessionCreate,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefiningSessionCreate,
@@ -893,6 +895,15 @@ export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput = 
 
 
 /**
+ * @summary Get Available Mining Inventory
+ */
+export const GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse = MiningAvailableResponse
+
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse = zod.input<typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse>;
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponseOutput = zod.output<typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse>;
+
+
+/**
  * @summary Get Current Session
  */
 export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({
@@ -934,6 +945,20 @@ export const CreateRefiningSessionApiV2SessionsRefinagePostResponse = RefiningSe
 
 export type CreateRefiningSessionApiV2SessionsRefinagePostResponse = zod.input<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
 export type CreateRefiningSessionApiV2SessionsRefinagePostResponseOutput = zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+
+
+/**
+ * @summary Create Mining Session
+ */
+export const CreateMiningSessionApiV2SessionsMiningPostBody = MiningSessionCreate
+
+export type CreateMiningSessionApiV2SessionsMiningPostBody = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+export type CreateMiningSessionApiV2SessionsMiningPostBodyOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+
+export const CreateMiningSessionApiV2SessionsMiningPostResponse = SessionResponse
+
+export type CreateMiningSessionApiV2SessionsMiningPostResponse = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+export type CreateMiningSessionApiV2SessionsMiningPostResponseOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
 
 
 /**

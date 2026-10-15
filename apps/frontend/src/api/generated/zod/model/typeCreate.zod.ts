@@ -15,7 +15,8 @@ export const TypeCreate = zod.object({
   "isActive": zod.boolean(),
   "isStackable": zod.boolean().default(typeCreateIsStackableDefault),
   "hasTierOption": zod.boolean().default(typeCreateHasTierOptionDefault),
-  "nexusName": zod.union([zod.string(),zod.null()]).optional()
+  "nexusName": zod.union([zod.string(),zod.null()]).optional(),
+  "requestName": zod.union([zod.string(),zod.null()]).optional()
 });
 
 export type TypeCreate = zod.input<typeof TypeCreate>;

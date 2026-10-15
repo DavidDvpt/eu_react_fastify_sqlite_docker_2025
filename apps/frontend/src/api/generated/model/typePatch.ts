@@ -11,4 +11,5 @@ export type TypePatch = {
   isStackable?: boolean | null;
   hasTierOption?: boolean | null;
   nexusName?: string | null;
+  requestName?: string | null;
 };

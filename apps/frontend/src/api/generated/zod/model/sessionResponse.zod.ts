@@ -10,6 +10,7 @@ export const SessionResponse = zod.object({
   "id": zod.string(),
   "type": SessionType,
   "clickCount": zod.union([zod.int(),zod.null()]),
+  "searchType": zod.union([zod.int(),zod.null()]).optional(),
   "createdAt": zod.iso.datetime({"offset":true}),
   "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()])
 });
