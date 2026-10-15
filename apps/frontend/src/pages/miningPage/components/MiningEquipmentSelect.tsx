@@ -16,6 +16,8 @@ function MiningEquipmentSelect({
   enhancersBySocket,
   target,
   title,
+  clickCount,
+  searchType,
 }: {
   label: string;
   placeholder: string;
@@ -27,21 +29,34 @@ function MiningEquipmentSelect({
   enhancersBySocket: Record<string, MiningAvailableStackResponse[]>;
   target: "FINDER" | "EXCAVATOR";
   title: string;
+  clickCount: number;
+  searchType?: number;
 }) {
   const options = lots
     .filter((lot) => lot.lotId)
-    .map((lot) => ({
-      value: lot.lotId as string,
-      label: (
-        <MiningItemOption
-          item={itemById.get(lot.itemId)}
-          tierLevel={lot.tierLevel}
-          quantity={lot.quantity}
-        />
-      ),
-    }));
+    .map((lot) => {
+      const item = itemById.get(lot.itemId);
+      const decay = item?.decay
+        ? item.decay * (searchType === 3 ? 2 : 1)
+        : undefined;
+
+      return {
+        value: lot.lotId as string,
+        label: (
+          <MiningItemOption
+            item={item}
+            tierLevel={lot.tierLevel}
+            quantity={lot.quantity}
+            rightContent={target === "FINDER" && decay ? `${decay} PED/clic` : undefined}
+          />
+        ),
+      };
+    });
   const selectedLot = lots.find((lot) => lot.lotId === value);
   const selectedItem = selectedLot ? itemById.get(selectedLot.itemId) : undefined;
+  const finderDecay = selectedItem?.decay
+    ? selectedItem.decay * (searchType === 3 ? 2 : 1)
+    : undefined;
 
   return (
     <div className="flex flex-col gap-2">
@@ -54,6 +69,11 @@ function MiningEquipmentSelect({
         disabled={disabled || !options.length}
         triggerClassName="bg-input"
       />
+      {target === "FINDER" && finderDecay && (
+        <div className="text-sm text-text-muted">
+          Coût total estimé : {Number((clickCount * finderDecay).toFixed(3))} PED
+        </div>
+      )}
       {selectedItem && selectedLot && (
         <EnhancerSockets
           key={selectedLot.lotId}

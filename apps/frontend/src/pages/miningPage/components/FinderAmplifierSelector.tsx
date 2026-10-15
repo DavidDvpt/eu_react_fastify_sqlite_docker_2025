@@ -15,11 +15,13 @@ function FinderAmplifierSelector({
   lots,
   itemById,
   clickCount,
+  searchType,
   disabled = false,
 }: {
   lots: MiningAvailableLotResponse[];
   itemById: Map<string, ItemViewModel>;
   clickCount: number;
+  searchType?: number;
   disabled?: boolean;
 }) {
   const [itemId, setItemId] = useState<string>();
@@ -37,7 +39,7 @@ function FinderAmplifierSelector({
   const selectedType = amplifierTypes.find(({ item }) => item?.id === itemId);
   const selectedItem = selectedType?.item;
   const allocations = selectedItem
-    ? allocateAmplifiers(selectedType.lots, selectedItem, clickCount)
+    ? allocateAmplifiers(selectedType.lots, selectedItem, clickCount, searchType)
     : [];
   const allocatedClicks = allocations.reduce(
     (total, row) => total + row.clicks,
@@ -106,8 +108,11 @@ function allocateAmplifiers(
   lots: MiningAvailableLotResponse[],
   item: ItemViewModel,
   clickCount: number,
+  searchType?: number,
 ): AmplifierAllocation[] {
-  const decay = item.decay;
+  const decay = item.decay
+    ? item.decay * (searchType === 3 ? 2 : 1)
+    : null;
   if (!decay || decay <= 0 || clickCount <= 0) return [];
 
   const usableLots = lots.filter((lot) => (lot.ttRemaining ?? 0) > 0);

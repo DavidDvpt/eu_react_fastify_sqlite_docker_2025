@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ModalGeneric } from "@/shared/components";
 import { useSystemDatas } from "@/shared/hooks";
 import FinderAmplifierSelector from "./FinderAmplifierSelector";
+import MiningAmmoSelector from "./MiningAmmoSelector";
 import MiningEquipmentSelect from "./MiningEquipmentSelect";
 
 function MiningSessionModal() {
@@ -19,6 +20,7 @@ function MiningSessionModal() {
   const [isEnmatterSelected, setIsEnmatterSelected] = useState(false);
   const [isOresSelected, setIsOresSelected] = useState(false);
   const searchType = isEnmatterSelected && isOresSelected ? 3 : isEnmatterSelected ? 1 : isOresSelected ? 2 : undefined;
+  const formReady = Boolean(clickCount && clickCount > 0 && searchType);
   const available = availableQuery.data;
   const itemById = useMemo(
     () => new Map((itemDatas ?? []).map((item) => [item.id, item])),
@@ -43,7 +45,7 @@ function MiningSessionModal() {
             <div className="flex flex-wrap items-end justify-between gap-4">
               <div className="flex flex-col gap-2">
                 <label htmlFor="mining-click-count" className="text-sm font-medium text-text">Nombre de clics</label>
-                <input id="mining-click-count" type="number" min={1} max={9999} value={clickCount ?? ""} onChange={(event) => { const value = event.currentTarget.value; setClickCount(value === "" ? undefined : Math.min(9999, Math.max(0, Number(value)))); }} className="h-9 w-24 rounded-md border border-border bg-input px-3 py-2 text-sm text-text focus:outline-none focus:ring-1 focus:ring-ring" />
+                <input id="mining-click-count" type="number" min={1} max={9999} value={clickCount ?? ""} onChange={(event) => { const value = event.currentTarget.value; setClickCount(value === "" ? undefined : Math.min(9999, Math.max(0, Number(value)))); }} className="ml-1 h-9 w-24 rounded-md border border-border bg-input px-3 py-2 text-sm text-text focus:outline-none focus:ring-1 focus:ring-ring" />
               </div>
               <div className="flex flex-col gap-2">
                 <span className="text-sm font-medium text-text">Type</span>
@@ -54,19 +56,27 @@ function MiningSessionModal() {
                 <span className="sr-only">Type Mining : {searchType ?? "non sélectionné"}</span>
               </div>
             </div>
+            <MiningAmmoSelector
+              ammo={available.ammo}
+              itemById={itemById}
+              clickCount={clickCount ?? 0}
+              searchType={searchType}
+              disabled={isItemsLoading || !formReady}
+            />
             <section className="flex flex-col gap-4 rounded-md border border-border p-4">
               <h3 className="m-0 mb-[10px] text-base font-medium text-text">Session Finder</h3>
-              <MiningEquipmentSelect label="Finder" placeholder="Sélectionner un finder" lots={available.finder} itemById={itemById} value={finderLotId} onValueChange={setFinderLotId} disabled={isItemsLoading} enhancersBySocket={available.finderEnhancers} target="FINDER" title="Enhancers" />
+              <MiningEquipmentSelect label="Finder" placeholder="Sélectionner un finder" lots={available.finder} itemById={itemById} value={finderLotId} onValueChange={setFinderLotId} disabled={isItemsLoading || !formReady} enhancersBySocket={available.finderEnhancers} target="FINDER" title="Enhancers" clickCount={clickCount ?? 0} searchType={searchType} />
               <FinderAmplifierSelector
                 lots={available.finderAmplifier}
                 itemById={itemById}
                 clickCount={clickCount ?? 0}
-                disabled={isItemsLoading}
+                searchType={searchType}
+                disabled={isItemsLoading || !formReady}
               />
             </section>
             <section className="flex flex-col gap-4 rounded-md border border-border p-4">
               <h3 className="m-0 mb-[10px] text-base font-medium text-text">Session Excavator</h3>
-              <MiningEquipmentSelect label="Excavateur" placeholder="Sélectionner un excavateur" lots={available.excavator} itemById={itemById} value={excavatorLotId} onValueChange={setExcavatorLotId} disabled={isItemsLoading} enhancersBySocket={available.excavatorEnhancers} target="EXCAVATOR" title="Enhancers" />
+              <MiningEquipmentSelect label="Excavateur" placeholder="Sélectionner un excavateur" lots={available.excavator} itemById={itemById} value={excavatorLotId} onValueChange={setExcavatorLotId} disabled={isItemsLoading || !formReady} enhancersBySocket={available.excavatorEnhancers} target="EXCAVATOR" title="Enhancers" clickCount={clickCount ?? 0} searchType={searchType} />
             </section>
           </div>
         )}
