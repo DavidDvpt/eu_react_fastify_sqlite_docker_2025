@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AppSelect from "@/shared/components/form/Select/AppSelect";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import { getItemImageUrl } from "@/shared/helpers";
@@ -7,7 +7,7 @@ import type { ItemViewModel } from "@zod-schemas";
 import MiningItemOption from "./MiningItemOption";
 import styles from "./MiningSessionModal.module.css";
 
-type SelectedEnhancer = { itemId: string; quantity: number };
+export type SelectedEnhancer = { socket: number; itemId: string; quantity: number };
 
 function EnhancerSockets({
   tierLevel,
@@ -15,12 +15,14 @@ function EnhancerSockets({
   itemById,
   target,
   title,
+  onSelectionChange,
 }: {
   tierLevel?: number | null;
   enhancersBySocket: Record<string, MiningAvailableStackResponse[]>;
   itemById: Map<string, ItemViewModel>;
   target: "FINDER" | "EXCAVATOR";
   title: string;
+  onSelectionChange?: (enhancers: SelectedEnhancer[]) => void;
 }) {
   const [activeSocket, setActiveSocket] = useState<number>();
   const [lastSelectedSocket, setLastSelectedSocket] = useState<number>();
@@ -47,13 +49,19 @@ function EnhancerSockets({
 
     setSelectedEnhancers((current) => ({
       ...current,
-      [socket]: { itemId, quantity: available.quantity },
+      [socket]: { socket, itemId, quantity: available.quantity },
     }));
     setLastSelectedSocket(socket);
     setActiveSocket(undefined);
   };
 
   const displayedSocket = activeSocket ?? lastSelectedSocket;
+
+  useEffect(() => {
+    onSelectionChange?.(
+      Object.values(selectedEnhancers),
+    );
+  }, [onSelectionChange, selectedEnhancers]);
 
   return (
     <div className="flex flex-col gap-2">

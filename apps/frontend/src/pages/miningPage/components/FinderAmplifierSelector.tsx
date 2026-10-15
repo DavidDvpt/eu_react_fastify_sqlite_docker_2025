@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AppSelect from "@/shared/components/form/Select/AppSelect";
 import type { MiningAvailableLotResponse } from "@/api/generated/react-query/model/miningAvailableLotResponse";
 import type { ItemViewModel } from "@zod-schemas";
@@ -11,18 +11,25 @@ type AmplifierAllocation = {
   isFullTT: boolean;
 };
 
+export type AmplifierSelection = {
+  itemId: string;
+  allocations: AmplifierAllocation[];
+};
+
 function FinderAmplifierSelector({
   lots,
   itemById,
   clickCount,
   searchType,
   disabled = false,
+  onSelectionChange,
 }: {
   lots: MiningAvailableLotResponse[];
   itemById: Map<string, ItemViewModel>;
   clickCount: number;
   searchType?: number;
   disabled?: boolean;
+  onSelectionChange?: (selection?: AmplifierSelection) => void;
 }) {
   const [itemId, setItemId] = useState<string>();
   const amplifierTypes = useMemo(() => {
@@ -38,13 +45,24 @@ function FinderAmplifierSelector({
 
   const selectedType = amplifierTypes.find(({ item }) => item?.id === itemId);
   const selectedItem = selectedType?.item;
-  const allocations = selectedItem
-    ? allocateAmplifiers(selectedType.lots, selectedItem, clickCount, searchType)
-    : [];
+  const allocations = useMemo(
+    () => selectedItem
+      ? allocateAmplifiers(selectedType.lots, selectedItem, clickCount, searchType)
+      : [],
+    [clickCount, searchType, selectedItem, selectedType],
+  );
   const allocatedClicks = allocations.reduce(
     (total, row) => total + row.clicks,
     0,
   );
+
+  useEffect(() => {
+    onSelectionChange?.(
+      selectedItem && selectedType
+        ? { itemId: selectedItem.id, allocations }
+        : undefined,
+    );
+  }, [allocations, onSelectionChange, selectedItem, selectedType]);
 
   return (
     <div className="flex flex-col gap-3">

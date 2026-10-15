@@ -3,6 +3,7 @@ import type { MiningAvailableLotResponse } from "@/api/generated/react-query/mod
 import type { MiningAvailableStackResponse } from "@/api/generated/react-query/model/miningAvailableStackResponse";
 import type { ItemViewModel } from "@zod-schemas";
 import EnhancerSockets from "./EnhancerSockets";
+import type { SelectedEnhancer } from "./EnhancerSockets";
 import MiningItemOption from "./MiningItemOption";
 
 function MiningEquipmentSelect({
@@ -18,6 +19,7 @@ function MiningEquipmentSelect({
   title,
   clickCount,
   searchType,
+  onEnhancersChange,
 }: {
   label: string;
   placeholder: string;
@@ -31,6 +33,7 @@ function MiningEquipmentSelect({
   title: string;
   clickCount: number;
   searchType?: number;
+  onEnhancersChange?: (enhancers: SelectedEnhancer[]) => void;
 }) {
   const options = lots
     .filter((lot) => lot.lotId)
@@ -82,6 +85,7 @@ function MiningEquipmentSelect({
           itemById={itemById}
           target={target}
           title={title}
+          onSelectionChange={onEnhancersChange}
         />
       )}
     </div>

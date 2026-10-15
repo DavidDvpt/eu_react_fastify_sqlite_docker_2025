@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import AppSelect from "@/shared/components/form/Select/AppSelect";
 import type { MiningAvailableStackResponse } from "@/api/generated/react-query/model/miningAvailableStackResponse";
 import type { ItemViewModel } from "@zod-schemas";
@@ -10,12 +10,14 @@ function MiningAmmoSelector({
   clickCount,
   searchType,
   disabled = false,
+  onSelectionChange,
 }: {
   ammo: MiningAvailableStackResponse[];
   itemById: Map<string, ItemViewModel>;
   clickCount: number;
   searchType?: number;
   disabled?: boolean;
+  onSelectionChange?: (selection?: { itemId: string; quantity: number }) => void;
 }) {
   const [selectedItemId, setSelectedItemId] = useState<string>();
   const options = useMemo(
@@ -40,6 +42,13 @@ function MiningAmmoSelector({
   const requiredQuantity = selectedItem?.value && selectedItem.value > 0
     ? Math.ceil(totalCost / selectedItem.value)
     : 0;
+
+  useEffect(() => {
+    const selectedStack = ammo.find((stack) => stack.itemId === effectiveSelectedItemId);
+    onSelectionChange?.(
+      selectedStack ? { itemId: selectedStack.itemId, quantity: selectedStack.quantity } : undefined,
+    );
+  }, [ammo, effectiveSelectedItemId, onSelectionChange]);
 
   return (
     <section className="flex flex-col gap-3 rounded-md border border-border p-4">
