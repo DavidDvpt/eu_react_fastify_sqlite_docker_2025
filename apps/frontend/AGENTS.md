@@ -19,9 +19,10 @@ Panel > Section > SubSection
 - Every form must be built with `GenericForm` and the corresponding RHF-aware
   components (`InputRHF`, `SelectRHF`, etc.). Do not create an independent
   form state or bind raw inputs directly when an RHF component is available.
-- Keep one React component per file. Supporting types, constants, and helper
-  functions are allowed, but additional React component definitions belong in
-  their own files.
+- Keep exactly one React component per file. Supporting types, constants, and
+  helper functions are allowed, but every additional React component
+  definition—including small private/helper components rendered by the main
+  component—must live in its own file.
 - Complex form controls that own or need their own data source (for example,
   a select or tooltip with data-fetching, transformation, or selection logic)
   must be wrapped in a dedicated component. That wrapper owns the data and
