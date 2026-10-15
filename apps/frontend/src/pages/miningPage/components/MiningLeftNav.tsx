@@ -1,15 +1,11 @@
 import { VerticalNav } from "@/shared/components";
 import useNavLinks from "@/shared/hooks/useNavLinks";
-import { useGetCurrentSessionApiV2SessionsCurrentGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import { SessionType } from "@/api/generated/react-query/model/sessionType";
+import { useGetMiningSessionsApiV2SessionsMiningGet } from "@/api/generated/react-query/entropiaManagerAPI";
 
 function MiningLeftNav() {
   const links = useNavLinks();
-  const currentSessionQuery = useGetCurrentSessionApiV2SessionsCurrentGet(
-    { type: SessionType.MINING },
-    { query: { retry: false } },
-  );
-  const hasCurrentSession = Boolean(currentSessionQuery.data);
+  const sessionsQuery = useGetMiningSessionsApiV2SessionsMiningGet();
+  const hasCurrentSession = sessionsQuery.data?.some((session) => session.endedAt == null) ?? false;
 
   return (
     <VerticalNav

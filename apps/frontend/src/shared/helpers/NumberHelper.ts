@@ -7,6 +7,17 @@ export class NumberHelper {
     return Math.round(Number(value) * factor) / factor;
   }
 
+  static formatNumber(value: number): string {
+    return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(value);
+  }
+
+  static formatPercent(value: number): string {
+    return new Intl.NumberFormat("fr-FR", {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    }).format(value);
+  }
+
   /** Greatest common divisor of two positive integers (Euclid). */
   static gcd(a: number, b: number): number {
     let x = Math.abs(Math.trunc(a));
