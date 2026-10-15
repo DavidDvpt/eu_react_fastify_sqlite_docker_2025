@@ -20,11 +20,26 @@ function MiningSessionModal() {
   const [isEnmatterSelected, setIsEnmatterSelected] = useState(false);
   const [isOresSelected, setIsOresSelected] = useState(false);
   const searchType = isEnmatterSelected && isOresSelected ? 3 : isEnmatterSelected ? 1 : isOresSelected ? 2 : undefined;
-  const formReady = Boolean(clickCount && clickCount > 0 && searchType);
   const available = availableQuery.data;
   const itemById = useMemo(
     () => new Map((itemDatas ?? []).map((item) => [item.id, item])),
     [itemDatas],
+  );
+  const selectedFinder = available?.finder.find((lot) => lot.lotId === finderLotId);
+  const selectedFinderItem = selectedFinder
+    ? itemById.get(selectedFinder.itemId)
+    : undefined;
+  const finderDecay = selectedFinderItem?.decay
+    ? selectedFinderItem.decay * (searchType === 3 ? 2 : 1)
+    : undefined;
+  const formReady = Boolean(
+    clickCount &&
+      clickCount > 0 &&
+      searchType &&
+      selectedFinder &&
+      excavatorLotId &&
+      finderDecay &&
+      (selectedFinder.ttRemaining ?? 0) > finderDecay * clickCount,
   );
   const onClose = () => navigate("/mining");
 
@@ -82,7 +97,7 @@ function MiningSessionModal() {
         )}
         <div className="flex justify-end gap-2 border-t border-border pt-4">
           <Button variant="secondary" className="w-[calc(120px+3rem)]" onClick={onClose}>Annuler</Button>
-          <Button variant="primary" className="w-[calc(120px+3rem)]" disabled>Créer la session</Button>
+          <Button variant="primary" className="w-[calc(120px+3rem)]" disabled={!formReady}>Créer la session</Button>
         </div>
       </div>
     </ModalGeneric>
