@@ -108,7 +108,7 @@ function GenericListBody<T>({
             className={cn(
               rowBaseClassName ?? DEFAULT_ROW_CLASS,
               "group",
-              rowClassName,
+              typeof rowClassName === "function" ? rowClassName(row) : rowClassName,
             )}
             style={{ minHeight: rowHeight, height: rowHeight }}
           >
