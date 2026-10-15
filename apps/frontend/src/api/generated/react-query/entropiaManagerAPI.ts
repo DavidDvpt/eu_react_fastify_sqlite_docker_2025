@@ -57,7 +57,10 @@ import type {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningPrevalidationResponse,
   MiningSessionCreate,
+  MiningSessionHistoryResponse,
+  MiningSessionPrevalidationCreate,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefiningSessionCreate,
@@ -3783,6 +3786,167 @@ export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = A
 
 
 /**
+ * @summary Get Mining Sessions
+ */
+export const getMiningSessionsApiV2SessionsMiningGet = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningSessionHistoryResponse[]>(
+      {url: `/api/v2/sessions/mining`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMiningSessionsApiV2SessionsMiningGetQueryKey = () => {
+    return [
+    `/api/v2/sessions/mining`
+    ] as const;
+    }
+
+
+export const getGetMiningSessionsApiV2SessionsMiningGetQueryOptions = <TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMiningSessionsApiV2SessionsMiningGetQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>> = ({ signal }) => getMiningSessionsApiV2SessionsMiningGet(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMiningSessionsApiV2SessionsMiningGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>>
+export type GetMiningSessionsApiV2SessionsMiningGetQueryError = ErrorType<unknown>
+
+
+export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+          TError,
+          Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+          TError,
+          Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Mining Sessions
+ */
+
+export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMiningSessionsApiV2SessionsMiningGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Create Mining Session
+ */
+export const createMiningSessionApiV2SessionsMiningPost = (
+    miningSessionCreate: BodyType<MiningSessionCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionResponse>(
+      {url: `/api/v2/sessions/mining`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: miningSessionCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateMiningSessionApiV2SessionsMiningPostMutationKey = () => ['createMiningSessionApiV2SessionsMiningPost'] as const;
+
+export const getCreateMiningSessionApiV2SessionsMiningPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext> => {
+
+const mutationKey = getCreateMiningSessionApiV2SessionsMiningPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, CreateMiningSessionApiV2SessionsMiningPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createMiningSessionApiV2SessionsMiningPost(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMiningSessionApiV2SessionsMiningPostMutationResult = NonNullable<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>>
+    export type CreateMiningSessionApiV2SessionsMiningPostMutationBody = BodyType<MiningSessionCreate>
+    export type CreateMiningSessionApiV2SessionsMiningPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateMiningSessionApiV2SessionsMiningPostMutationVariables = {data: BodyType<MiningSessionCreate>}
+
+    /**
+ * @summary Create Mining Session
+ */
+export const useCreateMiningSessionApiV2SessionsMiningPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+        TError,
+        CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateMiningSessionApiV2SessionsMiningPostMutationOptions(options), queryClient);
+    }
+
+/**
  * @summary Get Available Mining Inventory
  */
 export const getAvailableMiningInventoryApiV2SessionsMiningAvailableGet = (
@@ -3884,7 +4048,7 @@ export const getCurrentSessionApiV2SessionsCurrentGet = (
 ) => {
 
 
-      return customInstance<SessionResponse>(
+      return customInstance<SessionResponse | null>(
       {url: `/api/v2/sessions/current`, method: 'GET',
         params, signal
     },
@@ -4106,18 +4270,18 @@ export const useCreateRefiningSessionApiV2SessionsRefinagePost = <TError = Error
     }
 
 /**
- * @summary Create Mining Session
+ * @summary Prevalidate Mining Session
  */
-export const createMiningSessionApiV2SessionsMiningPost = (
-    miningSessionCreate: BodyType<MiningSessionCreate>,
+export const prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = (
+    miningSessionPrevalidationCreate: BodyType<MiningSessionPrevalidationCreate>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
-      return customInstance<SessionResponse>(
-      {url: `/api/v2/sessions/mining`, method: 'POST',
+      return customInstance<MiningPrevalidationResponse>(
+      {url: `/api/v2/sessions/mining/prevalidate`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
-      data: miningSessionCreate, signal
+      data: miningSessionPrevalidationCreate, signal
     },
       options);
     }
@@ -4125,13 +4289,13 @@ export const createMiningSessionApiV2SessionsMiningPost = (
 
 
 
-export const getCreateMiningSessionApiV2SessionsMiningPostMutationKey = () => ['createMiningSessionApiV2SessionsMiningPost'] as const;
+export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey = () => ['prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost'] as const;
 
-export const getCreateMiningSessionApiV2SessionsMiningPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext> => {
+export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext> => {
 
-const mutationKey = getCreateMiningSessionApiV2SessionsMiningPostMutationKey();
+const mutationKey = getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey();
 const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -4141,10 +4305,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, CreateMiningSessionApiV2SessionsMiningPostMutationVariables> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables> = (props) => {
           const {data} = props ?? {};
 
-          return  createMiningSessionApiV2SessionsMiningPost(data,requestOptions)
+          return  prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost(data,requestOptions)
         }
 
 
@@ -4154,23 +4318,23 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationResult = NonNullable<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationBody = BodyType<MiningSessionCreate>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationVariables = {data: BodyType<MiningSessionCreate>}
+    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationResult = NonNullable<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>>
+    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationBody = BodyType<MiningSessionPrevalidationCreate>
+    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationError = ErrorType<HTTPValidationError>
+    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables = {data: BodyType<MiningSessionPrevalidationCreate>}
 
     /**
- * @summary Create Mining Session
+ * @summary Prevalidate Mining Session
  */
-export const useCreateMiningSessionApiV2SessionsMiningPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+export const usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+        Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>,
         TError,
-        CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+        PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
         TContext
       > => {
-      return useMutation(getCreateMiningSessionApiV2SessionsMiningPostMutationOptions(options), queryClient);
+      return useMutation(getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions(options), queryClient);
     }
 
 /**

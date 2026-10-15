@@ -35,6 +35,8 @@ export * from './miningAvailableResponseFinderEnhancers.ts';
 export * from './miningEnhancerCreate.ts';
 export * from './miningEnhancerTarget.ts';
 export * from './miningSessionCreate.ts';
+export * from './miningSessionHistoryResponseSearchType.ts';
+export * from './miningSessionPrevalidationCreate.ts';
 export * from './refiningSessionCreate.ts';
 export * from './sessionCreate.ts';
 export * from './sessionLineCostCreate.ts';

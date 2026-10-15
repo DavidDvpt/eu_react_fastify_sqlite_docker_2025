@@ -23,7 +23,10 @@ import {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningPrevalidationResponse,
   MiningSessionCreate,
+  MiningSessionHistoryResponse,
+  MiningSessionPrevalidationCreate,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefiningSessionCreate,
@@ -895,6 +898,34 @@ export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput = 
 
 
 /**
+ * @summary Get Mining Sessions
+ */
+export const GetMiningSessionsApiV2SessionsMiningGetResponseItem = MiningSessionHistoryResponse
+
+export type GetMiningSessionsApiV2SessionsMiningGetResponseItem = zod.input<typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem>;
+export type GetMiningSessionsApiV2SessionsMiningGetResponseItemOutput = zod.output<typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem>;
+
+export const GetMiningSessionsApiV2SessionsMiningGetResponse = zod.array(GetMiningSessionsApiV2SessionsMiningGetResponseItem)
+
+export type GetMiningSessionsApiV2SessionsMiningGetResponse = zod.input<typeof GetMiningSessionsApiV2SessionsMiningGetResponse>;
+export type GetMiningSessionsApiV2SessionsMiningGetResponseOutput = zod.output<typeof GetMiningSessionsApiV2SessionsMiningGetResponse>;
+
+
+/**
+ * @summary Create Mining Session
+ */
+export const CreateMiningSessionApiV2SessionsMiningPostBody = MiningSessionCreate
+
+export type CreateMiningSessionApiV2SessionsMiningPostBody = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+export type CreateMiningSessionApiV2SessionsMiningPostBodyOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+
+export const CreateMiningSessionApiV2SessionsMiningPostResponse = SessionResponse
+
+export type CreateMiningSessionApiV2SessionsMiningPostResponse = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+export type CreateMiningSessionApiV2SessionsMiningPostResponseOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+
+
+/**
  * @summary Get Available Mining Inventory
  */
 export const GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse = MiningAvailableResponse
@@ -913,7 +944,7 @@ export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({
 export type GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
 export type GetCurrentSessionApiV2SessionsCurrentGetQueryParamsOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
 
-export const GetCurrentSessionApiV2SessionsCurrentGetResponse = SessionResponse
+export const GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.union([SessionResponse,zod.null()])
 
 export type GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
 export type GetCurrentSessionApiV2SessionsCurrentGetResponseOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
@@ -948,17 +979,17 @@ export type CreateRefiningSessionApiV2SessionsRefinagePostResponseOutput = zod.o
 
 
 /**
- * @summary Create Mining Session
+ * @summary Prevalidate Mining Session
  */
-export const CreateMiningSessionApiV2SessionsMiningPostBody = MiningSessionCreate
+export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody = MiningSessionPrevalidationCreate
 
-export type CreateMiningSessionApiV2SessionsMiningPostBody = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
-export type CreateMiningSessionApiV2SessionsMiningPostBodyOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody = zod.input<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBodyOutput = zod.output<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody>;
 
-export const CreateMiningSessionApiV2SessionsMiningPostResponse = SessionResponse
+export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse = MiningPrevalidationResponse
 
-export type CreateMiningSessionApiV2SessionsMiningPostResponse = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
-export type CreateMiningSessionApiV2SessionsMiningPostResponseOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse = zod.input<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponseOutput = zod.output<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
 
 
 /**
