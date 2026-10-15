@@ -16,4 +16,6 @@ export interface MiningSessionHistoryResponse {
   costTtc: number;
   resultTt: number;
   resultTtc: number;
+  createdAt: string;
+  endedAt: string | null;
 }

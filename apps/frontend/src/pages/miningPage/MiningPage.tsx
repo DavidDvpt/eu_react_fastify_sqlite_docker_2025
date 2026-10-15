@@ -11,7 +11,7 @@ import { getGridTemplateColumns } from "@/shared/components/GenericList/gridTemp
 import { Section } from "@/shared/components/Containers";
 import MiningSessionModal from "./components/MiningSessionModal";
 
-type MiningSessionTableRow = MiningSessionHistoryResponse & { index: number; endedAt?: string | null };
+type MiningSessionTableRow = MiningSessionHistoryResponse & { index: number };
 
 const formatNumber = (value: number) => new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(value);
 const formatPercent = (value: number) => new Intl.NumberFormat("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(value);
@@ -50,7 +50,6 @@ function MiningPage() {
   const currentSession = currentSessionQuery.data;
   const sessionRows: MiningSessionTableRow[] = (sessionsQuery.data ?? []).map((session, index) => ({
     ...session,
-    endedAt: (session as MiningSessionHistoryResponse & { endedAt?: string | null }).endedAt,
     index: index + 1,
   }));
 

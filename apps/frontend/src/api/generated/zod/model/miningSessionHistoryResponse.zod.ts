@@ -15,7 +15,9 @@ export const MiningSessionHistoryResponse = zod.object({
   "costTt": zod.union([zod.int(),zod.number()]),
   "costTtc": zod.union([zod.int(),zod.number()]),
   "resultTt": zod.union([zod.int(),zod.number()]),
-  "resultTtc": zod.union([zod.int(),zod.number()])
+  "resultTtc": zod.union([zod.int(),zod.number()]),
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()])
 });
 
 export type MiningSessionHistoryResponse = zod.input<typeof MiningSessionHistoryResponse>;
