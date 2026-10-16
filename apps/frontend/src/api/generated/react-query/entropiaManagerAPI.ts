@@ -61,6 +61,7 @@ import type {
   MiningPrevalidationResponse,
   MiningResourceCreate,
   MiningResourceUpdate,
+  MiningSessionClose,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -4619,12 +4620,15 @@ export const useConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineId
  */
 export const closeSessionApiV2SessionsSessionIdPatch = (
     sessionId: string,
+    miningSessionCloseNull?: BodyType<MiningSessionClose | null>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
       return customInstance<SessionResponse>(
-      {url: `/api/v2/sessions/${sessionId}`, method: 'PATCH', signal
+      {url: `/api/v2/sessions/${sessionId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: miningSessionCloseNull, signal
     },
       options);
     }
@@ -4649,9 +4653,9 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
       const mutationFn: MutationFunction<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, CloseSessionApiV2SessionsSessionIdPatchMutationVariables> = (props) => {
-          const {sessionId} = props ?? {};
+          const {sessionId,data} = props ?? {};
 
-          return  closeSessionApiV2SessionsSessionIdPatch(sessionId,requestOptions)
+          return  closeSessionApiV2SessionsSessionIdPatch(sessionId,data,requestOptions)
         }
 
 
@@ -4662,9 +4666,9 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
   return  { mutationFn, ...mutationOptions }}
 
     export type CloseSessionApiV2SessionsSessionIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>>
-
+    export type CloseSessionApiV2SessionsSessionIdPatchMutationBody = BodyType<MiningSessionClose | null> | undefined
     export type CloseSessionApiV2SessionsSessionIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type CloseSessionApiV2SessionsSessionIdPatchMutationVariables = {sessionId: string}
+    export type CloseSessionApiV2SessionsSessionIdPatchMutationVariables = {sessionId: string;data?: BodyType<MiningSessionClose | null>}
 
     /**
  * @summary Close Session

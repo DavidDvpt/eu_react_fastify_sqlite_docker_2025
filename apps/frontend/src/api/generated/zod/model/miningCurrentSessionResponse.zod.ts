@@ -4,8 +4,10 @@
  * Entropia Manager API
  */
 import * as zod from 'zod';
+import { MiningCostLineResponse } from './miningCostLineResponse.zod.ts';
 import { MiningCurrentEnhancerResponse } from './miningCurrentEnhancerResponse.zod.ts';
 import { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.zod.ts';
+import { MiningResultLineResponse } from './miningResultLineResponse.zod.ts';
 import { SessionType } from './sessionType.zod.ts';
 
 export const miningCurrentSessionResponseCostTtDefault = 0;
@@ -30,7 +32,9 @@ export const MiningCurrentSessionResponse = zod.object({
   "costTt": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtDefault),
   "costTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtcDefault),
   "resultTt": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseResultTtDefault),
-  "resultTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseResultTtcDefault)
+  "resultTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseResultTtcDefault),
+  "costLines": zod.array(MiningCostLineResponse).optional(),
+  "resultLines": zod.array(MiningResultLineResponse).optional()
 });
 
 export type MiningCurrentSessionResponse = zod.input<typeof MiningCurrentSessionResponse>;

@@ -3,11 +3,12 @@
  * Do not edit manually.
  * Entropia Manager API
  */
+import type { MiningCostLineResponse } from './miningCostLineResponse.ts';
 import type { MiningCurrentSessionResponseExcavatorEnhancers } from './miningCurrentSessionResponseExcavatorEnhancers.ts';
 import type { MiningCurrentSessionResponseFinderEnhancers } from './miningCurrentSessionResponseFinderEnhancers.ts';
 import type { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.ts';
+import type { MiningResultLineResponse } from './miningResultLineResponse.ts';
 import type { SessionType } from './sessionType.ts';
-import type { SessionLineResponse } from './sessionLineResponse.ts';
 
 export interface MiningCurrentSessionResponse {
   id: string;
@@ -27,5 +28,6 @@ export interface MiningCurrentSessionResponse {
   costTtc?: number;
   resultTt?: number;
   resultTtc?: number;
-  resultLines?: (SessionLineResponse & { itemId: string })[];
+  costLines?: MiningCostLineResponse[];
+  resultLines?: MiningResultLineResponse[];
 }

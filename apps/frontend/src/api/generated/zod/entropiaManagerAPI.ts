@@ -27,6 +27,7 @@ import {
   MiningPrevalidationResponse,
   MiningResourceCreate,
   MiningResourceUpdate,
+  MiningSessionClose,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -1082,6 +1083,11 @@ export const CloseSessionApiV2SessionsSessionIdPatchParams = zod.object({
 
 export type CloseSessionApiV2SessionsSessionIdPatchParams = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
 export type CloseSessionApiV2SessionsSessionIdPatchParamsOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
+
+export const CloseSessionApiV2SessionsSessionIdPatchBody = zod.union([MiningSessionClose,zod.null()])
+
+export type CloseSessionApiV2SessionsSessionIdPatchBody = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;
+export type CloseSessionApiV2SessionsSessionIdPatchBodyOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;
 
 export const CloseSessionApiV2SessionsSessionIdPatchResponse = SessionResponse
 

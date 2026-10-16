@@ -48,6 +48,7 @@ import type {
   MiningPrevalidationResponse,
   MiningResourceCreate,
   MiningResourceUpdate,
+  MiningSessionClose,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -1420,11 +1421,12 @@ const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsume
  * @summary Close Session
  */
 const closeSessionApiV2SessionsSessionIdPatch = (
-    sessionId: string, options?: AxiosRequestConfig
+    sessionId: string,
+    miningSessionCloseNull?: MiningSessionClose | null, options?: AxiosRequestConfig
  ): Promise<AxiosResponse<SessionResponse>> => {
     return axiosInstance.patch(
       `/api/v2/sessions/${sessionId}`,
-      undefined,options
+      miningSessionCloseNull,options
     );
   }
 const getCloseSessionApiV2SessionsSessionIdPatchUrl = (sessionId: string,) => {

@@ -6,7 +6,9 @@
 import type { MiningCurrentSessionResponseExcavatorEnhancers } from '../miningCurrentSessionResponseExcavatorEnhancers.ts';
 import type { MiningCurrentSessionResponseFinderEnhancers } from '../miningCurrentSessionResponseFinderEnhancers.ts';
 import type { SessionType } from '../sessionType.ts';
+import type { MiningCostLineResponse } from './miningCostLineResponse.ts';
 import type { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.ts';
+import type { MiningResultLineResponse } from './miningResultLineResponse.ts';
 
 export type MiningCurrentSessionResponse = {
   id: string;
@@ -26,4 +28,6 @@ export type MiningCurrentSessionResponse = {
   costTtc?: number;
   resultTt?: number;
   resultTtc?: number;
+  costLines?: MiningCostLineResponse[];
+  resultLines?: MiningResultLineResponse[];
 };
