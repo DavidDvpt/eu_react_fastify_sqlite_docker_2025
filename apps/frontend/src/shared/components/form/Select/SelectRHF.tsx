@@ -62,8 +62,15 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
           control={rhf.control}
           render={({ field }) =>
             renderSelect(
-              typeof field.value === "string" ? field.value : undefined,
-              field.onChange,
+              typeof value === "string"
+                ? value
+                : typeof field.value === "string"
+                  ? field.value
+                  : undefined,
+              (nextValue) => {
+                field.onChange(nextValue);
+                onValueChange?.(nextValue);
+              },
               Boolean(fieldState.error),
             )
           }

@@ -4,7 +4,7 @@
  * Entropia Manager API
  */
 
-export type LotTierResponse = {
-  id: string;
-  tierLevel: number;
+export type LotUpdate = {
+  tierLevel?: number | null;
+  ttRemaining?: number | string | null;
 };

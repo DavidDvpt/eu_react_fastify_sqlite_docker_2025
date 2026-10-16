@@ -4,10 +4,8 @@
  * Entropia Manager API
  */
 
-export type LotTierUpdate = {
-  /**
-     * @minimum 0
-     * @maximum 10
-     */
-  tierLevel: number;
+export type LotUpdateResponse = {
+  id: string;
+  tierLevel?: number | null;
+  ttRemaining: number;
 };

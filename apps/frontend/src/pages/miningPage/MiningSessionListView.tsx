@@ -7,6 +7,7 @@ import { Section } from "@/shared/components/Containers";
 import miningSessionColumns from "@/shared/components/GenericList/columnDefinition/miningSessionTemplateColumns";
 import type { MiningSessionTableRow } from "@/shared/types/mining";
 import MiningSessionCloseModal from "./components/MiningSessionCloseModal";
+import { NumberHelper } from "@/shared/helpers";
 
 const miningSessionColumnsTemplate =
   getGridTemplateColumns(miningSessionColumns);
@@ -24,6 +25,25 @@ function MiningSessionListView() {
       index: index + 1,
     }),
   );
+  const totalBalanceTt = sessionRows.reduce(
+    (total, row) => total + row.resultTt - row.costTt,
+    0,
+  );
+  const totalBalanceTtc = sessionRows.reduce(
+    (total, row) => total + row.resultTtc - row.costTtc,
+    0,
+  );
+  const totalCostTtc = sessionRows.reduce((total, row) => total + row.costTtc, 0);
+  const totalResultTtc = sessionRows.reduce((total, row) => total + row.resultTtc, 0);
+  const totalBalancePercent = totalCostTtc
+    ? (totalResultTtc / totalCostTtc) * 100
+    : 0;
+  const balanceClassName = (value: number) =>
+    value < 0
+      ? "text-error-500"
+      : value > 0
+        ? "text-success-700"
+        : "text-text";
 
   return (
     <Section className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto text-text">
@@ -74,6 +94,23 @@ function MiningSessionListView() {
           isLoading={sessionsQuery.isPending}
           isError={sessionsQuery.isError}
           errorMessage="Impossible de charger les sessions."
+          footer={
+            <div
+              className="grid items-center text-xs font-bold"
+              style={{ gridTemplateColumns: miningSessionColumnsTemplate, fontWeight: 700 }}
+            >
+              <span className="col-span-11 justify-self-end bg-transparent text-right font-bold text-text">Bilan</span>
+              <span className={`${balanceClassName(totalBalanceTt)} bg-transparent text-right font-bold`}>
+                {NumberHelper.formatNumber(totalBalanceTt)}
+              </span>
+              <span className={`${balanceClassName(totalBalanceTtc)} bg-transparent text-right font-bold`}>
+                {NumberHelper.formatNumber(totalBalanceTtc)}
+              </span>
+              <span className={`${totalBalancePercent < 100 ? "text-error-500" : "text-success-700"} bg-transparent text-right font-bold`}>
+                {NumberHelper.formatPercent(totalBalancePercent)}%
+              </span>
+            </div>
+          }
           rowBaseClassName="grid items-stretch text-xs text-text"
           rowClassName={(row) => {
             if (row.endedAt == null) {

@@ -12,7 +12,7 @@ export const StockLineResponse = zod.object({
   "lotId": zod.union([zod.string(),zod.null()]).optional(),
   "tierLevel": zod.union([zod.int(),zod.null()]).optional(),
   "ttRemaining": zod.union([zod.int(),zod.number(),zod.null()]).optional()
-}).describe('One stock line.\n\nStackable items produce a single aggregated line per item (``lot_id`` and\n``tier_level`` are ``None``). Non-stackable items produce one line per\navailable physical instance, carrying the ``lot_id`` (and ``tier_level``\nwhen tierable) the client needs to edit the tier via\n``PATCH /inventory/lots/{lot_id}/tier``.');
+}).describe('One stock line.\n\nStackable items produce a single aggregated line per item (``lot_id`` and\n``tier_level`` are ``None``). Non-stackable items produce one line per\navailable physical instance, carrying the ``lot_id`` (and ``tier_level``\nwhen tierable) the client needs to edit the tier via\n``PATCH /inventory/lots/{lot_id}``.');
 
 export type StockLineResponse = zod.input<typeof StockLineResponse>;
 export type StockLineResponseOutput = zod.output<typeof StockLineResponse>;

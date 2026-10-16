@@ -11,7 +11,7 @@
  * ``tier_level`` are ``None``). Non-stackable items produce one line per
  * available physical instance, carrying the ``lot_id`` (and ``tier_level``
  * when tierable) the client needs to edit the tier via
- * ``PATCH /inventory/lots/{lot_id}/tier``.
+ * ``PATCH /inventory/lots/{lot_id}``.
  */
 export interface StockLineResponse {
   itemId: string;

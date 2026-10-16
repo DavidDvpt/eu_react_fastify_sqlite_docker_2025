@@ -13,8 +13,8 @@ import { formatItemNameWithTier } from "@/shared/helpers";
 import type { LotViewModel } from "@zod-schemas";
 import { Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
-import { useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch } from "@/api/generated/react-query/entropiaManagerAPI";
-import { LotTierUpdate } from "@/api/generated/zod/model/lotTierUpdate.zod";
+import { useUpdateInventoryLotApiV2InventoryLotsLotIdPatch } from "@/api/generated/react-query/entropiaManagerAPI";
+import { LotUpdate } from "@/api/generated/zod/model/lotUpdate.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
 
@@ -169,11 +169,13 @@ function ItemDetail({
       {isEditingTier && canEditTier ? (
         <ItemTierEditor
           key={(lots ?? [])
-            .map((lot) => `${lot.id}:${lot.tierLevel ?? "null"}`)
+            .map((lot) => `${lot.id}:${lot.tierLevel ?? "null"}:${lot.ttRemaining ?? "null"}`)
             .join("|")}
           itemId={item.id}
           lots={lots ?? null}
           focusedLotId={focusedLot?.id ?? null}
+        canEditTt={!item.isLimited && !item.type?.isStackable}
+        itemValue={item.value}
           onClose={() => setIsEditingTier(false)}
         />
       ) : null}
@@ -256,17 +258,23 @@ function ItemTierEditor({
   itemId,
   lots,
   focusedLotId = null,
+  canEditTt,
+  itemValue,
   onClose,
 }: {
   itemId: string;
   lots: LotViewModel[] | null;
   focusedLotId?: string | null;
+  canEditTt: boolean;
+  itemValue: number;
   onClose: () => void;
 }) {
-  const updateTierMutation =
-    useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch();
+  const updateLotMutation = useUpdateInventoryLotApiV2InventoryLotsLotIdPatch();
   const [tierValues, setTierValues] = useState<Record<string, number>>(() =>
     Object.fromEntries((lots ?? []).map((lot) => [lot.id, lot.tierLevel ?? 0])),
+  );
+  const [ttValues, setTtValues] = useState<Record<string, number>>(() =>
+    Object.fromEntries((lots ?? []).map((lot) => [lot.id, lot.ttRemaining ?? itemValue])),
   );
   const [error, setError] = useState<string | null>(null);
 
@@ -277,10 +285,21 @@ function ItemTierEditor({
 
   const updateTier = async (lot: LotViewModel) => {
     const tierLevel = tierValues[lot.id] ?? lot.tierLevel ?? 0;
-    const parsed = LotTierUpdate.safeParse({ tierLevel });
+    const ttRemaining = ttValues[lot.id] ?? lot.ttRemaining ?? itemValue;
+    const parsed = LotUpdate.safeParse({
+      tierLevel,
+      ...(canEditTt ? { ttRemaining } : {}),
+    });
 
     if (!parsed.success) {
-      setError("Le tier doit être un entier compris entre 0 et 10.");
+      setError(canEditTt
+        ? "Le tier doit être entre 0 et 10 et le TT doit être un nombre positif."
+        : "Le tier doit être un entier compris entre 0 et 10.");
+      return;
+    }
+
+    if (canEditTt && ttRemaining > itemValue) {
+      setError(`Le TT ne peut pas dépasser ${itemValue} PED.`);
       return;
     }
 
@@ -295,7 +314,7 @@ function ItemTierEditor({
 
     setError(null);
     try {
-      await updateTierMutation.mutateAsync({
+      await updateLotMutation.mutateAsync({
         lotId: lot.id,
         data: parsed.data,
       });
@@ -333,6 +352,7 @@ function ItemTierEditor({
               <div className="text-xs text-text-muted">
                 <div>Lot du {FormatTools.dateFrShort(lot.createdAt)}</div>
                 <div>Tier actuel : T{currentTier}</div>
+                {canEditTt ? <div>TT actuel : {lot.ttRemaining ?? itemValue} PED</div> : null}
               </div>
               <div className="flex items-end gap-2">
                 <label className="flex flex-col gap-1 text-xs text-text">
@@ -355,6 +375,26 @@ function ItemTierEditor({
                     }}
                   />
                 </label>
+                {canEditTt ? (
+                  <label className="flex flex-col gap-1 text-xs text-text">
+                    Nouveau TT
+                    <Input
+                      aria-label={`Nouveau TT du lot ${lot.id}`}
+                      type="number"
+                      min={0}
+                      max={itemValue}
+                      step="any"
+                      value={ttValues[lot.id] ?? lot.ttRemaining ?? itemValue}
+                      onChange={(event) => {
+                        const nextTt = event.currentTarget.valueAsNumber;
+                        setTtValues((values) => ({
+                          ...values,
+                          [lot.id]: nextTt,
+                        }));
+                      }}
+                    />
+                  </label>
+                ) : null}
                 <Button
                   type="button"
                   variant="primary"
@@ -362,7 +402,7 @@ function ItemTierEditor({
                   className="h-8 w-8 rounded-md p-0"
                   aria-label={`Enregistrer le tier du lot ${lot.id}`}
                   icon={Save}
-                  disabled={updateTierMutation.isPending}
+                  disabled={updateLotMutation.isPending}
                   onClick={() => updateTier(lot)}
                 />
               </div>

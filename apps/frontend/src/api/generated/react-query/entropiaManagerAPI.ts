@@ -53,8 +53,8 @@ import type {
   ListTypesApiV2TypesGetParams,
   LotOriginResponse,
   LotResponse,
-  LotTierResponse,
-  LotTierUpdate,
+  LotUpdate,
+  LotUpdateResponse,
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
@@ -2769,19 +2769,19 @@ export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<
 
 
 /**
- * @summary Update Inventory Lot Tier
+ * @summary Update Inventory Lot
  */
-export const updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch = (
+export const updateInventoryLotApiV2InventoryLotsLotIdPatch = (
     lotId: string,
-    lotTierUpdate: BodyType<LotTierUpdate>,
+    lotUpdate: BodyType<LotUpdate>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
-      return customInstance<LotTierResponse>(
-      {url: `/api/v2/inventory/lots/${lotId}/tier`, method: 'PATCH',
+      return customInstance<LotUpdateResponse>(
+      {url: `/api/v2/inventory/lots/${lotId}`, method: 'PATCH',
       headers: {'Content-Type': 'application/json', },
-      data: lotTierUpdate, signal
+      data: lotUpdate, signal
     },
       options);
     }
@@ -2789,13 +2789,13 @@ export const updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch = (
 
 
 
-export const getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationKey = () => ['updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch'] as const;
+export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey = () => ['updateInventoryLotApiV2InventoryLotsLotIdPatch'] as const;
 
-export const getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>, TError,UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>, TError,UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables, TContext> => {
+export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext> => {
 
-const mutationKey = getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationKey();
+const mutationKey = getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey();
 const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -2805,10 +2805,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>, UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables> = (props) => {
           const {lotId,data} = props ?? {};
 
-          return  updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch(lotId,data,requestOptions)
+          return  updateInventoryLotApiV2InventoryLotsLotIdPatch(lotId,data,requestOptions)
         }
 
 
@@ -2818,23 +2818,23 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationResult = NonNullable<Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>>
-    export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationBody = BodyType<LotTierUpdate>
-    export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationError = ErrorType<HTTPValidationError>
-    export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables = {lotId: string;data: BodyType<LotTierUpdate>}
+    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>>
+    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationBody = BodyType<LotUpdate>
+    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables = {lotId: string;data: BodyType<LotUpdate>}
 
     /**
- * @summary Update Inventory Lot Tier
+ * @summary Update Inventory Lot
  */
-export const useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>, TError,UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+export const useUpdateInventoryLotApiV2InventoryLotsLotIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch>>,
+        Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>,
         TError,
-        UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationVariables,
+        UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
         TContext
       > => {
-      return useMutation(getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchMutationOptions(options), queryClient);
+      return useMutation(getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions(options), queryClient);
     }
 
 /**

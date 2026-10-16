@@ -1,4 +1,5 @@
 import { queryClient } from "@/lib/react-query/queryClient";
+import { getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey } from "@/api/generated/react-query/entropiaManagerAPI";
 
 type InvalidateObject = { keys: (string | undefined)[] };
 
@@ -48,6 +49,10 @@ export class InvalidateQueryAndKeys {
       }),
       queryClient.invalidateQueries({
         queryKey: this.getItemStockKey(itemId).keys,
+      }),
+      // Mining session creation reads lot TT from this dedicated inventory query.
+      queryClient.invalidateQueries({
+        queryKey: getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey(),
       }),
     ]);
   }

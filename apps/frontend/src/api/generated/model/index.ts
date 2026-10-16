@@ -29,7 +29,7 @@ export * from './listTransactionsApiV2TransactionsGetStatus.ts';
 export * from './listTransactionsApiV2TransactionsGetType.ts';
 export * from './listTypesApiV2TypesGetSortKey.ts';
 export * from './listTypesApiV2TypesGetSortOrder.ts';
-export * from './lotTierUpdate.ts';
+export * from './lotUpdate.ts';
 export * from './miningAvailableResponseExcavatorEnhancers.ts';
 export * from './miningAvailableResponseFinderEnhancers.ts';
 export * from './miningCostLineUpdate.ts';

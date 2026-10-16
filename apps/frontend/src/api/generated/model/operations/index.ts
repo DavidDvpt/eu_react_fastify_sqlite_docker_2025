@@ -28,7 +28,7 @@ export * from './listTransactionsApiV2TransactionsGetParams.ts';
 export * from './listTypesApiV2TypesGetParams.ts';
 export * from './lotOriginResponse.ts';
 export * from './lotResponse.ts';
-export * from './lotTierResponse.ts';
+export * from './lotUpdateResponse.ts';
 export * from './meResponse.ts';
 export * from './messageResponse.ts';
 export * from './miningAvailableLotResponse.ts';

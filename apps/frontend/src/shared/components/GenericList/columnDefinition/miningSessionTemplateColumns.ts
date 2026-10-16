@@ -27,7 +27,7 @@ const miningSessionColumns: GenericListColumn<MiningSessionTableRow>[] = [
   {
     key: "finder",
     label: "Finder",
-    minWidth: 180,
+    minWidth: 140,
     fillRemainingSpace: true,
     value: (row) => row.finder ?? "—",
   },
@@ -85,21 +85,21 @@ const miningSessionColumns: GenericListColumn<MiningSessionTableRow>[] = [
   {
     key: "balanceTt",
     label: "Bilan TT",
-    minWidth: 76,
+    minWidth: 90,
     align: "right",
     value: (row) => NumberHelper.formatNumber(row.resultTt - row.costTt),
   },
   {
     key: "balanceTtc",
     label: "Bilan TTC",
-    minWidth: 76,
+    minWidth: 90,
     align: "right",
     value: (row) => NumberHelper.formatNumber(row.resultTtc - row.costTtc),
   },
   {
     key: "balancePercent",
     label: "Bilan %",
-    minWidth: 72,
+    minWidth: 85,
     align: "right",
     value: (row) =>
       `${NumberHelper.formatPercent(row.resultTtc > 0 && row.costTtc ? (row.resultTtc / row.costTtc) * 100 : 0)}%`,

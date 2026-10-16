@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import AppSelect from "@/shared/components/form/Select/AppSelect";
+import SelectRHF from "@/shared/components/form/Select/SelectRHF";
 import type { MiningAvailableStackResponse } from "@/api/generated/react-query/model/miningAvailableStackResponse";
 import type { ItemViewModel } from "@zod-schemas";
 import MiningItemOption from "./MiningItemOption";
@@ -11,6 +12,7 @@ function MiningAmmoSelector({
   searchType,
   disabled = false,
   onSelectionChange,
+  name,
 }: {
   ammo: MiningAvailableStackResponse[];
   itemById: Map<string, ItemViewModel>;
@@ -18,6 +20,7 @@ function MiningAmmoSelector({
   searchType?: number;
   disabled?: boolean;
   onSelectionChange?: (selection?: { itemId: string; quantity: number }) => void;
+  name?: string;
 }) {
   const [selectedItemId, setSelectedItemId] = useState<string>();
   const options = useMemo(
@@ -55,13 +58,24 @@ function MiningAmmoSelector({
       <h3 className="m-0 mb-[10px] text-base font-medium text-text">
         Munitions ({options.length} disponible{options.length > 1 ? "s" : ""})
       </h3>
-      <AppSelect
-        value={effectiveSelectedItemId}
-        options={options}
-        onValueChange={setSelectedItemId}
-        placeholder={options.length ? "Sélectionner une munition" : "Aucune munition disponible"}
-        disabled={disabled || options.length <= 1}
-      />
+      {name ? (
+        <SelectRHF
+          name={name}
+          value={effectiveSelectedItemId}
+          options={options}
+          onValueChange={setSelectedItemId}
+          placeholder={options.length ? "Sélectionner une munition" : "Aucune munition disponible"}
+          disabled={disabled || options.length <= 1}
+        />
+      ) : (
+        <AppSelect
+          value={effectiveSelectedItemId}
+          options={options}
+          onValueChange={setSelectedItemId}
+          placeholder={options.length ? "Sélectionner une munition" : "Aucune munition disponible"}
+          disabled={disabled || options.length <= 1}
+        />
+      )}
       {selectedItem && (
         <div className="flex flex-wrap gap-6 text-sm text-text-muted">
           <span>Coût par clic : {costPerClick} PED</span>

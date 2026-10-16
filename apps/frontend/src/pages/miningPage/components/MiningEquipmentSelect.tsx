@@ -1,4 +1,5 @@
 import AppSelect from "@/shared/components/form/Select/AppSelect";
+import SelectRHF from "@/shared/components/form/Select/SelectRHF";
 import type { MiningAvailableLotResponse } from "@/api/generated/react-query/model/miningAvailableLotResponse";
 import type { MiningAvailableStackResponse } from "@/api/generated/react-query/model/miningAvailableStackResponse";
 import type { ItemViewModel } from "@zod-schemas";
@@ -20,6 +21,7 @@ function MiningEquipmentSelect({
   clickCount,
   searchType,
   onEnhancersChange,
+  name,
 }: {
   label: string;
   placeholder: string;
@@ -34,6 +36,7 @@ function MiningEquipmentSelect({
   clickCount: number;
   searchType?: number;
   onEnhancersChange?: (enhancers: SelectedEnhancer[]) => void;
+  name?: string;
 }) {
   const options = lots
     .filter((lot) => lot.lotId)
@@ -64,14 +67,25 @@ function MiningEquipmentSelect({
   return (
     <div className="flex flex-col gap-2">
       <label className="text-sm font-medium text-text">{label}</label>
-      <AppSelect
-        value={value}
-        onValueChange={onValueChange}
-        options={options}
-        placeholder={options.length ? placeholder : `Aucun ${label.toLowerCase()} disponible`}
-        disabled={disabled || !options.length}
-        triggerClassName="bg-input"
-      />
+      {name ? (
+        <SelectRHF
+          name={name}
+          options={options}
+          placeholder={options.length ? placeholder : `Aucun ${label.toLowerCase()} disponible`}
+          disabled={disabled || !options.length}
+          triggerClassName="bg-input"
+          onValueChange={onValueChange}
+        />
+      ) : (
+        <AppSelect
+          value={value}
+          onValueChange={onValueChange}
+          options={options}
+          placeholder={options.length ? placeholder : `Aucun ${label.toLowerCase()} disponible`}
+          disabled={disabled || !options.length}
+          triggerClassName="bg-input"
+        />
+      )}
       {target === "FINDER" && finderDecay && (
         <div className="text-sm text-text-muted">
           Coût total estimé : {Number((clickCount * finderDecay).toFixed(3))} PED

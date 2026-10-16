@@ -18,8 +18,8 @@ import {
   ItemResponse,
   LotOriginResponse,
   LotResponse,
-  LotTierResponse,
-  LotTierUpdate,
+  LotUpdate,
+  LotUpdateResponse,
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
@@ -666,24 +666,24 @@ export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponseOutput = zod.out
 
 
 /**
- * @summary Update Inventory Lot Tier
+ * @summary Update Inventory Lot
  */
-export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams = zod.object({
+export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams = zod.object({
   "lot_id": zod.string()
 })
 
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams>;
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParamsOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchParams>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParamsOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams>;
 
-export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody = LotTierUpdate
+export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = LotUpdate
 
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody>;
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBodyOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchBody>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBodyOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody>;
 
-export const UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse = LotTierResponse
+export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse = LotUpdateResponse
 
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse = zod.input<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse>;
-export type UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponseOutput = zod.output<typeof UpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchResponse>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponseOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse>;
 
 
 /**
