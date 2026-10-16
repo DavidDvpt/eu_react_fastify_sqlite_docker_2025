@@ -59,6 +59,8 @@ import type {
   MiningAvailableResponse,
   MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
+  MiningResourceCreate,
+  MiningResourceUpdate,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -67,6 +69,7 @@ import type {
   RefiningSessionCreate,
   RefiningSessionResponse,
   SessionCreate,
+  SessionLineResponse,
   SessionResponse,
   SignInBody,
   SignUpBody,
@@ -4336,6 +4339,279 @@ export const usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = <TE
         TContext
       > => {
       return useMutation(getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Create Mining Resource Line
+ */
+export const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = (
+    sessionId: string,
+    miningResourceCreate: BodyType<MiningResourceCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionLineResponse>(
+      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: miningResourceCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey = () => ['createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost'] as const;
+
+export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext> => {
+
+const mutationKey = getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables> = (props) => {
+          const {sessionId,data} = props ?? {};
+
+          return  createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost(sessionId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>>
+    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationBody = BodyType<MiningResourceCreate>
+    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables = {sessionId: string;data: BodyType<MiningResourceCreate>}
+
+    /**
+ * @summary Create Mining Resource Line
+ */
+export const useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>,
+        TError,
+        CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Update Mining Resource Line
+ */
+export const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = (
+    sessionId: string,
+    lineId: string,
+    miningResourceUpdate: BodyType<MiningResourceUpdate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionLineResponse>(
+      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`, method: 'PUT',
+      headers: {'Content-Type': 'application/json', },
+      data: miningResourceUpdate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey = () => ['updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut'] as const;
+
+export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext> => {
+
+const mutationKey = getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables> = (props) => {
+          const {sessionId,lineId,data} = props ?? {};
+
+          return  updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut(sessionId,lineId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>>
+    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationBody = BodyType<MiningResourceUpdate>
+    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationError = ErrorType<HTTPValidationError>
+    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables = {sessionId: string;lineId: string;data: BodyType<MiningResourceUpdate>}
+
+    /**
+ * @summary Update Mining Resource Line
+ */
+export const useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>,
+        TError,
+        UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Finalize Mining Resource Line
+ */
+export const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = (
+    sessionId: string,
+    lineId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionLineResponse>(
+      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`, method: 'POST', signal
+    },
+      options);
+    }
+
+
+
+
+export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey = () => ['finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost'] as const;
+
+export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext> => {
+
+const mutationKey = getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables> = (props) => {
+          const {sessionId,lineId} = props ?? {};
+
+          return  finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost(sessionId,lineId,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationResult = NonNullable<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>>
+
+    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationError = ErrorType<HTTPValidationError>
+    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables = {sessionId: string;lineId: string}
+
+    /**
+ * @summary Finalize Mining Resource Line
+ */
+export const useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>,
+        TError,
+        FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Consume Mining Cost Line
+ */
+export const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = (
+    sessionId: string,
+    lineId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<SessionLineResponse>(
+      {url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`, method: 'POST', signal
+    },
+      options);
+    }
+
+
+
+
+export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey = () => ['consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost'] as const;
+
+export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext> => {
+
+const mutationKey = getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables> = (props) => {
+          const {sessionId,lineId} = props ?? {};
+
+          return  consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost(sessionId,lineId,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationResult = NonNullable<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>>
+
+    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationError = ErrorType<HTTPValidationError>
+    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables = {sessionId: string;lineId: string}
+
+    /**
+ * @summary Consume Mining Cost Line
+ */
+export const useConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>,
+        TError,
+        ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions(options), queryClient);
     }
 
 /**

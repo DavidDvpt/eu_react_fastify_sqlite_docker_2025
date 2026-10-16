@@ -46,6 +46,8 @@ import type {
   MiningAvailableResponse,
   MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
+  MiningResourceCreate,
+  MiningResourceUpdate,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -54,6 +56,7 @@ import type {
   RefiningSessionCreate,
   RefiningSessionResponse,
   SessionCreate,
+  SessionLineResponse,
   SessionResponse,
   SignInBody,
   SignUpBody,
@@ -1310,6 +1313,110 @@ const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl = () => {
 }
 
 /**
+ * @summary Create Mining Resource Line
+ */
+const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = (
+    sessionId: string,
+    miningResourceCreate: MiningResourceCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines`,
+      miningResourceCreate,options
+    );
+  }
+const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl = (sessionId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Update Mining Resource Line
+ */
+const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = (
+    sessionId: string,
+    lineId: string,
+    miningResourceUpdate: MiningResourceUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.put(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
+      miningResourceUpdate,options
+    );
+  }
+const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Finalize Mining Resource Line
+ */
+const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = (
+    sessionId: string,
+    lineId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
+      undefined,options
+    );
+  }
+const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Consume Mining Cost Line
+ */
+const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = (
+    sessionId: string,
+    lineId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
+      undefined,options
+    );
+  }
+const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
  * @summary Close Session
  */
 const closeSessionApiV2SessionsSessionIdPatch = (
@@ -1356,7 +1463,7 @@ const getHealthHealthGetUrl = () => {
   });
 }
 
-return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,requestNexusUpdateApiV2TypesIdNexusUpdatePost,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,listLotOriginsApiV2InventoryLotsOriginGet,getLotOriginApiV2InventoryLotsLotIdOriginGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listImagesApiV2ImagesGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,getResultsByOriginApiV2RefinageRecipeOriginItemIdGet,getRecipeByResultApiV2RefinageRecipeResultItemIdGet,getMiningSessionsApiV2SessionsMiningGet,createMiningSessionApiV2SessionsMiningPost,getAvailableMiningInventoryApiV2SessionsMiningAvailableGet,getCurrentSessionApiV2SessionsCurrentGet,createSessionApiV2SessionsPost,createRefiningSessionApiV2SessionsRefinagePost,prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,closeSessionApiV2SessionsSessionIdPatch,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getListLotOriginsApiV2InventoryLotsOriginGetUrl,getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListImagesApiV2ImagesGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl,getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl,getGetMiningSessionsApiV2SessionsMiningGetUrl,getCreateMiningSessionApiV2SessionsMiningPostUrl,getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl,getGetCurrentSessionApiV2SessionsCurrentGetUrl,getCreateSessionApiV2SessionsPostUrl,getCreateRefiningSessionApiV2SessionsRefinagePostUrl,getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl,getCloseSessionApiV2SessionsSessionIdPatchUrl,getHealthHealthGetUrl}};
+return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,requestNexusUpdateApiV2TypesIdNexusUpdatePost,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,listLotOriginsApiV2InventoryLotsOriginGet,getLotOriginApiV2InventoryLotsLotIdOriginGet,updateInventoryLotTierApiV2InventoryLotsLotIdTierPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listImagesApiV2ImagesGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,getResultsByOriginApiV2RefinageRecipeOriginItemIdGet,getRecipeByResultApiV2RefinageRecipeResultItemIdGet,getMiningSessionsApiV2SessionsMiningGet,createMiningSessionApiV2SessionsMiningPost,getAvailableMiningInventoryApiV2SessionsMiningAvailableGet,getCurrentSessionApiV2SessionsCurrentGet,createSessionApiV2SessionsPost,createRefiningSessionApiV2SessionsRefinagePost,prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost,consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost,closeSessionApiV2SessionsSessionIdPatch,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getListLotOriginsApiV2InventoryLotsOriginGetUrl,getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl,getUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListImagesApiV2ImagesGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl,getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl,getGetMiningSessionsApiV2SessionsMiningGetUrl,getCreateMiningSessionApiV2SessionsMiningPostUrl,getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl,getGetCurrentSessionApiV2SessionsCurrentGetUrl,getCreateSessionApiV2SessionsPostUrl,getCreateRefiningSessionApiV2SessionsRefinagePostUrl,getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl,getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl,getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl,getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl,getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl,getCloseSessionApiV2SessionsSessionIdPatchUrl,getHealthHealthGetUrl}};
 export type SignupApiV2AuthSignupPostResult = AxiosResponse<SignupApiV2AuthSignupPost201>
 export type SigninApiV2AuthSigninPostResult = AxiosResponse<MessageResponse>
 export type LogoutApiV2AuthLogoutPostResult = AxiosResponse<MessageResponse>
@@ -1408,5 +1515,9 @@ export type GetCurrentSessionApiV2SessionsCurrentGetResult = AxiosResponse<Minin
 export type CreateSessionApiV2SessionsPostResult = AxiosResponse<SessionResponse>
 export type CreateRefiningSessionApiV2SessionsRefinagePostResult = AxiosResponse<RefiningSessionResponse>
 export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResult = AxiosResponse<MiningPrevalidationResponse>
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResult = AxiosResponse<SessionLineResponse>
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResult = AxiosResponse<SessionLineResponse>
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResult = AxiosResponse<SessionLineResponse>
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResult = AxiosResponse<SessionLineResponse>
 export type CloseSessionApiV2SessionsSessionIdPatchResult = AxiosResponse<SessionResponse>
 export type HealthHealthGetResult = AxiosResponse<HealthHealthGet200>

@@ -25,6 +25,8 @@ import {
   MiningAvailableResponse,
   MiningCurrentSessionResponse,
   MiningPrevalidationResponse,
+  MiningResourceCreate,
+  MiningResourceUpdate,
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
@@ -33,6 +35,7 @@ import {
   RefiningSessionCreate,
   RefiningSessionResponse,
   SessionCreate,
+  SessionLineResponse,
   SessionResponse,
   SessionType,
   SignInBody,
@@ -991,6 +994,83 @@ export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse 
 
 export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse = zod.input<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
 export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponseOutput = zod.output<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
+
+
+/**
+ * @summary Create Mining Resource Line
+ */
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams = zod.object({
+  "session_id": zod.string()
+})
+
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParamsOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams>;
+
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody = MiningResourceCreate
+
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBodyOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody>;
+
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse = SessionLineResponse
+
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponseOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse>;
+
+
+/**
+ * @summary Update Mining Resource Line
+ */
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
+
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParamsOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams>;
+
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody = MiningResourceUpdate
+
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBodyOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody>;
+
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse = SessionLineResponse
+
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponseOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse>;
+
+
+/**
+ * @summary Finalize Mining Resource Line
+ */
+export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
+
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams = zod.input<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams>;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParamsOutput = zod.output<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams>;
+
+export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse = SessionLineResponse
+
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse = zod.input<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse>;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponseOutput = zod.output<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse>;
+
+
+/**
+ * @summary Consume Mining Cost Line
+ */
+export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
+
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams = zod.input<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams>;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParamsOutput = zod.output<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams>;
+
+export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse = SessionLineResponse
+
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse = zod.input<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse>;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponseOutput = zod.output<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse>;
 
 
 /**
