@@ -15,13 +15,25 @@ function MiningSessionCockpit({
     enhancers: MiningCurrentSessionResponse["finderEnhancers"],
   ): EnhancerLine[] =>
     Object.entries(enhancers ?? {})
-      .map(([socket, enhancer]) => ({
-        itemId: enhancer.itemId,
-        socket,
-        quantityRemaining: enhancer.quantityRemaining,
-        costLineId: (enhancer as { lineId?: string; costLineId?: string }).lineId ??
-          (enhancer as { costLineId?: string }).costLineId,
-      }))
+      .map(([socket, enhancer]) => {
+        const costLine = session.costLines?.find(
+          (line) => line.isEnhancer && line.itemId === enhancer.itemId,
+        );
+        const quantityInitial = enhancer.quantityInitial;
+        const quantityConsumed = costLine?.quantity ?? Math.max(
+          0,
+          quantityInitial - enhancer.quantityRemaining,
+        );
+        return {
+          itemId: enhancer.itemId,
+          socket,
+          quantityInitial,
+          quantityConsumed,
+          quantityRemaining: Math.max(0, quantityInitial - quantityConsumed),
+          costLineId: costLine?.id ?? (enhancer as { lineId?: string; costLineId?: string }).lineId ??
+            (enhancer as { costLineId?: string }).costLineId,
+        };
+      })
       .sort((left, right) => Number(left.socket) - Number(right.socket));
   const finderEnhancers = toEnhancerLines(session.finderEnhancers);
   const excavatorEnhancers = toEnhancerLines(session.excavatorEnhancers);

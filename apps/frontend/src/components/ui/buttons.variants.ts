@@ -18,7 +18,7 @@ export const buttonVariants: Record<string | number | symbol, string> = {
   warning:
     "border border-button-warning-border bg-button-warning-bg text-button-warning-text shadow hover:border-button-warning-hover-border hover:bg-button-warning-hover-bg hover:text-button-warning-hover-text active:border-button-warning-active-border active:bg-button-warning-active-bg active:text-button-warning-active-text disabled:border-button-warning-disabled-border disabled:bg-button-warning-disabled-bg disabled:opacity-100",
   navVertical:
-    "w-full justify-center bg-transparent border border-border text-center text-sm text-text-muted py-2 no-underline hover:bg-surface-hover hover:text-text hover:border-border-active data-[active=true]:border-border-active data-[active=true]:bg-surface-hover data-[active=true]:font-bold data-[active=true]:text-text data-[active=true]:shadow-ambient-md",
+    "w-full justify-center bg-transparent border border-border text-center !text-[14px] text-text-muted py-2 no-underline hover:bg-surface-hover hover:text-text hover:border-border-active data-[active=true]:border-border-active data-[active=true]:bg-surface-hover data-[active=true]:font-bold data-[active=true]:text-text data-[active=true]:shadow-ambient-md",
   navHorizontal:
     "inline-flex min-w-0 flex-1 items-center justify-center text-m !font-normal text-text-muted no-underline transition-colors hover:text-primary-300 hover:bg-surface data-[active=true]:bg-surface data-[active=true]:!font-bold data-[active=true]:text-primary-700",
 } as const;

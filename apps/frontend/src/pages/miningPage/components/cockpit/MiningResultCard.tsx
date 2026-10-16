@@ -42,6 +42,7 @@ function MiningResultCard({
     const parsed = Number(newQuantity);
     if (newQuantity === "" || Number.isNaN(parsed)) return;
     onQuantityChange(Math.max(0, parsed));
+    setNewQuantity("");
   };
 
   const handleQuantityChange = (value: string) => {

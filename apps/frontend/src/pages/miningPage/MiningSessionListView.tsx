@@ -1,17 +1,23 @@
 import { useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useGetMiningSessionsApiV2SessionsMiningGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import { GenericList } from "@/shared/components/GenericList";
 import { getGridTemplateColumns } from "@/shared/components/GenericList/gridTemplate";
 import { Section } from "@/shared/components/Containers";
 import miningSessionColumns from "@/shared/components/GenericList/columnDefinition/miningSessionTemplateColumns";
 import type { MiningSessionTableRow } from "@/shared/types/mining";
+import MiningSessionCloseModal from "./components/MiningSessionCloseModal";
 
 const miningSessionColumnsTemplate =
   getGridTemplateColumns(miningSessionColumns);
 
 function MiningSessionListView() {
   const navigate = useNavigate();
-  const sessionsQuery = useGetMiningSessionsApiV2SessionsMiningGet();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedSessionId = searchParams.get("session_id");
+  const sessionsQuery = useGetMiningSessionsApiV2SessionsMiningGet({
+    query: { refetchOnMount: "always" },
+  });
   const sessionRows: MiningSessionTableRow[] = (sessionsQuery.data ?? []).map(
     (session, index) => ({
       ...session,
@@ -69,21 +75,35 @@ function MiningSessionListView() {
           isError={sessionsQuery.isError}
           errorMessage="Impossible de charger les sessions."
           rowBaseClassName="grid items-stretch text-xs text-text"
-          rowClassName={(row) =>
-            row.endedAt == null
-              ? "border-b border-border bg-white !text-black [&_*]:!text-black"
-              : "border-b border-border"
-          }
+          rowClassName={(row) => {
+            if (row.endedAt == null) {
+              return "border-b border-border bg-white !text-black [&_*]:!text-black";
+            }
+            const balanceTtc = row.resultTtc - row.costTtc;
+            if (balanceTtc < 0) {
+              return "border-b border-border bg-error-100 !text-black [&_*]:!text-black";
+            }
+            if (balanceTtc > 0) {
+              return "border-b border-border bg-success-100 !text-black [&_*]:!text-black";
+            }
+            return "border-b border-border";
+          }}
           onRowClick={(row) =>
-            navigate(
-              row.endedAt == null
-                ? "/mining/current"
-                : `/mining/${row.number}/session`,
-            )
+            row.endedAt == null
+              ? navigate("/mining/current")
+              : setSearchParams({ session_id: row.sessionId, modal: "detail" })
           }
           rowHeight={32}
         />
       </div>
+      <MiningSessionCloseModal
+        open={searchParams.get("modal") === "detail" && Boolean(selectedSessionId)}
+        sessionId={selectedSessionId ?? undefined}
+        readOnly
+        onOpenChange={(open) => {
+          if (!open) setSearchParams({});
+        }}
+      />
     </Section>
   );
 }

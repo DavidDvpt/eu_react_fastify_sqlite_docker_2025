@@ -44,6 +44,7 @@ export * from './miningAvailableLotResponse.zod.ts';
 export * from './miningAvailableResponse.zod.ts';
 export * from './miningAvailableStackResponse.zod.ts';
 export * from './miningCostLineResponse.zod.ts';
+export * from './miningCostLineUpdate.zod.ts';
 export * from './miningCurrentEnhancerResponse.zod.ts';
 export * from './miningCurrentSessionResponse.zod.ts';
 export * from './miningCurrentToolLotResponse.zod.ts';

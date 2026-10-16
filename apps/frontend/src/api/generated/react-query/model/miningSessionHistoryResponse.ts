@@ -6,6 +6,7 @@
 import type { MiningSessionHistoryResponseSearchType } from './miningSessionHistoryResponseSearchType.ts';
 
 export interface MiningSessionHistoryResponse {
+  sessionId: string;
   number: number;
   searchType: MiningSessionHistoryResponseSearchType;
   finder: string | null;

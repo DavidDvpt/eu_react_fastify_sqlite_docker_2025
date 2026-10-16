@@ -62,6 +62,7 @@ export * from './miningAvailableResponseExcavatorEnhancers.ts';
 export * from './miningAvailableResponseFinderEnhancers.ts';
 export * from './miningAvailableStackResponse.ts';
 export * from './miningCostLineResponse.ts';
+export * from './miningCostLineUpdate.ts';
 export * from './miningCurrentEnhancerResponse.ts';
 export * from './miningCurrentSessionResponse.ts';
 export * from './miningCurrentSessionResponseExcavatorEnhancers.ts';

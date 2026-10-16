@@ -6,6 +6,7 @@
 import * as zod from 'zod';
 
 export const MiningSessionHistoryResponse = zod.object({
+  "sessionId": zod.string(),
   "number": zod.int(),
   "searchType": zod.union([zod.enum(['E', 'O', 'EO']),zod.null()]),
   "finder": zod.union([zod.string(),zod.null()]),

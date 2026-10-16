@@ -32,6 +32,7 @@ export * from './listTypesApiV2TypesGetSortOrder.ts';
 export * from './lotTierUpdate.ts';
 export * from './miningAvailableResponseExcavatorEnhancers.ts';
 export * from './miningAvailableResponseFinderEnhancers.ts';
+export * from './miningCostLineUpdate.ts';
 export * from './miningCurrentSessionResponseExcavatorEnhancers.ts';
 export * from './miningCurrentSessionResponseFinderEnhancers.ts';
 export * from './miningEnhancerCreate.ts';
