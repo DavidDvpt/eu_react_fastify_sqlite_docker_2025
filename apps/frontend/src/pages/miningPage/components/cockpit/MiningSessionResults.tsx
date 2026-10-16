@@ -3,6 +3,7 @@ import { Input } from "@/components/ui/input";
 import {
   useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,
   useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost,
+  useGetMiningLootListApiV2SessionsMiningLootlistGet,
   useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,
 } from "@/api/generated/react-query/entropiaManagerAPI";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
@@ -30,19 +31,6 @@ type MiningResult = {
   isFinalized?: boolean;
 };
 
-function isMiningResource(item: ItemViewModel, searchType?: number | null) {
-  const typeName = item.type?.name.toLowerCase() ?? "";
-  const categoryName = item.type?.category?.name.toLowerCase() ?? "";
-  const isOre = typeName.includes("ore") || categoryName.includes("ore");
-  const isEnmatter =
-    typeName.includes("enmatter") || categoryName.includes("enmatter");
-
-  if (searchType === 1) return isEnmatter;
-  if (searchType === 2) return isOre;
-  if (searchType === 3) return isOre || isEnmatter;
-  return false;
-}
-
 function MiningSessionResults({
   sessionId,
   items,
@@ -62,6 +50,14 @@ function MiningSessionResults({
   const createMutation = useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost();
   const updateMutation = useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut();
   const finalizeMutation = useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost();
+  const lootListQuery = useGetMiningLootListApiV2SessionsMiningLootlistGet(
+    { sessionType: searchType ?? 0 },
+    {
+      query: {
+        enabled: searchType === 1 || searchType === 2 || searchType === 3,
+      },
+    },
+  );
 
   useEffect(() => {
     if (!resultLines?.length || results.length > 0) return;
@@ -80,15 +76,20 @@ function MiningSessionResults({
     [items],
   );
   const resourceItems = useMemo(
-    () =>
-      items
-        .filter((item) => isMiningResource(item, searchType))
+    () => {
+      const lootItemIds = new Set(
+        (lootListQuery.data ?? []).map((itemId) => itemId.toLowerCase()),
+      );
+
+      return items
+        .filter((item) => lootItemIds.has(item.id.toLowerCase()))
         .filter((item) =>
           item.name.toLowerCase().includes(query.trim().toLowerCase()),
         )
         .sort((left, right) => left.name.localeCompare(right.name))
-        .slice(0, 4),
-    [items, query, searchType],
+        .slice(0, 4);
+    },
+    [items, lootListQuery.data, query],
   );
 
   const addResult = (item: ItemViewModel) => {

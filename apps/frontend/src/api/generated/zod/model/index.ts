@@ -14,6 +14,7 @@ export * from './getCurrentSessionApiV2SessionsCurrentGetParams.zod.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetParams.zod.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetParams.zod.ts';
 export * from './getLotOriginApiV2InventoryLotsLotIdOriginGetParams.zod.ts';
+export * from './getMiningLootListApiV2SessionsMiningLootlistGetParams.zod.ts';
 export * from './getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams.zod.ts';
 export * from './hTTPValidationError.zod.ts';
 export * from './healthHealthGet200.zod.ts';

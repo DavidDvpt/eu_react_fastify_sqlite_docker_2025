@@ -17,6 +17,7 @@ export * from './getItemTransactionsApiV2ItemsIdTransactionsGetParams.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetStatus.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetType.ts';
 export * from './getLotOriginApiV2InventoryLotsLotIdOriginGetParams.ts';
+export * from './getMiningLootListApiV2SessionsMiningLootlistGetParams.ts';
 export * from './getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams.ts';
 export * from './healthHealthGet200.ts';
 export * from './hTTPValidationError.ts';

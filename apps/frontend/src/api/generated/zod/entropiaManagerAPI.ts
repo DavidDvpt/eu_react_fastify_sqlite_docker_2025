@@ -958,6 +958,31 @@ export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponseOu
 
 
 /**
+ * @summary Get Mining Loot List
+ */
+export const getMiningLootListApiV2SessionsMiningLootlistGetQuerySessionTypeMax = 3;
+
+
+
+export const GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams = zod.object({
+  "sessionType": zod.int().min(1).max(getMiningLootListApiV2SessionsMiningLootlistGetQuerySessionTypeMax)
+})
+
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParamsOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
+
+export const GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem = zod.string()
+
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItemOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem>;
+
+export const GetMiningLootListApiV2SessionsMiningLootlistGetResponse = zod.array(GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem)
+
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponse = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse>;
+
+
+/**
  * @summary Get Current Session
  */
 export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({

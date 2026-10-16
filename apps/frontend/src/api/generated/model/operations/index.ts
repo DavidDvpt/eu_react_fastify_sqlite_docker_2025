@@ -11,6 +11,7 @@ export * from './getCurrentSessionApiV2SessionsCurrentGetParams.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetParams.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetParams.ts';
 export * from './getLotOriginApiV2InventoryLotsLotIdOriginGetParams.ts';
+export * from './getMiningLootListApiV2SessionsMiningLootlistGetParams.ts';
 export * from './getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams.ts';
 export * from './idResponse.ts';
 export * from './inventoryFinancialReportApiV2InventoryFinancialReportGetParams.ts';

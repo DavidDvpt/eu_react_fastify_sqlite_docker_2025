@@ -31,6 +31,7 @@ import type {
   GetItemLotsApiV2ItemsIdLotsGetParams,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  GetMiningLootListApiV2SessionsMiningLootlistGetParams,
   GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
   HTTPValidationError,
   HealthHealthGet200,
@@ -4127,6 +4128,100 @@ export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<TD
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
   const queryOptions = getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Get Mining Loot List
+ */
+export const getMiningLootListApiV2SessionsMiningLootlistGet = (
+    params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<string[]>(
+      {url: `/api/v2/sessions/mining/lootlist`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey = (params?: GetMiningLootListApiV2SessionsMiningLootlistGetParams,) => {
+    return [
+    `/api/v2/sessions/mining/lootlist`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions = <TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>> = ({ signal }) => getMiningLootListApiV2SessionsMiningLootlistGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>>
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>,
+          TError,
+          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>,
+          TError,
+          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Mining Loot List
+ */
+
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions(params,options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
