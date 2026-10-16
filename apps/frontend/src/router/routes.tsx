@@ -57,6 +57,15 @@ const routes = [
               { path: "store", element: <StorePage /> },
               { path: "store/:itemId", element: <StorePage /> },
               {
+                element: <LeftMenuLayout leftNav={<MiningLeftNav />} />,
+                children: [
+                  { path: "mining", element: <MiningPage /> },
+                  { path: "mining/create", element: <MiningPage /> },
+                  { path: "mining/current", element: <MiningPage /> },
+                  { path: "mining/:id/session", element: <MiningPage /> },
+                ],
+              },
+              {
                 element: <AdminGuard />,
                 children: [
                   { path: "images", element: <ImagesPage /> },
@@ -75,15 +84,6 @@ const routes = [
                           { path: ":tab/:id/edit", element: <ManagePage /> },
                         ],
                       },
-                    ],
-                  },
-                  {
-                    element: <LeftMenuLayout leftNav={<MiningLeftNav />} />,
-                    children: [
-                      { path: "mining", element: <MiningPage /> },
-                      { path: "mining/create", element: <MiningPage /> },
-                      { path: "mining/current", element: <MiningPage /> },
-                      { path: "mining/:id/session", element: <MiningPage /> },
                     ],
                   },
                 ],
