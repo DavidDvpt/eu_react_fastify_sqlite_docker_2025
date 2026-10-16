@@ -17,7 +17,7 @@ vi.mock("@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData", () => ({
 }));
 
 vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
-  useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch: () => ({
+  useUpdateInventoryLotApiV2InventoryLotsLotIdPatch: () => ({
     mutateAsync: updateTierMock,
     isPending: false,
   }),
@@ -50,6 +50,7 @@ const ITEM = {
   imageUrlId: "",
   value: 100,
   stock: 2,
+  isLimited: true,
   weight: null,
   isUntradeable: false,
   isRare: false,
