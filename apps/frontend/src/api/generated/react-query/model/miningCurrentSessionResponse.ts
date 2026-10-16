@@ -7,6 +7,7 @@ import type { MiningCurrentSessionResponseExcavatorEnhancers } from './miningCur
 import type { MiningCurrentSessionResponseFinderEnhancers } from './miningCurrentSessionResponseFinderEnhancers.ts';
 import type { MiningCurrentToolLotResponse } from './miningCurrentToolLotResponse.ts';
 import type { SessionType } from './sessionType.ts';
+import type { SessionLineResponse } from './sessionLineResponse.ts';
 
 export interface MiningCurrentSessionResponse {
   id: string;
@@ -26,4 +27,5 @@ export interface MiningCurrentSessionResponse {
   costTtc?: number;
   resultTt?: number;
   resultTtc?: number;
+  resultLines?: (SessionLineResponse & { itemId: string })[];
 }

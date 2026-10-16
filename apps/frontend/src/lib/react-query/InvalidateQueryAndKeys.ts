@@ -24,6 +24,9 @@ export class InvalidateQueryAndKeys {
   static getInventoryFinancialReportKey(): InvalidateObject {
     return { keys: ["inventory", "financial-report"] };
   }
+  static getCurrentSessionKey(): InvalidateObject {
+    return { keys: ["/api/v2/sessions/current"] };
+  }
   static getItemLotsKey(itemId?: string): InvalidateObject {
     return { keys: ["item-lots", itemId] };
   }
@@ -128,5 +131,11 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getInventoryFinancialReportKey().keys,
       }),
     ]);
+  }
+
+  static async miningMutation() {
+    return await queryClient.invalidateQueries({
+      queryKey: this.getCurrentSessionKey().keys,
+    });
   }
 }

@@ -11,11 +11,12 @@ import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemA
 import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
 import { formatItemNameWithTier } from "@/shared/helpers";
 import type { LotViewModel } from "@zod-schemas";
-import { Pencil, Save, X } from "lucide-react";
+import { Save } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { useUpdateInventoryLotTierApiV2InventoryLotsLotIdTierPatch } from "@/api/generated/react-query/entropiaManagerAPI";
 import { LotTierUpdate } from "@/api/generated/zod/model/lotTierUpdate.zod";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
 
 function formatDetailValue(label: string, value: number): string {
   if (label === "Profondeur moyenne") {
@@ -153,14 +154,14 @@ function ItemDetail({
       <div className="flex items-center justify-between gap-2">
         <h1 className="m-0 p-0 text-base">{displayName}</h1>
         {canEditTier ? (
-          <Button
+          <IconButton
             type="button"
             variant="primary"
             size="icon"
             className="h-8 w-8 rounded-md p-0"
             aria-label="Modifier les tiers"
             title="Modifier les tiers"
-            icon={isEditingTier ? X : Pencil}
+            icon={isEditingTier ? IconButtonIcon.Close : IconButtonIcon.Edit}
             onClick={() => setIsEditingTier((editing) => !editing)}
           />
         ) : null}

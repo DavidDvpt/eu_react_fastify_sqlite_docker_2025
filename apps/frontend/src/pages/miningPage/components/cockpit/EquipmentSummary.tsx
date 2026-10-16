@@ -14,6 +14,7 @@ function EquipmentSummary({
   itemById,
   amplifierItemId,
   enhancers,
+  sessionId,
 }: {
   label: string;
   itemId?: string | null;
@@ -21,6 +22,7 @@ function EquipmentSummary({
   itemById: Map<string, ItemViewModel>;
   amplifierItemId?: string | null;
   enhancers: EnhancerLine[];
+  sessionId: string;
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const hasAccessories = Boolean(amplifierItemId) || enhancers.length > 0;
@@ -78,6 +80,7 @@ function EquipmentSummary({
                     key={`${label}-${line.socket}`}
                     line={line}
                     item={itemById.get(line.itemId)}
+                    sessionId={sessionId}
                   />
                 );
               })}

@@ -4,6 +4,7 @@ export type EnhancerLine = {
   itemId: string;
   socket: string;
   quantityRemaining: number;
+  costLineId?: string;
 };
 
 export type CockpitItemProps = {

@@ -32,8 +32,10 @@ function MiningSessionCurrentView() {
         ) : (
           <div className="flex w-full max-w-2xl flex-col">
             <MiningSessionResults
+              sessionId={miningSession.id}
               items={itemDatas ?? []}
               searchType={miningSession.searchType}
+              resultLines={miningSession.resultLines}
             />
           </div>
         )}

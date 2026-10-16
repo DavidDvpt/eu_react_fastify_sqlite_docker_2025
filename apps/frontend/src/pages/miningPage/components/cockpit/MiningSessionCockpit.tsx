@@ -19,6 +19,8 @@ function MiningSessionCockpit({
         itemId: enhancer.itemId,
         socket,
         quantityRemaining: enhancer.quantityRemaining,
+        costLineId: (enhancer as { lineId?: string; costLineId?: string }).lineId ??
+          (enhancer as { costLineId?: string }).costLineId,
       }))
       .sort((left, right) => Number(left.socket) - Number(right.socket));
   const finderEnhancers = toEnhancerLines(session.finderEnhancers);
@@ -52,6 +54,7 @@ function MiningSessionCockpit({
         itemById={itemById}
         amplifierItemId={session.amplifierItemId}
         enhancers={finderEnhancers}
+        sessionId={session.id}
       />
       <EquipmentSummaryComponent
         label="Excavateur"
@@ -59,6 +62,7 @@ function MiningSessionCockpit({
         tierLevel={session.excavatorLots?.[0]?.tierLevel}
         itemById={itemById}
         enhancers={excavatorEnhancers}
+        sessionId={session.id}
       />
       <MiningSessionFinancialSummary session={session} />
     </div>
