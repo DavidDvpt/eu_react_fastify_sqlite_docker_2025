@@ -6,17 +6,13 @@ import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMemo, useState } from "react";
+import { useQueryParams } from "@/shared/hooks";
 import ItemImage from "@/shared/components/itemImage/ItemImage";
 import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup";
 import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
 import { formatItemNameWithTier } from "@/shared/helpers";
-import type { LotViewModel } from "@zod-schemas";
-import { Save } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { useUpdateInventoryLotApiV2InventoryLotsLotIdPatch } from "@/api/generated/react-query/entropiaManagerAPI";
-import { LotUpdate } from "@/api/generated/zod/model/lotUpdate.zod";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
+import ItemTierEditor from "@/shared/components/ItemDetail/ItemTierEditor";
 
 function formatDetailValue(label: string, value: number): string {
   if (label === "Profondeur moyenne") {
@@ -31,38 +27,43 @@ function formatDetailValue(label: string, value: number): string {
   if (label === "Utilisation par minute") {
     return String(Math.trunc(value));
   }
+  if (label === "Decay") {
+    return FormatTools.formatToDecimals(value, 5);
+  }
 
   return FormatTools.formatToThreeDecimals(value);
 }
 
 function ItemDetail({
   item,
-  lots,
-  focusedLot = null,
+  lot = null,
   onBack = () => {},
   variant = "stock",
 }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
+  const { lotId } = useQueryParams<{ lotId?: string | string[] }>();
 
+  const selectedLotId = Array.isArray(lotId) ? lotId[0] : lotId;
+
+  if (!lot) {
+    throw new Error(`Lot introuvable pour lotId=${selectedLotId}.`);
+  }
+  console.log(item);
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
-  // Instance view: the detail refers to MY single stock instance (one lot),
-  // which carries its own characteristics — including its tiered name.
-  // Aggregated view (stackable, no lot selected): the generic item.
-  const isInstanceView = Boolean(
-    focusedLot && item?.type && !item.type.isStackable,
-  );
+  // The URL identifies the single inventory instance being displayed.
+  const isInstanceView = Boolean(selectedLotId);
   const isStoreView = variant === "store";
 
   const displayName = useMemo(() => {
     if (!item) return "";
-    if (isInstanceView && focusedLot) {
+    if (isInstanceView && lot) {
       return formatItemNameWithTier({
         name: item.name,
         hasTierOption: item.type?.hasTierOption,
         isStackable: false,
-        tierLevel: focusedLot.tierLevel,
+        tierLevel: lot.tierLevel,
       });
     }
     return formatItemNameWithTier({
@@ -71,21 +72,27 @@ function ItemDetail({
       isStackable: item.type?.isStackable,
       tierLevel: isStoreView && item.type?.hasTierOption ? 0 : null,
     });
-  }, [item, isInstanceView, focusedLot, isStoreView]);
+  }, [item, isInstanceView, lot, isStoreView]);
 
   const displayStock = isStoreView || isInstanceView ? 1 : (item?.stock ?? 0);
 
   const canEditTier =
-    !isStoreView &&
-    Boolean(item?.type?.hasTierOption && !item?.type?.isStackable);
+    !isStoreView && isInstanceView && Boolean(item?.type?.hasTierOption);
   const [isEditingTier, setIsEditingTier] = useState(false);
 
   const totalValue = useMemo(() => {
     if (!item) return 0;
+    if (isInstanceView) {
+      return lot.ttRemaining;
+    }
     return displayStock * item.value;
-  }, [item, displayStock]);
+  }, [item, displayStock, isInstanceView, lot]);
 
   if (!item) return null;
+
+  if (isInstanceView && !lot) {
+    throw new Error(`Lot introuvable pour lotId=${selectedLotId}.`);
+  }
 
   const detailRows = [
     ["Profondeur moyenne", item.depth],
@@ -98,7 +105,7 @@ function ItemDetail({
     ["Outil", item.tool],
     ["Type d’item", item.itemType],
     ["Utilisation par minute", item.usePerMinute],
-    ["Nexus", item.nexusUrl],
+    ["Decay", item.decay],
   ].filter(
     ([, value]) => value !== null && value !== undefined && value !== "",
   );
@@ -111,8 +118,8 @@ function ItemDetail({
       quantity: 1,
       // Selling MY instance consumes exactly this lot (the backend
       // requires lot_id for non-stackable sales).
-      ...(action === "sell" && isInstanceView && focusedLot
-        ? { lotId: focusedLot.id }
+      ...(action === "sell" && isInstanceView && selectedLotId
+        ? { lotId: selectedLotId }
         : {}),
       closePath: location.pathname,
     };
@@ -168,15 +175,11 @@ function ItemDetail({
       </div>
       {isEditingTier && canEditTier ? (
         <ItemTierEditor
-          key={(lots ?? [])
-            .map((lot) => `${lot.id}:${lot.tierLevel ?? "null"}:${lot.ttRemaining ?? "null"}`)
-            .join("|")}
+          key={`${lot?.id ?? "none"}:${lot?.tierLevel ?? "null"}:${lot?.ttRemaining ?? "null"}`}
           itemId={item.id}
-          lots={lots ?? null}
-          focusedLotId={focusedLot?.id ?? null}
-        canEditTt={!item.isLimited && !item.type?.isStackable}
-        itemValue={item.value}
-          onClose={() => setIsEditingTier(false)}
+          lot={lot}
+          canEditTt={!item.isLimited && !item.type?.isStackable}
+          itemValue={item.value}
         />
       ) : null}
       <div className="flex">
@@ -191,7 +194,7 @@ function ItemDetail({
           <span className="text-text-muted">
             {FormatTools.pedFormat().format(item.value)} Ped(s)
           </span>
-          <span className="text-text">Weight</span>
+          {/* <span className="text-text">Weight</span>
           <span className="text-text-muted">
             {item.weight === null
               ? "-"
@@ -202,7 +205,7 @@ function ItemDetail({
             {item.isUntradeable ? "Oui" : "Non"}
           </span>
           <span className="text-text">Rare</span>
-          <span className="text-text-muted">{item.isRare ? "Oui" : "Non"}</span>
+          <span className="text-text-muted">{item.isRare ? "Oui" : "Non"}</span> */}
           {detailRows.map(([label, value]) => (
             <span key={label} className="contents">
               <span className="text-text">{label}</span>
@@ -251,169 +254,6 @@ function ItemDetail({
         )}
       </div>
     </Section>
-  );
-}
-
-function ItemTierEditor({
-  itemId,
-  lots,
-  focusedLotId = null,
-  canEditTt,
-  itemValue,
-  onClose,
-}: {
-  itemId: string;
-  lots: LotViewModel[] | null;
-  focusedLotId?: string | null;
-  canEditTt: boolean;
-  itemValue: number;
-  onClose: () => void;
-}) {
-  const updateLotMutation = useUpdateInventoryLotApiV2InventoryLotsLotIdPatch();
-  const [tierValues, setTierValues] = useState<Record<string, number>>(() =>
-    Object.fromEntries((lots ?? []).map((lot) => [lot.id, lot.tierLevel ?? 0])),
-  );
-  const [ttValues, setTtValues] = useState<Record<string, number>>(() =>
-    Object.fromEntries((lots ?? []).map((lot) => [lot.id, lot.ttRemaining ?? itemValue])),
-  );
-  const [error, setError] = useState<string | null>(null);
-
-  // Instance view: edit MY single lot only. Aggregated view: all active lots.
-  const editableLots = (lots ?? []).filter((lot) =>
-    focusedLotId != null ? lot.id === focusedLotId : lot.isActive,
-  );
-
-  const updateTier = async (lot: LotViewModel) => {
-    const tierLevel = tierValues[lot.id] ?? lot.tierLevel ?? 0;
-    const ttRemaining = ttValues[lot.id] ?? lot.ttRemaining ?? itemValue;
-    const parsed = LotUpdate.safeParse({
-      tierLevel,
-      ...(canEditTt ? { ttRemaining } : {}),
-    });
-
-    if (!parsed.success) {
-      setError(canEditTt
-        ? "Le tier doit être entre 0 et 10 et le TT doit être un nombre positif."
-        : "Le tier doit être un entier compris entre 0 et 10.");
-      return;
-    }
-
-    if (canEditTt && ttRemaining > itemValue) {
-      setError(`Le TT ne peut pas dépasser ${itemValue} PED.`);
-      return;
-    }
-
-    if (
-      lot.tierLevel !== null &&
-      lot.tierLevel !== undefined &&
-      tierLevel < lot.tierLevel
-    ) {
-      setError("Le tier ne peut pas diminuer.");
-      return;
-    }
-
-    setError(null);
-    try {
-      await updateLotMutation.mutateAsync({
-        lotId: lot.id,
-        data: parsed.data,
-      });
-      await InvalidateQueryAndKeys.lotTierMutation(itemId);
-    } catch {
-      setError("Impossible de modifier le tier.");
-    }
-  };
-
-  return (
-    <div className="flex flex-col gap-2 rounded-md border border-table-border p-2">
-      <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-semibold">
-          {focusedLotId != null ? "Modifier le tier" : "Modifier les tiers"}
-        </span>
-        <Button type="button" variant="link" size="sm" onClick={onClose}>
-          Fermer
-        </Button>
-      </div>
-      {editableLots.length === 0 ? (
-        <p className="m-0 text-xs text-text-muted">
-          Aucun lot actif à modifier.
-        </p>
-      ) : (
-        editableLots.map((lot) => {
-          const currentTier = lot.tierLevel ?? 0;
-          const isFocused = focusedLotId != null && lot.id === focusedLotId;
-          return (
-            <div
-              key={lot.id}
-              className={`flex items-end justify-between gap-2 border-t border-table-border pt-2${
-                isFocused ? " border-primary-500" : ""
-              }`}
-            >
-              <div className="text-xs text-text-muted">
-                <div>Lot du {FormatTools.dateFrShort(lot.createdAt)}</div>
-                <div>Tier actuel : T{currentTier}</div>
-                {canEditTt ? <div>TT actuel : {lot.ttRemaining ?? itemValue} PED</div> : null}
-              </div>
-              <div className="flex items-end gap-2">
-                <label className="flex flex-col gap-1 text-xs text-text">
-                  Nouveau tier
-                  <Input
-                    aria-label={`Nouveau tier du lot ${lot.id}`}
-                    type="number"
-                    min={currentTier}
-                    max={10}
-                    step={1}
-                    value={tierValues[lot.id] ?? currentTier}
-                    onChange={(event) => {
-                      // Read synchronously: currentTarget is nullified once
-                      // the event handler returns (spinner buttons included).
-                      const nextTier = event.currentTarget.valueAsNumber;
-                      setTierValues((values) => ({
-                        ...values,
-                        [lot.id]: nextTier,
-                      }));
-                    }}
-                  />
-                </label>
-                {canEditTt ? (
-                  <label className="flex flex-col gap-1 text-xs text-text">
-                    Nouveau TT
-                    <Input
-                      aria-label={`Nouveau TT du lot ${lot.id}`}
-                      type="number"
-                      min={0}
-                      max={itemValue}
-                      step="any"
-                      value={ttValues[lot.id] ?? lot.ttRemaining ?? itemValue}
-                      onChange={(event) => {
-                        const nextTt = event.currentTarget.valueAsNumber;
-                        setTtValues((values) => ({
-                          ...values,
-                          [lot.id]: nextTt,
-                        }));
-                      }}
-                    />
-                  </label>
-                ) : null}
-                <Button
-                  type="button"
-                  variant="primary"
-                  size="icon"
-                  className="h-8 w-8 rounded-md p-0"
-                  aria-label={`Enregistrer le tier du lot ${lot.id}`}
-                  icon={Save}
-                  disabled={updateLotMutation.isPending}
-                  onClick={() => updateTier(lot)}
-                />
-              </div>
-            </div>
-          );
-        })
-      )}
-      {error ? (
-        <p className="m-0 text-sm text-destructive-300">{error}</p>
-      ) : null}
-    </div>
   );
 }
 

@@ -36,7 +36,7 @@ function StockDetailsPanel({ onClose, className, mode = "inventory" }: StockDeta
   const focusedLotId = Array.isArray(lotId) ? lotId[0] : lotId;
   // The detail of a lot row is MY instance: resolve the single lot the
   // detail refers to. Falls back to the aggregated item view when absent.
-  const focusedLot = lots?.find((lot) => lot.id === focusedLotId) ?? null;
+  const lot = lots?.find((entry) => entry.id === focusedLotId) ?? null;
 
   return (
     <Section className={cn("relative min-h-0 p-0", className)} disableShadow>
@@ -50,7 +50,7 @@ function StockDetailsPanel({ onClose, className, mode = "inventory" }: StockDeta
         onBack={onClose}
         item={detailItem}
         lots={lots}
-        focusedLot={focusedLot}
+        lot={lot}
         variant={mode === "store" ? "store" : "stock"}
       />
 
@@ -59,7 +59,7 @@ function StockDetailsPanel({ onClose, className, mode = "inventory" }: StockDeta
         isTierable={mode === "inventory" && Boolean(
           detailItem?.type?.hasTierOption && !detailItem?.type?.isStackable,
         )}
-        focusedLotId={focusedLot?.id ?? null}
+        focusedLotId={lot?.id ?? null}
       />
     </Section>
   );

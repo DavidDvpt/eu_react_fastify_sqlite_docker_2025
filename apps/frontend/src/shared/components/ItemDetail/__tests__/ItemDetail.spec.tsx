@@ -30,12 +30,15 @@ function LocationProbe() {
   );
 }
 
-function renderDetail(ui: ReactNode) {
+function renderDetail(
+  ui: ReactNode,
+  initialEntry = "/inventory/sword",
+) {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
   return render(
-    <MemoryRouter initialEntries={["/inventory/sword"]}>
+    <MemoryRouter initialEntries={[initialEntry]}>
       <QueryClientProvider client={queryClient}>
         <LocationProbe />
         {ui}
@@ -127,8 +130,9 @@ describe("ItemDetail", () => {
       <ItemDetail
         item={ITEM as never}
         lots={LOTS as never}
-        focusedLot={LOTS[0] as never}
+        lot={LOTS[0] as never}
       />,
+      "/inventory/sword?lotId=lot-1",
     );
 
     expect(screen.getByRole("heading", { level: 1 })).toHaveTextContent(
@@ -148,8 +152,9 @@ describe("ItemDetail", () => {
       <ItemDetail
         item={ITEM as never}
         lots={LOTS as never}
-        focusedLot={LOTS[0] as never}
+        lot={LOTS[0] as never}
       />,
+      "/inventory/sword?lotId=lot-1",
     );
 
     await user.click(
@@ -157,22 +162,25 @@ describe("ItemDetail", () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByText("Modifier le tier")).toBeInTheDocument();
+      expect(
+        screen.getByRole("spinbutton", {
+          name: "Nouveau tier du lot lot-1",
+        }),
+      ).toBeInTheDocument();
     });
-    expect(screen.getByText("Tier actuel : T3")).toBeInTheDocument();
-    expect(screen.queryByText("Tier actuel : T5")).toBeNull();
+    expect(
+      screen.queryByRole("spinbutton", {
+        name: "Nouveau tier du lot lot-2",
+      }),
+    ).toBeNull();
   });
 
-  it("shows every active lot in the editor in aggregated mode", async () => {
-    const user = userEvent.setup();
+  it("does not offer tier editing without a lot in the URL", () => {
     renderDetail(<ItemDetail item={ITEM as never} lots={LOTS as never} />);
 
-    await user.click(
-      screen.getByRole("button", { name: "Modifier les tiers" }),
-    );
-
-    expect(screen.getByText("Tier actuel : T3")).toBeInTheDocument();
-    expect(screen.getByText("Tier actuel : T5")).toBeInTheDocument();
+    expect(
+      screen.queryByRole("button", { name: "Modifier les tiers" }),
+    ).toBeNull();
   });
 
   it("stays aggregated when the focused lot belongs to a stackable item", () => {
@@ -186,7 +194,7 @@ describe("ItemDetail", () => {
           } as never
         }
         lots={[]}
-        focusedLot={{ id: "lot-9", tierLevel: 4 } as never}
+        lot={{ id: "lot-9", tierLevel: 4 } as never}
       />,
     );
 
@@ -201,8 +209,9 @@ describe("ItemDetail", () => {
       <ItemDetail
         item={ITEM as never}
         lots={LOTS as never}
-        focusedLot={LOTS[1] as never}
+        lot={LOTS[1] as never}
       />,
+      "/inventory/sword?lotId=lot-2",
     );
 
     await user.click(screen.getByRole("button", { name: "Vente" }));
@@ -236,8 +245,9 @@ describe("ItemDetail", () => {
       <ItemDetail
         item={ITEM as never}
         lots={LOTS as never}
-        focusedLot={LOTS[0] as never}
+        lot={LOTS[0] as never}
       />,
+      "/inventory/sword?lotId=lot-1",
     );
 
     await user.click(
