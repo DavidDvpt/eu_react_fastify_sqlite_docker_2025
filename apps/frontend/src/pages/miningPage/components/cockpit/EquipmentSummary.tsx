@@ -14,8 +14,6 @@ function EquipmentSummary({
   itemById,
   amplifierItemId,
   enhancers,
-  brokenByKey,
-  onBrokenChange,
 }: {
   label: string;
   itemId?: string | null;
@@ -23,8 +21,6 @@ function EquipmentSummary({
   itemById: Map<string, ItemViewModel>;
   amplifierItemId?: string | null;
   enhancers: EnhancerLine[];
-  brokenByKey: Record<string, number>;
-  onBrokenChange: (key: string, value: number) => void;
 }) {
   const [isOpen, setIsOpen] = useState(true);
   const hasAccessories = Boolean(amplifierItemId) || enhancers.length > 0;
@@ -77,14 +73,11 @@ function EquipmentSummary({
           {enhancers.length > 0 && (
             <div className="flex">
               {enhancers.map((line) => {
-                const key = `${label}-${line.socket}`;
                 return (
                   <EnhancerLineView
-                    key={key}
+                    key={`${label}-${line.socket}`}
                     line={line}
                     item={itemById.get(line.itemId)}
-                    broken={brokenByKey[key] ?? 0}
-                    onBrokenChange={(value) => onBrokenChange(key, value)}
                   />
                 );
               })}

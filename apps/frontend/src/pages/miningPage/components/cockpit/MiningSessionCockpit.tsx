@@ -1,4 +1,3 @@
-import { useState } from "react";
 import type { MiningCurrentSessionResponse } from "@/api/generated/react-query/model/miningCurrentSessionResponse";
 import type { ItemViewModel } from "@zod-schemas";
 import EquipmentSummaryComponent from "./EquipmentSummary";
@@ -12,7 +11,6 @@ function MiningSessionCockpit({
   session: MiningCurrentSessionResponse;
   itemById: Map<string, ItemViewModel>;
 }) {
-  const [brokenByKey, setBrokenByKey] = useState<Record<string, number>>({});
   const toEnhancerLines = (
     enhancers: MiningCurrentSessionResponse["finderEnhancers"],
   ): EnhancerLine[] =>
@@ -26,9 +24,6 @@ function MiningSessionCockpit({
   const finderEnhancers = toEnhancerLines(session.finderEnhancers);
   const excavatorEnhancers = toEnhancerLines(session.excavatorEnhancers);
 
-  const handleBrokenChange = (key: string, value: number) => {
-    setBrokenByKey((current) => ({ ...current, [key]: value }));
-  };
   const miningType =
     session.searchType === 1
       ? "Enmatter"
@@ -57,8 +52,6 @@ function MiningSessionCockpit({
         itemById={itemById}
         amplifierItemId={session.amplifierItemId}
         enhancers={finderEnhancers}
-        brokenByKey={brokenByKey}
-        onBrokenChange={handleBrokenChange}
       />
       <EquipmentSummaryComponent
         label="Excavateur"
@@ -66,8 +59,6 @@ function MiningSessionCockpit({
         tierLevel={session.excavatorLots?.[0]?.tierLevel}
         itemById={itemById}
         enhancers={excavatorEnhancers}
-        brokenByKey={brokenByKey}
-        onBrokenChange={handleBrokenChange}
       />
       <MiningSessionFinancialSummary session={session} />
     </div>

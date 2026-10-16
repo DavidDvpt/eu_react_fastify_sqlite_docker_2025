@@ -93,7 +93,7 @@ function MiningSessionResults({
         )}
       </div>
       {results.length > 0 ? (
-        <div className="grid gap-2 md:grid-cols-2">
+        <div className="flex flex-wrap gap-2">
           {results.map((result) => {
             const item = itemById.get(result.itemId);
             if (!item) return null;
