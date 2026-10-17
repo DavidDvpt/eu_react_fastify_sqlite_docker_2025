@@ -1,6 +1,5 @@
 // eu_react_fastify_docker/frontend/src/shared/components/ItemDetails.tsx
 import type { ItemDetailProps, TransactionAction } from "@/shared/types";
-import { Button } from "@/components/ui/button";
 import { Section } from "../Containers";
 import { getItemImageUrl } from "@/shared/helpers/imageUrl";
 import { FormatTools } from "@/shared/tools";
@@ -13,6 +12,7 @@ import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageB
 import { formatItemNameWithTier } from "@/shared/helpers";
 import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
 import ItemTierEditor from "@/shared/components/ItemDetail/ItemTierEditor";
+import ItemDetailsButtons from "@/shared/components/ItemDetail/ItemDetailsButtons";
 
 function formatDetailValue(label: string, value: number): string {
   if (label === "Profondeur moyenne") {
@@ -34,45 +34,40 @@ function formatDetailValue(label: string, value: number): string {
   return FormatTools.formatToThreeDecimals(value);
 }
 
-function ItemDetail({
-  item,
-  lot = null,
-  onBack = () => {},
-  variant = "stock",
-}: ItemDetailProps) {
+function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
-  const { lotId } = useQueryParams<{ lotId?: string | string[] }>();
+  const { lotId } = useQueryParams<{ lotId?: string }>();
 
-  const selectedLotId = Array.isArray(lotId) ? lotId[0] : lotId;
+  const hasInvalidLot = Boolean(lotId && (!lot || lot.id !== lotId));
+  const [error] = useState<string | null>(() =>
+    hasInvalidLot ? "L’instance de l’item n’a pas été trouvée." : null,
+  );
 
-  if (!lot) {
-    throw new Error(`Lot introuvable pour lotId=${selectedLotId}.`);
-  }
-  console.log(item);
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
-  // The URL identifies the single inventory instance being displayed.
+  const selectedLotId = lotId;
   const isInstanceView = Boolean(selectedLotId);
   const isStoreView = variant === "store";
 
   const displayName = useMemo(() => {
-    if (!item) return "";
-    if (isInstanceView && lot) {
+    if (!item || error) return "";
+    if (isInstanceView) {
       return formatItemNameWithTier({
         name: item.name,
         hasTierOption: item.type?.hasTierOption,
         isStackable: false,
-        tierLevel: lot.tierLevel,
+        tierLevel: lot!.tierLevel,
       });
     }
+
     return formatItemNameWithTier({
       name: item.name,
       hasTierOption: item.type?.hasTierOption,
       isStackable: item.type?.isStackable,
       tierLevel: isStoreView && item.type?.hasTierOption ? 0 : null,
     });
-  }, [item, isInstanceView, lot, isStoreView]);
+  }, [item, isInstanceView, lot, isStoreView, error]);
 
   const displayStock = isStoreView || isInstanceView ? 1 : (item?.stock ?? 0);
 
@@ -81,18 +76,14 @@ function ItemDetail({
   const [isEditingTier, setIsEditingTier] = useState(false);
 
   const totalValue = useMemo(() => {
-    if (!item) return 0;
+    if (!item || error) return 0;
     if (isInstanceView) {
-      return lot.ttRemaining;
+      return lot!.ttRemaining;
     }
     return displayStock * item.value;
-  }, [item, displayStock, isInstanceView, lot]);
+  }, [item, displayStock, isInstanceView, lot, error]);
 
   if (!item) return null;
-
-  if (isInstanceView && !lot) {
-    throw new Error(`Lot introuvable pour lotId=${selectedLotId}.`);
-  }
 
   const detailRows = [
     ["Profondeur moyenne", item.depth],
@@ -133,126 +124,111 @@ function ItemDetail({
     });
   };
 
-  const buyButton = (
-    <Button
-      onClick={() => openTransactionModal("buy")}
-      className="w-[100px]"
-      size="sm"
-      variant="primary"
-    >
-      Achat
-    </Button>
-  );
-
-  const sellButton = (
-    <Button
-      onClick={() => openTransactionModal("sell")}
-      disabled={displayStock <= 0}
-      className="w-[100px]"
-      size="sm"
-      variant="primary"
-    >
-      Vente
-    </Button>
-  );
-
   return (
     <Section className="flex flex-col gap-4 p-2 m-2">
-      <div className="flex items-center justify-between gap-2">
-        <h1 className="m-0 p-0 text-base">{displayName}</h1>
-        {canEditTier ? (
-          <IconButton
-            type="button"
-            variant="primary"
-            size="icon"
-            className="h-8 w-8 rounded-md p-0"
-            aria-label="Modifier les tiers"
-            title="Modifier les tiers"
-            icon={isEditingTier ? IconButtonIcon.Close : IconButtonIcon.Edit}
-            onClick={() => setIsEditingTier((editing) => !editing)}
-          />
-        ) : null}
-      </div>
-      {isEditingTier && canEditTier ? (
-        <ItemTierEditor
-          key={`${lot?.id ?? "none"}:${lot?.tierLevel ?? "null"}:${lot?.ttRemaining ?? "null"}`}
-          itemId={item.id}
-          lot={lot}
-          canEditTt={!item.isLimited && !item.type?.isStackable}
-          itemValue={item.value}
-        />
-      ) : null}
-      <div className="flex">
-        <ItemImage
-          url={getItemImageUrl(item.imageUrlId, "normal") ?? ""}
-          alt={item.name}
-          size="medium"
-        />
+      {error ? (
+        <p className="m-0 p-2 text-sm text-text">{error}</p>
+      ) : (
+        <>
+          <div className="flex items-center justify-between gap-2">
+            <h1 className="m-0 p-0 text-base">{displayName}</h1>
+            {canEditTier ? (
+              <IconButton
+                type="button"
+                variant="primary"
+                size="icon"
+                className="h-8 w-8 rounded-md p-0"
+                aria-label="Modifier les tiers"
+                title="Modifier les tiers"
+                icon={
+                  isEditingTier ? IconButtonIcon.Close : IconButtonIcon.Edit
+                }
+                onClick={() => setIsEditingTier((editing) => !editing)}
+              />
+            ) : null}
+          </div>
+          {isEditingTier && canEditTier ? (
+            <ItemTierEditor
+              key={`${lot?.id ?? "none"}:${lot?.tierLevel ?? "null"}:${lot?.ttRemaining ?? "null"}`}
+              itemId={item.id}
+              lot={lot}
+              canEditTt={!item.isLimited && !item.type?.isStackable}
+              itemValue={item.value}
+            />
+          ) : null}
+          <div className="flex">
+            <ItemImage
+              url={getItemImageUrl(item.imageUrlId, "normal") ?? ""}
+              alt={item.name}
+              size="medium"
+            />
 
-        <div className="grid grid-cols-2 content-start gap-x-4 gap-y-1 px-4 text-xs">
-          <span className="text-text">Prix unitaire</span>
-          <span className="text-text-muted">
-            {FormatTools.pedFormat().format(item.value)} Ped(s)
-          </span>
-          {/* <span className="text-text">Weight</span>
-          <span className="text-text-muted">
-            {item.weight === null
-              ? "-"
-              : FormatTools.formatToThreeDecimals(item.weight)}
-          </span>
-          <span className="text-text">Non échangeable</span>
-          <span className="text-text-muted">
-            {item.isUntradeable ? "Oui" : "Non"}
-          </span>
-          <span className="text-text">Rare</span>
-          <span className="text-text-muted">{item.isRare ? "Oui" : "Non"}</span> */}
-          {detailRows.map(([label, value]) => (
-            <span key={label} className="contents">
-              <span className="text-text">{label}</span>
-              <span className="text-text-muted">
-                {label === "Nexus" ? (
-                  <a href={String(value)} target="_blank" rel="noreferrer">
-                    {String(value)}
-                  </a>
-                ) : typeof value === "number" ? (
-                  formatDetailValue(String(label), value)
-                ) : (
-                  String(value)
-                )}
-              </span>
+            <div className="grid grid-cols-2 content-start gap-x-6 px-4 text-xs">
+              <div className="grid grid-cols-[auto_auto] content-start gap-x-4 gap-y-1">
+                <span className="text-text">Prix unitaire</span>
+                <span className="text-text-muted">
+                  {FormatTools.pedFormat().format(item.value)} Ped(s)
+                </span>
+                {detailRows.map(([label, value]) => (
+                  <span key={label} className="contents">
+                    <span className="text-text">{label}</span>
+                    <span className="text-text-muted">
+                      {label === "Nexus" ? (
+                        <a
+                          href={String(value)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {String(value)}
+                        </a>
+                      ) : typeof value === "number" ? (
+                        formatDetailValue(String(label), value)
+                      ) : (
+                        String(value)
+                      )}
+                    </span>
+                  </span>
+                ))}
+              </div>
+              <div className="grid grid-cols-[auto_auto] content-start gap-x-4 gap-y-1">
+                <span className="text-text">Weight</span>
+                <span className="text-text-muted">
+                  {item.weight === null
+                    ? "-"
+                    : FormatTools.formatToThreeDecimals(item.weight)}
+                </span>
+                <span className="text-text">Untradeable</span>
+                <span className="text-text-muted">
+                  {item.isUntradeable ? "Oui" : "Non"}
+                </span>
+                <span className="text-text">Rare</span>
+                <span className="text-text-muted">
+                  {item.isRare ? "Oui" : "Non"}
+                </span>
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
+            <span className="text-text">Quantité</span>
+            <span className="text-text-muted">{displayStock}</span>
+            <span className="text-text">Valeur</span>
+            <span className="text-text-muted">
+              {FormatTools.pedFormat().format(totalValue)} Ped(s)
             </span>
-          ))}
-        </div>
-      </div>
-      <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
-        <span className="text-text">Quantité</span>
-        <span className="text-text-muted">{displayStock}</span>
-        <span className="text-text">Valeur</span>
-        <span className="text-text-muted">
-          {FormatTools.pedFormat().format(totalValue)} Ped(s)
-        </span>
-      </div>
-      <ItemAverageBuyMarkup
-        averageBuyMarkup={averageBuyMarkup}
-        className="border-t border-table-border pt-2"
-      />
-      {item.description && (
-        <p className="m-0 text-xs text-text">{item.description}</p>
+          </div>
+          <ItemAverageBuyMarkup
+            averageBuyMarkup={averageBuyMarkup}
+            className="border-t border-table-border pt-2"
+          />
+          {item.description && (
+            <p className="m-0 text-xs text-text">{item.description}</p>
+          )}
+        </>
       )}
-      <div className="flex items-center justify-end gap-2 pt-1">
-        {buyButton}
-        {!isStoreView && sellButton}
-        {onBack && (
-          <Button
-            onClick={onBack}
-            className="w-[100px]"
-            size="sm"
-            variant="secondary"
-          >
-            Retour
-          </Button>
-        )}
-      </div>
+      <ItemDetailsButtons
+        openTransaction={openTransactionModal}
+        canSell={!isStoreView && (item?.stock ?? 0) > 0}
+      />
     </Section>
   );
 }
