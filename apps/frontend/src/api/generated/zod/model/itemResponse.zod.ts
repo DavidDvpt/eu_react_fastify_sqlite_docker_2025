@@ -9,7 +9,7 @@ import { TypeResponse } from './typeResponse.zod.ts';
 export const ItemResponse = zod.object({
   "id": zod.string(),
   "name": zod.string(),
-  "imageUrlId": zod.string(),
+  "imageUrlId": zod.union([zod.string(),zod.null()]),
   "isLimited": zod.boolean(),
   "userId": zod.string(),
   "createdAt": zod.string(),

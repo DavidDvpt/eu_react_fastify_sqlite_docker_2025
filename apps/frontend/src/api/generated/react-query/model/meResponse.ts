@@ -8,4 +8,5 @@ export interface MeResponse {
   id: string;
   role: string;
   pseudo: string;
+  chatLogPath?: string | null;
 }

@@ -8,4 +8,5 @@ export type MeResponse = {
   id: string;
   role: string;
   pseudo: string;
+  chatLogPath?: string | null;
 };

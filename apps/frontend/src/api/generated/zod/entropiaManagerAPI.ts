@@ -10,6 +10,8 @@ import {
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
+  ChatLogPathResponse,
+  ChatLogPathUpdate,
   IdResponse,
   InventoryFinancialReportResponse,
   ItemCreate,
@@ -23,9 +25,13 @@ import {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningClaimCreate,
+  MiningClaimResponse,
+  MiningClaimsResponse,
   MiningCostLineResponse,
   MiningCostLineUpdate,
   MiningCurrentSessionResponse,
+  MiningDepositSizeResponse,
   MiningPrevalidationResponse,
   MiningResourceCreate,
   MiningResourceUpdate,
@@ -98,6 +104,29 @@ export const MeApiV2AuthMeGetResponse = MeResponse
 
 export type MeApiV2AuthMeGetResponse = zod.input<typeof MeApiV2AuthMeGetResponse>;
 export type MeApiV2AuthMeGetResponseOutput = zod.output<typeof MeApiV2AuthMeGetResponse>;
+
+
+/**
+ * @summary Chat Log Path
+ */
+export const ChatLogPathApiV2AuthChatLogPathGetResponse = ChatLogPathResponse
+
+export type ChatLogPathApiV2AuthChatLogPathGetResponse = zod.input<typeof ChatLogPathApiV2AuthChatLogPathGetResponse>;
+export type ChatLogPathApiV2AuthChatLogPathGetResponseOutput = zod.output<typeof ChatLogPathApiV2AuthChatLogPathGetResponse>;
+
+
+/**
+ * @summary Update Chat Log Path
+ */
+export const UpdateChatLogPathApiV2AuthChatLogPathPatchBody = ChatLogPathUpdate
+
+export type UpdateChatLogPathApiV2AuthChatLogPathPatchBody = zod.input<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchBody>;
+export type UpdateChatLogPathApiV2AuthChatLogPathPatchBodyOutput = zod.output<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchBody>;
+
+export const UpdateChatLogPathApiV2AuthChatLogPathPatchResponse = ChatLogPathResponse
+
+export type UpdateChatLogPathApiV2AuthChatLogPathPatchResponse = zod.input<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchResponse>;
+export type UpdateChatLogPathApiV2AuthChatLogPathPatchResponseOutput = zod.output<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchResponse>;
 
 
 /**
@@ -1158,6 +1187,92 @@ export const CloseSessionApiV2SessionsSessionIdPatchResponse = SessionResponse
 
 export type CloseSessionApiV2SessionsSessionIdPatchResponse = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
 export type CloseSessionApiV2SessionsSessionIdPatchResponseOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
+
+
+/**
+ * @summary List Claims
+ */
+export const ListClaimsApiV2MiningSessionIdClaimsGetParams = zod.object({
+  "session_id": zod.string()
+})
+
+export type ListClaimsApiV2MiningSessionIdClaimsGetParams = zod.input<typeof ListClaimsApiV2MiningSessionIdClaimsGetParams>;
+export type ListClaimsApiV2MiningSessionIdClaimsGetParamsOutput = zod.output<typeof ListClaimsApiV2MiningSessionIdClaimsGetParams>;
+
+export const ListClaimsApiV2MiningSessionIdClaimsGetResponse = MiningClaimsResponse
+
+export type ListClaimsApiV2MiningSessionIdClaimsGetResponse = zod.input<typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse>;
+export type ListClaimsApiV2MiningSessionIdClaimsGetResponseOutput = zod.output<typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse>;
+
+
+/**
+ * @summary Create Claim
+ */
+export const CreateClaimApiV2MiningSessionIdClaimsPostParams = zod.object({
+  "session_id": zod.string()
+})
+
+export type CreateClaimApiV2MiningSessionIdClaimsPostParams = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostParams>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostParamsOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostParams>;
+
+export const CreateClaimApiV2MiningSessionIdClaimsPostBody = MiningClaimCreate
+
+export type CreateClaimApiV2MiningSessionIdClaimsPostBody = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostBodyOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
+
+export const CreateClaimApiV2MiningSessionIdClaimsPostResponse = MiningClaimResponse
+
+export type CreateClaimApiV2MiningSessionIdClaimsPostResponse = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostResponseOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
+
+
+/**
+ * @summary List Deposit Sizes
+ */
+export const ListDepositSizesApiV2MiningDepositSizesGetResponseItem = MiningDepositSizeResponse
+
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseItem = zod.input<typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseItemOutput = zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem>;
+
+export const ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.array(ListDepositSizesApiV2MiningDepositSizesGetResponseItem)
+
+export type ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.input<typeof ListDepositSizesApiV2MiningDepositSizesGetResponse>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseOutput = zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponse>;
+
+
+/**
+ * @summary Get Deposit Size
+ */
+export const getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
+
+export const GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.object({
+  "value": zod.union([zod.number(),zod.string().regex(getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp)])
+})
+
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.input<typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParamsOutput = zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams>;
+
+export const GetDepositSizeApiV2MiningGetDepositSizeGetResponse = MiningDepositSizeResponse
+
+export type GetDepositSizeApiV2MiningGetDepositSizeGetResponse = zod.input<typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetResponseOutput = zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse>;
+
+
+/**
+ * @summary Get Deposit Size By Size
+ */
+export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams = zod.object({
+  "size": zod.int()
+})
+
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams>;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParamsOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams>;
+
+export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = MiningDepositSizeResponse
+
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponseOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
 
 
 /**
