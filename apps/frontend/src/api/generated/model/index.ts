@@ -6,6 +6,7 @@
 
 export * from './categoryCreate.ts';
 export * from './categoryPatch.ts';
+export * from './chatLogPathUpdate.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortKey.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortOrder.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetStatus.ts';
@@ -32,6 +33,7 @@ export * from './listTypesApiV2TypesGetSortOrder.ts';
 export * from './lotUpdate.ts';
 export * from './miningAvailableResponseExcavatorEnhancers.ts';
 export * from './miningAvailableResponseFinderEnhancers.ts';
+export * from './miningClaimCreate.ts';
 export * from './miningCostLineUpdate.ts';
 export * from './miningCurrentSessionResponseExcavatorEnhancers.ts';
 export * from './miningCurrentSessionResponseFinderEnhancers.ts';

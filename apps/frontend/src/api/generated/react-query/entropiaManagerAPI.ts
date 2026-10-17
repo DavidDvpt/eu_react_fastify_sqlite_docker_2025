@@ -27,7 +27,11 @@ import type {
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
+  ChatLogPathResponse,
+  ChatLogPathUpdate,
   GetCurrentSessionApiV2SessionsCurrentGetParams,
+  GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
   GetItemLotsApiV2ItemsIdLotsGetParams,
   GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
   GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
@@ -58,9 +62,13 @@ import type {
   MeResponse,
   MessageResponse,
   MiningAvailableResponse,
+  MiningClaimCreate,
+  MiningClaimResponse,
+  MiningClaimsResponse,
   MiningCostLineResponse,
   MiningCostLineUpdate,
   MiningCurrentSessionResponse,
+  MiningDepositSizeResponse,
   MiningPrevalidationResponse,
   MiningResourceCreate,
   MiningResourceUpdate,
@@ -405,6 +413,167 @@ export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2Aut
 
 
 
+
+/**
+ * @summary Chat Log Path
+ */
+export const chatLogPathApiV2AuthChatLogPathGet = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ChatLogPathResponse>(
+      {url: `/api/v2/auth/chat-log-path`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getChatLogPathApiV2AuthChatLogPathGetQueryKey = () => {
+    return [
+    `/api/v2/auth/chat-log-path`
+    ] as const;
+    }
+
+
+export const getChatLogPathApiV2AuthChatLogPathGetQueryOptions = <TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getChatLogPathApiV2AuthChatLogPathGetQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>> = ({ signal }) => chatLogPathApiV2AuthChatLogPathGet(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ChatLogPathApiV2AuthChatLogPathGetQueryResult = NonNullable<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>>
+export type ChatLogPathApiV2AuthChatLogPathGetQueryError = ErrorType<unknown>
+
+
+export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>,
+          TError,
+          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>,
+          TError,
+          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Chat Log Path
+ */
+
+export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getChatLogPathApiV2AuthChatLogPathGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Update Chat Log Path
+ */
+export const updateChatLogPathApiV2AuthChatLogPathPatch = (
+    chatLogPathUpdate: BodyType<ChatLogPathUpdate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<ChatLogPathResponse>(
+      {url: `/api/v2/auth/chat-log-path`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: chatLogPathUpdate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationKey = () => ['updateChatLogPathApiV2AuthChatLogPathPatch'] as const;
+
+export const getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext> => {
+
+const mutationKey = getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  updateChatLogPathApiV2AuthChatLogPathPatch(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationResult = NonNullable<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>>
+    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationBody = BodyType<ChatLogPathUpdate>
+    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationError = ErrorType<HTTPValidationError>
+    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables = {data: BodyType<ChatLogPathUpdate>}
+
+    /**
+ * @summary Update Chat Log Path
+ */
+export const useUpdateChatLogPathApiV2AuthChatLogPathPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>,
+        TError,
+        UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary List Categories
@@ -4943,6 +5112,449 @@ export const useCloseSessionApiV2SessionsSessionIdPatch = <TError = ErrorType<HT
       > => {
       return useMutation(getCloseSessionApiV2SessionsSessionIdPatchMutationOptions(options), queryClient);
     }
+
+/**
+ * @summary List Claims
+ */
+export const listClaimsApiV2MiningSessionIdClaimsGet = (
+    sessionId: string,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningClaimsResponse>(
+      {url: `/api/v2/mining/${sessionId}/claims`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getListClaimsApiV2MiningSessionIdClaimsGetQueryKey = (sessionId: string,) => {
+    return [
+    `/api/v2/mining/${sessionId}/claims`
+    ] as const;
+    }
+
+
+export const getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions = <TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListClaimsApiV2MiningSessionIdClaimsGetQueryKey(sessionId);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>> = ({ signal }) => listClaimsApiV2MiningSessionIdClaimsGet(sessionId, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, enabled: sessionId !== null && sessionId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListClaimsApiV2MiningSessionIdClaimsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>>
+export type ListClaimsApiV2MiningSessionIdClaimsGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
+ sessionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+          TError,
+          Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
+ sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+          TError,
+          Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
+ sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Claims
+ */
+
+export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
+ sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions(sessionId,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Create Claim
+ */
+export const createClaimApiV2MiningSessionIdClaimsPost = (
+    sessionId: string,
+    miningClaimCreate: BodyType<MiningClaimCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningClaimResponse>(
+      {url: `/api/v2/mining/${sessionId}/claims`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: miningClaimCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey = () => ['createClaimApiV2MiningSessionIdClaimsPost'] as const;
+
+export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext> => {
+
+const mutationKey = getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables> = (props) => {
+          const {sessionId,data} = props ?? {};
+
+          return  createClaimApiV2MiningSessionIdClaimsPost(sessionId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>>
+    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationBody = BodyType<MiningClaimCreate>
+    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationError = ErrorType<HTTPValidationError>
+    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables = {sessionId: string;data: BodyType<MiningClaimCreate>}
+
+    /**
+ * @summary Create Claim
+ */
+export const useCreateClaimApiV2MiningSessionIdClaimsPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+        TError,
+        CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary List Deposit Sizes
+ */
+export const listDepositSizesApiV2MiningDepositSizesGet = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningDepositSizeResponse[]>(
+      {url: `/api/v2/mining/deposit-sizes`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getListDepositSizesApiV2MiningDepositSizesGetQueryKey = () => {
+    return [
+    `/api/v2/mining/deposit-sizes`
+    ] as const;
+    }
+
+
+export const getListDepositSizesApiV2MiningDepositSizesGetQueryOptions = <TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListDepositSizesApiV2MiningDepositSizesGetQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>> = ({ signal }) => listDepositSizesApiV2MiningDepositSizesGet(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListDepositSizesApiV2MiningDepositSizesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>>
+export type ListDepositSizesApiV2MiningDepositSizesGetQueryError = ErrorType<unknown>
+
+
+export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Deposit Sizes
+ */
+
+export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListDepositSizesApiV2MiningDepositSizesGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Get Deposit Size
+ */
+export const getDepositSizeApiV2MiningGetDepositSizeGet = (
+    params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningDepositSizeResponse>(
+      {url: `/api/v2/mining/get-deposit-size`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey = (params?: GetDepositSizeApiV2MiningGetDepositSizeGetParams,) => {
+    return [
+    `/api/v2/mining/get-deposit-size`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions = <TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>> = ({ signal }) => getDepositSizeApiV2MiningGetDepositSizeGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryResult = NonNullable<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>>
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+          TError,
+          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+          TError,
+          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Deposit Size
+ */
+
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Get Deposit Size By Size
+ */
+export const getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet = (
+    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningDepositSizeResponse>(
+      {url: `/api/v2/mining/get-deposit-size-by-size`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey = (params?: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,) => {
+    return [
+    `/api/v2/mining/get-deposit-size-by-size`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions = <TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>> = ({ signal }) => getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryResult = NonNullable<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>>
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>,
+          TError,
+          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>,
+          TError,
+          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary Get Deposit Size By Size
+ */
+
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
 
 /**
  * @summary Health

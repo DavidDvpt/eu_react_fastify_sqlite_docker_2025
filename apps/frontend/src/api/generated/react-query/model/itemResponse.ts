@@ -8,7 +8,7 @@ import type { TypeResponse } from './typeResponse.ts';
 export interface ItemResponse {
   id: string;
   name: string;
-  imageUrlId: string;
+  imageUrlId: string | null;
   isLimited: boolean;
   userId: string;
   createdAt: string;
