@@ -48,6 +48,7 @@ function ItemList({
         : buildStockRows(inventoryStock).filter((item) => item.stock > 0);
 
       return rows
+        .filter((item) => item.isActive)
         .filter(
           (f) =>
             (f.typeId === typeId || typeId === undefined) &&

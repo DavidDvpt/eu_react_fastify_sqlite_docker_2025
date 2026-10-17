@@ -30,10 +30,7 @@ function LocationProbe() {
   );
 }
 
-function renderDetail(
-  ui: ReactNode,
-  initialEntry = "/inventory/sword",
-) {
+function renderDetail(ui: ReactNode, initialEntry = "/inventory/sword") {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
   });
@@ -114,12 +111,12 @@ describe("ItemDetail", () => {
       />,
     );
 
-    expect(
-      screen.getByText("Profondeur moyenne").nextElementSibling,
-    ).toHaveTextContent("105.6 m");
-    expect(
-      screen.getByText("Consommation de munitions").nextElementSibling,
-    ).toHaveTextContent("10 / 20");
+    expect(screen.getByText("Avg depth").nextElementSibling).toHaveTextContent(
+      "105.6 m",
+    );
+    expect(screen.getByText("ammo burn").nextElementSibling).toHaveTextContent(
+      "10 / 20",
+    );
     expect(
       screen.getByRole("link", { name: "https://example.com/finder" }),
     ).toBeInTheDocument();

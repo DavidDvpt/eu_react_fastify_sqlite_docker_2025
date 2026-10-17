@@ -13,26 +13,7 @@ import { formatItemNameWithTier } from "@/shared/helpers";
 import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
 import ItemTierEditor from "@/shared/components/ItemDetail/ItemTierEditor";
 import ItemDetailsButtons from "@/shared/components/ItemDetail/ItemDetailsButtons";
-
-function formatDetailValue(label: string, value: number): string {
-  if (label === "Profondeur moyenne") {
-    return `${FormatTools.formatToDecimals(value, 1)} m`;
-  }
-
-  if (label === "Consommation de munitions") {
-    const ammoBurn = Math.trunc(value);
-    return `${ammoBurn} / ${ammoBurn * 2}`;
-  }
-
-  if (label === "Utilisation par minute") {
-    return String(Math.trunc(value));
-  }
-  if (label === "Decay") {
-    return FormatTools.formatToDecimals(value, 5);
-  }
-
-  return FormatTools.formatToThreeDecimals(value);
-}
+import ItemDetailInfos from "@/shared/components/ItemDetail/ItemDetailInfos";
 
 function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
   const location = useLocation();
@@ -43,6 +24,9 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
   const [error] = useState<string | null>(() =>
     hasInvalidLot ? "L’instance de l’item n’a pas été trouvée." : null,
   );
+  const currentError = hasInvalidLot
+    ? "L’instance de l’item n’a pas été trouvée."
+    : error;
 
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
@@ -51,7 +35,7 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
   const isStoreView = variant === "store";
 
   const displayName = useMemo(() => {
-    if (!item || error) return "";
+    if (!item || currentError) return "";
     if (isInstanceView) {
       return formatItemNameWithTier({
         name: item.name,
@@ -67,7 +51,7 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
       isStackable: item.type?.isStackable,
       tierLevel: isStoreView && item.type?.hasTierOption ? 0 : null,
     });
-  }, [item, isInstanceView, lot, isStoreView, error]);
+  }, [item, isInstanceView, lot, isStoreView, currentError]);
 
   const displayStock = isStoreView || isInstanceView ? 1 : (item?.stock ?? 0);
 
@@ -76,30 +60,14 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
   const [isEditingTier, setIsEditingTier] = useState(false);
 
   const totalValue = useMemo(() => {
-    if (!item || error) return 0;
+    if (!item || currentError) return 0;
     if (isInstanceView) {
       return lot!.ttRemaining;
     }
     return displayStock * item.value;
-  }, [item, displayStock, isInstanceView, lot, error]);
+  }, [item, displayStock, isInstanceView, lot, currentError]);
 
   if (!item) return null;
-
-  const detailRows = [
-    ["Profondeur moyenne", item.depth],
-    ["Consommation de munitions", item.ammoBurn],
-    ["Efficacité", item.efficiency],
-    ["Portée", item.range],
-    ["Niveau de profession minimum", item.minProfessionLevel],
-    ["TT minimum", item.minTt],
-    ["Socket", item.socket],
-    ["Outil", item.tool],
-    ["Type d’item", item.itemType],
-    ["Utilisation par minute", item.usePerMinute],
-    ["Decay", item.decay],
-  ].filter(
-    ([, value]) => value !== null && value !== undefined && value !== "",
-  );
 
   const openTransactionModal = (action: TransactionAction) => {
     const query = {
@@ -126,8 +94,8 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
 
   return (
     <Section className="flex flex-col gap-4 p-2 m-2">
-      {error ? (
-        <p className="m-0 p-2 text-sm text-text">{error}</p>
+      {currentError ? (
+        <p className="m-0 p-2 text-sm text-text">{currentError}</p>
       ) : (
         <>
           <div className="flex items-center justify-between gap-2">
@@ -163,50 +131,7 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
               size="medium"
             />
 
-            <div className="grid grid-cols-2 content-start gap-x-6 px-4 text-xs">
-              <div className="grid grid-cols-[auto_auto] content-start gap-x-4 gap-y-1">
-                <span className="text-text">Prix unitaire</span>
-                <span className="text-text-muted">
-                  {FormatTools.pedFormat().format(item.value)} Ped(s)
-                </span>
-                {detailRows.map(([label, value]) => (
-                  <span key={label} className="contents">
-                    <span className="text-text">{label}</span>
-                    <span className="text-text-muted">
-                      {label === "Nexus" ? (
-                        <a
-                          href={String(value)}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {String(value)}
-                        </a>
-                      ) : typeof value === "number" ? (
-                        formatDetailValue(String(label), value)
-                      ) : (
-                        String(value)
-                      )}
-                    </span>
-                  </span>
-                ))}
-              </div>
-              <div className="grid grid-cols-[auto_auto] content-start gap-x-4 gap-y-1">
-                <span className="text-text">Weight</span>
-                <span className="text-text-muted">
-                  {item.weight === null
-                    ? "-"
-                    : FormatTools.formatToThreeDecimals(item.weight)}
-                </span>
-                <span className="text-text">Untradeable</span>
-                <span className="text-text-muted">
-                  {item.isUntradeable ? "Oui" : "Non"}
-                </span>
-                <span className="text-text">Rare</span>
-                <span className="text-text-muted">
-                  {item.isRare ? "Oui" : "Non"}
-                </span>
-              </div>
-            </div>
+            <ItemDetailInfos item={item} />
           </div>
           <div className="grid grid-cols-2 gap-x-4 border-t border-table-border pt-2 text-xs">
             <span className="text-text">Quantité</span>
