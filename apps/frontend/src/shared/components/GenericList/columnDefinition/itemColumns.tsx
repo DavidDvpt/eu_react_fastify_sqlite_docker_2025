@@ -70,6 +70,23 @@ const createItemColumns = (): GenericListColumn<ItemViewModel>[] => [
         2,
       ),
   },
+  {
+    key: "decay",
+    label: "Decay",
+    kind: "number",
+    accessor: "decay",
+    minWidth: 80,
+    maxWidth: 100,
+    align: "right",
+    bodyCellClassName: "text-text",
+    value: (row) =>
+      row.decay === null
+        ? "—"
+        : FormatTools.trimTrailingZeros(
+            FormatTools.formatToDecimals(row.decay, 5),
+            2,
+          ),
+  },
 ];
 
 export { createItemColumns };

@@ -83,6 +83,7 @@ function MiningSessionResults({
       );
 
       return items
+        .filter((item) => item.isActive)
         .filter((item) => lootItemIds.has(item.id.toLowerCase()))
         .filter((item) =>
           item.name.toLowerCase().includes(query.trim().toLowerCase()),

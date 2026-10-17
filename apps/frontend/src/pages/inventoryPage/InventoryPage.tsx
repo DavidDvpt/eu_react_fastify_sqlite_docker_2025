@@ -79,14 +79,14 @@ function InventoryPage() {
             onRefine={handleRefine}
             className={cn(
               "min-h-0 overflow-hidden transition-all duration-300 ease-in-out shadow-ambient-md m-2",
-              itemId ? "basis-1/2 max-w-[50%]" : "basis-full max-w-full",
+              itemId ? "basis-3/5 max-w-[60%]" : "basis-full max-w-full",
               "max-lg:basis-full max-lg:max-w-full",
             )}
           />
           {Boolean(itemId) && (
             <StockDetailsPanel
               mode="inventory"
-              className="min-h-0 overflow-hidden basis-1/2 max-w-[50%] transition-all duration-300 ease-in-out max-lg:hidden "
+              className="min-h-0 overflow-hidden basis-2/5 max-w-[40%] transition-all duration-300 ease-in-out max-lg:hidden "
               onClose={() => {
                 const search = new URLSearchParams(location.search);
                 search.delete("lotId");
