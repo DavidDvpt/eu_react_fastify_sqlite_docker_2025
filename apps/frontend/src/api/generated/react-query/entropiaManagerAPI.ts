@@ -27,8 +27,6 @@ import type {
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
-  ChatLogPathResponse,
-  ChatLogPathUpdate,
   GetCurrentSessionApiV2SessionsCurrentGetParams,
   GetDepositSizeApiV2MiningGetDepositSizeGetParams,
   GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
@@ -40,6 +38,8 @@ import type {
   HTTPValidationError,
   HealthHealthGet200,
   IdResponse,
+  InGameUsernameResponse,
+  InGameUsernameUpdate,
   InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
   InventoryFinancialReportResponse,
   ItemCreate,
@@ -415,16 +415,16 @@ export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2Aut
 
 
 /**
- * @summary Chat Log Path
+ * @summary In Game Username
  */
-export const chatLogPathApiV2AuthChatLogPathGet = (
+export const inGameUsernameApiV2AuthInGameUsernameGet = (
 
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
-      return customInstance<ChatLogPathResponse>(
-      {url: `/api/v2/auth/chat-log-path`, method: 'GET', signal
+      return customInstance<InGameUsernameResponse>(
+      {url: `/api/v2/auth/in-game-username`, method: 'GET', signal
     },
       options);
     }
@@ -432,69 +432,69 @@ export const chatLogPathApiV2AuthChatLogPathGet = (
 
 
 
-export const getChatLogPathApiV2AuthChatLogPathGetQueryKey = () => {
+export const getInGameUsernameApiV2AuthInGameUsernameGetQueryKey = () => {
     return [
-    `/api/v2/auth/chat-log-path`
+    `/api/v2/auth/in-game-username`
     ] as const;
     }
 
 
-export const getChatLogPathApiV2AuthChatLogPathGetQueryOptions = <TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions = <TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
 ) => {
 
 const {query: queryOptions, request: requestOptions} = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getChatLogPathApiV2AuthChatLogPathGetQueryKey();
+  const queryKey =  queryOptions?.queryKey ?? getInGameUsernameApiV2AuthInGameUsernameGetQueryKey();
 
 
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>> = ({ signal }) => chatLogPathApiV2AuthChatLogPathGet(requestOptions, signal);
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>> = ({ signal }) => inGameUsernameApiV2AuthInGameUsernameGet(requestOptions, signal);
 
 
 
 
 
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
 }
 
-export type ChatLogPathApiV2AuthChatLogPathGetQueryResult = NonNullable<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>>
-export type ChatLogPathApiV2AuthChatLogPathGetQueryError = ErrorType<unknown>
+export type InGameUsernameApiV2AuthInGameUsernameGetQueryResult = NonNullable<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>>
+export type InGameUsernameApiV2AuthInGameUsernameGetQueryError = ErrorType<unknown>
 
 
-export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>> & Pick<
+export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>> & Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>,
+          Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
           TError,
-          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>
+          Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>> & Pick<
+export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>> & Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>,
+          Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
           TError,
-          Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>
+          Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
         > , 'initialData'
       >, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
   ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
 /**
- * @summary Chat Log Path
+ * @summary In Game Username
  */
 
-export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof chatLogPathApiV2AuthChatLogPathGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient
  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 
-  const queryOptions = getChatLogPathApiV2AuthChatLogPathGetQueryOptions(options)
+  const queryOptions = getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions(options)
 
   const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 
@@ -508,18 +508,18 @@ export function useChatLogPathApiV2AuthChatLogPathGet<TData = Awaited<ReturnType
 
 
 /**
- * @summary Update Chat Log Path
+ * @summary Update In Game Username
  */
-export const updateChatLogPathApiV2AuthChatLogPathPatch = (
-    chatLogPathUpdate: BodyType<ChatLogPathUpdate>,
+export const updateInGameUsernameApiV2AuthInGameUsernamePut = (
+    inGameUsernameUpdate: BodyType<InGameUsernameUpdate>,
  options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
 ) => {
 
 
-      return customInstance<ChatLogPathResponse>(
-      {url: `/api/v2/auth/chat-log-path`, method: 'PATCH',
+      return customInstance<InGameUsernameResponse>(
+      {url: `/api/v2/auth/in-game-username`, method: 'PUT',
       headers: {'Content-Type': 'application/json', },
-      data: chatLogPathUpdate, signal
+      data: inGameUsernameUpdate, signal
     },
       options);
     }
@@ -527,13 +527,13 @@ export const updateChatLogPathApiV2AuthChatLogPathPatch = (
 
 
 
-export const getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationKey = () => ['updateChatLogPathApiV2AuthChatLogPathPatch'] as const;
+export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey = () => ['updateInGameUsernameApiV2AuthInGameUsernamePut'] as const;
 
-export const getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext> => {
+export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext> => {
 
-const mutationKey = getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationKey();
+const mutationKey = getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey();
 const {mutation: mutationOptions, request: requestOptions} = options ?
       options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
       options
@@ -543,10 +543,10 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
 
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables> = (props) => {
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables> = (props) => {
           const {data} = props ?? {};
 
-          return  updateChatLogPathApiV2AuthChatLogPathPatch(data,requestOptions)
+          return  updateInGameUsernameApiV2AuthInGameUsernamePut(data,requestOptions)
         }
 
 
@@ -556,23 +556,23 @@ const {mutation: mutationOptions, request: requestOptions} = options ?
 
   return  { mutationFn, ...mutationOptions }}
 
-    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationResult = NonNullable<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>>
-    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationBody = BodyType<ChatLogPathUpdate>
-    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationError = ErrorType<HTTPValidationError>
-    export type UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables = {data: BodyType<ChatLogPathUpdate>}
+    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationResult = NonNullable<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>>
+    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationBody = BodyType<InGameUsernameUpdate>
+    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationError = ErrorType<HTTPValidationError>
+    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables = {data: BodyType<InGameUsernameUpdate>}
 
     /**
- * @summary Update Chat Log Path
+ * @summary Update In Game Username
  */
-export const useUpdateChatLogPathApiV2AuthChatLogPathPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>, TError,UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+export const useUpdateInGameUsernameApiV2AuthInGameUsernamePut = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
  , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateChatLogPathApiV2AuthChatLogPathPatch>>,
+        Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>,
         TError,
-        UpdateChatLogPathApiV2AuthChatLogPathPatchMutationVariables,
+        UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
         TContext
       > => {
-      return useMutation(getUpdateChatLogPathApiV2AuthChatLogPathPatchMutationOptions(options), queryClient);
+      return useMutation(getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions(options), queryClient);
     }
 
 /**

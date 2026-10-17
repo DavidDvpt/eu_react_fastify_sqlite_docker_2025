@@ -9,7 +9,7 @@ export const MeResponse = zod.object({
   "id": zod.string(),
   "role": zod.string(),
   "pseudo": zod.string(),
-  "chatLogPath": zod.union([zod.string(),zod.null()]).optional()
+  "inGameUsername": zod.union([zod.string(),zod.null()]).optional()
 });
 
 export type MeResponse = zod.input<typeof MeResponse>;

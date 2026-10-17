@@ -7,6 +7,7 @@ import { RouterProvider } from "react-router-dom";
 import { queryClient } from "./lib/react-query/queryClient";
 import appRouter from "./router/appRouter";
 import { authMeThunk, selectAuthStatus } from "@/store";
+import ChatLogSetupGate from "@/features/chatLogSetup/components/ChatLogSetupGate";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -25,6 +26,7 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={appRouter} />
+      <ChatLogSetupGate />
     </QueryClientProvider>
   );
 }

@@ -9,8 +9,6 @@ export * from './averageBuyMarkupScopeResponse.zod.ts';
 export * from './categoryCreate.zod.ts';
 export * from './categoryPatch.zod.ts';
 export * from './categoryResponse.zod.ts';
-export * from './chatLogPathResponse.zod.ts';
-export * from './chatLogPathUpdate.zod.ts';
 export * from './closeSessionApiV2SessionsSessionIdPatchBody.zod.ts';
 export * from './getCurrentSessionApiV2SessionsCurrentGetParams.zod.ts';
 export * from './getDepositSizeApiV2MiningGetDepositSizeGetParams.zod.ts';
@@ -23,6 +21,8 @@ export * from './getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams.
 export * from './hTTPValidationError.zod.ts';
 export * from './healthHealthGet200.zod.ts';
 export * from './idResponse.zod.ts';
+export * from './inGameUsernameResponse.zod.ts';
+export * from './inGameUsernameUpdate.zod.ts';
 export * from './inventoryFinancialReportApiV2InventoryFinancialReportGetParams.zod.ts';
 export * from './inventoryFinancialReportResponse.zod.ts';
 export * from './itemCreate.zod.ts';

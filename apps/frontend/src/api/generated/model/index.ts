@@ -6,13 +6,13 @@
 
 export * from './categoryCreate.ts';
 export * from './categoryPatch.ts';
-export * from './chatLogPathUpdate.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortKey.ts';
 export * from './getItemLotsApiV2ItemsIdLotsGetSortOrder.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetStatus.ts';
 export * from './getItemTransactionsApiV2ItemsIdTransactionsGetType.ts';
 export * from './healthHealthGet200.ts';
 export * from './hTTPValidationError.ts';
+export * from './inGameUsernameUpdate.ts';
 export * from './itemCreate.ts';
 export * from './itemFinancialReportEnvelope.ts';
 export * from './itemPatch.ts';

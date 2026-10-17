@@ -5,6 +5,7 @@ import { Panel, Section } from "@/shared/components/Containers";
 import { useSystemDatas } from "@/shared/hooks";
 import MiningSessionCockpit from "./components/cockpit/MiningSessionCockpit";
 import MiningSessionResults from "./components/cockpit/MiningSessionResults";
+import { useMiningChatLogClaims } from "@/features/miningClaims/hooks/useMiningChatLogClaims";
 
 function MiningSessionCurrentView() {
   const currentSessionQuery = useGetCurrentSessionApiV2SessionsCurrentGet(
@@ -20,6 +21,7 @@ function MiningSessionCurrentView() {
     currentSession && "finderItemId" in currentSession
       ? (currentSession as MiningCurrentSessionResponse)
       : undefined;
+  useMiningChatLogClaims(miningSession?.id, itemDatas ?? []);
   const itemById = new Map((itemDatas ?? []).map((item) => [item.id, item]));
 
   return (

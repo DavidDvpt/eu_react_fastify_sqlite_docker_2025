@@ -4,6 +4,6 @@
  * Entropia Manager API
  */
 
-export interface ChatLogPathResponse {
-  chatLogPath: string | null;
-}
+export type InGameUsernameUpdate = {
+  inGameUsername: string | null;
+};
