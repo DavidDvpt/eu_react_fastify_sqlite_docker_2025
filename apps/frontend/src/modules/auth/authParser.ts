@@ -6,6 +6,7 @@ type MeApiResponse = {
   date_created?: string;
   is_active?: boolean;
   isActive?: boolean;
+  inGameUsername?: string | null;
 };
 
 async function meParser(data: MeApiResponse) {
@@ -15,13 +16,17 @@ async function meParser(data: MeApiResponse) {
     if (!data.pseudo) throw new Error("No pseudo found");
     if (!data.role) throw new Error("No role found");
 
-    const user = {
+    const user: AuthMe = {
       id: data.id,
       pseudo: data.pseudo,
       role: data.role as UserRoleType,
       // The generated MeResponse does not currently expose the active flag.
       isActive: data.is_active ?? data.isActive ?? true,
     };
+
+    if (data.inGameUsername !== undefined) {
+      user.inGameUsername = data.inGameUsername;
+    }
 
     return user;
   } catch (error) {

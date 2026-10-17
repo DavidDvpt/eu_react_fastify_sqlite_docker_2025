@@ -10,9 +10,9 @@ import {
   CategoryCreate,
   CategoryPatch,
   CategoryResponse,
-  ChatLogPathResponse,
-  ChatLogPathUpdate,
   IdResponse,
+  InGameUsernameResponse,
+  InGameUsernameUpdate,
   InventoryFinancialReportResponse,
   ItemCreate,
   ItemFinancialReportEnvelope,
@@ -107,26 +107,26 @@ export type MeApiV2AuthMeGetResponseOutput = zod.output<typeof MeApiV2AuthMeGetR
 
 
 /**
- * @summary Chat Log Path
+ * @summary In Game Username
  */
-export const ChatLogPathApiV2AuthChatLogPathGetResponse = ChatLogPathResponse
+export const InGameUsernameApiV2AuthInGameUsernameGetResponse = InGameUsernameResponse
 
-export type ChatLogPathApiV2AuthChatLogPathGetResponse = zod.input<typeof ChatLogPathApiV2AuthChatLogPathGetResponse>;
-export type ChatLogPathApiV2AuthChatLogPathGetResponseOutput = zod.output<typeof ChatLogPathApiV2AuthChatLogPathGetResponse>;
+export type InGameUsernameApiV2AuthInGameUsernameGetResponse = zod.input<typeof InGameUsernameApiV2AuthInGameUsernameGetResponse>;
+export type InGameUsernameApiV2AuthInGameUsernameGetResponseOutput = zod.output<typeof InGameUsernameApiV2AuthInGameUsernameGetResponse>;
 
 
 /**
- * @summary Update Chat Log Path
+ * @summary Update In Game Username
  */
-export const UpdateChatLogPathApiV2AuthChatLogPathPatchBody = ChatLogPathUpdate
+export const UpdateInGameUsernameApiV2AuthInGameUsernamePutBody = InGameUsernameUpdate
 
-export type UpdateChatLogPathApiV2AuthChatLogPathPatchBody = zod.input<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchBody>;
-export type UpdateChatLogPathApiV2AuthChatLogPathPatchBodyOutput = zod.output<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchBody>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBody = zod.input<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBodyOutput = zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody>;
 
-export const UpdateChatLogPathApiV2AuthChatLogPathPatchResponse = ChatLogPathResponse
+export const UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse = InGameUsernameResponse
 
-export type UpdateChatLogPathApiV2AuthChatLogPathPatchResponse = zod.input<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchResponse>;
-export type UpdateChatLogPathApiV2AuthChatLogPathPatchResponseOutput = zod.output<typeof UpdateChatLogPathApiV2AuthChatLogPathPatchResponse>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse = zod.input<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponseOutput = zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse>;
 
 
 /**

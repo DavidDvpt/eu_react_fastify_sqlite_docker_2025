@@ -60,6 +60,7 @@ function ModalGeneric({
           contentStyle,
         ].join(" ")}
         onInteractOutside={(e) => e.preventDefault()}
+        onEscapeKeyDown={noClose ? (e) => e.preventDefault() : undefined}
       >
         {(title || description) && (
           <DialogHeader className={headerStyle}>

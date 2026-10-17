@@ -5,6 +5,7 @@ type AuthMe = {
   pseudo: string;
   role: UserRoleType;
   isActive: boolean;
+  inGameUsername?: string | null;
 };
 
 type AuthType = {

@@ -7,7 +7,6 @@
 export * from './averageBuyMarkupResponse.ts';
 export * from './averageBuyMarkupScopeResponse.ts';
 export * from './categoryResponse.ts';
-export * from './chatLogPathResponse.ts';
 export * from './getCurrentSessionApiV2SessionsCurrentGetParams.ts';
 export * from './getDepositSizeApiV2MiningGetDepositSizeGetParams.ts';
 export * from './getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams.ts';
@@ -17,6 +16,7 @@ export * from './getLotOriginApiV2InventoryLotsLotIdOriginGetParams.ts';
 export * from './getMiningLootListApiV2SessionsMiningLootlistGetParams.ts';
 export * from './getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams.ts';
 export * from './idResponse.ts';
+export * from './inGameUsernameResponse.ts';
 export * from './inventoryFinancialReportApiV2InventoryFinancialReportGetParams.ts';
 export * from './inventoryFinancialReportResponse.ts';
 export * from './itemFinancialReportResponse.ts';
