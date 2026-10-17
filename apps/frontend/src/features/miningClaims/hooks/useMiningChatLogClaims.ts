@@ -7,10 +7,17 @@ import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys
 import { getauthState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { MiningClaimParser } from "../services/miningClaimParser";
+import type { MiningClaimPayload } from "../services/miningClaimParser";
 
 const POLL_INTERVAL_MS = 1000;
 
-export function useMiningChatLogClaims(sessionId: string | undefined, items: ItemResponse[]) {
+type ClaimDepletedInfo = MiningClaimPayload & { depositSize: number | null };
+
+export function useMiningChatLogClaims(
+  sessionId: string | undefined,
+  items: ItemResponse[],
+  onClaimDepleted?: (claim: ClaimDepletedInfo) => void,
+) {
   const parserRef = useRef(new MiningClaimParser());
   const inGameUsername = useAppSelector((state) => getauthState(state).user.result?.inGameUsername?.trim() ?? "");
   const offsetRef = useRef<number | null>(null);
@@ -50,12 +57,16 @@ export function useMiningChatLogClaims(sessionId: string | undefined, items: Ite
           if (!payload || pendingRef.current) continue;
           pendingRef.current = true;
           try {
+            const { resourceName, ...apiPayload } = payload;
             // The generated API uses camelCase; Axios performs the project's
             // configured wire conversion for the backend contract.
-            await createClaim.mutateAsync({
+            const createdClaim = await createClaim.mutateAsync({
               sessionId,
-              data: { ...payload, isAth: payload.isAth } as never,
+              data: { ...apiPayload, isAth: payload.isAth } as never,
             });
+            const depletedInfo = { resourceName, ...apiPayload, depositSize: createdClaim.depositSize ?? null };
+            console.log("Contenu de la snackbar", depletedInfo);
+            onClaimDepleted?.(depletedInfo);
             parserRef.current.reset();
             await InvalidateQueryAndKeys.miningMutation();
           } catch (error) {
@@ -75,5 +86,5 @@ export function useMiningChatLogClaims(sessionId: string | undefined, items: Ite
       cancelled = true;
       window.clearInterval(interval);
     };
-  }, [createClaim, inGameUsername, items, sessionId]);
+  }, [createClaim, inGameUsername, items, onClaimDepleted, sessionId]);
 }

@@ -20,7 +20,7 @@ function InGameUsernameSetupModal({ error, isOpen, onSubmit }: InGameUsernameSet
       open={isOpen}
       noClose
       title={{ value: "Configurer le pseudo en jeu" }}
-      description={{ value: "Ce pseudo permet d'identifier vos événements Mining dans chat.log." }}
+      description={{ value: "Ce pseudo permet d'identifier vos événements Mining dans chat.log. Respectez exactement les majuscules et minuscules du pseudo affiché dans Entropia Universe." }}
     >
       <GenericForm
         schema={schema}

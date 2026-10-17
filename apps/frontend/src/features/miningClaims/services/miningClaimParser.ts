@@ -11,6 +11,7 @@ export type CurrentMiningClaim = {
 };
 
 export type MiningClaimPayload = {
+  resourceName: string;
   itemId: string;
   quantity: number;
   value: number;
@@ -68,6 +69,7 @@ export class MiningClaimParser {
       if (!this.currentClaim) return null;
       this.currentClaim.resourceName = claimedResource[1] ?? null;
       this.setItems(items);
+      console.log("Source trouvée", this.currentClaim.resourceName);
       return null;
     }
 
@@ -101,13 +103,15 @@ export class MiningClaimParser {
 
     if (message === "This resource is depleted") {
       if (!this.currentClaim) return null;
+      console.log("Source depleted", this.currentClaim);
       this.setItems(items);
       const claim = this.currentClaim;
-      if (!claim.itemId || claim.quantity <= 0 || claim.value < 0) {
+      if (!claim.resourceName || !claim.itemId || claim.quantity <= 0 || claim.value < 0) {
         console.error("Mining claim incomplet, envoi annulé", claim);
         return null;
       }
       return {
+        resourceName: claim.resourceName,
         itemId: claim.itemId,
         quantity: claim.quantity,
         value: claim.value,
