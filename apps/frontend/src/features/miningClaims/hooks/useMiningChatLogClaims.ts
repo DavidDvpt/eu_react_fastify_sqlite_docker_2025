@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 
 import { useCreateClaimApiV2MiningSessionIdClaimsPost } from "@/api/generated/react-query/entropiaManagerAPI";
 import type { ItemResponse } from "@/api/generated/react-query/model/itemResponse";
-import { getChatLogHandle } from "@/features/chatLogSetup/services/chatLogStorage";
+import { getChatLog } from "@/features/chatLogSetup/services/chatLogStorage";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import { getauthState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
@@ -39,10 +39,10 @@ export function useMiningChatLogClaims(
 
     const readNewLines = async () => {
       try {
-        const handle = await getChatLogHandle();
-        if (!handle || cancelled) return;
-        if ((await handle.queryPermission({ mode: "read" })) !== "granted") return;
-        const file = await handle.getFile();
+        const log = await getChatLog();
+        if (!log || cancelled) return;
+        if (log.source === "handle" && (await log.handle.queryPermission({ mode: "read" })) !== "granted") return;
+        const file = log.source === "handle" ? await log.handle.getFile() : log.file;
         const offset = offsetRef.current ?? file.size;
         if (file.size < offset) offsetRef.current = file.size;
         if (file.size <= (offsetRef.current ?? offset)) return;

@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from "react";
 import { ApiStatus } from "@/lib/axios/ApiStatus";
 import { selectAuthStatus, selectIsLoggued } from "@/store";
 import { useAppSelector } from "@/store/hooks";
-import { getChatLogHandle, removeChatLogHandle, saveChatLogHandle, type StoredChatLogHandle } from "../services/chatLogStorage";
+import { getChatLog, removeChatLogHandle, saveChatLog, type StoredChatLog, type StoredChatLogHandle } from "../services/chatLogStorage";
 
 export type ChatLogFileStatus = "loading" | "configured" | "missing" | "permission-required" | "invalid" | "error";
 
@@ -20,36 +20,38 @@ function useChatLogSetup() {
   const authStatus = useAppSelector(selectAuthStatus);
   const isLoggedIn = useAppSelector(selectIsLoggued);
   const [status, setStatus] = useState<ChatLogFileStatus>("loading");
-  const [handle, setHandle] = useState<StoredChatLogHandle | null>(null);
+  const [log, setLog] = useState<StoredChatLog | null>(null);
   const [fileName, setFileName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const invalidateHandle = useCallback(async () => {
     await removeChatLogHandle();
-    setHandle(null);
+    setLog(null);
     setFileName("");
     setStatus("invalid");
   }, []);
 
-  const inspectHandle = useCallback(async (storedHandle: StoredChatLogHandle) => {
+  const inspectLog = useCallback(async (storedLog: StoredChatLog) => {
     try {
-      const permission = await storedHandle.queryPermission({ mode: "read" });
-      if (permission === "prompt") {
-        setHandle(storedHandle);
-        setFileName(storedHandle.name);
-        setStatus("permission-required");
-        return;
+      if (storedLog.source === "handle") {
+        const permission = await storedLog.handle.queryPermission({ mode: "read" });
+        if (permission === "prompt") {
+          setLog(storedLog);
+          setFileName(storedLog.handle.name);
+          setStatus("permission-required");
+          return;
+        }
+        if (permission !== "granted") {
+          await invalidateHandle();
+          return;
+        }
       }
-      if (permission !== "granted") {
-        await invalidateHandle();
-        return;
-      }
-      const file = await storedHandle.getFile();
+      const file = storedLog.source === "handle" ? await storedLog.handle.getFile() : storedLog.file;
       if (!isValidFile(file)) {
         await invalidateHandle();
         return;
       }
-      setHandle(storedHandle);
+      setLog(storedLog);
       setFileName(file.name);
       setError(null);
       setStatus("configured");
@@ -61,9 +63,9 @@ function useChatLogSetup() {
   useEffect(() => {
     if (!isLoggedIn || authStatus !== ApiStatus.FULFILLED) return;
     let cancelled = false;
-    void getChatLogHandle().then((storedHandle) => {
+    void getChatLog().then((storedLog) => {
       if (cancelled) return;
-      if (storedHandle) void inspectHandle(storedHandle);
+      if (storedLog) void inspectLog(storedLog);
       else setStatus("missing");
     }).catch(() => {
       if (!cancelled) {
@@ -72,14 +74,27 @@ function useChatLogSetup() {
       }
     });
     return () => { cancelled = true; };
-  }, [authStatus, inspectHandle, isLoggedIn]);
+  }, [authStatus, inspectLog, isLoggedIn]);
 
-  const selectFile = useCallback(async () => {
+  const selectFile = useCallback(async (fallbackFile?: File) => {
     try {
+      if (fallbackFile) {
+        if (!isValidFile(fallbackFile)) {
+          setError("Sélectionnez un fichier .log d'Entropia Universe.");
+          setStatus("invalid");
+          return;
+        }
+        const storedLog: StoredChatLog = { source: "file", file: fallbackFile };
+        await saveChatLog(storedLog);
+        setLog(storedLog);
+        setFileName(fallbackFile.name);
+        setError(null);
+        setStatus("configured");
+        return;
+      }
       const picker = (window as FilePickerWindow).showOpenFilePicker;
       if (!picker) {
-        setError("Ce navigateur ne prend pas en charge la sélection persistante de fichiers.");
-        setStatus("error");
+        setError("Utilisez le sélecteur de fichier ci-dessous.");
         return;
       }
       const [selectedHandle] = await picker({
@@ -95,8 +110,9 @@ function useChatLogSetup() {
         setStatus("invalid");
         return;
       }
-      await saveChatLogHandle(selectedHandle);
-      setHandle(selectedHandle);
+      const storedLog: StoredChatLog = { source: "handle", handle: selectedHandle };
+      await saveChatLog(storedLog);
+      setLog(storedLog);
       setFileName(file.name);
       setError(null);
       setStatus("configured");
@@ -108,15 +124,15 @@ function useChatLogSetup() {
   }, []);
 
   const requestPermission = useCallback(async () => {
-    if (!handle) return;
+    if (!log || log.source !== "handle") return;
     try {
-      const permission = await handle.requestPermission({ mode: "read" });
-      if (permission === "granted") await inspectHandle(handle);
+      const permission = await log.handle.requestPermission({ mode: "read" });
+      if (permission === "granted" && log.source === "handle") await inspectLog(log);
       else setStatus("invalid");
     } catch {
       await invalidateHandle();
     }
-  }, [handle, inspectHandle, invalidateHandle]);
+  }, [inspectLog, invalidateHandle, log]);
 
   return {
     error,

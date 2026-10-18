@@ -8,6 +8,10 @@ export type StoredChatLogHandle = FileSystemFileHandle & {
   requestPermission: (descriptor?: { mode?: "read" | "readwrite" }) => Promise<PermissionState>;
 };
 
+export type StoredChatLog =
+  | { source: "handle"; handle: StoredChatLogHandle }
+  | { source: "file"; file: File };
+
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
@@ -29,13 +33,17 @@ async function withStore<T>(mode: IDBTransactionMode, operation: (store: IDBObje
   });
 }
 
-export async function getChatLogHandle(): Promise<StoredChatLogHandle | null> {
+export async function getChatLog(): Promise<StoredChatLog | null> {
   if (typeof indexedDB === "undefined") return null;
-  return (await withStore<StoredChatLogHandle | undefined>("readonly", (store) => store.get(HANDLE_KEY))) ?? null;
+  const stored = await withStore<StoredChatLog | StoredChatLogHandle | undefined>("readonly", (store) => store.get(HANDLE_KEY));
+  if (!stored) return null;
+  // Keep compatibility with handles saved by the previous implementation.
+  if ("source" in stored) return stored;
+  return { source: "handle", handle: stored };
 }
 
-export async function saveChatLogHandle(handle: StoredChatLogHandle): Promise<void> {
-  await withStore("readwrite", (store) => store.put(handle, HANDLE_KEY));
+export async function saveChatLog(log: StoredChatLog): Promise<void> {
+  await withStore("readwrite", (store) => store.put(log, HANDLE_KEY));
 }
 
 export async function removeChatLogHandle(): Promise<void> {

@@ -14,7 +14,7 @@ type ChatLogSetupModalProps = {
   fileName: string;
   isOpen: boolean;
   onRequestPermission: () => Promise<void>;
-  onSelectFile: () => Promise<void>;
+  onSelectFile: (file?: File) => Promise<void>;
   status: ChatLogFileStatus;
   isBlocked?: boolean;
 };
@@ -42,7 +42,7 @@ function ChatLogSetupModal({ error, fileName, isBlocked = false, isOpen, onReque
         {needsPermission ? (
           <Button type="submit">Autoriser l'accès au fichier</Button>
         ) : (
-          <ChatLogFilePicker onSelect={onSelectFile} />
+          <ChatLogFilePicker onSelect={(file) => onSelectFile(file)} />
         )}
         {error && <p className="m-0 text-sm text-error-500">{error}</p>}
       </GenericForm>
