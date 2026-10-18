@@ -26,6 +26,7 @@ const claimEditSchema = z.object({
   value: nullableNumber(),
   latitude: nullableNumber(true),
   longitude: nullableNumber(true),
+  depth: nullableNumber(),
   depleted: z.boolean(),
 });
 
@@ -79,6 +80,7 @@ function MiningClaimEditModal({
     value: claim.value === null ? null : Number(claim.value),
     latitude: claim.latitude,
     longitude: claim.longitude,
+    depth: claim.depth === null ? null : Number(claim.depth),
     depleted: claim.depositSize !== null,
   };
 
@@ -93,6 +95,7 @@ function MiningClaimEditModal({
           value: values.value,
           latitude: values.latitude,
           longitude: values.longitude,
+          depth: values.depth,
           depositSize: values.depleted && values.depositSize
             ? Number(values.depositSize)
             : null,
@@ -128,6 +131,7 @@ function MiningClaimEditModal({
           <InputRHF name="latitude" label="Latitude: " type="number" step="1" registerOptions={{ valueAsNumber: true }} />
           <InputRHF name="longitude" label="Longitude: " type="number" step="1" registerOptions={{ valueAsNumber: true }} />
         </div>
+        <InputRHF name="depth" label="Profondeur: " type="number" step="any" registerOptions={{ valueAsNumber: true }} />
         <CheckboxRHF name="depleted" label="Depleted" />
         <FormButtonsSection
           submitDisabled={patchClaim.isPending}
