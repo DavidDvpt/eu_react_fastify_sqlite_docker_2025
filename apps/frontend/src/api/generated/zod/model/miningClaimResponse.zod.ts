@@ -11,6 +11,8 @@ export const miningClaimResponseDepthOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0
 
 export const MiningClaimResponse = zod.object({
   "id": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
   "sessionId": zod.string(),
   "itemId": zod.union([zod.string(),zod.null()]),
   "quantity": zod.union([zod.int(),zod.null()]),

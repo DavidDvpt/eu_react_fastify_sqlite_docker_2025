@@ -42,6 +42,8 @@ function MiningSessionClaims({
   const fakeClaims: MiningClaimResponse[] = [
     {
       id: "__fake-claim-open__",
+      createdAt: "1970-01-01T00:00:00.000Z",
+      updatedAt: null,
       sessionId,
       itemId: editableItems[0]?.id ?? null,
       quantity: 1250,
@@ -55,6 +57,8 @@ function MiningSessionClaims({
     },
     {
       id: "__fake-claim-depleted__",
+      createdAt: "1970-01-01T00:00:01.000Z",
+      updatedAt: null,
       sessionId,
       itemId: editableItems[0]?.id ?? null,
       quantity: 800,
@@ -67,7 +71,10 @@ function MiningSessionClaims({
       depth: null,
     },
   ];
-  const displayedClaims = import.meta.env.DEV ? [...fakeClaims, ...claims] : claims;
+  const displayedClaims = (import.meta.env.DEV ? [...fakeClaims, ...claims] : [...claims])
+    .sort(
+      (first, second) => Date.parse(first.createdAt) - Date.parse(second.createdAt),
+    );
 
   const openClaim = (claimId: string) => {
     const params = new URLSearchParams(searchParams);

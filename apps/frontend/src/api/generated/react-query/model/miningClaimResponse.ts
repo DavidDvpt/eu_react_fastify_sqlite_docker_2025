@@ -6,6 +6,8 @@
 
 export interface MiningClaimResponse {
   id: string;
+  createdAt: string;
+  updatedAt: string | null;
   sessionId: string;
   itemId: string | null;
   quantity: number | null;

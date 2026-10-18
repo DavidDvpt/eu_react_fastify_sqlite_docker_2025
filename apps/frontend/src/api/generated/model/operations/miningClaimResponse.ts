@@ -6,6 +6,8 @@
 
 export type MiningClaimResponse = {
   id: string;
+  createdAt: string;
+  updatedAt: string | null;
   sessionId: string;
   itemId: string | null;
   quantity: number | null;
