@@ -96,8 +96,9 @@ function MiningSessionClaims({
               <tr>
                 <th className="w-[8%] px-2 py-2">#</th>
                 <th className="w-[35%] px-2 py-2">Ressource</th>
-                <th className="w-[17%] px-2 py-2">Taille</th>
-                <th className="w-[40%] px-2 py-2 text-right">Valeur</th>
+                <th className="w-[14%] px-2 py-2">Taille</th>
+                <th className="w-[14%] px-2 py-2 text-right">Depth</th>
+                <th className="w-[26%] px-2 py-2 text-right">Valeur</th>
               </tr>
             </thead>
             <tbody>
@@ -123,6 +124,7 @@ function MiningSessionClaims({
                     <td className="px-2 py-2">{index + 1}</td>
                     <td className="break-words px-2 py-2">{resourceName}</td>
                     <td className="px-2 py-2">{size?.romanSize ?? "—"}</td>
+                    <td className="px-2 py-2 text-right">{claim.depth ?? "-"}</td>
                     <td className="px-2 py-2 text-right">{formatValue(claim.value)}</td>
                   </tr>
                 );
