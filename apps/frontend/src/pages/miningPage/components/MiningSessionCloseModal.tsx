@@ -33,6 +33,13 @@ function format(value: number | string | null | undefined) {
   return NumberHelper.formatNumber(asNumber(value) ?? 0);
 }
 
+function formatTotal(value: number) {
+  return new Intl.NumberFormat("fr-FR", {
+    minimumFractionDigits: 5,
+    maximumFractionDigits: 5,
+  }).format(value);
+}
+
 function itemName(item: ItemViewModel | undefined, fallback?: string | null | undefined) {
   return item?.name ?? fallback ?? "Inconnu";
 }
@@ -103,6 +110,18 @@ function MiningSessionCloseModal({
     const quantity = drafts[line.id]?.quantity ?? line.quantity ?? 0;
     return quantity * (items.get(line.itemId)?.value ?? 0);
   };
+
+  const valueForCost = (line: MiningCostLineResponse) => {
+    if (line.isFinder || line.isAmplifier || line.isExcavator) {
+      return asNumber(drafts[line.id]?.decay ?? line.decay) ?? 0;
+    }
+
+    const quantity = drafts[line.id]?.quantity ?? line.quantity ?? 0;
+    return quantity * (items.get(line.itemId ?? "")?.value ?? 0);
+  };
+
+  const totalResults = results.reduce((total, line) => total + valueForResult(line), 0);
+  const totalCosts = costs.reduce((total, line) => total + valueForCost(line), 0);
 
   const updateDraft = (line: MiningCostLineResponse | MiningResultLineResponse, value: DraftValue) => {
     setDrafts((current) => ({ ...current, [line.id]: { ...current[line.id], ...value } }));
@@ -240,6 +259,20 @@ function MiningSessionCloseModal({
                     </div>
                   );
                 })}
+                <div className="mt-2 flex flex-col gap-1 border-t border-border pt-3 text-sm font-semibold text-text">
+                  <div className="flex justify-between gap-3">
+                    <span>Total coûts</span>
+                    <span>{formatTotal(totalCosts)} PED</span>
+                  </div>
+                  <div className="flex justify-between gap-3">
+                    <span>Total résultats</span>
+                    <span>{formatTotal(totalResults)} PED</span>
+                  </div>
+                  <div className="flex justify-between gap-3 border-t border-border pt-1">
+                    <span>Différence (résultats - coûts)</span>
+                    <span>{formatTotal(totalResults - totalCosts)} PED</span>
+                  </div>
+                </div>
               </div>
             </Section>
           </div>
