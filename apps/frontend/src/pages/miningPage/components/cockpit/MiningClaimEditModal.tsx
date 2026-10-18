@@ -94,7 +94,7 @@ function MiningClaimEditModal({
           latitude: values.latitude,
           longitude: values.longitude,
           depositSize: values.depleted && values.depositSize
-            ? depositSizes.find((size) => String(size.id) === values.depositSize)?.id ?? null
+            ? Number(values.depositSize)
             : null,
         },
       });
