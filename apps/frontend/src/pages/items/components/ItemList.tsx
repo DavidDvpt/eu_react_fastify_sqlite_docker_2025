@@ -48,7 +48,10 @@ function ItemList({
         : buildStockRows(inventoryStock).filter((item) => item.stock > 0);
 
       return rows
-        .filter((item) => item.isActive)
+        // `isActive` is optional in the API response. Items without the
+        // field are still active (the API only uses `false` to deactivate an
+        // item); filtering on truthiness made every loaded item disappear.
+        .filter((item) => item.isActive !== false)
         .filter(
           (f) =>
             (f.typeId === typeId || typeId === undefined) &&

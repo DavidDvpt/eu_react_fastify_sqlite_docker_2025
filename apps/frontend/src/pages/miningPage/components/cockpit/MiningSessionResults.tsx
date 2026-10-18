@@ -83,7 +83,9 @@ function MiningSessionResults({
       );
 
       return items
-        .filter((item) => item.isActive)
+        // `isActive` is optional in the API response. Only an explicit false
+        // means that a resource must be hidden from the autocomplete.
+        .filter((item) => item.isActive !== false)
         .filter((item) => lootItemIds.has(item.id.toLowerCase()))
         .filter((item) =>
           item.name.toLowerCase().includes(query.trim().toLowerCase()),
