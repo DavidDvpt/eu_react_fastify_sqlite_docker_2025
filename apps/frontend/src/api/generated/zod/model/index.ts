@@ -50,6 +50,7 @@ export * from './miningAvailableLotResponse.zod.ts';
 export * from './miningAvailableResponse.zod.ts';
 export * from './miningAvailableStackResponse.zod.ts';
 export * from './miningClaimCreate.zod.ts';
+export * from './miningClaimPatch.zod.ts';
 export * from './miningClaimResponse.zod.ts';
 export * from './miningClaimsResponse.zod.ts';
 export * from './miningCostLineResponse.zod.ts';

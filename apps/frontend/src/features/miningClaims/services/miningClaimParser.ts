@@ -21,7 +21,8 @@ export type MiningClaimPayload = {
 };
 
 export type MiningClaimParserEvent =
-  | { type: "claim-detected"; resourceName: string }
+  | { type: "claim-detected"; payload: MiningClaimPayload }
+  | { type: "claim-updated"; payload: MiningClaimPayload }
   | { type: "claim-depleted"; payload: MiningClaimPayload };
 
 export const emptyClaim = (): CurrentMiningClaim => ({
@@ -74,7 +75,7 @@ export class MiningClaimParser {
       this.currentClaim.resourceName = claimedResource[1] ?? null;
       this.setItems(items);
       console.log("Source trouvée", this.currentClaim.resourceName);
-      return { type: "claim-detected", resourceName: this.currentClaim.resourceName };
+      return { type: "claim-detected", payload: this.toPayload() };
     }
 
     const escapedPlayerName = this.playerName.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
@@ -89,6 +90,7 @@ export class MiningClaimParser {
         this.currentClaim.isGlobal = true;
         this.currentClaim.isHof = message.includes("Hall of Fame");
         this.currentClaim.isAth = /ATH|all[- ]time high/i.test(message);
+        return { type: "claim-updated", payload: this.toPayload() };
       }
       return null;
     }
@@ -101,6 +103,7 @@ export class MiningClaimParser {
       if (Number.isFinite(quantity) && Number.isFinite(value)) {
         this.currentClaim.quantity += quantity;
         this.currentClaim.value = roundPed(this.currentClaim.value + value);
+        return { type: "claim-updated", payload: this.toPayload() };
       }
       return null;
     }
@@ -110,22 +113,11 @@ export class MiningClaimParser {
       console.log("Source depleted", this.currentClaim);
       this.setItems(items);
       const claim = this.currentClaim;
-      if (!claim.resourceName || !claim.itemId || claim.quantity <= 0 || claim.value < 0) {
+      if (!claim.resourceName || claim.quantity <= 0 || claim.value < 0) {
         console.error("Mining claim incomplet, envoi annulé", claim);
         return null;
       }
-      return {
-        type: "claim-depleted",
-        payload: {
-          resourceName: claim.resourceName,
-          itemId: claim.itemId,
-          quantity: claim.quantity,
-          value: claim.value,
-          isGlobal: claim.isGlobal,
-          isHof: claim.isHof,
-          isAth: claim.isAth,
-        },
-      };
+      return { type: "claim-depleted", payload: this.toPayload() };
     }
 
     return null;
@@ -133,5 +125,18 @@ export class MiningClaimParser {
 
   reset() {
     this.currentClaim = null;
+  }
+
+  private toPayload(): MiningClaimPayload {
+    const claim = this.currentClaim ?? emptyClaim();
+    return {
+      resourceName: claim.resourceName ?? "Unknown",
+      itemId: claim.itemId ?? "",
+      quantity: claim.quantity,
+      value: claim.value,
+      isGlobal: claim.isGlobal,
+      isHof: claim.isHof,
+      isAth: claim.isAth,
+    };
   }
 }

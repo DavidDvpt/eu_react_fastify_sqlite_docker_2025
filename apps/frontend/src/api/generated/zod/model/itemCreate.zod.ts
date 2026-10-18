@@ -19,6 +19,7 @@ export const itemCreateIsActiveDefault = true;
 
 export const ItemCreate = zod.object({
   "imageUrlId": zod.union([zod.string(),zod.null()]).optional(),
+  "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
   "value": zod.union([zod.number().min(itemCreateValueOneMin),zod.string().regex(itemCreateValueTwoRegExp),zod.null()]).optional(),
   "weight": zod.union([zod.number().min(itemCreateWeightOneMin),zod.string().regex(itemCreateWeightTwoRegExp),zod.null()]).optional(),
   "decay": zod.union([zod.number().min(itemCreateDecayOneMin),zod.string().regex(itemCreateDecayTwoRegExp),zod.null()]).optional(),

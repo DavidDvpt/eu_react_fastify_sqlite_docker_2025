@@ -23,6 +23,7 @@ const defaultValues: TypeCreateOutput = {
   hasTierOption: false,
   categoryId: "",
   nexusName: null,
+  requestName: null,
 };
 
 function TypeForm({ type, onClose }: TypeFormProps) {
@@ -35,6 +36,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
         hasTierOption: !type.isStackable && (type.hasTierOption ?? false),
         categoryId: type.categoryId,
         nexusName: type.nexusName ?? null,
+        requestName: type.requestName ?? null,
       }
     : defaultValues;
 
@@ -45,6 +47,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
         values: {
           ...values,
           nexusName: values.nexusName?.trim() || null,
+          requestName: values.requestName?.trim() || null,
         },
       },
       {
@@ -85,6 +88,11 @@ function TypeFormFields() {
         name="nexusName"
         label="Nom Nexus: "
         placeholder="Nom Nexus optionnel"
+      />
+      <InputRHF
+        name="requestName"
+        label="Nom de requête: "
+        placeholder="Nom de requête optionnel"
       />
       <CategorySelectRHF label="Catégorie: " />
       <CheckboxRHF name="isActive" label="Actif" />

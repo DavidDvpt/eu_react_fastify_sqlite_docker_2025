@@ -6,6 +6,7 @@
 
 export interface ItemCreate {
   imageUrlId?: string | null;
+  nexusUrl?: string | null;
   value?: number | string | null;
   weight?: number | string | null;
   decay?: number | string | null;

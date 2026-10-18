@@ -1,7 +1,12 @@
 import { useEffect, useRef } from "react";
 
-import { useCreateClaimApiV2MiningSessionIdClaimsPost } from "@/api/generated/react-query/entropiaManagerAPI";
+import {
+  getDepositSizeApiV2MiningGetDepositSizeGet,
+  useCreateClaimApiV2MiningSessionIdClaimsPost,
+  usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import type { ItemResponse } from "@/api/generated/react-query/model/itemResponse";
+import type { MiningClaimResponse } from "@/api/generated/react-query/model/miningClaimResponse";
 import { getChatLog } from "@/features/chatLogSetup/services/chatLogStorage";
 import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
 import { getauthState } from "@/store";
@@ -12,14 +17,16 @@ import type { MiningClaimParserEvent, MiningClaimPayload } from "../services/min
 const POLL_INTERVAL_MS = 1000;
 const LISTENER_LOG_PREFIX = "[ChatLogListener]";
 
-type ClaimDepletedInfo = MiningClaimPayload & { depositSize: number | null };
-type ClaimDetectedInfo = { resourceName: string };
+export type ClaimDetectedInfo = MiningClaimResponse & { resourceName: string };
+export type ClaimDepletedInfo = MiningClaimResponse & { resourceName: string };
+export type UnknownClaimCandidate = { id: string; resourceName: string };
 
 export function useMiningChatLogClaims(
   sessionId: string | undefined,
   items: ItemResponse[],
   onClaimDetected?: (claim: ClaimDetectedInfo) => void,
   onClaimDepleted?: (claim: ClaimDepletedInfo) => void,
+  onUnknownClaim?: (candidates: UnknownClaimCandidate[], resolve: (claimId: string) => void) => void,
 ) {
   const parserRef = useRef(new MiningClaimParser());
   const inGameUsername = useAppSelector((state) => getauthState(state).user.result?.inGameUsername?.trim() ?? "");
@@ -27,6 +34,8 @@ export function useMiningChatLogClaims(
   const pendingTextRef = useRef("");
   const pendingRef = useRef(false);
   const createClaim = useCreateClaimApiV2MiningSessionIdClaimsPost();
+  const patchClaim = usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch();
+  const claimQueueRef = useRef<Array<{ id: string; resourceName: string; itemId: string | null; depleted: boolean }>>([]);
 
   useEffect(() => {
     console.log(LISTENER_LOG_PREFIX, "Configuration du parser", {
@@ -41,6 +50,8 @@ export function useMiningChatLogClaims(
     parserRef.current.reset();
     offsetRef.current = null;
     pendingTextRef.current = "";
+    claimQueueRef.current = [];
+    pendingRef.current = false;
     console.log(LISTENER_LOG_PREFIX, "Parser prêt, lecture depuis la fin du fichier au prochain passage");
   }, [sessionId]);
 
@@ -55,6 +66,97 @@ export function useMiningChatLogClaims(
       return;
     }
     let cancelled = false;
+
+    const findPendingClaim = (resourceName: string) =>
+      claimQueueRef.current.find(
+        (claim) => !claim.depleted && claim.resourceName === resourceName,
+      );
+
+    const updateClaim = async (claimId: string, payload: MiningClaimPayload) => {
+      const data = {
+        itemId: payload.itemId || null,
+        quantity: payload.quantity > 0 ? payload.quantity : null,
+        value: payload.value > 0 ? payload.value : null,
+        isGlobal: payload.isGlobal,
+        isHof: payload.isHof,
+        depositSize: null,
+      };
+      return patchClaim.mutateAsync({ sessionId, claimId, data });
+    };
+
+    const processClaimEvent = async (event: MiningClaimParserEvent) => {
+      if (event.type === "claim-detected") {
+        const { resourceName, itemId, quantity, value, isGlobal, isHof } = event.payload;
+        const createdClaim = await createClaim.mutateAsync({
+          sessionId,
+          data: {
+            itemId: itemId || null,
+            quantity: quantity > 0 ? quantity : null,
+            value: value > 0 ? value : null,
+            isGlobal,
+            isHof,
+          },
+        });
+        claimQueueRef.current.push({
+          id: createdClaim.id,
+          resourceName,
+          itemId: createdClaim.itemId,
+          depleted: false,
+        });
+        onClaimDetected?.({ ...createdClaim, resourceName });
+        await InvalidateQueryAndKeys.miningMutation(sessionId);
+        return;
+      }
+
+      const pendingClaim = findPendingClaim(event.payload.resourceName);
+      if (!pendingClaim) return;
+
+      if (event.type === "claim-updated") {
+        const updatedClaim = await updateClaim(pendingClaim.id, event.payload);
+        pendingClaim.itemId = updatedClaim.itemId;
+        await InvalidateQueryAndKeys.miningMutation(sessionId);
+        return;
+      }
+
+      const unknownClaims = claimQueueRef.current.filter(
+        (claim) => !claim.depleted && claim.resourceName === event.payload.resourceName && !claim.itemId,
+      );
+      const completeDepletion = async (claim: { id: string; itemId: string | null; depleted: boolean }) => {
+        const depositSize = await getDepositSizeApiV2MiningGetDepositSizeGet({
+          value: event.payload.value,
+        });
+        const updatedClaim = await patchClaim.mutateAsync({
+          sessionId,
+          claimId: claim.id,
+          data: {
+            itemId: claim.itemId,
+            quantity: event.payload.quantity > 0 ? event.payload.quantity : null,
+            value: event.payload.value > 0 ? event.payload.value : null,
+            isGlobal: event.payload.isGlobal,
+            isHof: event.payload.isHof,
+            depositSize: depositSize.size,
+          },
+        });
+        claim.itemId = updatedClaim.itemId;
+        claim.depleted = true;
+        onClaimDepleted?.({ ...updatedClaim, resourceName: event.payload.resourceName });
+        parserRef.current.reset();
+        await InvalidateQueryAndKeys.miningMutation(sessionId);
+      };
+
+      if (!pendingClaim.itemId && unknownClaims.length > 0 && onUnknownClaim) {
+        onUnknownClaim?.(
+          unknownClaims.map(({ id, resourceName }) => ({ id, resourceName })),
+          (claimId) => {
+            const selectedClaim = claimQueueRef.current.find((claim) => claim.id === claimId);
+            if (selectedClaim) void completeDepletion(selectedClaim);
+          },
+        );
+        return;
+      }
+
+      await completeDepletion(pendingClaim);
+    };
 
     const readNewLines = async () => {
       try {
@@ -118,40 +220,11 @@ export function useMiningChatLogClaims(
             console.log(LISTENER_LOG_PREFIX, "Ligne ignorée : aucun claim complet");
             continue;
           }
-          if (event.type === "claim-detected") {
-            console.log(LISTENER_LOG_PREFIX, "Claim détecté", event);
-            onClaimDetected?.(event);
-            continue;
-          }
-          const payload = event.payload;
-          if (pendingRef.current) {
-            console.log(LISTENER_LOG_PREFIX, "Claim ignoré : une requête est déjà en cours");
-            continue;
-          }
           pendingRef.current = true;
           try {
-            const { resourceName, ...apiPayload } = payload;
-            console.log(LISTENER_LOG_PREFIX, "Envoi du claim à l'API", {
-              sessionId,
-              resourceName,
-              apiPayload,
-            });
-            // The generated API uses camelCase; Axios performs the project's
-            // configured wire conversion for the backend contract.
-            const createdClaim = await createClaim.mutateAsync({
-              sessionId,
-              data: { ...apiPayload, isAth: payload.isAth } as never,
-            });
-            console.log(LISTENER_LOG_PREFIX, "Claim créé par l'API", createdClaim);
-            const depletedInfo = { resourceName, ...apiPayload, depositSize: createdClaim.depositSize ?? null };
-            console.log("Contenu de la snackbar", depletedInfo);
-            onClaimDepleted?.(depletedInfo);
-            parserRef.current.reset();
-            console.log(LISTENER_LOG_PREFIX, "Parser reset après création du claim");
-            await InvalidateQueryAndKeys.miningMutation();
-            console.log(LISTENER_LOG_PREFIX, "Queries Mining invalidées");
+            await processClaimEvent(event);
           } catch (error) {
-            console.error(LISTENER_LOG_PREFIX, "Impossible d'envoyer le claim Mining", error, payload);
+            console.error(LISTENER_LOG_PREFIX, "Impossible de traiter le claim Mining", error, event);
           } finally {
             pendingRef.current = false;
             console.log(LISTENER_LOG_PREFIX, "Fin du traitement du claim");
@@ -170,5 +243,5 @@ export function useMiningChatLogClaims(
       window.clearInterval(interval);
       console.log(LISTENER_LOG_PREFIX, "Listener arrêté");
     };
-  }, [createClaim, inGameUsername, items, onClaimDetected, onClaimDepleted, sessionId]);
+  }, [createClaim, inGameUsername, items, onClaimDetected, onClaimDepleted, onUnknownClaim, patchClaim, sessionId]);
 }

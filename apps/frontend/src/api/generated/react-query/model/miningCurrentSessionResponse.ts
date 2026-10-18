@@ -17,6 +17,7 @@ export interface MiningCurrentSessionResponse {
   searchType?: number | null;
   createdAt: string;
   endedAt: string | null;
+  zoneId: string | null;
   finderItemId?: string | null;
   finderLot?: MiningCurrentToolLotResponse | null;
   amplifierItemId?: string | null;

@@ -6,17 +6,21 @@
 import * as zod from 'zod';
 
 export const miningClaimResponseValueOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const miningClaimResponseDepthOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 
 
 export const MiningClaimResponse = zod.object({
   "id": zod.string(),
   "sessionId": zod.string(),
-  "itemId": zod.string(),
-  "quantity": zod.int(),
+  "itemId": zod.union([zod.string(),zod.null()]),
+  "quantity": zod.union([zod.int(),zod.null()]),
   "isHof": zod.boolean(),
   "isGlobal": zod.boolean(),
   "value": zod.union([zod.string().regex(miningClaimResponseValueOneRegExp),zod.null()]),
-  "depositSize": zod.int()
+  "depositSize": zod.union([zod.int(),zod.null()]),
+  "latitude": zod.union([zod.int(),zod.null()]),
+  "longitude": zod.union([zod.int(),zod.null()]),
+  "depth": zod.union([zod.string().regex(miningClaimResponseDepthOneRegExp),zod.null()])
 });
 
 export type MiningClaimResponse = zod.input<typeof MiningClaimResponse>;

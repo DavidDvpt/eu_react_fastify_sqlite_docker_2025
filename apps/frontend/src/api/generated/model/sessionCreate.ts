@@ -8,4 +8,5 @@ import type { SessionType } from './sessionType.ts';
 export type SessionCreate = {
   type: SessionType;
   clickCount?: number | null;
+  zoneId?: string | null;
 };

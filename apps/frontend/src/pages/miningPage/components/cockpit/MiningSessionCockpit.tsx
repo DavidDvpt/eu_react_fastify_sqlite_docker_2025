@@ -1,16 +1,23 @@
+import { useState } from "react";
 import type { MiningCurrentSessionResponse } from "@/api/generated/react-query/model/miningCurrentSessionResponse";
 import type { ItemViewModel } from "@zod-schemas";
+import { useListDepositSizesApiV2MiningDepositSizesGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import EquipmentSummaryComponent from "./EquipmentSummary";
 import MiningSessionFinancialSummary from "./MiningSessionFinancialSummary";
+import MiningSessionClaims from "./MiningSessionClaims";
 import type { EnhancerLine } from "./types";
 
 function MiningSessionCockpit({
   session,
   itemById,
+  resourceNames,
 }: {
   session: MiningCurrentSessionResponse;
   itemById: Map<string, ItemViewModel>;
+  resourceNames: Record<string, string>;
 }) {
+  const [tab, setTab] = useState<"setup" | "claims">("setup");
+  const depositSizesQuery = useListDepositSizesApiV2MiningDepositSizesGet();
   const toEnhancerLines = (
     enhancers: MiningCurrentSessionResponse["finderEnhancers"],
   ): EnhancerLine[] =>
@@ -59,6 +66,28 @@ function MiningSessionCockpit({
         </span>
         <span className="font-medium text-text">{miningType}</span>
       </div>
+      <div className="flex gap-1 border-b border-border">
+        {([['setup', 'Setup'], ['claims', 'Claims']] as const).map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            className={`rounded-t-md border border-b-0 bg-transparent px-3 py-2 text-sm text-white transition-colors hover:bg-white/10 ${tab === value ? "border-border bg-primary/20 font-bold text-white" : "border-transparent text-white/70"}`}
+            onClick={() => setTab(value)}
+          >
+            {label}
+          </button>
+        ))}
+      </div>
+      {tab === "claims" ? (
+        <MiningSessionClaims
+          sessionId={session.id}
+          itemById={itemById}
+          depositSizes={depositSizesQuery.data ?? []}
+          resourceNames={resourceNames}
+          items={Array.from(itemById.values())}
+          searchType={session.searchType}
+        />
+      ) : <>
       <EquipmentSummaryComponent
         label="Finder"
         itemId={session.finderItemId}
@@ -77,6 +106,7 @@ function MiningSessionCockpit({
         sessionId={session.id}
       />
       <MiningSessionFinancialSummary session={session} />
+      </>}
     </div>
   );
 }

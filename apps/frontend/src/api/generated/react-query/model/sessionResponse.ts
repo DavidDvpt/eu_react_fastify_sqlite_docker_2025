@@ -12,4 +12,5 @@ export interface SessionResponse {
   searchType?: number | null;
   createdAt: string;
   endedAt: string | null;
+  zoneId: string | null;
 }

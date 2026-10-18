@@ -19,6 +19,7 @@ export const itemPatchDecayTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\
 
 export const ItemPatch = zod.object({
   "imageUrlId": zod.union([zod.string(),zod.null()]).optional(),
+  "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
   "value": zod.union([zod.number().min(itemPatchValueOneMin),zod.string().regex(itemPatchValueTwoRegExp),zod.null()]).optional(),
   "weight": zod.union([zod.number().min(itemPatchWeightOneMin),zod.string().regex(itemPatchWeightTwoRegExp),zod.null()]).optional(),
   "decay": zod.union([zod.number().min(itemPatchDecayOneMin),zod.string().regex(itemPatchDecayTwoRegExp),zod.null()]).optional(),

@@ -7,10 +7,13 @@
 export interface MiningClaimResponse {
   id: string;
   sessionId: string;
-  itemId: string;
-  quantity: number;
+  itemId: string | null;
+  quantity: number | null;
   isHof: boolean;
   isGlobal: boolean;
   value: string | null;
-  depositSize: number;
+  depositSize: number | null;
+  latitude: number | null;
+  longitude: number | null;
+  depth: string | null;
 }

@@ -22,6 +22,7 @@ export const MiningCurrentSessionResponse = zod.object({
   "searchType": zod.union([zod.int(),zod.null()]).optional(),
   "createdAt": zod.iso.datetime({"offset":true}),
   "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()]),
+  "zoneId": zod.union([zod.string(),zod.null()]),
   "finderItemId": zod.union([zod.string(),zod.null()]).optional(),
   "finderLot": zod.union([MiningCurrentToolLotResponse,zod.null()]).optional(),
   "amplifierItemId": zod.union([zod.string(),zod.null()]).optional(),

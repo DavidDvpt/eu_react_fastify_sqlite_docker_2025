@@ -58,6 +58,9 @@ describe("manage forms", () => {
     expect(
       screen.getByRole("textbox", { name: "Nom Nexus:" }),
     ).toBeInTheDocument();
+    expect(
+      screen.getByRole("textbox", { name: "Nom de requête:" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("Catégorie:")).toBeInTheDocument();
     expect(screen.getByRole("combobox")).toBeInTheDocument();
     expect(screen.getByText("Stackable")).toBeInTheDocument();

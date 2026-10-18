@@ -24,6 +24,7 @@ export const typeViewModelSchema = systemBaseSchema.extend({
   hasTierOption: booleanSchema.default(false),
   category: categoryViewModelSchema.nullable().default(null),
   nexusName: z.string().nullable().optional(),
+  requestName: z.string().nullable().optional(),
 });
 export type TypeViewModel = z.infer<typeof typeViewModelSchema>;
 export type TypeViewModels = TypeViewModel[];

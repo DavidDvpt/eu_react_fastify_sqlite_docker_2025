@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet } from "@/api/generated/react-query/entropiaManagerAPI";
 import {
+  useCreatePlanetZoneApiV2PlanetsZonesPost,
   useCreateMiningSessionApiV2SessionsMiningPost,
   getGetMiningSessionsApiV2SessionsMiningGetQueryKey,
+  useListPlanetZonesApiV2PlanetsZonesGet,
+  useListPlanetsApiV2PlanetsGet,
   usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,
 } from "@/api/generated/react-query/entropiaManagerAPI";
 import type { MiningPrevalidationResponse } from "@/api/generated/react-query/model/miningPrevalidationResponse";
@@ -26,6 +29,8 @@ import MiningEquipmentSelect from "./MiningEquipmentSelect";
 const miningSessionFormSchema = z.object({
   clickCount: z.coerce.number().optional(),
   searchType: z.string().optional(),
+  planetId: z.string().optional(),
+  zoneName: z.string().trim().optional(),
   ammoItemId: z.string().optional(),
   finderLotId: z.string().optional(),
   excavatorLotId: z.string().optional(),
@@ -112,6 +117,8 @@ function MiningSessionModal() {
   const prevalidateMutation =
     usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost();
   const createSessionMutation = useCreateMiningSessionApiV2SessionsMiningPost();
+  const createZoneMutation = useCreatePlanetZoneApiV2PlanetsZonesPost();
+  const planetsQuery = useListPlanetsApiV2PlanetsGet();
   const {
     items: { itemDatas, isLoading: isItemsLoading },
   } = useSystemDatas();
@@ -120,6 +127,12 @@ function MiningSessionModal() {
   const [clickCount, setClickCount] = useState<number | undefined>(undefined);
   const [isEnmatterSelected, setIsEnmatterSelected] = useState(false);
   const [isOresSelected, setIsOresSelected] = useState(false);
+  const [planetId, setPlanetId] = useState("");
+  const [zoneName, setZoneName] = useState("");
+  const zonesQuery = useListPlanetZonesApiV2PlanetsZonesGet(
+    planetId ? { planet: planetId } : undefined,
+    { query: { enabled: Boolean(planetId) } },
+  );
   const [ammoSelection, setAmmoSelection] = useState<{
     itemId: string;
     quantity: number;
@@ -183,11 +196,14 @@ function MiningSessionModal() {
     excavatorLotId &&
     ammoSelection &&
     finderDecay &&
-    hasEnoughFinderTt,
+    hasEnoughFinderTt &&
+    Boolean(planetId) === Boolean(zoneName.trim()),
   );
   const formIssues = [
     !clickCount || clickCount <= 0 ? "Indiquez le nombre de clics." : undefined,
     !searchType ? "Sélectionnez au moins un type de mining." : undefined,
+    planetId && !zoneName.trim() ? "Indiquez une zone ou retirez la planète." : undefined,
+    !planetId && zoneName.trim() ? "Sélectionnez une planète pour cette zone." : undefined,
     !selectedFinder ? "Sélectionnez un finder." : undefined,
     selectedFinder && !finderDecay
       ? "Le decay du finder est indisponible."
@@ -241,13 +257,16 @@ function MiningSessionModal() {
     : 0;
   const totalTtc = prevalidation ? prevalidation.total.costTtc : 0;
   const onClose = () => navigate("/mining");
-  const onPrevalidate = async () => {
+  const onPrevalidate = async (values: z.output<typeof miningSessionFormSchema>) => {
+    setPlanetId(values.planetId ?? "");
+    setZoneName(values.zoneName?.trim() ?? "");
     if (
       !available ||
       !clickCount ||
       !searchType ||
       !finderLotId ||
-      !ammoSelection
+      !ammoSelection ||
+      (Boolean(values.planetId) !== Boolean(values.zoneName?.trim()))
     )
       return;
 
@@ -274,10 +293,23 @@ function MiningSessionModal() {
     )
       return;
 
+    const normalizedZoneName = zoneName.trim();
+    const existingZone = planetId && normalizedZoneName
+      ? (zonesQuery.data ?? []).find(
+          (zone) => zone.name.trim().toLocaleLowerCase() === normalizedZoneName.toLocaleLowerCase(),
+        )
+      : undefined;
+    const zoneId = planetId && normalizedZoneName
+      ? existingZone?.id ?? (await createZoneMutation.mutateAsync({
+          data: { planetId, name: normalizedZoneName },
+        })).id
+      : undefined;
+
     await createSessionMutation.mutateAsync({
       data: {
         clickCount,
         searchType,
+        ...(zoneId ? { zoneId } : {}),
         finderLotId,
         ammoItemId: ammoSelection.itemId,
         ammoQuantityInitial: ammoQuantity,
@@ -299,7 +331,7 @@ function MiningSessionModal() {
             quantityInitial: enhancer.quantity,
           })),
         ],
-      },
+      } as Parameters<typeof createSessionMutation.mutateAsync>[0]["data"] & { zoneId: string },
     });
     await queryClient.invalidateQueries({
       queryKey: getGetMiningSessionsApiV2SessionsMiningGetQueryKey(),
@@ -322,6 +354,8 @@ function MiningSessionModal() {
         defaultValues={{
           clickCount: undefined,
           searchType: undefined,
+          planetId: "",
+          zoneName: "",
         }}
         onSubmit={onPrevalidate}
         className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
@@ -345,7 +379,7 @@ function MiningSessionModal() {
           )}
           {available && !showSummary && (
             <div className="flex flex-col gap-4">
-              <div className="flex flex-wrap items-end justify-between gap-4">
+              <div className="grid grid-cols-2 items-end gap-4">
                 <div className="flex flex-col gap-2 px-1">
                   <label
                     htmlFor="mining-click-count"
@@ -389,6 +423,38 @@ function MiningSessionModal() {
                   <span className="sr-only">
                     Type Mining : {searchType ?? "non sélectionné"}
                   </span>
+                </div>
+                <div className="flex flex-col gap-2 px-1">
+                  <InputRHF
+                    key={`zone-${planetId}`}
+                    name="zoneName"
+                    label="Zone"
+                    list="mining-zone-options"
+                    placeholder={planetId ? "Zone connue ou nouvelle" : "Sélectionnez d'abord une planète"}
+                    disabled={!planetId}
+                    onInputChange={(event) => setZoneName(event.currentTarget.value)}
+                  />
+                  <datalist id="mining-zone-options">
+                    {(zonesQuery.data ?? []).map((zone) => (
+                      <option key={zone.id} value={zone.name} />
+                    ))}
+                  </datalist>
+                </div>
+                <div className="flex flex-col gap-2 px-1">
+                  <SelectRHF
+                    name="planetId"
+                    label="Planète"
+                    options={(planetsQuery.data ?? []).map((planet) => ({
+                      value: planet.id,
+                      label: planet.name,
+                    }))}
+                    placeholder="Sélectionner une planète"
+                    onValueChange={(value) => {
+                      setPlanetId(value);
+                      setZoneName("");
+                    }}
+                    disabled={planetsQuery.isPending}
+                  />
                 </div>
               </div>
               <MiningAmmoSelector
@@ -473,6 +539,12 @@ function MiningSessionModal() {
                       .join(" + ")}
                   </span>
                 </div>
+                <div>
+                  Planète : <span className="text-text">{planetsQuery.data?.find((planet) => planet.id === planetId)?.name ?? "—"}</span>
+                </div>
+                <div>
+                  Zone : <span className="text-text">{zoneName || "—"}</span>
+                </div>
                 {prevalidation?.ammo.map((line) => (
                   <SummaryCostItem
                     key={`ammo-${line.itemId}`}
@@ -526,6 +598,11 @@ function MiningSessionModal() {
               {createSessionMutation.isError && (
                 <div className="text-sm text-error-300">
                   Impossible de créer cette session.
+                </div>
+              )}
+              {createZoneMutation.isError && (
+                <div className="text-sm text-error-300">
+                  Impossible de créer cette zone.
                 </div>
               )}
               {prevalidation && (
@@ -602,10 +679,10 @@ function MiningSessionModal() {
             <Button
               variant="primary"
               className="w-[calc(120px+3rem)]"
-              disabled={createSessionMutation.isPending}
+              disabled={createSessionMutation.isPending || createZoneMutation.isPending || zonesQuery.isPending}
               onClick={onCreateSession}
             >
-              {createSessionMutation.isPending ? "Création..." : "Valider"}
+              {createSessionMutation.isPending || createZoneMutation.isPending ? "Création..." : "Valider"}
             </Button>
           )}
         </div>

@@ -12,7 +12,8 @@ export const sessionCreateClickCountOneMin = 0;
 
 export const SessionCreate = zod.object({
   "type": SessionType,
-  "clickCount": zod.union([zod.int().min(sessionCreateClickCountOneMin),zod.null()]).optional()
+  "clickCount": zod.union([zod.int().min(sessionCreateClickCountOneMin),zod.null()]).optional(),
+  "zoneId": zod.union([zod.string(),zod.null()]).optional()
 });
 
 export type SessionCreate = zod.input<typeof SessionCreate>;

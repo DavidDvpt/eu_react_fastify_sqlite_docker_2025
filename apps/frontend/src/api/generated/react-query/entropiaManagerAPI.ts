@@ -64,6 +64,7 @@ import type {
   MessageResponse,
   MiningAvailableResponse,
   MiningClaimCreate,
+  MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
   MiningCostLineResponse,
@@ -5277,6 +5278,76 @@ export const useCreateClaimApiV2MiningSessionIdClaimsPost = <TError = ErrorType<
         TContext
       > => {
       return useMutation(getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions(options), queryClient);
+    }
+
+/**
+ * @summary Patch Claim
+ */
+export const patchClaimApiV2MiningSessionIdClaimsClaimIdPatch = (
+    sessionId: string,
+    claimId: string,
+    miningClaimPatch: BodyType<MiningClaimPatch>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<MiningClaimResponse>(
+      {url: `/api/v2/mining/${sessionId}/claims/${claimId}`, method: 'PATCH',
+      headers: {'Content-Type': 'application/json', },
+      data: miningClaimPatch, signal
+    },
+      options);
+    }
+
+
+
+
+export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey = () => ['patchClaimApiV2MiningSessionIdClaimsClaimIdPatch'] as const;
+
+export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext> => {
+
+const mutationKey = getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables> = (props) => {
+          const {sessionId,claimId,data} = props ?? {};
+
+          return  patchClaimApiV2MiningSessionIdClaimsClaimIdPatch(sessionId,claimId,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>>
+    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationBody = BodyType<MiningClaimPatch>
+    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationError = ErrorType<HTTPValidationError>
+    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables = {sessionId: string;claimId: string;data: BodyType<MiningClaimPatch>}
+
+    /**
+ * @summary Patch Claim
+ */
+export const usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>,
+        TError,
+        PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
+        TContext
+      > => {
+      return useMutation(getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions(options), queryClient);
     }
 
 /**

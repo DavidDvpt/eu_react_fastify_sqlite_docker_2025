@@ -5,9 +5,8 @@
  */
 
 export interface MiningClaimCreate {
-  itemId: string;
-  /** @exclusiveMinimum 0 */
-  quantity: number;
+  itemId?: string | null;
+  quantity?: number | null;
   isHof?: boolean;
   isGlobal?: boolean;
   value?: number | string | null;

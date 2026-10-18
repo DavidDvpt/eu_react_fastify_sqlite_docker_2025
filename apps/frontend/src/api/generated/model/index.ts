@@ -34,6 +34,7 @@ export * from './lotUpdate.ts';
 export * from './miningAvailableResponseExcavatorEnhancers.ts';
 export * from './miningAvailableResponseFinderEnhancers.ts';
 export * from './miningClaimCreate.ts';
+export * from './miningClaimPatch.ts';
 export * from './miningCostLineUpdate.ts';
 export * from './miningCurrentSessionResponseExcavatorEnhancers.ts';
 export * from './miningCurrentSessionResponseFinderEnhancers.ts';
