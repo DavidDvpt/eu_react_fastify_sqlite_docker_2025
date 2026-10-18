@@ -69,7 +69,8 @@ function MiningClaimEditModal({
 
   if (!claimId || !claim) return null;
 
-  const selectedDepositSize = depositSizes.find((size) => size.size === claim.depositSize);
+  // Claims store the reference row id, not the display size number.
+  const selectedDepositSize = depositSizes.find((size) => size.id === claim.depositSize);
 
   const defaultValues = {
     itemId: claim.itemId,
@@ -93,7 +94,7 @@ function MiningClaimEditModal({
           latitude: values.latitude,
           longitude: values.longitude,
           depositSize: values.depleted && values.depositSize
-            ? depositSizes.find((size) => String(size.id) === values.depositSize)?.size ?? null
+            ? depositSizes.find((size) => String(size.id) === values.depositSize)?.id ?? null
             : null,
         },
       });

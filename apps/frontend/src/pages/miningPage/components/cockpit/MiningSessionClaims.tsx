@@ -95,7 +95,8 @@ function MiningSessionClaims({
             </thead>
             <tbody>
               {displayedClaims.map((claim, index) => {
-                const size = depositSizes.find((entry) => entry.size === claim.depositSize);
+                // Claims store the reference row id, not the display size number.
+                const size = depositSizes.find((entry) => entry.id === claim.depositSize);
                 const resourceName = claim.itemId
                   ? itemById.get(claim.itemId)?.name ?? resourceNames[claim.id] ?? "Unknown"
                   : resourceNames[claim.id] ?? "Unknown";
