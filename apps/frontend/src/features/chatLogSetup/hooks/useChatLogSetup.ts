@@ -33,6 +33,12 @@ function useChatLogSetup() {
 
   const inspectLog = useCallback(async (storedLog: StoredChatLog) => {
     try {
+      // A File obtained from <input type="file"> is only a snapshot. It cannot
+      // be refreshed when the game appends new lines to chat.log.
+      if (storedLog.source === "file") {
+        await invalidateHandle();
+        return;
+      }
       if (storedLog.source === "handle") {
         const permission = await storedLog.handle.queryPermission({ mode: "read" });
         if (permission === "prompt") {
@@ -46,7 +52,7 @@ function useChatLogSetup() {
           return;
         }
       }
-      const file = storedLog.source === "handle" ? await storedLog.handle.getFile() : storedLog.file;
+      const file = await storedLog.handle.getFile();
       if (!isValidFile(file)) {
         await invalidateHandle();
         return;

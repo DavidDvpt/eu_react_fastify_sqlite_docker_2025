@@ -5,7 +5,7 @@
  */
 
 export interface MiningDepositSizeResponse {
-  id: string;
+  id: number;
   size: number;
   romanSize: string;
   sizeLabel: string;

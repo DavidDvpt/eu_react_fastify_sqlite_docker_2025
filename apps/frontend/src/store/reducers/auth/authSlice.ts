@@ -13,6 +13,11 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
+    setInGameUsername(state, action: { payload: string | null }) {
+      if (state.user.result) {
+        state.user.result.inGameUsername = action.payload;
+      }
+    },
     logout(state) {
       state.isLoggued = false;
       state.role = null;

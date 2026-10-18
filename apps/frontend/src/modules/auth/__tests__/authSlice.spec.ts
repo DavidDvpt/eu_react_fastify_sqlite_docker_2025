@@ -4,6 +4,27 @@ import { ApiStatus } from "@/lib/axios/ApiStatus";
 import authReducer, { authActions } from "@/store/reducers/auth/authSlice";
 
 describe("authSlice", () => {
+  it("updates the in-game username without reloading the authenticated user", () => {
+    const previousState: AuthType = {
+      isLoggued: true,
+      role: "USER",
+      user: {
+        status: ApiStatus.FULFILLED,
+        result: {
+          id: "1",
+          pseudo: "david",
+          role: "USER",
+          isActive: true,
+        },
+        error: null,
+      },
+    };
+
+    const state = authReducer(previousState, authActions.setInGameUsername("EntropiaName"));
+
+    expect(state.user.result?.inGameUsername).toBe("EntropiaName");
+  });
+
   it("logout resets auth state to its initial values", () => {
     const previousState: AuthType = {
       isLoggued: true,

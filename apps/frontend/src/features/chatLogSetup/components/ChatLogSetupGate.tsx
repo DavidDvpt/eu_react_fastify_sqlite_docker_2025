@@ -2,7 +2,7 @@ import ChatLogSetupModal from "./ChatLogSetupModal";
 import InGameUsernameSetupModal from "./InGameUsernameSetupModal";
 import useChatLogSetup from "../hooks/useChatLogSetup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { authMeThunk, getauthState } from "@/store";
+import { authActions, getauthState } from "@/store";
 import { ApiStatus } from "@/lib/axios/ApiStatus";
 import { useState } from "react";
 import { useUpdateInGameUsernameApiV2AuthInGameUsernamePut } from "@/api/generated/react-query/entropiaManagerAPI";
@@ -18,8 +18,10 @@ function ChatLogSetupGate() {
   const saveUsername = async ({ inGameUsername }: { inGameUsername: string }) => {
     try {
       setUsernameError(null);
-      await updateUsername.mutateAsync({ data: { inGameUsername: inGameUsername.trim() } });
-      await dispatch(authMeThunk()).unwrap();
+      const response = await updateUsername.mutateAsync({
+        data: { inGameUsername: inGameUsername.trim() },
+      });
+      dispatch(authActions.setInGameUsername(response.inGameUsername));
     } catch (error) {
       console.error("Impossible d'enregistrer le pseudo en jeu", error);
       setUsernameError("Impossible d'enregistrer le pseudo en jeu.");

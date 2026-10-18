@@ -1,30 +1,26 @@
-import { useRef } from "react";
-
 import { Button } from "@/components/ui/button";
 
 type ChatLogFilePickerProps = {
-  onSelect: (file: File) => Promise<void>;
+  onSelect: (file?: File) => Promise<void>;
+};
+
+type FilePickerWindow = Window & {
+  showOpenFilePicker?: () => Promise<unknown[]>;
 };
 
 function ChatLogFilePicker({ onSelect }: ChatLogFilePickerProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const supportsLiveFileAccess = typeof (window as FilePickerWindow).showOpenFilePicker === "function";
 
   return (
     <>
-      <input
-        ref={inputRef}
-        type="file"
-        accept=".log,text/plain,application/octet-stream"
-        className="hidden"
-        onChange={(event) => {
-          const [file] = Array.from(event.target.files ?? []);
-          if (file) void onSelect(file);
-          event.target.value = "";
-        }}
-      />
-      <Button type="button" variant="secondary" onClick={() => inputRef.current?.click()}>
-        Sélectionner chat.log
+      <Button type="button" variant="secondary" onClick={() => void onSelect()} disabled={!supportsLiveFileAccess}>
+        Sélectionner chat.log (accès live)
       </Button>
+      {!supportsLiveFileAccess && (
+        <p className="m-0 text-sm text-error-500">
+          Utilisez Chrome ou Brave pour permettre le suivi en direct de chat.log.
+        </p>
+      )}
     </>
   );
 }

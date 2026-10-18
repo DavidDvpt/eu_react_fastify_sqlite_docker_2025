@@ -20,6 +20,10 @@ export type MiningClaimPayload = {
   isAth: boolean;
 };
 
+export type MiningClaimParserEvent =
+  | { type: "claim-detected"; resourceName: string }
+  | { type: "claim-depleted"; payload: MiningClaimPayload };
+
 export const emptyClaim = (): CurrentMiningClaim => ({
   resourceName: null,
   itemId: null,
@@ -30,7 +34,7 @@ export const emptyClaim = (): CurrentMiningClaim => ({
   isAth: false,
 });
 
-const resourceDeedPattern = /You received (?:Energy Matter|Ore) Resource Deed x \(\d+\) Value:/;
+const resourceDeedPattern = /You received Energy Matter Resource Deed x \(\d+\) Value:/;
 const claimedResourcePattern = /You have claimed a resource! \(([^)]+)\)/;
 const extractionPattern = /You received (.+) x \((\d+)\) Value: ([\d.,]+) PED/;
 function parsePed(value: string): number {
@@ -55,7 +59,7 @@ export class MiningClaimParser {
     this.currentClaim.itemId = items.find((item) => item.name === this.currentClaim?.resourceName)?.id ?? null;
   }
 
-  processLine(line: string, items: ItemResponse[]): MiningClaimPayload | null {
+  processLine(line: string, items: ItemResponse[]): MiningClaimParserEvent | null {
     if (!line.includes("[System]") && !line.includes("[Globals]")) return null;
     const message = line.replace(/^.*?\[(?:System|Globals)\]\s*\[.*?\]\s*/, "").trim();
 
@@ -70,7 +74,7 @@ export class MiningClaimParser {
       this.currentClaim.resourceName = claimedResource[1] ?? null;
       this.setItems(items);
       console.log("Source trouvée", this.currentClaim.resourceName);
-      return null;
+      return { type: "claim-detected", resourceName: this.currentClaim.resourceName };
     }
 
     const escapedPlayerName = this.playerName.replace(/[.*+?^${}()|[\\]\\]/g, "\\$&");
@@ -111,13 +115,16 @@ export class MiningClaimParser {
         return null;
       }
       return {
-        resourceName: claim.resourceName,
-        itemId: claim.itemId,
-        quantity: claim.quantity,
-        value: claim.value,
-        isGlobal: claim.isGlobal,
-        isHof: claim.isHof,
-        isAth: claim.isAth,
+        type: "claim-depleted",
+        payload: {
+          resourceName: claim.resourceName,
+          itemId: claim.itemId,
+          quantity: claim.quantity,
+          value: claim.value,
+          isGlobal: claim.isGlobal,
+          isHof: claim.isHof,
+          isAth: claim.isAth,
+        },
       };
     }
 

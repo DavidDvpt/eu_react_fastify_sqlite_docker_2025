@@ -26,9 +26,13 @@ function MiningSessionCurrentView() {
     currentSession && "finderItemId" in currentSession
       ? (currentSession as MiningCurrentSessionResponse)
       : undefined;
+  const handleClaimDetected = useCallback((claim: { resourceName: string }) => {
+    setSnackbarClaim({ type: "detected", resourceName: claim.resourceName });
+  }, []);
   const handleClaimDepleted = useCallback((claim: { resourceName: string; value: number; isGlobal: boolean; isHof: boolean; isAth: boolean; depositSize: number | null }) => {
     const depositSize = depositSizesQuery.data?.find((size) => size.size === claim.depositSize);
     setSnackbarClaim({
+      type: "depleted",
       resourceName: claim.resourceName,
       romanSize: depositSize?.romanSize ?? "",
       value: claim.value,
@@ -37,7 +41,7 @@ function MiningSessionCurrentView() {
       isAth: claim.isAth,
     });
   }, [depositSizesQuery.data]);
-  useMiningChatLogClaims(miningSession?.id, itemDatas ?? [], handleClaimDepleted);
+  useMiningChatLogClaims(miningSession?.id, itemDatas ?? [], handleClaimDetected, handleClaimDepleted);
   useEffect(() => {
     if (!snackbarClaim) return;
     const timeout = window.setTimeout(() => setSnackbarClaim(null), 3000);

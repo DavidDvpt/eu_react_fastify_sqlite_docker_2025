@@ -10,7 +10,7 @@ export const miningDepositSizeResponseValueMaxRegExp = new RegExp('^(?!^[-+.]*$)
 
 
 export const MiningDepositSizeResponse = zod.object({
-  "id": zod.string(),
+  "id": zod.int(),
   "size": zod.int(),
   "romanSize": zod.string(),
   "sizeLabel": zod.string(),
