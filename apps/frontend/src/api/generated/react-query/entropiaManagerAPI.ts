@@ -53,6 +53,7 @@ import type {
   ListInventoryStockApiV2InventoryStockGetParams,
   ListItemsApiV2ItemsGetParams,
   ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  ListPlanetZonesApiV2PlanetsZonesGetParams,
   ListTransactionsApiV2TransactionsGetParams,
   ListTypesApiV2TypesGetParams,
   LotOriginResponse,
@@ -76,6 +77,9 @@ import type {
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
+  PlanetResponse,
+  PlanetZoneCreate,
+  PlanetZoneResponse,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefiningSessionCreate,
@@ -5555,6 +5559,261 @@ export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData 
 
 
 
+
+/**
+ * @summary List Planets
+ */
+export const listPlanetsApiV2PlanetsGet = (
+
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<PlanetResponse[]>(
+      {url: `/api/v2/planets`, method: 'GET', signal
+    },
+      options);
+    }
+
+
+
+
+export const getListPlanetsApiV2PlanetsGetQueryKey = () => {
+    return [
+    `/api/v2/planets`
+    ] as const;
+    }
+
+
+export const getListPlanetsApiV2PlanetsGetQueryOptions = <TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListPlanetsApiV2PlanetsGetQueryKey();
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>> = ({ signal }) => listPlanetsApiV2PlanetsGet(requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListPlanetsApiV2PlanetsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>>
+export type ListPlanetsApiV2PlanetsGetQueryError = ErrorType<unknown>
+
+
+export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
+  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+          TError,
+          Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+          TError,
+          Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Planets
+ */
+
+export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
+  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListPlanetsApiV2PlanetsGetQueryOptions(options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary List Planet Zones
+ */
+export const listPlanetZonesApiV2PlanetsZonesGet = (
+    params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<PlanetZoneResponse[]>(
+      {url: `/api/v2/planets/zones`, method: 'GET',
+        params, signal
+    },
+      options);
+    }
+
+
+
+
+export const getListPlanetZonesApiV2PlanetsZonesGetQueryKey = (params?: ListPlanetZonesApiV2PlanetsZonesGetParams,) => {
+    return [
+    `/api/v2/planets/zones`, ...(params ? [params] : [])
+    ] as const;
+    }
+
+
+export const getListPlanetZonesApiV2PlanetsZonesGetQueryOptions = <TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+) => {
+
+const {query: queryOptions, request: requestOptions} = options ?? {};
+
+  const queryKey =  queryOptions?.queryKey ?? getListPlanetZonesApiV2PlanetsZonesGetQueryKey(params);
+
+
+
+    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>> = ({ signal }) => listPlanetZonesApiV2PlanetsZonesGet(params, requestOptions, signal);
+
+
+
+
+
+   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+}
+
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>>
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryError = ErrorType<HTTPValidationError>
+
+
+export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params: undefined |  ListPlanetZonesApiV2PlanetsZonesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>> & Pick<
+        DefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>> & Pick<
+        UndefinedInitialDataOptions<
+          Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+          TError,
+          Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
+        > , 'initialData'
+      >, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+/**
+ * @summary List Planet Zones
+ */
+
+export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
+ params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient
+ ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+
+  const queryOptions = getListPlanetZonesApiV2PlanetsZonesGetQueryOptions(params,options)
+
+  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+  return withQueryKey(query, queryOptions.queryKey);
+}
+
+
+
+
+
+
+
+/**
+ * @summary Create Planet Zone
+ */
+export const createPlanetZoneApiV2PlanetsZonesPost = (
+    planetZoneCreate: BodyType<PlanetZoneCreate>,
+ options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+) => {
+
+
+      return customInstance<IdResponse>(
+      {url: `/api/v2/planets/zones`, method: 'POST',
+      headers: {'Content-Type': 'application/json', },
+      data: planetZoneCreate, signal
+    },
+      options);
+    }
+
+
+
+
+export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey = () => ['createPlanetZoneApiV2PlanetsZonesPost'] as const;
+
+export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+): UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext> => {
+
+const mutationKey = getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey();
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables> = (props) => {
+          const {data} = props ?? {};
+
+          return  createPlanetZoneApiV2PlanetsZonesPost(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>>
+    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationBody = BodyType<PlanetZoneCreate>
+    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationError = ErrorType<HTTPValidationError>
+    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables = {data: BodyType<PlanetZoneCreate>}
+
+    /**
+ * @summary Create Planet Zone
+ */
+export const useCreatePlanetZoneApiV2PlanetsZonesPost = <TError = ErrorType<HTTPValidationError>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
+ , queryClient?: QueryClient): UseMutationResult<
+        Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+        TError,
+        CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
+        TContext
+      > => {
+      return useMutation(getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions(options), queryClient);
+    }
 
 /**
  * @summary Health

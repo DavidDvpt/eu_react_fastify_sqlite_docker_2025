@@ -46,6 +46,7 @@ export * from './miningSessionCreate.ts';
 export * from './miningSessionHistoryResponseSearchType.ts';
 export * from './miningSessionLineUpdate.ts';
 export * from './miningSessionPrevalidationCreate.ts';
+export * from './planetZoneCreate.ts';
 export * from './refiningSessionCreate.ts';
 export * from './sessionCreate.ts';
 export * from './sessionLineCostCreate.ts';

@@ -39,6 +39,9 @@ import {
   MiningSessionCreate,
   MiningSessionHistoryResponse,
   MiningSessionPrevalidationCreate,
+  PlanetResponse,
+  PlanetZoneCreate,
+  PlanetZoneResponse,
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   RefiningSessionCreate,
@@ -1273,6 +1276,55 @@ export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = Mi
 
 export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
 export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponseOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
+
+
+/**
+ * @summary List Planets
+ */
+export const ListPlanetsApiV2PlanetsGetResponseItem = PlanetResponse
+
+export type ListPlanetsApiV2PlanetsGetResponseItem = zod.input<typeof ListPlanetsApiV2PlanetsGetResponseItem>;
+export type ListPlanetsApiV2PlanetsGetResponseItemOutput = zod.output<typeof ListPlanetsApiV2PlanetsGetResponseItem>;
+
+export const ListPlanetsApiV2PlanetsGetResponse = zod.array(ListPlanetsApiV2PlanetsGetResponseItem)
+
+export type ListPlanetsApiV2PlanetsGetResponse = zod.input<typeof ListPlanetsApiV2PlanetsGetResponse>;
+export type ListPlanetsApiV2PlanetsGetResponseOutput = zod.output<typeof ListPlanetsApiV2PlanetsGetResponse>;
+
+
+/**
+ * @summary List Planet Zones
+ */
+export const ListPlanetZonesApiV2PlanetsZonesGetQueryParams = zod.object({
+  "planet": zod.union([zod.string(),zod.null()]).optional()
+})
+
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryParams = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams>;
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryParamsOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams>;
+
+export const ListPlanetZonesApiV2PlanetsZonesGetResponseItem = PlanetZoneResponse
+
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseItem = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem>;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseItemOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem>;
+
+export const ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.array(ListPlanetZonesApiV2PlanetsZonesGetResponseItem)
+
+export type ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetResponse>;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetResponse>;
+
+
+/**
+ * @summary Create Planet Zone
+ */
+export const CreatePlanetZoneApiV2PlanetsZonesPostBody = PlanetZoneCreate
+
+export type CreatePlanetZoneApiV2PlanetsZonesPostBody = zod.input<typeof CreatePlanetZoneApiV2PlanetsZonesPostBody>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostBodyOutput = zod.output<typeof CreatePlanetZoneApiV2PlanetsZonesPostBody>;
+
+export const CreatePlanetZoneApiV2PlanetsZonesPostResponse = IdResponse
+
+export type CreatePlanetZoneApiV2PlanetsZonesPostResponse = zod.input<typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostResponseOutput = zod.output<typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse>;
 
 
 /**
