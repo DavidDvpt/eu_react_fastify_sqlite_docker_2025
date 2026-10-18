@@ -1,7 +1,10 @@
 import { useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { z } from "zod";
-import { usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch } from "@/api/generated/react-query/entropiaManagerAPI";
+import {
+  useCreateClaimApiV2MiningSessionIdClaimsPost,
+  usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
+} from "@/api/generated/react-query/entropiaManagerAPI";
 import type { MiningClaimResponse } from "@/api/generated/react-query/model/miningClaimResponse";
 import type { MiningDepositSizeResponse } from "@/api/generated/react-query/model/miningDepositSizeResponse";
 import { GenericForm } from "@/shared/components/form/Genericform";
@@ -47,7 +50,9 @@ function MiningClaimEditModal({
 }: MiningClaimEditModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const claimId = searchParams.get("claimId");
+  const isCreateMode = searchParams.get("createClaim") === "true";
   const claim = claims.find((entry) => entry.id === claimId);
+  const createClaim = useCreateClaimApiV2MiningSessionIdClaimsPost();
   const patchClaim = usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch();
 
   const itemOptions = useMemo(
@@ -65,27 +70,59 @@ function MiningClaimEditModal({
   const close = () => {
     const next = new URLSearchParams(searchParams);
     next.delete("claimId");
+    next.delete("createClaim");
     setSearchParams(next);
   };
 
-  if (!claimId || !claim) return null;
+  if ((!claimId || !claim) && !isCreateMode) return null;
 
   // Claims store the reference row id, not the display size number.
-  const selectedDepositSize = depositSizes.find((size) => size.id === claim.depositSize);
+  const selectedDepositSize = depositSizes.find((size) => size.id === claim?.depositSize);
 
   const defaultValues = {
-    itemId: claim.itemId,
+    itemId: claim?.itemId ?? null,
     depositSize: selectedDepositSize ? String(selectedDepositSize.id) : null,
-    quantity: claim.quantity,
-    value: claim.value === null ? null : Number(claim.value),
-    latitude: claim.latitude,
-    longitude: claim.longitude,
-    depth: claim.depth === null ? null : Number(claim.depth),
-    depleted: claim.depositSize !== null,
+    quantity: claim?.quantity ?? null,
+    value: claim?.value == null ? null : Number(claim.value),
+    latitude: claim?.latitude ?? null,
+    longitude: claim?.longitude ?? null,
+    depth: claim?.depth == null ? null : Number(claim.depth),
+    depleted: claim?.depositSize !== null && claim?.depositSize !== undefined,
   };
 
   const handleSubmit = async (values: ClaimEditValues) => {
-    if (!claim.id.startsWith("__fake-claim-")) {
+    const depositSizeId =
+      values.depositSize ||
+      (claim?.depositSize == null ? null : String(claim.depositSize));
+
+    if (isCreateMode) {
+      const createdClaim = await createClaim.mutateAsync({
+        sessionId,
+        data: {
+          itemId: values.itemId || null,
+          quantity: values.quantity,
+          value: values.value,
+          isGlobal: false,
+          isHof: false,
+        },
+      });
+      if (values.depth !== null || depositSizeId !== null) {
+        await patchClaim.mutateAsync({
+          sessionId,
+          claimId: createdClaim.id,
+          data: {
+            itemId: values.itemId || null,
+            quantity: values.quantity,
+            value: values.value,
+            latitude: values.latitude,
+            longitude: values.longitude,
+            depth: values.depth,
+            depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
+          },
+        });
+      }
+      await InvalidateQueryAndKeys.miningMutation(sessionId);
+    } else if (claim && !claim.id.startsWith("__fake-claim-")) {
       await patchClaim.mutateAsync({
         sessionId,
         claimId: claim.id,
@@ -96,8 +133,8 @@ function MiningClaimEditModal({
           latitude: values.latitude,
           longitude: values.longitude,
           depth: values.depth,
-          depositSize: values.depleted && values.depositSize
-            ? Number(values.depositSize)
+          depositSize: depositSizeId !== null
+            ? Number(depositSizeId)
             : null,
         },
       });
@@ -113,11 +150,11 @@ function MiningClaimEditModal({
       onOpenChange={(open) => {
         if (!open) close();
       }}
-      title={{ value: "Modifier le claim" }}
+      title={{ value: isCreateMode ? "Créer un claim" : "Modifier le claim" }}
       contentStyle="max-h-[90vh] overflow-y-auto"
     >
       <GenericForm
-        key={claim.id}
+        key={claim?.id ?? "create"}
         schema={claimEditSchema}
         defaultValues={defaultValues}
         onSubmit={handleSubmit}
@@ -136,7 +173,7 @@ function MiningClaimEditModal({
         <FormButtonsSection
           submitDisabled={patchClaim.isPending}
           cancelDisabled={patchClaim.isPending}
-          submitLabel="Enregistrer"
+          submitLabel={isCreateMode ? "Créer" : "Enregistrer"}
           onCancel={close}
         />
       </GenericForm>

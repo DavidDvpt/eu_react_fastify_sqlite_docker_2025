@@ -1,4 +1,5 @@
 import { useSearchParams } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 import {
   useGetMiningLootListApiV2SessionsMiningLootlistGet,
   useListClaimsApiV2MiningSessionIdClaimsGet,
@@ -73,7 +74,7 @@ function MiningSessionClaims({
   ];
   const displayedClaims = (import.meta.env.DEV ? [...fakeClaims, ...claims] : [...claims])
     .sort(
-      (first, second) => Date.parse(first.createdAt) - Date.parse(second.createdAt),
+      (first, second) => Date.parse(second.createdAt) - Date.parse(first.createdAt),
     );
 
   const openClaim = (claimId: string) => {
@@ -82,9 +83,21 @@ function MiningSessionClaims({
     setSearchParams(params);
   };
 
+  const openCreateClaim = () => {
+    const params = new URLSearchParams(searchParams);
+    params.delete("claimId");
+    params.set("createClaim", "true");
+    setSearchParams(params);
+  };
+
   return (
     <section className="flex min-w-0 flex-col gap-3">
-      <h3 className="m-0 text-base font-semibold text-text">Claims de la session</h3>
+      <div className="flex items-center justify-between gap-2">
+        <h3 className="m-0 text-base font-semibold text-text">Claims de la session</h3>
+        <Button type="button" variant="primary" size="sm" onClick={openCreateClaim}>
+          Créer un claim
+        </Button>
+      </div>
       {claimsQuery.isPending ? (
         <p className="m-0 text-sm text-text-muted">Chargement des claims...</p>
       ) : displayedClaims.length === 0 ? (
