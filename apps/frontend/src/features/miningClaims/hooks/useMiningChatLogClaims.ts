@@ -12,7 +12,7 @@ import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys
 import { getauthState } from "@/store";
 import { useAppSelector } from "@/store/hooks";
 import { MiningClaimParser } from "../services/miningClaimParser";
-import type { MiningClaimParserEvent, MiningClaimPayload } from "../services/miningClaimParser";
+import type { MiningClaimParserEvent } from "../services/miningClaimParser";
 
 const POLL_INTERVAL_MS = 1000;
 const LISTENER_LOG_PREFIX = "[ChatLogListener]";
@@ -72,18 +72,6 @@ export function useMiningChatLogClaims(
         (claim) => !claim.depleted && claim.resourceName === resourceName,
       );
 
-    const updateClaim = async (claimId: string, payload: MiningClaimPayload) => {
-      const data = {
-        itemId: payload.itemId || null,
-        quantity: payload.quantity > 0 ? payload.quantity : null,
-        value: payload.value > 0 ? payload.value : null,
-        isGlobal: payload.isGlobal,
-        isHof: payload.isHof,
-        depositSize: null,
-      };
-      return patchClaim.mutateAsync({ sessionId, claimId, data });
-    };
-
     const processClaimEvent = async (event: MiningClaimParserEvent) => {
       if (event.type === "claim-detected") {
         const { resourceName, itemId, quantity, value, isGlobal, isHof } = event.payload;
@@ -112,9 +100,9 @@ export function useMiningChatLogClaims(
       if (!pendingClaim) return;
 
       if (event.type === "claim-updated") {
-        const updatedClaim = await updateClaim(pendingClaim.id, event.payload);
-        pendingClaim.itemId = updatedClaim.itemId;
-        await InvalidateQueryAndKeys.miningMutation(sessionId);
+        // Keep accumulating parser data locally. The claim is patched once,
+        // when the game confirms depletion, with the final total quantity and
+        // value.
         return;
       }
 
@@ -134,7 +122,8 @@ export function useMiningChatLogClaims(
             value: event.payload.value > 0 ? event.payload.value : null,
             isGlobal: event.payload.isGlobal,
             isHof: event.payload.isHof,
-            depositSize: depositSize.size,
+            // Claims store the reference row id, not the display size number.
+            depositSize: depositSize.id,
           },
         });
         claim.itemId = updatedClaim.itemId;
