@@ -2,33 +2,33 @@ import {
   QueryClient,
   QueryClientProvider,
   useQuery,
-} from "@tanstack/react-query";
-import { renderHook, waitFor } from "@testing-library/react";
-import type { ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+} from '@tanstack/react-query';
+import { renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useInventoryStockData from "../rqFetchHooks/useInventoryStockData";
+import useInventoryStockData from '../rqFetchHooks/useInventoryStockData';
 
 const { inventoryStockMock, systemDatasMock } = vi.hoisted(() => ({
   inventoryStockMock: vi.fn(),
   systemDatasMock: vi.fn(),
 }));
 
-vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+vi.mock('@/api/generated/react-query/entropiaManagerAPI', () => ({
   useListInventoryStockApiV2InventoryStockGet: () =>
     useQuery({
-      queryKey: ["inventory-stock"],
+      queryKey: ['inventory-stock'],
       queryFn: inventoryStockMock,
     }),
 }));
 
-vi.mock("@/shared/hooks/rqFetchHooks/useSystemDatas", () => ({
+vi.mock('@/shared/hooks/rqFetchHooks/useSystemDatas', () => ({
   default: (...args: unknown[]) => systemDatasMock(...args),
 }));
 
 const ITEMS = [
-  { id: "ore", name: "Ore", value: 2 },
-  { id: "sword", name: "Sword", value: 100 },
+  { id: 'ore', name: 'Ore', value: 2 },
+  { id: 'sword', name: 'Sword', value: 100 },
 ];
 
 function mockSystemDatas(itemDatas: unknown[] = ITEMS) {
@@ -51,40 +51,58 @@ function freshClient() {
   });
 }
 
-describe("useInventoryStockData", () => {
+describe('useInventoryStockData', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSystemDatas();
     inventoryStockMock.mockResolvedValue([
-      { itemId: "ore", quantity: 10, isStackable: true, lotId: null, tierLevel: null },
-      { itemId: "sword", quantity: 1, isStackable: false, lotId: "lot-1", tierLevel: 3 },
-      { itemId: "sword", quantity: 1, isStackable: false, lotId: "lot-2", tierLevel: 5 },
+      {
+        itemId: 'ore',
+        quantity: 10,
+        isStackable: true,
+        lotId: null,
+        tierLevel: null,
+      },
+      {
+        itemId: 'sword',
+        quantity: 1,
+        isStackable: false,
+        lotId: 'lot-1',
+        tierLevel: 3,
+      },
+      {
+        itemId: 'sword',
+        quantity: 1,
+        isStackable: false,
+        lotId: 'lot-2',
+        tierLevel: 5,
+      },
     ]);
   });
 
-  it("sums lines per item and exposes lot identifiers for non-stackables", async () => {
+  it('sums lines per item and exposes lot identifiers for non-stackables', async () => {
     const { result } = renderHook(() => useInventoryStockData(), {
       wrapper: createWrapper(freshClient()),
     });
 
     await waitFor(() => {
       expect(result.current.inventoryStock).toEqual([
-        { id: "ore", name: "Ore", value: 2, stock: 10, lots: [] },
+        { id: 'ore', name: 'Ore', value: 2, stock: 10, lots: [] },
         {
-          id: "sword",
-          name: "Sword",
+          id: 'sword',
+          name: 'Sword',
           value: 100,
           stock: 2,
           lots: [
-            { lotId: "lot-1", tierLevel: 3 },
-            { lotId: "lot-2", tierLevel: 5 },
+            { lotId: 'lot-1', tierLevel: 3 },
+            { lotId: 'lot-2', tierLevel: 5 },
           ],
         },
       ]);
     });
   });
 
-  it("computes the total stock value from aggregated quantities", async () => {
+  it('computes the total stock value from aggregated quantities', async () => {
     const { result } = renderHook(() => useInventoryStockData(), {
       wrapper: createWrapper(freshClient()),
     });
@@ -95,7 +113,7 @@ describe("useInventoryStockData", () => {
     });
   });
 
-  it("defaults to zero stock without lines", async () => {
+  it('defaults to zero stock without lines', async () => {
     inventoryStockMock.mockResolvedValue([]);
 
     const { result } = renderHook(() => useInventoryStockData(), {
@@ -104,14 +122,14 @@ describe("useInventoryStockData", () => {
 
     await waitFor(() => {
       expect(result.current.inventoryStock).toEqual([
-        { id: "ore", name: "Ore", value: 2, stock: 0, lots: [] },
-        { id: "sword", name: "Sword", value: 100, stock: 0, lots: [] },
+        { id: 'ore', name: 'Ore', value: 2, stock: 0, lots: [] },
+        { id: 'sword', name: 'Sword', value: 100, stock: 0, lots: [] },
       ]);
       expect(result.current.inventoryStockValue).toBe(0);
     });
   });
 
-  it("returns no items without item datas", async () => {
+  it('returns no items without item datas', async () => {
     systemDatasMock.mockReturnValue({
       items: { itemDatas: undefined, isLoading: false, isError: false },
     });
@@ -125,8 +143,8 @@ describe("useInventoryStockData", () => {
     });
   });
 
-  it("surfaces stock query errors", async () => {
-    inventoryStockMock.mockRejectedValue(new Error("boom"));
+  it('surfaces stock query errors', async () => {
+    inventoryStockMock.mockRejectedValue(new Error('boom'));
 
     const { result } = renderHook(() => useInventoryStockData(), {
       wrapper: createWrapper(freshClient()),

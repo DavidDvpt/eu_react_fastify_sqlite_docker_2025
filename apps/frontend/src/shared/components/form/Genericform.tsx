@@ -1,9 +1,9 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
-import { FormProvider, type Resolver, useForm } from "react-hook-form";
-import * as z4 from "zod/v4/core";
-import useWatchFields from "./hookForm/useWatchFields";
-import type { GenericFormProps, SchemaInput, SchemaOutput } from "./form.types";
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect } from 'react';
+import { FormProvider, type Resolver, useForm } from 'react-hook-form';
+import * as z4 from 'zod/v4/core';
+import useWatchFields from './hookForm/useWatchFields';
+import type { GenericFormProps, SchemaInput, SchemaOutput } from './form.types';
 
 export function GenericForm<TSchema extends z4.$ZodType>({
   externalError = null,
@@ -36,7 +36,7 @@ export function GenericForm<TSchema extends z4.$ZodType>({
 
     externalError.forEach((error) => {
       methods.setError(error.key, {
-        type: "manual",
+        type: 'manual',
         message: error.msg,
       });
     });

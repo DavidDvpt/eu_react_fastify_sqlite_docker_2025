@@ -1,7 +1,7 @@
-import type z from "zod";
-import type { GenericListColumn } from "./columnDefinition/genericListColumnType";
-import type { ComponentType, ReactNode } from "react";
-import type { genericListViewModeSchema } from "@/shared/components/GenericList/genericListSchemas";
+import type z from 'zod';
+import type { GenericListColumn } from './columnDefinition/genericListColumnType';
+import type { ComponentType, ReactNode } from 'react';
+import type { genericListViewModeSchema } from '@/shared/components/GenericList/genericListSchemas';
 
 export type GenericListViewMode = z.infer<typeof genericListViewModeSchema>;
 
@@ -19,7 +19,7 @@ export type GenericListFooterCell = {
 export type GenericListFooterConfig = {
   visible?: boolean;
   rowClassName?: string;
-  layout?: "grid" | "flex";
+  layout?: 'grid' | 'flex';
   columnsTemplate?: string;
   cells?: GenericListFooterCell[];
 };
@@ -80,7 +80,7 @@ export type GenericListBodyProps<T> = {
 export type GenericListFooterProps = {
   visible?: boolean;
   rowClassName?: string;
-  layout?: "grid" | "flex";
+  layout?: 'grid' | 'flex';
   columnsTemplate?: string;
   cells?: GenericListFooterCell[];
   fallback?: ReactNode;

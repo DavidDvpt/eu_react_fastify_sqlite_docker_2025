@@ -8,9 +8,9 @@ import type { ListItemsApiV2ItemsGetSortKey } from '../listItemsApiV2ItemsGetSor
 import type { ListItemsApiV2ItemsGetSortOrder } from '../listItemsApiV2ItemsGetSortOrder.ts';
 
 export type ListItemsApiV2ItemsGetParams = {
-isActive?: boolean | null;
-typeId?: string | null;
-sortKey?: ListItemsApiV2ItemsGetSortKey;
-sortOrder?: ListItemsApiV2ItemsGetSortOrder;
-detail?: ListItemsApiV2ItemsGetDetail;
+  isActive?: boolean | null;
+  typeId?: string | null;
+  sortKey?: ListItemsApiV2ItemsGetSortKey;
+  sortOrder?: ListItemsApiV2ItemsGetSortOrder;
+  detail?: ListItemsApiV2ItemsGetDetail;
 };

@@ -1,9 +1,5 @@
-import { z } from "zod";
-import {
-  booleanSchema,
-  genericDateSchema,
-  idSchema,
-} from "./common.js";
+import { z } from 'zod';
+import { booleanSchema, genericDateSchema, idSchema } from './common.js';
 
 const systemBaseSchema = idSchema.extend({
   name: z.string().min(1),
@@ -31,17 +27,17 @@ export type TypeViewModels = TypeViewModel[];
 
 // ITEMS
 export const itemDetailsEnum = z.enum([
-  "finderDetail",
-  "finderAmplifierDetails",
-  "excavatorDetail",
-  "refinerDetail",
-  "enhancerDetails",
+  'finderDetail',
+  'finderAmplifierDetails',
+  'excavatorDetail',
+  'refinerDetail',
+  'enhancerDetails',
 ]);
 export const itemFormSchema = z.object({
   id: z.string().nullable().default(null),
   name: z.string().min(1),
   typeId: z.string(),
-  imageUrlId: z.string().default(""),
+  imageUrlId: z.string().default(''),
   value: z.coerce.number().nonnegative(),
   description: z.string().nullable().default(null),
   weight: z.number().nullable().default(null),

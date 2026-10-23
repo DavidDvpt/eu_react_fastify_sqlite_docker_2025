@@ -1,8 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
-import AppSelect from "@/shared/components/form/Select/AppSelect";
-import type { MiningAvailableLotResponse } from "@/api/generated/react-query/model/miningAvailableLotResponse";
-import type { ItemViewModel } from "@zod-schemas";
-import MiningItemOption from "./MiningItemOption";
+import { useEffect, useMemo, useState } from 'react';
+import AppSelect from '@/shared/components/form/Select/AppSelect';
+import type { MiningAvailableLotResponse } from '@/api/generated/react-query/model/miningAvailableLotResponse';
+import type { ItemViewModel } from '@zod-schemas';
+import MiningItemOption from './MiningItemOption';
 
 type AmplifierAllocation = {
   ttRemaining: number;
@@ -11,7 +11,7 @@ type AmplifierAllocation = {
   isFullTT: boolean;
 };
 
-const NO_AMPLIFIER = "__none__";
+const NO_AMPLIFIER = '__none__';
 
 export type AmplifierSelection = {
   itemId: string;
@@ -49,9 +49,15 @@ function FinderAmplifierSelector({
   const selectedType = amplifierTypes.find(({ item }) => item?.id === itemId);
   const selectedItem = selectedType?.item;
   const allocations = useMemo(
-    () => selectedItem
-      ? allocateAmplifiers(selectedType.lots, selectedItem, clickCount, searchType)
-      : [],
+    () =>
+      selectedItem
+        ? allocateAmplifiers(
+            selectedType.lots,
+            selectedItem,
+            clickCount,
+            searchType,
+          )
+        : [],
     [clickCount, searchType, selectedItem, selectedType],
   );
   const allocatedClicks = allocations.reduce(
@@ -64,7 +70,9 @@ function FinderAmplifierSelector({
       selectedItem && selectedType
         ? {
             itemId: selectedItem.id,
-            lotIds: selectedType.lots.flatMap((lot) => lot.lotId ? [lot.lotId] : []),
+            lotIds: selectedType.lots.flatMap((lot) =>
+              lot.lotId ? [lot.lotId] : [],
+            ),
             allocations,
           }
         : undefined,
@@ -78,17 +86,28 @@ function FinderAmplifierSelector({
         <AppSelect
           value={itemId}
           options={[
-            { value: NO_AMPLIFIER, label: <span className="flex h-[38px] items-center">Aucun amplificateur</span> },
+            {
+              value: NO_AMPLIFIER,
+              label: (
+                <span className="flex h-[38px] items-center">
+                  Aucun amplificateur
+                </span>
+              ),
+            },
             ...amplifierTypes.map(({ item, lots: itemLots }) => ({
               value: item?.id ?? itemLots[0].itemId,
-              label: <MiningItemOption item={item} quantity={itemLots.length} />,
+              label: (
+                <MiningItemOption item={item} quantity={itemLots.length} />
+              ),
             })),
           ]}
-          onValueChange={(value) => setItemId(value === NO_AMPLIFIER ? undefined : value)}
+          onValueChange={(value) =>
+            setItemId(value === NO_AMPLIFIER ? undefined : value)
+          }
           placeholder={
             amplifierTypes.length
-              ? "Sélectionner un type d’amplificateur"
-              : "Aucun amplificateur disponible"
+              ? 'Sélectionner un type d’amplificateur'
+              : 'Aucun amplificateur disponible'
           }
           disabled={disabled || !amplifierTypes.length}
           triggerClassName="h-14"
@@ -117,7 +136,7 @@ function FinderAmplifierSelector({
                   className="grid grid-cols-[minmax(0,1fr)_100px_100px] gap-3 border-t border-border px-3 py-2 text-sm text-text-muted"
                 >
                   <span>
-                    {allocation.isFullTT ? "Full TT" : allocation.ttRemaining}
+                    {allocation.isFullTT ? 'Full TT' : allocation.ttRemaining}
                   </span>
                   <span>{allocation.quantity}</span>
                   <span>{allocation.clicks}</span>
@@ -141,9 +160,7 @@ function allocateAmplifiers(
   clickCount: number,
   searchType?: number,
 ): AmplifierAllocation[] {
-  const decay = item.decay
-    ? item.decay * (searchType === 3 ? 2 : 1)
-    : null;
+  const decay = item.decay ? item.decay * (searchType === 3 ? 2 : 1) : null;
   if (!decay || decay <= 0 || clickCount <= 0) return [];
 
   const usableLots = lots.filter((lot) => (lot.ttRemaining ?? 0) > 0);

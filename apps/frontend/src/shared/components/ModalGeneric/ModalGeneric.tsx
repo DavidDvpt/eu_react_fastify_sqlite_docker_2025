@@ -1,5 +1,5 @@
-import { type PropsWithChildren } from "react";
-import { Button } from "@/components/ui/button";
+import { type PropsWithChildren } from 'react';
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogClose,
@@ -9,13 +9,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { MODAL_GENERIC_VARIANTS } from "./ModalGeneric.variant";
+} from '@/components/ui/dialog';
+import { MODAL_GENERIC_VARIANTS } from './ModalGeneric.variant';
 
-import type { ModalGenericVariant } from "./ModalGeneric.variant";
+import type { ModalGenericVariant } from './ModalGeneric.variant';
 
 interface IModalGenericProps extends PropsWithChildren {
-  dialogType: "form" | "info" | "confirm";
+  dialogType: 'form' | 'info' | 'confirm';
   variant?: ModalGenericVariant;
   isDefaultOpen?: boolean;
   open?: boolean;
@@ -29,8 +29,8 @@ interface IModalGenericProps extends PropsWithChildren {
 }
 
 function ModalGeneric({
-  dialogType = "info",
-  variant = "default",
+  dialogType = 'info',
+  variant = 'default',
   isDefaultOpen = true,
   open,
   onOpenChange,
@@ -41,7 +41,7 @@ function ModalGeneric({
   children,
   noClose = false,
 }: IModalGenericProps) {
-  const hasControlledOpen = typeof open === "boolean";
+  const hasControlledOpen = typeof open === 'boolean';
   const variantClassName = MODAL_GENERIC_VARIANTS[variant];
 
   return (
@@ -54,11 +54,11 @@ function ModalGeneric({
       <DialogContent
         className={[
           variantClassName,
-          "flex",
-          "flex-col",
-          noClose && "[&>button]:hidden",
+          'flex',
+          'flex-col',
+          noClose && '[&>button]:hidden',
           contentStyle,
-        ].join(" ")}
+        ].join(' ')}
         onInteractOutside={(e) => e.preventDefault()}
         onEscapeKeyDown={noClose ? (e) => e.preventDefault() : undefined}
       >
@@ -75,7 +75,7 @@ function ModalGeneric({
           </DialogHeader>
         )}
 
-        {dialogType === "info" && (
+        {dialogType === 'info' && (
           <>
             {children}
 
@@ -87,7 +87,7 @@ function ModalGeneric({
           </>
         )}
 
-        {dialogType === "form" && children}
+        {dialogType === 'form' && children}
       </DialogContent>
     </Dialog>
   );

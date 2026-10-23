@@ -1,4 +1,4 @@
-import type { ChangeEvent, InputHTMLAttributes, ReactNode } from "react";
+import type { ChangeEvent, InputHTMLAttributes, ReactNode } from 'react';
 import type {
   Control,
   FieldErrors,
@@ -11,8 +11,8 @@ import type {
   UseFormProps,
   UseFormRegister,
   UseFormWatch,
-} from "react-hook-form";
-import * as z4 from "zod/v4/core";
+} from 'react-hook-form';
+import * as z4 from 'zod/v4/core';
 
 export type SchemaInput<TSchema extends z4.$ZodType> = z4.input<TSchema> &
   FieldValues;
@@ -27,7 +27,7 @@ export type FormExternalError<TFormValues extends FieldValues> = {
 export type GenericFormProps<TSchema extends z4.$ZodType> = {
   externalError?: FormExternalError<SchemaInput<TSchema>>[] | null;
   resetExternalError?: () => void;
-  defaultValues?: UseFormProps<SchemaInput<TSchema>>["defaultValues"];
+  defaultValues?: UseFormProps<SchemaInput<TSchema>>['defaultValues'];
   onSubmit: SubmitHandler<SchemaOutput<TSchema>>;
   children: React.ReactNode;
   schema: TSchema;
@@ -45,7 +45,7 @@ export type SafeFormContext = {
 
 export interface InputRHFProps extends Omit<
   InputHTMLAttributes<HTMLInputElement>,
-  "name"
+  'name'
 > {
   name: string;
   label?: string;

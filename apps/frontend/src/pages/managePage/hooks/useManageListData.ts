@@ -1,17 +1,17 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
 import {
   useListItemsApiV2ItemsGet,
   useListTypesApiV2TypesGet,
   useRequestNexusUpdateApiV2TypesIdNexusUpdatePost,
-} from "@/api/generated/react-query/entropiaManagerAPI";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { ManageListRow, ManageTab } from "@/shared/types/managePageTypes";
-import type { GenericListColumn } from "@/shared/types";
-import { useSystemDatas } from "@/shared/hooks";
-import { createTypeColumns } from "@/shared/components/GenericList/columnDefinition/typeColumns";
-import { createItemColumns } from "@/shared/components/GenericList/columnDefinition/itemColumns";
-import { createCategoryColumns } from "@/shared/components/GenericList/columnDefinition/categoryColumns";
+} from '@/api/generated/react-query/entropiaManagerAPI';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { ManageListRow, ManageTab } from '@/shared/types/managePageTypes';
+import type { GenericListColumn } from '@/shared/types';
+import { useSystemDatas } from '@/shared/hooks';
+import { createTypeColumns } from '@/shared/components/GenericList/columnDefinition/typeColumns';
+import { createItemColumns } from '@/shared/components/GenericList/columnDefinition/itemColumns';
+import { createCategoryColumns } from '@/shared/components/GenericList/columnDefinition/categoryColumns';
 
 interface UseManageListData {
   activeTab: ManageTab;
@@ -56,8 +56,8 @@ function useManageListData({
     categoryId ? { categoryId } : undefined,
     {
       query: {
-        enabled: activeTab === "type" && Boolean(categoryId),
-        queryKey: ["types", "manage", categoryId],
+        enabled: activeTab === 'type' && Boolean(categoryId),
+        queryKey: ['types', 'manage', categoryId],
         staleTime: Infinity,
       },
     },
@@ -66,8 +66,8 @@ function useManageListData({
     typeId ? { typeId } : undefined,
     {
       query: {
-        enabled: activeTab === "item" && Boolean(typeId),
-        queryKey: ["items", "manage", typeId],
+        enabled: activeTab === 'item' && Boolean(typeId),
+        queryKey: ['items', 'manage', typeId],
         staleTime: Infinity,
       },
     },
@@ -80,13 +80,15 @@ function useManageListData({
 
   const contentValues = useMemo<ManageListDataResult>(() => {
     switch (activeTab) {
-      case "type": {
+      case 'type': {
         return {
-          list: (manageTypesQuery.data
-            ?.map((row) => ({
-              ...row,
-              category: row.category ?? cat?.find((category) => category.id === row.categoryId) ?? null,
-            })) ?? typesByCategory(categoryId)) as ManageListRow[],
+          list: (manageTypesQuery.data?.map((row) => ({
+            ...row,
+            category:
+              row.category ??
+              cat?.find((category) => category.id === row.categoryId) ??
+              null,
+          })) ?? typesByCategory(categoryId)) as ManageListRow[],
           isPending: categoryId ? manageTypesQuery.isPending : isTypesPending,
           isError: categoryId ? manageTypesQuery.isError : isTypesError,
           columns: createTypeColumns({
@@ -95,26 +97,33 @@ function useManageListData({
             },
             nexusUpdatePending: nexusUpdateMutation.isPending,
           }) as GenericListColumn<ManageListRow>[],
-          errorMessage: "Impossible de charger les types.",
+          errorMessage: 'Impossible de charger les types.',
           editRoute: (id) => `/manage/type/${id}/edit`,
-          findEntityById: (id) => (manageTypesQuery.data ?? typeDatas)?.find((row) => row.id === id) as ManageListRow | undefined,
+          findEntityById: (id) =>
+            (manageTypesQuery.data ?? typeDatas)?.find(
+              (row) => row.id === id,
+            ) as ManageListRow | undefined,
         };
       }
-      case "item":
+      case 'item':
         return {
-          list: (manageItemsQuery.data ?? filteredItems({
-            categoryId,
-            typeId,
-          })) as ManageListRow[],
+          list: (manageItemsQuery.data ??
+            filteredItems({
+              categoryId,
+              typeId,
+            })) as ManageListRow[],
           isPending: typeId ? manageItemsQuery.isPending : isItemsPending,
           isError: typeId ? manageItemsQuery.isError : isItemsError,
           columns: createItemColumns() as GenericListColumn<ManageListRow>[],
           errorMessage: `Impossible de charger les items.`,
           editRoute: (id) => `/manage/item/${id}/edit`,
-          findEntityById: (id) => (manageItemsQuery.data ?? itemDatas)?.find((row) => row.id === id) as ManageListRow | undefined,
+          findEntityById: (id) =>
+            (manageItemsQuery.data ?? itemDatas)?.find(
+              (row) => row.id === id,
+            ) as ManageListRow | undefined,
         };
       default:
-      case "category":
+      case 'category':
         return {
           list: (cat ?? []) as ManageListRow[],
           isPending: isCategoriesPending,

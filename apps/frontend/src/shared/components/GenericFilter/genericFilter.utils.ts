@@ -1,1 +1,1 @@
-export const allOptionValue = "__all__";
+export const allOptionValue = '__all__';

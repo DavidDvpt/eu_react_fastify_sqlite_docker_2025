@@ -1,19 +1,19 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { getMinimumTtcWithFee } from "@/shared/helpers/transactionHelpers";
+import { getMinimumTtcWithFee } from '@/shared/helpers/transactionHelpers';
 
 import {
   computeFeePricing,
   computeQuantityPricing,
   computeTtcPricing,
-} from "./transactionUtils";
+} from './transactionUtils';
 
-describe("transactionUtils", () => {
-  describe("computeQuantityPricing", () => {
-    it("keeps buy quantity above stock and recomputes the ttc", () => {
+describe('transactionUtils', () => {
+  describe('computeQuantityPricing', () => {
+    it('keeps buy quantity above stock and recomputes the ttc', () => {
       expect(
         computeQuantityPricing({
-          action: "buy",
+          action: 'buy',
           quantity: 12,
           fee: 2,
           ttc: 200,
@@ -26,10 +26,10 @@ describe("transactionUtils", () => {
       });
     });
 
-    it("returns zeroes when the quantity is empty", () => {
+    it('returns zeroes when the quantity is empty', () => {
       expect(
         computeQuantityPricing({
-          action: "buy",
+          action: 'buy',
           quantity: 0,
           fee: 2,
           ttc: 200,
@@ -42,9 +42,9 @@ describe("transactionUtils", () => {
       });
     });
 
-    it("recomputes sell quantity with the minimum fee/ttc pair", () => {
+    it('recomputes sell quantity with the minimum fee/ttc pair', () => {
       const result = computeQuantityPricing({
-        action: "sell",
+        action: 'sell',
         quantity: 3,
         fee: 99,
         ttc: 100,
@@ -57,10 +57,10 @@ describe("transactionUtils", () => {
       });
     });
 
-    it("keeps sell ttc untouched when it already satisfies the threshold", () => {
+    it('keeps sell ttc untouched when it already satisfies the threshold', () => {
       expect(
         computeQuantityPricing({
-          action: "sell",
+          action: 'sell',
           quantity: 3,
           fee: 99,
           ttc: 200,
@@ -74,11 +74,11 @@ describe("transactionUtils", () => {
     });
   });
 
-  describe("computeFeePricing", () => {
-    it("clamps buy fee to 100 and recomputes the ttc", () => {
+  describe('computeFeePricing', () => {
+    it('clamps buy fee to 100 and recomputes the ttc', () => {
       expect(
         computeFeePricing({
-          action: "buy",
+          action: 'buy',
           quantity: 2,
           fee: 150,
           ttc: 15,
@@ -91,9 +91,9 @@ describe("transactionUtils", () => {
       });
     });
 
-    it("ignores the raw fee on sell and recomputes from the current total", () => {
+    it('ignores the raw fee on sell and recomputes from the current total', () => {
       const result = computeFeePricing({
-        action: "sell",
+        action: 'sell',
         quantity: 2,
         fee: 8,
         ttc: 100,
@@ -107,11 +107,11 @@ describe("transactionUtils", () => {
     });
   });
 
-  describe("computeTtcPricing", () => {
-    it("keeps the buy fee and preserves the edited ttc value", () => {
+  describe('computeTtcPricing', () => {
+    it('keeps the buy fee and preserves the edited ttc value', () => {
       expect(
         computeTtcPricing({
-          action: "buy",
+          action: 'buy',
           quantity: 2,
           fee: 7,
           ttc: 15,
@@ -124,9 +124,9 @@ describe("transactionUtils", () => {
       });
     });
 
-    it("recomputes sell fee while preserving the edited ttc value", () => {
+    it('recomputes sell fee while preserving the edited ttc value', () => {
       const result = computeTtcPricing({
-        action: "sell",
+        action: 'sell',
         quantity: 2,
         fee: 8,
         ttc: 105,

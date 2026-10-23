@@ -1,18 +1,26 @@
-import { SessionType } from "@/api/generated/model";
-import { useGetCurrentSessionApiV2SessionsCurrentGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import type { MiningCurrentSessionResponse } from "@/api/generated/react-query/model/miningCurrentSessionResponse";
-import { Panel, Section } from "@/shared/components/Containers";
-import { useSystemDatas } from "@/shared/hooks";
-import { useCallback, useEffect, useState } from "react";
-import { useListDepositSizesApiV2MiningDepositSizesGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import MiningSessionCockpit from "./components/cockpit/MiningSessionCockpit";
-import MiningSessionResults from "./components/cockpit/MiningSessionResults";
-import { useMiningChatLogClaims, type UnknownClaimCandidate } from "@/features/miningClaims/hooks/useMiningChatLogClaims";
-import MiningClaimSnackbar, { type MiningClaimSnackbarData } from "./components/cockpit/MiningClaimSnackbar";
+import { SessionType } from '@/api/generated/model';
+import { useGetCurrentSessionApiV2SessionsCurrentGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import type { MiningCurrentSessionResponse } from '@/api/generated/react-query/model/miningCurrentSessionResponse';
+import { Panel, Section } from '@/shared/components/Containers';
+import { useSystemDatas } from '@/shared/hooks';
+import { useCallback, useEffect, useState } from 'react';
+import { useListDepositSizesApiV2MiningDepositSizesGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import MiningSessionCockpit from './components/cockpit/MiningSessionCockpit';
+import MiningSessionResults from './components/cockpit/MiningSessionResults';
+import {
+  useMiningChatLogClaims,
+  type UnknownClaimCandidate,
+} from '@/features/miningClaims/hooks/useMiningChatLogClaims';
+import MiningClaimSnackbar, {
+  type MiningClaimSnackbarData,
+} from './components/cockpit/MiningClaimSnackbar';
 
 function MiningSessionCurrentView() {
-  const [snackbarClaim, setSnackbarClaim] = useState<MiningClaimSnackbarData | null>(null);
-  const [resourceNames, setResourceNames] = useState<Record<string, string>>({});
+  const [snackbarClaim, setSnackbarClaim] =
+    useState<MiningClaimSnackbarData | null>(null);
+  const [resourceNames, setResourceNames] = useState<Record<string, string>>(
+    {},
+  );
   const [unknownClaimDialog, setUnknownClaimDialog] = useState<{
     candidates: UnknownClaimCandidate[];
     resolve: (claimId: string) => void;
@@ -28,30 +36,63 @@ function MiningSessionCurrentView() {
 
   const currentSession = currentSessionQuery.data;
   const miningSession =
-    currentSession && "finderItemId" in currentSession
+    currentSession && 'finderItemId' in currentSession
       ? (currentSession as MiningCurrentSessionResponse)
       : undefined;
-  const handleClaimDetected = useCallback((claim: { id: string; resourceName: string }) => {
-    setResourceNames((current) => ({ ...current, [claim.id]: claim.resourceName }));
-    setSnackbarClaim({ type: "detected", resourceName: claim.resourceName });
-  }, []);
-  const handleClaimDepleted = useCallback((claim: { id: string; resourceName: string; value: string | null; isGlobal: boolean; isHof: boolean; depositSize: number | null }) => {
-    setResourceNames((current) => ({ ...current, [claim.id]: claim.resourceName }));
-    const depositSize = depositSizesQuery.data?.find((size) => size.size === claim.depositSize);
-    setSnackbarClaim({
-      type: "depleted",
-      resourceName: claim.resourceName,
-      romanSize: depositSize?.romanSize ?? "",
-      value: claim.value === null ? undefined : Number(claim.value),
-      isGlobal: claim.isGlobal,
-      isHof: claim.isHof,
-      isAth: false,
-    });
-  }, [depositSizesQuery.data]);
-  const handleUnknownClaim = useCallback((candidates: UnknownClaimCandidate[], resolve: (claimId: string) => void) => {
-    setUnknownClaimDialog({ candidates, resolve });
-  }, []);
-  useMiningChatLogClaims(miningSession?.id, itemDatas ?? [], handleClaimDetected, handleClaimDepleted, handleUnknownClaim);
+  const handleClaimDetected = useCallback(
+    (claim: { id: string; resourceName: string }) => {
+      setResourceNames((current) => ({
+        ...current,
+        [claim.id]: claim.resourceName,
+      }));
+      setSnackbarClaim({ type: 'detected', resourceName: claim.resourceName });
+    },
+    [],
+  );
+  const handleClaimDepleted = useCallback(
+    (claim: {
+      id: string;
+      resourceName: string;
+      value: string | null;
+      isGlobal: boolean;
+      isHof: boolean;
+      depositSize: number | null;
+    }) => {
+      setResourceNames((current) => ({
+        ...current,
+        [claim.id]: claim.resourceName,
+      }));
+      const depositSize = depositSizesQuery.data?.find(
+        (size) => size.size === claim.depositSize,
+      );
+      setSnackbarClaim({
+        type: 'depleted',
+        resourceName: claim.resourceName,
+        romanSize: depositSize?.romanSize ?? '',
+        value: claim.value === null ? undefined : Number(claim.value),
+        isGlobal: claim.isGlobal,
+        isHof: claim.isHof,
+        isAth: false,
+      });
+    },
+    [depositSizesQuery.data],
+  );
+  const handleUnknownClaim = useCallback(
+    (
+      candidates: UnknownClaimCandidate[],
+      resolve: (claimId: string) => void,
+    ) => {
+      setUnknownClaimDialog({ candidates, resolve });
+    },
+    [],
+  );
+  useMiningChatLogClaims(
+    miningSession?.id,
+    itemDatas ?? [],
+    handleClaimDetected,
+    handleClaimDepleted,
+    handleUnknownClaim,
+  );
   useEffect(() => {
     if (!snackbarClaim) return;
     const timeout = window.setTimeout(() => setSnackbarClaim(null), 3000);
@@ -64,8 +105,12 @@ function MiningSessionCurrentView() {
       {unknownClaimDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
           <div className="w-full max-w-md rounded-lg border border-border bg-surface p-5 text-text shadow-xl">
-            <h2 className="m-0 text-lg font-semibold">Quelle source est depleted ?</h2>
-            <p className="mt-2 text-sm text-text-muted">Sélectionne le claim correspondant à la source inconnue.</p>
+            <h2 className="m-0 text-lg font-semibold">
+              Quelle source est depleted ?
+            </h2>
+            <p className="mt-2 text-sm text-text-muted">
+              Sélectionne le claim correspondant à la source inconnue.
+            </p>
             <div className="mt-4 flex flex-col gap-2">
               {unknownClaimDialog.candidates.map((candidate, index) => (
                 <button
@@ -85,34 +130,34 @@ function MiningSessionCurrentView() {
         </div>
       )}
       {snackbarClaim && <MiningClaimSnackbar claim={snackbarClaim} />}
-    <Panel className="grid grid-cols-3 gap-2">
-      <Section className="col-span-2 flex min-h-0 flex-1 items-start justify-start text-text">
-        {currentSessionQuery.isPending ? (
-          "Recherche de la session en cours..."
-        ) : !miningSession ? (
-          "Aucune session Mining en cours."
-        ) : (
-          <div className="flex w-full max-w-2xl flex-col">
-            <MiningSessionResults
-              sessionId={miningSession.id}
-              items={itemDatas ?? []}
-              searchType={miningSession.searchType}
-              resultLines={miningSession.resultLines}
-            />
-          </div>
-        )}
-      </Section>
+      <Panel className="grid grid-cols-3 gap-2">
+        <Section className="col-span-2 flex min-h-0 flex-1 items-start justify-start text-text">
+          {currentSessionQuery.isPending ? (
+            'Recherche de la session en cours...'
+          ) : !miningSession ? (
+            'Aucune session Mining en cours.'
+          ) : (
+            <div className="flex w-full max-w-2xl flex-col">
+              <MiningSessionResults
+                sessionId={miningSession.id}
+                items={itemDatas ?? []}
+                searchType={miningSession.searchType}
+                resultLines={miningSession.resultLines}
+              />
+            </div>
+          )}
+        </Section>
 
-      <Section className="col-span-1 min-h-0">
-        {miningSession && (
-          <MiningSessionCockpit
-            session={miningSession}
-            itemById={itemById}
-            resourceNames={resourceNames}
-          />
-        )}
-      </Section>
-    </Panel>
+        <Section className="col-span-1 min-h-0">
+          {miningSession && (
+            <MiningSessionCockpit
+              session={miningSession}
+              itemById={itemById}
+              resourceNames={resourceNames}
+            />
+          )}
+        </Section>
+      </Panel>
     </>
   );
 }

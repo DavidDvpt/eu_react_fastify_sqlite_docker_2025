@@ -2,21 +2,21 @@ import {
   QueryClient,
   QueryClientProvider,
   useQuery,
-} from "@tanstack/react-query";
-import { renderHook, waitFor } from "@testing-library/react";
-import type { ReactNode } from "react";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+} from '@tanstack/react-query';
+import { renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import useItemAverageBuyMarkup from "../rqFetchHooks/useItemAverageBuyMarkupData";
+import useItemAverageBuyMarkup from '../rqFetchHooks/useItemAverageBuyMarkupData';
 
 const { averageBuyMarkupGetMock } = vi.hoisted(() => ({
   averageBuyMarkupGetMock: vi.fn(),
 }));
 
-vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+vi.mock('@/api/generated/react-query/entropiaManagerAPI', () => ({
   useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet: () =>
     useQuery({
-      queryKey: ["item-average-buy-markup"],
+      queryKey: ['item-average-buy-markup'],
       queryFn: averageBuyMarkupGetMock,
     }),
 }));
@@ -29,7 +29,7 @@ function createWrapper(queryClient: QueryClient) {
   };
 }
 
-describe("useItemAverageBuyMarkup", () => {
+describe('useItemAverageBuyMarkup', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     averageBuyMarkupGetMock.mockResolvedValue({
@@ -38,13 +38,13 @@ describe("useItemAverageBuyMarkup", () => {
     });
   });
 
-  it("exposes the average buy markup of an item", async () => {
+  it('exposes the average buy markup of an item', async () => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });
 
     const { result } = renderHook(
-      () => useItemAverageBuyMarkup({ itemId: "item-1" }),
+      () => useItemAverageBuyMarkup({ itemId: 'item-1' }),
       { wrapper: createWrapper(queryClient) },
     );
 
@@ -56,7 +56,7 @@ describe("useItemAverageBuyMarkup", () => {
     });
   });
 
-  it("returns nothing without an item id", async () => {
+  it('returns nothing without an item id', async () => {
     const queryClient = new QueryClient({
       defaultOptions: { queries: { retry: false } },
     });

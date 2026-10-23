@@ -3,10 +3,7 @@
  * Do not edit manually.
  * Entropia Manager API
  */
-import {
-  useMutation,
-  useQuery
-} from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import type {
   DataTag,
   DefinedInitialDataOptions,
@@ -19,7 +16,7 @@ import type {
   UseMutationOptions,
   UseMutationResult,
   UseQueryOptions,
-  UseQueryResult
+  UseQueryResult,
 } from '@tanstack/react-query';
 
 import type {
@@ -98,18 +95,18 @@ import type {
   TransactionStatusPatch,
   TypeCreate,
   TypePatch,
-  TypeResponse
+  TypeResponse,
 } from './model';
 
 import { customInstance } from '../../mutator/customInstance.ts';
-import type { ErrorType , BodyType } from '../../mutator/customInstance.ts';
-
+import type { ErrorType, BodyType } from '../../mutator/customInstance.ts';
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKey: K } => {
+const withQueryKey = <T extends object, K>(
+  query: T,
+  queryKey: K,
+): T & { queryKey: K } => {
   const result = { queryKey } as T & { queryKey: K };
   for (const key of Object.keys(query)) {
     // The explicit queryKey always wins, matching the previous
@@ -128,5854 +125,10753 @@ const withQueryKey = <T extends object, K>(query: T, queryKey: K): T & { queryKe
  * @summary Signup
  */
 export const signupApiV2AuthSignupPost = (
-    signUpBody: BodyType<SignUpBody>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  signUpBody: BodyType<SignUpBody>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<SignupApiV2AuthSignupPost201>(
-      {url: `/api/v2/auth/signup`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: signUpBody, signal
+  return customInstance<SignupApiV2AuthSignupPost201>(
+    {
+      url: `/api/v2/auth/signup`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: signUpBody,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getSignupApiV2AuthSignupPostMutationKey = () =>
+  ['signupApiV2AuthSignupPost'] as const;
 
+export const getSignupApiV2AuthSignupPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+    TError,
+    SignupApiV2AuthSignupPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+  TError,
+  SignupApiV2AuthSignupPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getSignupApiV2AuthSignupPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+    SignupApiV2AuthSignupPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getSignupApiV2AuthSignupPostMutationKey = () => ['signupApiV2AuthSignupPost'] as const;
+    return signupApiV2AuthSignupPost(data, requestOptions);
+  };
 
-export const getSignupApiV2AuthSignupPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getSignupApiV2AuthSignupPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type SignupApiV2AuthSignupPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>
+>;
+export type SignupApiV2AuthSignupPostMutationBody = BodyType<SignUpBody>;
+export type SignupApiV2AuthSignupPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type SignupApiV2AuthSignupPostMutationVariables = {
+  data: BodyType<SignUpBody>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, SignupApiV2AuthSignupPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  signupApiV2AuthSignupPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type SignupApiV2AuthSignupPostMutationResult = NonNullable<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>>
-    export type SignupApiV2AuthSignupPostMutationBody = BodyType<SignUpBody>
-    export type SignupApiV2AuthSignupPostMutationError = ErrorType<HTTPValidationError>
-    export type SignupApiV2AuthSignupPostMutationVariables = {data: BodyType<SignUpBody>}
-
-    /**
+/**
  * @summary Signup
  */
-export const useSignupApiV2AuthSignupPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>, TError,SignupApiV2AuthSignupPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
-        TError,
-        SignupApiV2AuthSignupPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getSignupApiV2AuthSignupPostMutationOptions(options), queryClient);
-    }
+export const useSignupApiV2AuthSignupPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+      TError,
+      SignupApiV2AuthSignupPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof signupApiV2AuthSignupPost>>,
+  TError,
+  SignupApiV2AuthSignupPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getSignupApiV2AuthSignupPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Signin
  */
 export const signinApiV2AuthSigninPost = (
-    signInBody: BodyType<SignInBody>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  signInBody: BodyType<SignInBody>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MessageResponse>(
-      {url: `/api/v2/auth/signin`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: signInBody, signal
+  return customInstance<MessageResponse>(
+    {
+      url: `/api/v2/auth/signin`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: signInBody,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getSigninApiV2AuthSigninPostMutationKey = () =>
+  ['signinApiV2AuthSigninPost'] as const;
 
+export const getSigninApiV2AuthSigninPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+    TError,
+    SigninApiV2AuthSigninPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+  TError,
+  SigninApiV2AuthSigninPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getSigninApiV2AuthSigninPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+    SigninApiV2AuthSigninPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getSigninApiV2AuthSigninPostMutationKey = () => ['signinApiV2AuthSigninPost'] as const;
+    return signinApiV2AuthSigninPost(data, requestOptions);
+  };
 
-export const getSigninApiV2AuthSigninPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getSigninApiV2AuthSigninPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type SigninApiV2AuthSigninPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>
+>;
+export type SigninApiV2AuthSigninPostMutationBody = BodyType<SignInBody>;
+export type SigninApiV2AuthSigninPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type SigninApiV2AuthSigninPostMutationVariables = {
+  data: BodyType<SignInBody>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, SigninApiV2AuthSigninPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  signinApiV2AuthSigninPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type SigninApiV2AuthSigninPostMutationResult = NonNullable<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>>
-    export type SigninApiV2AuthSigninPostMutationBody = BodyType<SignInBody>
-    export type SigninApiV2AuthSigninPostMutationError = ErrorType<HTTPValidationError>
-    export type SigninApiV2AuthSigninPostMutationVariables = {data: BodyType<SignInBody>}
-
-    /**
+/**
  * @summary Signin
  */
-export const useSigninApiV2AuthSigninPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>, TError,SigninApiV2AuthSigninPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
-        TError,
-        SigninApiV2AuthSigninPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getSigninApiV2AuthSigninPostMutationOptions(options), queryClient);
-    }
+export const useSigninApiV2AuthSigninPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+      TError,
+      SigninApiV2AuthSigninPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof signinApiV2AuthSigninPost>>,
+  TError,
+  SigninApiV2AuthSigninPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getSigninApiV2AuthSigninPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Logout
  */
 export const logoutApiV2AuthLogoutPost = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<MessageResponse>(
+    { url: `/api/v2/auth/logout`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getLogoutApiV2AuthLogoutPostMutationKey = () =>
+  ['logoutApiV2AuthLogoutPost'] as const;
 
-      return customInstance<MessageResponse>(
-      {url: `/api/v2/auth/logout`, method: 'POST', signal
-    },
-      options);
-    }
+export const getLogoutApiV2AuthLogoutPostMutationOptions = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+    TError,
+    void,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+  TError,
+  void,
+  TContext
+> => {
+  const mutationKey = getLogoutApiV2AuthLogoutPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+    void
+  > = () => {
+    return logoutApiV2AuthLogoutPost(requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
+export type LogoutApiV2AuthLogoutPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>
+>;
 
-export const getLogoutApiV2AuthLogoutPostMutationKey = () => ['logoutApiV2AuthLogoutPost'] as const;
+export type LogoutApiV2AuthLogoutPostMutationError = ErrorType<unknown>;
 
-export const getLogoutApiV2AuthLogoutPostMutationOptions = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext> => {
-
-const mutationKey = getLogoutApiV2AuthLogoutPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, void> = () => {
-
-
-          return  logoutApiV2AuthLogoutPost(requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type LogoutApiV2AuthLogoutPostMutationResult = NonNullable<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>>
-
-    export type LogoutApiV2AuthLogoutPostMutationError = ErrorType<unknown>
-
-
-    /**
+/**
  * @summary Logout
  */
-export const useLogoutApiV2AuthLogoutPost = <TError = ErrorType<unknown>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>, TError,void, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
-        TError,
-        void,
-        TContext
-      > => {
-      return useMutation(getLogoutApiV2AuthLogoutPostMutationOptions(options), queryClient);
-    }
+export const useLogoutApiV2AuthLogoutPost = <
+  TError = ErrorType<unknown>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+      TError,
+      void,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof logoutApiV2AuthLogoutPost>>,
+  TError,
+  void,
+  TContext
+> => {
+  return useMutation(
+    getLogoutApiV2AuthLogoutPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Me
  */
 export const meApiV2AuthMeGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MeResponse>(
-      {url: `/api/v2/auth/me`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<MeResponse>(
+    { url: `/api/v2/auth/me`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getMeApiV2AuthMeGetQueryKey = () => {
-    return [
-    `/api/v2/auth/me`
-    ] as const;
-    }
+  return [`/api/v2/auth/me`] as const;
+};
 
+export const getMeApiV2AuthMeGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getMeApiV2AuthMeGetQueryOptions = <TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getMeApiV2AuthMeGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof meApiV2AuthMeGet>>
+  > = ({ signal }) => meApiV2AuthMeGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getMeApiV2AuthMeGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type MeApiV2AuthMeGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof meApiV2AuthMeGet>>
+>;
+export type MeApiV2AuthMeGetQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof meApiV2AuthMeGet>>> = ({ signal }) => meApiV2AuthMeGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type MeApiV2AuthMeGetQueryResult = NonNullable<Awaited<ReturnType<typeof meApiV2AuthMeGet>>>
-export type MeApiV2AuthMeGetQueryError = ErrorType<unknown>
-
-
-export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>> & Pick<
+export function useMeApiV2AuthMeGet<
+  TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
           TError,
           Awaited<ReturnType<typeof meApiV2AuthMeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useMeApiV2AuthMeGet<
+  TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
           TError,
           Awaited<ReturnType<typeof meApiV2AuthMeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useMeApiV2AuthMeGet<
+  TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Me
  */
 
-export function useMeApiV2AuthMeGet<TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof meApiV2AuthMeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useMeApiV2AuthMeGet<
+  TData = Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof meApiV2AuthMeGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getMeApiV2AuthMeGetQueryOptions(options);
 
-  const queryOptions = getMeApiV2AuthMeGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary In Game Username
  */
 export const inGameUsernameApiV2AuthInGameUsernameGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<InGameUsernameResponse>(
-      {url: `/api/v2/auth/in-game-username`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<InGameUsernameResponse>(
+    { url: `/api/v2/auth/in-game-username`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getInGameUsernameApiV2AuthInGameUsernameGetQueryKey = () => {
-    return [
-    `/api/v2/auth/in-game-username`
-    ] as const;
-    }
+  return [`/api/v2/auth/in-game-username`] as const;
+};
 
+export const getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions = <TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ??
+    getInGameUsernameApiV2AuthInGameUsernameGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
+  > = ({ signal }) =>
+    inGameUsernameApiV2AuthInGameUsernameGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getInGameUsernameApiV2AuthInGameUsernameGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type InGameUsernameApiV2AuthInGameUsernameGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
+>;
+export type InGameUsernameApiV2AuthInGameUsernameGetQueryError =
+  ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>> = ({ signal }) => inGameUsernameApiV2AuthInGameUsernameGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type InGameUsernameApiV2AuthInGameUsernameGetQueryResult = NonNullable<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>>
-export type InGameUsernameApiV2AuthInGameUsernameGetQueryError = ErrorType<unknown>
-
-
-export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>> & Pick<
+export function useInGameUsernameApiV2AuthInGameUsernameGet<
+  TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
           TError,
           Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useInGameUsernameApiV2AuthInGameUsernameGet<
+  TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
           TError,
           Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useInGameUsernameApiV2AuthInGameUsernameGet<
+  TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary In Game Username
  */
 
-export function useInGameUsernameApiV2AuthInGameUsernameGet<TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useInGameUsernameApiV2AuthInGameUsernameGet<
+  TData = Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof inGameUsernameApiV2AuthInGameUsernameGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions(options);
 
-  const queryOptions = getInGameUsernameApiV2AuthInGameUsernameGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Update In Game Username
  */
 export const updateInGameUsernameApiV2AuthInGameUsernamePut = (
-    inGameUsernameUpdate: BodyType<InGameUsernameUpdate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  inGameUsernameUpdate: BodyType<InGameUsernameUpdate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<InGameUsernameResponse>(
-      {url: `/api/v2/auth/in-game-username`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: inGameUsernameUpdate, signal
+  return customInstance<InGameUsernameResponse>(
+    {
+      url: `/api/v2/auth/in-game-username`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: inGameUsernameUpdate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey =
+  () => ['updateInGameUsernameApiV2AuthInGameUsernamePut'] as const;
 
+export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>
+      >,
+      TError,
+      UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>,
+    TError,
+    UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>
+      >,
+      UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables
+    > = (props) => {
+      const { data } = props ?? {};
 
-export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey = () => ['updateInGameUsernameApiV2AuthInGameUsernamePut'] as const;
+      return updateInGameUsernameApiV2AuthInGameUsernamePut(
+        data,
+        requestOptions,
+      );
+    };
 
-export const getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext> => {
+    return { mutationFn, ...mutationOptions };
+  };
 
-const mutationKey = getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>
+  >;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationBody =
+  BodyType<InGameUsernameUpdate>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationError =
+  ErrorType<HTTPValidationError>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables = {
+  data: BodyType<InGameUsernameUpdate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  updateInGameUsernameApiV2AuthInGameUsernamePut(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationResult = NonNullable<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>>
-    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationBody = BodyType<InGameUsernameUpdate>
-    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationError = ErrorType<HTTPValidationError>
-    export type UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables = {data: BodyType<InGameUsernameUpdate>}
-
-    /**
+/**
  * @summary Update In Game Username
  */
-export const useUpdateInGameUsernameApiV2AuthInGameUsernamePut = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>, TError,UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>,
-        TError,
-        UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
-        TContext
-      > => {
-      return useMutation(getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions(options), queryClient);
-    }
+export const useUpdateInGameUsernameApiV2AuthInGameUsernamePut = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>
+      >,
+      TError,
+      UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof updateInGameUsernameApiV2AuthInGameUsernamePut>>,
+  TError,
+  UpdateInGameUsernameApiV2AuthInGameUsernamePutMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getUpdateInGameUsernameApiV2AuthInGameUsernamePutMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Categories
  */
 export const listCategoriesApiV2CategoriesGet = (
-    params?: ListCategoriesApiV2CategoriesGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListCategoriesApiV2CategoriesGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<CategoryResponse[]>(
+    { url: `/api/v2/categories`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<CategoryResponse[]>(
-      {url: `/api/v2/categories`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListCategoriesApiV2CategoriesGetQueryKey = (params?: ListCategoriesApiV2CategoriesGetParams,) => {
-    return [
-    `/api/v2/categories`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListCategoriesApiV2CategoriesGetQueryOptions = <TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListCategoriesApiV2CategoriesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListCategoriesApiV2CategoriesGetQueryKey = (
+  params?: ListCategoriesApiV2CategoriesGetParams,
 ) => {
+  return [`/api/v2/categories`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListCategoriesApiV2CategoriesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListCategoriesApiV2CategoriesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListCategoriesApiV2CategoriesGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListCategoriesApiV2CategoriesGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>
+  > = ({ signal }) =>
+    listCategoriesApiV2CategoriesGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>> = ({ signal }) => listCategoriesApiV2CategoriesGet(params, requestOptions, signal);
+export type ListCategoriesApiV2CategoriesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>
+>;
+export type ListCategoriesApiV2CategoriesGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListCategoriesApiV2CategoriesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>>
-export type ListCategoriesApiV2CategoriesGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListCategoriesApiV2CategoriesGet<TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListCategoriesApiV2CategoriesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData>> & Pick<
+export function useListCategoriesApiV2CategoriesGet<
+  TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListCategoriesApiV2CategoriesGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
           TError,
           Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListCategoriesApiV2CategoriesGet<TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListCategoriesApiV2CategoriesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListCategoriesApiV2CategoriesGet<
+  TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListCategoriesApiV2CategoriesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
           TError,
           Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListCategoriesApiV2CategoriesGet<TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListCategoriesApiV2CategoriesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListCategoriesApiV2CategoriesGet<
+  TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListCategoriesApiV2CategoriesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Categories
  */
 
-export function useListCategoriesApiV2CategoriesGet<TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListCategoriesApiV2CategoriesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListCategoriesApiV2CategoriesGet<
+  TData = Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListCategoriesApiV2CategoriesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listCategoriesApiV2CategoriesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListCategoriesApiV2CategoriesGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListCategoriesApiV2CategoriesGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Category
  */
 export const createCategoryApiV2CategoriesPost = (
-    categoryCreate: BodyType<CategoryCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  categoryCreate: BodyType<CategoryCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/categories`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: categoryCreate, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/categories`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: categoryCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateCategoryApiV2CategoriesPostMutationKey = () =>
+  ['createCategoryApiV2CategoriesPost'] as const;
 
+export const getCreateCategoryApiV2CategoriesPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+    TError,
+    CreateCategoryApiV2CategoriesPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+  TError,
+  CreateCategoryApiV2CategoriesPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateCategoryApiV2CategoriesPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+    CreateCategoryApiV2CategoriesPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateCategoryApiV2CategoriesPostMutationKey = () => ['createCategoryApiV2CategoriesPost'] as const;
+    return createCategoryApiV2CategoriesPost(data, requestOptions);
+  };
 
-export const getCreateCategoryApiV2CategoriesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateCategoryApiV2CategoriesPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateCategoryApiV2CategoriesPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>
+>;
+export type CreateCategoryApiV2CategoriesPostMutationBody =
+  BodyType<CategoryCreate>;
+export type CreateCategoryApiV2CategoriesPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateCategoryApiV2CategoriesPostMutationVariables = {
+  data: BodyType<CategoryCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, CreateCategoryApiV2CategoriesPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createCategoryApiV2CategoriesPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateCategoryApiV2CategoriesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>>
-    export type CreateCategoryApiV2CategoriesPostMutationBody = BodyType<CategoryCreate>
-    export type CreateCategoryApiV2CategoriesPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateCategoryApiV2CategoriesPostMutationVariables = {data: BodyType<CategoryCreate>}
-
-    /**
+/**
  * @summary Create Category
  */
-export const useCreateCategoryApiV2CategoriesPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>, TError,CreateCategoryApiV2CategoriesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
-        TError,
-        CreateCategoryApiV2CategoriesPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateCategoryApiV2CategoriesPostMutationOptions(options), queryClient);
-    }
+export const useCreateCategoryApiV2CategoriesPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+      TError,
+      CreateCategoryApiV2CategoriesPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createCategoryApiV2CategoriesPost>>,
+  TError,
+  CreateCategoryApiV2CategoriesPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateCategoryApiV2CategoriesPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Category
  */
 export const getCategoryApiV2CategoriesIdGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<CategoryResponse>(
+    { url: `/api/v2/categories/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetCategoryApiV2CategoriesIdGetQueryKey = (id: string) => {
+  return [`/api/v2/categories/${id}`] as const;
+};
 
-      return customInstance<CategoryResponse>(
-      {url: `/api/v2/categories/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetCategoryApiV2CategoriesIdGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/categories/${id}`
-    ] as const;
-    }
-
-
-export const getGetCategoryApiV2CategoriesIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetCategoryApiV2CategoriesIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetCategoryApiV2CategoriesIdGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCategoryApiV2CategoriesIdGetQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>
+  > = ({ signal }) =>
+    getCategoryApiV2CategoriesIdGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetCategoryApiV2CategoriesIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>
+>;
+export type GetCategoryApiV2CategoriesIdGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>> = ({ signal }) => getCategoryApiV2CategoriesIdGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetCategoryApiV2CategoriesIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>>
-export type GetCategoryApiV2CategoriesIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetCategoryApiV2CategoriesIdGet<TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData>> & Pick<
+export function useGetCategoryApiV2CategoriesIdGet<
+  TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
           TError,
           Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCategoryApiV2CategoriesIdGet<TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCategoryApiV2CategoriesIdGet<
+  TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
           TError,
           Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCategoryApiV2CategoriesIdGet<TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCategoryApiV2CategoriesIdGet<
+  TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Category
  */
 
-export function useGetCategoryApiV2CategoriesIdGet<TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetCategoryApiV2CategoriesIdGet<
+  TData = Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryApiV2CategoriesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetCategoryApiV2CategoriesIdGetQueryOptions(
+    id,
+    options,
+  );
 
-  const queryOptions = getGetCategoryApiV2CategoriesIdGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Patch Category
  */
 export const patchCategoryApiV2CategoriesIdPatch = (
-    id: string,
-    categoryPatch: BodyType<CategoryPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  categoryPatch: BodyType<CategoryPatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/categories/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: categoryPatch, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/categories/${id}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: categoryPatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchCategoryApiV2CategoriesIdPatchMutationKey = () =>
+  ['patchCategoryApiV2CategoriesIdPatch'] as const;
 
+export const getPatchCategoryApiV2CategoriesIdPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+    TError,
+    PatchCategoryApiV2CategoriesIdPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+  TError,
+  PatchCategoryApiV2CategoriesIdPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchCategoryApiV2CategoriesIdPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+    PatchCategoryApiV2CategoriesIdPatchMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchCategoryApiV2CategoriesIdPatchMutationKey = () => ['patchCategoryApiV2CategoriesIdPatch'] as const;
+    return patchCategoryApiV2CategoriesIdPatch(id, data, requestOptions);
+  };
 
-export const getPatchCategoryApiV2CategoriesIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchCategoryApiV2CategoriesIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchCategoryApiV2CategoriesIdPatchMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>
+>;
+export type PatchCategoryApiV2CategoriesIdPatchMutationBody =
+  BodyType<CategoryPatch>;
+export type PatchCategoryApiV2CategoriesIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchCategoryApiV2CategoriesIdPatchMutationVariables = {
+  id: string;
+  data: BodyType<CategoryPatch>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, PatchCategoryApiV2CategoriesIdPatchMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchCategoryApiV2CategoriesIdPatch(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchCategoryApiV2CategoriesIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>>
-    export type PatchCategoryApiV2CategoriesIdPatchMutationBody = BodyType<CategoryPatch>
-    export type PatchCategoryApiV2CategoriesIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchCategoryApiV2CategoriesIdPatchMutationVariables = {id: string;data: BodyType<CategoryPatch>}
-
-    /**
+/**
  * @summary Patch Category
  */
-export const usePatchCategoryApiV2CategoriesIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>, TError,PatchCategoryApiV2CategoriesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
-        TError,
-        PatchCategoryApiV2CategoriesIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchCategoryApiV2CategoriesIdPatchMutationOptions(options), queryClient);
-    }
+export const usePatchCategoryApiV2CategoriesIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+      TError,
+      PatchCategoryApiV2CategoriesIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchCategoryApiV2CategoriesIdPatch>>,
+  TError,
+  PatchCategoryApiV2CategoriesIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchCategoryApiV2CategoriesIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Delete Category
  */
 export const deleteCategoryApiV2CategoriesIdDelete = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<IdResponse>(
+    { url: `/api/v2/categories/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
+export const getDeleteCategoryApiV2CategoriesIdDeleteMutationKey = () =>
+  ['deleteCategoryApiV2CategoriesIdDelete'] as const;
 
-      return customInstance<IdResponse>(
-      {url: `/api/v2/categories/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+export const getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+    TError,
+    DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+  TError,
+  DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDeleteCategoryApiV2CategoriesIdDeleteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+    DeleteCategoryApiV2CategoriesIdDeleteMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return deleteCategoryApiV2CategoriesIdDelete(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getDeleteCategoryApiV2CategoriesIdDeleteMutationKey = () => ['deleteCategoryApiV2CategoriesIdDelete'] as const;
+export type DeleteCategoryApiV2CategoriesIdDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>
+>;
 
-export const getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext> => {
+export type DeleteCategoryApiV2CategoriesIdDeleteMutationError =
+  ErrorType<HTTPValidationError>;
+export type DeleteCategoryApiV2CategoriesIdDeleteMutationVariables = {
+  id: string;
+};
 
-const mutationKey = getDeleteCategoryApiV2CategoriesIdDeleteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, DeleteCategoryApiV2CategoriesIdDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  deleteCategoryApiV2CategoriesIdDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteCategoryApiV2CategoriesIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>>
-
-    export type DeleteCategoryApiV2CategoriesIdDeleteMutationError = ErrorType<HTTPValidationError>
-    export type DeleteCategoryApiV2CategoriesIdDeleteMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Delete Category
  */
-export const useDeleteCategoryApiV2CategoriesIdDelete = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>, TError,DeleteCategoryApiV2CategoriesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
-        TError,
-        DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions(options), queryClient);
-    }
+export const useDeleteCategoryApiV2CategoriesIdDelete = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+      TError,
+      DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof deleteCategoryApiV2CategoriesIdDelete>>,
+  TError,
+  DeleteCategoryApiV2CategoriesIdDeleteMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDeleteCategoryApiV2CategoriesIdDeleteMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Category Types
  */
 export const getCategoryTypesApiV2CategoriesIdTypesGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TypeResponse[]>(
+    { url: `/api/v2/categories/${id}/types`, method: 'GET', signal },
+    options,
+  );
+};
 
-
-      return customInstance<TypeResponse[]>(
-      {url: `/api/v2/categories/${id}/types`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetCategoryTypesApiV2CategoriesIdTypesGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/categories/${id}/types`
-    ] as const;
-    }
-
-
-export const getGetCategoryTypesApiV2CategoriesIdTypesGetQueryOptions = <TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetCategoryTypesApiV2CategoriesIdTypesGetQueryKey = (
+  id: string,
 ) => {
+  return [`/api/v2/categories/${id}/types`] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetCategoryTypesApiV2CategoriesIdTypesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCategoryTypesApiV2CategoriesIdTypesGetQueryKey(id);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetCategoryTypesApiV2CategoriesIdTypesGetQueryKey(id);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>
+  > = ({ signal }) =>
+    getCategoryTypesApiV2CategoriesIdTypesGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>> = ({ signal }) => getCategoryTypesApiV2CategoriesIdTypesGet(id, requestOptions, signal);
+export type GetCategoryTypesApiV2CategoriesIdTypesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>
+>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetCategoryTypesApiV2CategoriesIdTypesGetQueryResult = NonNullable<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>>
-export type GetCategoryTypesApiV2CategoriesIdTypesGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetCategoryTypesApiV2CategoriesIdTypesGet<TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData>> & Pick<
+export function useGetCategoryTypesApiV2CategoriesIdTypesGet<
+  TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
           TError,
           Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCategoryTypesApiV2CategoriesIdTypesGet<TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCategoryTypesApiV2CategoriesIdTypesGet<
+  TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
           TError,
           Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCategoryTypesApiV2CategoriesIdTypesGet<TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCategoryTypesApiV2CategoriesIdTypesGet<
+  TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Category Types
  */
 
-export function useGetCategoryTypesApiV2CategoriesIdTypesGet<TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetCategoryTypesApiV2CategoriesIdTypesGet<
+  TData = Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCategoryTypesApiV2CategoriesIdTypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetCategoryTypesApiV2CategoriesIdTypesGetQueryOptions(
+    id,
+    options,
+  );
 
-  const queryOptions = getGetCategoryTypesApiV2CategoriesIdTypesGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary List Types
  */
 export const listTypesApiV2TypesGet = (
-    params?: ListTypesApiV2TypesGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListTypesApiV2TypesGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TypeResponse[]>(
+    { url: `/api/v2/types`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<TypeResponse[]>(
-      {url: `/api/v2/types`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListTypesApiV2TypesGetQueryKey = (params?: ListTypesApiV2TypesGetParams,) => {
-    return [
-    `/api/v2/types`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListTypesApiV2TypesGetQueryOptions = <TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListTypesApiV2TypesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListTypesApiV2TypesGetQueryKey = (
+  params?: ListTypesApiV2TypesGetParams,
 ) => {
+  return [`/api/v2/types`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListTypesApiV2TypesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTypesApiV2TypesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListTypesApiV2TypesGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListTypesApiV2TypesGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listTypesApiV2TypesGet>>
+  > = ({ signal }) => listTypesApiV2TypesGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>> = ({ signal }) => listTypesApiV2TypesGet(params, requestOptions, signal);
+export type ListTypesApiV2TypesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listTypesApiV2TypesGet>>
+>;
+export type ListTypesApiV2TypesGetQueryError = ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListTypesApiV2TypesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>>
-export type ListTypesApiV2TypesGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListTypesApiV2TypesGet<TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListTypesApiV2TypesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData>> & Pick<
+export function useListTypesApiV2TypesGet<
+  TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListTypesApiV2TypesGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
           TError,
           Awaited<ReturnType<typeof listTypesApiV2TypesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListTypesApiV2TypesGet<TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTypesApiV2TypesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListTypesApiV2TypesGet<
+  TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTypesApiV2TypesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
           TError,
           Awaited<ReturnType<typeof listTypesApiV2TypesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListTypesApiV2TypesGet<TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTypesApiV2TypesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListTypesApiV2TypesGet<
+  TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTypesApiV2TypesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Types
  */
 
-export function useListTypesApiV2TypesGet<TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTypesApiV2TypesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTypesApiV2TypesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListTypesApiV2TypesGet<
+  TData = Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTypesApiV2TypesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTypesApiV2TypesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListTypesApiV2TypesGetQueryOptions(params, options);
 
-  const queryOptions = getListTypesApiV2TypesGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Type
  */
 export const createTypeApiV2TypesPost = (
-    typeCreate: BodyType<TypeCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  typeCreate: BodyType<TypeCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/types`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: typeCreate, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/types`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: typeCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateTypeApiV2TypesPostMutationKey = () =>
+  ['createTypeApiV2TypesPost'] as const;
 
+export const getCreateTypeApiV2TypesPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+    TError,
+    CreateTypeApiV2TypesPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+  TError,
+  CreateTypeApiV2TypesPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateTypeApiV2TypesPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+    CreateTypeApiV2TypesPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateTypeApiV2TypesPostMutationKey = () => ['createTypeApiV2TypesPost'] as const;
+    return createTypeApiV2TypesPost(data, requestOptions);
+  };
 
-export const getCreateTypeApiV2TypesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateTypeApiV2TypesPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateTypeApiV2TypesPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createTypeApiV2TypesPost>>
+>;
+export type CreateTypeApiV2TypesPostMutationBody = BodyType<TypeCreate>;
+export type CreateTypeApiV2TypesPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateTypeApiV2TypesPostMutationVariables = {
+  data: BodyType<TypeCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, CreateTypeApiV2TypesPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createTypeApiV2TypesPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateTypeApiV2TypesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>>
-    export type CreateTypeApiV2TypesPostMutationBody = BodyType<TypeCreate>
-    export type CreateTypeApiV2TypesPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateTypeApiV2TypesPostMutationVariables = {data: BodyType<TypeCreate>}
-
-    /**
+/**
  * @summary Create Type
  */
-export const useCreateTypeApiV2TypesPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTypeApiV2TypesPost>>, TError,CreateTypeApiV2TypesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
-        TError,
-        CreateTypeApiV2TypesPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateTypeApiV2TypesPostMutationOptions(options), queryClient);
-    }
+export const useCreateTypeApiV2TypesPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+      TError,
+      CreateTypeApiV2TypesPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createTypeApiV2TypesPost>>,
+  TError,
+  CreateTypeApiV2TypesPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateTypeApiV2TypesPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Type
  */
 export const getTypeApiV2TypesIdGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TypeResponse>(
+    { url: `/api/v2/types/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetTypeApiV2TypesIdGetQueryKey = (id: string) => {
+  return [`/api/v2/types/${id}`] as const;
+};
 
-      return customInstance<TypeResponse>(
-      {url: `/api/v2/types/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetTypeApiV2TypesIdGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/types/${id}`
-    ] as const;
-    }
-
-
-export const getGetTypeApiV2TypesIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetTypeApiV2TypesIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetTypeApiV2TypesIdGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetTypeApiV2TypesIdGetQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>
+  > = ({ signal }) => getTypeApiV2TypesIdGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetTypeApiV2TypesIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>
+>;
+export type GetTypeApiV2TypesIdGetQueryError = ErrorType<HTTPValidationError>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>> = ({ signal }) => getTypeApiV2TypesIdGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetTypeApiV2TypesIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>>
-export type GetTypeApiV2TypesIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetTypeApiV2TypesIdGet<TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData>> & Pick<
+export function useGetTypeApiV2TypesIdGet<
+  TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
           TError,
           Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeApiV2TypesIdGet<TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTypeApiV2TypesIdGet<
+  TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
           TError,
           Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeApiV2TypesIdGet<TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTypeApiV2TypesIdGet<
+  TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Type
  */
 
-export function useGetTypeApiV2TypesIdGet<TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetTypeApiV2TypesIdGet<
+  TData = Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeApiV2TypesIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetTypeApiV2TypesIdGetQueryOptions(id, options);
 
-  const queryOptions = getGetTypeApiV2TypesIdGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Patch Type
  */
 export const patchTypeApiV2TypesIdPatch = (
-    id: string,
-    typePatch: BodyType<TypePatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  typePatch: BodyType<TypePatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/types/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: typePatch, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/types/${id}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: typePatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchTypeApiV2TypesIdPatchMutationKey = () =>
+  ['patchTypeApiV2TypesIdPatch'] as const;
 
+export const getPatchTypeApiV2TypesIdPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+    TError,
+    PatchTypeApiV2TypesIdPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+  TError,
+  PatchTypeApiV2TypesIdPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchTypeApiV2TypesIdPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+    PatchTypeApiV2TypesIdPatchMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchTypeApiV2TypesIdPatchMutationKey = () => ['patchTypeApiV2TypesIdPatch'] as const;
+    return patchTypeApiV2TypesIdPatch(id, data, requestOptions);
+  };
 
-export const getPatchTypeApiV2TypesIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchTypeApiV2TypesIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchTypeApiV2TypesIdPatchMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>
+>;
+export type PatchTypeApiV2TypesIdPatchMutationBody = BodyType<TypePatch>;
+export type PatchTypeApiV2TypesIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchTypeApiV2TypesIdPatchMutationVariables = {
+  id: string;
+  data: BodyType<TypePatch>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, PatchTypeApiV2TypesIdPatchMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchTypeApiV2TypesIdPatch(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchTypeApiV2TypesIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>>
-    export type PatchTypeApiV2TypesIdPatchMutationBody = BodyType<TypePatch>
-    export type PatchTypeApiV2TypesIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchTypeApiV2TypesIdPatchMutationVariables = {id: string;data: BodyType<TypePatch>}
-
-    /**
+/**
  * @summary Patch Type
  */
-export const usePatchTypeApiV2TypesIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>, TError,PatchTypeApiV2TypesIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
-        TError,
-        PatchTypeApiV2TypesIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchTypeApiV2TypesIdPatchMutationOptions(options), queryClient);
-    }
+export const usePatchTypeApiV2TypesIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+      TError,
+      PatchTypeApiV2TypesIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchTypeApiV2TypesIdPatch>>,
+  TError,
+  PatchTypeApiV2TypesIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchTypeApiV2TypesIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Delete Category
  */
 export const deleteCategoryApiV2TypesIdDelete = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<IdResponse>(
+    { url: `/api/v2/types/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
+export const getDeleteCategoryApiV2TypesIdDeleteMutationKey = () =>
+  ['deleteCategoryApiV2TypesIdDelete'] as const;
 
-      return customInstance<IdResponse>(
-      {url: `/api/v2/types/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+export const getDeleteCategoryApiV2TypesIdDeleteMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+    TError,
+    DeleteCategoryApiV2TypesIdDeleteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+  TError,
+  DeleteCategoryApiV2TypesIdDeleteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDeleteCategoryApiV2TypesIdDeleteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+    DeleteCategoryApiV2TypesIdDeleteMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return deleteCategoryApiV2TypesIdDelete(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getDeleteCategoryApiV2TypesIdDeleteMutationKey = () => ['deleteCategoryApiV2TypesIdDelete'] as const;
+export type DeleteCategoryApiV2TypesIdDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>
+>;
 
-export const getDeleteCategoryApiV2TypesIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext> => {
+export type DeleteCategoryApiV2TypesIdDeleteMutationError =
+  ErrorType<HTTPValidationError>;
+export type DeleteCategoryApiV2TypesIdDeleteMutationVariables = { id: string };
 
-const mutationKey = getDeleteCategoryApiV2TypesIdDeleteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, DeleteCategoryApiV2TypesIdDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  deleteCategoryApiV2TypesIdDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteCategoryApiV2TypesIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>>
-
-    export type DeleteCategoryApiV2TypesIdDeleteMutationError = ErrorType<HTTPValidationError>
-    export type DeleteCategoryApiV2TypesIdDeleteMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Delete Category
  */
-export const useDeleteCategoryApiV2TypesIdDelete = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>, TError,DeleteCategoryApiV2TypesIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
-        TError,
-        DeleteCategoryApiV2TypesIdDeleteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDeleteCategoryApiV2TypesIdDeleteMutationOptions(options), queryClient);
-    }
+export const useDeleteCategoryApiV2TypesIdDelete = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+      TError,
+      DeleteCategoryApiV2TypesIdDeleteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof deleteCategoryApiV2TypesIdDelete>>,
+  TError,
+  DeleteCategoryApiV2TypesIdDeleteMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDeleteCategoryApiV2TypesIdDeleteMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Type Items
  */
 export const getTypeItemsApiV2TypesTypeRefItemsGet = (
-    typeRef: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  typeRef: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<ItemResponse[]>(
+    { url: `/api/v2/types/${typeRef}/items`, method: 'GET', signal },
+    options,
+  );
+};
 
-
-      return customInstance<ItemResponse[]>(
-      {url: `/api/v2/types/${typeRef}/items`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey = (typeRef: string,) => {
-    return [
-    `/api/v2/types/${typeRef}/items`
-    ] as const;
-    }
-
-
-export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions = <TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey = (
+  typeRef: string,
 ) => {
+  return [`/api/v2/types/${typeRef}/items`] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  typeRef: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey(typeRef);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetTypeItemsApiV2TypesTypeRefItemsGetQueryKey(typeRef);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
+  > = ({ signal }) =>
+    getTypeItemsApiV2TypesTypeRefItemsGet(typeRef, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: typeRef !== null && typeRef !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>> = ({ signal }) => getTypeItemsApiV2TypesTypeRefItemsGet(typeRef, requestOptions, signal);
+export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
+>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: typeRef !== null && typeRef !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>>
-export type GetTypeItemsApiV2TypesTypeRefItemsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- typeRef: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>> & Pick<
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<
+  TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  typeRef: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
           TError,
           Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<
+  TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  typeRef: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
           TError,
           Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<
+  TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  typeRef: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Type Items
  */
 
-export function useGetTypeItemsApiV2TypesTypeRefItemsGet<TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- typeRef: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetTypeItemsApiV2TypesTypeRefItemsGet<
+  TData = Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  typeRef: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTypeItemsApiV2TypesTypeRefItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions(
+    typeRef,
+    options,
+  );
 
-  const queryOptions = getGetTypeItemsApiV2TypesTypeRefItemsGetQueryOptions(typeRef,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Request Nexus Update
  */
 export const requestNexusUpdateApiV2TypesIdNexusUpdatePost = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<IdResponse>(
+    { url: `/api/v2/types/${id}/nexus-update`, method: 'POST', signal },
+    options,
+  );
+};
 
+export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey = () =>
+  ['requestNexusUpdateApiV2TypesIdNexusUpdatePost'] as const;
 
-      return customInstance<IdResponse>(
-      {url: `/api/v2/types/${id}/nexus-update`, method: 'POST', signal
-    },
-      options);
-    }
+export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+    TError,
+    RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+  TError,
+  RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
+  TContext
+> => {
+  const mutationKey =
+    getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+    RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return requestNexusUpdateApiV2TypesIdNexusUpdatePost(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey = () => ['requestNexusUpdateApiV2TypesIdNexusUpdatePost'] as const;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>
+  >;
 
-export const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext> => {
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationError =
+  ErrorType<HTTPValidationError>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables = {
+  id: string;
+};
 
-const mutationKey = getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  requestNexusUpdateApiV2TypesIdNexusUpdatePost(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationResult = NonNullable<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>>
-
-    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationError = ErrorType<HTTPValidationError>
-    export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Request Nexus Update
  */
-export const useRequestNexusUpdateApiV2TypesIdNexusUpdatePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>, TError,RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
-        TError,
-        RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions(options), queryClient);
-    }
+export const useRequestNexusUpdateApiV2TypesIdNexusUpdatePost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+      TError,
+      RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof requestNexusUpdateApiV2TypesIdNexusUpdatePost>>,
+  TError,
+  RequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getRequestNexusUpdateApiV2TypesIdNexusUpdatePostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Items
  */
 export const listItemsApiV2ItemsGet = (
-    params?: ListItemsApiV2ItemsGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListItemsApiV2ItemsGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<ItemResponse[]>(
+    { url: `/api/v2/items`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<ItemResponse[]>(
-      {url: `/api/v2/items`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListItemsApiV2ItemsGetQueryKey = (params?: ListItemsApiV2ItemsGetParams,) => {
-    return [
-    `/api/v2/items`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListItemsApiV2ItemsGetQueryOptions = <TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListItemsApiV2ItemsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListItemsApiV2ItemsGetQueryKey = (
+  params?: ListItemsApiV2ItemsGetParams,
 ) => {
+  return [`/api/v2/items`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListItemsApiV2ItemsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListItemsApiV2ItemsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListItemsApiV2ItemsGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListItemsApiV2ItemsGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>
+  > = ({ signal }) => listItemsApiV2ItemsGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>> = ({ signal }) => listItemsApiV2ItemsGet(params, requestOptions, signal);
+export type ListItemsApiV2ItemsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>
+>;
+export type ListItemsApiV2ItemsGetQueryError = ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListItemsApiV2ItemsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>>
-export type ListItemsApiV2ItemsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListItemsApiV2ItemsGet<TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListItemsApiV2ItemsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData>> & Pick<
+export function useListItemsApiV2ItemsGet<
+  TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListItemsApiV2ItemsGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
           TError,
           Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListItemsApiV2ItemsGet<TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListItemsApiV2ItemsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListItemsApiV2ItemsGet<
+  TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListItemsApiV2ItemsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
           TError,
           Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListItemsApiV2ItemsGet<TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListItemsApiV2ItemsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListItemsApiV2ItemsGet<
+  TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListItemsApiV2ItemsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Items
  */
 
-export function useListItemsApiV2ItemsGet<TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListItemsApiV2ItemsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListItemsApiV2ItemsGet<
+  TData = Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListItemsApiV2ItemsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listItemsApiV2ItemsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListItemsApiV2ItemsGetQueryOptions(params, options);
 
-  const queryOptions = getListItemsApiV2ItemsGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Item
  */
 export const createItemApiV2ItemsPost = (
-    itemCreate: BodyType<ItemCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  itemCreate: BodyType<ItemCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/items`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: itemCreate, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/items`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: itemCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateItemApiV2ItemsPostMutationKey = () =>
+  ['createItemApiV2ItemsPost'] as const;
 
+export const getCreateItemApiV2ItemsPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+    TError,
+    CreateItemApiV2ItemsPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+  TError,
+  CreateItemApiV2ItemsPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateItemApiV2ItemsPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+    CreateItemApiV2ItemsPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateItemApiV2ItemsPostMutationKey = () => ['createItemApiV2ItemsPost'] as const;
+    return createItemApiV2ItemsPost(data, requestOptions);
+  };
 
-export const getCreateItemApiV2ItemsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateItemApiV2ItemsPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateItemApiV2ItemsPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createItemApiV2ItemsPost>>
+>;
+export type CreateItemApiV2ItemsPostMutationBody = BodyType<ItemCreate>;
+export type CreateItemApiV2ItemsPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateItemApiV2ItemsPostMutationVariables = {
+  data: BodyType<ItemCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, CreateItemApiV2ItemsPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createItemApiV2ItemsPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateItemApiV2ItemsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>>
-    export type CreateItemApiV2ItemsPostMutationBody = BodyType<ItemCreate>
-    export type CreateItemApiV2ItemsPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateItemApiV2ItemsPostMutationVariables = {data: BodyType<ItemCreate>}
-
-    /**
+/**
  * @summary Create Item
  */
-export const useCreateItemApiV2ItemsPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createItemApiV2ItemsPost>>, TError,CreateItemApiV2ItemsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
-        TError,
-        CreateItemApiV2ItemsPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateItemApiV2ItemsPostMutationOptions(options), queryClient);
-    }
+export const useCreateItemApiV2ItemsPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+      TError,
+      CreateItemApiV2ItemsPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createItemApiV2ItemsPost>>,
+  TError,
+  CreateItemApiV2ItemsPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateItemApiV2ItemsPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Item Stock
  */
 export const getItemStockApiV2ItemsIdStockGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<StockLineResponse[]>(
+    { url: `/api/v2/items/${id}/stock`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetItemStockApiV2ItemsIdStockGetQueryKey = (id: string) => {
+  return [`/api/v2/items/${id}/stock`] as const;
+};
 
-      return customInstance<StockLineResponse[]>(
-      {url: `/api/v2/items/${id}/stock`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetItemStockApiV2ItemsIdStockGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/items/${id}/stock`
-    ] as const;
-    }
-
-
-export const getGetItemStockApiV2ItemsIdStockGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetItemStockApiV2ItemsIdStockGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetItemStockApiV2ItemsIdStockGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetItemStockApiV2ItemsIdStockGetQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>
+  > = ({ signal }) =>
+    getItemStockApiV2ItemsIdStockGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetItemStockApiV2ItemsIdStockGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>
+>;
+export type GetItemStockApiV2ItemsIdStockGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>> = ({ signal }) => getItemStockApiV2ItemsIdStockGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemStockApiV2ItemsIdStockGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>>
-export type GetItemStockApiV2ItemsIdStockGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData>> & Pick<
+export function useGetItemStockApiV2ItemsIdStockGet<
+  TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
           TError,
           Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemStockApiV2ItemsIdStockGet<
+  TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
           TError,
           Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemStockApiV2ItemsIdStockGet<
+  TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item Stock
  */
 
-export function useGetItemStockApiV2ItemsIdStockGet<TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemStockApiV2ItemsIdStockGet<
+  TData = Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemStockApiV2ItemsIdStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetItemStockApiV2ItemsIdStockGetQueryOptions(
+    id,
+    options,
+  );
 
-  const queryOptions = getGetItemStockApiV2ItemsIdStockGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Refinage Origin Stock
  */
 export const getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet = (
+  id: string,
+  params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<RefinageOriginStockResponse[]>(
+    {
+      url: `/api/v2/items/${id}/refinage/origin-stock`,
+      method: 'GET',
+      params,
+      signal,
+    },
+    options,
+  );
+};
+
+export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey =
+  (
     id: string,
     params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<RefinageOriginStockResponse[]>(
-      {url: `/api/v2/items/${id}/refinage/origin-stock`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey = (id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,) => {
+  ) => {
     return [
-    `/api/v2/items/${id}/refinage/origin-stock`, ...(params ? [params] : [])
+      `/api/v2/items/${id}/refinage/origin-stock`,
+      ...(params ? [params] : []),
     ] as const;
-    }
+  };
 
+export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+      >
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
+    id: string,
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions = <TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey(
+        id,
+        params,
+      );
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+        >
+      >
+    > = ({ signal }) =>
+      getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet(
+        id,
+        params,
+        requestOptions,
+        signal,
+      );
 
-  const queryKey =  queryOptions?.queryKey ?? getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryKey(id,params);
+    return {
+      queryKey,
+      queryFn,
+      enabled: id !== null && id !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+      >
+    >
+  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>> = ({ signal }) => getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet(id,params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryResult = NonNullable<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>>
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params: undefined |  GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<
+  TData = Awaited<
+    ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params:
+    undefined | GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
+          Awaited<
+            ReturnType<
+              typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<
+  TData = Awaited<
+    ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>,
+          Awaited<
+            ReturnType<
+              typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<
+  TData = Awaited<
+    ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Refinage Origin Stock
  */
 
-export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<TData = Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet<
+  TData = Awaited<
+    ReturnType<typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions(
+      id,
+      params,
+      options,
+    );
 
-  const queryOptions = getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions(id,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Item Lots
  */
 export const getItemLotsApiV2ItemsIdLotsGet = (
-    id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<LotResponse[]>(
+    { url: `/api/v2/items/${id}/lots`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<LotResponse[]>(
-      {url: `/api/v2/items/${id}/lots`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetItemLotsApiV2ItemsIdLotsGetQueryKey = (id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams,) => {
-    return [
-    `/api/v2/items/${id}/lots`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetItemLotsApiV2ItemsIdLotsGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetItemLotsApiV2ItemsIdLotsGetQueryKey = (
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
 ) => {
+  return [`/api/v2/items/${id}/lots`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetItemLotsApiV2ItemsIdLotsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetItemLotsApiV2ItemsIdLotsGetQueryKey(id,params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetItemLotsApiV2ItemsIdLotsGetQueryKey(id, params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>
+  > = ({ signal }) =>
+    getItemLotsApiV2ItemsIdLotsGet(id, params, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>> = ({ signal }) => getItemLotsApiV2ItemsIdLotsGet(id,params, requestOptions, signal);
+export type GetItemLotsApiV2ItemsIdLotsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>
+>;
+export type GetItemLotsApiV2ItemsIdLotsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemLotsApiV2ItemsIdLotsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>>
-export type GetItemLotsApiV2ItemsIdLotsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemLotsApiV2ItemsIdLotsGet<TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params: undefined |  GetItemLotsApiV2ItemsIdLotsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData>> & Pick<
+export function useGetItemLotsApiV2ItemsIdLotsGet<
+  TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params: undefined | GetItemLotsApiV2ItemsIdLotsGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
           TError,
           Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemLotsApiV2ItemsIdLotsGet<TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemLotsApiV2ItemsIdLotsGet<
+  TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
           TError,
           Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemLotsApiV2ItemsIdLotsGet<TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemLotsApiV2ItemsIdLotsGet<
+  TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item Lots
  */
 
-export function useGetItemLotsApiV2ItemsIdLotsGet<TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemLotsApiV2ItemsIdLotsGet<
+  TData = Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemLotsApiV2ItemsIdLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemLotsApiV2ItemsIdLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetItemLotsApiV2ItemsIdLotsGetQueryOptions(
+    id,
+    params,
+    options,
+  );
 
-  const queryOptions = getGetItemLotsApiV2ItemsIdLotsGetQueryOptions(id,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Item Transactions
  */
 export const getItemTransactionsApiV2ItemsIdTransactionsGet = (
-    id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TransactionEntryResponse[]>(
+    { url: `/api/v2/items/${id}/transactions`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<TransactionEntryResponse[]>(
-      {url: `/api/v2/items/${id}/transactions`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryKey = (id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,) => {
-    return [
-    `/api/v2/items/${id}/transactions`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError = ErrorType<HTTPValidationError>>(id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryKey = (
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
 ) => {
+  return [
+    `/api/v2/items/${id}/transactions`,
+    ...(params ? [params] : []),
+  ] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryKey(id,params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryKey(id, params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>
+  > = ({ signal }) =>
+    getItemTransactionsApiV2ItemsIdTransactionsGet(
+      id,
+      params,
+      requestOptions,
+      signal,
+    );
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>> = ({ signal }) => getItemTransactionsApiV2ItemsIdTransactionsGet(id,params, requestOptions, signal);
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>
+  >;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>>
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<TData = Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params: undefined |  GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData>> & Pick<
+export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<
+  TData = Awaited<
+    ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params: undefined | GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>,
+          Awaited<
+            ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<TData = Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<
+  TData = Awaited<
+    ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>,
+          Awaited<
+            ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<TData = Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<
+  TData = Awaited<
+    ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item Transactions
  */
 
-export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<TData = Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemTransactionsApiV2ItemsIdTransactionsGet<
+  TData = Awaited<
+    ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getItemTransactionsApiV2ItemsIdTransactionsGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryOptions(
+      id,
+      params,
+      options,
+    );
 
-  const queryOptions = getGetItemTransactionsApiV2ItemsIdTransactionsGetQueryOptions(id,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Item Financial Report
  */
 export const getItemFinancialReportApiV2ItemsIdFinancialReportGet = (
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<ItemFinancialReportEnvelope>(
+    { url: `/api/v2/items/${id}/financial-report`, method: 'GET', signal },
+    options,
+  );
+};
+
+export const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryKey = (
+  id: string,
+) => {
+  return [`/api/v2/items/${id}/financial-report`] as const;
+};
+
+export const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
     id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<ItemFinancialReportEnvelope>(
-      {url: `/api/v2/items/${id}/financial-report`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
     },
-      options);
-    }
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryKey(id);
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+      >
+    > = ({ signal }) =>
+      getItemFinancialReportApiV2ItemsIdFinancialReportGet(
+        id,
+        requestOptions,
+        signal,
+      );
 
+    return {
+      queryKey,
+      queryFn,
+      enabled: id !== null && id !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/items/${id}/financial-report`
-    ] as const;
-    }
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+    >
+  >;
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-export const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>> = ({ signal }) => getItemFinancialReportApiV2ItemsIdFinancialReportGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>>
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<TData = Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData>> & Pick<
+export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>,
+          Awaited<
+            ReturnType<
+              typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<TData = Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>,
+          Awaited<
+            ReturnType<
+              typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<TData = Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item Financial Report
  */
 
-export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<TData = Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemFinancialReportApiV2ItemsIdFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemFinancialReportApiV2ItemsIdFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryOptions(
+      id,
+      options,
+    );
 
-  const queryOptions = getGetItemFinancialReportApiV2ItemsIdFinancialReportGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Item Average Buy Markup
  */
 export const getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet = (
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<AverageBuyMarkupResponse>(
+    { url: `/api/v2/items/${id}/average-buy-markup`, method: 'GET', signal },
+    options,
+  );
+};
+
+export const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryKey =
+  (id: string) => {
+    return [`/api/v2/items/${id}/average-buy-markup`] as const;
+  };
+
+export const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
     id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<AverageBuyMarkupResponse>(
-      {url: `/api/v2/items/${id}/average-buy-markup`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
     },
-      options);
-    }
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryKey(id);
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+        >
+      >
+    > = ({ signal }) =>
+      getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet(
+        id,
+        requestOptions,
+        signal,
+      );
 
+    return {
+      queryKey,
+      queryFn,
+      enabled: id !== null && id !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/items/${id}/average-buy-markup`
-    ] as const;
-    }
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+    >
+  >;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-export const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryKey(id);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>> = ({ signal }) => getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>>
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<TData = Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData>> & Pick<
+export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<
+  TData = Awaited<
+    ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>,
+          Awaited<
+            ReturnType<
+              typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<TData = Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<
+  TData = Awaited<
+    ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>,
+          Awaited<
+            ReturnType<
+              typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<TData = Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<
+  TData = Awaited<
+    ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item Average Buy Markup
  */
 
-export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<TData = Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet<
+  TData = Awaited<
+    ReturnType<typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryOptions(
+      id,
+      options,
+    );
 
-  const queryOptions = getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Item
  */
 export const getItemApiV2ItemsIdGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<ItemResponse>(
+    { url: `/api/v2/items/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetItemApiV2ItemsIdGetQueryKey = (id: string) => {
+  return [`/api/v2/items/${id}`] as const;
+};
 
-      return customInstance<ItemResponse>(
-      {url: `/api/v2/items/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetItemApiV2ItemsIdGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/items/${id}`
-    ] as const;
-    }
-
-
-export const getGetItemApiV2ItemsIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetItemApiV2ItemsIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ?? getGetItemApiV2ItemsIdGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetItemApiV2ItemsIdGetQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>
+  > = ({ signal }) => getItemApiV2ItemsIdGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetItemApiV2ItemsIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>
+>;
+export type GetItemApiV2ItemsIdGetQueryError = ErrorType<HTTPValidationError>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>> = ({ signal }) => getItemApiV2ItemsIdGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetItemApiV2ItemsIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>>
-export type GetItemApiV2ItemsIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetItemApiV2ItemsIdGet<TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData>> & Pick<
+export function useGetItemApiV2ItemsIdGet<
+  TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
           TError,
           Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemApiV2ItemsIdGet<TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemApiV2ItemsIdGet<
+  TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
           TError,
           Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetItemApiV2ItemsIdGet<TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetItemApiV2ItemsIdGet<
+  TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Item
  */
 
-export function useGetItemApiV2ItemsIdGet<TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetItemApiV2ItemsIdGet<
+  TData = Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getItemApiV2ItemsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetItemApiV2ItemsIdGetQueryOptions(id, options);
 
-  const queryOptions = getGetItemApiV2ItemsIdGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Patch Item
  */
 export const patchItemApiV2ItemsIdPatch = (
-    id: string,
-    itemPatch: BodyType<ItemPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  itemPatch: BodyType<ItemPatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/items/${id}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: itemPatch, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/items/${id}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: itemPatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchItemApiV2ItemsIdPatchMutationKey = () =>
+  ['patchItemApiV2ItemsIdPatch'] as const;
 
+export const getPatchItemApiV2ItemsIdPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+    TError,
+    PatchItemApiV2ItemsIdPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+  TError,
+  PatchItemApiV2ItemsIdPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchItemApiV2ItemsIdPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+    PatchItemApiV2ItemsIdPatchMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchItemApiV2ItemsIdPatchMutationKey = () => ['patchItemApiV2ItemsIdPatch'] as const;
+    return patchItemApiV2ItemsIdPatch(id, data, requestOptions);
+  };
 
-export const getPatchItemApiV2ItemsIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchItemApiV2ItemsIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchItemApiV2ItemsIdPatchMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>
+>;
+export type PatchItemApiV2ItemsIdPatchMutationBody = BodyType<ItemPatch>;
+export type PatchItemApiV2ItemsIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchItemApiV2ItemsIdPatchMutationVariables = {
+  id: string;
+  data: BodyType<ItemPatch>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, PatchItemApiV2ItemsIdPatchMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchItemApiV2ItemsIdPatch(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchItemApiV2ItemsIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>>
-    export type PatchItemApiV2ItemsIdPatchMutationBody = BodyType<ItemPatch>
-    export type PatchItemApiV2ItemsIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchItemApiV2ItemsIdPatchMutationVariables = {id: string;data: BodyType<ItemPatch>}
-
-    /**
+/**
  * @summary Patch Item
  */
-export const usePatchItemApiV2ItemsIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>, TError,PatchItemApiV2ItemsIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
-        TError,
-        PatchItemApiV2ItemsIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchItemApiV2ItemsIdPatchMutationOptions(options), queryClient);
-    }
+export const usePatchItemApiV2ItemsIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+      TError,
+      PatchItemApiV2ItemsIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPatch>>,
+  TError,
+  PatchItemApiV2ItemsIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchItemApiV2ItemsIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Patch Item
  */
 export const patchItemApiV2ItemsIdPut = (
-    id: string,
-    itemPatch: BodyType<ItemPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  itemPatch: BodyType<ItemPatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/items/${id}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: itemPatch, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/items/${id}`,
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      data: itemPatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchItemApiV2ItemsIdPutMutationKey = () =>
+  ['patchItemApiV2ItemsIdPut'] as const;
 
+export const getPatchItemApiV2ItemsIdPutMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+    TError,
+    PatchItemApiV2ItemsIdPutMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+  TError,
+  PatchItemApiV2ItemsIdPutMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchItemApiV2ItemsIdPutMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+    PatchItemApiV2ItemsIdPutMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchItemApiV2ItemsIdPutMutationKey = () => ['patchItemApiV2ItemsIdPut'] as const;
+    return patchItemApiV2ItemsIdPut(id, data, requestOptions);
+  };
 
-export const getPatchItemApiV2ItemsIdPutMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchItemApiV2ItemsIdPutMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchItemApiV2ItemsIdPutMutationResult = NonNullable<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>
+>;
+export type PatchItemApiV2ItemsIdPutMutationBody = BodyType<ItemPatch>;
+export type PatchItemApiV2ItemsIdPutMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchItemApiV2ItemsIdPutMutationVariables = {
+  id: string;
+  data: BodyType<ItemPatch>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, PatchItemApiV2ItemsIdPutMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchItemApiV2ItemsIdPut(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchItemApiV2ItemsIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>>
-    export type PatchItemApiV2ItemsIdPutMutationBody = BodyType<ItemPatch>
-    export type PatchItemApiV2ItemsIdPutMutationError = ErrorType<HTTPValidationError>
-    export type PatchItemApiV2ItemsIdPutMutationVariables = {id: string;data: BodyType<ItemPatch>}
-
-    /**
+/**
  * @summary Patch Item
  */
-export const usePatchItemApiV2ItemsIdPut = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>, TError,PatchItemApiV2ItemsIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
-        TError,
-        PatchItemApiV2ItemsIdPutMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchItemApiV2ItemsIdPutMutationOptions(options), queryClient);
-    }
+export const usePatchItemApiV2ItemsIdPut = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+      TError,
+      PatchItemApiV2ItemsIdPutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchItemApiV2ItemsIdPut>>,
+  TError,
+  PatchItemApiV2ItemsIdPutMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchItemApiV2ItemsIdPutMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Delete Item
  */
 export const deleteItemApiV2ItemsIdDelete = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<IdResponse>(
+    { url: `/api/v2/items/${id}`, method: 'DELETE', signal },
+    options,
+  );
+};
 
+export const getDeleteItemApiV2ItemsIdDeleteMutationKey = () =>
+  ['deleteItemApiV2ItemsIdDelete'] as const;
 
-      return customInstance<IdResponse>(
-      {url: `/api/v2/items/${id}`, method: 'DELETE', signal
-    },
-      options);
-    }
+export const getDeleteItemApiV2ItemsIdDeleteMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+    TError,
+    DeleteItemApiV2ItemsIdDeleteMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+  TError,
+  DeleteItemApiV2ItemsIdDeleteMutationVariables,
+  TContext
+> => {
+  const mutationKey = getDeleteItemApiV2ItemsIdDeleteMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+    DeleteItemApiV2ItemsIdDeleteMutationVariables
+  > = (props) => {
+    const { id } = props ?? {};
 
+    return deleteItemApiV2ItemsIdDelete(id, requestOptions);
+  };
 
+  return { mutationFn, ...mutationOptions };
+};
 
-export const getDeleteItemApiV2ItemsIdDeleteMutationKey = () => ['deleteItemApiV2ItemsIdDelete'] as const;
+export type DeleteItemApiV2ItemsIdDeleteMutationResult = NonNullable<
+  Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>
+>;
 
-export const getDeleteItemApiV2ItemsIdDeleteMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext> => {
+export type DeleteItemApiV2ItemsIdDeleteMutationError =
+  ErrorType<HTTPValidationError>;
+export type DeleteItemApiV2ItemsIdDeleteMutationVariables = { id: string };
 
-const mutationKey = getDeleteItemApiV2ItemsIdDeleteMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, DeleteItemApiV2ItemsIdDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  deleteItemApiV2ItemsIdDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DeleteItemApiV2ItemsIdDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>>
-
-    export type DeleteItemApiV2ItemsIdDeleteMutationError = ErrorType<HTTPValidationError>
-    export type DeleteItemApiV2ItemsIdDeleteMutationVariables = {id: string}
-
-    /**
+/**
  * @summary Delete Item
  */
-export const useDeleteItemApiV2ItemsIdDelete = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>, TError,DeleteItemApiV2ItemsIdDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
-        TError,
-        DeleteItemApiV2ItemsIdDeleteMutationVariables,
-        TContext
-      > => {
-      return useMutation(getDeleteItemApiV2ItemsIdDeleteMutationOptions(options), queryClient);
-    }
+export const useDeleteItemApiV2ItemsIdDelete = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+      TError,
+      DeleteItemApiV2ItemsIdDeleteMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof deleteItemApiV2ItemsIdDelete>>,
+  TError,
+  DeleteItemApiV2ItemsIdDeleteMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getDeleteItemApiV2ItemsIdDeleteMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Inventory Lots
  */
 export const listInventoryLotsApiV2InventoryLotsGet = (
-    params?: ListInventoryLotsApiV2InventoryLotsGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<LotResponse[]>(
+    { url: `/api/v2/inventory/lots`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<LotResponse[]>(
-      {url: `/api/v2/inventory/lots`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListInventoryLotsApiV2InventoryLotsGetQueryKey = (params?: ListInventoryLotsApiV2InventoryLotsGetParams,) => {
-    return [
-    `/api/v2/inventory/lots`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListInventoryLotsApiV2InventoryLotsGetQueryOptions = <TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListInventoryLotsApiV2InventoryLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListInventoryLotsApiV2InventoryLotsGetQueryKey = (
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
 ) => {
+  return [`/api/v2/inventory/lots`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListInventoryLotsApiV2InventoryLotsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListInventoryLotsApiV2InventoryLotsGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListInventoryLotsApiV2InventoryLotsGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>
+  > = ({ signal }) =>
+    listInventoryLotsApiV2InventoryLotsGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>> = ({ signal }) => listInventoryLotsApiV2InventoryLotsGet(params, requestOptions, signal);
+export type ListInventoryLotsApiV2InventoryLotsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>
+>;
+export type ListInventoryLotsApiV2InventoryLotsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListInventoryLotsApiV2InventoryLotsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>>
-export type ListInventoryLotsApiV2InventoryLotsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListInventoryLotsApiV2InventoryLotsGet<TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListInventoryLotsApiV2InventoryLotsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData>> & Pick<
+export function useListInventoryLotsApiV2InventoryLotsGet<
+  TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListInventoryLotsApiV2InventoryLotsGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
           TError,
           Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListInventoryLotsApiV2InventoryLotsGet<TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryLotsApiV2InventoryLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListInventoryLotsApiV2InventoryLotsGet<
+  TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
           TError,
           Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListInventoryLotsApiV2InventoryLotsGet<TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryLotsApiV2InventoryLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListInventoryLotsApiV2InventoryLotsGet<
+  TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Inventory Lots
  */
 
-export function useListInventoryLotsApiV2InventoryLotsGet<TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryLotsApiV2InventoryLotsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListInventoryLotsApiV2InventoryLotsGet<
+  TData = Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryLotsApiV2InventoryLotsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryLotsApiV2InventoryLotsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListInventoryLotsApiV2InventoryLotsGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListInventoryLotsApiV2InventoryLotsGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary List Lot Origins
  */
 export const listLotOriginsApiV2InventoryLotsOriginGet = (
-    params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<LotOriginResponse[]>(
+    { url: `/api/v2/inventory/lots/origin`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<LotOriginResponse[]>(
-      {url: `/api/v2/inventory/lots/origin`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListLotOriginsApiV2InventoryLotsOriginGetQueryKey = (params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,) => {
-    return [
-    `/api/v2/inventory/lots/origin`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions = <TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListLotOriginsApiV2InventoryLotsOriginGetQueryKey = (
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
 ) => {
+  return [
+    `/api/v2/inventory/lots/origin`,
+    ...(params ? [params] : []),
+  ] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListLotOriginsApiV2InventoryLotsOriginGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListLotOriginsApiV2InventoryLotsOriginGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
+  > = ({ signal }) =>
+    listLotOriginsApiV2InventoryLotsOriginGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>> = ({ signal }) => listLotOriginsApiV2InventoryLotsOriginGet(params, requestOptions, signal);
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
+>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListLotOriginsApiV2InventoryLotsOriginGetQueryResult = NonNullable<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>>
-export type ListLotOriginsApiV2InventoryLotsOriginGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListLotOriginsApiV2InventoryLotsOriginGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>> & Pick<
+export function useListLotOriginsApiV2InventoryLotsOriginGet<
+  TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
           TError,
           Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListLotOriginsApiV2InventoryLotsOriginGet<
+  TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
           TError,
           Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListLotOriginsApiV2InventoryLotsOriginGet<
+  TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Lot Origins
  */
 
-export function useListLotOriginsApiV2InventoryLotsOriginGet<TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListLotOriginsApiV2InventoryLotsOriginGet<
+  TData = Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listLotOriginsApiV2InventoryLotsOriginGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListLotOriginsApiV2InventoryLotsOriginGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Lot Origin
  */
 export const getLotOriginApiV2InventoryLotsLotIdOriginGet = (
-    lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<LotOriginResponse>(
-      {url: `/api/v2/inventory/lots/${lotId}/origin`, method: 'GET',
-        params, signal
+  return customInstance<LotOriginResponse>(
+    {
+      url: `/api/v2/inventory/lots/${lotId}/origin`,
+      method: 'GET',
+      params,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
-
-
-
-export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey = (lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,) => {
-    return [
-    `/api/v2/inventory/lots/${lotId}/origin`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions = <TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey = (
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
 ) => {
+  return [
+    `/api/v2/inventory/lots/${lotId}/origin`,
+    ...(params ? [params] : []),
+  ] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey(lotId,params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryKey(lotId, params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
+  > = ({ signal }) =>
+    getLotOriginApiV2InventoryLotsLotIdOriginGet(
+      lotId,
+      params,
+      requestOptions,
+      signal,
+    );
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: lotId !== null && lotId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>> = ({ signal }) => getLotOriginApiV2InventoryLotsLotIdOriginGet(lotId,params, requestOptions, signal);
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
+  >;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: lotId !== null && lotId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryResult = NonNullable<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>>
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- lotId: string,
-    params: undefined |  GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>> & Pick<
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<
+  TData = Awaited<
+    ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  lotId: string,
+  params: undefined | GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>,
+          Awaited<
+            ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<
+  TData = Awaited<
+    ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>,
+          Awaited<
+            ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<
+  TData = Awaited<
+    ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Lot Origin
  */
 
-export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<TData = Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError = ErrorType<HTTPValidationError>>(
- lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetLotOriginApiV2InventoryLotsLotIdOriginGet<
+  TData = Awaited<
+    ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  lotId: string,
+  params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getLotOriginApiV2InventoryLotsLotIdOriginGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions(
+      lotId,
+      params,
+      options,
+    );
 
-  const queryOptions = getGetLotOriginApiV2InventoryLotsLotIdOriginGetQueryOptions(lotId,params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Update Inventory Lot
  */
 export const updateInventoryLotApiV2InventoryLotsLotIdPatch = (
-    lotId: string,
-    lotUpdate: BodyType<LotUpdate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  lotId: string,
+  lotUpdate: BodyType<LotUpdate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<LotUpdateResponse>(
-      {url: `/api/v2/inventory/lots/${lotId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: lotUpdate, signal
+  return customInstance<LotUpdateResponse>(
+    {
+      url: `/api/v2/inventory/lots/${lotId}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: lotUpdate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey =
+  () => ['updateInventoryLotApiV2InventoryLotsLotIdPatch'] as const;
 
+export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>
+      >,
+      TError,
+      UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>,
+    TError,
+    UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>
+      >,
+      UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables
+    > = (props) => {
+      const { lotId, data } = props ?? {};
 
-export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey = () => ['updateInventoryLotApiV2InventoryLotsLotIdPatch'] as const;
+      return updateInventoryLotApiV2InventoryLotsLotIdPatch(
+        lotId,
+        data,
+        requestOptions,
+      );
+    };
 
-export const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext> => {
+    return { mutationFn, ...mutationOptions };
+  };
 
-const mutationKey = getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>
+  >;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationBody =
+  BodyType<LotUpdate>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables = {
+  lotId: string;
+  data: BodyType<LotUpdate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables> = (props) => {
-          const {lotId,data} = props ?? {};
-
-          return  updateInventoryLotApiV2InventoryLotsLotIdPatch(lotId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>>
-    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationBody = BodyType<LotUpdate>
-    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables = {lotId: string;data: BodyType<LotUpdate>}
-
-    /**
+/**
  * @summary Update Inventory Lot
  */
-export const useUpdateInventoryLotApiV2InventoryLotsLotIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>, TError,UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>,
-        TError,
-        UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions(options), queryClient);
-    }
+export const useUpdateInventoryLotApiV2InventoryLotsLotIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>
+      >,
+      TError,
+      UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof updateInventoryLotApiV2InventoryLotsLotIdPatch>>,
+  TError,
+  UpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getUpdateInventoryLotApiV2InventoryLotsLotIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Inventory Stock
  */
 export const listInventoryStockApiV2InventoryStockGet = (
-    params?: ListInventoryStockApiV2InventoryStockGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<StockLineResponse[]>(
+    { url: `/api/v2/inventory/stock`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<StockLineResponse[]>(
-      {url: `/api/v2/inventory/stock`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListInventoryStockApiV2InventoryStockGetQueryKey = (params?: ListInventoryStockApiV2InventoryStockGetParams,) => {
-    return [
-    `/api/v2/inventory/stock`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListInventoryStockApiV2InventoryStockGetQueryOptions = <TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListInventoryStockApiV2InventoryStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListInventoryStockApiV2InventoryStockGetQueryKey = (
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
 ) => {
+  return [`/api/v2/inventory/stock`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListInventoryStockApiV2InventoryStockGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListInventoryStockApiV2InventoryStockGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListInventoryStockApiV2InventoryStockGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>
+  > = ({ signal }) =>
+    listInventoryStockApiV2InventoryStockGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>> = ({ signal }) => listInventoryStockApiV2InventoryStockGet(params, requestOptions, signal);
+export type ListInventoryStockApiV2InventoryStockGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>
+>;
+export type ListInventoryStockApiV2InventoryStockGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListInventoryStockApiV2InventoryStockGetQueryResult = NonNullable<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>>
-export type ListInventoryStockApiV2InventoryStockGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListInventoryStockApiV2InventoryStockGet<TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListInventoryStockApiV2InventoryStockGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData>> & Pick<
+export function useListInventoryStockApiV2InventoryStockGet<
+  TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListInventoryStockApiV2InventoryStockGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
           TError,
           Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListInventoryStockApiV2InventoryStockGet<TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryStockApiV2InventoryStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListInventoryStockApiV2InventoryStockGet<
+  TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
           TError,
           Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListInventoryStockApiV2InventoryStockGet<TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryStockApiV2InventoryStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListInventoryStockApiV2InventoryStockGet<
+  TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Inventory Stock
  */
 
-export function useListInventoryStockApiV2InventoryStockGet<TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListInventoryStockApiV2InventoryStockGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListInventoryStockApiV2InventoryStockGet<
+  TData = Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListInventoryStockApiV2InventoryStockGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listInventoryStockApiV2InventoryStockGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListInventoryStockApiV2InventoryStockGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListInventoryStockApiV2InventoryStockGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Inventory Financial Report
  */
 export const inventoryFinancialReportApiV2InventoryFinancialReportGet = (
-    params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<InventoryFinancialReportResponse>(
-      {url: `/api/v2/inventory/financial-report`, method: 'GET',
-        params, signal
+  return customInstance<InventoryFinancialReportResponse>(
+    {
+      url: `/api/v2/inventory/financial-report`,
+      method: 'GET',
+      params,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
-
-
-
-export const getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryKey = (params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,) => {
+export const getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryKey =
+  (params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams) => {
     return [
-    `/api/v2/inventory/financial-report`, ...(params ? [params] : [])
+      `/api/v2/inventory/financial-report`,
+      ...(params ? [params] : []),
     ] as const;
-    }
+  };
 
+export const getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+      >
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
+    params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryOptions = <TData = Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+    const queryKey =
+      queryOptions?.queryKey ??
+      getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryKey(
+        params,
+      );
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+        >
+      >
+    > = ({ signal }) =>
+      inventoryFinancialReportApiV2InventoryFinancialReportGet(
+        params,
+        requestOptions,
+        signal,
+      );
 
-  const queryKey =  queryOptions?.queryKey ?? getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryKey(params);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+      >
+    >
+  >;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>> = ({ signal }) => inventoryFinancialReportApiV2InventoryFinancialReportGet(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryResult = NonNullable<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>>
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<TData = Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData>> & Pick<
+export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params:
+    undefined | InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>,
+          Awaited<
+            ReturnType<
+              typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<TData = Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>,
+          Awaited<
+            ReturnType<
+              typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<TData = Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Inventory Financial Report
  */
 
-export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<TData = Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useInventoryFinancialReportApiV2InventoryFinancialReportGet<
+  TData = Awaited<
+    ReturnType<typeof inventoryFinancialReportApiV2InventoryFinancialReportGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof inventoryFinancialReportApiV2InventoryFinancialReportGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryOptions(
+      params,
+      options,
+    );
 
-  const queryOptions = getInventoryFinancialReportApiV2InventoryFinancialReportGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * Return the image catalog page requested by the frontend.
  * @summary List Images
  */
 export const listImagesApiV2ImagesGet = (
-    params?: ListImagesApiV2ImagesGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListImagesApiV2ImagesGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<ListImagesApiV2ImagesGet200>(
+    { url: `/api/v2/images`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<ListImagesApiV2ImagesGet200>(
-      {url: `/api/v2/images`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListImagesApiV2ImagesGetQueryKey = (params?: ListImagesApiV2ImagesGetParams,) => {
-    return [
-    `/api/v2/images`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListImagesApiV2ImagesGetQueryOptions = <TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListImagesApiV2ImagesGetQueryKey = (
+  params?: ListImagesApiV2ImagesGetParams,
 ) => {
+  return [`/api/v2/images`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListImagesApiV2ImagesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListImagesApiV2ImagesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListImagesApiV2ImagesGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ?? getListImagesApiV2ImagesGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
+  > = ({ signal }) => listImagesApiV2ImagesGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>> = ({ signal }) => listImagesApiV2ImagesGet(params, requestOptions, signal);
+export type ListImagesApiV2ImagesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
+>;
+export type ListImagesApiV2ImagesGetQueryError = ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListImagesApiV2ImagesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>>
-export type ListImagesApiV2ImagesGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListImagesApiV2ImagesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>> & Pick<
+export function useListImagesApiV2ImagesGet<
+  TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListImagesApiV2ImagesGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
           TError,
           Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListImagesApiV2ImagesGet<
+  TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListImagesApiV2ImagesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
           TError,
           Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListImagesApiV2ImagesGet<
+  TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListImagesApiV2ImagesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Images
  */
 
-export function useListImagesApiV2ImagesGet<TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListImagesApiV2ImagesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListImagesApiV2ImagesGet<
+  TData = Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListImagesApiV2ImagesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listImagesApiV2ImagesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListImagesApiV2ImagesGetQueryOptions(params, options);
 
-  const queryOptions = getListImagesApiV2ImagesGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary List Transactions
  */
 export const listTransactionsApiV2TransactionsGet = (
-    params?: ListTransactionsApiV2TransactionsGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListTransactionsApiV2TransactionsGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TransactionEntryResponse[]>(
+    { url: `/api/v2/transactions`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<TransactionEntryResponse[]>(
-      {url: `/api/v2/transactions`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListTransactionsApiV2TransactionsGetQueryKey = (params?: ListTransactionsApiV2TransactionsGetParams,) => {
-    return [
-    `/api/v2/transactions`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListTransactionsApiV2TransactionsGetQueryOptions = <TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListTransactionsApiV2TransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListTransactionsApiV2TransactionsGetQueryKey = (
+  params?: ListTransactionsApiV2TransactionsGetParams,
 ) => {
+  return [`/api/v2/transactions`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListTransactionsApiV2TransactionsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTransactionsApiV2TransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListTransactionsApiV2TransactionsGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListTransactionsApiV2TransactionsGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>
+  > = ({ signal }) =>
+    listTransactionsApiV2TransactionsGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>> = ({ signal }) => listTransactionsApiV2TransactionsGet(params, requestOptions, signal);
+export type ListTransactionsApiV2TransactionsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>
+>;
+export type ListTransactionsApiV2TransactionsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListTransactionsApiV2TransactionsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>>
-export type ListTransactionsApiV2TransactionsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListTransactionsApiV2TransactionsGet<TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListTransactionsApiV2TransactionsGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData>> & Pick<
+export function useListTransactionsApiV2TransactionsGet<
+  TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListTransactionsApiV2TransactionsGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
           TError,
           Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListTransactionsApiV2TransactionsGet<TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTransactionsApiV2TransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListTransactionsApiV2TransactionsGet<
+  TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTransactionsApiV2TransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
           TError,
           Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListTransactionsApiV2TransactionsGet<TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTransactionsApiV2TransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListTransactionsApiV2TransactionsGet<
+  TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTransactionsApiV2TransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Transactions
  */
 
-export function useListTransactionsApiV2TransactionsGet<TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListTransactionsApiV2TransactionsGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListTransactionsApiV2TransactionsGet<
+  TData = Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListTransactionsApiV2TransactionsGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listTransactionsApiV2TransactionsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListTransactionsApiV2TransactionsGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListTransactionsApiV2TransactionsGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Transaction
  */
 export const createTransactionApiV2TransactionsPost = (
-    transactionBody: BodyType<TransactionBody>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  transactionBody: BodyType<TransactionBody>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/transactions`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: transactionBody, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/transactions`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: transactionBody,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateTransactionApiV2TransactionsPostMutationKey = () =>
+  ['createTransactionApiV2TransactionsPost'] as const;
 
+export const getCreateTransactionApiV2TransactionsPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+    TError,
+    CreateTransactionApiV2TransactionsPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+  TError,
+  CreateTransactionApiV2TransactionsPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateTransactionApiV2TransactionsPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+    CreateTransactionApiV2TransactionsPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateTransactionApiV2TransactionsPostMutationKey = () => ['createTransactionApiV2TransactionsPost'] as const;
+    return createTransactionApiV2TransactionsPost(data, requestOptions);
+  };
 
-export const getCreateTransactionApiV2TransactionsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateTransactionApiV2TransactionsPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateTransactionApiV2TransactionsPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>
+>;
+export type CreateTransactionApiV2TransactionsPostMutationBody =
+  BodyType<TransactionBody>;
+export type CreateTransactionApiV2TransactionsPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateTransactionApiV2TransactionsPostMutationVariables = {
+  data: BodyType<TransactionBody>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, CreateTransactionApiV2TransactionsPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createTransactionApiV2TransactionsPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateTransactionApiV2TransactionsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>>
-    export type CreateTransactionApiV2TransactionsPostMutationBody = BodyType<TransactionBody>
-    export type CreateTransactionApiV2TransactionsPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateTransactionApiV2TransactionsPostMutationVariables = {data: BodyType<TransactionBody>}
-
-    /**
+/**
  * @summary Create Transaction
  */
-export const useCreateTransactionApiV2TransactionsPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>, TError,CreateTransactionApiV2TransactionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
-        TError,
-        CreateTransactionApiV2TransactionsPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateTransactionApiV2TransactionsPostMutationOptions(options), queryClient);
-    }
+export const useCreateTransactionApiV2TransactionsPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+      TError,
+      CreateTransactionApiV2TransactionsPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createTransactionApiV2TransactionsPost>>,
+  TError,
+  CreateTransactionApiV2TransactionsPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateTransactionApiV2TransactionsPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Running
  */
 export const listRunningApiV2TransactionsRunningGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<TransactionResponse[]>(
-      {url: `/api/v2/transactions/running`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<TransactionResponse[]>(
+    { url: `/api/v2/transactions/running`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getListRunningApiV2TransactionsRunningGetQueryKey = () => {
-    return [
-    `/api/v2/transactions/running`
-    ] as const;
-    }
+  return [`/api/v2/transactions/running`] as const;
+};
 
+export const getListRunningApiV2TransactionsRunningGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getListRunningApiV2TransactionsRunningGetQueryOptions = <TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListRunningApiV2TransactionsRunningGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>
+  > = ({ signal }) =>
+    listRunningApiV2TransactionsRunningGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getListRunningApiV2TransactionsRunningGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type ListRunningApiV2TransactionsRunningGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>
+>;
+export type ListRunningApiV2TransactionsRunningGetQueryError =
+  ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>> = ({ signal }) => listRunningApiV2TransactionsRunningGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListRunningApiV2TransactionsRunningGetQueryResult = NonNullable<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>>
-export type ListRunningApiV2TransactionsRunningGetQueryError = ErrorType<unknown>
-
-
-export function useListRunningApiV2TransactionsRunningGet<TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData>> & Pick<
+export function useListRunningApiV2TransactionsRunningGet<
+  TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
           TError,
           Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListRunningApiV2TransactionsRunningGet<TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListRunningApiV2TransactionsRunningGet<
+  TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
           TError,
           Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListRunningApiV2TransactionsRunningGet<TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListRunningApiV2TransactionsRunningGet<
+  TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Running
  */
 
-export function useListRunningApiV2TransactionsRunningGet<TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListRunningApiV2TransactionsRunningGet<
+  TData = Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listRunningApiV2TransactionsRunningGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getListRunningApiV2TransactionsRunningGetQueryOptions(options);
 
-  const queryOptions = getListRunningApiV2TransactionsRunningGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Transaction
  */
 export const getTransactionApiV2TransactionsIdGet = (
-    id: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<TransactionResponse>(
+    { url: `/api/v2/transactions/${id}`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetTransactionApiV2TransactionsIdGetQueryKey = (id: string) => {
+  return [`/api/v2/transactions/${id}`] as const;
+};
 
-      return customInstance<TransactionResponse>(
-      {url: `/api/v2/transactions/${id}`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetTransactionApiV2TransactionsIdGetQueryKey = (id: string,) => {
-    return [
-    `/api/v2/transactions/${id}`
-    ] as const;
-    }
-
-
-export const getGetTransactionApiV2TransactionsIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError = ErrorType<HTTPValidationError>>(id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetTransactionApiV2TransactionsIdGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
 ) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetTransactionApiV2TransactionsIdGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetTransactionApiV2TransactionsIdGetQueryKey(id);
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>
+  > = ({ signal }) =>
+    getTransactionApiV2TransactionsIdGet(id, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: id !== null && id !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetTransactionApiV2TransactionsIdGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>
+>;
+export type GetTransactionApiV2TransactionsIdGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>> = ({ signal }) => getTransactionApiV2TransactionsIdGet(id, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetTransactionApiV2TransactionsIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>>
-export type GetTransactionApiV2TransactionsIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetTransactionApiV2TransactionsIdGet<TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData>> & Pick<
+export function useGetTransactionApiV2TransactionsIdGet<
+  TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
           TError,
           Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTransactionApiV2TransactionsIdGet<TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTransactionApiV2TransactionsIdGet<
+  TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
           TError,
           Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetTransactionApiV2TransactionsIdGet<TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetTransactionApiV2TransactionsIdGet<
+  TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Transaction
  */
 
-export function useGetTransactionApiV2TransactionsIdGet<TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError = ErrorType<HTTPValidationError>>(
- id: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetTransactionApiV2TransactionsIdGet<
+  TData = Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  id: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getTransactionApiV2TransactionsIdGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetTransactionApiV2TransactionsIdGetQueryOptions(
+    id,
+    options,
+  );
 
-  const queryOptions = getGetTransactionApiV2TransactionsIdGetQueryOptions(id,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Patch Status
  */
 export const patchStatusApiV2TransactionsIdStatusPatch = (
-    id: string,
-    transactionStatusPatch: BodyType<TransactionStatusPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  transactionStatusPatch: BodyType<TransactionStatusPatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<void>(
-      {url: `/api/v2/transactions/${id}/status`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: transactionStatusPatch, signal
+  return customInstance<void>(
+    {
+      url: `/api/v2/transactions/${id}/status`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: transactionStatusPatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchStatusApiV2TransactionsIdStatusPatchMutationKey = () =>
+  ['patchStatusApiV2TransactionsIdStatusPatch'] as const;
 
+export const getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+    TError,
+    PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+  TError,
+  PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchStatusApiV2TransactionsIdStatusPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+    PatchStatusApiV2TransactionsIdStatusPatchMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchStatusApiV2TransactionsIdStatusPatchMutationKey = () => ['patchStatusApiV2TransactionsIdStatusPatch'] as const;
+    return patchStatusApiV2TransactionsIdStatusPatch(id, data, requestOptions);
+  };
 
-export const getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchStatusApiV2TransactionsIdStatusPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchStatusApiV2TransactionsIdStatusPatchMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>
+  >;
+export type PatchStatusApiV2TransactionsIdStatusPatchMutationBody =
+  BodyType<TransactionStatusPatch>;
+export type PatchStatusApiV2TransactionsIdStatusPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchStatusApiV2TransactionsIdStatusPatchMutationVariables = {
+  id: string;
+  data: BodyType<TransactionStatusPatch>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, PatchStatusApiV2TransactionsIdStatusPatchMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchStatusApiV2TransactionsIdStatusPatch(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchStatusApiV2TransactionsIdStatusPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>>
-    export type PatchStatusApiV2TransactionsIdStatusPatchMutationBody = BodyType<TransactionStatusPatch>
-    export type PatchStatusApiV2TransactionsIdStatusPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchStatusApiV2TransactionsIdStatusPatchMutationVariables = {id: string;data: BodyType<TransactionStatusPatch>}
-
-    /**
+/**
  * @summary Patch Status
  */
-export const usePatchStatusApiV2TransactionsIdStatusPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>, TError,PatchStatusApiV2TransactionsIdStatusPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
-        TError,
-        PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions(options), queryClient);
-    }
+export const usePatchStatusApiV2TransactionsIdStatusPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+      TError,
+      PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchStatusApiV2TransactionsIdStatusPatch>>,
+  TError,
+  PatchStatusApiV2TransactionsIdStatusPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchStatusApiV2TransactionsIdStatusPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * Legacy ``PATCH /:id/cancel`` sent the raw string ``"CANCELED"`` as the body.
  * @summary Patch Cancel
  */
 export const patchCancelApiV2TransactionsIdCancelPatch = (
-    id: string,
-    patchCancelApiV2TransactionsIdCancelPatchBody: BodyType<string>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  id: string,
+  patchCancelApiV2TransactionsIdCancelPatchBody: BodyType<string>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<void>(
-      {url: `/api/v2/transactions/${id}/cancel`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: patchCancelApiV2TransactionsIdCancelPatchBody, signal
+  return customInstance<void>(
+    {
+      url: `/api/v2/transactions/${id}/cancel`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: patchCancelApiV2TransactionsIdCancelPatchBody,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchCancelApiV2TransactionsIdCancelPatchMutationKey = () =>
+  ['patchCancelApiV2TransactionsIdCancelPatch'] as const;
 
+export const getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+    TError,
+    PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+  TError,
+  PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getPatchCancelApiV2TransactionsIdCancelPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+    PatchCancelApiV2TransactionsIdCancelPatchMutationVariables
+  > = (props) => {
+    const { id, data } = props ?? {};
 
-export const getPatchCancelApiV2TransactionsIdCancelPatchMutationKey = () => ['patchCancelApiV2TransactionsIdCancelPatch'] as const;
+    return patchCancelApiV2TransactionsIdCancelPatch(id, data, requestOptions);
+  };
 
-export const getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getPatchCancelApiV2TransactionsIdCancelPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchCancelApiV2TransactionsIdCancelPatchMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>
+  >;
+export type PatchCancelApiV2TransactionsIdCancelPatchMutationBody =
+  BodyType<string>;
+export type PatchCancelApiV2TransactionsIdCancelPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchCancelApiV2TransactionsIdCancelPatchMutationVariables = {
+  id: string;
+  data: BodyType<string>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, PatchCancelApiV2TransactionsIdCancelPatchMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  patchCancelApiV2TransactionsIdCancelPatch(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchCancelApiV2TransactionsIdCancelPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>>
-    export type PatchCancelApiV2TransactionsIdCancelPatchMutationBody = BodyType<string>
-    export type PatchCancelApiV2TransactionsIdCancelPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchCancelApiV2TransactionsIdCancelPatchMutationVariables = {id: string;data: BodyType<string>}
-
-    /**
+/**
  * @summary Patch Cancel
  */
-export const usePatchCancelApiV2TransactionsIdCancelPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>, TError,PatchCancelApiV2TransactionsIdCancelPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
-        TError,
-        PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions(options), queryClient);
-    }
+export const usePatchCancelApiV2TransactionsIdCancelPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+      TError,
+      PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchCancelApiV2TransactionsIdCancelPatch>>,
+  TError,
+  PatchCancelApiV2TransactionsIdCancelPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchCancelApiV2TransactionsIdCancelPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Results By Origin
  */
 export const getResultsByOriginApiV2RefinageRecipeOriginItemIdGet = (
+  itemId: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<string[]>(
+    { url: `/api/v2/refinage/recipe/origin/${itemId}`, method: 'GET', signal },
+    options,
+  );
+};
+
+export const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryKey = (
+  itemId: string,
+) => {
+  return [`/api/v2/refinage/recipe/origin/${itemId}`] as const;
+};
+
+export const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
     itemId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<string[]>(
-      {url: `/api/v2/refinage/recipe/origin/${itemId}`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
     },
-      options);
-    }
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryKey(itemId);
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+      >
+    > = ({ signal }) =>
+      getResultsByOriginApiV2RefinageRecipeOriginItemIdGet(
+        itemId,
+        requestOptions,
+        signal,
+      );
 
+    return {
+      queryKey,
+      queryFn,
+      enabled: itemId !== null && itemId !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryKey = (itemId: string,) => {
-    return [
-    `/api/v2/refinage/recipe/origin/${itemId}`
-    ] as const;
-    }
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+    >
+  >;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-export const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryKey(itemId);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>> = ({ signal }) => getResultsByOriginApiV2RefinageRecipeOriginItemIdGet(itemId, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: itemId !== null && itemId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>>
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData>> & Pick<
+export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>,
+          Awaited<
+            ReturnType<
+              typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>,
+          Awaited<
+            ReturnType<
+              typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Results By Origin
  */
 
-export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<TData = Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getResultsByOriginApiV2RefinageRecipeOriginItemIdGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryOptions(
+      itemId,
+      options,
+    );
 
-  const queryOptions = getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetQueryOptions(itemId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Recipe By Result
  */
 export const getRecipeByResultApiV2RefinageRecipeResultItemIdGet = (
+  itemId: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
+) => {
+  return customInstance<RefinageRecipeResponse[]>(
+    { url: `/api/v2/refinage/recipe/result/${itemId}`, method: 'GET', signal },
+    options,
+  );
+};
+
+export const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryKey = (
+  itemId: string,
+) => {
+  return [`/api/v2/refinage/recipe/result/${itemId}`] as const;
+};
+
+export const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
     itemId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<RefinageRecipeResponse[]>(
-      {url: `/api/v2/refinage/recipe/result/${itemId}`, method: 'GET', signal
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
     },
-      options);
-    }
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryKey(itemId);
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+      >
+    > = ({ signal }) =>
+      getRecipeByResultApiV2RefinageRecipeResultItemIdGet(
+        itemId,
+        requestOptions,
+        signal,
+      );
 
+    return {
+      queryKey,
+      queryFn,
+      enabled: itemId !== null && itemId !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryKey = (itemId: string,) => {
-    return [
-    `/api/v2/refinage/recipe/result/${itemId}`
-    ] as const;
-    }
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+    >
+  >;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-export const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions = <TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryKey(itemId);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>> = ({ signal }) => getRecipeByResultApiV2RefinageRecipeResultItemIdGet(itemId, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: itemId !== null && itemId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryResult = NonNullable<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>>
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData>> & Pick<
+export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>,
+          Awaited<
+            ReturnType<
+              typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>,
+          Awaited<
+            ReturnType<
+              typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Recipe By Result
  */
 
-export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<TData = Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError = ErrorType<HTTPValidationError>>(
- itemId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetRecipeByResultApiV2RefinageRecipeResultItemIdGet<
+  TData = Awaited<
+    ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  itemId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getRecipeByResultApiV2RefinageRecipeResultItemIdGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions(
+      itemId,
+      options,
+    );
 
-  const queryOptions = getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions(itemId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Mining Sessions
  */
 export const getMiningSessionsApiV2SessionsMiningGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningSessionHistoryResponse[]>(
-      {url: `/api/v2/sessions/mining`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<MiningSessionHistoryResponse[]>(
+    { url: `/api/v2/sessions/mining`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getGetMiningSessionsApiV2SessionsMiningGetQueryKey = () => {
-    return [
-    `/api/v2/sessions/mining`
-    ] as const;
-    }
+  return [`/api/v2/sessions/mining`] as const;
+};
 
+export const getGetMiningSessionsApiV2SessionsMiningGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getGetMiningSessionsApiV2SessionsMiningGetQueryOptions = <TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetMiningSessionsApiV2SessionsMiningGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
+  > = ({ signal }) =>
+    getMiningSessionsApiV2SessionsMiningGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getGetMiningSessionsApiV2SessionsMiningGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type GetMiningSessionsApiV2SessionsMiningGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
+>;
+export type GetMiningSessionsApiV2SessionsMiningGetQueryError =
+  ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>> = ({ signal }) => getMiningSessionsApiV2SessionsMiningGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetMiningSessionsApiV2SessionsMiningGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>>
-export type GetMiningSessionsApiV2SessionsMiningGetQueryError = ErrorType<unknown>
-
-
-export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>> & Pick<
+export function useGetMiningSessionsApiV2SessionsMiningGet<
+  TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
           TError,
           Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningSessionsApiV2SessionsMiningGet<
+  TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
           TError,
           Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningSessionsApiV2SessionsMiningGet<
+  TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Mining Sessions
  */
 
-export function useGetMiningSessionsApiV2SessionsMiningGet<TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetMiningSessionsApiV2SessionsMiningGet<
+  TData = Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getMiningSessionsApiV2SessionsMiningGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetMiningSessionsApiV2SessionsMiningGetQueryOptions(options);
 
-  const queryOptions = getGetMiningSessionsApiV2SessionsMiningGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Mining Session
  */
 export const createMiningSessionApiV2SessionsMiningPost = (
-    miningSessionCreate: BodyType<MiningSessionCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  miningSessionCreate: BodyType<MiningSessionCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<SessionResponse>(
-      {url: `/api/v2/sessions/mining`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: miningSessionCreate, signal
+  return customInstance<SessionResponse>(
+    {
+      url: `/api/v2/sessions/mining`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: miningSessionCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateMiningSessionApiV2SessionsMiningPostMutationKey = () =>
+  ['createMiningSessionApiV2SessionsMiningPost'] as const;
 
+export const getCreateMiningSessionApiV2SessionsMiningPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+    TError,
+    CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+  TError,
+  CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+  TContext
+> => {
+  const mutationKey =
+    getCreateMiningSessionApiV2SessionsMiningPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+    CreateMiningSessionApiV2SessionsMiningPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateMiningSessionApiV2SessionsMiningPostMutationKey = () => ['createMiningSessionApiV2SessionsMiningPost'] as const;
+    return createMiningSessionApiV2SessionsMiningPost(data, requestOptions);
+  };
 
-export const getCreateMiningSessionApiV2SessionsMiningPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateMiningSessionApiV2SessionsMiningPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateMiningSessionApiV2SessionsMiningPostMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>
+  >;
+export type CreateMiningSessionApiV2SessionsMiningPostMutationBody =
+  BodyType<MiningSessionCreate>;
+export type CreateMiningSessionApiV2SessionsMiningPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateMiningSessionApiV2SessionsMiningPostMutationVariables = {
+  data: BodyType<MiningSessionCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, CreateMiningSessionApiV2SessionsMiningPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createMiningSessionApiV2SessionsMiningPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationResult = NonNullable<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationBody = BodyType<MiningSessionCreate>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateMiningSessionApiV2SessionsMiningPostMutationVariables = {data: BodyType<MiningSessionCreate>}
-
-    /**
+/**
  * @summary Create Mining Session
  */
-export const useCreateMiningSessionApiV2SessionsMiningPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>, TError,CreateMiningSessionApiV2SessionsMiningPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
-        TError,
-        CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateMiningSessionApiV2SessionsMiningPostMutationOptions(options), queryClient);
-    }
+export const useCreateMiningSessionApiV2SessionsMiningPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+      TError,
+      CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createMiningSessionApiV2SessionsMiningPost>>,
+  TError,
+  CreateMiningSessionApiV2SessionsMiningPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateMiningSessionApiV2SessionsMiningPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Get Mining Session Detail
  */
 export const getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet = (
-    sessionId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionId: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningCurrentSessionResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/detail`, method: 'GET', signal
+  return customInstance<MiningCurrentSessionResponse>(
+    {
+      url: `/api/v2/sessions/mining/${sessionId}/detail`,
+      method: 'GET',
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryKey =
+  (sessionId: string) => {
+    return [`/api/v2/sessions/mining/${sessionId}/detail`] as const;
+  };
 
+export const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+      >
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
+    sessionId: string,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryKey(
+        sessionId,
+      );
 
-export const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryKey = (sessionId: string,) => {
-    return [
-    `/api/v2/sessions/mining/${sessionId}/detail`
-    ] as const;
-    }
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+        >
+      >
+    > = ({ signal }) =>
+      getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet(
+        sessionId,
+        requestOptions,
+        signal,
+      );
 
+    return {
+      queryKey,
+      queryFn,
+      enabled: sessionId !== null && sessionId !== undefined,
+      ...queryOptions,
+    } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryOptions = <TData = Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError = ErrorType<HTTPValidationError>>(sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+      >
+    >
+  >;
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryKey(sessionId);
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>> = ({ signal }) => getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet(sessionId, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: sessionId !== null && sessionId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>>
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<TData = Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData>> & Pick<
+export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>,
+          Awaited<
+            ReturnType<
+              typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<TData = Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>,
+          Awaited<
+            ReturnType<
+              typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<TData = Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Mining Session Detail
  */
 
-export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<TData = Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+    >
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryOptions(
+      sessionId,
+      options,
+    );
 
-  const queryOptions = getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetQueryOptions(sessionId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Available Mining Inventory
  */
 export const getAvailableMiningInventoryApiV2SessionsMiningAvailableGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<MiningAvailableResponse>(
+    { url: `/api/v2/sessions/mining/available`, method: 'GET', signal },
+    options,
+  );
+};
 
+export const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey =
+  () => {
+    return [`/api/v2/sessions/mining/available`] as const;
+  };
 
-      return customInstance<MiningAvailableResponse>(
-      {url: `/api/v2/sessions/mining/available`, method: 'GET', signal
-    },
-      options);
-    }
+export const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<
+        typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+      >
+    >,
+    TError = ErrorType<unknown>,
+  >(options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey();
 
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+        >
+      >
+    > = ({ signal }) =>
+      getAvailableMiningInventoryApiV2SessionsMiningAvailableGet(
+        requestOptions,
+        signal,
+      );
 
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
-export const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey = () => {
-    return [
-    `/api/v2/sessions/mining/available`
-    ] as const;
-    }
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+      >
+    >
+  >;
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryError =
+  ErrorType<unknown>;
 
-
-export const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryOptions = <TData = Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
-
-const {query: queryOptions, request: requestOptions} = options ?? {};
-
-  const queryKey =  queryOptions?.queryKey ?? getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey();
-
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>> = ({ signal }) => getAvailableMiningInventoryApiV2SessionsMiningAvailableGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryResult = NonNullable<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>>
-export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryError = ErrorType<unknown>
-
-
-export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<TData = Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData>> & Pick<
+export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+    >
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>,
+          Awaited<
+            ReturnType<
+              typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<TData = Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+    >
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>,
+          Awaited<
+            ReturnType<
+              typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<TData = Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+    >
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Available Mining Inventory
  */
 
-export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<TData = Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet<
+  TData = Awaited<
+    ReturnType<
+      typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+    >
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getAvailableMiningInventoryApiV2SessionsMiningAvailableGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryOptions(
+      options,
+    );
 
-  const queryOptions = getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Mining Loot List
  */
 export const getMiningLootListApiV2SessionsMiningLootlistGet = (
-    params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<string[]>(
+    { url: `/api/v2/sessions/mining/lootlist`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<string[]>(
-      {url: `/api/v2/sessions/mining/lootlist`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey = (params?: GetMiningLootListApiV2SessionsMiningLootlistGetParams,) => {
-    return [
-    `/api/v2/sessions/mining/lootlist`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions = <TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey = (
+  params?: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
 ) => {
+  return [
+    `/api/v2/sessions/mining/lootlist`,
+    ...(params ? [params] : []),
+  ] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetMiningLootListApiV2SessionsMiningLootlistGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
+  > = ({ signal }) =>
+    getMiningLootListApiV2SessionsMiningLootlistGet(
+      params,
+      requestOptions,
+      signal,
+    );
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>> = ({ signal }) => getMiningLootListApiV2SessionsMiningLootlistGet(params, requestOptions, signal);
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryResult =
+  NonNullable<
+    Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
+  >;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryResult = NonNullable<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>>
-export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>> & Pick<
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<
+  TData = Awaited<
+    ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>,
+          Awaited<
+            ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<
+  TData = Awaited<
+    ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>,
+          Awaited<
+            ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+          >,
           TError,
-          Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<
+  TData = Awaited<
+    ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Mining Loot List
  */
 
-export function useGetMiningLootListApiV2SessionsMiningLootlistGet<TData = Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetMiningLootListApiV2SessionsMiningLootlistGet<
+  TData = Awaited<
+    ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<typeof getMiningLootListApiV2SessionsMiningLootlistGet>
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions(
+      params,
+      options,
+    );
 
-  const queryOptions = getGetMiningLootListApiV2SessionsMiningLootlistGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Current Session
  */
 export const getCurrentSessionApiV2SessionsCurrentGet = (
-    params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<MiningCurrentSessionResponse | SessionResponse | null>(
+    { url: `/api/v2/sessions/current`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<MiningCurrentSessionResponse | SessionResponse | null>(
-      {url: `/api/v2/sessions/current`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetCurrentSessionApiV2SessionsCurrentGetQueryKey = (params?: GetCurrentSessionApiV2SessionsCurrentGetParams,) => {
-    return [
-    `/api/v2/sessions/current`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions = <TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetCurrentSessionApiV2SessionsCurrentGetQueryKey = (
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
 ) => {
+  return [`/api/v2/sessions/current`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetCurrentSessionApiV2SessionsCurrentGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetCurrentSessionApiV2SessionsCurrentGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
+  > = ({ signal }) =>
+    getCurrentSessionApiV2SessionsCurrentGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>> = ({ signal }) => getCurrentSessionApiV2SessionsCurrentGet(params, requestOptions, signal);
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
+>;
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetCurrentSessionApiV2SessionsCurrentGetQueryResult = NonNullable<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>>
-export type GetCurrentSessionApiV2SessionsCurrentGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  GetCurrentSessionApiV2SessionsCurrentGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>> & Pick<
+export function useGetCurrentSessionApiV2SessionsCurrentGet<
+  TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
           TError,
           Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCurrentSessionApiV2SessionsCurrentGet<
+  TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
           TError,
           Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetCurrentSessionApiV2SessionsCurrentGet<
+  TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Current Session
  */
 
-export function useGetCurrentSessionApiV2SessionsCurrentGet<TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetCurrentSessionApiV2SessionsCurrentGet<
+  TData = Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getCurrentSessionApiV2SessionsCurrentGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getGetCurrentSessionApiV2SessionsCurrentGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Session
  */
 export const createSessionApiV2SessionsPost = (
-    sessionCreate: BodyType<SessionCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionCreate: BodyType<SessionCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<SessionResponse>(
-      {url: `/api/v2/sessions`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: sessionCreate, signal
+  return customInstance<SessionResponse>(
+    {
+      url: `/api/v2/sessions`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: sessionCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateSessionApiV2SessionsPostMutationKey = () =>
+  ['createSessionApiV2SessionsPost'] as const;
 
+export const getCreateSessionApiV2SessionsPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+    TError,
+    CreateSessionApiV2SessionsPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+  TError,
+  CreateSessionApiV2SessionsPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateSessionApiV2SessionsPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+    CreateSessionApiV2SessionsPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreateSessionApiV2SessionsPostMutationKey = () => ['createSessionApiV2SessionsPost'] as const;
+    return createSessionApiV2SessionsPost(data, requestOptions);
+  };
 
-export const getCreateSessionApiV2SessionsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateSessionApiV2SessionsPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateSessionApiV2SessionsPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>
+>;
+export type CreateSessionApiV2SessionsPostMutationBody =
+  BodyType<SessionCreate>;
+export type CreateSessionApiV2SessionsPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateSessionApiV2SessionsPostMutationVariables = {
+  data: BodyType<SessionCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, CreateSessionApiV2SessionsPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createSessionApiV2SessionsPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateSessionApiV2SessionsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>>
-    export type CreateSessionApiV2SessionsPostMutationBody = BodyType<SessionCreate>
-    export type CreateSessionApiV2SessionsPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateSessionApiV2SessionsPostMutationVariables = {data: BodyType<SessionCreate>}
-
-    /**
+/**
  * @summary Create Session
  */
-export const useCreateSessionApiV2SessionsPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>, TError,CreateSessionApiV2SessionsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
-        TError,
-        CreateSessionApiV2SessionsPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateSessionApiV2SessionsPostMutationOptions(options), queryClient);
-    }
+export const useCreateSessionApiV2SessionsPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+      TError,
+      CreateSessionApiV2SessionsPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createSessionApiV2SessionsPost>>,
+  TError,
+  CreateSessionApiV2SessionsPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateSessionApiV2SessionsPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Create Refining Session
  */
 export const createRefiningSessionApiV2SessionsRefinagePost = (
-    refiningSessionCreate: BodyType<RefiningSessionCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  refiningSessionCreate: BodyType<RefiningSessionCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<RefiningSessionResponse>(
-      {url: `/api/v2/sessions/refinage`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: refiningSessionCreate, signal
+  return customInstance<RefiningSessionResponse>(
+    {
+      url: `/api/v2/sessions/refinage`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: refiningSessionCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey =
+  () => ['createRefiningSessionApiV2SessionsRefinagePost'] as const;
 
+export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>
+      >,
+      TError,
+      CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>,
+    TError,
+    CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>
+      >,
+      CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables
+    > = (props) => {
+      const { data } = props ?? {};
 
-export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey = () => ['createRefiningSessionApiV2SessionsRefinagePost'] as const;
+      return createRefiningSessionApiV2SessionsRefinagePost(
+        data,
+        requestOptions,
+      );
+    };
 
-export const getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext> => {
+    return { mutationFn, ...mutationOptions };
+  };
 
-const mutationKey = getCreateRefiningSessionApiV2SessionsRefinagePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateRefiningSessionApiV2SessionsRefinagePostMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>
+  >;
+export type CreateRefiningSessionApiV2SessionsRefinagePostMutationBody =
+  BodyType<RefiningSessionCreate>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables = {
+  data: BodyType<RefiningSessionCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createRefiningSessionApiV2SessionsRefinagePost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationResult = NonNullable<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>>
-    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationBody = BodyType<RefiningSessionCreate>
-    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationError = ErrorType<HTTPValidationError>
-    export type CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables = {data: BodyType<RefiningSessionCreate>}
-
-    /**
+/**
  * @summary Create Refining Session
  */
-export const useCreateRefiningSessionApiV2SessionsRefinagePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>, TError,CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>,
-        TError,
-        CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions(options), queryClient);
-    }
+export const useCreateRefiningSessionApiV2SessionsRefinagePost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>
+      >,
+      TError,
+      CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createRefiningSessionApiV2SessionsRefinagePost>>,
+  TError,
+  CreateRefiningSessionApiV2SessionsRefinagePostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateRefiningSessionApiV2SessionsRefinagePostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Prevalidate Mining Session
  */
 export const prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = (
-    miningSessionPrevalidationCreate: BodyType<MiningSessionPrevalidationCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  miningSessionPrevalidationCreate: BodyType<MiningSessionPrevalidationCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningPrevalidationResponse>(
-      {url: `/api/v2/sessions/mining/prevalidate`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: miningSessionPrevalidationCreate, signal
+  return customInstance<MiningPrevalidationResponse>(
+    {
+      url: `/api/v2/sessions/mining/prevalidate`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: miningSessionPrevalidationCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey =
+  () => ['prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost'] as const;
 
+export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+        >
+      >,
+      TError,
+      PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+      >
+    >,
+    TError,
+    PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+        >
+      >,
+      PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables
+    > = (props) => {
+      const { data } = props ?? {};
 
-export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey = () => ['prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost'] as const;
+      return prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost(
+        data,
+        requestOptions,
+      );
+    };
 
-export const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext> => {
+    return { mutationFn, ...mutationOptions };
+  };
 
-const mutationKey = getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+      >
+    >
+  >;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationBody =
+  BodyType<MiningSessionPrevalidationCreate>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationError =
+  ErrorType<HTTPValidationError>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables =
+  { data: BodyType<MiningSessionPrevalidationCreate> };
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationResult = NonNullable<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>>
-    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationBody = BodyType<MiningSessionPrevalidationCreate>
-    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationError = ErrorType<HTTPValidationError>
-    export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables = {data: BodyType<MiningSessionPrevalidationCreate>}
-
-    /**
+/**
  * @summary Prevalidate Mining Session
  */
-export const usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>, TError,PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost>>,
-        TError,
-        PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions(options), queryClient);
-    }
+export const usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+        >
+      >,
+      TError,
+      PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<
+    ReturnType<
+      typeof prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost
+    >
+  >,
+  TError,
+  PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostMutationOptions(
+      options,
+    ),
+    queryClient,
+  );
+};
 
 /**
  * @summary Create Mining Resource Line
  */
-export const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = (
+export const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost =
+  (
     sessionId: string,
     miningResourceCreate: BodyType<MiningResourceCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
+    options?: SecondParameter<typeof customInstance>,
+    signal?: AbortSignal,
+  ) => {
+    return customInstance<SessionLineResponse>(
+      {
+        url: `/api/v2/sessions/mining/${sessionId}/resource-lines`,
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        data: miningResourceCreate,
+        signal,
+      },
+      options,
+    );
+  };
 
+export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey =
+  () =>
+    [
+      'createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost',
+    ] as const;
 
-      return customInstance<SessionLineResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: miningResourceCreate, signal
-    },
-      options);
-    }
+export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+        >
+      >,
+      TError,
+      CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+      >
+    >,
+    TError,
+    CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+        >
+      >,
+      CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables
+    > = (props) => {
+      const { sessionId, data } = props ?? {};
 
+      return createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost(
+        sessionId,
+        data,
+        requestOptions,
+      );
+    };
 
+    return { mutationFn, ...mutationOptions };
+  };
 
-export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey = () => ['createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost'] as const;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+      >
+    >
+  >;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationBody =
+  BodyType<MiningResourceCreate>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables =
+  { sessionId: string; data: BodyType<MiningResourceCreate> };
 
-export const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext> => {
-
-const mutationKey = getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables> = (props) => {
-          const {sessionId,data} = props ?? {};
-
-          return  createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost(sessionId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>>
-    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationBody = BodyType<MiningResourceCreate>
-    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables = {sessionId: string;data: BodyType<MiningResourceCreate>}
-
-    /**
+/**
  * @summary Create Mining Resource Line
  */
-export const useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>, TError,CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost>>,
+export const useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(
+    options?: {
+      mutation?: UseMutationOptions<
+        Awaited<
+          ReturnType<
+            typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+          >
+        >,
         TError,
         CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables,
         TContext
-      > => {
-      return useMutation(getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions(options), queryClient);
-    }
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+    queryClient?: QueryClient,
+  ): UseMutationResult<
+    Awaited<
+      ReturnType<
+        typeof createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost
+      >
+    >,
+    TError,
+    CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationVariables,
+    TContext
+  > => {
+    return useMutation(
+      getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostMutationOptions(
+        options,
+      ),
+      queryClient,
+    );
+  };
 
 /**
  * @summary Update Mining Resource Line
  */
-export const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = (
+export const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut =
+  (
     sessionId: string,
     lineId: string,
     miningResourceUpdate: BodyType<MiningResourceUpdate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
+    options?: SecondParameter<typeof customInstance>,
+    signal?: AbortSignal,
+  ) => {
+    return customInstance<SessionLineResponse>(
+      {
+        url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        data: miningResourceUpdate,
+        signal,
+      },
+      options,
+    );
+  };
 
+export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey =
+  () =>
+    [
+      'updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut',
+    ] as const;
 
-      return customInstance<SessionLineResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: miningResourceUpdate, signal
-    },
-      options);
-    }
+export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+        >
+      >,
+      TError,
+      UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+      >
+    >,
+    TError,
+    UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+        >
+      >,
+      UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables
+    > = (props) => {
+      const { sessionId, lineId, data } = props ?? {};
 
+      return updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut(
+        sessionId,
+        lineId,
+        data,
+        requestOptions,
+      );
+    };
 
+    return { mutationFn, ...mutationOptions };
+  };
 
-export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey = () => ['updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut'] as const;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+      >
+    >
+  >;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationBody =
+  BodyType<MiningResourceUpdate>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationError =
+  ErrorType<HTTPValidationError>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables =
+  { sessionId: string; lineId: string; data: BodyType<MiningResourceUpdate> };
 
-export const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext> => {
-
-const mutationKey = getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables> = (props) => {
-          const {sessionId,lineId,data} = props ?? {};
-
-          return  updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut(sessionId,lineId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>>
-    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationBody = BodyType<MiningResourceUpdate>
-    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationError = ErrorType<HTTPValidationError>
-    export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables = {sessionId: string;lineId: string;data: BodyType<MiningResourceUpdate>}
-
-    /**
+/**
  * @summary Update Mining Resource Line
  */
-export const useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>, TError,UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut>>,
+export const useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(
+    options?: {
+      mutation?: UseMutationOptions<
+        Awaited<
+          ReturnType<
+            typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+          >
+        >,
         TError,
         UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables,
         TContext
-      > => {
-      return useMutation(getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions(options), queryClient);
-    }
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+    queryClient?: QueryClient,
+  ): UseMutationResult<
+    Awaited<
+      ReturnType<
+        typeof updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut
+      >
+    >,
+    TError,
+    UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationVariables,
+    TContext
+  > => {
+    return useMutation(
+      getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutMutationOptions(
+        options,
+      ),
+      queryClient,
+    );
+  };
 
 /**
  * @summary Finalize Mining Resource Line
  */
-export const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = (
+export const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost =
+  (
     sessionId: string,
     lineId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
+    options?: SecondParameter<typeof customInstance>,
+    signal?: AbortSignal,
+  ) => {
+    return customInstance<SessionLineResponse>(
+      {
+        url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
+        method: 'POST',
+        signal,
+      },
+      options,
+    );
+  };
 
+export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey =
+  () =>
+    [
+      'finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost',
+    ] as const;
 
-      return customInstance<SessionLineResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`, method: 'POST', signal
-    },
-      options);
-    }
+export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+        >
+      >,
+      TError,
+      FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+      >
+    >,
+    TError,
+    FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+        >
+      >,
+      FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables
+    > = (props) => {
+      const { sessionId, lineId } = props ?? {};
 
+      return finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost(
+        sessionId,
+        lineId,
+        requestOptions,
+      );
+    };
 
+    return { mutationFn, ...mutationOptions };
+  };
 
-export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey = () => ['finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost'] as const;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+      >
+    >
+  >;
 
-export const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext> => {
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationError =
+  ErrorType<HTTPValidationError>;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables =
+  { sessionId: string; lineId: string };
 
-const mutationKey = getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables> = (props) => {
-          const {sessionId,lineId} = props ?? {};
-
-          return  finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost(sessionId,lineId,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationResult = NonNullable<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>>
-
-    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationError = ErrorType<HTTPValidationError>
-    export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables = {sessionId: string;lineId: string}
-
-    /**
+/**
  * @summary Finalize Mining Resource Line
  */
-export const useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>, TError,FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost>>,
+export const useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(
+    options?: {
+      mutation?: UseMutationOptions<
+        Awaited<
+          ReturnType<
+            typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+          >
+        >,
         TError,
         FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables,
         TContext
-      > => {
-      return useMutation(getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions(options), queryClient);
-    }
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+    queryClient?: QueryClient,
+  ): UseMutationResult<
+    Awaited<
+      ReturnType<
+        typeof finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost
+      >
+    >,
+    TError,
+    FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationVariables,
+    TContext
+  > => {
+    return useMutation(
+      getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostMutationOptions(
+        options,
+      ),
+      queryClient,
+    );
+  };
 
 /**
  * @summary Consume Mining Cost Line
  */
-export const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = (
+export const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost =
+  (
     sessionId: string,
     lineId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
+    options?: SecondParameter<typeof customInstance>,
+    signal?: AbortSignal,
+  ) => {
+    return customInstance<MiningCostLineResponse>(
+      {
+        url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
+        method: 'POST',
+        signal,
+      },
+      options,
+    );
+  };
 
+export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey =
+  () =>
+    [
+      'consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost',
+    ] as const;
 
-      return customInstance<MiningCostLineResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`, method: 'POST', signal
-    },
-      options);
-    }
+export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+        >
+      >,
+      TError,
+      ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+      >
+    >,
+    TError,
+    ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+        >
+      >,
+      ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables
+    > = (props) => {
+      const { sessionId, lineId } = props ?? {};
 
+      return consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost(
+        sessionId,
+        lineId,
+        requestOptions,
+      );
+    };
 
+    return { mutationFn, ...mutationOptions };
+  };
 
-export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey = () => ['consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost'] as const;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+      >
+    >
+  >;
 
-export const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext> => {
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationError =
+  ErrorType<HTTPValidationError>;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables =
+  { sessionId: string; lineId: string };
 
-const mutationKey = getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables> = (props) => {
-          const {sessionId,lineId} = props ?? {};
-
-          return  consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost(sessionId,lineId,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationResult = NonNullable<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>>
-
-    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationError = ErrorType<HTTPValidationError>
-    export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables = {sessionId: string;lineId: string}
-
-    /**
+/**
  * @summary Consume Mining Cost Line
  */
-export const useConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>, TError,ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost>>,
+export const useConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(
+    options?: {
+      mutation?: UseMutationOptions<
+        Awaited<
+          ReturnType<
+            typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+          >
+        >,
         TError,
         ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables,
         TContext
-      > => {
-      return useMutation(getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions(options), queryClient);
-    }
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+    queryClient?: QueryClient,
+  ): UseMutationResult<
+    Awaited<
+      ReturnType<
+        typeof consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost
+      >
+    >,
+    TError,
+    ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationVariables,
+    TContext
+  > => {
+    return useMutation(
+      getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostMutationOptions(
+        options,
+      ),
+      queryClient,
+    );
+  };
 
 /**
  * @summary Update Mining Cost Line
  */
-export const updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut = (
+export const updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut =
+  (
     sessionId: string,
     lineId: string,
     miningCostLineUpdate: BodyType<MiningCostLineUpdate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
+    options?: SecondParameter<typeof customInstance>,
+    signal?: AbortSignal,
+  ) => {
+    return customInstance<MiningCostLineResponse>(
+      {
+        url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}`,
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        data: miningCostLineUpdate,
+        signal,
+      },
+      options,
+    );
+  };
 
+export const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationKey =
+  () =>
+    [
+      'updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut',
+    ] as const;
 
-      return customInstance<MiningCostLineResponse>(
-      {url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}`, method: 'PUT',
-      headers: {'Content-Type': 'application/json', },
-      data: miningCostLineUpdate, signal
-    },
-      options);
-    }
+export const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<
+          typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+        >
+      >,
+      TError,
+      UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<
+        typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+      >
+    >,
+    TError,
+    UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<
+          typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+        >
+      >,
+      UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables
+    > = (props) => {
+      const { sessionId, lineId, data } = props ?? {};
 
+      return updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut(
+        sessionId,
+        lineId,
+        data,
+        requestOptions,
+      );
+    };
 
+    return { mutationFn, ...mutationOptions };
+  };
 
-export const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationKey = () => ['updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut'] as const;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationResult =
+  NonNullable<
+    Awaited<
+      ReturnType<
+        typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+      >
+    >
+  >;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationBody =
+  BodyType<MiningCostLineUpdate>;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationError =
+  ErrorType<HTTPValidationError>;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables =
+  { sessionId: string; lineId: string; data: BodyType<MiningCostLineUpdate> };
 
-export const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>, TError,UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>, TError,UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables, TContext> => {
-
-const mutationKey = getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>, UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables> = (props) => {
-          const {sessionId,lineId,data} = props ?? {};
-
-          return  updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut(sessionId,lineId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationResult = NonNullable<Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>>
-    export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationBody = BodyType<MiningCostLineUpdate>
-    export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationError = ErrorType<HTTPValidationError>
-    export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables = {sessionId: string;lineId: string;data: BodyType<MiningCostLineUpdate>}
-
-    /**
+/**
  * @summary Update Mining Cost Line
  */
-export const useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>, TError,UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut>>,
+export const useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(
+    options?: {
+      mutation?: UseMutationOptions<
+        Awaited<
+          ReturnType<
+            typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+          >
+        >,
         TError,
         UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables,
         TContext
-      > => {
-      return useMutation(getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationOptions(options), queryClient);
-    }
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+    queryClient?: QueryClient,
+  ): UseMutationResult<
+    Awaited<
+      ReturnType<
+        typeof updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut
+      >
+    >,
+    TError,
+    UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationVariables,
+    TContext
+  > => {
+    return useMutation(
+      getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutMutationOptions(
+        options,
+      ),
+      queryClient,
+    );
+  };
 
 /**
  * @summary Close Session
  */
 export const closeSessionApiV2SessionsSessionIdPatch = (
-    sessionId: string,
-    miningSessionCloseNull?: BodyType<MiningSessionClose | null>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionId: string,
+  miningSessionCloseNull?: BodyType<MiningSessionClose | null>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<SessionResponse>(
-      {url: `/api/v2/sessions/${sessionId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: miningSessionCloseNull, signal
+  return customInstance<SessionResponse>(
+    {
+      url: `/api/v2/sessions/${sessionId}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: miningSessionCloseNull,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCloseSessionApiV2SessionsSessionIdPatchMutationKey = () =>
+  ['closeSessionApiV2SessionsSessionIdPatch'] as const;
 
+export const getCloseSessionApiV2SessionsSessionIdPatchMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+    TError,
+    CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+  TError,
+  CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCloseSessionApiV2SessionsSessionIdPatchMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+    CloseSessionApiV2SessionsSessionIdPatchMutationVariables
+  > = (props) => {
+    const { sessionId, data } = props ?? {};
 
-export const getCloseSessionApiV2SessionsSessionIdPatchMutationKey = () => ['closeSessionApiV2SessionsSessionIdPatch'] as const;
+    return closeSessionApiV2SessionsSessionIdPatch(
+      sessionId,
+      data,
+      requestOptions,
+    );
+  };
 
-export const getCloseSessionApiV2SessionsSessionIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCloseSessionApiV2SessionsSessionIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CloseSessionApiV2SessionsSessionIdPatchMutationResult = NonNullable<
+  Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>
+>;
+export type CloseSessionApiV2SessionsSessionIdPatchMutationBody =
+  BodyType<MiningSessionClose | null> | undefined;
+export type CloseSessionApiV2SessionsSessionIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type CloseSessionApiV2SessionsSessionIdPatchMutationVariables = {
+  sessionId: string;
+  data?: BodyType<MiningSessionClose | null>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, CloseSessionApiV2SessionsSessionIdPatchMutationVariables> = (props) => {
-          const {sessionId,data} = props ?? {};
-
-          return  closeSessionApiV2SessionsSessionIdPatch(sessionId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CloseSessionApiV2SessionsSessionIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>>
-    export type CloseSessionApiV2SessionsSessionIdPatchMutationBody = BodyType<MiningSessionClose | null> | undefined
-    export type CloseSessionApiV2SessionsSessionIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type CloseSessionApiV2SessionsSessionIdPatchMutationVariables = {sessionId: string;data?: BodyType<MiningSessionClose | null>}
-
-    /**
+/**
  * @summary Close Session
  */
-export const useCloseSessionApiV2SessionsSessionIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>, TError,CloseSessionApiV2SessionsSessionIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
-        TError,
-        CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCloseSessionApiV2SessionsSessionIdPatchMutationOptions(options), queryClient);
-    }
+export const useCloseSessionApiV2SessionsSessionIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+      TError,
+      CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof closeSessionApiV2SessionsSessionIdPatch>>,
+  TError,
+  CloseSessionApiV2SessionsSessionIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCloseSessionApiV2SessionsSessionIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Claims
  */
 export const listClaimsApiV2MiningSessionIdClaimsGet = (
-    sessionId: string,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionId: string,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<MiningClaimsResponse>(
+    { url: `/api/v2/mining/${sessionId}/claims`, method: 'GET', signal },
+    options,
+  );
+};
 
-
-      return customInstance<MiningClaimsResponse>(
-      {url: `/api/v2/mining/${sessionId}/claims`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
-
-export const getListClaimsApiV2MiningSessionIdClaimsGetQueryKey = (sessionId: string,) => {
-    return [
-    `/api/v2/mining/${sessionId}/claims`
-    ] as const;
-    }
-
-
-export const getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions = <TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListClaimsApiV2MiningSessionIdClaimsGetQueryKey = (
+  sessionId: string,
 ) => {
+  return [`/api/v2/mining/${sessionId}/claims`] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListClaimsApiV2MiningSessionIdClaimsGetQueryKey(sessionId);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListClaimsApiV2MiningSessionIdClaimsGetQueryKey(sessionId);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
+  > = ({ signal }) =>
+    listClaimsApiV2MiningSessionIdClaimsGet(sessionId, requestOptions, signal);
 
+  return {
+    queryKey,
+    queryFn,
+    enabled: sessionId !== null && sessionId !== undefined,
+    ...queryOptions,
+  } as UseQueryOptions<
+    Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>> = ({ signal }) => listClaimsApiV2MiningSessionIdClaimsGet(sessionId, requestOptions, signal);
+export type ListClaimsApiV2MiningSessionIdClaimsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
+>;
+export type ListClaimsApiV2MiningSessionIdClaimsGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: sessionId !== null && sessionId !== undefined, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListClaimsApiV2MiningSessionIdClaimsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>>
-export type ListClaimsApiV2MiningSessionIdClaimsGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>> & Pick<
+export function useListClaimsApiV2MiningSessionIdClaimsGet<
+  TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
           TError,
           Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListClaimsApiV2MiningSessionIdClaimsGet<
+  TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
           TError,
           Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListClaimsApiV2MiningSessionIdClaimsGet<
+  TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Claims
  */
 
-export function useListClaimsApiV2MiningSessionIdClaimsGet<TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError = ErrorType<HTTPValidationError>>(
- sessionId: string, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListClaimsApiV2MiningSessionIdClaimsGet<
+  TData = Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  sessionId: string,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listClaimsApiV2MiningSessionIdClaimsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions(
+    sessionId,
+    options,
+  );
 
-  const queryOptions = getListClaimsApiV2MiningSessionIdClaimsGetQueryOptions(sessionId,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Claim
  */
 export const createClaimApiV2MiningSessionIdClaimsPost = (
-    sessionId: string,
-    miningClaimCreate: BodyType<MiningClaimCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionId: string,
+  miningClaimCreate: BodyType<MiningClaimCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningClaimResponse>(
-      {url: `/api/v2/mining/${sessionId}/claims`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: miningClaimCreate, signal
+  return customInstance<MiningClaimResponse>(
+    {
+      url: `/api/v2/mining/${sessionId}/claims`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: miningClaimCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey = () =>
+  ['createClaimApiV2MiningSessionIdClaimsPost'] as const;
 
+export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+    TError,
+    CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+  TError,
+  CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+    CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables
+  > = (props) => {
+    const { sessionId, data } = props ?? {};
 
-export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey = () => ['createClaimApiV2MiningSessionIdClaimsPost'] as const;
+    return createClaimApiV2MiningSessionIdClaimsPost(
+      sessionId,
+      data,
+      requestOptions,
+    );
+  };
 
-export const getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreateClaimApiV2MiningSessionIdClaimsPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreateClaimApiV2MiningSessionIdClaimsPostMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>
+  >;
+export type CreateClaimApiV2MiningSessionIdClaimsPostMutationBody =
+  BodyType<MiningClaimCreate>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables = {
+  sessionId: string;
+  data: BodyType<MiningClaimCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables> = (props) => {
-          const {sessionId,data} = props ?? {};
-
-          return  createClaimApiV2MiningSessionIdClaimsPost(sessionId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationResult = NonNullable<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>>
-    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationBody = BodyType<MiningClaimCreate>
-    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationError = ErrorType<HTTPValidationError>
-    export type CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables = {sessionId: string;data: BodyType<MiningClaimCreate>}
-
-    /**
+/**
  * @summary Create Claim
  */
-export const useCreateClaimApiV2MiningSessionIdClaimsPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>, TError,CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
-        TError,
-        CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions(options), queryClient);
-    }
+export const useCreateClaimApiV2MiningSessionIdClaimsPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+      TError,
+      CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createClaimApiV2MiningSessionIdClaimsPost>>,
+  TError,
+  CreateClaimApiV2MiningSessionIdClaimsPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreateClaimApiV2MiningSessionIdClaimsPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Patch Claim
  */
 export const patchClaimApiV2MiningSessionIdClaimsClaimIdPatch = (
-    sessionId: string,
-    claimId: string,
-    miningClaimPatch: BodyType<MiningClaimPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  sessionId: string,
+  claimId: string,
+  miningClaimPatch: BodyType<MiningClaimPatch>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningClaimResponse>(
-      {url: `/api/v2/mining/${sessionId}/claims/${claimId}`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: miningClaimPatch, signal
+  return customInstance<MiningClaimResponse>(
+    {
+      url: `/api/v2/mining/${sessionId}/claims/${claimId}`,
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      data: miningClaimPatch,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey =
+  () => ['patchClaimApiV2MiningSessionIdClaimsClaimIdPatch'] as const;
 
+export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions =
+  <TError = ErrorType<HTTPValidationError>, TContext = unknown>(options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>
+      >,
+      TError,
+      PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  }): UseMutationOptions<
+    Awaited<
+      ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>
+    >,
+    TError,
+    PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
+    TContext
+  > => {
+    const mutationKey =
+      getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey();
+    const { mutation: mutationOptions, request: requestOptions } = options
+      ? options.mutation &&
+        'mutationKey' in options.mutation &&
+        options.mutation.mutationKey
+        ? options
+        : { ...options, mutation: { ...options.mutation, mutationKey } }
+      : { mutation: { mutationKey }, request: undefined };
 
+    const mutationFn: MutationFunction<
+      Awaited<
+        ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>
+      >,
+      PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables
+    > = (props) => {
+      const { sessionId, claimId, data } = props ?? {};
 
-export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey = () => ['patchClaimApiV2MiningSessionIdClaimsClaimIdPatch'] as const;
+      return patchClaimApiV2MiningSessionIdClaimsClaimIdPatch(
+        sessionId,
+        claimId,
+        data,
+        requestOptions,
+      );
+    };
 
-export const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext> => {
+    return { mutationFn, ...mutationOptions };
+  };
 
-const mutationKey = getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationResult =
+  NonNullable<
+    Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>
+  >;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationBody =
+  BodyType<MiningClaimPatch>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationError =
+  ErrorType<HTTPValidationError>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables =
+  { sessionId: string; claimId: string; data: BodyType<MiningClaimPatch> };
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables> = (props) => {
-          const {sessionId,claimId,data} = props ?? {};
-
-          return  patchClaimApiV2MiningSessionIdClaimsClaimIdPatch(sessionId,claimId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>>
-    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationBody = BodyType<MiningClaimPatch>
-    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables = {sessionId: string;claimId: string;data: BodyType<MiningClaimPatch>}
-
-    /**
+/**
  * @summary Patch Claim
  */
-export const usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>, TError,PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>,
-        TError,
-        PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions(options), queryClient);
-    }
+export const usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<
+        ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>
+      >,
+      TError,
+      PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof patchClaimApiV2MiningSessionIdClaimsClaimIdPatch>>,
+  TError,
+  PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary List Deposit Sizes
  */
 export const listDepositSizesApiV2MiningDepositSizesGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningDepositSizeResponse[]>(
-      {url: `/api/v2/mining/deposit-sizes`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<MiningDepositSizeResponse[]>(
+    { url: `/api/v2/mining/deposit-sizes`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getListDepositSizesApiV2MiningDepositSizesGetQueryKey = () => {
-    return [
-    `/api/v2/mining/deposit-sizes`
-    ] as const;
-    }
+  return [`/api/v2/mining/deposit-sizes`] as const;
+};
 
+export const getListDepositSizesApiV2MiningDepositSizesGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+  >,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getListDepositSizesApiV2MiningDepositSizesGetQueryOptions = <TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListDepositSizesApiV2MiningDepositSizesGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
+  > = ({ signal }) =>
+    listDepositSizesApiV2MiningDepositSizesGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getListDepositSizesApiV2MiningDepositSizesGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type ListDepositSizesApiV2MiningDepositSizesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
+>;
+export type ListDepositSizesApiV2MiningDepositSizesGetQueryError =
+  ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>> = ({ signal }) => listDepositSizesApiV2MiningDepositSizesGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListDepositSizesApiV2MiningDepositSizesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>>
-export type ListDepositSizesApiV2MiningDepositSizesGetQueryError = ErrorType<unknown>
-
-
-export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>> & Pick<
+export function useListDepositSizesApiV2MiningDepositSizesGet<
+  TData = Awaited<
+    ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+          Awaited<
+            ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListDepositSizesApiV2MiningDepositSizesGet<
+  TData = Awaited<
+    ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+          Awaited<
+            ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+          >,
           TError,
           Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListDepositSizesApiV2MiningDepositSizesGet<
+  TData = Awaited<
+    ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Deposit Sizes
  */
 
-export function useListDepositSizesApiV2MiningDepositSizesGet<TData = Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListDepositSizesApiV2MiningDepositSizesGet<
+  TData = Awaited<
+    ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>
+  >,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listDepositSizesApiV2MiningDepositSizesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getListDepositSizesApiV2MiningDepositSizesGetQueryOptions(options);
 
-  const queryOptions = getListDepositSizesApiV2MiningDepositSizesGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Deposit Size
  */
 export const getDepositSizeApiV2MiningGetDepositSizeGet = (
-    params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<MiningDepositSizeResponse>(
+    { url: `/api/v2/mining/get-deposit-size`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<MiningDepositSizeResponse>(
-      {url: `/api/v2/mining/get-deposit-size`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey = (params?: GetDepositSizeApiV2MiningGetDepositSizeGetParams,) => {
-    return [
-    `/api/v2/mining/get-deposit-size`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions = <TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey = (
+  params?: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
 ) => {
+  return [
+    `/api/v2/mining/get-deposit-size`,
+    ...(params ? [params] : []),
+  ] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions = <
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getGetDepositSizeApiV2MiningGetDepositSizeGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
+  > = ({ signal }) =>
+    getDepositSizeApiV2MiningGetDepositSizeGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>> = ({ signal }) => getDepositSizeApiV2MiningGetDepositSizeGet(params, requestOptions, signal);
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
+>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryResult = NonNullable<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>>
-export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>> & Pick<
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+          Awaited<
+            ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+          Awaited<
+            ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+          >,
           TError,
           Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Deposit Size
  */
 
-export function useGetDepositSizeApiV2MiningGetDepositSizeGet<TData = Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDepositSizeApiV2MiningGetDepositSizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof getDepositSizeApiV2MiningGetDepositSizeGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions(params, options);
 
-  const queryOptions = getGetDepositSizeApiV2MiningGetDepositSizeGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Get Deposit Size By Size
  */
 export const getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet = (
-    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<MiningDepositSizeResponse>(
-      {url: `/api/v2/mining/get-deposit-size-by-size`, method: 'GET',
-        params, signal
+  return customInstance<MiningDepositSizeResponse>(
+    {
+      url: `/api/v2/mining/get-deposit-size-by-size`,
+      method: 'GET',
+      params,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
-
-
-
-export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey = (params?: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,) => {
+export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey =
+  (params?: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams) => {
     return [
-    `/api/v2/mining/get-deposit-size-by-size`, ...(params ? [params] : [])
+      `/api/v2/mining/get-deposit-size-by-size`,
+      ...(params ? [params] : []),
     ] as const;
-    }
+  };
 
+export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions =
+  <
+    TData = Awaited<
+      ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+    >,
+    TError = ErrorType<HTTPValidationError>,
+  >(
+    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+    options?: {
+      query?: Partial<
+        UseQueryOptions<
+          Awaited<
+            ReturnType<
+              typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+            >
+          >,
+          TError,
+          TData
+        >
+      >;
+      request?: SecondParameter<typeof customInstance>;
+    },
+  ) => {
+    const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions = <TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+    const queryKey =
+      queryOptions?.queryKey ??
+      getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey(params);
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+    const queryFn: QueryFunction<
+      Awaited<
+        ReturnType<
+          typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+        >
+      >
+    > = ({ signal }) =>
+      getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet(
+        params,
+        requestOptions,
+        signal,
+      );
 
-  const queryKey =  queryOptions?.queryKey ?? getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryKey(params);
+    return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+      Awaited<
+        ReturnType<
+          typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+        >
+      >,
+      TError,
+      TData
+    > & { queryKey: DataTag<QueryKey, TData, TError> };
+  };
 
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryResult =
+  NonNullable<
+    Awaited<
+      ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+    >
+  >;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>> = ({ signal }) => getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet(params, requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryResult = NonNullable<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>>
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>> & Pick<
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>,
+          Awaited<
+            ReturnType<
+              typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>> & Pick<
+          Awaited<
+            ReturnType<
+              typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+          >
+        >,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
-          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>,
+          Awaited<
+            ReturnType<
+              typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+            >
+          >,
           TError,
-          Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+          Awaited<
+            ReturnType<
+              typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+            >
+          >
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Get Deposit Size By Size
  */
 
-export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<TData = Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError = ErrorType<HTTPValidationError>>(
- params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet<
+  TData = Awaited<
+    ReturnType<typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet>
+  >,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<
+          ReturnType<
+            typeof getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet
+          >
+        >,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions =
+    getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions(
+      params,
+      options,
+    );
 
-  const queryOptions = getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary List Planets
  */
 export const listPlanetsApiV2PlanetsGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<PlanetResponse[]>(
-      {url: `/api/v2/planets`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<PlanetResponse[]>(
+    { url: `/api/v2/planets`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getListPlanetsApiV2PlanetsGetQueryKey = () => {
-    return [
-    `/api/v2/planets`
-    ] as const;
-    }
+  return [`/api/v2/planets`] as const;
+};
 
+export const getListPlanetsApiV2PlanetsGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<
+      Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+      TError,
+      TData
+    >
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getListPlanetsApiV2PlanetsGetQueryOptions = <TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey =
+    queryOptions?.queryKey ?? getListPlanetsApiV2PlanetsGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
+  > = ({ signal }) => listPlanetsApiV2PlanetsGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getListPlanetsApiV2PlanetsGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type ListPlanetsApiV2PlanetsGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
+>;
+export type ListPlanetsApiV2PlanetsGetQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>> = ({ signal }) => listPlanetsApiV2PlanetsGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListPlanetsApiV2PlanetsGetQueryResult = NonNullable<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>>
-export type ListPlanetsApiV2PlanetsGetQueryError = ErrorType<unknown>
-
-
-export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>> & Pick<
+export function useListPlanetsApiV2PlanetsGet<
+  TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
           TError,
           Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListPlanetsApiV2PlanetsGet<
+  TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
           TError,
           Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListPlanetsApiV2PlanetsGet<
+  TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Planets
  */
 
-export function useListPlanetsApiV2PlanetsGet<TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListPlanetsApiV2PlanetsGet<
+  TData = Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetsApiV2PlanetsGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListPlanetsApiV2PlanetsGetQueryOptions(options);
 
-  const queryOptions = getListPlanetsApiV2PlanetsGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary List Planet Zones
  */
 export const listPlanetZonesApiV2PlanetsZonesGet = (
-    params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
+  return customInstance<PlanetZoneResponse[]>(
+    { url: `/api/v2/planets/zones`, method: 'GET', params, signal },
+    options,
+  );
+};
 
-
-      return customInstance<PlanetZoneResponse[]>(
-      {url: `/api/v2/planets/zones`, method: 'GET',
-        params, signal
-    },
-      options);
-    }
-
-
-
-
-export const getListPlanetZonesApiV2PlanetsZonesGetQueryKey = (params?: ListPlanetZonesApiV2PlanetsZonesGetParams,) => {
-    return [
-    `/api/v2/planets/zones`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getListPlanetZonesApiV2PlanetsZonesGetQueryOptions = <TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getListPlanetZonesApiV2PlanetsZonesGetQueryKey = (
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
 ) => {
+  return [`/api/v2/planets/zones`, ...(params ? [params] : [])] as const;
+};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+export const getListPlanetZonesApiV2PlanetsZonesGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-  const queryKey =  queryOptions?.queryKey ?? getListPlanetZonesApiV2PlanetsZonesGetQueryKey(params);
+  const queryKey =
+    queryOptions?.queryKey ??
+    getListPlanetZonesApiV2PlanetsZonesGetQueryKey(params);
 
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
+  > = ({ signal }) =>
+    listPlanetZonesApiV2PlanetsZonesGet(params, requestOptions, signal);
 
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>> = ({ signal }) => listPlanetZonesApiV2PlanetsZonesGet(params, requestOptions, signal);
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
+>;
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryError =
+  ErrorType<HTTPValidationError>;
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ListPlanetZonesApiV2PlanetsZonesGetQueryResult = NonNullable<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>>
-export type ListPlanetZonesApiV2PlanetsZonesGetQueryError = ErrorType<HTTPValidationError>
-
-
-export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
- params: undefined |  ListPlanetZonesApiV2PlanetsZonesGetParams, options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>> & Pick<
+export function useListPlanetZonesApiV2PlanetsZonesGet<
+  TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params: undefined | ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
           TError,
           Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListPlanetZonesApiV2PlanetsZonesGet<
+  TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
           TError,
           Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useListPlanetZonesApiV2PlanetsZonesGet<
+  TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary List Planet Zones
  */
 
-export function useListPlanetZonesApiV2PlanetsZonesGet<TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError = ErrorType<HTTPValidationError>>(
- params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useListPlanetZonesApiV2PlanetsZonesGet<
+  TData = Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+  TError = ErrorType<HTTPValidationError>,
+>(
+  params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof listPlanetZonesApiV2PlanetsZonesGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getListPlanetZonesApiV2PlanetsZonesGetQueryOptions(
+    params,
+    options,
+  );
 
-  const queryOptions = getListPlanetZonesApiV2PlanetsZonesGetQueryOptions(params,options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
 
 /**
  * @summary Create Planet Zone
  */
 export const createPlanetZoneApiV2PlanetsZonesPost = (
-    planetZoneCreate: BodyType<PlanetZoneCreate>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  planetZoneCreate: BodyType<PlanetZoneCreate>,
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<IdResponse>(
-      {url: `/api/v2/planets/zones`, method: 'POST',
-      headers: {'Content-Type': 'application/json', },
-      data: planetZoneCreate, signal
+  return customInstance<IdResponse>(
+    {
+      url: `/api/v2/planets/zones`,
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      data: planetZoneCreate,
+      signal,
     },
-      options);
-    }
+    options,
+  );
+};
 
+export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey = () =>
+  ['createPlanetZoneApiV2PlanetsZonesPost'] as const;
 
+export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(options?: {
+  mutation?: UseMutationOptions<
+    Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+    TError,
+    CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
+    TContext
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}): UseMutationOptions<
+  Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+  TError,
+  CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
+  TContext
+> => {
+  const mutationKey = getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey();
+  const { mutation: mutationOptions, request: requestOptions } = options
+    ? options.mutation &&
+      'mutationKey' in options.mutation &&
+      options.mutation.mutationKey
+      ? options
+      : { ...options, mutation: { ...options.mutation, mutationKey } }
+    : { mutation: { mutationKey }, request: undefined };
 
+  const mutationFn: MutationFunction<
+    Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+    CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables
+  > = (props) => {
+    const { data } = props ?? {};
 
-export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey = () => ['createPlanetZoneApiV2PlanetsZonesPost'] as const;
+    return createPlanetZoneApiV2PlanetsZonesPost(data, requestOptions);
+  };
 
-export const getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext> => {
+  return { mutationFn, ...mutationOptions };
+};
 
-const mutationKey = getCreatePlanetZoneApiV2PlanetsZonesPostMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export type CreatePlanetZoneApiV2PlanetsZonesPostMutationResult = NonNullable<
+  Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>
+>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostMutationBody =
+  BodyType<PlanetZoneCreate>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostMutationError =
+  ErrorType<HTTPValidationError>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables = {
+  data: BodyType<PlanetZoneCreate>;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  createPlanetZoneApiV2PlanetsZonesPost(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationResult = NonNullable<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>>
-    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationBody = BodyType<PlanetZoneCreate>
-    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationError = ErrorType<HTTPValidationError>
-    export type CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables = {data: BodyType<PlanetZoneCreate>}
-
-    /**
+/**
  * @summary Create Planet Zone
  */
-export const useCreatePlanetZoneApiV2PlanetsZonesPost = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>, TError,CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
-        TError,
-        CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
-        TContext
-      > => {
-      return useMutation(getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions(options), queryClient);
-    }
+export const useCreatePlanetZoneApiV2PlanetsZonesPost = <
+  TError = ErrorType<HTTPValidationError>,
+  TContext = unknown,
+>(
+  options?: {
+    mutation?: UseMutationOptions<
+      Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+      TError,
+      CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
+      TContext
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseMutationResult<
+  Awaited<ReturnType<typeof createPlanetZoneApiV2PlanetsZonesPost>>,
+  TError,
+  CreatePlanetZoneApiV2PlanetsZonesPostMutationVariables,
+  TContext
+> => {
+  return useMutation(
+    getCreatePlanetZoneApiV2PlanetsZonesPostMutationOptions(options),
+    queryClient,
+  );
+};
 
 /**
  * @summary Health
  */
 export const healthHealthGet = (
-
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
+  options?: SecondParameter<typeof customInstance>,
+  signal?: AbortSignal,
 ) => {
-
-
-      return customInstance<HealthHealthGet200>(
-      {url: `/health`, method: 'GET', signal
-    },
-      options);
-    }
-
-
-
+  return customInstance<HealthHealthGet200>(
+    { url: `/health`, method: 'GET', signal },
+    options,
+  );
+};
 
 export const getHealthHealthGetQueryKey = () => {
-    return [
-    `/health`
-    ] as const;
-    }
+  return [`/health`] as const;
+};
 
+export const getHealthHealthGetQueryOptions = <
+  TData = Awaited<ReturnType<typeof healthHealthGet>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: Partial<
+    UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>
+  >;
+  request?: SecondParameter<typeof customInstance>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getHealthHealthGetQueryOptions = <TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>( options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+  const queryKey = queryOptions?.queryKey ?? getHealthHealthGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof healthHealthGet>>> = ({
+    signal,
+  }) => healthHealthGet(requestOptions, signal);
 
-  const queryKey =  queryOptions?.queryKey ?? getHealthHealthGetQueryKey();
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof healthHealthGet>>,
+    TError,
+    TData
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type HealthHealthGetQueryResult = NonNullable<
+  Awaited<ReturnType<typeof healthHealthGet>>
+>;
+export type HealthHealthGetQueryError = ErrorType<unknown>;
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof healthHealthGet>>> = ({ signal }) => healthHealthGet(requestOptions, signal);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type HealthHealthGetQueryResult = NonNullable<Awaited<ReturnType<typeof healthHealthGet>>>
-export type HealthHealthGetQueryError = ErrorType<unknown>
-
-
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options: { query:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>> & Pick<
+export function useHealthHealthGet<
+  TData = Awaited<ReturnType<typeof healthHealthGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options: {
+    query: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof healthHealthGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         DefinedInitialDataOptions<
           Awaited<ReturnType<typeof healthHealthGet>>,
           TError,
           Awaited<ReturnType<typeof healthHealthGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  DefinedUseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>> & Pick<
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): DefinedUseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useHealthHealthGet<
+  TData = Awaited<ReturnType<typeof healthHealthGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof healthHealthGet>>,
+        TError,
+        TData
+      >
+    > &
+      Pick<
         UndefinedInitialDataOptions<
           Awaited<ReturnType<typeof healthHealthGet>>,
           TError,
           Awaited<ReturnType<typeof healthHealthGet>>
-        > , 'initialData'
-      >, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
-  ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> }
+        >,
+        'initialData'
+      >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
+export function useHealthHealthGet<
+  TData = Awaited<ReturnType<typeof healthHealthGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof healthHealthGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+};
 /**
  * @summary Health
  */
 
-export function useHealthHealthGet<TData = Awaited<ReturnType<typeof healthHealthGet>>, TError = ErrorType<unknown>>(
-  options?: { query?:Partial<UseQueryOptions<Awaited<ReturnType<typeof healthHealthGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient
- ):  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+export function useHealthHealthGet<
+  TData = Awaited<ReturnType<typeof healthHealthGet>>,
+  TError = ErrorType<unknown>,
+>(
+  options?: {
+    query?: Partial<
+      UseQueryOptions<
+        Awaited<ReturnType<typeof healthHealthGet>>,
+        TError,
+        TData
+      >
+    >;
+    request?: SecondParameter<typeof customInstance>;
+  },
+  queryClient?: QueryClient,
+): UseQueryResult<TData, TError> & {
+  queryKey: DataTag<QueryKey, TData, TError>;
+} {
+  const queryOptions = getHealthHealthGetQueryOptions(options);
 
-  const queryOptions = getHealthHealthGetQueryOptions(options)
-
-  const query = useQuery(queryOptions, queryClient) as  UseQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+  const query = useQuery(queryOptions, queryClient) as UseQueryResult<
+    TData,
+    TError
+  > & { queryKey: DataTag<QueryKey, TData, TError> };
 
   return withQueryKey(query, queryOptions.queryKey);
 }
-
-
-
-
-
-
-

@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import type { GenericListHeaderProps } from "./genericListTypes";
+import { cn } from '@/lib/utils';
+import type { GenericListHeaderProps } from './genericListTypes';
 
-function getHeaderAlignClass(align?: "left" | "center" | "right") {
-  if (align === "center") return "text-center";
-  if (align === "right") return "text-right";
-  return "text-left";
+function getHeaderAlignClass(align?: 'left' | 'center' | 'right') {
+  if (align === 'center') return 'text-center';
+  if (align === 'right') return 'text-right';
+  return 'text-left';
 }
 
 function GenericListHeader<T>({
@@ -19,7 +19,7 @@ function GenericListHeader<T>({
   return (
     <div
       className={cn(
-        "top-0 z-10 grid items-center border-b border-table-row-divider bg-table-head-bg text-table-head-text",
+        'top-0 z-10 grid items-center border-b border-table-row-divider bg-table-head-bg text-table-head-text',
         className,
       )}
       style={{
@@ -31,12 +31,12 @@ function GenericListHeader<T>({
         <div
           key={column.key}
           className={cn(
-            "min-w-0 px-1 font-semibold",
+            'min-w-0 px-1 font-semibold',
             getHeaderAlignClass(column.align),
             column.headerCellClassName,
           )}
         >
-          {column.kind === "image" ? "" : column.label}
+          {column.kind === 'image' ? '' : column.label}
         </div>
       ))}
     </div>

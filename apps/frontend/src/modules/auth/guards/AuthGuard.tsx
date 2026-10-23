@@ -1,7 +1,7 @@
-import { CapsuleLoader } from "@/shared/components";
-import { selectIsAuthResolving, selectIsLoggued } from "@/store";
-import { useAppSelector } from "@/store/hooks";
-import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { CapsuleLoader } from '@/shared/components';
+import { selectIsAuthResolving, selectIsLoggued } from '@/store';
+import { useAppSelector } from '@/store/hooks';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
 function AuthGuard() {
   const isLoggued = useAppSelector(selectIsLoggued);

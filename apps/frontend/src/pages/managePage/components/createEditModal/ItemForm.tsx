@@ -1,16 +1,16 @@
-import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
-import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import SelectRHF from "@/shared/components/form/Select/SelectRHF";
-import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
-import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import { useSystemDatas } from "@/shared/hooks";
-import type { ItemViewModel } from "@zod-schemas";
+import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
+import FormButtonsSection from '@/shared/components/form/FormButtonsSection';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import SelectRHF from '@/shared/components/form/Select/SelectRHF';
+import { selectOptionsHelper } from '@/shared/helpers/selectHelper';
+import useSystemMutation from '@/shared/hooks/useSystemMutation';
+import { useSystemDatas } from '@/shared/hooks';
+import type { ItemViewModel } from '@zod-schemas';
 import {
   ItemCreate,
   type ItemCreateOutput,
-} from "@/api/generated/zod/model/itemCreate.zod";
+} from '@/api/generated/zod/model/itemCreate.zod';
 
 interface ItemFormProps {
   item?: ItemViewModel;
@@ -19,8 +19,8 @@ interface ItemFormProps {
 
 const defaultValues = {
   id: null,
-  name: "",
-  typeId: "",
+  name: '',
+  typeId: '',
   imageUrlId: null,
   value: 0,
   description: null,
@@ -67,7 +67,7 @@ function ManageItemForm({ item, onClose }: ItemFormProps) {
 
   return (
     <GenericForm
-      key={item?.id ?? "create-item"}
+      key={item?.id ?? 'create-item'}
       onSubmit={handleSubmit}
       schema={ItemCreate}
       defaultValues={formValues}
@@ -114,7 +114,7 @@ function ManageItemForm({ item, onClose }: ItemFormProps) {
       <FormButtonsSection
         submitDisabled={itemMutation.isPending}
         cancelDisabled={itemMutation.isPending}
-        submitLabel={item ? "Modifier" : "Créer"}
+        submitLabel={item ? 'Modifier' : 'Créer'}
         onCancel={onClose}
       />
     </GenericForm>

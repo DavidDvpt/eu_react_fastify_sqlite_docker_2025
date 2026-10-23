@@ -1,14 +1,23 @@
-import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
-import { formLabelClassName } from "@/shared/components/form/form.styles";
-import { REFINING_PROVENANCES } from "@/shared/helpers";
+import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
+import { formLabelClassName } from '@/shared/components/form/form.styles';
+import { REFINING_PROVENANCES } from '@/shared/helpers';
 
-const PROVENANCE_LABELS = { TRADE: "Trade", MINING: "Minage", CRAFTING: "Crafting" } as const;
+const PROVENANCE_LABELS = {
+  TRADE: 'Trade',
+  MINING: 'Minage',
+  CRAFTING: 'Crafting',
+} as const;
 
 type RefiningProvenanceFieldsProps = {
-  onProvenanceChange: (provenance: (typeof REFINING_PROVENANCES)[number], checked: boolean) => void;
+  onProvenanceChange: (
+    provenance: (typeof REFINING_PROVENANCES)[number],
+    checked: boolean,
+  ) => void;
 };
 
-function RefiningProvenanceFields({ onProvenanceChange }: RefiningProvenanceFieldsProps) {
+function RefiningProvenanceFields({
+  onProvenanceChange,
+}: RefiningProvenanceFieldsProps) {
   return (
     <div className="flex flex-col gap-2">
       <span className={formLabelClassName}>Provenance</span>
@@ -19,7 +28,9 @@ function RefiningProvenanceFields({ onProvenanceChange }: RefiningProvenanceFiel
             name="provenance"
             checkedValue={provenance}
             label={PROVENANCE_LABELS[provenance]}
-            onCheckedChange={(checked) => onProvenanceChange(provenance, checked)}
+            onCheckedChange={(checked) =>
+              onProvenanceChange(provenance, checked)
+            }
           />
         ))}
       </div>

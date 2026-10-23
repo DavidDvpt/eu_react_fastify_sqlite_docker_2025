@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
-import brand from "@/assets/brand.png";
+import brand from '@/assets/brand.png';
 
 function Brand() {
   return (

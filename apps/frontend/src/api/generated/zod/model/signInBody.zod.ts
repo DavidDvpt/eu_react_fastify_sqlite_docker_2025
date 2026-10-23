@@ -11,11 +11,9 @@ export const signInBodyPseudoMax = 50;
 export const signInBodyPasswordMin = 8;
 export const signInBodyPasswordMax = 50;
 
-
-
 export const SignInBody = zod.object({
-  "pseudo": zod.string().min(signInBodyPseudoMin).max(signInBodyPseudoMax),
-  "password": zod.string().min(signInBodyPasswordMin).max(signInBodyPasswordMax)
+  pseudo: zod.string().min(signInBodyPseudoMin).max(signInBodyPseudoMax),
+  password: zod.string().min(signInBodyPasswordMin).max(signInBodyPasswordMax),
 });
 
 export type SignInBody = zod.input<typeof SignInBody>;

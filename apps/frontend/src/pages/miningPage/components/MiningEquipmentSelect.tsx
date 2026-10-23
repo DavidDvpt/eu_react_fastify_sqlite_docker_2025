@@ -1,11 +1,11 @@
-import AppSelect from "@/shared/components/form/Select/AppSelect";
-import SelectRHF from "@/shared/components/form/Select/SelectRHF";
-import type { MiningAvailableLotResponse } from "@/api/generated/react-query/model/miningAvailableLotResponse";
-import type { MiningAvailableStackResponse } from "@/api/generated/react-query/model/miningAvailableStackResponse";
-import type { ItemViewModel } from "@zod-schemas";
-import EnhancerSockets from "./EnhancerSockets";
-import type { SelectedEnhancer } from "./EnhancerSockets";
-import MiningItemOption from "./MiningItemOption";
+import AppSelect from '@/shared/components/form/Select/AppSelect';
+import SelectRHF from '@/shared/components/form/Select/SelectRHF';
+import type { MiningAvailableLotResponse } from '@/api/generated/react-query/model/miningAvailableLotResponse';
+import type { MiningAvailableStackResponse } from '@/api/generated/react-query/model/miningAvailableStackResponse';
+import type { ItemViewModel } from '@zod-schemas';
+import EnhancerSockets from './EnhancerSockets';
+import type { SelectedEnhancer } from './EnhancerSockets';
+import MiningItemOption from './MiningItemOption';
 
 function MiningEquipmentSelect({
   label,
@@ -31,7 +31,7 @@ function MiningEquipmentSelect({
   onValueChange: (value: string) => void;
   disabled?: boolean;
   enhancersBySocket: Record<string, MiningAvailableStackResponse[]>;
-  target: "FINDER" | "EXCAVATOR";
+  target: 'FINDER' | 'EXCAVATOR';
   title: string;
   clickCount: number;
   searchType?: number;
@@ -53,13 +53,17 @@ function MiningEquipmentSelect({
             item={item}
             tierLevel={lot.tierLevel}
             quantity={lot.quantity}
-            rightContent={target === "FINDER" && decay ? `${decay} PED/clic` : undefined}
+            rightContent={
+              target === 'FINDER' && decay ? `${decay} PED/clic` : undefined
+            }
           />
         ),
       };
     });
   const selectedLot = lots.find((lot) => lot.lotId === value);
-  const selectedItem = selectedLot ? itemById.get(selectedLot.itemId) : undefined;
+  const selectedItem = selectedLot
+    ? itemById.get(selectedLot.itemId)
+    : undefined;
   const finderDecay = selectedItem?.decay
     ? selectedItem.decay * (searchType === 3 ? 2 : 1)
     : undefined;
@@ -71,7 +75,11 @@ function MiningEquipmentSelect({
         <SelectRHF
           name={name}
           options={options}
-          placeholder={options.length ? placeholder : `Aucun ${label.toLowerCase()} disponible`}
+          placeholder={
+            options.length
+              ? placeholder
+              : `Aucun ${label.toLowerCase()} disponible`
+          }
           disabled={disabled || !options.length}
           triggerClassName="bg-input"
           onValueChange={onValueChange}
@@ -81,14 +89,19 @@ function MiningEquipmentSelect({
           value={value}
           onValueChange={onValueChange}
           options={options}
-          placeholder={options.length ? placeholder : `Aucun ${label.toLowerCase()} disponible`}
+          placeholder={
+            options.length
+              ? placeholder
+              : `Aucun ${label.toLowerCase()} disponible`
+          }
           disabled={disabled || !options.length}
           triggerClassName="bg-input"
         />
       )}
-      {target === "FINDER" && finderDecay && (
+      {target === 'FINDER' && finderDecay && (
         <div className="text-sm text-text-muted">
-          Coût total estimé : {Number((clickCount * finderDecay).toFixed(3))} PED
+          Coût total estimé : {Number((clickCount * finderDecay).toFixed(3))}{' '}
+          PED
         </div>
       )}
       {selectedItem && selectedLot && (

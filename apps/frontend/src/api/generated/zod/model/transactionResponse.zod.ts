@@ -10,18 +10,18 @@ import { TransactionStatus } from './transactionStatus.zod.ts';
 import { TransactionType } from './transactionType.zod.ts';
 
 export const TransactionResponse = zod.object({
-  "id": zod.string(),
-  "itemId": zod.string(),
-  "quantity": zod.int(),
-  "transactionType": TransactionType,
-  "status": zod.union([TransactionStatus,zod.null()]),
-  "tt": zod.union([zod.int(),zod.number()]),
-  "ttc": zod.union([zod.int(),zod.number()]),
-  "fee": zod.union([zod.int(),zod.number()]),
-  "item": zod.union([ItemResponse,zod.null()]),
-  "entries": zod.array(TransactionLotResponse),
-  "createdAt": zod.string(),
-  "updatedAt": zod.union([zod.string(),zod.null()])
+  id: zod.string(),
+  itemId: zod.string(),
+  quantity: zod.int(),
+  transactionType: TransactionType,
+  status: zod.union([TransactionStatus, zod.null()]),
+  tt: zod.union([zod.int(), zod.number()]),
+  ttc: zod.union([zod.int(), zod.number()]),
+  fee: zod.union([zod.int(), zod.number()]),
+  item: zod.union([ItemResponse, zod.null()]),
+  entries: zod.array(TransactionLotResponse),
+  createdAt: zod.string(),
+  updatedAt: zod.union([zod.string(), zod.null()]),
 });
 
 export type TransactionResponse = zod.input<typeof TransactionResponse>;

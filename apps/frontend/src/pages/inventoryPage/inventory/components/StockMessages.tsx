@@ -8,9 +8,7 @@ function StockMessages({ details, isError, isLoading }: StockMessagesProps) {
   return (
     <div className="flex min-h-full flex-col gap-4 pr-1">
       {isLoading && (
-        <p className="text-sm text-text-muted">
-          Chargement des details...
-        </p>
+        <p className="text-sm text-text-muted">Chargement des details...</p>
       )}
       {isError && (
         <p className="text-sm text-danger">

@@ -1,11 +1,11 @@
-import { Section } from "@/shared/components/Containers";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup";
-import { getItemImageUrl } from "@/shared/helpers/imageUrl";
-import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
-import { FormatTools } from "@/shared/tools/formatTools";
-import type { ItemWithStock } from "@/shared/types";
-import { useMemo } from "react";
+import { Section } from '@/shared/components/Containers';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import ItemAverageBuyMarkup from '@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup';
+import { getItemImageUrl } from '@/shared/helpers/imageUrl';
+import useItemAverageBuyMarkup from '@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData';
+import { FormatTools } from '@/shared/tools/formatTools';
+import type { ItemWithStock } from '@/shared/types';
+import { useMemo } from 'react';
 
 interface ItemSectionInfoProps {
   itemWithStock: ItemWithStock;
@@ -17,7 +17,7 @@ function ItemSectionInfo({ itemWithStock }: ItemSectionInfoProps) {
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: id });
 
   const itemImageUrl = useMemo(
-    () => getItemImageUrl(imageUrlId, "normal"),
+    () => getItemImageUrl(imageUrlId, 'normal'),
     [imageUrlId],
   );
 
@@ -34,14 +34,13 @@ function ItemSectionInfo({ itemWithStock }: ItemSectionInfoProps) {
         <p className="m-0 truncate text-base font-semibold">{name}</p>
         <p className="m-0 flex justify-between gap-2 text-xs">
           <span>
-            Coût unitaire: {" "}
+            Coût unitaire:{' '}
             <span className="text-text-muted">
               {FormatTools.pedFormat().format(value ?? 0)} Ped
             </span>
           </span>
           <span>
-            Stock: {" "}
-            <span className="text-text-muted">{stock || 0}</span>
+            Stock: <span className="text-text-muted">{stock || 0}</span>
           </span>
         </p>
 

@@ -9,14 +9,23 @@ export const miningResourceCreateQuantityExclusiveMin = 0;
 
 export const miningResourceCreateTtOneExclusiveMin = 0;
 
-export const miningResourceCreateTtTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
-
+export const miningResourceCreateTtTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 
 export const MiningResourceCreate = zod.object({
-  "itemId": zod.string(),
-  "quantity": zod.int().gt(miningResourceCreateQuantityExclusiveMin),
-  "tt": zod.union([zod.number().gt(miningResourceCreateTtOneExclusiveMin),zod.string().regex(miningResourceCreateTtTwoRegExp),zod.null()]).optional()
+  itemId: zod.string(),
+  quantity: zod.int().gt(miningResourceCreateQuantityExclusiveMin),
+  tt: zod
+    .union([
+      zod.number().gt(miningResourceCreateTtOneExclusiveMin),
+      zod.string().regex(miningResourceCreateTtTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
 });
 
 export type MiningResourceCreate = zod.input<typeof MiningResourceCreate>;
-export type MiningResourceCreateOutput = zod.output<typeof MiningResourceCreate>;
+export type MiningResourceCreateOutput = zod.output<
+  typeof MiningResourceCreate
+>;

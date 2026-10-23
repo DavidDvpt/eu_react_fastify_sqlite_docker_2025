@@ -1,13 +1,13 @@
-import { QueryClientProvider } from "@tanstack/react-query";
-import { ApiStatus } from "@/lib/axios/ApiStatus";
+import { QueryClientProvider } from '@tanstack/react-query';
+import { ApiStatus } from '@/lib/axios/ApiStatus';
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useEffect, useRef } from "react";
-import { RouterProvider } from "react-router-dom";
-import { queryClient } from "./lib/react-query/queryClient";
-import appRouter from "./router/appRouter";
-import { authMeThunk, selectAuthStatus } from "@/store";
-import ChatLogSetupGate from "@/features/chatLogSetup/components/ChatLogSetupGate";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useEffect, useRef } from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { queryClient } from './lib/react-query/queryClient';
+import appRouter from './router/appRouter';
+import { authMeThunk, selectAuthStatus } from '@/store';
+import ChatLogSetupGate from '@/features/chatLogSetup/components/ChatLogSetupGate';
 
 function App() {
   const dispatch = useAppDispatch();

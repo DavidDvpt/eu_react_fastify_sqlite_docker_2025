@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 import {
   Card,
@@ -6,9 +6,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { cn } from "@/lib/utils";
-import type { AppCardVariant } from "@/shared/types/global.type";
+} from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import type { AppCardVariant } from '@/shared/types/global.type';
 
 interface AppCardProps {
   title: ReactNode;
@@ -30,9 +30,9 @@ function AppCard({
   contentClassName,
 }: AppCardProps) {
   return (
-    <Card variant={variant ?? "default"} className={className}>
+    <Card variant={variant ?? 'default'} className={className}>
       <CardHeader
-        className={cn("items-center text-center", headerCellClassName)}
+        className={cn('items-center text-center', headerCellClassName)}
       >
         <CardTitle>{title}</CardTitle>
         {description ? <CardDescription>{description}</CardDescription> : null}

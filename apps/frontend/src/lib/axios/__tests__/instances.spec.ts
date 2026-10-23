@@ -1,25 +1,23 @@
-import { env } from "@/config/env";
-import { describe, expect, it } from "vitest";
-import { axiosInstance, axiosPublicInstance } from "../instances";
+import { env } from '@/config/env';
+import { describe, expect, it } from 'vitest';
+import { axiosInstance, axiosPublicInstance } from '../instances';
 
-describe("axios instances", () => {
-  it("should have the same base config", () => {
+describe('axios instances', () => {
+  it('should have the same base config', () => {
     expect(axiosInstance().defaults.baseURL).toBe(env.VITE_API_URL);
 
-    expect(axiosPublicInstance.defaults.baseURL).toBe(
-      env.VITE_API_URL
-    );
+    expect(axiosPublicInstance.defaults.baseURL).toBe(env.VITE_API_URL);
 
     expect(axiosInstance().defaults.timeout).toBe(20_000);
     expect(axiosPublicInstance.defaults.timeout).toBe(20_000);
   });
 
-  it("should enable credentials on both instances", () => {
+  it('should enable credentials on both instances', () => {
     expect(axiosInstance().defaults.withCredentials).toBe(true);
     expect(axiosPublicInstance.defaults.withCredentials).toBe(true);
   });
 
-  it("should be two different instances", () => {
+  it('should be two different instances', () => {
     expect(axiosInstance).not.toBe(axiosPublicInstance);
   });
 });

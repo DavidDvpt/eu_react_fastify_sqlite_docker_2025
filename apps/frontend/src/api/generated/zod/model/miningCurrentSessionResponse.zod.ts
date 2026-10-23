@@ -16,27 +16,43 @@ export const miningCurrentSessionResponseResultTtDefault = 0;
 export const miningCurrentSessionResponseResultTtcDefault = 0;
 
 export const MiningCurrentSessionResponse = zod.object({
-  "id": zod.string(),
-  "type": SessionType,
-  "clickCount": zod.union([zod.int(),zod.null()]),
-  "searchType": zod.union([zod.int(),zod.null()]).optional(),
-  "createdAt": zod.iso.datetime({"offset":true}),
-  "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()]),
-  "zoneId": zod.union([zod.string(),zod.null()]),
-  "finderItemId": zod.union([zod.string(),zod.null()]).optional(),
-  "finderLot": zod.union([MiningCurrentToolLotResponse,zod.null()]).optional(),
-  "amplifierItemId": zod.union([zod.string(),zod.null()]).optional(),
-  "finderEnhancers": zod.record(zod.string(), MiningCurrentEnhancerResponse).optional(),
-  "excavatorItemIds": zod.array(zod.string()).optional(),
-  "excavatorLots": zod.array(MiningCurrentToolLotResponse).optional(),
-  "excavatorEnhancers": zod.record(zod.string(), MiningCurrentEnhancerResponse).optional(),
-  "costTt": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtDefault),
-  "costTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseCostTtcDefault),
-  "resultTt": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseResultTtDefault),
-  "resultTtc": zod.union([zod.int(),zod.number()]).default(miningCurrentSessionResponseResultTtcDefault),
-  "costLines": zod.array(MiningCostLineResponse).optional(),
-  "resultLines": zod.array(MiningResultLineResponse).optional()
+  id: zod.string(),
+  type: SessionType,
+  clickCount: zod.union([zod.int(), zod.null()]),
+  searchType: zod.union([zod.int(), zod.null()]).optional(),
+  createdAt: zod.iso.datetime({ offset: true }),
+  endedAt: zod.union([zod.iso.datetime({ offset: true }), zod.null()]),
+  zoneId: zod.union([zod.string(), zod.null()]),
+  finderItemId: zod.union([zod.string(), zod.null()]).optional(),
+  finderLot: zod.union([MiningCurrentToolLotResponse, zod.null()]).optional(),
+  amplifierItemId: zod.union([zod.string(), zod.null()]).optional(),
+  finderEnhancers: zod
+    .record(zod.string(), MiningCurrentEnhancerResponse)
+    .optional(),
+  excavatorItemIds: zod.array(zod.string()).optional(),
+  excavatorLots: zod.array(MiningCurrentToolLotResponse).optional(),
+  excavatorEnhancers: zod
+    .record(zod.string(), MiningCurrentEnhancerResponse)
+    .optional(),
+  costTt: zod
+    .union([zod.int(), zod.number()])
+    .default(miningCurrentSessionResponseCostTtDefault),
+  costTtc: zod
+    .union([zod.int(), zod.number()])
+    .default(miningCurrentSessionResponseCostTtcDefault),
+  resultTt: zod
+    .union([zod.int(), zod.number()])
+    .default(miningCurrentSessionResponseResultTtDefault),
+  resultTtc: zod
+    .union([zod.int(), zod.number()])
+    .default(miningCurrentSessionResponseResultTtcDefault),
+  costLines: zod.array(MiningCostLineResponse).optional(),
+  resultLines: zod.array(MiningResultLineResponse).optional(),
 });
 
-export type MiningCurrentSessionResponse = zod.input<typeof MiningCurrentSessionResponse>;
-export type MiningCurrentSessionResponseOutput = zod.output<typeof MiningCurrentSessionResponse>;
+export type MiningCurrentSessionResponse = zod.input<
+  typeof MiningCurrentSessionResponse
+>;
+export type MiningCurrentSessionResponseOutput = zod.output<
+  typeof MiningCurrentSessionResponse
+>;

@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface FormButtonSection {
   className?: string;
@@ -15,7 +15,7 @@ interface FormButtonSection {
 
 function FormButtonsSection(props: FormButtonSection) {
   return (
-    <div className={cn("flex justify-center m-4", props.className)}>
+    <div className={cn('flex justify-center m-4', props.className)}>
       {props.cancelVisible !== false && (
         <Button
           type="reset"
@@ -24,11 +24,11 @@ function FormButtonsSection(props: FormButtonSection) {
           disabled={props.cancelDisabled}
           size="lg"
           className={cn(
-            props.fullWidth ? "min-w-0 flex-1" : "w-[140px]",
-            "mr-4",
+            props.fullWidth ? 'min-w-0 flex-1' : 'w-[140px]',
+            'mr-4',
           )}
         >
-          {props.cancelLabel ?? "Annuler"}
+          {props.cancelLabel ?? 'Annuler'}
         </Button>
       )}
       <Button
@@ -36,9 +36,9 @@ function FormButtonsSection(props: FormButtonSection) {
         variant="primary"
         disabled={props.submitDisabled}
         size="lg"
-        className={props.fullWidth ? "min-w-0 flex-1" : "w-[140px]"}
+        className={props.fullWidth ? 'min-w-0 flex-1' : 'w-[140px]'}
       >
-        {props.submitLabel ?? "Valider"}
+        {props.submitLabel ?? 'Valider'}
       </Button>
     </div>
   );

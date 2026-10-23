@@ -1,9 +1,9 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from 'react-router-dom';
 
-import CheckboxApp from "@/shared/components/form/Checkbox/CheckboxApp";
-import SwitchApp from "@/shared/components/form/Switch/SwitchApp";
+import CheckboxApp from '@/shared/components/form/Checkbox/CheckboxApp';
+import SwitchApp from '@/shared/components/form/Switch/SwitchApp';
 
-type UrlParamFlagKind = "checkbox" | "switch";
+type UrlParamFlagKind = 'checkbox' | 'switch';
 
 type UrlParamFlagProps = {
   paramKey: string;
@@ -23,8 +23,8 @@ function UrlParamFlag({
   paramKey,
   kind,
   checkboxLabel,
-  switchTrueLabel = "",
-  switchFalseLabel = "",
+  switchTrueLabel = '',
+  switchFalseLabel = '',
   checkboxWrapperClassName,
   containerClassName,
   labelClassName,
@@ -41,7 +41,7 @@ function UrlParamFlag({
     const nextSearchParams = new URLSearchParams(location.search);
 
     if (nextChecked) {
-      nextSearchParams.set(paramKey, paramValue ?? "1");
+      nextSearchParams.set(paramKey, paramValue ?? '1');
     } else {
       nextSearchParams.delete(paramKey);
     }
@@ -52,7 +52,7 @@ function UrlParamFlag({
     });
   };
 
-  if (kind === "checkbox") {
+  if (kind === 'checkbox') {
     return (
       <CheckboxApp
         name={paramKey}

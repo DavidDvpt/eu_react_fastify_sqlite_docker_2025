@@ -1,21 +1,19 @@
-import { useQueries } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useQueries } from '@tanstack/react-query';
+import { useMemo } from 'react';
 
 import {
   getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetQueryOptions,
   getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryOptions,
   useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet,
-} from "@/api/generated/react-query/entropiaManagerAPI";
+} from '@/api/generated/react-query/entropiaManagerAPI';
 import type {
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
-} from "@/api/generated/react-query/model";
+} from '@/api/generated/react-query/model';
 
 /** Résultats qui utilisent l'item comme ingrédient (`GET /refinage/recipe/origin`). */
-export function useRefinageResultsByOrigin(
-  itemId: string | null | undefined,
-) {
-  return useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet(itemId ?? "", {
+export function useRefinageResultsByOrigin(itemId: string | null | undefined) {
+  return useGetResultsByOriginApiV2RefinageRecipeOriginItemIdGet(itemId ?? '', {
     query: {
       enabled: Boolean(itemId),
       staleTime: 30_000,

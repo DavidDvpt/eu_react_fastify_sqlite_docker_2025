@@ -5,12 +5,9 @@
  */
 import * as zod from 'zod';
 
-
-
-
 export const PlanetZoneCreate = zod.object({
-  "planetId": zod.string(),
-  "name": zod.string().min(1)
+  planetId: zod.string(),
+  name: zod.string().min(1),
 });
 
 export type PlanetZoneCreate = zod.input<typeof PlanetZoneCreate>;

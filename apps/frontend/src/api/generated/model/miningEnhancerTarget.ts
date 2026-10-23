@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export type MiningEnhancerTarget = typeof MiningEnhancerTarget[keyof typeof MiningEnhancerTarget];
-
+export type MiningEnhancerTarget =
+  (typeof MiningEnhancerTarget)[keyof typeof MiningEnhancerTarget];
 
 export const MiningEnhancerTarget = {
   FINDER: 'FINDER',

@@ -1,32 +1,32 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react';
 
-import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import { ModalGeneric } from "@/shared/components/ModalGeneric";
+import FormButtonsSection from '@/shared/components/form/FormButtonsSection';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import { ModalGeneric } from '@/shared/components/ModalGeneric';
 import {
   REFINING_PROVENANCES,
   buildRefinageCosts,
   computeRefinageMaxClickCountFromOriginStock,
   getItemImageUrl,
   getRecipePpcm,
-} from "@/shared/helpers";
-import type { StockRow } from "@/shared/helpers/stock";
-import { useSystemDatas } from "@/shared/hooks/rqFetchHooks";
+} from '@/shared/helpers';
+import type { StockRow } from '@/shared/helpers/stock';
+import { useSystemDatas } from '@/shared/hooks/rqFetchHooks';
 import {
   useRefinageRecipeLines,
   useRefinageResultsByOrigin,
   useRefinageOriginStocks,
-} from "@/shared/hooks/rqFetchHooks/useRefiningRecipes";
-import { useInventoryStockData } from "@/shared/hooks/rqFetchHooks";
-import useRefiningMutation from "@/shared/hooks/useRefiningMutation";
-import { refiningFormSchema, type RefiningFormValues } from "@/shared/schemas";
-import { FormatTools } from "@/shared/tools";
+} from '@/shared/hooks/rqFetchHooks/useRefiningRecipes';
+import { useInventoryStockData } from '@/shared/hooks/rqFetchHooks';
+import useRefiningMutation from '@/shared/hooks/useRefiningMutation';
+import { refiningFormSchema, type RefiningFormValues } from '@/shared/schemas';
+import { FormatTools } from '@/shared/tools';
 
-import RefiningProvenanceFields from "./RefiningProvenanceFields";
-import RefiningQuantityField from "./RefiningQuantityField";
-import RefiningRecipeField from "./RefiningRecipeField";
-import RefiningRefinerSelect from "./RefiningRefinerSelect";
+import RefiningProvenanceFields from './RefiningProvenanceFields';
+import RefiningQuantityField from './RefiningQuantityField';
+import RefiningRecipeField from './RefiningRecipeField';
+import RefiningRefinerSelect from './RefiningRefinerSelect';
 
 type RefiningModalProps = { item: StockRow; onClose: () => void };
 
@@ -62,7 +62,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
           resultId,
           name: itemData?.name ?? resultId,
           imageUrl: itemData?.imageUrlId
-            ? (getItemImageUrl(itemData.imageUrlId, "normal") ?? null)
+            ? (getItemImageUrl(itemData.imageUrlId, 'normal') ?? null)
             : null,
           maxClickCount,
           refinable: maxClickCount > 0,
@@ -74,14 +74,14 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
   const refinerOptions = useMemo(
     () =>
       inventoryStock.flatMap((stockItem) => {
-        const typeName = stockItem.type?.name?.toLowerCase() ?? "";
+        const typeName = stockItem.type?.name?.toLowerCase() ?? '';
         const categoryName =
-          stockItem.type?.category?.name?.toLowerCase() ?? "";
+          stockItem.type?.category?.name?.toLowerCase() ?? '';
         const isRefiner =
-          typeName.includes("refiner") ||
-          typeName.includes("raffin") ||
-          categoryName.includes("refiner") ||
-          categoryName.includes("raffin");
+          typeName.includes('refiner') ||
+          typeName.includes('raffin') ||
+          categoryName.includes('refiner') ||
+          categoryName.includes('raffin');
 
         if (!isRefiner) return [];
 
@@ -95,7 +95,8 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
                 {stockItem.imageUrlId ? (
                   <img
                     src={
-                      getItemImageUrl(stockItem.imageUrlId, "micro") ?? undefined
+                      getItemImageUrl(stockItem.imageUrlId, 'micro') ??
+                      undefined
                     }
                     alt=""
                     className="h-7 w-7 rounded object-contain"
@@ -134,14 +135,14 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
       refiningFormSchema.superRefine((values, context) => {
         if (ppcm > 0 && values.clickCount % ppcm !== 0)
           context.addIssue({
-            code: "custom",
-            path: ["clickCount"],
+            code: 'custom',
+            path: ['clickCount'],
             message: `Le nombre de résultats doit être un multiple de ${ppcm}.`,
           });
         if (selectedOption && values.clickCount > selectedOption.maxClickCount)
           context.addIssue({
-            code: "custom",
-            path: ["clickCount"],
+            code: 'custom',
+            path: ['clickCount'],
             message: `Maximum ${selectedOption.maxClickCount} résultat(s) avec le stock disponible.`,
           });
       }),
@@ -168,14 +169,14 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
       dialogType="form"
       open
       onOpenChange={(open) => !open && onClose()}
-      title={{ value: "Refinage", style: "m-0 text-2xl leading-tight" }}
+      title={{ value: 'Refinage', style: 'm-0 text-2xl leading-tight' }}
       contentStyle="!h-[min(620px,80vh)] !max-h-[80vh]"
     >
       <GenericForm
         schema={schema}
         defaultValues={{
-          result: "",
-          refinerLotId: "",
+          result: '',
+          refinerLotId: '',
           clickCount: 1,
           provenance: [...REFINING_PROVENANCES],
         }}
@@ -232,7 +233,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
             !refinerOptions.length
           }
           cancelDisabled={refineMutation.isPending}
-          submitLabel={refineMutation.isPending ? "Refinage..." : "Refiner"}
+          submitLabel={refineMutation.isPending ? 'Refinage...' : 'Refiner'}
         />
       </GenericForm>
     </ModalGeneric>

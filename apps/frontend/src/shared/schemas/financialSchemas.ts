@@ -1,12 +1,12 @@
-import z from "zod";
+import z from 'zod';
 import {
   transactionStatusDtoSchema,
   transactionTypeSchema,
   transactionValuesSchema,
-} from "./transactionSchemas.js";
+} from './transactionSchemas.js';
 
 export const financialItemInTypeSchema = transactionTypeSchema.exclude([
-  "SELL",
+  'SELL',
 ]);
 
 export const financialInventoryReportSchema = z.object({

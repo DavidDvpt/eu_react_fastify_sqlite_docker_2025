@@ -4,10 +4,10 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { cn } from "@/lib/utils";
-import type { SelectOption } from "../form.types";
-import { formControlClassName } from "../form.styles";
+} from '@/components/ui/select';
+import { cn } from '@/lib/utils';
+import type { SelectOption } from '../form.types';
+import { formControlClassName } from '../form.styles';
 
 type AppSelectProps = {
   value?: string;
@@ -39,9 +39,9 @@ function AppSelect({
       <SelectTrigger
         className={cn(
           formControlClassName,
-          "px-3 py-2 data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50",
-          muted && "text-text-muted",
-          error && "border-error-500 focus-visible:ring-error-500",
+          'px-3 py-2 data-[placeholder]:[&>span]:text-input-placeholder data-[placeholder]:[&>span]:opacity-50',
+          muted && 'text-text-muted',
+          error && 'border-error-500 focus-visible:ring-error-500',
           triggerClassName,
         )}
       >
@@ -49,7 +49,7 @@ function AppSelect({
       </SelectTrigger>
       <SelectContent
         className={cn(
-          "max-h-[200px] min-w-[100px] overflow-auto bg-surface text-text",
+          'max-h-[200px] min-w-[100px] overflow-auto bg-surface text-text',
           contentClassName,
         )}
       >
@@ -58,7 +58,7 @@ function AppSelect({
             key={option.value}
             value={option.value}
             className={cn(
-              "data-[highlighted]:bg-select-item-hover data-[highlighted]:text-text",
+              'data-[highlighted]:bg-select-item-hover data-[highlighted]:text-text',
               itemClassName,
             )}
           >

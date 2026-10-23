@@ -9,10 +9,12 @@ import { SessionResponse } from './sessionResponse.zod.ts';
 import { SessionResultLineResponse } from './sessionResultLineResponse.zod.ts';
 
 export const RefiningSessionResponse = zod.object({
-  "session": SessionResponse,
-  "result": SessionResultLineResponse,
-  "costs": zod.array(SessionCostLineResponse)
+  session: SessionResponse,
+  result: SessionResultLineResponse,
+  costs: zod.array(SessionCostLineResponse),
 });
 
 export type RefiningSessionResponse = zod.input<typeof RefiningSessionResponse>;
-export type RefiningSessionResponseOutput = zod.output<typeof RefiningSessionResponse>;
+export type RefiningSessionResponseOutput = zod.output<
+  typeof RefiningSessionResponse
+>;

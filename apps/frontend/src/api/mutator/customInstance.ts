@@ -1,21 +1,15 @@
-import type { AxiosError, AxiosRequestConfig } from "axios";
+import type { AxiosError, AxiosRequestConfig } from 'axios';
 
-import {
-  axiosInstance,
-  axiosPublicInstance,
-} from "@/lib/axios/instances";
+import { axiosInstance, axiosPublicInstance } from '@/lib/axios/instances';
 
 type OrvalRequestConfig = AxiosRequestConfig & {
   data?: unknown;
 };
 
-const publicRoutes = new Set([
-  "/api/v2/auth/signin",
-  "/api/v2/auth/signup",
-]);
+const publicRoutes = new Set(['/api/v2/auth/signin', '/api/v2/auth/signup']);
 
 function isPublicRoute(url?: string) {
-  const path = url?.split("?", 1)[0];
+  const path = url?.split('?', 1)[0];
   return path !== undefined && publicRoutes.has(path);
 }
 
@@ -30,9 +24,7 @@ export const customInstance = <T>(
     ? axiosPublicInstance
     : axiosInstance();
 
-  return client
-    .request<T>(requestConfig)
-    .then(({ data }) => data);
+  return client.request<T>(requestConfig).then(({ data }) => data);
 };
 
 export type ErrorType<Error> = AxiosError<Error>;

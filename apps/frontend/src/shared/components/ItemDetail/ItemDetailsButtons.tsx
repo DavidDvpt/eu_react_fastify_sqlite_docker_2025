@@ -1,7 +1,7 @@
-import { Button } from "@/components/ui/button";
-import type { TransactionAction } from "@/shared/types";
-import { useMemo } from "react";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { Button } from '@/components/ui/button';
+import type { TransactionAction } from '@/shared/types';
+import { useMemo } from 'react';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
 interface ItemDetailsButtonsProps {
   canSell?: boolean;
@@ -21,18 +21,18 @@ function ItemDetailsButtons({
   const hasSellButton = Boolean(openTransaction) && canSell;
 
   const backRoute = useMemo(() => {
-    const pathParts = location.pathname.split("/").filter(Boolean);
+    const pathParts = location.pathname.split('/').filter(Boolean);
     const section = pathParts[0];
 
     if (
       pathParts.length !== 2 ||
-      (section !== "inventory" && section !== "store")
+      (section !== 'inventory' && section !== 'store')
     ) {
       return null;
     }
 
     const search = new URLSearchParams(searchParams);
-    search.delete("lotId");
+    search.delete('lotId');
 
     return {
       pathname: `/${section}`,
@@ -48,7 +48,7 @@ function ItemDetailsButtons({
     <div className="flex items-center justify-end gap-2 pt-1">
       {hasBuyButton && (
         <Button
-          onClick={() => openTransaction("buy")}
+          onClick={() => openTransaction('buy')}
           className="w-[100px]"
           size="sm"
           variant="primary"
@@ -58,7 +58,7 @@ function ItemDetailsButtons({
       )}
       {hasSellButton && (
         <Button
-          onClick={() => openTransaction("sell")}
+          onClick={() => openTransaction('sell')}
           disabled={hasStock}
           className="w-[100px]"
           size="sm"

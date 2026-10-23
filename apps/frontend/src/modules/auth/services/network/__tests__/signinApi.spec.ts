@@ -1,63 +1,61 @@
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 const { mockSignin } = vi.hoisted(() => ({
   mockSignin: vi.fn(),
 }));
 
-vi.mock("@/api/generated/react-query/entropiaManagerAPI", () => ({
+vi.mock('@/api/generated/react-query/entropiaManagerAPI', () => ({
   signinApiV2AuthSigninPost: mockSignin,
 }));
 
-import signinApi from "../signinApi";
+import signinApi from '../signinApi';
 
-describe("signinApi", () => {
+describe('signinApi', () => {
   beforeEach(() => {
     vi.clearAllMocks();
     mockSignin.mockReset();
   });
 
-  it("rejects when pseudo is missing", async () => {
+  it('rejects when pseudo is missing', async () => {
     await expect(
       signinApi({
-        pseudo: "",
-        password: "password123",
-      })
-    ).rejects.toThrow("Pseudo is undefined");
+        pseudo: '',
+        password: 'password123',
+      }),
+    ).rejects.toThrow('Pseudo is undefined');
   });
 
-  it("rejects when password is missing", async () => {
+  it('rejects when password is missing', async () => {
     await expect(
       signinApi({
-        pseudo: "john-doe",
-        password: "",
-      })
-    ).rejects.toThrow("Password is undefined");
+        pseudo: 'john-doe',
+        password: '',
+      }),
+    ).rejects.toThrow('Password is undefined');
   });
 
-  it("posts signin payload to auth/signin", async () => {
-    mockSignin.mockResolvedValueOnce({ message: "Success" });
+  it('posts signin payload to auth/signin', async () => {
+    mockSignin.mockResolvedValueOnce({ message: 'Success' });
 
     await signinApi({
-      pseudo: "john-doe",
-      password: "password123",
+      pseudo: 'john-doe',
+      password: 'password123',
     });
 
-    expect(mockSignin).toHaveBeenCalledWith(
-      {
-        pseudo: "john-doe",
-        password: "password123",
-      }
-    );
+    expect(mockSignin).toHaveBeenCalledWith({
+      pseudo: 'john-doe',
+      password: 'password123',
+    });
   });
 
-  it("returns backend response as-is", async () => {
-    mockSignin.mockResolvedValueOnce({ message: "Success" });
+  it('returns backend response as-is', async () => {
+    mockSignin.mockResolvedValueOnce({ message: 'Success' });
 
     const result = await signinApi({
-      pseudo: "john-doe",
-      password: "password123",
+      pseudo: 'john-doe',
+      password: 'password123',
     });
 
-    expect(result).toEqual({ message: "Success" });
+    expect(result).toEqual({ message: 'Success' });
   });
 });

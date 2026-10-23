@@ -1,6 +1,6 @@
-import { createSelector } from "@reduxjs/toolkit";
-import { ApiStatus } from "@/lib/axios/ApiStatus";
-import { getauthState } from "@/store/reducers/auth/authSlice";
+import { createSelector } from '@reduxjs/toolkit';
+import { ApiStatus } from '@/lib/axios/ApiStatus';
+import { getauthState } from '@/store/reducers/auth/authSlice';
 
 const selectIsLoggued = createSelector(
   [getauthState],

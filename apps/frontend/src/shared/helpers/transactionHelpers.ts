@@ -8,14 +8,14 @@ export function feeCalculation(markup: number) {
 }
 
 export function sanitizeQuantity(value: number | undefined) {
-  if (typeof value !== "number" || !Number.isFinite(value) || value < 1) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 1) {
     return 1;
   }
   return Math.floor(value);
 }
 
 export function sanitizeNonNegative(value: number | undefined) {
-  if (typeof value !== "number" || !Number.isFinite(value) || value < 0) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value < 0) {
     return 0;
   }
   return value;
@@ -30,8 +30,11 @@ const FREE_TTC_FACTOR = 10 ** FREE_TTC_MAX_DECIMALS;
  * Works in integer space to avoid float pitfalls.
  */
 export function hasMaxFreeDecimals(value: number): boolean {
-  if (typeof value !== "number" || !Number.isFinite(value)) return false;
-  return Math.abs(Math.round(value * FREE_TTC_FACTOR) - value * FREE_TTC_FACTOR) < 1e-6;
+  if (typeof value !== 'number' || !Number.isFinite(value)) return false;
+  return (
+    Math.abs(Math.round(value * FREE_TTC_FACTOR) - value * FREE_TTC_FACTOR) <
+    1e-6
+  );
 }
 
 /**
@@ -49,12 +52,12 @@ export function canBuyMultipleLots(): boolean {
  * on the browser locale). Non-parseable values map to 0.
  */
 export function parseDecimalInput(value: unknown): number {
-  if (typeof value === "number") {
+  if (typeof value === 'number') {
     return Number.isFinite(value) ? value : 0;
   }
-  if (typeof value === "string") {
-    const normalized = value.trim().replace(",", ".");
-    if (normalized === "") return 0;
+  if (typeof value === 'string') {
+    const normalized = value.trim().replace(',', '.');
+    if (normalized === '') return 0;
     const parsed = Number(normalized);
     return Number.isFinite(parsed) ? parsed : 0;
   }
@@ -67,10 +70,10 @@ export function parseDecimalInput(value: unknown): number {
  * untouched (field-level preprocessors map them to defaults).
  */
 export function normalizeDecimalInput(value: unknown): unknown {
-  if (typeof value === "string") {
+  if (typeof value === 'string') {
     const trimmed = value.trim();
-    if (trimmed === "") return value;
-    return trimmed.replace(",", ".");
+    if (trimmed === '') return value;
+    return trimmed.replace(',', '.');
   }
   return value;
 }
@@ -94,7 +97,7 @@ export function getMinimumTtcWithFee(tt: number, initialTtc: number) {
 
 export function getMinimumBuyTtc(tt: number, fee: number, initialTtc?: number) {
   const base =
-    typeof initialTtc === "number" && Number.isFinite(initialTtc)
+    typeof initialTtc === 'number' && Number.isFinite(initialTtc)
       ? initialTtc
       : tt;
   const minByInputs = Math.max(tt + fee, base);

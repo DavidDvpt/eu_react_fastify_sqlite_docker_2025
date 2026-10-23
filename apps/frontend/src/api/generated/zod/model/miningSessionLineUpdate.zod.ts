@@ -9,14 +9,25 @@ export const miningSessionLineUpdateQuantityOneMin = 0;
 
 export const miningSessionLineUpdateDecayOneMin = 0;
 
-export const miningSessionLineUpdateDecayTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
-
+export const miningSessionLineUpdateDecayTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 
 export const MiningSessionLineUpdate = zod.object({
-  "lineId": zod.string(),
-  "quantity": zod.union([zod.int().min(miningSessionLineUpdateQuantityOneMin),zod.null()]).optional(),
-  "decay": zod.union([zod.number().min(miningSessionLineUpdateDecayOneMin),zod.string().regex(miningSessionLineUpdateDecayTwoRegExp),zod.null()]).optional()
+  lineId: zod.string(),
+  quantity: zod
+    .union([zod.int().min(miningSessionLineUpdateQuantityOneMin), zod.null()])
+    .optional(),
+  decay: zod
+    .union([
+      zod.number().min(miningSessionLineUpdateDecayOneMin),
+      zod.string().regex(miningSessionLineUpdateDecayTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
 });
 
 export type MiningSessionLineUpdate = zod.input<typeof MiningSessionLineUpdate>;
-export type MiningSessionLineUpdateOutput = zod.output<typeof MiningSessionLineUpdate>;
+export type MiningSessionLineUpdateOutput = zod.output<
+  typeof MiningSessionLineUpdate
+>;

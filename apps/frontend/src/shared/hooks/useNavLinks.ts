@@ -1,15 +1,15 @@
-import { useLocation } from "react-router-dom";
-import type { NavbarButtonType } from "../types";
-import { MANAGE_NAV_LINKS } from "@/pages/managePage/manageLeftNav";
-import { MINING_NAV_LINKS } from "@/pages/miningPage/miningLeftNav";
+import { useLocation } from 'react-router-dom';
+import type { NavbarButtonType } from '../types';
+import { MANAGE_NAV_LINKS } from '@/pages/managePage/manageLeftNav';
+import { MINING_NAV_LINKS } from '@/pages/miningPage/miningLeftNav';
 
 function useNavLinks(): NavbarButtonType[] {
   const location = useLocation();
 
   // Sécurisez le résultat de useLocation
-  const pathname = location?.pathname || "/";
+  const pathname = location?.pathname || '/';
 
-  if (pathname.startsWith("/manage")) {
+  if (pathname.startsWith('/manage')) {
     return MANAGE_NAV_LINKS.map((link) => ({
       ...link,
       isActive:
@@ -17,7 +17,7 @@ function useNavLinks(): NavbarButtonType[] {
     }));
   }
 
-  if (pathname.startsWith("/mining")) {
+  if (pathname.startsWith('/mining')) {
     return MINING_NAV_LINKS.map((link) => ({
       ...link,
       isActive:

@@ -1,5 +1,5 @@
-import type { GenericListColumn } from "@/shared/types";
-import { toDisplay } from "./utils";
+import type { GenericListColumn } from '@/shared/types';
+import { toDisplay } from './utils';
 
 type ButtonCellProps<T> = {
   column: GenericListColumn<T>;

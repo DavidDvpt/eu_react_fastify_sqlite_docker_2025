@@ -1,43 +1,43 @@
-import Layout from "@/layouts/Layout";
-import AppLayout from "@/layouts/AppLayout";
-import AuthLayout from "@/layouts/AuthLayout";
-import LeftMenuLayout from "@/layouts/LeftMenuLayout";
-import RootLayout from "@/layouts/RootLayout";
-import GuestOnly from "@/modules/auth/guards/GuestOnly";
-import AuthGuard from "@/modules/auth/guards/AuthGuard";
-import HomePage from "@/pages/HomePage";
-import ManagePage from "@/pages/managePage/ManagePage";
-import NotFoundPage from "@/pages/NotFoundPage";
-import { Navigate } from "react-router-dom";
-import InventoryPage from "@/pages/inventoryPage/InventoryPage";
-import SignInPage from "@/pages/authPages/SignInPage";
-import SignUpPage from "@/pages/authPages/SignUpPage";
-import AdminGuard from "@/modules/auth/guards/AdminGuard";
-import StorePage from "@/pages/storePage/StorePage";
-import ImagesPage from "@/pages/imagesPage/ImagesPage";
-import MiningPage from "@/pages/miningPage/MiningPage";
-import ManageLeftNav from "@/pages/managePage/components/ManageLeftNav";
-import MiningLeftNav from "@/pages/miningPage/components/MiningLeftNav";
+import Layout from '@/layouts/Layout';
+import AppLayout from '@/layouts/AppLayout';
+import AuthLayout from '@/layouts/AuthLayout';
+import LeftMenuLayout from '@/layouts/LeftMenuLayout';
+import RootLayout from '@/layouts/RootLayout';
+import GuestOnly from '@/modules/auth/guards/GuestOnly';
+import AuthGuard from '@/modules/auth/guards/AuthGuard';
+import HomePage from '@/pages/HomePage';
+import ManagePage from '@/pages/managePage/ManagePage';
+import NotFoundPage from '@/pages/NotFoundPage';
+import { Navigate } from 'react-router-dom';
+import InventoryPage from '@/pages/inventoryPage/InventoryPage';
+import SignInPage from '@/pages/authPages/SignInPage';
+import SignUpPage from '@/pages/authPages/SignUpPage';
+import AdminGuard from '@/modules/auth/guards/AdminGuard';
+import StorePage from '@/pages/storePage/StorePage';
+import ImagesPage from '@/pages/imagesPage/ImagesPage';
+import MiningPage from '@/pages/miningPage/MiningPage';
+import ManageLeftNav from '@/pages/managePage/components/ManageLeftNav';
+import MiningLeftNav from '@/pages/miningPage/components/MiningLeftNav';
 
 const routes = [
   {
-    path: "/",
+    path: '/',
     element: <RootLayout />,
     children: [
       {
         element: <GuestOnly />,
         children: [
           {
-            path: "auth",
+            path: 'auth',
             element: <AuthLayout />,
             children: [
-              { path: "signin", element: <SignInPage /> },
-              { path: "signup", element: <SignUpPage /> },
+              { path: 'signin', element: <SignInPage /> },
+              { path: 'signup', element: <SignUpPage /> },
             ],
           },
         ],
       },
-      { path: "admin", element: <Layout />, children: [] },
+      { path: 'admin', element: <Layout />, children: [] },
       {
         element: <AuthGuard />,
         children: [
@@ -45,43 +45,43 @@ const routes = [
             element: <AppLayout />,
             children: [
               { index: true, element: <Navigate to="/home" replace /> },
-              { path: "home", element: <HomePage /> },
-              { path: "home/:itemId/:action", element: <HomePage /> },
+              { path: 'home', element: <HomePage /> },
+              { path: 'home/:itemId/:action', element: <HomePage /> },
               {
-                path: "trading",
+                path: 'trading',
                 element: <Navigate to="/inventory" replace />,
               },
-              { path: "inventory", element: <InventoryPage /> },
-              { path: "inventory/:itemId", element: <InventoryPage /> },
-              { path: "inventory/:itemId/:action", element: <InventoryPage /> },
-              { path: "store", element: <StorePage /> },
-              { path: "store/:itemId", element: <StorePage /> },
+              { path: 'inventory', element: <InventoryPage /> },
+              { path: 'inventory/:itemId', element: <InventoryPage /> },
+              { path: 'inventory/:itemId/:action', element: <InventoryPage /> },
+              { path: 'store', element: <StorePage /> },
+              { path: 'store/:itemId', element: <StorePage /> },
               {
                 element: <LeftMenuLayout leftNav={<MiningLeftNav />} />,
                 children: [
-                  { path: "mining", element: <MiningPage /> },
-                  { path: "mining/create", element: <MiningPage /> },
-                  { path: "mining/current", element: <MiningPage /> },
-                  { path: "mining/:id/session", element: <MiningPage /> },
+                  { path: 'mining', element: <MiningPage /> },
+                  { path: 'mining/create', element: <MiningPage /> },
+                  { path: 'mining/current', element: <MiningPage /> },
+                  { path: 'mining/:id/session', element: <MiningPage /> },
                 ],
               },
               {
                 element: <AdminGuard />,
                 children: [
-                  { path: "images", element: <ImagesPage /> },
+                  { path: 'images', element: <ImagesPage /> },
                   {
                     element: <LeftMenuLayout leftNav={<ManageLeftNav />} />,
                     children: [
                       {
-                        path: "manage",
+                        path: 'manage',
                         children: [
                           {
                             index: true,
                             element: <Navigate to="/manage/category" replace />,
                           },
-                          { path: ":tab", element: <ManagePage /> },
-                          { path: ":tab/create", element: <ManagePage /> },
-                          { path: ":tab/:id/edit", element: <ManagePage /> },
+                          { path: ':tab', element: <ManagePage /> },
+                          { path: ':tab/create', element: <ManagePage /> },
+                          { path: ':tab/:id/edit', element: <ManagePage /> },
                         ],
                       },
                     ],
@@ -89,12 +89,12 @@ const routes = [
                 ],
               },
 
-              { path: "*", element: <NotFoundPage />, children: [] },
+              { path: '*', element: <NotFoundPage />, children: [] },
             ],
           },
         ],
       },
-      { path: "*", element: <NotFoundPage />, children: [] },
+      { path: '*', element: <NotFoundPage />, children: [] },
     ],
   },
 ];

@@ -1,16 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
-import { nanoid } from "@reduxjs/toolkit";
-import { Input } from "@/components/ui/input";
+import { useEffect, useMemo, useState } from 'react';
+import { nanoid } from '@reduxjs/toolkit';
+import { Input } from '@/components/ui/input';
 import {
   useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,
   useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost,
   useGetMiningLootListApiV2SessionsMiningLootlistGet,
   useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,
-} from "@/api/generated/react-query/entropiaManagerAPI";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { ItemViewModel } from "@zod-schemas";
-import MiningResultCard from "./MiningResultCard";
-import MiningResultItemOption from "./MiningResultItemOption";
+} from '@/api/generated/react-query/entropiaManagerAPI';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { ItemViewModel } from '@zod-schemas';
+import MiningResultCard from './MiningResultCard';
+import MiningResultItemOption from './MiningResultItemOption';
 
 type MiningSessionResultsProps = {
   sessionId: string;
@@ -47,10 +47,13 @@ function MiningSessionResults({
       isFinalized: line.isFinalized,
     })),
   );
-  const [query, setQuery] = useState("");
-  const createMutation = useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost();
-  const updateMutation = useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut();
-  const finalizeMutation = useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost();
+  const [query, setQuery] = useState('');
+  const createMutation =
+    useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost();
+  const updateMutation =
+    useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut();
+  const finalizeMutation =
+    useFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost();
   const lootListQuery = useGetMiningLootListApiV2SessionsMiningLootlistGet(
     { sessionType: searchType ?? 0 },
     {
@@ -76,13 +79,13 @@ function MiningSessionResults({
     () => new Map(items.map((item) => [item.id, item])),
     [items],
   );
-  const resourceItems = useMemo(
-    () => {
-      const lootItemIds = new Set(
-        (lootListQuery.data ?? []).map((itemId) => itemId.toLowerCase()),
-      );
+  const resourceItems = useMemo(() => {
+    const lootItemIds = new Set(
+      (lootListQuery.data ?? []).map((itemId) => itemId.toLowerCase()),
+    );
 
-      return items
+    return (
+      items
         // `isActive` is optional in the API response. Only an explicit false
         // means that a resource must be hidden from the autocomplete.
         .filter((item) => item.isActive !== false)
@@ -91,10 +94,9 @@ function MiningSessionResults({
           item.name.toLowerCase().includes(query.trim().toLowerCase()),
         )
         .sort((left, right) => left.name.localeCompare(right.name))
-        .slice(0, 4);
-    },
-    [items, lootListQuery.data, query],
-  );
+        .slice(0, 4)
+    );
+  }, [items, lootListQuery.data, query]);
 
   const addResult = (item: ItemViewModel) => {
     setResults((currentResults) => [
@@ -107,7 +109,9 @@ function MiningSessionResults({
     if (result.isFinalized) return;
     setResults((currentResults) =>
       currentResults.map((current) =>
-        current.clientId === result.clientId ? { ...current, quantity } : current,
+        current.clientId === result.clientId
+          ? { ...current, quantity }
+          : current,
       ),
     );
     if (quantity <= 0) return;
@@ -119,7 +123,11 @@ function MiningSessionResults({
             setResults((currentResults) =>
               currentResults.map((current) =>
                 current.clientId === result.clientId
-                  ? { ...current, lineId: line.id, quantity: line.quantity ?? quantity }
+                  ? {
+                      ...current,
+                      lineId: line.id,
+                      quantity: line.quantity ?? quantity,
+                    }
                   : current,
               ),
             );
@@ -143,7 +151,9 @@ function MiningSessionResults({
         onSuccess: () => {
           setResults((currentResults) =>
             currentResults.map((current) =>
-              current.clientId === result.clientId ? { ...current, isFinalized: true } : current,
+              current.clientId === result.clientId
+                ? { ...current, isFinalized: true }
+                : current,
             ),
           );
           void InvalidateQueryAndKeys.miningMutation();
@@ -154,7 +164,7 @@ function MiningSessionResults({
 
   const handleAddResult = (item: ItemViewModel) => {
     addResult(item);
-    setQuery("");
+    setQuery('');
   };
 
   return (
@@ -189,7 +199,9 @@ function MiningSessionResults({
                 key={result.clientId}
                 item={item}
                 quantity={result.quantity}
-                onQuantityChange={(quantity) => updateQuantity(result, quantity)}
+                onQuantityChange={(quantity) =>
+                  updateQuantity(result, quantity)
+                }
                 onFinalize={() => finalize(result)}
                 isFinalized={Boolean(result.isFinalized)}
                 isSaving={

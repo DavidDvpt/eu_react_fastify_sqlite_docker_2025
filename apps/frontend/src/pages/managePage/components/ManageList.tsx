@@ -1,16 +1,16 @@
-import { GenericList } from "@/shared/components";
-import { Section } from "@/shared/components/Containers";
+import { GenericList } from '@/shared/components';
+import { Section } from '@/shared/components/Containers';
 
 import {
   useLocation,
   useMatch,
   useNavigate,
   useParams,
-} from "react-router-dom";
-import type { ManageTab } from "@/shared/types/managePageTypes";
-import useManageListData from "../hooks/useManageListData";
-import CreateEditModal from "@/pages/managePage/components/createEditModal/CreateEditModal";
-import type { ManagePageQuery } from "../managePageSchema";
+} from 'react-router-dom';
+import type { ManageTab } from '@/shared/types/managePageTypes';
+import useManageListData from '../hooks/useManageListData';
+import CreateEditModal from '@/pages/managePage/components/createEditModal/CreateEditModal';
+import type { ManagePageQuery } from '../managePageSchema';
 
 interface ManageListProps extends ManagePageQuery {
   activeTab: ManageTab;
@@ -20,8 +20,8 @@ function ManageList({ activeTab, categoryId, typeId }: ManageListProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { id } = useParams();
-  const isCreateRoute = Boolean(useMatch("/manage/:tab/create"));
-  const isEditRoute = Boolean(useMatch("/manage/:tab/:id/edit"));
+  const isCreateRoute = Boolean(useMatch('/manage/:tab/create'));
+  const isEditRoute = Boolean(useMatch('/manage/:tab/:id/edit'));
 
   const {
     list,

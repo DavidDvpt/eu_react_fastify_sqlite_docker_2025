@@ -1,11 +1,11 @@
-import ChatLogSetupModal from "./ChatLogSetupModal";
-import InGameUsernameSetupModal from "./InGameUsernameSetupModal";
-import useChatLogSetup from "../hooks/useChatLogSetup";
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { authActions, getauthState } from "@/store";
-import { ApiStatus } from "@/lib/axios/ApiStatus";
-import { useState } from "react";
-import { useUpdateInGameUsernameApiV2AuthInGameUsernamePut } from "@/api/generated/react-query/entropiaManagerAPI";
+import ChatLogSetupModal from './ChatLogSetupModal';
+import InGameUsernameSetupModal from './InGameUsernameSetupModal';
+import useChatLogSetup from '../hooks/useChatLogSetup';
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { authActions, getauthState } from '@/store';
+import { ApiStatus } from '@/lib/axios/ApiStatus';
+import { useState } from 'react';
+import { useUpdateInGameUsernameApiV2AuthInGameUsernamePut } from '@/api/generated/react-query/entropiaManagerAPI';
 
 function ChatLogSetupGate() {
   const setup = useChatLogSetup();
@@ -13,9 +13,16 @@ function ChatLogSetupGate() {
   const { isLoggued, user } = useAppSelector(getauthState);
   const [usernameError, setUsernameError] = useState<string | null>(null);
   const updateUsername = useUpdateInGameUsernameApiV2AuthInGameUsernamePut();
-  const needsUsername = isLoggued && user.status === ApiStatus.FULFILLED && !user.result?.inGameUsername?.trim();
+  const needsUsername =
+    isLoggued &&
+    user.status === ApiStatus.FULFILLED &&
+    !user.result?.inGameUsername?.trim();
 
-  const saveUsername = async ({ inGameUsername }: { inGameUsername: string }) => {
+  const saveUsername = async ({
+    inGameUsername,
+  }: {
+    inGameUsername: string;
+  }) => {
     try {
       setUsernameError(null);
       const response = await updateUsername.mutateAsync({
@@ -30,7 +37,11 @@ function ChatLogSetupGate() {
 
   return (
     <>
-      <InGameUsernameSetupModal isOpen={needsUsername} error={usernameError} onSubmit={saveUsername} />
+      <InGameUsernameSetupModal
+        isOpen={needsUsername}
+        error={usernameError}
+        onSubmit={saveUsername}
+      />
       <ChatLogSetupModal {...setup} isBlocked={needsUsername} />
     </>
   );

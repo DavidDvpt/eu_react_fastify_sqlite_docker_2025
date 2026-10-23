@@ -8,12 +8,14 @@ import * as zod from 'zod';
 export const lotOriginResponseLotMarkupDefault = 100;
 
 export const LotOriginResponse = zod.object({
-  "lotId": zod.string(),
-  "itemId": zod.string(),
-  "quantityRemaining": zod.int(),
-  "isActive": zod.boolean(),
-  "origin": zod.union([zod.string(),zod.null()]),
-  "lotMarkup": zod.union([zod.int(),zod.number()]).default(lotOriginResponseLotMarkupDefault)
+  lotId: zod.string(),
+  itemId: zod.string(),
+  quantityRemaining: zod.int(),
+  isActive: zod.boolean(),
+  origin: zod.union([zod.string(), zod.null()]),
+  lotMarkup: zod
+    .union([zod.int(), zod.number()])
+    .default(lotOriginResponseLotMarkupDefault),
 });
 
 export type LotOriginResponse = zod.input<typeof LotOriginResponse>;

@@ -5,10 +5,17 @@
  */
 import * as zod from 'zod';
 
-export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.object({
-  "origin": zod.union([zod.array(zod.string()),zod.null()]).optional(),
-  "origin[]": zod.union([zod.array(zod.string()),zod.null()]).optional()
-})
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams =
+  zod.object({
+    origin: zod.union([zod.array(zod.string()), zod.null()]).optional(),
+    'origin[]': zod.union([zod.array(zod.string()), zod.null()]).optional(),
+  });
 
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams =
+  zod.input<
+    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams
+  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput =
+  zod.output<
+    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams
+  >;

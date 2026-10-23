@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { configureStore } from "@reduxjs/toolkit";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { configureStore } from '@reduxjs/toolkit';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { ApiStatus } from "@/lib/axios/ApiStatus";
-import authReducer, { authActions } from "@/store/reducers/auth/authSlice";
-import { authMeThunk } from "@/store/reducers/auth/authThunks";
+import { ApiStatus } from '@/lib/axios/ApiStatus';
+import authReducer, { authActions } from '@/store/reducers/auth/authSlice';
+import { authMeThunk } from '@/store/reducers/auth/authThunks';
 
-vi.mock("@/modules/auth/services/network/meApi", () => ({
+vi.mock('@/modules/auth/services/network/meApi', () => ({
   default: vi.fn(),
 }));
 
-import meApi from "@/modules/auth/services/network/meApi";
+import meApi from '@/modules/auth/services/network/meApi';
 
 function makeStore(preloadedAuth?: any) {
   return configureStore({
@@ -18,7 +18,7 @@ function makeStore(preloadedAuth?: any) {
     preloadedState: {
       auth: {
         isLoggued: false,
-        role: "USER",
+        role: 'USER',
         user: {
           status: ApiStatus.IDLE,
           result: null,
@@ -30,16 +30,16 @@ function makeStore(preloadedAuth?: any) {
   });
 }
 
-describe("authMeThunk", () => {
+describe('authMeThunk', () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
 
-  it("dispatching meThunk calls meApi and sets auth state (success)", async () => {
+  it('dispatching meThunk calls meApi and sets auth state (success)', async () => {
     const apiUser = {
-      id: "1",
-      email: "test@test.com",
-      role: "ADMIN",
+      id: '1',
+      email: 'test@test.com',
+      role: 'ADMIN',
     };
 
     (meApi as any).mockResolvedValue(apiUser);
@@ -58,18 +58,18 @@ describe("authMeThunk", () => {
     expect(state.user.result).toEqual(apiUser);
     expect(state.user.error).toBeNull();
     expect(state.isLoggued).toBe(true);
-    expect(state.role).toBe("ADMIN");
+    expect(state.role).toBe('ADMIN');
   });
 
-  it("dispatching meThunk handles error (rejected)", async () => {
-    (meApi as any).mockRejectedValue(new Error("Unauthorized"));
+  it('dispatching meThunk handles error (rejected)', async () => {
+    (meApi as any).mockRejectedValue(new Error('Unauthorized'));
 
     const store = makeStore({
       isLoggued: true,
-      role: "ADMIN",
+      role: 'ADMIN',
       user: {
         status: ApiStatus.FULFILLED,
-        result: { id: "1" },
+        result: { id: '1' },
         error: null,
       },
     });
@@ -81,17 +81,17 @@ describe("authMeThunk", () => {
     expect(meApi).toHaveBeenCalledOnce();
     expect(state.user.status).toBe(ApiStatus.REJECTED);
     expect(state.user.result).toBeNull();
-    expect(state.user.error?.message).toBe("Unauthorized");
+    expect(state.user.error?.message).toBe('Unauthorized');
     expect(state.isLoggued).toBe(false);
   });
 
-  it("dispatching logout resets auth state", () => {
+  it('dispatching logout resets auth state', () => {
     const store = makeStore({
       isLoggued: true,
-      role: "ADMIN",
+      role: 'ADMIN',
       user: {
         status: ApiStatus.FULFILLED,
-        result: { id: "1", pseudo: "test", role: "ADMIN", isActive: true },
+        result: { id: '1', pseudo: 'test', role: 'ADMIN', isActive: true },
         error: null,
       },
     });

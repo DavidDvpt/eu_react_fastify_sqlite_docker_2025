@@ -4,8 +4,9 @@
  * Entropia Manager API
  */
 
-export type ListTransactionsApiV2TransactionsGetStatus = typeof ListTransactionsApiV2TransactionsGetStatus[keyof typeof ListTransactionsApiV2TransactionsGetStatus] | null;
-
+export type ListTransactionsApiV2TransactionsGetStatus =
+  | (typeof ListTransactionsApiV2TransactionsGetStatus)[keyof typeof ListTransactionsApiV2TransactionsGetStatus]
+  | null;
 
 export const ListTransactionsApiV2TransactionsGetStatus = {
   SOLDED: 'SOLDED',

@@ -8,11 +8,15 @@ import { MiningPrevalidationLineResponse } from './miningPrevalidationLineRespon
 import { MiningPrevalidationTotalsResponse } from './miningPrevalidationTotalsResponse.zod.ts';
 
 export const MiningPrevalidationResponse = zod.object({
-  "finder": zod.array(MiningPrevalidationLineResponse),
-  "amp": zod.array(MiningPrevalidationLineResponse),
-  "ammo": zod.array(MiningPrevalidationLineResponse),
-  "total": MiningPrevalidationTotalsResponse
+  finder: zod.array(MiningPrevalidationLineResponse),
+  amp: zod.array(MiningPrevalidationLineResponse),
+  ammo: zod.array(MiningPrevalidationLineResponse),
+  total: MiningPrevalidationTotalsResponse,
 });
 
-export type MiningPrevalidationResponse = zod.input<typeof MiningPrevalidationResponse>;
-export type MiningPrevalidationResponseOutput = zod.output<typeof MiningPrevalidationResponse>;
+export type MiningPrevalidationResponse = zod.input<
+  typeof MiningPrevalidationResponse
+>;
+export type MiningPrevalidationResponseOutput = zod.output<
+  typeof MiningPrevalidationResponse
+>;

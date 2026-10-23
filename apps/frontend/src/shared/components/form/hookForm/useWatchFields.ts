@@ -1,5 +1,10 @@
-import { useEffect } from "react";
-import { useWatch, type Control, type FieldValues, type Path } from "react-hook-form";
+import { useEffect } from 'react';
+import {
+  useWatch,
+  type Control,
+  type FieldValues,
+  type Path,
+} from 'react-hook-form';
 
 type WatchFieldError<TFormValues extends FieldValues> = {
   key: Path<TFormValues>;

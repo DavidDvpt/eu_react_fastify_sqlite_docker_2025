@@ -1,5 +1,5 @@
-import { meApiV2AuthMeGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import { meParser } from "../../authParser";
+import { meApiV2AuthMeGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import { meParser } from '../../authParser';
 
 async function meApi() {
   try {

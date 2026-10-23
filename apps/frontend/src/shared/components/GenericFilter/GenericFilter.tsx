@@ -1,15 +1,15 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
-import { Section, SubSection } from "../Containers";
-import SelectRHF from "../form/Select/SelectRHF";
+import { Section, SubSection } from '../Containers';
+import SelectRHF from '../form/Select/SelectRHF';
 
-import { cn } from "@/lib/utils";
-import { useLocation, useNavigate } from "react-router-dom";
-import type { FilterKeys, GenericFilterProps } from "@/shared/types";
-import useGenericFilterContext from "./useGenericFilterContext";
-import useGenericFilterParams from "./useGenericFilterParams";
-import { useGenericFilterData } from "./useGenericFilterData";
-import { allOptionValue } from "./genericFilter.utils";
+import { cn } from '@/lib/utils';
+import { useLocation, useNavigate } from 'react-router-dom';
+import type { FilterKeys, GenericFilterProps } from '@/shared/types';
+import useGenericFilterContext from './useGenericFilterContext';
+import useGenericFilterParams from './useGenericFilterParams';
+import { useGenericFilterData } from './useGenericFilterData';
+import { allOptionValue } from './genericFilter.utils';
 
 function GenericFilter({ className, context }: GenericFilterProps) {
   const { params, constructQuery } = useGenericFilterParams();
@@ -21,21 +21,21 @@ function GenericFilter({ className, context }: GenericFilterProps) {
   const navigate = useNavigate();
 
   const updateValue = (key: FilterKeys, value: string | undefined) => {
-    if (key === "reset") {
-      navigate({ pathname: location.pathname, search: "" });
+    if (key === 'reset') {
+      navigate({ pathname: location.pathname, search: '' });
       return;
     }
 
     const q = constructQuery(key, value);
     const searchParams = new URLSearchParams(q);
 
-    if (key === "categoryId") {
+    if (key === 'categoryId') {
       // A category change invalidates both the selected type and item.
-      searchParams.delete("typeId");
-      searchParams.delete("itemId");
-    } else if (key === "typeId") {
+      searchParams.delete('typeId');
+      searchParams.delete('itemId');
+    } else if (key === 'typeId') {
       // A type change invalidates the selected item.
-      searchParams.delete("itemId");
+      searchParams.delete('itemId');
     }
 
     navigate({
@@ -44,11 +44,11 @@ function GenericFilter({ className, context }: GenericFilterProps) {
     });
   };
 
-  const filterItemClassName = "min-w-0 basis-[220px] grow";
+  const filterItemClassName = 'min-w-0 basis-[220px] grow';
 
   return (
     <Section
-      className={cn("flex flex-col gap-2", className)}
+      className={cn('flex flex-col gap-2', className)}
       aria-label="Filtres"
     >
       <SubSection
@@ -59,7 +59,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={categoriesForSelect}
-              onValueChange={(value) => updateValue("categoryId", value)}
+              onValueChange={(value) => updateValue('categoryId', value)}
               placeholder="Choisir une categorie ..."
               value={params.categoryId || allOptionValue}
             />
@@ -70,7 +70,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={typesForSelect}
-              onValueChange={(value) => updateValue("typeId", value)}
+              onValueChange={(value) => updateValue('typeId', value)}
               placeholder="Choisir un type ..."
               value={params.typeId || allOptionValue}
             />
@@ -81,7 +81,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           <div className={filterItemClassName}>
             <SelectRHF
               options={itemsForSelect}
-              onValueChange={(value) => updateValue("itemId", value)}
+              onValueChange={(value) => updateValue('itemId', value)}
               placeholder="Choisir un item"
               value={params.itemId}
               hasAutocomplete
@@ -95,7 +95,7 @@ function GenericFilter({ className, context }: GenericFilterProps) {
           variant="secondary"
           size="sm"
           className="ml-auto w-[100px]"
-          onClick={() => updateValue("reset", undefined)}
+          onClick={() => updateValue('reset', undefined)}
         >
           Reset
         </Button>

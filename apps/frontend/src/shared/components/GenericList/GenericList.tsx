@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import type { GenericListProps } from "./genericListTypes";
+import { cn } from '@/lib/utils';
+import type { GenericListProps } from './genericListTypes';
 
-import { GenericListFooter } from "./GenericListFooter";
-import GenericListBody from "./GenericListBody";
-import { getGridTemplateColumns } from "./gridTemplate";
-import { GenericListHeader } from "./GenericListHeader";
+import { GenericListFooter } from './GenericListFooter';
+import GenericListBody from './GenericListBody';
+import { getGridTemplateColumns } from './gridTemplate';
+import { GenericListHeader } from './GenericListHeader';
 
 function GenericList<T>({
   columns,
@@ -24,9 +24,9 @@ function GenericList<T>({
   rowHeight = 40,
   isLoading = false,
   isError = false,
-  loadingMessage = "Chargement...",
-  errorMessage = "Une erreur est survenue.",
-  emptyMessage = "Aucune donnee.",
+  loadingMessage = 'Chargement...',
+  errorMessage = 'Une erreur est survenue.',
+  emptyMessage = 'Aucune donnee.',
   footer,
   footerConfig,
   RowComponent,
@@ -34,19 +34,13 @@ function GenericList<T>({
 }: GenericListProps<T>) {
   const columnsTemplate = getGridTemplateColumns(columns);
 
-  const view = allowCardView ? (viewMode ?? "list") : "list";
+  const view = allowCardView ? (viewMode ?? 'list') : 'list';
 
   return (
-    <div
-      className={cn(
-        "flex min-h-0 flex-col",
-        grow && "flex-1",
-        className,
-      )}
-    >
+    <div className={cn('flex min-h-0 flex-col', grow && 'flex-1', className)}>
       <GenericListHeader
         columns={columns}
-        visible={hasHeader && view === "list"}
+        visible={hasHeader && view === 'list'}
         className={headerClassName}
         rowHeight={rowHeight}
         columnsTemplate={columnsTemplate}
@@ -54,7 +48,7 @@ function GenericList<T>({
 
       <div
         className={cn(
-          "min-h-0 flex-1 overflow-y-auto overflow-x-hidden",
+          'min-h-0 flex-1 overflow-y-auto overflow-x-hidden',
           bodyClassName,
         )}
       >
@@ -84,7 +78,7 @@ function GenericList<T>({
 
       <GenericListFooter
         visible={
-          view === "list" &&
+          view === 'list' &&
           (footerConfig?.visible ??
             (Boolean(footer) || Boolean(footerConfig?.cells?.length)))
         }

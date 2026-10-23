@@ -1,8 +1,8 @@
-import { ModalGeneric } from "../ModalGeneric";
-import TransactionResellContent from "./TransactionResellContent";
-import TransactionModalActionContent from "./TransactionModalActionContent";
+import { ModalGeneric } from '../ModalGeneric';
+import TransactionResellContent from './TransactionResellContent';
+import TransactionModalActionContent from './TransactionModalActionContent';
 
-import useTransactionQueries from "@/shared/hooks/useTransactionQueries";
+import useTransactionQueries from '@/shared/hooks/useTransactionQueries';
 
 function TransactionModal() {
   const { queries, updateQueries } = useTransactionQueries();
@@ -20,19 +20,19 @@ function TransactionModal() {
         if (!open) handleClose();
       }}
       title={{
-        value: queries.action === "buy" ? "Achat" : "Vente",
-        style: "m-0 text-2xl leading-tight",
+        value: queries.action === 'buy' ? 'Achat' : 'Vente',
+        style: 'm-0 text-2xl leading-tight',
       }}
     >
-      {(queries.action === "resell" || queries.action === "newSell") && (
+      {(queries.action === 'resell' || queries.action === 'newSell') && (
         <TransactionResellContent
           onClose={handleClose}
           action={queries.action}
-          onResellValidate={() => updateQueries({ ...queries, action: "sell" })}
+          onResellValidate={() => updateQueries({ ...queries, action: 'sell' })}
         />
       )}
 
-      {(queries.action === "sell" || queries.action === "buy") && (
+      {(queries.action === 'sell' || queries.action === 'buy') && (
         <TransactionModalActionContent
           onClose={handleClose}
           modalParams={queries}

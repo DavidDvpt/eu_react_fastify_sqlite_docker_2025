@@ -1,14 +1,11 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { useListRunningApiV2TransactionsRunningGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggued } from "@/store";
-import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type {
-  TransactionViewModel,
-  TransactionViewModels,
-} from "@zod-schemas";
+import { useListRunningApiV2TransactionsRunningGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import { useAppSelector } from '@/store/hooks';
+import { selectIsLoggued } from '@/store';
+import useSystemDatas from '@/shared/hooks/rqFetchHooks/useSystemDatas';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { TransactionViewModel, TransactionViewModels } from '@zod-schemas';
 
 function useTransactionsData() {
   const isLoggued = useAppSelector(selectIsLoggued);

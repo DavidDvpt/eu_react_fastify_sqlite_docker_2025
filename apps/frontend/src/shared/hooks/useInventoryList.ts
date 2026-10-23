@@ -1,6 +1,6 @@
-import useGenericFilterParams from "@/shared/components/GenericFilter/useGenericFilterParams";
-import { useSystemDatas } from "@/shared/hooks";
-import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
+import useGenericFilterParams from '@/shared/components/GenericFilter/useGenericFilterParams';
+import { useSystemDatas } from '@/shared/hooks';
+import useInventoryStockData from '@/shared/hooks/rqFetchHooks/useInventoryStockData';
 
 function useInventoryList() {
   const { params } = useGenericFilterParams();

@@ -6,10 +6,12 @@
 import * as zod from 'zod';
 
 export const RefinageRecipeResponse = zod.object({
-  "result": zod.string(),
-  "origin": zod.string(),
-  "quantity": zod.int()
+  result: zod.string(),
+  origin: zod.string(),
+  quantity: zod.int(),
 });
 
 export type RefinageRecipeResponse = zod.input<typeof RefinageRecipeResponse>;
-export type RefinageRecipeResponseOutput = zod.output<typeof RefinageRecipeResponse>;
+export type RefinageRecipeResponseOutput = zod.output<
+  typeof RefinageRecipeResponse
+>;

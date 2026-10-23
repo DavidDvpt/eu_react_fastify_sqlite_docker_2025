@@ -1,6 +1,6 @@
-import z from "zod";
+import z from 'zod';
 
-import { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
+import { genericFilterSchema } from '@/shared/components/GenericFilter/genericFilterSchema';
 
 export const managePageQuerySchema = genericFilterSchema;
 

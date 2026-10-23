@@ -1,39 +1,39 @@
-import { useMemo } from "react";
-import { Button } from "@/components/ui/button";
-import { Section } from "@/shared/components/Containers";
-import { GenericForm } from "@/shared/components/form/Genericform";
+import { useMemo } from 'react';
+import { Button } from '@/components/ui/button';
+import { Section } from '@/shared/components/Containers';
+import { GenericForm } from '@/shared/components/form/Genericform';
 
 import type {
   AutoPricingFormValues,
   TransactionModalParams,
   TransactionPricingField,
-} from "@/shared/types/transactions";
-import { transactionFormSchema } from "./transactionSchemas";
-import { computeQuantityPricing } from "./transactionUtils";
-import { canBuyMultipleLots } from "@/shared/helpers/transactionHelpers";
-import TransactionFormContent from "./TransactionFormContent";
-import { PANEL_COPY } from "./constants";
+} from '@/shared/types/transactions';
+import { transactionFormSchema } from './transactionSchemas';
+import { computeQuantityPricing } from './transactionUtils';
+import { canBuyMultipleLots } from '@/shared/helpers/transactionHelpers';
+import TransactionFormContent from './TransactionFormContent';
+import { PANEL_COPY } from './constants';
 
-import type { ItemWithStock } from "@/shared/types";
-import type { LotViewModel } from "@zod-schemas";
-import useTransactionsMutation from "@/shared/hooks/useTransactionMutation";
+import type { ItemWithStock } from '@/shared/types';
+import type { LotViewModel } from '@zod-schemas';
+import useTransactionsMutation from '@/shared/hooks/useTransactionMutation';
 
 function getTransactionErrorMessage(error: unknown, fallback: string) {
   const responseData = (error as { response?: { data?: unknown } })?.response
     ?.data;
-  if (!responseData || typeof responseData !== "object") return fallback;
+  if (!responseData || typeof responseData !== 'object') return fallback;
 
   const detail = (responseData as { detail?: unknown }).detail;
-  if (typeof detail === "string") return detail;
+  if (typeof detail === 'string') return detail;
   if (Array.isArray(detail)) {
     const messages = detail
       .map((entry) =>
-        typeof entry === "object" && entry !== null && "msg" in entry
+        typeof entry === 'object' && entry !== null && 'msg' in entry
           ? String(entry.msg)
           : null,
       )
       .filter((message): message is string => Boolean(message));
-    if (messages.length > 0) return messages.join(" ");
+    if (messages.length > 0) return messages.join(' ');
   }
 
   return fallback;
@@ -56,7 +56,7 @@ function TransactionPanelContent({
   const { action, quantity, ttc, lotId } = modalParams;
   // Selling MY single instance: exactly this lot, quantity locked to 1.
   const isNonStackable = item.type != null && !item.type.isStackable;
-  const isInstanceSell = action === "sell" && isNonStackable;
+  const isInstanceSell = action === 'sell' && isNonStackable;
   const schema = useMemo(() => {
     return transactionFormSchema(
       isInstanceSell ? 1 : item.stock,
@@ -73,12 +73,12 @@ function TransactionPanelContent({
 
   const initialValues = useMemo(() => {
     const mergedValues = {
-      quantity: isNonStackable ? 1 : quantity ?? 1,
+      quantity: isNonStackable ? 1 : (quantity ?? 1),
       tt: lot?.ttRemaining ?? item.value,
       fee: 0,
       ttc: ttc ?? item.value,
       lotCount: 1,
-      ...(action === "buy" && item.type?.hasTierOption && !item.type.isStackable
+      ...(action === 'buy' && item.type?.hasTierOption && !item.type.isStackable
         ? { tierLevel: 0 }
         : {}),
     };
@@ -112,8 +112,10 @@ function TransactionPanelContent({
   if (!item) return null;
 
   const onSubmit = (values: AutoPricingFormValues) => {
-    const tt = isNonStackable ? values.tt ?? item.value : values.quantity * item.value;
-    if (action === "buy" && values.ttc < tt) {
+    const tt = isNonStackable
+      ? (values.tt ?? item.value)
+      : values.quantity * item.value;
+    if (action === 'buy' && values.ttc < tt) {
       const shouldContinue = window.confirm(
         "Le prix d'achat est inférieur au TT. Confirmer l'achat dans cet état ?",
       );
@@ -122,7 +124,7 @@ function TransactionPanelContent({
 
     createMutation.mutate(
       {
-        values: { ...values, status: "RUNNING" },
+        values: { ...values, status: 'RUNNING' },
         item,
         action,
         lotId: isInstanceSell ? lotId : undefined,

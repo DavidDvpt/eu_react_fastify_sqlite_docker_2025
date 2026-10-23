@@ -5,4 +5,6 @@
  */
 import type { MiningAvailableStackResponse } from './operations/miningAvailableStackResponse.ts';
 
-export type MiningAvailableResponseExcavatorEnhancers = {[key: string]: MiningAvailableStackResponse[]};
+export type MiningAvailableResponseExcavatorEnhancers = {
+  [key: string]: MiningAvailableStackResponse[];
+};

@@ -1,6 +1,6 @@
-import { FlaskConical } from "lucide-react";
+import { FlaskConical } from 'lucide-react';
 
-import type { StockRow } from "@/shared/helpers/stock";
+import type { StockRow } from '@/shared/helpers/stock';
 
 type RefineActionCellProps = {
   item: StockRow;

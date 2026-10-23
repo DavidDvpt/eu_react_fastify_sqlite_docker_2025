@@ -4,8 +4,9 @@
  * Entropia Manager API
  */
 
-export type ListItemsApiV2ItemsGetSortKey = typeof ListItemsApiV2ItemsGetSortKey[keyof typeof ListItemsApiV2ItemsGetSortKey] | null;
-
+export type ListItemsApiV2ItemsGetSortKey =
+  | (typeof ListItemsApiV2ItemsGetSortKey)[keyof typeof ListItemsApiV2ItemsGetSortKey]
+  | null;
 
 export const ListItemsApiV2ItemsGetSortKey = {
   name: 'name',

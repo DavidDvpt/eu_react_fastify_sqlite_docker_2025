@@ -5,7 +5,11 @@
  */
 import * as zod from 'zod';
 
-export const PatchCancelApiV2TransactionsIdCancelPatchBody = zod.string()
+export const PatchCancelApiV2TransactionsIdCancelPatchBody = zod.string();
 
-export type PatchCancelApiV2TransactionsIdCancelPatchBody = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
-export type PatchCancelApiV2TransactionsIdCancelPatchBodyOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
+export type PatchCancelApiV2TransactionsIdCancelPatchBody = zod.input<
+  typeof PatchCancelApiV2TransactionsIdCancelPatchBody
+>;
+export type PatchCancelApiV2TransactionsIdCancelPatchBodyOutput = zod.output<
+  typeof PatchCancelApiV2TransactionsIdCancelPatchBody
+>;

@@ -1,4 +1,4 @@
-import type { DisplayedFields, GenericFilterContext } from "@/shared/types";
+import type { DisplayedFields, GenericFilterContext } from '@/shared/types';
 
 const contexts: Record<GenericFilterContext, DisplayedFields> = {
   manageCategory: { category: true, type: true, item: false },

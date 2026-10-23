@@ -6,9 +6,9 @@
 import * as zod from 'zod';
 
 export const PlanetZoneResponse = zod.object({
-  "id": zod.string(),
-  "planetId": zod.string(),
-  "name": zod.string()
+  id: zod.string(),
+  planetId: zod.string(),
+  name: zod.string(),
 });
 
 export type PlanetZoneResponse = zod.input<typeof PlanetZoneResponse>;

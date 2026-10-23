@@ -5,13 +5,13 @@
  */
 
 export type ListImagesApiV2ImagesGetParams = {
-/**
- * @minimum 1
- */
-page?: number;
-/**
- * @minimum 1
- * @maximum 300
- */
-pageSize?: number;
+  /**
+   * @minimum 1
+   */
+  page?: number;
+  /**
+   * @minimum 1
+   * @maximum 300
+   */
+  pageSize?: number;
 };

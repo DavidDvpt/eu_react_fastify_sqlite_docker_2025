@@ -1,10 +1,14 @@
-import CategoryForm from "@/pages/managePage/components/createEditModal/CategoryForm";
-import ManageItemForm from "@/pages/managePage/components/createEditModal/ItemForm";
-import TypeForm from "@/pages/managePage/components/createEditModal/TypeForm";
-import { ModalGeneric } from "@/shared/components";
-import type { ManageTab } from "@/shared/types/managePageTypes";
-import type { ItemViewModel, TypeViewModel, CategoryViewModel } from "@zod-schemas";
-import { useLocation, useNavigate } from "react-router-dom";
+import CategoryForm from '@/pages/managePage/components/createEditModal/CategoryForm';
+import ManageItemForm from '@/pages/managePage/components/createEditModal/ItemForm';
+import TypeForm from '@/pages/managePage/components/createEditModal/TypeForm';
+import { ModalGeneric } from '@/shared/components';
+import type { ManageTab } from '@/shared/types/managePageTypes';
+import type {
+  ItemViewModel,
+  TypeViewModel,
+  CategoryViewModel,
+} from '@zod-schemas';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 interface CreatEditModalProps {
   tab: ManageTab;
@@ -23,15 +27,18 @@ function CreateEditModal({ tab, entity }: CreatEditModalProps) {
     <ModalGeneric
       onOpenChange={onclose}
       dialogType="form"
-      title={{ value: entity ? "Edition" : "Creation" }}
+      title={{ value: entity ? 'Edition' : 'Creation' }}
     >
-      {tab === "category" && (
-        <CategoryForm category={entity as CategoryViewModel} onClose={onclose} />
+      {tab === 'category' && (
+        <CategoryForm
+          category={entity as CategoryViewModel}
+          onClose={onclose}
+        />
       )}
-      {tab === "type" && (
+      {tab === 'type' && (
         <TypeForm type={entity as TypeViewModel} onClose={onclose} />
       )}
-      {tab === "item" && (
+      {tab === 'item' && (
         <ManageItemForm item={entity as ItemViewModel} onClose={onclose} />
       )}
     </ModalGeneric>

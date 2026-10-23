@@ -1,1 +1,1 @@
-export { default } from "./AppCard";
+export { default } from './AppCard';

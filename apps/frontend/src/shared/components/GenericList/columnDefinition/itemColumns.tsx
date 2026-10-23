@@ -1,87 +1,87 @@
-import type { GenericListColumn } from "@/shared/types";
-import { FormatTools } from "@/shared/tools";
-import type { ItemViewModel } from "@zod-schemas";
-import { getItemImageUrl } from "@/shared/helpers/imageUrl";
+import type { GenericListColumn } from '@/shared/types';
+import { FormatTools } from '@/shared/tools';
+import type { ItemViewModel } from '@zod-schemas';
+import { getItemImageUrl } from '@/shared/helpers/imageUrl';
 
 const createItemColumns = (): GenericListColumn<ItemViewModel>[] => [
   {
-    key: "image",
-    label: "Image",
-    kind: "image",
-    accessor: "imageUrlId",
+    key: 'image',
+    label: 'Image',
+    kind: 'image',
+    accessor: 'imageUrlId',
     minWidth: 40,
     maxWidth: 40,
-    bodyCellClassName: "bg-transparent",
+    bodyCellClassName: 'bg-transparent',
     imageSrc: (value) =>
-      typeof value === "string" && value.trim() !== ""
-          ? (getItemImageUrl(value, "normal") ?? "")
-        : "",
-    imageAlt: (item) => item.name ?? "Image",
+      typeof value === 'string' && value.trim() !== ''
+        ? (getItemImageUrl(value, 'normal') ?? '')
+        : '',
+    imageAlt: (item) => item.name ?? 'Image',
   },
   {
-    key: "name",
-    label: "Nom",
-    kind: "text",
-    accessor: "name",
+    key: 'name',
+    label: 'Nom',
+    kind: 'text',
+    accessor: 'name',
     fillRemainingSpace: true,
-    bodyCellClassName: "text-text font-semibold pl-1",
+    bodyCellClassName: 'text-text font-semibold pl-1',
   },
   {
-    key: "type",
-    label: "Type",
-    kind: "text",
+    key: 'type',
+    label: 'Type',
+    kind: 'text',
     minWidth: 120,
     maxWidth: 200,
-    bodyCellClassName: "text-text",
-    value: (row) => row.type?.name ?? "Unknown",
+    bodyCellClassName: 'text-text',
+    value: (row) => row.type?.name ?? 'Unknown',
   },
 
   {
-    key: "limited",
-    label: "Limited",
-    kind: "text",
-    accessor: "isLimited",
+    key: 'limited',
+    label: 'Limited',
+    kind: 'text',
+    accessor: 'isLimited',
     minWidth: 60,
     maxWidth: 80,
-    bodyCellClassName: "text-text",
+    bodyCellClassName: 'text-text',
     value: (row) =>
-      "isLimited" in row ? (row.isLimited ? "Oui" : "Non") : "Non",
+      'isLimited' in row ? (row.isLimited ? 'Oui' : 'Non') : 'Non',
   },
   {
-    key: "stackable",
-    label: "Stackable",
-    kind: "text",
+    key: 'stackable',
+    label: 'Stackable',
+    kind: 'text',
     minWidth: 60,
     maxWidth: 80,
-    bodyCellClassName: "text-text",
-    value: (row) => (row.type?.isStackable ? "Oui" : "Non"),
+    bodyCellClassName: 'text-text',
+    value: (row) => (row.type?.isStackable ? 'Oui' : 'Non'),
   },
   {
-    key: "value",
-    label: "Valeur",
-    kind: "number",
+    key: 'value',
+    label: 'Valeur',
+    kind: 'number',
     minWidth: 80,
     maxWidth: 100,
-    align: "right",
-    bodyCellClassName: "text-text font-semibold",
+    align: 'right',
+    bodyCellClassName: 'text-text font-semibold',
     value: (row) =>
       FormatTools.trimTrailingZeros(
-        FormatTools.formatToDecimals("value" in row ? row.value : 0, 5),
+        FormatTools.formatToDecimals('value' in row ? row.value : 0, 5),
         2,
       ),
   },
   {
-    key: "decay",
-    label: "Decay",
-    kind: "number",
-    accessor: "decay",
+    key: 'decay',
+    label: 'Decay',
+    kind: 'number',
+    accessor: 'decay',
     minWidth: 80,
     maxWidth: 100,
-    align: "right",
-    bodyCellClassName: "text-text",
+    align: 'right',
+    bodyCellClassName: 'text-text',
     value: (row) =>
       row.decay === null
-        ? "—"
+        ? '—'
         : FormatTools.trimTrailingZeros(
             FormatTools.formatToDecimals(row.decay, 5),
             2,

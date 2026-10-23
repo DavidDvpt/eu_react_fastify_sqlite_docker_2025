@@ -4,8 +4,9 @@
  * Entropia Manager API
  */
 
-export type ListInventoryStockApiV2InventoryStockGetSortOrder = typeof ListInventoryStockApiV2InventoryStockGetSortOrder[keyof typeof ListInventoryStockApiV2InventoryStockGetSortOrder] | null;
-
+export type ListInventoryStockApiV2InventoryStockGetSortOrder =
+  | (typeof ListInventoryStockApiV2InventoryStockGetSortOrder)[keyof typeof ListInventoryStockApiV2InventoryStockGetSortOrder]
+  | null;
 
 export const ListInventoryStockApiV2InventoryStockGetSortOrder = {
   asc: 'asc',

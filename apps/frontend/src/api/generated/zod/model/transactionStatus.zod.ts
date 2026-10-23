@@ -5,7 +5,12 @@
  */
 import * as zod from 'zod';
 
-export const TransactionStatus = zod.enum(['SOLDED', 'RETURNED', 'RUNNING', 'CANCELED']);
+export const TransactionStatus = zod.enum([
+  'SOLDED',
+  'RETURNED',
+  'RUNNING',
+  'CANCELED',
+]);
 
 export type TransactionStatus = zod.input<typeof TransactionStatus>;
 export type TransactionStatusOutput = zod.output<typeof TransactionStatus>;

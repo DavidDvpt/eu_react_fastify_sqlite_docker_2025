@@ -7,11 +7,11 @@ import * as zod from 'zod';
 
 export const miningCostLineUpdateQuantityMin = 0;
 
-
-
 export const MiningCostLineUpdate = zod.object({
-  "quantity": zod.int().min(miningCostLineUpdateQuantityMin)
+  quantity: zod.int().min(miningCostLineUpdateQuantityMin),
 });
 
 export type MiningCostLineUpdate = zod.input<typeof MiningCostLineUpdate>;
-export type MiningCostLineUpdateOutput = zod.output<typeof MiningCostLineUpdate>;
+export type MiningCostLineUpdateOutput = zod.output<
+  typeof MiningCostLineUpdate
+>;

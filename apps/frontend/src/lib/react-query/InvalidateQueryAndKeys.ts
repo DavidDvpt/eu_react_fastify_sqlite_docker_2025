@@ -1,41 +1,41 @@
-import { queryClient } from "@/lib/react-query/queryClient";
+import { queryClient } from '@/lib/react-query/queryClient';
 import {
   getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey,
   getListClaimsApiV2MiningSessionIdClaimsGetQueryKey,
-} from "@/api/generated/react-query/entropiaManagerAPI";
+} from '@/api/generated/react-query/entropiaManagerAPI';
 
 type InvalidateObject = { keys: (string | undefined)[] };
 
 export class InvalidateQueryAndKeys {
   static getCategoriesKey(): InvalidateObject {
-    return { keys: ["categories"] };
+    return { keys: ['categories'] };
   }
   static getTypesKey(): InvalidateObject {
-    return { keys: ["types"] };
+    return { keys: ['types'] };
   }
   static getItemsKey(): InvalidateObject {
-    return { keys: ["items"] };
+    return { keys: ['items'] };
   }
   static getRunningTransactionKey(): InvalidateObject {
-    return { keys: ["running-transactions"] };
+    return { keys: ['running-transactions'] };
   }
   static getItemStockKey(itemId?: string): InvalidateObject {
-    return { keys: ["stock", "item-stock", itemId] };
+    return { keys: ['stock', 'item-stock', itemId] };
   }
   static getInventoryStockKey(): InvalidateObject {
-    return { keys: ["stock", "items-stock"] };
+    return { keys: ['stock', 'items-stock'] };
   }
   static getInventoryFinancialReportKey(): InvalidateObject {
-    return { keys: ["inventory", "financial-report"] };
+    return { keys: ['inventory', 'financial-report'] };
   }
   static getCurrentSessionKey(): InvalidateObject {
-    return { keys: ["/api/v2/sessions/current"] };
+    return { keys: ['/api/v2/sessions/current'] };
   }
   static getItemLotsKey(itemId?: string): InvalidateObject {
-    return { keys: ["item-lots", itemId] };
+    return { keys: ['item-lots', itemId] };
   }
   static getItemAverageBuyMarkupKey(itemId?: string): InvalidateObject {
-    return { keys: ["item-average-buy-markup", itemId] };
+    return { keys: ['item-average-buy-markup', itemId] };
   }
   static async lotTierMutation(itemId?: string) {
     return await Promise.all([
@@ -43,7 +43,7 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getItemLotsKey(itemId).keys,
       }),
       queryClient.invalidateQueries({
-        queryKey: ["inventory", "lots"],
+        queryKey: ['inventory', 'lots'],
       }),
       // Stock lines carry tierLevel: refresh them right away so the list,
       // the details and the tier editor never show a stale tier.
@@ -55,7 +55,8 @@ export class InvalidateQueryAndKeys {
       }),
       // Mining session creation reads lot TT from this dedicated inventory query.
       queryClient.invalidateQueries({
-        queryKey: getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey(),
+        queryKey:
+          getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey(),
       }),
     ]);
   }
@@ -88,11 +89,7 @@ export class InvalidateQueryAndKeys {
       queryKey: this.getItemsKey().keys,
     });
   }
-  static async transactionMutation({
-    itemId,
-  }: {
-    itemId?: string;
-  }) {
+  static async transactionMutation({ itemId }: { itemId?: string }) {
     return await Promise.all([
       queryClient.invalidateQueries({
         queryKey: this.getInventoryStockKey().keys,
@@ -101,7 +98,7 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getItemStockKey(itemId).keys,
       }),
       queryClient.invalidateQueries({
-        queryKey: ["stock", "details", itemId],
+        queryKey: ['stock', 'details', itemId],
       }),
       queryClient.invalidateQueries({
         queryKey: this.getItemLotsKey().keys,
@@ -117,11 +114,7 @@ export class InvalidateQueryAndKeys {
       }),
     ]);
   }
-  static async refiningMutation({
-    itemId,
-  }: {
-    itemId?: string;
-  }) {
+  static async refiningMutation({ itemId }: { itemId?: string }) {
     return await Promise.all([
       queryClient.invalidateQueries({
         queryKey: this.getInventoryStockKey().keys,
@@ -130,7 +123,7 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getItemStockKey(itemId).keys,
       }),
       queryClient.invalidateQueries({
-        queryKey: ["stock", "details", itemId],
+        queryKey: ['stock', 'details', itemId],
       }),
       queryClient.invalidateQueries({
         queryKey: this.getItemLotsKey().keys,
@@ -147,9 +140,12 @@ export class InvalidateQueryAndKeys {
         queryKey: this.getCurrentSessionKey().keys,
       }),
       ...(sessionId
-        ? [queryClient.invalidateQueries({
-            queryKey: getListClaimsApiV2MiningSessionIdClaimsGetQueryKey(sessionId),
-          })]
+        ? [
+            queryClient.invalidateQueries({
+              queryKey:
+                getListClaimsApiV2MiningSessionIdClaimsGetQueryKey(sessionId),
+            }),
+          ]
         : []),
     ]);
   }

@@ -1,7 +1,5 @@
-export function formatTierLevel(
-  tierLevel: number | null | undefined,
-): string {
-  return tierLevel === null || tierLevel === undefined ? "" : `T${tierLevel}`;
+export function formatTierLevel(tierLevel: number | null | undefined): string {
+  return tierLevel === null || tierLevel === undefined ? '' : `T${tierLevel}`;
 }
 
 export function formatItemNameWithTier({

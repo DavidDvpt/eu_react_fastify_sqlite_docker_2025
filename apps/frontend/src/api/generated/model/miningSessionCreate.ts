@@ -9,9 +9,9 @@ export type MiningSessionCreate = {
   /** @exclusiveMinimum 0 */
   clickCount: number;
   /**
-     * @minimum 1
-     * @maximum 3
-     */
+   * @minimum 1
+   * @maximum 3
+   */
   searchType: number;
   finderLotId: string;
   ammoItemId: string;

@@ -1,5 +1,5 @@
-import { Brand, Nav } from "@/components/navbar";
-import Profile from "./Profile";
+import { Brand, Nav } from '@/components/navbar';
+import Profile from './Profile';
 
 function NavBar() {
   return (

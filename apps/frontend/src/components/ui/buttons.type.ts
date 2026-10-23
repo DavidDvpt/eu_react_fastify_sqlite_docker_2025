@@ -1,8 +1,8 @@
-import type { LucideIcon } from "lucide-react";
+import type { LucideIcon } from 'lucide-react';
 import type {
   buttonSizeClasses,
   buttonVariants,
-} from "@/components/ui/buttons.variants";
+} from '@/components/ui/buttons.variants';
 
 export type ButtonVariant = keyof typeof buttonVariants;
 export type ButtonSize = keyof typeof buttonSizeClasses;

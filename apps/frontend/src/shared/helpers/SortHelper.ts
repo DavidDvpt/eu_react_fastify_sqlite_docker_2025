@@ -1,9 +1,9 @@
-import type { Order } from "@zod-schemas";
+import type { Order } from '@zod-schemas';
 
 export class SortHelper {
   constructor() {}
 
-  static sortByKey<T>(array: T[], key: keyof T, order: Order = "asc") {
+  static sortByKey<T>(array: T[], key: keyof T, order: Order = 'asc') {
     array.sort((a, b) => {
       const av = a[key];
       const bv = b[key];
@@ -14,13 +14,15 @@ export class SortHelper {
 
       let comparison = 0;
 
-      if (typeof av === "number" && typeof bv === "number") {
+      if (typeof av === 'number' && typeof bv === 'number') {
         comparison = av - bv;
-      } else if (typeof av === "boolean" && typeof bv === "boolean") {
+      } else if (typeof av === 'boolean' && typeof bv === 'boolean') {
         comparison = Number(av) - Number(bv);
       } else {
-        const aTime = av instanceof Date ? av.getTime() : Date.parse(String(av));
-        const bTime = bv instanceof Date ? bv.getTime() : Date.parse(String(bv));
+        const aTime =
+          av instanceof Date ? av.getTime() : Date.parse(String(av));
+        const bTime =
+          bv instanceof Date ? bv.getTime() : Date.parse(String(bv));
         const bothDates = !Number.isNaN(aTime) && !Number.isNaN(bTime);
 
         comparison = bothDates
@@ -28,7 +30,7 @@ export class SortHelper {
           : String(av).localeCompare(String(bv), undefined, { numeric: true });
       }
 
-      return order === "desc" ? -comparison : comparison;
+      return order === 'desc' ? -comparison : comparison;
     });
   }
 }

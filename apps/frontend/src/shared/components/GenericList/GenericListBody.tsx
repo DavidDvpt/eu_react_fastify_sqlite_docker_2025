@@ -1,13 +1,13 @@
-import { cn } from "@/lib/utils";
-import type { GenericListBodyProps } from "./genericListTypes";
-import { GenericCellRenderer } from "./GenericCellRenderer";
-import type { GenericListColumn } from "@/shared/types";
+import { cn } from '@/lib/utils';
+import type { GenericListBodyProps } from './genericListTypes';
+import { GenericCellRenderer } from './GenericCellRenderer';
+import type { GenericListColumn } from '@/shared/types';
 
 const DEFAULT_ROW_CLASS =
-  "grid items-stretch border-b border-table-row-divider text-text last:border-b-0 hover:bg-table-row-hover-bg";
+  'grid items-stretch border-b border-table-row-divider text-text last:border-b-0 hover:bg-table-row-hover-bg';
 
-const CONTROL_KINDS = new Set(["button", "select", "checkbox"]);
-const TEXT_KINDS = new Set(["text", "number", "date", "custom"]);
+const CONTROL_KINDS = new Set(['button', 'select', 'checkbox']);
+const TEXT_KINDS = new Set(['text', 'number', 'date', 'custom']);
 
 function GenericListBody<T>({
   columns,
@@ -24,29 +24,27 @@ function GenericListBody<T>({
   RowComponent,
   CardComponent,
 }: GenericListBodyProps<T>) {
-  const alignClass = (align: GenericListColumn<T>["align"]) => {
-    if (align === "center") return "items-center justify-center text-center";
-    if (align === "right") return "items-center justify-end text-right";
-    return "items-center justify-start text-left";
+  const alignClass = (align: GenericListColumn<T>['align']) => {
+    if (align === 'center') return 'items-center justify-center text-center';
+    if (align === 'right') return 'items-center justify-end text-right';
+    return 'items-center justify-start text-left';
   };
 
   const toneClass = (column: GenericListColumn<T>) => {
-    const kind = column.kind ?? "text";
+    const kind = column.kind ?? 'text';
 
-    if (!TEXT_KINDS.has(kind)) return "";
+    if (!TEXT_KINDS.has(kind)) return '';
 
-    const isNameColumn = column.key === "name" || column.accessor === "name";
+    const isNameColumn = column.key === 'name' || column.accessor === 'name';
 
-    return isNameColumn
-      ? "text-text"
-      : "text-text-muted group-hover:text-text";
+    return isNameColumn ? 'text-text' : 'text-text-muted group-hover:text-text';
   };
 
-  if (viewMode === "card") {
+  if (viewMode === 'card') {
     return (
       <div
         className={cn(
-          "grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-3 p-3",
+          'grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-3 p-3',
           cardClassName,
         )}
       >
@@ -65,8 +63,8 @@ function GenericListBody<T>({
             <div
               key={getRowKey(row)}
               className={cn(
-                "rounded-md border border-table-border p-3",
-                onRowClick ? "cursor-pointer" : "",
+                'rounded-md border border-table-border p-3',
+                onRowClick ? 'cursor-pointer' : '',
               )}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
             >
@@ -74,7 +72,7 @@ function GenericListBody<T>({
                 <div
                   key={column.key}
                   className={cn(
-                    "py-1",
+                    'py-1',
                     column.bodyCellClassName,
                     toneClass(column),
                   )}
@@ -90,7 +88,7 @@ function GenericListBody<T>({
   }
 
   return (
-    <div className={cn("flex flex-col", className)}>
+    <div className={cn('flex flex-col', className)}>
       {rows.map((row) => {
         if (RowComponent) {
           return (
@@ -107,8 +105,10 @@ function GenericListBody<T>({
             key={getRowKey(row)}
             className={cn(
               rowBaseClassName ?? DEFAULT_ROW_CLASS,
-              "group",
-              typeof rowClassName === "function" ? rowClassName(row) : rowClassName,
+              'group',
+              typeof rowClassName === 'function'
+                ? rowClassName(row)
+                : rowClassName,
             )}
             style={{ minHeight: rowHeight, height: rowHeight }}
           >
@@ -118,23 +118,23 @@ function GenericListBody<T>({
             >
               {columns.map((column) => {
                 const hasCellClick = Boolean(column.onCellClick);
-                const isControlCell = CONTROL_KINDS.has(column.kind ?? "text");
+                const isControlCell = CONTROL_KINDS.has(column.kind ?? 'text');
                 const handlesCellClick = hasCellClick && !isControlCell;
 
                 return (
                   <div
                     key={column.key}
                     className={cn(
-                      "flex min-w-0 overflow-hidden text-text",
+                      'flex min-w-0 overflow-hidden text-text',
                       alignClass(column.align),
                       column.bodyCellClassName,
                       toneClass(column),
-                      hasCellClick ? "cursor-pointer" : "",
+                      hasCellClick ? 'cursor-pointer' : '',
                       !isControlCell && !hasCellClick && onRowClick
-                        ? "cursor-pointer"
-                        : "",
+                        ? 'cursor-pointer'
+                        : '',
                     )}
-                    role={handlesCellClick ? "button" : undefined}
+                    role={handlesCellClick ? 'button' : undefined}
                     tabIndex={handlesCellClick ? 0 : undefined}
                     onClick={
                       isControlCell
@@ -151,7 +151,7 @@ function GenericListBody<T>({
                     onKeyDown={
                       handlesCellClick
                         ? (event) => {
-                            if (event.key !== "Enter" && event.key !== " ")
+                            if (event.key !== 'Enter' && event.key !== ' ')
                               return;
 
                             event.preventDefault();

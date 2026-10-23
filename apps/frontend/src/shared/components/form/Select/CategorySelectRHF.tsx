@@ -1,6 +1,6 @@
-import SelectRHF from "@/shared/components/form/Select/SelectRHF";
-import { selectOptionsHelper } from "@/shared/helpers/selectHelper";
-import { useSystemDatas } from "@/shared/hooks";
+import SelectRHF from '@/shared/components/form/Select/SelectRHF';
+import { selectOptionsHelper } from '@/shared/helpers/selectHelper';
+import { useSystemDatas } from '@/shared/hooks';
 
 interface CategorySelectRHFProps {
   updateValue?: (label: string, value: string) => void;
@@ -22,7 +22,7 @@ function CategorySelectRHF({
       label={label}
       options={options}
       wrapperClassName={classname}
-      onValueChange={(value) => updateValue?.("category", value)}
+      onValueChange={(value) => updateValue?.('category', value)}
       placeholder="Choisir une categorie ..."
     />
   );

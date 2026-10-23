@@ -1,15 +1,15 @@
-import type { ReactNode } from "react";
-import type { ItemImageProps } from "@/shared/components/itemImage/ItemImage";
+import type { ReactNode } from 'react';
+import type { ItemImageProps } from '@/shared/components/itemImage/ItemImage';
 
 export type GenericListColumnKind =
-  | "text"
-  | "number"
-  | "date"
-  | "image"
-  | "button"
-  | "select"
-  | "checkbox"
-  | "custom";
+  | 'text'
+  | 'number'
+  | 'date'
+  | 'image'
+  | 'button'
+  | 'select'
+  | 'checkbox'
+  | 'custom';
 
 export type GenericColumnOnSelectChangeProps<T> = {
   row: T;
@@ -19,7 +19,7 @@ export type GenericColumnOnSelectChangeProps<T> = {
 
 export type GenericColumnOnSelectChange<T> = {
   bivarianceHack: (props: GenericColumnOnSelectChangeProps<T>) => void;
-}["bivarianceHack"];
+}['bivarianceHack'];
 
 export type GenericListColumn<T> = {
   key: string;
@@ -29,7 +29,7 @@ export type GenericListColumn<T> = {
   minWidth?: string | number;
   maxWidth?: string | number;
   fillRemainingSpace?: boolean;
-  align?: "left" | "center" | "right";
+  align?: 'left' | 'center' | 'right';
   headerCellClassName?: string;
   bodyCellClassName?: string;
   footerCellClassName?: string;
@@ -39,7 +39,7 @@ export type GenericListColumn<T> = {
   disabled?: (row: T) => boolean;
   imageSrc?: (value: unknown, row: T) => string;
   imageAlt?: (row: T) => string;
-  imageSize?: ItemImageProps["size"];
+  imageSize?: ItemImageProps['size'];
   buttonLabel?: string;
   selectOptions?: Array<{ label: string; value: string }>;
   isRowPending?: (row: T) => boolean;

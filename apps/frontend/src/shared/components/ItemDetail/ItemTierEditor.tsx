@@ -1,12 +1,12 @@
-import { useUpdateInventoryLotApiV2InventoryLotsLotIdPatch } from "@/api/generated/react-query/entropiaManagerAPI";
-import { LotUpdate, type LotUpdateOutput } from "@/api/generated/zod/model";
-import { Button } from "@/components/ui/button";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import type { LotViewModel } from "@/shared/schemas";
-import { Save } from "lucide-react";
-import { useState } from "react";
+import { useUpdateInventoryLotApiV2InventoryLotsLotIdPatch } from '@/api/generated/react-query/entropiaManagerAPI';
+import { LotUpdate, type LotUpdateOutput } from '@/api/generated/zod/model';
+import { Button } from '@/components/ui/button';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import type { LotViewModel } from '@/shared/schemas';
+import { Save } from 'lucide-react';
+import { useState } from 'react';
 
 function ItemTierEditor({
   itemId,
@@ -21,7 +21,7 @@ function ItemTierEditor({
 }) {
   const updateLotMutation = useUpdateInventoryLotApiV2InventoryLotsLotIdPatch();
   const [externalError, setExternalError] = useState<
-    { key: "tierLevel"; msg: string }[]
+    { key: 'tierLevel'; msg: string }[]
   >([]);
 
   const update = async (values: LotUpdateOutput) => {
@@ -40,7 +40,7 @@ function ItemTierEditor({
       await InvalidateQueryAndKeys.lotTierMutation(itemId);
     } catch {
       setExternalError([
-        { key: "tierLevel", msg: "Impossible de modifier le tier." },
+        { key: 'tierLevel', msg: 'Impossible de modifier le tier.' },
       ]);
     }
   };
@@ -54,20 +54,20 @@ function ItemTierEditor({
       values.tierLevel < lot.tierLevel
     ) {
       context.addIssue({
-        code: "custom",
-        path: ["tierLevel"],
-        message: "Le tier ne peut pas diminuer.",
+        code: 'custom',
+        path: ['tierLevel'],
+        message: 'Le tier ne peut pas diminuer.',
       });
     }
 
     if (
       canEditTt &&
-      typeof values.ttRemaining === "number" &&
+      typeof values.ttRemaining === 'number' &&
       values.ttRemaining > itemValue
     ) {
       context.addIssue({
-        code: "custom",
-        path: ["ttRemaining"],
+        code: 'custom',
+        path: ['ttRemaining'],
         message: `Le TT ne peut pas dépasser ${itemValue} PED.`,
       });
     }

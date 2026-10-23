@@ -1,1 +1,1 @@
-export { default as ModalGeneric } from "./ModalGeneric";
+export { default as ModalGeneric } from './ModalGeneric';

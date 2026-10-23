@@ -1,5 +1,5 @@
-import { NavButton } from "@/components/navbar";
-import type { NavbarButtonType } from "@/shared/types";
+import { NavButton } from '@/components/navbar';
+import type { NavbarButtonType } from '@/shared/types';
 
 type VerticalNavProps = {
   items: NavbarButtonType[];
@@ -8,7 +8,7 @@ type VerticalNavProps = {
 
 function VerticalNav({ items }: VerticalNavProps) {
   return (
-    <aside className={"flex flex-col space-y-2 m-2"}>
+    <aside className={'flex flex-col space-y-2 m-2'}>
       {items.map((item) => {
         return (
           <NavButton

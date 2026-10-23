@@ -6,8 +6,10 @@
 import * as zod from 'zod';
 
 export const InGameUsernameResponse = zod.object({
-  "inGameUsername": zod.union([zod.string(),zod.null()])
+  inGameUsername: zod.union([zod.string(), zod.null()]),
 });
 
 export type InGameUsernameResponse = zod.input<typeof InGameUsernameResponse>;
-export type InGameUsernameResponseOutput = zod.output<typeof InGameUsernameResponse>;
+export type InGameUsernameResponseOutput = zod.output<
+  typeof InGameUsernameResponse
+>;

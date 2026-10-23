@@ -1,52 +1,65 @@
-const DATABASE_NAME = "entropia-manager-local";
+const DATABASE_NAME = 'entropia-manager-local';
 const DATABASE_VERSION = 1;
-const STORE_NAME = "chat-log";
-const HANDLE_KEY = "selected-file";
+const STORE_NAME = 'chat-log';
+const HANDLE_KEY = 'selected-file';
 
 export type StoredChatLogHandle = FileSystemFileHandle & {
-  queryPermission: (descriptor?: { mode?: "read" | "readwrite" }) => Promise<PermissionState>;
-  requestPermission: (descriptor?: { mode?: "read" | "readwrite" }) => Promise<PermissionState>;
+  queryPermission: (descriptor?: {
+    mode?: 'read' | 'readwrite';
+  }) => Promise<PermissionState>;
+  requestPermission: (descriptor?: {
+    mode?: 'read' | 'readwrite';
+  }) => Promise<PermissionState>;
 };
 
 export type StoredChatLog =
-  | { source: "handle"; handle: StoredChatLogHandle }
-  | { source: "file"; file: File };
+  | { source: 'handle'; handle: StoredChatLogHandle }
+  | { source: 'file'; file: File };
 
 function openDatabase(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open(DATABASE_NAME, DATABASE_VERSION);
-    request.onupgradeneeded = () => request.result.createObjectStore(STORE_NAME);
+    request.onupgradeneeded = () =>
+      request.result.createObjectStore(STORE_NAME);
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error("IndexedDB error"));
+    request.onerror = () =>
+      reject(request.error ?? new Error('IndexedDB error'));
   });
 }
 
-async function withStore<T>(mode: IDBTransactionMode, operation: (store: IDBObjectStore) => IDBRequest<T>): Promise<T> {
+async function withStore<T>(
+  mode: IDBTransactionMode,
+  operation: (store: IDBObjectStore) => IDBRequest<T>,
+): Promise<T> {
   const database = await openDatabase();
   return new Promise((resolve, reject) => {
     const transaction = database.transaction(STORE_NAME, mode);
     const request = operation(transaction.objectStore(STORE_NAME));
     request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error ?? new Error("IndexedDB error"));
+    request.onerror = () =>
+      reject(request.error ?? new Error('IndexedDB error'));
     transaction.oncomplete = () => database.close();
-    transaction.onerror = () => reject(transaction.error ?? new Error("IndexedDB error"));
+    transaction.onerror = () =>
+      reject(transaction.error ?? new Error('IndexedDB error'));
   });
 }
 
 export async function getChatLog(): Promise<StoredChatLog | null> {
-  if (typeof indexedDB === "undefined") return null;
-  const stored = await withStore<StoredChatLog | StoredChatLogHandle | undefined>("readonly", (store) => store.get(HANDLE_KEY));
+  if (typeof indexedDB === 'undefined') return null;
+  const stored = await withStore<
+    StoredChatLog | StoredChatLogHandle | undefined
+  >('readonly', (store) => store.get(HANDLE_KEY));
   if (!stored) return null;
   // Keep compatibility with handles saved by the previous implementation.
-  if ("source" in stored) return stored;
-  return { source: "handle", handle: stored };
+  if ('source' in stored) return stored;
+  return { source: 'handle', handle: stored };
 }
 
 export async function saveChatLog(log: StoredChatLog): Promise<void> {
-  await withStore("readwrite", (store) => store.put(log, HANDLE_KEY));
+  await withStore('readwrite', (store) => store.put(log, HANDLE_KEY));
 }
 
 export async function removeChatLogHandle(): Promise<void> {
-  if (typeof indexedDB === "undefined") return;
-  await withStore("readwrite", (store) => store.delete(HANDLE_KEY));
+  if (typeof indexedDB === 'undefined') return;
+  await withStore('readwrite', (store) => store.delete(HANDLE_KEY));
 }

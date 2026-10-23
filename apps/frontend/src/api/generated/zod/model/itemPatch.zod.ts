@@ -7,29 +7,51 @@ import * as zod from 'zod';
 
 export const itemPatchValueOneMin = 0;
 
-export const itemPatchValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const itemPatchValueTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 export const itemPatchWeightOneMin = 0;
 
-export const itemPatchWeightTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const itemPatchWeightTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 export const itemPatchDecayOneMin = 0;
 
-export const itemPatchDecayTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
-
-
+export const itemPatchDecayTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 
 export const ItemPatch = zod.object({
-  "imageUrlId": zod.union([zod.string(),zod.null()]).optional(),
-  "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
-  "value": zod.union([zod.number().min(itemPatchValueOneMin),zod.string().regex(itemPatchValueTwoRegExp),zod.null()]).optional(),
-  "weight": zod.union([zod.number().min(itemPatchWeightOneMin),zod.string().regex(itemPatchWeightTwoRegExp),zod.null()]).optional(),
-  "decay": zod.union([zod.number().min(itemPatchDecayOneMin),zod.string().regex(itemPatchDecayTwoRegExp),zod.null()]).optional(),
-  "description": zod.union([zod.string(),zod.null()]).optional(),
-  "isLimited": zod.union([zod.boolean(),zod.null()]).optional(),
-  "isUntradeable": zod.union([zod.boolean(),zod.null()]).optional(),
-  "isRare": zod.union([zod.boolean(),zod.null()]).optional(),
-  "name": zod.union([zod.string().min(1),zod.null()]).optional(),
-  "typeId": zod.union([zod.string(),zod.null()]).optional(),
-  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
+  imageUrlId: zod.union([zod.string(), zod.null()]).optional(),
+  nexusUrl: zod.union([zod.string(), zod.null()]).optional(),
+  value: zod
+    .union([
+      zod.number().min(itemPatchValueOneMin),
+      zod.string().regex(itemPatchValueTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  weight: zod
+    .union([
+      zod.number().min(itemPatchWeightOneMin),
+      zod.string().regex(itemPatchWeightTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  decay: zod
+    .union([
+      zod.number().min(itemPatchDecayOneMin),
+      zod.string().regex(itemPatchDecayTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  description: zod.union([zod.string(), zod.null()]).optional(),
+  isLimited: zod.union([zod.boolean(), zod.null()]).optional(),
+  isUntradeable: zod.union([zod.boolean(), zod.null()]).optional(),
+  isRare: zod.union([zod.boolean(), zod.null()]).optional(),
+  name: zod.union([zod.string().min(1), zod.null()]).optional(),
+  typeId: zod.union([zod.string(), zod.null()]).optional(),
+  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
 });
 
 export type ItemPatch = zod.input<typeof ItemPatch>;

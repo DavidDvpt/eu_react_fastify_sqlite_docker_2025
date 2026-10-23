@@ -1,21 +1,21 @@
-import type { RowRendererProps } from "@/shared/components/GenericList/genericListTypes";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { formatItemNameWithTier } from "@/shared/helpers";
-import { getItemImageUrl } from "@/shared/helpers/imageUrl";
-import { FormatTools } from "@/shared/tools";
-import { getItemStockValue, type StockRow } from "@/shared/helpers/stock";
+import type { RowRendererProps } from '@/shared/components/GenericList/genericListTypes';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import { formatItemNameWithTier } from '@/shared/helpers';
+import { getItemImageUrl } from '@/shared/helpers/imageUrl';
+import { FormatTools } from '@/shared/tools';
+import { getItemStockValue, type StockRow } from '@/shared/helpers/stock';
 
 function InventoryItemCard({ row, onRowClick }: RowRendererProps<StockRow>) {
   return (
     <article
       className={`flex items-start gap-3 rounded-md border border-table-border p-3 ${
-        onRowClick ? "cursor-pointer" : ""
+        onRowClick ? 'cursor-pointer' : ''
       }`}
       onClick={onRowClick ? () => onRowClick(row) : undefined}
     >
       <div className="h-[100px] w-[100px] shrink-0">
         <ItemImage
-          url={getItemImageUrl(row.imageUrlId, "normal")}
+          url={getItemImageUrl(row.imageUrlId, 'normal')}
           alt={row.name}
           size="medium"
           classname="h-full w-full"

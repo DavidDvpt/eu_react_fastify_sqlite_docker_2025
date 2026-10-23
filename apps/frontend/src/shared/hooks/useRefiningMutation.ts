@@ -1,8 +1,8 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
-import { useCreateRefiningSessionApiV2SessionsRefinagePost } from "@/api/generated/react-query/entropiaManagerAPI";
-import type { SessionLineCostCreate } from "@/api/generated/react-query/model";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import { useCreateRefiningSessionApiV2SessionsRefinagePost } from '@/api/generated/react-query/entropiaManagerAPI';
+import type { SessionLineCostCreate } from '@/api/generated/react-query/model';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
 
 type RefiningMutationParams = {
   /** Item cliqué dans l'inventaire (utilisé pour l'invalidation ciblée). */

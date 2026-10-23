@@ -1,4 +1,4 @@
-import styles from "./CapsuleLoader.module.css";
+import styles from './CapsuleLoader.module.css';
 
 type CapsuleLoaderProps = {
   title: string;

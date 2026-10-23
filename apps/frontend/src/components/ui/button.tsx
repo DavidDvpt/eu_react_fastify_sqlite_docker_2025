@@ -1,20 +1,20 @@
-import { Slot } from "@radix-ui/react-slot";
-import * as React from "react";
+import { Slot } from '@radix-ui/react-slot';
+import * as React from 'react';
 
-import { cn } from "@/lib/utils";
-import type { ButtonProps } from "./buttons.type";
+import { cn } from '@/lib/utils';
+import type { ButtonProps } from './buttons.type';
 import {
   baseClasses,
   buttonSizeClasses,
   buttonVariants,
-} from "@/components/ui/buttons.variants";
+} from '@/components/ui/buttons.variants';
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
       className,
-      variant = "default",
-      size = "default",
+      variant = 'default',
+      size = 'default',
       asChild = false,
       icon: Icon,
       iconSize,
@@ -24,7 +24,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    const Comp = asChild ? Slot : "button";
+    const Comp = asChild ? Slot : 'button';
     return (
       <Comp
         className={cn(
@@ -32,7 +32,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           buttonVariants[variant],
           buttonSizeClasses[size],
           // Tighten icon-to-label spacing only when there is label content.
-          children ? "gap-1" : "gap-0",
+          children ? 'gap-1' : 'gap-0',
           className,
         )}
         ref={ref}
@@ -46,7 +46,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               <Icon
                 aria-hidden="true"
                 size={iconSize ?? 16}
-                style={iconSize ? { width: iconSize, height: iconSize } : undefined}
+                style={
+                  iconSize ? { width: iconSize, height: iconSize } : undefined
+                }
                 className={iconClassName}
               />
             ) : null}
@@ -57,6 +59,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     );
   },
 );
-Button.displayName = "Button";
+Button.displayName = 'Button';
 
 export { Button };

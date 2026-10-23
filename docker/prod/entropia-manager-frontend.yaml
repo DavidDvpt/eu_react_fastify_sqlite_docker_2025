@@ -4,7 +4,7 @@ services:
     pull_policy: never
     container_name: entropia-manager-frontend
     expose:
-      - "8019"
+      - '8019'
     restart: unless-stopped
     networks:
       - ser5-network

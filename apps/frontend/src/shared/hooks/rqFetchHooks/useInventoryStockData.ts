@@ -1,16 +1,16 @@
-import { useListInventoryStockApiV2InventoryStockGet } from "@/api/generated/react-query/entropiaManagerAPI";
+import { useListInventoryStockApiV2InventoryStockGet } from '@/api/generated/react-query/entropiaManagerAPI';
 
-import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
-import { useMemo } from "react";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { ItemWithStock } from "@/shared/types";
+import useSystemDatas from '@/shared/hooks/rqFetchHooks/useSystemDatas';
+import { useMemo } from 'react';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { ItemWithStock } from '@/shared/types';
 import {
   getLotsForItem,
   getItemStockValue,
   getStockForItem,
   groupStockLines,
   NumberHelper,
-} from "@/shared/helpers";
+} from '@/shared/helpers';
 
 function useInventoryStockData({ enabled = true }: { enabled?: boolean } = {}) {
   const {

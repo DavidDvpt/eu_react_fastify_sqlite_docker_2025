@@ -1,12 +1,12 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
-import { useFormContext } from "react-hook-form";
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import { useFormContext } from 'react-hook-form';
 
-import { cn } from "@/lib/utils";
-import { parseDecimalInput } from "@/shared/helpers/transactionHelpers";
+import { cn } from '@/lib/utils';
+import { parseDecimalInput } from '@/shared/helpers/transactionHelpers';
 
 type StepperButtonsProps = {
   /** RHF field name holding a decimal value (number or numeric string). */
-  name: "fee" | "ttc" | "tt";
+  name: 'fee' | 'ttc' | 'tt';
   /** Increment applied per click. */
   step?: number;
   /** Rounding precision (avoids float dust, e.g. 0.1 + 0.2). */
@@ -31,8 +31,9 @@ function StepperButtons({
     if (disabled) return;
     const factor = 10 ** decimals;
     const next =
-      Math.round((parseDecimalInput(getValues(name)) + direction * step) * factor) /
-      factor;
+      Math.round(
+        (parseDecimalInput(getValues(name)) + direction * step) * factor,
+      ) / factor;
     setValue(name, next, {
       shouldDirty: true,
       shouldTouch: true,
@@ -41,8 +42,8 @@ function StepperButtons({
   };
 
   const buttonClassName = cn(
-    "flex h-1/2 items-center justify-center border-none bg-transparent p-0 text-text/60 cursor-pointer hover:text-text focus:outline-none",
-    disabled ? "cursor-not-allowed opacity-30 hover:text-text/60" : "",
+    'flex h-1/2 items-center justify-center border-none bg-transparent p-0 text-text/60 cursor-pointer hover:text-text focus:outline-none',
+    disabled ? 'cursor-not-allowed opacity-30 hover:text-text/60' : '',
   );
 
   return (

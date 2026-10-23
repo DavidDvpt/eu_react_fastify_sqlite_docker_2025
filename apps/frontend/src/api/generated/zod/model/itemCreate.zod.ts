@@ -7,30 +7,54 @@ import * as zod from 'zod';
 
 export const itemCreateValueOneMin = 0;
 
-export const itemCreateValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const itemCreateValueTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 export const itemCreateWeightOneMin = 0;
 
-export const itemCreateWeightTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const itemCreateWeightTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 export const itemCreateDecayOneMin = 0;
 
-export const itemCreateDecayTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const itemCreateDecayTwoRegExp = new RegExp(
+  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
+);
 
 export const itemCreateIsActiveDefault = true;
 
 export const ItemCreate = zod.object({
-  "imageUrlId": zod.union([zod.string(),zod.null()]).optional(),
-  "nexusUrl": zod.union([zod.string(),zod.null()]).optional(),
-  "value": zod.union([zod.number().min(itemCreateValueOneMin),zod.string().regex(itemCreateValueTwoRegExp),zod.null()]).optional(),
-  "weight": zod.union([zod.number().min(itemCreateWeightOneMin),zod.string().regex(itemCreateWeightTwoRegExp),zod.null()]).optional(),
-  "decay": zod.union([zod.number().min(itemCreateDecayOneMin),zod.string().regex(itemCreateDecayTwoRegExp),zod.null()]).optional(),
-  "description": zod.union([zod.string(),zod.null()]).optional(),
-  "isLimited": zod.union([zod.boolean(),zod.null()]).optional(),
-  "isUntradeable": zod.union([zod.boolean(),zod.null()]).optional(),
-  "isRare": zod.union([zod.boolean(),zod.null()]).optional(),
-  "id": zod.union([zod.string().min(1),zod.null()]).optional(),
-  "name": zod.string(),
-  "typeId": zod.string(),
-  "isActive": zod.boolean().default(itemCreateIsActiveDefault)
+  imageUrlId: zod.union([zod.string(), zod.null()]).optional(),
+  nexusUrl: zod.union([zod.string(), zod.null()]).optional(),
+  value: zod
+    .union([
+      zod.number().min(itemCreateValueOneMin),
+      zod.string().regex(itemCreateValueTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  weight: zod
+    .union([
+      zod.number().min(itemCreateWeightOneMin),
+      zod.string().regex(itemCreateWeightTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  decay: zod
+    .union([
+      zod.number().min(itemCreateDecayOneMin),
+      zod.string().regex(itemCreateDecayTwoRegExp),
+      zod.null(),
+    ])
+    .optional(),
+  description: zod.union([zod.string(), zod.null()]).optional(),
+  isLimited: zod.union([zod.boolean(), zod.null()]).optional(),
+  isUntradeable: zod.union([zod.boolean(), zod.null()]).optional(),
+  isRare: zod.union([zod.boolean(), zod.null()]).optional(),
+  id: zod.union([zod.string().min(1), zod.null()]).optional(),
+  name: zod.string(),
+  typeId: zod.string(),
+  isActive: zod.boolean().default(itemCreateIsActiveDefault),
 });
 
 export type ItemCreate = zod.input<typeof ItemCreate>;

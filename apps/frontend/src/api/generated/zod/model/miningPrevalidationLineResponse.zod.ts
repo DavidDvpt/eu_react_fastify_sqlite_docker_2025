@@ -6,12 +6,16 @@
 import * as zod from 'zod';
 
 export const MiningPrevalidationLineResponse = zod.object({
-  "lotId": zod.string(),
-  "itemId": zod.string(),
-  "quantity": zod.union([zod.int(),zod.null()]).optional(),
-  "costTt": zod.union([zod.int(),zod.number()]),
-  "costTtc": zod.union([zod.int(),zod.number()])
+  lotId: zod.string(),
+  itemId: zod.string(),
+  quantity: zod.union([zod.int(), zod.null()]).optional(),
+  costTt: zod.union([zod.int(), zod.number()]),
+  costTtc: zod.union([zod.int(), zod.number()]),
 });
 
-export type MiningPrevalidationLineResponse = zod.input<typeof MiningPrevalidationLineResponse>;
-export type MiningPrevalidationLineResponseOutput = zod.output<typeof MiningPrevalidationLineResponse>;
+export type MiningPrevalidationLineResponse = zod.input<
+  typeof MiningPrevalidationLineResponse
+>;
+export type MiningPrevalidationLineResponseOutput = zod.output<
+  typeof MiningPrevalidationLineResponse
+>;

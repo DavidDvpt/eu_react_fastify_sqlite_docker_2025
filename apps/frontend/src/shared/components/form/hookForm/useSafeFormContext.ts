@@ -1,6 +1,6 @@
-import type { FieldValues } from "react-hook-form";
-import { useFormContext } from "react-hook-form";
-import type { SafeFormContext } from "../form.types";
+import type { FieldValues } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
+import type { SafeFormContext } from '../form.types';
 
 function useSafeFormContext(options: {
   required: false;
@@ -16,7 +16,7 @@ function useSafeFormContext(options?: {
     if (!required) return null;
 
     throw new Error(
-      "useSafeFormContext must be used inside a FormProvider (GenericForm).",
+      'useSafeFormContext must be used inside a FormProvider (GenericForm).',
     );
   }
 

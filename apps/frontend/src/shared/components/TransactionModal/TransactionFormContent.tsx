@@ -1,14 +1,14 @@
-import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import useTransactionAutoPricing from "@/shared/hooks/useTransactionAutoPricing";
+import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import useTransactionAutoPricing from '@/shared/hooks/useTransactionAutoPricing';
 import type {
   AutoPricingFormValues,
   TransactionFormFieldsProps,
-} from "@/shared/types";
-import { useFormContext } from "react-hook-form";
+} from '@/shared/types';
+import { useFormContext } from 'react-hook-form';
 
-import { TransactionFields } from "./TransactionFields";
-import TransactionSummary from "./TransactionSummary";
+import { TransactionFields } from './TransactionFields';
+import TransactionSummary from './TransactionSummary';
 
 function TransactionFormContent({
   item,
@@ -16,7 +16,7 @@ function TransactionFormContent({
 }: TransactionFormFieldsProps) {
   const { action, lotId } = modalParams;
   const isInstanceSell =
-    action === "sell" &&
+    action === 'sell' &&
     lotId != null &&
     item.type != null &&
     !item.type.isStackable;
@@ -37,24 +37,24 @@ function TransactionFormContent({
     isNonStackable,
   });
 
-  const lotCount = Number(form.watch("lotCount")) || 1;
-  const tt = Number(form.watch("tt")) || item.value;
+  const lotCount = Number(form.watch('lotCount')) || 1;
+  const tt = Number(form.watch('tt')) || item.value;
 
   return (
     <>
       <TransactionFields
         quantityLabel="Quantite"
         feeLabel="Fee"
-        totalLabel={action === "buy" ? "Achat" : "Vente"}
+        totalLabel={action === 'buy' ? 'Achat' : 'Vente'}
         totalLabelClassName="text-sm text-text"
         feeReadOnly={isFeeReadOnly}
         quantityReadOnly={isInstanceSell}
         isNonStackable={isNonStackable}
-        ttReadOnly={action === "sell"}
+        ttReadOnly={action === 'sell'}
         isAuction={isAuctionEnabled}
       />
 
-      {action === "buy" && isNonStackable ? (
+      {action === 'buy' && isNonStackable ? (
         <div className="flex items-start justify-between">
           {item.type?.hasTierOption ? (
             <InputRHF
@@ -94,7 +94,7 @@ function TransactionFormContent({
         ttValue={isNonStackable ? tt : quantityValue * item.value}
         feeValue={feeValue}
         ttcValue={totalValue}
-        lotCount={action === "buy" && isNonStackable ? lotCount : undefined}
+        lotCount={action === 'buy' && isNonStackable ? lotCount : undefined}
       />
     </>
   );

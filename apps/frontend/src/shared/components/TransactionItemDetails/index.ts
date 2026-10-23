@@ -1,1 +1,1 @@
-export { TransactionItemDetails } from "./TransactionItemDetails";
+export { TransactionItemDetails } from './TransactionItemDetails';

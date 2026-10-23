@@ -10,11 +10,18 @@ export const listImagesApiV2ImagesGetParamsPageDefault = 1;
 export const listImagesApiV2ImagesGetParamsPageSizeDefault = 100;
 export const listImagesApiV2ImagesGetParamsPageSizeMax = 300;
 
-
 export const ListImagesApiV2ImagesGetParams = zod.object({
-  "page": zod.int().min(1).default(listImagesApiV2ImagesGetParamsPageDefault),
-  "pageSize": zod.int().min(1).max(listImagesApiV2ImagesGetParamsPageSizeMax).default(listImagesApiV2ImagesGetParamsPageSizeDefault)
-})
+  page: zod.int().min(1).default(listImagesApiV2ImagesGetParamsPageDefault),
+  pageSize: zod
+    .int()
+    .min(1)
+    .max(listImagesApiV2ImagesGetParamsPageSizeMax)
+    .default(listImagesApiV2ImagesGetParamsPageSizeDefault),
+});
 
-export type ListImagesApiV2ImagesGetParams = zod.input<typeof ListImagesApiV2ImagesGetParams>;
-export type ListImagesApiV2ImagesGetParamsOutput = zod.output<typeof ListImagesApiV2ImagesGetParams>;
+export type ListImagesApiV2ImagesGetParams = zod.input<
+  typeof ListImagesApiV2ImagesGetParams
+>;
+export type ListImagesApiV2ImagesGetParamsOutput = zod.output<
+  typeof ListImagesApiV2ImagesGetParams
+>;

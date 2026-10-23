@@ -8,15 +8,19 @@ import { TransactionStatus } from './transactionStatus.zod.ts';
 import { TransactionType } from './transactionType.zod.ts';
 
 export const TransactionEntryResponse = zod.object({
-  "itemId": zod.union([zod.string(),zod.null()]).optional(),
-  "lotId": zod.union([zod.string(),zod.null()]).optional(),
-  "quantityLot": zod.union([zod.int(),zod.null()]).optional(),
-  "transactionType": zod.union([TransactionType,zod.null()]).optional(),
-  "status": zod.union([TransactionStatus,zod.null()]).optional(),
-  "tt": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
-  "fee": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
-  "ttc": zod.union([zod.int(),zod.number(),zod.null()]).optional()
+  itemId: zod.union([zod.string(), zod.null()]).optional(),
+  lotId: zod.union([zod.string(), zod.null()]).optional(),
+  quantityLot: zod.union([zod.int(), zod.null()]).optional(),
+  transactionType: zod.union([TransactionType, zod.null()]).optional(),
+  status: zod.union([TransactionStatus, zod.null()]).optional(),
+  tt: zod.union([zod.int(), zod.number(), zod.null()]).optional(),
+  fee: zod.union([zod.int(), zod.number(), zod.null()]).optional(),
+  ttc: zod.union([zod.int(), zod.number(), zod.null()]).optional(),
 });
 
-export type TransactionEntryResponse = zod.input<typeof TransactionEntryResponse>;
-export type TransactionEntryResponseOutput = zod.output<typeof TransactionEntryResponse>;
+export type TransactionEntryResponse = zod.input<
+  typeof TransactionEntryResponse
+>;
+export type TransactionEntryResponseOutput = zod.output<
+  typeof TransactionEntryResponse
+>;

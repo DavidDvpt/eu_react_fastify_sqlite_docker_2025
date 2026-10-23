@@ -1,18 +1,25 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
-import { useGetItemStockApiV2ItemsIdStockGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import type { StockLineResponse } from "@/api/generated/react-query/model";
-import type { ItemViewModel, StockQuery } from "@zod-schemas";
-import { getLotsForItem, getStockForItem, groupStockLines } from "@/shared/helpers";
-import { useMemo } from "react";
+import { useQueryClient } from '@tanstack/react-query';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import useSystemDatas from '@/shared/hooks/rqFetchHooks/useSystemDatas';
+import { useGetItemStockApiV2ItemsIdStockGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import type { StockLineResponse } from '@/api/generated/react-query/model';
+import type { ItemViewModel, StockQuery } from '@zod-schemas';
+import {
+  getLotsForItem,
+  getStockForItem,
+  groupStockLines,
+} from '@/shared/helpers';
+import { useMemo } from 'react';
 
 /**
  * Item stock lines, seeded from the inventory list cache when available.
  * Opening details from the list renders instantly with no extra request;
  * a direct deep link (empty cache) fetches normally.
  */
-export default function useItemStock({ itemId, enabled = true }: StockQuery & { enabled?: boolean } = {}) {
+export default function useItemStock({
+  itemId,
+  enabled = true,
+}: StockQuery & { enabled?: boolean } = {}) {
   const {
     items: { itemDatas, ...restItem },
   } = useSystemDatas();
@@ -26,7 +33,7 @@ export default function useItemStock({ itemId, enabled = true }: StockQuery & { 
   };
 
   const { data: itemStock, ...rest } = useGetItemStockApiV2ItemsIdStockGet(
-    itemId ?? "",
+    itemId ?? '',
     {
       query: {
         queryKey: InvalidateQueryAndKeys.getItemStockKey(itemId).keys,

@@ -1,15 +1,15 @@
-import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
-import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import CategorySelectRHF from "@/shared/components/form/Select/CategorySelectRHF";
-import useSystemMutation from "@/shared/hooks/useSystemMutation";
-import { useFormContext } from "react-hook-form";
-import type { TypeViewModel } from "@zod-schemas";
+import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
+import FormButtonsSection from '@/shared/components/form/FormButtonsSection';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import CategorySelectRHF from '@/shared/components/form/Select/CategorySelectRHF';
+import useSystemMutation from '@/shared/hooks/useSystemMutation';
+import { useFormContext } from 'react-hook-form';
+import type { TypeViewModel } from '@zod-schemas';
 import {
   TypeCreate,
   type TypeCreateOutput,
-} from "@/api/generated/zod/model/typeCreate.zod";
+} from '@/api/generated/zod/model/typeCreate.zod';
 
 interface TypeFormProps {
   type?: TypeViewModel;
@@ -17,11 +17,11 @@ interface TypeFormProps {
 }
 
 const defaultValues: TypeCreateOutput = {
-  name: "",
+  name: '',
   isActive: true,
   isStackable: false,
   hasTierOption: false,
-  categoryId: "",
+  categoryId: '',
   nexusName: null,
   requestName: null,
 };
@@ -60,7 +60,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
 
   return (
     <GenericForm
-      key={type?.id ?? "create-type"}
+      key={type?.id ?? 'create-type'}
       onSubmit={handleSubmit}
       schema={TypeCreate}
       defaultValues={formValues}
@@ -70,7 +70,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
       <FormButtonsSection
         submitDisabled={typeMutation.isPending}
         cancelDisabled={typeMutation.isPending}
-        submitLabel={type ? "Modifier" : "Créer"}
+        submitLabel={type ? 'Modifier' : 'Créer'}
         onCancel={onClose}
       />
     </GenericForm>
@@ -79,7 +79,7 @@ function TypeForm({ type, onClose }: TypeFormProps) {
 
 function TypeFormFields() {
   const form = useFormContext<TypeCreateOutput>();
-  const isStackable = Boolean(form.watch("isStackable"));
+  const isStackable = Boolean(form.watch('isStackable'));
 
   return (
     <div className="flex-1 flex flex-col gap-2">
@@ -101,7 +101,7 @@ function TypeFormFields() {
         label="Stackable"
         onCheckedChange={(checked) => {
           if (checked) {
-            form.setValue("hasTierOption", false, {
+            form.setValue('hasTierOption', false, {
               shouldDirty: true,
             });
           }

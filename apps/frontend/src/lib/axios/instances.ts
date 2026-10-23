@@ -1,9 +1,9 @@
-import { getApiBaseUrl } from "@/config/runtime";
-import axios from "axios";
+import { getApiBaseUrl } from '@/config/runtime';
+import axios from 'axios';
 import {
   attachPrivateRequestInterceptor,
   attachPrivateResponseInterceptor,
-} from "./interceptors";
+} from './interceptors';
 
 const baseConfig = {
   baseURL: getApiBaseUrl(),

@@ -1,4 +1,4 @@
-import { toDisplay } from "./utils";
+import { toDisplay } from './utils';
 
 type TextCellProps = {
   value: unknown;

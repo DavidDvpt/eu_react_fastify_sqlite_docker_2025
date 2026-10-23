@@ -1,9 +1,9 @@
-import { useEffect } from "react";
-import { useFormContext, useWatch } from "react-hook-form";
+import { useEffect } from 'react';
+import { useFormContext, useWatch } from 'react-hook-form';
 
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import type { RefiningFormValues } from "@/shared/schemas";
-import { FormatTools } from "@/shared/tools";
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import type { RefiningFormValues } from '@/shared/schemas';
+import { FormatTools } from '@/shared/tools';
 
 type RefiningQuantityFieldProps = {
   selectedResultId: string | null;
@@ -21,21 +21,21 @@ function RefiningQuantityField({
   refinerDecays,
 }: RefiningQuantityFieldProps) {
   const { getValues, setValue } = useFormContext<RefiningFormValues>();
-  const clickCount = useWatch<RefiningFormValues, "clickCount">({
-    name: "clickCount",
+  const clickCount = useWatch<RefiningFormValues, 'clickCount'>({
+    name: 'clickCount',
   });
-  const refinerLotId = useWatch<RefiningFormValues, "refinerLotId">({
-    name: "refinerLotId",
+  const refinerLotId = useWatch<RefiningFormValues, 'refinerLotId'>({
+    name: 'refinerLotId',
   });
   const refiningDecay = refinerDecays.get(refinerLotId) ?? 0;
   const refiningCost =
-    refiningDecay * (typeof clickCount === "number" ? clickCount : 0);
+    refiningDecay * (typeof clickCount === 'number' ? clickCount : 0);
 
   useEffect(() => {
     if (selectedResultId && !linesPending) {
-      const currentClickCount = getValues("clickCount");
+      const currentClickCount = getValues('clickCount');
       if (currentClickCount !== maxClickCount) {
-        setValue("clickCount", maxClickCount, { shouldValidate: true });
+        setValue('clickCount', maxClickCount, { shouldValidate: true });
       }
     }
   }, [getValues, linesPending, maxClickCount, selectedResultId, setValue]);
@@ -53,13 +53,13 @@ function RefiningQuantityField({
       />
       <p className="m-0 text-xs text-text-muted">
         Multiple de {ppcm} — maximum {maxClickCount} résultat
-        {maxClickCount > 1 ? "s" : ""}
+        {maxClickCount > 1 ? 's' : ''}
       </p>
       <p className="m-0 text-xs text-text-muted">
-        Coût decay total :{" "}
+        Coût decay total :{' '}
         {FormatTools.pedFormat({ decimalMini: 2, decimalMaxi: 5 }).format(
           refiningCost,
-        )}{" "}
+        )}{' '}
         PED
       </p>
     </div>

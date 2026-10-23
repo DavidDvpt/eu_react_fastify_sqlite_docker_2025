@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from 'zod';
 
 export const stockQuerySchema = z.object({ itemId: z.string() }).partial();
 

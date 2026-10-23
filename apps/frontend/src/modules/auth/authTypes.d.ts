@@ -1,4 +1,4 @@
-type UserRoleType = "USER" | "ADMIN" | null;
+type UserRoleType = 'USER' | 'ADMIN' | null;
 
 type AuthMe = {
   id: string;

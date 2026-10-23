@@ -1,6 +1,6 @@
-import { formatItemNameWithTier, getItemImageUrl } from "@/shared/helpers";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import type { ItemViewModel } from "@zod-schemas";
+import { formatItemNameWithTier, getItemImageUrl } from '@/shared/helpers';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import type { ItemViewModel } from '@zod-schemas';
 
 type MiningResultItemOptionProps = {
   item: ItemViewModel;
@@ -24,14 +24,14 @@ function MiningResultItemOption({
       className="flex w-full cursor-pointer items-center gap-2 rounded-none bg-input px-2 py-0 text-left text-xs text-white shadow-none hover:bg-surface-hover"
       onClick={onClick}
       onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
+        if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
           onClick();
         }
       }}
     >
       <ItemImage
-        url={getItemImageUrl(item.imageUrlId, "normal")}
+        url={getItemImageUrl(item.imageUrlId, 'normal')}
         alt={name}
         size="small"
         classname="shrink-0"

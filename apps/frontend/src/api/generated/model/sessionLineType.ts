@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export type SessionLineType = typeof SessionLineType[keyof typeof SessionLineType];
-
+export type SessionLineType =
+  (typeof SessionLineType)[keyof typeof SessionLineType];
 
 export const SessionLineType = {
   COST: 'COST',

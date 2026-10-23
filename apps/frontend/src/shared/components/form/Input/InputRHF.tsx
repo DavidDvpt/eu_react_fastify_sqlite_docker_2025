@@ -1,19 +1,19 @@
-import { Eye, EyeOff } from "lucide-react";
-import { type ChangeEvent, type InputHTMLAttributes, useState } from "react";
+import { Eye, EyeOff } from 'lucide-react';
+import { type ChangeEvent, type InputHTMLAttributes, useState } from 'react';
 
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormContext";
-import type { InputRHFProps } from "../form.types";
+import { Input } from '@/components/ui/input';
+import { cn } from '@/lib/utils';
+import useSafeFormContext from '@/shared/components/form/hookForm/useSafeFormContext';
+import type { InputRHFProps } from '../form.types';
 import {
   formErrorClassName,
   formFieldWrapperClassName,
   formLabelClassName,
-} from "../form.styles";
+} from '../form.styles';
 
 function InputRHF({
   name,
-  type = "text",
+  type = 'text',
   label,
   className,
   wrapperClassName,
@@ -40,12 +40,12 @@ function InputRHF({
     onBlur: onRegistrationBlur,
     onChange: onRegistrationChange,
   } = registration;
-  const isPasswordField = type === "password";
+  const isPasswordField = type === 'password';
 
   const effectiveType =
     isPasswordField && visible
-      ? "text"
-      : (type as InputHTMLAttributes<HTMLInputElement>["type"]);
+      ? 'text'
+      : (type as InputHTMLAttributes<HTMLInputElement>['type']);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onInputChange?.(event, name);
@@ -75,10 +75,10 @@ function InputRHF({
             className,
             inputClassName,
             fieldState.error
-              ? "border-error-500 focus-visible:ring-error-500"
-              : "",
-            isPasswordField ? "pr-10" : "",
-            suffix ? "pr-8" : "",
+              ? 'border-error-500 focus-visible:ring-error-500'
+              : '',
+            isPasswordField ? 'pr-10' : '',
+            suffix ? 'pr-8' : '',
           )}
           onBlur={(event) => {
             onRegistrationBlur(event);
@@ -101,7 +101,7 @@ function InputRHF({
             className="absolute inset-y-0 right-2 inline-flex items-center text-text border-none bg-transparent cursor-pointer focus:outline-none focus:ring-0"
             onClick={() => setVisible((prev) => !prev)}
             aria-label={
-              visible ? "Masquer le mot de passe" : "Afficher le mot de passe"
+              visible ? 'Masquer le mot de passe' : 'Afficher le mot de passe'
             }
           >
             {visible ? (
@@ -114,12 +114,7 @@ function InputRHF({
       </div>
 
       {!hideErrorMessage && fieldState.error?.message ? (
-        <p
-          className={cn(
-            formErrorClassName,
-            errorClassName,
-          )}
-        >
+        <p className={cn(formErrorClassName, errorClassName)}>
           {String(fieldState.error.message)}
         </p>
       ) : null}

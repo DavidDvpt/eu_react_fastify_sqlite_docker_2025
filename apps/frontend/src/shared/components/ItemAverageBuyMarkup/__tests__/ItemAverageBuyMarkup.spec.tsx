@@ -1,10 +1,10 @@
-import { render, screen } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { render, screen } from '@testing-library/react';
+import { describe, expect, it } from 'vitest';
 
-import ItemAverageBuyMarkup from "../ItemAverageBuyMarkup";
+import ItemAverageBuyMarkup from '../ItemAverageBuyMarkup';
 
-describe("ItemAverageBuyMarkup", () => {
-  it("renders global and stock markups on two lines", () => {
+describe('ItemAverageBuyMarkup', () => {
+  it('renders global and stock markups on two lines', () => {
     render(
       <ItemAverageBuyMarkup
         averageBuyMarkup={{
@@ -14,13 +14,13 @@ describe("ItemAverageBuyMarkup", () => {
       />,
     );
 
-    expect(screen.getByText("Global %")).toBeInTheDocument();
-    expect(screen.getByText("45.20% / 43.87%")).toBeInTheDocument();
-    expect(screen.getByText("Stock %")).toBeInTheDocument();
-    expect(screen.getByText("12.00% / 10.50%")).toBeInTheDocument();
+    expect(screen.getByText('Global %')).toBeInTheDocument();
+    expect(screen.getByText('45.20% / 43.87%')).toBeInTheDocument();
+    expect(screen.getByText('Stock %')).toBeInTheDocument();
+    expect(screen.getByText('12.00% / 10.50%')).toBeInTheDocument();
   });
 
-  it("renders a dash for every null value", () => {
+  it('renders a dash for every null value', () => {
     render(
       <ItemAverageBuyMarkup
         averageBuyMarkup={{
@@ -30,10 +30,10 @@ describe("ItemAverageBuyMarkup", () => {
       />,
     );
 
-    expect(screen.getAllByText("- / -")).toHaveLength(2);
+    expect(screen.getAllByText('- / -')).toHaveLength(2);
   });
 
-  it("renders nothing when there is no markup", () => {
+  it('renders nothing when there is no markup', () => {
     const { container } = render(
       <ItemAverageBuyMarkup averageBuyMarkup={null} />,
     );

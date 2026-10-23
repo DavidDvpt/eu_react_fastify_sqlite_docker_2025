@@ -1,4 +1,4 @@
-import { toDisplay } from "./utils";
+import { toDisplay } from './utils';
 
 type DateCellProps = {
   value: unknown;
@@ -15,7 +15,7 @@ function DateCell({ value }: DateCellProps) {
     <>
       {Number.isNaN(date.getTime())
         ? toDisplay(value)
-        : date.toLocaleDateString("fr-FR")}
+        : date.toLocaleDateString('fr-FR')}
     </>
   );
 }

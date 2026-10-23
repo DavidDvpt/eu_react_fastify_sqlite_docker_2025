@@ -1,4 +1,4 @@
-import type { ItemViewModel } from "@zod-schemas";
+import type { ItemViewModel } from '@zod-schemas';
 
 export type EnhancerLine = {
   itemId: string;

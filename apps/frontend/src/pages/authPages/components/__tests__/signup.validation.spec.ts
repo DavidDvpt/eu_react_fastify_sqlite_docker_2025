@@ -1,58 +1,58 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import "@/shared/validation/zodConfig";
-import { userSignUpFormSchema } from "@zod-schemas";
+import '@/shared/validation/zodConfig';
+import { userSignUpFormSchema } from '@zod-schemas';
 
-describe("signUpSchema", () => {
-  it("accepts a valid payload", () => {
+describe('signUpSchema', () => {
+  it('accepts a valid payload', () => {
     const result = userSignUpFormSchema.safeParse({
-      pseudo: "frederic",
-      firstname: "Frederic",
-      lastname: "Francois",
-      email: "frederic@test.com",
-      password: "password123",
+      pseudo: 'frederic',
+      firstname: 'Frederic',
+      lastname: 'Francois',
+      email: 'frederic@test.com',
+      password: 'password123',
     });
 
     expect(result.success).toBe(true);
   });
 
-  it("rejects invalid email", () => {
+  it('rejects invalid email', () => {
     const result = userSignUpFormSchema.safeParse({
-      pseudo: "frederic",
-      email: "invalid-email",
-      password: "password123",
+      pseudo: 'frederic',
+      email: 'invalid-email',
+      password: 'password123',
     });
 
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.email?.[0]).toBe(
-        "Email invalide"
+        'Email invalide',
       );
     }
   });
 
-  it("rejects short password", () => {
+  it('rejects short password', () => {
     const result = userSignUpFormSchema.safeParse({
-      pseudo: "frederic",
-      email: "frederic@test.com",
-      password: "123",
+      pseudo: 'frederic',
+      email: 'frederic@test.com',
+      password: '123',
     });
 
     expect(result.success).toBe(false);
     if (!result.success) {
       expect(result.error.flatten().fieldErrors.password?.[0]).toBe(
-        "Ce champ doit contenir au moins 8 caractères"
+        'Ce champ doit contenir au moins 8 caractères',
       );
     }
   });
 
-  it("transforms empty optional names to undefined", () => {
+  it('transforms empty optional names to undefined', () => {
     const result = userSignUpFormSchema.safeParse({
-      pseudo: "frederic",
-      firstname: "",
-      lastname: "",
-      email: "frederic@test.com",
-      password: "password123",
+      pseudo: 'frederic',
+      firstname: '',
+      lastname: '',
+      email: 'frederic@test.com',
+      password: 'password123',
     });
 
     expect(result.success).toBe(true);

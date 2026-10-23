@@ -5,9 +5,9 @@
  */
 
 export type GetMiningLootListApiV2SessionsMiningLootlistGetParams = {
-/**
- * @minimum 1
- * @maximum 3
- */
-sessionType: number;
+  /**
+   * @minimum 1
+   * @maximum 3
+   */
+  sessionType: number;
 };

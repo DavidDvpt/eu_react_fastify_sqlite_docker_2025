@@ -1,1 +1,1 @@
-export { GenericCellRenderer } from "./index.tsx";
+export { GenericCellRenderer } from './index.tsx';

@@ -1,11 +1,15 @@
-import { useEffect, useRef, useState } from "react";
-import type { KeyboardEvent } from "react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { formatItemNameWithTier, getItemImageUrl, NumberHelper } from "@/shared/helpers";
-import type { ItemViewModel } from "@zod-schemas";
-import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
+import { useEffect, useRef, useState } from 'react';
+import type { KeyboardEvent } from 'react';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import {
+  formatItemNameWithTier,
+  getItemImageUrl,
+  NumberHelper,
+} from '@/shared/helpers';
+import type { ItemViewModel } from '@zod-schemas';
+import IconButton, { IconButtonIcon } from '@/shared/components/IconButton';
 
 const FINALIZE_HOLD_MS = 3000;
 
@@ -26,7 +30,7 @@ function MiningResultCard({
   isFinalized,
   isSaving = false,
 }: MiningResultCardProps) {
-  const [newQuantity, setNewQuantity] = useState("");
+  const [newQuantity, setNewQuantity] = useState('');
   const [holdProgress, setHoldProgress] = useState(0);
   const holdStartedAt = useRef<number | null>(null);
   const holdCompleted = useRef(false);
@@ -40,9 +44,9 @@ function MiningResultCard({
 
   const submitQuantity = () => {
     const parsed = Number(newQuantity);
-    if (newQuantity === "" || Number.isNaN(parsed)) return;
+    if (newQuantity === '' || Number.isNaN(parsed)) return;
     onQuantityChange(Math.max(0, parsed));
-    setNewQuantity("");
+    setNewQuantity('');
   };
 
   const handleQuantityChange = (value: string) => {
@@ -60,7 +64,13 @@ function MiningResultCard({
   };
 
   const startFinalize = () => {
-    if (isFinalized || quantity <= 0 || isSaving || holdStartedAt.current !== null) return;
+    if (
+      isFinalized ||
+      quantity <= 0 ||
+      isSaving ||
+      holdStartedAt.current !== null
+    )
+      return;
     holdStartedAt.current = Date.now();
     holdCompleted.current = false;
     setHoldProgress(0);
@@ -88,22 +98,26 @@ function MiningResultCard({
   );
 
   const handleQuantityKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       event.preventDefault();
       submitQuantity();
     }
   };
 
   return (
-    <article className={`grid w-[200px] min-w-0 grid-cols-[auto_1fr] gap-3 rounded-lg border border-border bg-surface p-2 text-xs ${isFinalized ? "opacity-60" : ""}`}>
+    <article
+      className={`grid w-[200px] min-w-0 grid-cols-[auto_1fr] gap-3 rounded-lg border border-border bg-surface p-2 text-xs ${isFinalized ? 'opacity-60' : ''}`}
+    >
       <ItemImage
-        url={getItemImageUrl(item.imageUrlId, "normal")}
+        url={getItemImageUrl(item.imageUrlId, 'normal')}
         alt={name}
         size="medium"
         classname="h-[70px] w-[70px] shrink-0"
       />
       <div className="min-w-0 flex-1">
-        <div className="line-clamp-2 break-words text-sm font-medium text-text">{name}</div>
+        <div className="line-clamp-2 break-words text-sm font-medium text-text">
+          {name}
+        </div>
         <div className="mt-1 grid grid-cols-[auto_1fr] gap-x-2 gap-y-0.5 text-text-muted">
           <span>TT</span>
           <span className="text-right font-bold text-text">
@@ -137,7 +151,7 @@ function MiningResultCard({
             variant="primary"
             aria-label="Valider la quantité"
             title="Valider la quantité"
-            disabled={isFinalized || isSaving || newQuantity === ""}
+            disabled={isFinalized || isSaving || newQuantity === ''}
             onClick={submitQuantity}
             icon={IconButtonIcon.Enter}
             iconSize={14}
@@ -148,20 +162,20 @@ function MiningResultCard({
           <Button
             type="button"
             size="sm"
-            variant={isFinalized ? "secondary" : "primary"}
+            variant={isFinalized ? 'secondary' : 'primary'}
             disabled={isFinalized || quantity <= 0 || isSaving}
             onPointerDown={startFinalize}
             onPointerUp={cancelFinalize}
             onPointerLeave={cancelFinalize}
             onPointerCancel={cancelFinalize}
             onKeyDown={(event) => {
-              if (event.key === "Enter" || event.key === " ") {
+              if (event.key === 'Enter' || event.key === ' ') {
                 event.preventDefault();
                 startFinalize();
               }
             }}
             onKeyUp={(event) => {
-              if (event.key === "Enter" || event.key === " ") cancelFinalize();
+              if (event.key === 'Enter' || event.key === ' ') cancelFinalize();
             }}
             className="relative min-w-0 flex-1 overflow-hidden"
           >
@@ -173,7 +187,11 @@ function MiningResultCard({
               />
             )}
             <span className="relative z-10">
-              {isFinalized ? "Finalisée" : isSaving ? "Enregistrement…" : "Finaliser"}
+              {isFinalized
+                ? 'Finalisée'
+                : isSaving
+                  ? 'Enregistrement…'
+                  : 'Finaliser'}
             </span>
           </Button>
           <IconButton

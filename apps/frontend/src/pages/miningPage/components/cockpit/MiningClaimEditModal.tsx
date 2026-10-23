@@ -1,24 +1,27 @@
-import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
-import { z } from "zod";
+import { useMemo } from 'react';
+import { useSearchParams } from 'react-router-dom';
+import { z } from 'zod';
 import {
   useCreateClaimApiV2MiningSessionIdClaimsPost,
   usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
-} from "@/api/generated/react-query/entropiaManagerAPI";
-import type { MiningClaimResponse } from "@/api/generated/react-query/model/miningClaimResponse";
-import type { MiningDepositSizeResponse } from "@/api/generated/react-query/model/miningDepositSizeResponse";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import FormButtonsSection from "@/shared/components/form/FormButtonsSection";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import SelectRHF from "@/shared/components/form/Select/SelectRHF";
-import CheckboxRHF from "@/shared/components/form/Checkbox/CheckboxRHF";
-import { ModalGeneric } from "@/shared/components";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { ItemViewModel } from "@zod-schemas";
+} from '@/api/generated/react-query/entropiaManagerAPI';
+import type { MiningClaimResponse } from '@/api/generated/react-query/model/miningClaimResponse';
+import type { MiningDepositSizeResponse } from '@/api/generated/react-query/model/miningDepositSizeResponse';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import FormButtonsSection from '@/shared/components/form/FormButtonsSection';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import SelectRHF from '@/shared/components/form/Select/SelectRHF';
+import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
+import { ModalGeneric } from '@/shared/components';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { ItemViewModel } from '@zod-schemas';
 
 const nullableNumber = (integer = false) =>
   z.preprocess(
-    (value) => value === "" || (typeof value === "number" && Number.isNaN(value)) ? null : value,
+    (value) =>
+      value === '' || (typeof value === 'number' && Number.isNaN(value))
+        ? null
+        : value,
     (integer ? z.number().int() : z.number()).nullable(),
   );
 
@@ -49,8 +52,8 @@ function MiningClaimEditModal({
   depositSizes,
 }: MiningClaimEditModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
-  const claimId = searchParams.get("claimId");
-  const isCreateMode = searchParams.get("createClaim") === "true";
+  const claimId = searchParams.get('claimId');
+  const isCreateMode = searchParams.get('createClaim') === 'true';
   const claim = claims.find((entry) => entry.id === claimId);
   const createClaim = useCreateClaimApiV2MiningSessionIdClaimsPost();
   const patchClaim = usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch();
@@ -60,24 +63,27 @@ function MiningClaimEditModal({
     [items],
   );
   const sizeOptions = useMemo(
-    () => depositSizes.map((size) => ({
-      value: String(size.id),
-      label: `${size.romanSize} — ${size.sizeLabel}`,
-    })),
+    () =>
+      depositSizes.map((size) => ({
+        value: String(size.id),
+        label: `${size.romanSize} — ${size.sizeLabel}`,
+      })),
     [depositSizes],
   );
 
   const close = () => {
     const next = new URLSearchParams(searchParams);
-    next.delete("claimId");
-    next.delete("createClaim");
+    next.delete('claimId');
+    next.delete('createClaim');
     setSearchParams(next);
   };
 
   if ((!claimId || !claim) && !isCreateMode) return null;
 
   // Claims store the reference row id, not the display size number.
-  const selectedDepositSize = depositSizes.find((size) => size.id === claim?.depositSize);
+  const selectedDepositSize = depositSizes.find(
+    (size) => size.id === claim?.depositSize,
+  );
 
   const defaultValues = {
     itemId: claim?.itemId ?? null,
@@ -122,7 +128,7 @@ function MiningClaimEditModal({
         });
       }
       await InvalidateQueryAndKeys.miningMutation(sessionId);
-    } else if (claim && !claim.id.startsWith("__fake-claim-")) {
+    } else if (claim && !claim.id.startsWith('__fake-claim-')) {
       await patchClaim.mutateAsync({
         sessionId,
         claimId: claim.id,
@@ -133,9 +139,7 @@ function MiningClaimEditModal({
           latitude: values.latitude,
           longitude: values.longitude,
           depth: values.depth,
-          depositSize: depositSizeId !== null
-            ? Number(depositSizeId)
-            : null,
+          depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
         },
       });
       await InvalidateQueryAndKeys.miningMutation(sessionId);
@@ -150,30 +154,72 @@ function MiningClaimEditModal({
       onOpenChange={(open) => {
         if (!open) close();
       }}
-      title={{ value: isCreateMode ? "Créer un claim" : "Modifier le claim" }}
+      title={{ value: isCreateMode ? 'Créer un claim' : 'Modifier le claim' }}
       contentStyle="max-h-[90vh] overflow-y-auto"
     >
       <GenericForm
-        key={claim?.id ?? "create"}
+        key={claim?.id ?? 'create'}
         schema={claimEditSchema}
         defaultValues={defaultValues}
         onSubmit={handleSubmit}
         className="flex flex-col gap-3"
       >
-        <SelectRHF name="itemId" label="Ressource: " options={itemOptions} placeholder="Choisir une ressource..." />
-        <SelectRHF name="depositSize" label="Taille: " options={sizeOptions} placeholder="Choisir une taille..." />
-        <InputRHF name="quantity" label="Quantité: " type="number" min={1} step="1" registerOptions={{ valueAsNumber: true }} />
-        <InputRHF name="value" label="Valeur: " type="number" min={0} step="any" registerOptions={{ valueAsNumber: true }} />
+        <SelectRHF
+          name="itemId"
+          label="Ressource: "
+          options={itemOptions}
+          placeholder="Choisir une ressource..."
+        />
+        <SelectRHF
+          name="depositSize"
+          label="Taille: "
+          options={sizeOptions}
+          placeholder="Choisir une taille..."
+        />
+        <InputRHF
+          name="quantity"
+          label="Quantité: "
+          type="number"
+          min={1}
+          step="1"
+          registerOptions={{ valueAsNumber: true }}
+        />
+        <InputRHF
+          name="value"
+          label="Valeur: "
+          type="number"
+          min={0}
+          step="any"
+          registerOptions={{ valueAsNumber: true }}
+        />
         <div className="grid grid-cols-2 gap-2">
-          <InputRHF name="latitude" label="Latitude: " type="number" step="1" registerOptions={{ valueAsNumber: true }} />
-          <InputRHF name="longitude" label="Longitude: " type="number" step="1" registerOptions={{ valueAsNumber: true }} />
+          <InputRHF
+            name="latitude"
+            label="Latitude: "
+            type="number"
+            step="1"
+            registerOptions={{ valueAsNumber: true }}
+          />
+          <InputRHF
+            name="longitude"
+            label="Longitude: "
+            type="number"
+            step="1"
+            registerOptions={{ valueAsNumber: true }}
+          />
         </div>
-        <InputRHF name="depth" label="Profondeur: " type="number" step="any" registerOptions={{ valueAsNumber: true }} />
+        <InputRHF
+          name="depth"
+          label="Profondeur: "
+          type="number"
+          step="any"
+          registerOptions={{ valueAsNumber: true }}
+        />
         <CheckboxRHF name="depleted" label="Depleted" />
         <FormButtonsSection
           submitDisabled={patchClaim.isPending}
           cancelDisabled={patchClaim.isPending}
-          submitLabel={isCreateMode ? "Créer" : "Enregistrer"}
+          submitLabel={isCreateMode ? 'Créer' : 'Enregistrer'}
           onCancel={close}
         />
       </GenericForm>

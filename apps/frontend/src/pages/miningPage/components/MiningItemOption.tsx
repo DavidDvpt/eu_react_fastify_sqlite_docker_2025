@@ -1,7 +1,7 @@
-import { formatItemNameWithTier, getItemImageUrl } from "@/shared/helpers";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import type { ItemViewModel } from "@zod-schemas";
-import type { ReactNode } from "react";
+import { formatItemNameWithTier, getItemImageUrl } from '@/shared/helpers';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import type { ItemViewModel } from '@zod-schemas';
+import type { ReactNode } from 'react';
 
 function MiningItemOption({
   item,
@@ -21,12 +21,12 @@ function MiningItemOption({
         isStackable: item.type?.isStackable,
         tierLevel,
       })
-    : "Item indisponible";
+    : 'Item indisponible';
 
   return (
     <span className="flex items-center gap-2">
       <ItemImage
-        url={item ? getItemImageUrl(item.imageUrlId, "normal") : null}
+        url={item ? getItemImageUrl(item.imageUrlId, 'normal') : null}
         alt={name}
         size="small"
         classname="shrink-0"

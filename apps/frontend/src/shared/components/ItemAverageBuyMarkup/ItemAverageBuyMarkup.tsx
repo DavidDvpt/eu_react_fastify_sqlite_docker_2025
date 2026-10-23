@@ -1,12 +1,12 @@
-import { cn } from "@/lib/utils";
-import type { AverageBuyMarkupResponse } from "@/api/generated/react-query/model";
+import { cn } from '@/lib/utils';
+import type { AverageBuyMarkupResponse } from '@/api/generated/react-query/model';
 
 interface ItemAverageBuyMarkupProps {
   averageBuyMarkup: AverageBuyMarkupResponse | null | undefined;
   className?: string;
 }
 
-const EMPTY_VALUE = "-";
+const EMPTY_VALUE = '-';
 
 function formatMarkup(value: number | null) {
   return value === null ? EMPTY_VALUE : `${value.toFixed(2)}%`;
@@ -25,7 +25,7 @@ function ItemAverageBuyMarkup({
   return (
     <div
       className={cn(
-        "grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-1 text-xs",
+        'grid grid-cols-[auto_auto_1fr] gap-x-2 gap-y-1 text-xs',
         className,
       )}
     >

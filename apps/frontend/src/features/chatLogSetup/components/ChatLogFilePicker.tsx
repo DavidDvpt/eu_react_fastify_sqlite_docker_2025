@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 
 type ChatLogFilePickerProps = {
   onSelect: (file?: File) => Promise<void>;
@@ -9,16 +9,23 @@ type FilePickerWindow = Window & {
 };
 
 function ChatLogFilePicker({ onSelect }: ChatLogFilePickerProps) {
-  const supportsLiveFileAccess = typeof (window as FilePickerWindow).showOpenFilePicker === "function";
+  const supportsLiveFileAccess =
+    typeof (window as FilePickerWindow).showOpenFilePicker === 'function';
 
   return (
     <>
-      <Button type="button" variant="secondary" onClick={() => void onSelect()} disabled={!supportsLiveFileAccess}>
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() => void onSelect()}
+        disabled={!supportsLiveFileAccess}
+      >
         Sélectionner chat.log (accès live)
       </Button>
       {!supportsLiveFileAccess && (
         <p className="m-0 text-sm text-error-500">
-          Utilisez Chrome ou Brave pour permettre le suivi en direct de chat.log.
+          Utilisez Chrome ou Brave pour permettre le suivi en direct de
+          chat.log.
         </p>
       )}
     </>

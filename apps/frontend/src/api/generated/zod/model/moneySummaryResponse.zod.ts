@@ -10,10 +10,18 @@ export const moneySummaryResponseFeeDefault = 0;
 export const moneySummaryResponseTtcDefault = 0;
 
 export const MoneySummaryResponse = zod.object({
-  "tt": zod.union([zod.int(),zod.number()]).default(moneySummaryResponseTtDefault),
-  "fee": zod.union([zod.int(),zod.number()]).default(moneySummaryResponseFeeDefault),
-  "ttc": zod.union([zod.int(),zod.number()]).default(moneySummaryResponseTtcDefault)
+  tt: zod
+    .union([zod.int(), zod.number()])
+    .default(moneySummaryResponseTtDefault),
+  fee: zod
+    .union([zod.int(), zod.number()])
+    .default(moneySummaryResponseFeeDefault),
+  ttc: zod
+    .union([zod.int(), zod.number()])
+    .default(moneySummaryResponseTtcDefault),
 });
 
 export type MoneySummaryResponse = zod.input<typeof MoneySummaryResponse>;
-export type MoneySummaryResponseOutput = zod.output<typeof MoneySummaryResponse>;
+export type MoneySummaryResponseOutput = zod.output<
+  typeof MoneySummaryResponse
+>;

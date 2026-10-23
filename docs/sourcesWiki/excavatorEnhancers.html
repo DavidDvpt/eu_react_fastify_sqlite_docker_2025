@@ -21,7 +21,7 @@
     <script async="" src="//www.google-analytics.com/analytics.js"></script>
     <script type="text/javascript">
       (function (i, s, o, g, r, a, m) {
-        i["GoogleAnalyticsObject"] = r;
+        i['GoogleAnalyticsObject'] = r;
         ((i[r] =
           i[r] ||
           function () {
@@ -35,13 +35,13 @@
       })(
         window,
         document,
-        "script",
-        "//www.google-analytics.com/analytics.js",
-        "ga",
+        'script',
+        '//www.google-analytics.com/analytics.js',
+        'ga',
       );
 
-      ga("create", "UA-52066011-1", "entropiawiki.com");
-      ga("send", "pageview");
+      ga('create', 'UA-52066011-1', 'entropiawiki.com');
+      ga('send', 'pageview');
     </script>
     <meta
       name="keywords"
@@ -75,7 +75,7 @@
 
       <script type="text/javascript">
         //<![CDATA[
-        var theForm = document.forms["aspnetForm"];
+        var theForm = document.forms['aspnetForm'];
         function __doPostBack(eventTarget, eventArgument) {
           if (!theForm.onsubmit || theForm.onsubmit() != false) {
             theForm.__EVENTTARGET.value = eventTarget;
@@ -97,8 +97,8 @@
       ></script>
       <script type="text/javascript">
         //<![CDATA[
-        if (typeof Sys === "undefined")
-          throw new Error("ASP.NET Ajax client-side framework failed to load.");
+        if (typeof Sys === 'undefined')
+          throw new Error('ASP.NET Ajax client-side framework failed to load.');
         //]]>
       </script>
 
@@ -409,8 +409,8 @@
                 var agent = navigator.userAgent.toLowerCase();
 
                 var is_iphone =
-                  agent.indexOf("iphone") != -1 ||
-                  (agent.indexOf("ipad") != -1 && agent.indexOf("apple") != -1);
+                  agent.indexOf('iphone') != -1 ||
+                  (agent.indexOf('ipad') != -1 && agent.indexOf('apple') != -1);
 
                 if (!is_iphone) {
                   document.write(
@@ -446,11 +446,11 @@
               <script type="text/javascript">
                 //<![CDATA[
                 Sys.WebForms.PageRequestManager._initialize(
-                  "ctl00$ContentPlaceHolder1$ScriptManager1",
-                  document.getElementById("aspnetForm"),
+                  'ctl00$ContentPlaceHolder1$ScriptManager1',
+                  document.getElementById('aspnetForm'),
                 );
                 Sys.WebForms.PageRequestManager.getInstance()._updateControls(
-                  ["tctl00$ContentPlaceHolder1$UpdatePanel1"],
+                  ['tctl00$ContentPlaceHolder1$UpdatePanel1'],
                   [],
                   [],
                   90,
@@ -1255,14 +1255,14 @@
             AjaxControlToolkit.CollapsiblePanelBehavior,
             {
               ClientStateFieldID:
-                "ctl00_ContentPlaceHolder1_CollapsiblePanelExtender3_ClientState",
-              CollapseControlID: "ctl00_ContentPlaceHolder1_ToolsHead",
-              ExpandControlID: "ctl00_ContentPlaceHolder1_ToolsHead",
-              id: "ctl00_ContentPlaceHolder1_CollapsiblePanelExtender3",
+                'ctl00_ContentPlaceHolder1_CollapsiblePanelExtender3_ClientState',
+              CollapseControlID: 'ctl00_ContentPlaceHolder1_ToolsHead',
+              ExpandControlID: 'ctl00_ContentPlaceHolder1_ToolsHead',
+              id: 'ctl00_ContentPlaceHolder1_CollapsiblePanelExtender3',
             },
             null,
             null,
-            $get("ctl00_ContentPlaceHolder1_ToolsContent"),
+            $get('ctl00_ContentPlaceHolder1_ToolsContent'),
           );
         });
         Sys.Application.add_init(function () {
@@ -1270,14 +1270,14 @@
             AjaxControlToolkit.CollapsiblePanelBehavior,
             {
               ClientStateFieldID:
-                "ctl00_ContentPlaceHolder1_CollapsiblePanelExtender1_ClientState",
-              CollapseControlID: "ctl00_ContentPlaceHolder1_FilterHead",
-              ExpandControlID: "ctl00_ContentPlaceHolder1_FilterHead",
-              id: "ctl00_ContentPlaceHolder1_CollapsiblePanelExtender1",
+                'ctl00_ContentPlaceHolder1_CollapsiblePanelExtender1_ClientState',
+              CollapseControlID: 'ctl00_ContentPlaceHolder1_FilterHead',
+              ExpandControlID: 'ctl00_ContentPlaceHolder1_FilterHead',
+              id: 'ctl00_ContentPlaceHolder1_CollapsiblePanelExtender1',
             },
             null,
             null,
-            $get("ctl00_ContentPlaceHolder1_FilterContent"),
+            $get('ctl00_ContentPlaceHolder1_FilterContent'),
           );
         });
         //]]>

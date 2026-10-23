@@ -1,15 +1,15 @@
-import z from "zod";
-import { booleanSchema } from "@zod-schemas";
-import { genericListViewModeSchema } from "@/shared/components/GenericList";
-import { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
+import z from 'zod';
+import { booleanSchema } from '@zod-schemas';
+import { genericListViewModeSchema } from '@/shared/components/GenericList';
+import { genericFilterSchema } from '@/shared/components/GenericFilter/genericFilterSchema';
 
 export const inventoryPageQuerySchema = genericFilterSchema
   .omit({ itemId: true })
   .extend({
     showAllItems: z
-      .preprocess((value) => (value === "1" ? true : value), booleanSchema)
+      .preprocess((value) => (value === '1' ? true : value), booleanSchema)
       .optional(),
-    viewMode: genericListViewModeSchema.default("list"),
+    viewMode: genericListViewModeSchema.default('list'),
   });
 
 export type InventoryPageQuery = z.infer<typeof inventoryPageQuerySchema>;

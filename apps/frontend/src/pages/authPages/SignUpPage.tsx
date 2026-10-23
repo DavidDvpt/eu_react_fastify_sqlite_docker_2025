@@ -1,10 +1,10 @@
-import AppCard from "@/shared/components/AppCard";
-import signupApi from "@/modules/auth/services/network/signupApi";
-import { useNavigate } from "react-router-dom";
-import styles from "./styles/signup.module.css";
-import { AppLink } from "@/shared/components/AppLink";
-import SignUpForm from "./components/SignUpForm";
-import type { UserSignupFormBody } from "@zod-schemas";
+import AppCard from '@/shared/components/AppCard';
+import signupApi from '@/modules/auth/services/network/signupApi';
+import { useNavigate } from 'react-router-dom';
+import styles from './styles/signup.module.css';
+import { AppLink } from '@/shared/components/AppLink';
+import SignUpForm from './components/SignUpForm';
+import type { UserSignupFormBody } from '@zod-schemas';
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ function SignUpPage() {
   const handleSubmit = async (values: UserSignupFormBody) => {
     try {
       await signupApi(values);
-      navigate("/auth/signin", { replace: true });
+      navigate('/auth/signin', { replace: true });
     } catch (error) {
       console.log(error);
     }

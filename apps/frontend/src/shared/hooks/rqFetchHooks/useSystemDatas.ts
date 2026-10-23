@@ -1,17 +1,17 @@
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
 import {
   useListCategoriesApiV2CategoriesGet,
   useListItemsApiV2ItemsGet,
   useListTypesApiV2TypesGet,
-} from "@/api/generated/react-query/entropiaManagerAPI";
-import { useAppSelector } from "@/store/hooks";
-import { selectIsLoggued } from "@/store/reducers/auth";
+} from '@/api/generated/react-query/entropiaManagerAPI';
+import { useAppSelector } from '@/store/hooks';
+import { selectIsLoggued } from '@/store/reducers/auth';
 import type {
   CategoryViewModels,
   ItemViewModels,
   TypeViewModels,
-} from "@zod-schemas";
-import { useMemo } from "react";
+} from '@zod-schemas';
+import { useMemo } from 'react';
 
 export default function useSystemDatas() {
   const logged = useAppSelector(selectIsLoggued);
@@ -74,23 +74,23 @@ export default function useSystemDatas() {
   // `detail` query parameter. Each detail query only returns values for the
   // matching item type, so merge them into the base item collection below.
   const finderDetails = useListItemsApiV2ItemsGet(
-    { detail: "finderDetail" },
+    { detail: 'finderDetail' },
     { query: { enabled: logged, staleTime: Infinity } },
   );
   const finderAmplifierDetails = useListItemsApiV2ItemsGet(
-    { detail: "finderAmplifierDetails" },
+    { detail: 'finderAmplifierDetails' },
     { query: { enabled: logged, staleTime: Infinity } },
   );
   const excavatorDetails = useListItemsApiV2ItemsGet(
-    { detail: "excavatorDetail" },
+    { detail: 'excavatorDetail' },
     { query: { enabled: logged, staleTime: Infinity } },
   );
   const refinerDetails = useListItemsApiV2ItemsGet(
-    { detail: "refinerDetail" },
+    { detail: 'refinerDetail' },
     { query: { enabled: logged, staleTime: Infinity } },
   );
   const enhancerDetails = useListItemsApiV2ItemsGet(
-    { detail: "enhancerDetails" },
+    { detail: 'enhancerDetails' },
     { query: { enabled: logged, staleTime: Infinity } },
   );
   const itemData = i.data as ItemViewModels | undefined;

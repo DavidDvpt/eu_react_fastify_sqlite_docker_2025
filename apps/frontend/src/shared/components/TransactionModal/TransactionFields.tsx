@@ -1,5 +1,5 @@
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import StepperButtons from "./StepperButtons";
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import StepperButtons from './StepperButtons';
 
 type TransactionFieldRowProps = {
   quantityLabel: string;
@@ -25,7 +25,7 @@ export function TransactionFields({
   isNonStackable = false,
   ttReadOnly = false,
 }: TransactionFieldRowProps) {
-  const fieldWidthClassName = isNonStackable ? "w-[23%]" : "w-[30%]";
+  const fieldWidthClassName = isNonStackable ? 'w-[23%]' : 'w-[30%]';
 
   return (
     <div className="flex items-start justify-between">
@@ -38,7 +38,7 @@ export function TransactionFields({
         readOnly={quantityReadOnly}
         label={quantityLabel}
         labelClassName="text-sm"
-        wrapperClassName={`${isNonStackable ? "w-[20%]" : fieldWidthClassName} min-w-0`}
+        wrapperClassName={`${isNonStackable ? 'w-[20%]' : fieldWidthClassName} min-w-0`}
       />
 
       {isNonStackable ? (
@@ -52,7 +52,14 @@ export function TransactionFields({
           label="TT"
           labelClassName="text-sm"
           wrapperClassName={`${fieldWidthClassName} min-w-0`}
-          suffix={<StepperButtons name="tt" step={1} decimals={5} disabled={ttReadOnly} />}
+          suffix={
+            <StepperButtons
+              name="tt"
+              step={1}
+              decimals={5}
+              disabled={ttReadOnly}
+            />
+          }
         />
       ) : null}
 
@@ -66,7 +73,12 @@ export function TransactionFields({
         labelClassName="text-sm"
         wrapperClassName={`${fieldWidthClassName} min-w-0`}
         suffix={
-          <StepperButtons name="fee" step={1} decimals={2} disabled={feeReadOnly} />
+          <StepperButtons
+            name="fee"
+            step={1}
+            decimals={2}
+            disabled={feeReadOnly}
+          />
         }
       />
 
@@ -75,7 +87,7 @@ export function TransactionFields({
         type="text"
         inputMode="decimal"
         selectOnFocus
-        placeholder={isAuction ? undefined : "ex. 24.20000"}
+        placeholder={isAuction ? undefined : 'ex. 24.20000'}
         label={totalLabel}
         labelClassName={totalLabelClassName}
         wrapperClassName={`${fieldWidthClassName} min-w-0`}

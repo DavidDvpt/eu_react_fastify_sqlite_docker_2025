@@ -1,8 +1,8 @@
-import { useCallback, useMemo, useState, type ReactNode } from "react";
-import { useQueryClient } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { z } from "zod";
-import { useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet } from "@/api/generated/react-query/entropiaManagerAPI";
+import { useCallback, useMemo, useState, type ReactNode } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
+import { z } from 'zod';
+import { useGetAvailableMiningInventoryApiV2SessionsMiningAvailableGet } from '@/api/generated/react-query/entropiaManagerAPI';
 import {
   useCreatePlanetZoneApiV2PlanetsZonesPost,
   useCreateMiningSessionApiV2SessionsMiningPost,
@@ -10,21 +10,21 @@ import {
   useListPlanetZonesApiV2PlanetsZonesGet,
   useListPlanetsApiV2PlanetsGet,
   usePrevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,
-} from "@/api/generated/react-query/entropiaManagerAPI";
-import type { MiningPrevalidationResponse } from "@/api/generated/react-query/model/miningPrevalidationResponse";
-import { Button } from "@/components/ui/button";
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import SelectRHF from "@/shared/components/form/Select/SelectRHF";
-import { ModalGeneric } from "@/shared/components";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { getItemImageUrl } from "@/shared/helpers";
-import { useSystemDatas } from "@/shared/hooks";
-import FinderAmplifierSelector from "./FinderAmplifierSelector";
-import type { AmplifierSelection } from "./FinderAmplifierSelector";
-import type { SelectedEnhancer } from "./EnhancerSockets";
-import MiningAmmoSelector from "./MiningAmmoSelector";
-import MiningEquipmentSelect from "./MiningEquipmentSelect";
+} from '@/api/generated/react-query/entropiaManagerAPI';
+import type { MiningPrevalidationResponse } from '@/api/generated/react-query/model/miningPrevalidationResponse';
+import { Button } from '@/components/ui/button';
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import SelectRHF from '@/shared/components/form/Select/SelectRHF';
+import { ModalGeneric } from '@/shared/components';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import { getItemImageUrl } from '@/shared/helpers';
+import { useSystemDatas } from '@/shared/hooks';
+import FinderAmplifierSelector from './FinderAmplifierSelector';
+import type { AmplifierSelection } from './FinderAmplifierSelector';
+import type { SelectedEnhancer } from './EnhancerSockets';
+import MiningAmmoSelector from './MiningAmmoSelector';
+import MiningEquipmentSelect from './MiningEquipmentSelect';
 
 const miningSessionFormSchema = z.object({
   clickCount: z.coerce.number().optional(),
@@ -48,17 +48,17 @@ function SummaryItem({
   indent?: boolean;
 }) {
   return (
-    <div className={`flex items-center gap-2 ${indent ? "pl-4" : ""}`}>
+    <div className={`flex items-center gap-2 ${indent ? 'pl-4' : ''}`}>
       {item && (
         <ItemImage
-          url={getItemImageUrl(item.imageUrlId, "normal")}
+          url={getItemImageUrl(item.imageUrlId, 'normal')}
           alt={item.name}
           size="small"
           classname="shrink-0"
         />
       )}
       <span>
-        {label} : <span className="text-text">{item?.name ?? "—"}</span>
+        {label} : <span className="text-text">{item?.name ?? '—'}</span>
       </span>
       {children && (
         <span className="ml-auto text-right text-text">{children}</span>
@@ -82,26 +82,26 @@ function SummaryCostItem({
     <div className="flex items-center gap-2">
       {item && (
         <ItemImage
-          url={getItemImageUrl(item.imageUrlId, "normal")}
+          url={getItemImageUrl(item.imageUrlId, 'normal')}
           alt={item.name}
           size="small"
           classname="shrink-0"
         />
       )}
       <span>
-        {label} : <span className="text-text">{item?.name ?? "—"}</span>
+        {label} : <span className="text-text">{item?.name ?? '—'}</span>
       </span>
       <span className="ml-auto grid grid-cols-2 gap-4 text-right text-text">
         <span>
-          {new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(
+          {new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 3 }).format(
             costTt,
-          )}{" "}
+          )}{' '}
           PED
         </span>
         <span>
-          {new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(
+          {new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 3 }).format(
             costTtc,
-          )}{" "}
+          )}{' '}
           PED
         </span>
       </span>
@@ -127,8 +127,8 @@ function MiningSessionModal() {
   const [clickCount, setClickCount] = useState<number | undefined>(undefined);
   const [isEnmatterSelected, setIsEnmatterSelected] = useState(false);
   const [isOresSelected, setIsOresSelected] = useState(false);
-  const [planetId, setPlanetId] = useState("");
-  const [zoneName, setZoneName] = useState("");
+  const [planetId, setPlanetId] = useState('');
+  const [zoneName, setZoneName] = useState('');
   const zonesQuery = useListPlanetZonesApiV2PlanetsZonesGet(
     planetId ? { planet: planetId } : undefined,
     { query: { enabled: Boolean(planetId) } },
@@ -174,7 +174,7 @@ function MiningSessionModal() {
     ? itemById.get(selectedExcavator.itemId)
     : undefined;
   const formatAmount = (value: number) =>
-    new Intl.NumberFormat("fr-FR", {
+    new Intl.NumberFormat('fr-FR', {
       maximumFractionDigits: 3,
     }).format(value);
   const finderDecay = selectedFinderItem?.decay
@@ -200,23 +200,27 @@ function MiningSessionModal() {
     Boolean(planetId) === Boolean(zoneName.trim()),
   );
   const formIssues = [
-    !clickCount || clickCount <= 0 ? "Indiquez le nombre de clics." : undefined,
-    !searchType ? "Sélectionnez au moins un type de mining." : undefined,
-    planetId && !zoneName.trim() ? "Indiquez une zone ou retirez la planète." : undefined,
-    !planetId && zoneName.trim() ? "Sélectionnez une planète pour cette zone." : undefined,
-    !selectedFinder ? "Sélectionnez un finder." : undefined,
+    !clickCount || clickCount <= 0 ? 'Indiquez le nombre de clics.' : undefined,
+    !searchType ? 'Sélectionnez au moins un type de mining.' : undefined,
+    planetId && !zoneName.trim()
+      ? 'Indiquez une zone ou retirez la planète.'
+      : undefined,
+    !planetId && zoneName.trim()
+      ? 'Sélectionnez une planète pour cette zone.'
+      : undefined,
+    !selectedFinder ? 'Sélectionnez un finder.' : undefined,
     selectedFinder && !finderDecay
-      ? "Le decay du finder est indisponible."
+      ? 'Le decay du finder est indisponible.'
       : undefined,
     selectedFinder && finderDecay && !hasEnoughFinderTt
       ? `TT du finder insuffisant : ${formatAmount(selectedFinder.ttRemaining ?? 0)} PED disponibles pour ${formatAmount(requiredFinderTt ?? 0)} PED nécessaires.`
       : undefined,
     !ammoSelection
       ? available?.ammo.length
-        ? "Sélectionnez une munition."
-        : "Aucune munition disponible dans votre inventaire."
+        ? 'Sélectionnez une munition.'
+        : 'Aucune munition disponible dans votre inventaire.'
       : undefined,
-    !excavatorLotId ? "Sélectionnez un excavateur." : undefined,
+    !excavatorLotId ? 'Sélectionnez un excavateur.' : undefined,
   ].filter((issue): issue is string => Boolean(issue));
   const onAmmoSelectionChange = useCallback(
     (selection?: { itemId: string; quantity: number }) => {
@@ -243,7 +247,7 @@ function MiningSessionModal() {
     [],
   );
   const formatPercent = (value: number) =>
-    new Intl.NumberFormat("fr-FR", {
+    new Intl.NumberFormat('fr-FR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value);
@@ -256,17 +260,19 @@ function MiningSessionModal() {
     ? Math.ceil(ammoCost / selectedAmmoItem.value)
     : 0;
   const totalTtc = prevalidation ? prevalidation.total.costTtc : 0;
-  const onClose = () => navigate("/mining");
-  const onPrevalidate = async (values: z.output<typeof miningSessionFormSchema>) => {
-    setPlanetId(values.planetId ?? "");
-    setZoneName(values.zoneName?.trim() ?? "");
+  const onClose = () => navigate('/mining');
+  const onPrevalidate = async (
+    values: z.output<typeof miningSessionFormSchema>,
+  ) => {
+    setPlanetId(values.planetId ?? '');
+    setZoneName(values.zoneName?.trim() ?? '');
     if (
       !available ||
       !clickCount ||
       !searchType ||
       !finderLotId ||
       !ammoSelection ||
-      (Boolean(values.planetId) !== Boolean(values.zoneName?.trim()))
+      Boolean(values.planetId) !== Boolean(values.zoneName?.trim())
     )
       return;
 
@@ -294,16 +300,23 @@ function MiningSessionModal() {
       return;
 
     const normalizedZoneName = zoneName.trim();
-    const existingZone = planetId && normalizedZoneName
-      ? (zonesQuery.data ?? []).find(
-          (zone) => zone.name.trim().toLocaleLowerCase() === normalizedZoneName.toLocaleLowerCase(),
-        )
-      : undefined;
-    const zoneId = planetId && normalizedZoneName
-      ? existingZone?.id ?? (await createZoneMutation.mutateAsync({
-          data: { planetId, name: normalizedZoneName },
-        })).id
-      : undefined;
+    const existingZone =
+      planetId && normalizedZoneName
+        ? (zonesQuery.data ?? []).find(
+            (zone) =>
+              zone.name.trim().toLocaleLowerCase() ===
+              normalizedZoneName.toLocaleLowerCase(),
+          )
+        : undefined;
+    const zoneId =
+      planetId && normalizedZoneName
+        ? (existingZone?.id ??
+          (
+            await createZoneMutation.mutateAsync({
+              data: { planetId, name: normalizedZoneName },
+            })
+          ).id)
+        : undefined;
 
     await createSessionMutation.mutateAsync({
       data: {
@@ -318,20 +331,22 @@ function MiningSessionModal() {
         enhancers: [
           ...finderEnhancers.map((enhancer) => ({
             itemId: enhancer.itemId,
-            target: "FINDER" as const,
+            target: 'FINDER' as const,
             targetLotId: finderLotId,
             socket: enhancer.socket,
             quantityInitial: enhancer.quantity,
           })),
           ...excavatorEnhancers.map((enhancer) => ({
             itemId: enhancer.itemId,
-            target: "EXCAVATOR" as const,
+            target: 'EXCAVATOR' as const,
             targetLotId: excavatorLotId,
             socket: enhancer.socket,
             quantityInitial: enhancer.quantity,
           })),
         ],
-      } as Parameters<typeof createSessionMutation.mutateAsync>[0]["data"] & { zoneId: string },
+      } as Parameters<typeof createSessionMutation.mutateAsync>[0]['data'] & {
+        zoneId: string;
+      },
     });
     await queryClient.invalidateQueries({
       queryKey: getGetMiningSessionsApiV2SessionsMiningGetQueryKey(),
@@ -342,7 +357,7 @@ function MiningSessionModal() {
   return (
     <ModalGeneric
       dialogType="form"
-      title={{ value: "Session Mining" }}
+      title={{ value: 'Session Mining' }}
       open={true}
       onOpenChange={(open) => {
         if (!open) onClose();
@@ -354,8 +369,8 @@ function MiningSessionModal() {
         defaultValues={{
           clickCount: undefined,
           searchType: undefined,
-          planetId: "",
-          zoneName: "",
+          planetId: '',
+          zoneName: '',
         }}
         onSubmit={onPrevalidate}
         className="flex min-h-0 flex-1 flex-col gap-4 overflow-hidden"
@@ -393,11 +408,11 @@ function MiningSessionModal() {
                     type="number"
                     min={1}
                     max={9999}
-                    value={clickCount ?? ""}
+                    value={clickCount ?? ''}
                     onInputChange={(event) => {
                       const value = event.currentTarget.value;
                       setClickCount(
-                        value === ""
+                        value === ''
                           ? undefined
                           : Math.min(9999, Math.max(0, Number(value))),
                       );
@@ -410,18 +425,18 @@ function MiningSessionModal() {
                   <SelectRHF
                     name="searchType"
                     options={[
-                      { value: "1", label: "Enmatter" },
-                      { value: "2", label: "Ore" },
-                      { value: "3", label: "Enmatter / Ore" },
+                      { value: '1', label: 'Enmatter' },
+                      { value: '2', label: 'Ore' },
+                      { value: '3', label: 'Enmatter / Ore' },
                     ]}
                     placeholder="Sélectionner un type"
                     onValueChange={(value) => {
-                      setIsEnmatterSelected(value === "1" || value === "3");
-                      setIsOresSelected(value === "2" || value === "3");
+                      setIsEnmatterSelected(value === '1' || value === '3');
+                      setIsOresSelected(value === '2' || value === '3');
                     }}
                   />
                   <span className="sr-only">
-                    Type Mining : {searchType ?? "non sélectionné"}
+                    Type Mining : {searchType ?? 'non sélectionné'}
                   </span>
                 </div>
                 <div className="flex flex-col gap-2 px-1">
@@ -430,9 +445,15 @@ function MiningSessionModal() {
                     name="zoneName"
                     label="Zone"
                     list="mining-zone-options"
-                    placeholder={planetId ? "Zone connue ou nouvelle" : "Sélectionnez d'abord une planète"}
+                    placeholder={
+                      planetId
+                        ? 'Zone connue ou nouvelle'
+                        : "Sélectionnez d'abord une planète"
+                    }
                     disabled={!planetId}
-                    onInputChange={(event) => setZoneName(event.currentTarget.value)}
+                    onInputChange={(event) =>
+                      setZoneName(event.currentTarget.value)
+                    }
                   />
                   <datalist id="mining-zone-options">
                     {(zonesQuery.data ?? []).map((zone) => (
@@ -451,7 +472,7 @@ function MiningSessionModal() {
                     placeholder="Sélectionner une planète"
                     onValueChange={(value) => {
                       setPlanetId(value);
-                      setZoneName("");
+                      setZoneName('');
                     }}
                     disabled={planetsQuery.isPending}
                   />
@@ -525,25 +546,29 @@ function MiningSessionModal() {
               </h3>
               <div className="grid gap-2 text-sm text-text-muted">
                 <div>
-                  Nombre de clics :{" "}
+                  Nombre de clics :{' '}
                   <span className="text-text">{clickCount}</span>
                 </div>
                 <div>
-                  Types sélectionnés :{" "}
+                  Types sélectionnés :{' '}
                   <span className="text-text">
                     {[
-                      isEnmatterSelected && "Enmatter",
-                      isOresSelected && "Ores",
+                      isEnmatterSelected && 'Enmatter',
+                      isOresSelected && 'Ores',
                     ]
                       .filter(Boolean)
-                      .join(" + ")}
+                      .join(' + ')}
                   </span>
                 </div>
                 <div>
-                  Planète : <span className="text-text">{planetsQuery.data?.find((planet) => planet.id === planetId)?.name ?? "—"}</span>
+                  Planète :{' '}
+                  <span className="text-text">
+                    {planetsQuery.data?.find((planet) => planet.id === planetId)
+                      ?.name ?? '—'}
+                  </span>
                 </div>
                 <div>
-                  Zone : <span className="text-text">{zoneName || "—"}</span>
+                  Zone : <span className="text-text">{zoneName || '—'}</span>
                 </div>
                 {prevalidation?.ammo.map((line) => (
                   <SummaryCostItem
@@ -664,7 +689,7 @@ function MiningSessionModal() {
             className="w-[calc(120px+3rem)]"
             onClick={showSummary ? () => setShowSummary(false) : onClose}
           >
-            {showSummary ? "Retour" : "Annuler"}
+            {showSummary ? 'Retour' : 'Annuler'}
           </Button>
           {!showSummary ? (
             <Button
@@ -673,16 +698,22 @@ function MiningSessionModal() {
               className="w-[calc(120px+3rem)]"
               disabled={!formReady || prevalidateMutation.isPending}
             >
-              {prevalidateMutation.isPending ? "Validation..." : "Valider"}
+              {prevalidateMutation.isPending ? 'Validation...' : 'Valider'}
             </Button>
           ) : (
             <Button
               variant="primary"
               className="w-[calc(120px+3rem)]"
-              disabled={createSessionMutation.isPending || createZoneMutation.isPending || zonesQuery.isPending}
+              disabled={
+                createSessionMutation.isPending ||
+                createZoneMutation.isPending ||
+                zonesQuery.isPending
+              }
               onClick={onCreateSession}
             >
-              {createSessionMutation.isPending || createZoneMutation.isPending ? "Création..." : "Valider"}
+              {createSessionMutation.isPending || createZoneMutation.isPending
+                ? 'Création...'
+                : 'Valider'}
             </Button>
           )}
         </div>

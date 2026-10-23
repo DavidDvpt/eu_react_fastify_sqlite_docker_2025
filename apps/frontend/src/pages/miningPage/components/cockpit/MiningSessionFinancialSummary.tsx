@@ -1,8 +1,10 @@
-import type { MiningCurrentSessionResponse } from "@/api/generated/react-query/model/miningCurrentSessionResponse";
-import { NumberHelper } from "@/shared/helpers";
+import type { MiningCurrentSessionResponse } from '@/api/generated/react-query/model/miningCurrentSessionResponse';
+import { NumberHelper } from '@/shared/helpers';
 
 function formatReturn(cost: number, result: number) {
-  return cost > 0 ? `${NumberHelper.formatPercent((result / cost) * 100)} %` : "—";
+  return cost > 0
+    ? `${NumberHelper.formatPercent((result / cost) * 100)} %`
+    : '—';
 }
 
 function MiningSessionFinancialSummary({
@@ -23,11 +25,19 @@ function MiningSessionFinancialSummary({
         <span className="text-right text-text-muted">Coût</span>
         <span className="text-right text-text-muted">Résultat</span>
         <span className="text-text-muted">TT</span>
-        <span className="text-right text-text">{NumberHelper.formatNumber(costTt)}</span>
-        <span className="text-right text-text">{NumberHelper.formatNumber(resultTt)}</span>
+        <span className="text-right text-text">
+          {NumberHelper.formatNumber(costTt)}
+        </span>
+        <span className="text-right text-text">
+          {NumberHelper.formatNumber(resultTt)}
+        </span>
         <span className="text-text-muted">TTC</span>
-        <span className="text-right text-text">{NumberHelper.formatNumber(costTtc)}</span>
-        <span className="text-right text-text">{NumberHelper.formatNumber(resultTtc)}</span>
+        <span className="text-right text-text">
+          {NumberHelper.formatNumber(costTtc)}
+        </span>
+        <span className="text-right text-text">
+          {NumberHelper.formatNumber(resultTtc)}
+        </span>
       </div>
       <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 border-t border-border pt-2 text-xs">
         <span className="text-text-muted">Bilan TT</span>

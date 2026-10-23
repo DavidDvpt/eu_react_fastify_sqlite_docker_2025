@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export type TransactionStatus = typeof TransactionStatus[keyof typeof TransactionStatus];
-
+export type TransactionStatus =
+  (typeof TransactionStatus)[keyof typeof TransactionStatus];
 
 export const TransactionStatus = {
   SOLDED: 'SOLDED',

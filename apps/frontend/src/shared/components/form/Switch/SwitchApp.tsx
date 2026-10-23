@@ -1,4 +1,4 @@
-import { Switch } from "@/components/ui/switch";
+import { Switch } from '@/components/ui/switch';
 
 interface SwitchAppProps {
   value: boolean;
@@ -13,14 +13,14 @@ interface SwitchAppProps {
 }
 
 function SwitchApp(props: SwitchAppProps) {
-  const { trueValue = "", falseValue = "", visible = true } = props;
+  const { trueValue = '', falseValue = '', visible = true } = props;
 
   if (!visible) {
     return null;
   }
   const containerClassName =
     props.containerClassName ||
-    "flex h-full min-h-0 flex-col items-center justify-start gap-2 py-1";
+    'flex h-full min-h-0 flex-col items-center justify-start gap-2 py-1';
 
   return (
     <div className={containerClassName}>

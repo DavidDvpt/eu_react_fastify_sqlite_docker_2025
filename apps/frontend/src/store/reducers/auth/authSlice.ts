@@ -1,7 +1,7 @@
-import { ApiStatus } from "@/lib/axios/ApiStatus";
-import type { RootState } from "@/store";
-import { authMeThunk } from "@/store/reducers/auth/authThunks";
-import { createSlice } from "@reduxjs/toolkit";
+import { ApiStatus } from '@/lib/axios/ApiStatus';
+import type { RootState } from '@/store';
+import { authMeThunk } from '@/store/reducers/auth/authThunks';
+import { createSlice } from '@reduxjs/toolkit';
 
 const initialState: AuthType = {
   isLoggued: false,
@@ -10,7 +10,7 @@ const initialState: AuthType = {
 };
 
 const authSlice = createSlice({
-  name: "auth",
+  name: 'auth',
   initialState,
   reducers: {
     setInGameUsername(state, action: { payload: string | null }) {

@@ -1,6 +1,6 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it } from 'vitest';
 
-import { StockLineResponse } from "@/api/generated/zod/model/stockLineResponse.zod";
+import { StockLineResponse } from '@/api/generated/zod/model/stockLineResponse.zod';
 
 /**
  * Guards the `npm run api:update` step: the generated client must expose
@@ -8,34 +8,38 @@ import { StockLineResponse } from "@/api/generated/zod/model/stockLineResponse.z
  * not the legacy `dict[itemId -> qty]`. If the OpenAPI fetch or the orval
  * regen is skipped, this spec fails.
  */
-describe("stock lines API contract", () => {
-  it("parses a non-stackable instance line with its lot identifiers", () => {
+describe('stock lines API contract', () => {
+  it('parses a non-stackable instance line with its lot identifiers', () => {
     expect(
       StockLineResponse.parse({
-        itemId: "sword",
+        itemId: 'sword',
         quantity: 1,
         isStackable: false,
-        lotId: "lot-1",
+        lotId: 'lot-1',
         tierLevel: 3,
       }),
     ).toEqual({
-      itemId: "sword",
+      itemId: 'sword',
       quantity: 1,
       isStackable: false,
-      lotId: "lot-1",
+      lotId: 'lot-1',
       tierLevel: 3,
     });
   });
 
-  it("parses a stackable aggregate line without lot identifiers", () => {
+  it('parses a stackable aggregate line without lot identifiers', () => {
     expect(
-      StockLineResponse.parse({ itemId: "ore", quantity: 10, isStackable: true }),
-    ).toMatchObject({ itemId: "ore", quantity: 10, isStackable: true });
+      StockLineResponse.parse({
+        itemId: 'ore',
+        quantity: 10,
+        isStackable: true,
+      }),
+    ).toMatchObject({ itemId: 'ore', quantity: 10, isStackable: true });
   });
 
-  it("accepts explicit null lot identifiers", () => {
+  it('accepts explicit null lot identifiers', () => {
     const parsed = StockLineResponse.parse({
-      itemId: "ore",
+      itemId: 'ore',
       quantity: 10,
       isStackable: true,
       lotId: null,
@@ -46,9 +50,9 @@ describe("stock lines API contract", () => {
     expect(parsed.tierLevel).toBeNull();
   });
 
-  it("rejects lines without a quantity", () => {
+  it('rejects lines without a quantity', () => {
     expect(() =>
-      StockLineResponse.parse({ itemId: "ore", isStackable: true }),
+      StockLineResponse.parse({ itemId: 'ore', isStackable: true }),
     ).toThrow();
   });
 });

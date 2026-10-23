@@ -1,18 +1,18 @@
-import { GenericList } from "@/shared/components";
+import { GenericList } from '@/shared/components';
 
-import FormatTools from "@/shared/tools/formatTools";
-import { useMemo } from "react";
+import FormatTools from '@/shared/tools/formatTools';
+import { useMemo } from 'react';
 
-import { useTransactionsData } from "@/shared/hooks";
+import { useTransactionsData } from '@/shared/hooks';
 import {
   financialSummaryBodyClassName,
   financialSummaryColumn,
   financialSummaryRowBaseClassName,
   financialSummaryRowClassName,
   financialSummaryRowHeight,
-} from "@/shared/components/GenericList/columnDefinition/financialSummaryColumns";
-import { useInventoryStockData } from "@/shared/hooks";
-import { Section } from "../Containers";
+} from '@/shared/components/GenericList/columnDefinition/financialSummaryColumns';
+import { useInventoryStockData } from '@/shared/hooks';
+import { Section } from '../Containers';
 
 function FinancialSummarySection() {
   const { running: runningRows } = useTransactionsData();
@@ -26,13 +26,13 @@ function FinancialSummarySection() {
   const rows = useMemo(
     () => [
       {
-        key: "stock-value",
-        label: "Valeur totale du stock (TT)",
+        key: 'stock-value',
+        label: 'Valeur totale du stock (TT)',
         amount: inventoryStockValue,
       },
       {
-        key: "running-sales",
-        label: "Total des ventes en cours (TTC)",
+        key: 'running-sales',
+        label: 'Total des ventes en cours (TTC)',
         amount: totalRunningTransactionsTtc,
       },
     ],
@@ -59,16 +59,16 @@ function FinancialSummarySection() {
         rowClassName={financialSummaryRowClassName}
         rowHeight={financialSummaryRowHeight}
         footerConfig={{
-          rowClassName: "justify-end py-2 text-table-body-text",
+          rowClassName: 'justify-end py-2 text-table-body-text',
           cells: [
             {
-              key: "total-summary",
+              key: 'total-summary',
               content: (
                 <span>
-                  Total:{" "}
+                  Total:{' '}
                   <strong className="font-semibold">
                     {FormatTools.pedFormat().format(total)}
-                  </strong>{" "}
+                  </strong>{' '}
                   Peds
                 </span>
               ),

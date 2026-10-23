@@ -1,5 +1,5 @@
-import type { StockLineResponse } from "@/api/generated/react-query/model";
-import type { ItemWithStock } from "@/shared/types";
+import type { StockLineResponse } from '@/api/generated/react-query/model';
+import type { ItemWithStock } from '@/shared/types';
 
 /** A non-stackable physical instance with its editable identifiers. */
 export interface StockLot {
@@ -36,7 +36,10 @@ export function groupStockLines(
   const grouped: GroupedStocks = {};
   if (!lines) return grouped;
   for (const line of lines) {
-    const entry = grouped[line.itemId] ?? { quantity: 0, lots: [] as StockLot[] };
+    const entry = grouped[line.itemId] ?? {
+      quantity: 0,
+      lots: [] as StockLot[],
+    };
     entry.quantity += line.quantity;
     if (!line.isStackable && line.lotId != null) {
       entry.lots.push({
@@ -52,7 +55,10 @@ export function groupStockLines(
   return grouped;
 }
 
-export function getStockForItem(grouped: GroupedStocks, itemId: string): number {
+export function getStockForItem(
+  grouped: GroupedStocks,
+  itemId: string,
+): number {
   return grouped[itemId]?.quantity ?? 0;
 }
 
@@ -66,7 +72,10 @@ export function getItemStockValue(item: ItemWithStock): number {
   return item.stock * item.value;
 }
 
-export function getLotsForItem(grouped: GroupedStocks, itemId: string): StockLot[] {
+export function getLotsForItem(
+  grouped: GroupedStocks,
+  itemId: string,
+): StockLot[] {
   return grouped[itemId]?.lots ?? [];
 }
 

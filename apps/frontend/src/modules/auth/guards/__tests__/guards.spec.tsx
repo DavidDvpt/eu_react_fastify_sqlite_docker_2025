@@ -1,18 +1,18 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { configureStore } from "@reduxjs/toolkit";
-import { render, screen } from "@testing-library/react";
-import { Provider } from "react-redux";
-import { RouterProvider, createMemoryRouter } from "react-router-dom";
-import { describe, expect, it } from "vitest";
+import { configureStore } from '@reduxjs/toolkit';
+import { render, screen } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { RouterProvider, createMemoryRouter } from 'react-router-dom';
+import { describe, expect, it } from 'vitest';
 
-import routes from "@/router/routes";
-import { ApiStatus } from "@/lib/axios/ApiStatus";
+import routes from '@/router/routes';
+import { ApiStatus } from '@/lib/axios/ApiStatus';
 
-import authReducer from "@/store/reducers/auth/authSlice";
+import authReducer from '@/store/reducers/auth/authSlice';
 
 // --- Mocks : layouts/pages ---
 // Le but : tester le routing, pas le contenu des pages.
-vi.mock("@/layouts/RootLayout", () => ({
+vi.mock('@/layouts/RootLayout', () => ({
   default: () => (
     <div>
       ROOT
@@ -20,7 +20,7 @@ vi.mock("@/layouts/RootLayout", () => ({
     </div>
   ),
 }));
-vi.mock("@/layouts/AuthLayout", () => ({
+vi.mock('@/layouts/AuthLayout', () => ({
   default: () => (
     <div>
       AUTH_LAYOUT
@@ -28,7 +28,7 @@ vi.mock("@/layouts/AuthLayout", () => ({
     </div>
   ),
 }));
-vi.mock("@/layouts/AppLayout", () => ({
+vi.mock('@/layouts/AppLayout', () => ({
   default: () => (
     <div>
       APP_LAYOUT
@@ -36,21 +36,21 @@ vi.mock("@/layouts/AppLayout", () => ({
     </div>
   ),
 }));
-vi.mock("@/layouts/AdminLayout", () => ({
+vi.mock('@/layouts/AdminLayout', () => ({
   default: () => <div>ADMIN</div>,
 }));
 
-vi.mock("@/pages/HomePage", () => ({
+vi.mock('@/pages/HomePage', () => ({
   default: () => <div>HOME</div>,
 }));
-vi.mock("@/pages/authPages/SignInPage", () => ({
+vi.mock('@/pages/authPages/SignInPage', () => ({
   default: () => <div>SIGNIN</div>,
 }));
-vi.mock("@/pages/authPages/SignUpPage", () => ({
+vi.mock('@/pages/authPages/SignUpPage', () => ({
   default: () => <div>SIGNUP</div>,
 }));
 // 👉 Outlet utilisé dans les mocks de layout
-import { Outlet } from "react-router-dom";
+import { Outlet } from 'react-router-dom';
 
 function makeStore(preloadedAuth: any) {
   return configureStore({
@@ -62,14 +62,14 @@ function makeStore(preloadedAuth: any) {
 function makeAuthState(
   isLoggued: boolean,
   status: ApiStatus,
-  role: "USER" | "ADMIN" | null = isLoggued ? "USER" : null,
+  role: 'USER' | 'ADMIN' | null = isLoggued ? 'USER' : null,
 ) {
   return {
     isLoggued,
     role,
     user: {
       result: isLoggued
-        ? { id: "1", pseudo: "demo", role: role ?? "USER", isActive: true }
+        ? { id: '1', pseudo: 'demo', role: role ?? 'USER', isActive: true }
         : null,
       error: null,
       status,
@@ -77,111 +77,114 @@ function makeAuthState(
   };
 }
 
-describe("routes (real)", () => {
-  it("GET / -> redirects to /auth/signin when NOT logged", async () => {
+describe('routes (real)', () => {
+  it('GET / -> redirects to /auth/signin when NOT logged', async () => {
     const store = makeStore(makeAuthState(false, ApiStatus.REJECTED));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/"],
+      initialEntries: ['/'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
-    expect(await screen.findByText("SIGNIN")).toBeInTheDocument();
+    expect(await screen.findByText('SIGNIN')).toBeInTheDocument();
   });
 
-  it("GET / -> shows HOME when logged", async () => {
+  it('GET / -> shows HOME when logged', async () => {
     const store = makeStore(makeAuthState(true, ApiStatus.FULFILLED));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/"],
+      initialEntries: ['/'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
-    expect(await screen.findByText("HOME")).toBeInTheDocument();
+    expect(await screen.findByText('HOME')).toBeInTheDocument();
   });
 
-  it("GET /auth/signin -> redirects to /home when logged (GuestOnly)", async () => {
+  it('GET /auth/signin -> redirects to /home when logged (GuestOnly)', async () => {
     const store = makeStore(makeAuthState(true, ApiStatus.FULFILLED));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/auth/signin"],
+      initialEntries: ['/auth/signin'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
-    expect(await screen.findByText("HOME")).toBeInTheDocument();
+    expect(await screen.findByText('HOME')).toBeInTheDocument();
   });
 
-  it("GET /auth/signin -> stays on SIGNIN when NOT logged", async () => {
+  it('GET /auth/signin -> stays on SIGNIN when NOT logged', async () => {
     const store = makeStore(makeAuthState(false, ApiStatus.REJECTED));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/auth/signin"],
+      initialEntries: ['/auth/signin'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
-    expect(await screen.findByText("SIGNIN")).toBeInTheDocument();
+    expect(await screen.findByText('SIGNIN')).toBeInTheDocument();
   });
 
-  it("GET / -> shows session loader while auth is resolving", async () => {
+  it('GET / -> shows session loader while auth is resolving', async () => {
     const store = makeStore(makeAuthState(false, ApiStatus.PENDING));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/"],
+      initialEntries: ['/'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
     expect(
-      await screen.findByRole("status", { name: "Verification de la session" })
+      await screen.findByRole('status', { name: 'Verification de la session' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Reconnexion en cours avant affichage de l'application.")
+      screen.getByText(
+        "Reconnexion en cours avant affichage de l'application.",
+      ),
     ).toBeInTheDocument();
   });
 
-  it("GET /auth/signin -> shows session loader while auth is resolving", async () => {
+  it('GET /auth/signin -> shows session loader while auth is resolving', async () => {
     const store = makeStore(makeAuthState(false, ApiStatus.IDLE));
 
     const router = createMemoryRouter(routes as any, {
-      initialEntries: ["/auth/signin"],
+      initialEntries: ['/auth/signin'],
     });
 
     render(
       <Provider store={store}>
         <RouterProvider router={router} />
-      </Provider>
+      </Provider>,
     );
 
     expect(
-      await screen.findByRole("status", { name: "Verification de la session" })
+      await screen.findByRole('status', { name: 'Verification de la session' }),
     ).toBeInTheDocument();
     expect(
-      screen.getByText("Reconnexion en cours avant affichage de l'application.")
+      screen.getByText(
+        "Reconnexion en cours avant affichage de l'application.",
+      ),
     ).toBeInTheDocument();
   });
-
 });

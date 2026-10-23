@@ -3,14 +3,14 @@ import {
   getMinimumTtcWithFee,
   parseDecimalInput,
   sanitizeNonNegative,
-} from "@/shared/helpers/transactionHelpers";
+} from '@/shared/helpers/transactionHelpers';
 import type {
   TransactionPricingInput,
   TransactionPricingValues,
-} from "@/shared/types";
+} from '@/shared/types';
 
 function sanitizeEditableQuantity(value: number) {
-  if (typeof value !== "number" || !Number.isFinite(value) || value <= 0) {
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
     return 0;
   }
 
@@ -50,13 +50,13 @@ export function computeQuantityPricing({
   }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-      return { quantity: 0, fee: 0, ttc: 0 };
+    return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;
   const currentTtc = sanitizeNonNegative(ttc);
 
-  if (action === "buy") {
+  if (action === 'buy') {
     const currentFee = Math.min(100, sanitizeNonNegative(fee));
     const minimumTtc = tt + currentFee;
     const nextTtc =
@@ -71,7 +71,10 @@ export function computeQuantityPricing({
     };
   }
 
-  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(tt, currentTtc);
+  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(
+    tt,
+    currentTtc,
+  );
   const nextTtc = tt + nextFee > currentTtc ? suggestedTtc : currentTtc;
 
   return {
@@ -94,13 +97,13 @@ export function computeFeePricing({
   }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-      return { quantity: 0, fee: 0, ttc: 0 };
+    return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;
   const currentTtc = sanitizeNonNegative(ttc);
 
-  if (action === "buy") {
+  if (action === 'buy') {
     const nextFee = Math.min(100, sanitizeNonNegative(fee));
     const minimumTtc = tt + nextFee;
     const nextTtc =
@@ -115,7 +118,10 @@ export function computeFeePricing({
     };
   }
 
-  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(tt, currentTtc);
+  const { fee: nextFee, ttc: suggestedTtc } = getMinimumTtcWithFee(
+    tt,
+    currentTtc,
+  );
   const nextTtc = tt + nextFee > currentTtc ? suggestedTtc : currentTtc;
 
   return {
@@ -138,13 +144,13 @@ export function computeTtcPricing({
   }
   const nextQuantity = sanitizeEditableQuantity(quantity);
   if (nextQuantity === 0) {
-      return { quantity: 0, fee: 0, ttc: 0 };
+    return { quantity: 0, fee: 0, ttc: 0 };
   }
 
   const tt = nextQuantity * unitPrice;
   const currentTtc = sanitizeNonNegative(ttc);
 
-  if (action === "buy") {
+  if (action === 'buy') {
     const currentFee = Math.min(100, sanitizeNonNegative(fee));
 
     return {

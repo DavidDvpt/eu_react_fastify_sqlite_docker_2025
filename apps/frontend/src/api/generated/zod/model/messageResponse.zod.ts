@@ -6,7 +6,7 @@
 import * as zod from 'zod';
 
 export const MessageResponse = zod.object({
-  "message": zod.string()
+  message: zod.string(),
 });
 
 export type MessageResponse = zod.input<typeof MessageResponse>;

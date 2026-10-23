@@ -1,10 +1,10 @@
-import { cn } from "@/lib/utils";
-import type { GenericListFooterProps } from "./genericListTypes";
+import { cn } from '@/lib/utils';
+import type { GenericListFooterProps } from './genericListTypes';
 
 function GenericListFooter({
   visible = true,
   rowClassName,
-  layout = "flex",
+  layout = 'flex',
   columnsTemplate,
   cells,
   fallback,
@@ -15,15 +15,15 @@ function GenericListFooter({
 
   if (fallback) {
     return (
-      <div className={cn("border-t border-table-border", rowClassName)}>
+      <div className={cn('border-t border-table-border', rowClassName)}>
         {fallback}
       </div>
     );
   }
 
-  if (layout === "grid") {
+  if (layout === 'grid') {
     return (
-      <div className={cn("border-t border-table-border", rowClassName)}>
+      <div className={cn('border-t border-table-border', rowClassName)}>
         <div className="grid" style={{ gridTemplateColumns: columnsTemplate }}>
           {cells?.map((cell) => (
             <div key={cell.key} className={cell.className}>
@@ -38,7 +38,7 @@ function GenericListFooter({
   return (
     <div
       className={cn(
-        "border-t border-table-border flex items-center",
+        'border-t border-table-border flex items-center',
         rowClassName,
       )}
     >

@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { formatItemNameWithTier, getItemImageUrl } from "@/shared/helpers";
-import type { ItemViewModel } from "@zod-schemas";
-import EquipmentHeader from "./EquipmentHeader";
-import EnhancerLineView from "./EnhancerLineView";
-import type { EnhancerLine } from "./types";
+import { useState } from 'react';
+import { ChevronDown, ChevronUp } from 'lucide-react';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import { formatItemNameWithTier, getItemImageUrl } from '@/shared/helpers';
+import type { ItemViewModel } from '@zod-schemas';
+import EquipmentHeader from './EquipmentHeader';
+import EnhancerLineView from './EnhancerLineView';
+import type { EnhancerLine } from './types';
 
 function EquipmentSummary({
   label,
@@ -33,11 +33,15 @@ function EquipmentSummary({
   return (
     <section className="flex flex-col gap-2">
       <div className="flex items-center gap-2">
-        <EquipmentHeader item={equipment} itemId={itemId} tierLevel={tierLevel} />
+        <EquipmentHeader
+          item={equipment}
+          itemId={itemId}
+          tierLevel={tierLevel}
+        />
         {hasAccessories && (
           <button
             type="button"
-            aria-label={`${isOpen ? "Fermer" : "Ouvrir"} les accessoires ${label}`}
+            aria-label={`${isOpen ? 'Fermer' : 'Ouvrir'} les accessoires ${label}`}
             aria-expanded={isOpen}
             aria-controls={accessoriesId}
             onClick={() => setIsOpen((current) => !current)}
@@ -52,12 +56,15 @@ function EquipmentSummary({
         )}
       </div>
       {hasAccessories && isOpen && (
-        <div id={accessoriesId} className="ml-3 flex flex-col gap-2 border-l border-border pl-3">
+        <div
+          id={accessoriesId}
+          className="ml-3 flex flex-col gap-2 border-l border-border pl-3"
+        >
           {amplifierItemId && (
             <div className="flex items-center gap-2">
               {amplifier && (
                 <ItemImage
-                  url={getItemImageUrl(amplifier.imageUrlId, "normal")}
+                  url={getItemImageUrl(amplifier.imageUrlId, 'normal')}
                   alt={amplifier.name}
                   size="small"
                   classname="shrink-0"

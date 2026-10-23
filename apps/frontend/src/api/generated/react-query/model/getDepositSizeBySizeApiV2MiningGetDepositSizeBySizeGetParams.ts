@@ -5,5 +5,5 @@
  */
 
 export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams = {
-size: number;
+  size: number;
 };

@@ -1,7 +1,7 @@
-import { Section } from "@/shared/components/Containers";
-import { FormatTools } from "@/shared/tools/formatTools";
-import { formatTierLevel } from "@/shared/helpers";
-import type { LotViewModel } from "@zod-schemas";
+import { Section } from '@/shared/components/Containers';
+import { FormatTools } from '@/shared/tools/formatTools';
+import { formatTierLevel } from '@/shared/helpers';
+import type { LotViewModel } from '@zod-schemas';
 
 interface StockLotInListProps {
   lots: LotViewModel[] | null;
@@ -22,8 +22,8 @@ function StockLotsSection({
   ).length;
 
   const gridClass = isTierable
-    ? "grid-cols-[1.2fr_1fr_1fr_0.7fr]"
-    : "grid-cols-[1.4fr_1fr_1fr]";
+    ? 'grid-cols-[1.2fr_1fr_1fr_0.7fr]'
+    : 'grid-cols-[1.4fr_1fr_1fr]';
 
   return (
     <Section className="flex min-h-0 flex-1 flex-col overflow-hidden p-2 m-2">
@@ -54,7 +54,7 @@ function StockLotsSection({
                   <li
                     key={lot.id}
                     className={`grid ${gridClass} gap-2 border-b border-card-inner-border px-2 py-1 text-xs text-table-body-text last:border-b-0${
-                      isFocused ? " border-primary-500" : ""
+                      isFocused ? ' border-primary-500' : ''
                     }`}
                   >
                     <span>{FormatTools.dateFrShort(lot.createdAt)}</span>

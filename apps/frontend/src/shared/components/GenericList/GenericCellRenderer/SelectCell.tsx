@@ -1,5 +1,5 @@
-import type { GenericListColumn } from "@/shared/types";
-import AppSelect from "@/shared/components/form/Select/AppSelect";
+import type { GenericListColumn } from '@/shared/types';
+import AppSelect from '@/shared/components/form/Select/AppSelect';
 
 type SelectCellProps<T> = {
   column: GenericListColumn<T>;
@@ -10,7 +10,7 @@ type SelectCellProps<T> = {
 function SelectCell<T>({ column, row, value }: SelectCellProps<T>) {
   return (
     <AppSelect
-      value={String(value ?? "")}
+      value={String(value ?? '')}
       disabled={column.disabled?.(row)}
       options={column.selectOptions ?? []}
       muted

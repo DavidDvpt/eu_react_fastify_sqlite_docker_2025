@@ -1,7 +1,7 @@
-import CapsuleLoader from "@/shared/components/CapsuleLoader";
-import { formLabelClassName } from "@/shared/components/form/form.styles";
-import RefiningRecipeOption from "./RefiningRecipeOption";
-import type { RefiningRecipeOptionData } from "./refiningTypes";
+import CapsuleLoader from '@/shared/components/CapsuleLoader';
+import { formLabelClassName } from '@/shared/components/form/form.styles';
+import RefiningRecipeOption from './RefiningRecipeOption';
+import type { RefiningRecipeOptionData } from './refiningTypes';
 
 type RefiningRecipeListProps = {
   options: RefiningRecipeOptionData[];

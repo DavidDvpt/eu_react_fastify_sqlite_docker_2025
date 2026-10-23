@@ -7,10 +7,12 @@ import * as zod from 'zod';
 import { LotResponse } from './lotResponse.zod.ts';
 
 export const TransactionLotResponse = zod.object({
-  "lotId": zod.string(),
-  "quantity": zod.int(),
-  "lot": zod.union([LotResponse,zod.null()])
+  lotId: zod.string(),
+  quantity: zod.int(),
+  lot: zod.union([LotResponse, zod.null()]),
 });
 
 export type TransactionLotResponse = zod.input<typeof TransactionLotResponse>;
-export type TransactionLotResponseOutput = zod.output<typeof TransactionLotResponse>;
+export type TransactionLotResponseOutput = zod.output<
+  typeof TransactionLotResponse
+>;

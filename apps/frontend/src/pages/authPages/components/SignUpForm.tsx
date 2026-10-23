@@ -1,16 +1,16 @@
-import InputRHF from "@/shared/components/form/Input/InputRHF";
-import { GenericForm } from "@/shared/components/form/Genericform";
-import { Button } from "@/components/ui/button";
+import InputRHF from '@/shared/components/form/Input/InputRHF';
+import { GenericForm } from '@/shared/components/form/Genericform';
+import { Button } from '@/components/ui/button';
 
-import { userSignUpFormSchema } from "@zod-schemas";
-import type { UserSignupFormBody } from "@zod-schemas";
+import { userSignUpFormSchema } from '@zod-schemas';
+import type { UserSignupFormBody } from '@zod-schemas';
 
 const signUpDefaultValues = {
-  pseudo: "",
-  firstname: "",
-  lastname: "",
-  email: "",
-  password: "",
+  pseudo: '',
+  firstname: '',
+  lastname: '',
+  email: '',
+  password: '',
 };
 
 interface ISignUpFormProps {
@@ -44,12 +44,7 @@ function SignUpForm({ className, onSubmit }: ISignUpFormProps) {
         type="text"
         autoComplete="family-name"
       />
-      <InputRHF
-        name="email"
-        label="Email"
-        type="email"
-        autoComplete="email"
-      />
+      <InputRHF name="email" label="Email" type="email" autoComplete="email" />
       <InputRHF
         name="password"
         label="Mot de passe"

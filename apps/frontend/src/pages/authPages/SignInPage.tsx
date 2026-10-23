@@ -1,10 +1,10 @@
-import signinApi from "@/modules/auth/services/network/signinApi";
-import { Panel, Section } from "@/shared/components/Containers";
-import { AppLink } from "@/shared/components/AppLink";
-import { useAppDispatch } from "@/store/hooks";
-import SignInForm from "./components/SignInForm";
-import type { SignInBodyOutput } from "@/api/generated/zod/model/signInBody.zod";
-import { authMeThunk } from "@/store";
+import signinApi from '@/modules/auth/services/network/signinApi';
+import { Panel, Section } from '@/shared/components/Containers';
+import { AppLink } from '@/shared/components/AppLink';
+import { useAppDispatch } from '@/store/hooks';
+import SignInForm from './components/SignInForm';
+import type { SignInBodyOutput } from '@/api/generated/zod/model/signInBody.zod';
+import { authMeThunk } from '@/store';
 
 function SignInPage() {
   const dispatch = useAppDispatch();
@@ -13,7 +13,7 @@ function SignInPage() {
     try {
       const response = await signinApi(values);
 
-      if (response.message === "Success") {
+      if (response.message === 'Success') {
         dispatch(authMeThunk());
       }
     } catch (error) {
@@ -22,7 +22,10 @@ function SignInPage() {
   };
 
   return (
-    <Panel aria-labelledby="signin-title" className="items-center justify-center">
+    <Panel
+      aria-labelledby="signin-title"
+      className="items-center justify-center"
+    >
       <Section className="p-6 w-[400px]">
         <h1 id="signin-title" className="text-center">
           Connexion

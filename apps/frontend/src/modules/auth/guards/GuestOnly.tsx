@@ -1,7 +1,7 @@
-import { CapsuleLoader } from "@/shared/components";
-import { selectIsAuthResolving, selectIsLoggued } from "@/store";
-import { useAppSelector } from "@/store/hooks";
-import { Navigate, Outlet } from "react-router-dom";
+import { CapsuleLoader } from '@/shared/components';
+import { selectIsAuthResolving, selectIsLoggued } from '@/store';
+import { useAppSelector } from '@/store/hooks';
+import { Navigate, Outlet } from 'react-router-dom';
 
 function GuestOnly() {
   const isLoggued = useAppSelector(selectIsLoggued);

@@ -4,4 +4,4 @@
  * Entropia Manager API
  */
 
-export type SignupApiV2AuthSignupPost201 = {[key: string]: string};
+export type SignupApiV2AuthSignupPost201 = { [key: string]: string };

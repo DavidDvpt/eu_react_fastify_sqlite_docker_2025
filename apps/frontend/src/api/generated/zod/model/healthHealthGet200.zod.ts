@@ -5,7 +5,7 @@
  */
 import * as zod from 'zod';
 
-export const HealthHealthGet200 = zod.record(zod.string(), zod.unknown())
+export const HealthHealthGet200 = zod.record(zod.string(), zod.unknown());
 
 export type HealthHealthGet200 = zod.input<typeof HealthHealthGet200>;
 export type HealthHealthGet200Output = zod.output<typeof HealthHealthGet200>;

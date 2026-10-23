@@ -8,4 +8,6 @@ import * as zod from 'zod';
 export const MiningEnhancerTarget = zod.enum(['FINDER', 'EXCAVATOR']);
 
 export type MiningEnhancerTarget = zod.input<typeof MiningEnhancerTarget>;
-export type MiningEnhancerTargetOutput = zod.output<typeof MiningEnhancerTarget>;
+export type MiningEnhancerTargetOutput = zod.output<
+  typeof MiningEnhancerTarget
+>;

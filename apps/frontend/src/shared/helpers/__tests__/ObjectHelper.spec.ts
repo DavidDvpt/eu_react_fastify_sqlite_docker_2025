@@ -1,58 +1,58 @@
-import { ObjectHelper } from "../ObjectHelper.js";
+import { ObjectHelper } from '../ObjectHelper.js';
 
-describe("ObjectHelper", () => {
-  describe("omitUndefined", () => {
-    it("removes keys with undefined values", () => {
+describe('ObjectHelper', () => {
+  describe('omitUndefined', () => {
+    it('removes keys with undefined values', () => {
       expect(
         ObjectHelper.omitUndefined({
           id: 1,
-          name: "Alice",
+          name: 'Alice',
           email: undefined,
         }),
       ).toEqual({
         id: 1,
-        name: "Alice",
+        name: 'Alice',
       });
     });
 
-    it("keeps falsy values that are not undefined", () => {
+    it('keeps falsy values that are not undefined', () => {
       expect(
         ObjectHelper.omitUndefined({
           active: false,
           count: 0,
-          label: "",
+          label: '',
           meta: null,
           optional: undefined,
         }),
       ).toEqual({
         active: false,
         count: 0,
-        label: "",
+        label: '',
         meta: null,
       });
     });
   });
 
-  describe("snakeToCamelKeys", () => {
-    it("converts snake_case keys to camelCase", () => {
+  describe('snakeToCamelKeys', () => {
+    it('converts snake_case keys to camelCase', () => {
       expect(
         ObjectHelper.snakeToCamelKeys({
           item_id: 1,
-          item_name: "Alice",
+          item_name: 'Alice',
           is_active: true,
         }),
       ).toEqual({
         itemId: 1,
-        itemName: "Alice",
+        itemName: 'Alice',
         isActive: true,
       });
     });
 
-    it("converts nested objects and arrays", () => {
+    it('converts nested objects and arrays', () => {
       expect(
         ObjectHelper.snakeToCamelKeys({
           item_data: {
-            created_at: "2026-08-30",
+            created_at: '2026-08-30',
             lot_list: [
               {
                 lot_id: 10,
@@ -63,7 +63,7 @@ describe("ObjectHelper", () => {
         }),
       ).toEqual({
         itemData: {
-          createdAt: "2026-08-30",
+          createdAt: '2026-08-30',
           lotList: [
             {
               lotId: 10,
@@ -74,7 +74,7 @@ describe("ObjectHelper", () => {
       });
     });
 
-    it("converts Prisma Decimal-like values with Number", () => {
+    it('converts Prisma Decimal-like values with Number', () => {
       class Decimal {
         private readonly value: string;
 
@@ -89,7 +89,7 @@ describe("ObjectHelper", () => {
 
       expect(
         ObjectHelper.snakeToCamelKeys({
-          total_price: new Decimal("12.34"),
+          total_price: new Decimal('12.34'),
           quantity: 2,
         }),
       ).toEqual({

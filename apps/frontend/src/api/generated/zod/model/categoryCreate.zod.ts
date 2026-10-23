@@ -5,12 +5,9 @@
  */
 import * as zod from 'zod';
 
-
-
-
 export const CategoryCreate = zod.object({
-  "name": zod.string().min(1),
-  "isActive": zod.boolean()
+  name: zod.string().min(1),
+  isActive: zod.boolean(),
 });
 
 export type CategoryCreate = zod.input<typeof CategoryCreate>;

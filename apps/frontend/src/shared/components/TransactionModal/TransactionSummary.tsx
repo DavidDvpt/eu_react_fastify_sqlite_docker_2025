@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { FormatTools } from "@/shared/tools";
+import { cn } from '@/lib/utils';
+import { FormatTools } from '@/shared/tools';
 
 interface TransactionSummaryProps {
   ttValue: number;
@@ -18,17 +18,18 @@ function TransactionSummary({
   const markup = ttValue > 0 ? (ttcValue / ttValue) * 100 : 0;
   const netMarkup =
     ttValue > 0 && ttcValue > 0 ? ((ttcValue - feeValue) / ttValue) * 100 : 0;
-  const showTotals = typeof lotCount === "number" && Number.isInteger(lotCount) && lotCount > 1;
+  const showTotals =
+    typeof lotCount === 'number' && Number.isInteger(lotCount) && lotCount > 1;
   const ttcTotal = showTotals ? ttcValue * (lotCount as number) : ttcValue;
   const ttTotal = showTotals ? ttValue * (lotCount as number) : ttValue;
 
   const deltaStyle = cn(
-    "m-0",
+    'm-0',
     deltaValue < 0
-      ? "text-destructive-700"
+      ? 'text-destructive-700'
       : deltaValue === 0
-        ? "text-text"
-        : "text-success-700",
+        ? 'text-text'
+        : 'text-success-700',
   );
   return (
     <div className="space-y-1 text-xs">
@@ -52,7 +53,9 @@ function TransactionSummary({
       </div>
       {showTotals ? (
         <div className="flex justify-between fle-row">
-          <p className="m-0">Total TT : {FormatTools.pedFormat().format(ttTotal)} Ped</p>
+          <p className="m-0">
+            Total TT : {FormatTools.pedFormat().format(ttTotal)} Ped
+          </p>
           <p className={deltaStyle}>
             Total TTC : {FormatTools.pedFormat().format(ttcTotal)} Ped
           </p>

@@ -6,20 +6,24 @@
 import * as zod from 'zod';
 
 export const MiningSessionHistoryResponse = zod.object({
-  "sessionId": zod.string(),
-  "number": zod.int(),
-  "searchType": zod.union([zod.enum(['E', 'O', 'EO']),zod.null()]),
-  "finder": zod.union([zod.string(),zod.null()]),
-  "enhancer": zod.boolean(),
-  "amp": zod.boolean(),
-  "clickCount": zod.union([zod.int(),zod.null()]),
-  "costTt": zod.union([zod.int(),zod.number()]),
-  "costTtc": zod.union([zod.int(),zod.number()]),
-  "resultTt": zod.union([zod.int(),zod.number()]),
-  "resultTtc": zod.union([zod.int(),zod.number()]),
-  "createdAt": zod.iso.datetime({"offset":true}),
-  "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()])
+  sessionId: zod.string(),
+  number: zod.int(),
+  searchType: zod.union([zod.enum(['E', 'O', 'EO']), zod.null()]),
+  finder: zod.union([zod.string(), zod.null()]),
+  enhancer: zod.boolean(),
+  amp: zod.boolean(),
+  clickCount: zod.union([zod.int(), zod.null()]),
+  costTt: zod.union([zod.int(), zod.number()]),
+  costTtc: zod.union([zod.int(), zod.number()]),
+  resultTt: zod.union([zod.int(), zod.number()]),
+  resultTtc: zod.union([zod.int(), zod.number()]),
+  createdAt: zod.iso.datetime({ offset: true }),
+  endedAt: zod.union([zod.iso.datetime({ offset: true }), zod.null()]),
 });
 
-export type MiningSessionHistoryResponse = zod.input<typeof MiningSessionHistoryResponse>;
-export type MiningSessionHistoryResponseOutput = zod.output<typeof MiningSessionHistoryResponse>;
+export type MiningSessionHistoryResponse = zod.input<
+  typeof MiningSessionHistoryResponse
+>;
+export type MiningSessionHistoryResponseOutput = zod.output<
+  typeof MiningSessionHistoryResponse
+>;

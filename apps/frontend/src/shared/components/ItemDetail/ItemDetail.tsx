@@ -1,41 +1,41 @@
 // eu_react_fastify_docker/frontend/src/shared/components/ItemDetails.tsx
-import type { ItemDetailProps, TransactionAction } from "@/shared/types";
-import { Section } from "../Containers";
-import { getItemImageUrl } from "@/shared/helpers/imageUrl";
-import { FormatTools } from "@/shared/tools";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useMemo, useState } from "react";
-import { useQueryParams } from "@/shared/hooks";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import ItemAverageBuyMarkup from "@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup";
-import useItemAverageBuyMarkup from "@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData";
-import { formatItemNameWithTier } from "@/shared/helpers";
-import IconButton, { IconButtonIcon } from "@/shared/components/IconButton";
-import ItemTierEditor from "@/shared/components/ItemDetail/ItemTierEditor";
-import ItemDetailsButtons from "@/shared/components/ItemDetail/ItemDetailsButtons";
-import ItemDetailInfos from "@/shared/components/ItemDetail/ItemDetailInfos";
+import type { ItemDetailProps, TransactionAction } from '@/shared/types';
+import { Section } from '../Containers';
+import { getItemImageUrl } from '@/shared/helpers/imageUrl';
+import { FormatTools } from '@/shared/tools';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useMemo, useState } from 'react';
+import { useQueryParams } from '@/shared/hooks';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import ItemAverageBuyMarkup from '@/shared/components/ItemAverageBuyMarkup/ItemAverageBuyMarkup';
+import useItemAverageBuyMarkup from '@/shared/hooks/rqFetchHooks/useItemAverageBuyMarkupData';
+import { formatItemNameWithTier } from '@/shared/helpers';
+import IconButton, { IconButtonIcon } from '@/shared/components/IconButton';
+import ItemTierEditor from '@/shared/components/ItemDetail/ItemTierEditor';
+import ItemDetailsButtons from '@/shared/components/ItemDetail/ItemDetailsButtons';
+import ItemDetailInfos from '@/shared/components/ItemDetail/ItemDetailInfos';
 
-function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
+function ItemDetail({ item, lot = null, variant = 'stock' }: ItemDetailProps) {
   const location = useLocation();
   const navigate = useNavigate();
   const { lotId } = useQueryParams<{ lotId?: string }>();
 
   const hasInvalidLot = Boolean(lotId && (!lot || lot.id !== lotId));
   const [error] = useState<string | null>(() =>
-    hasInvalidLot ? "L’instance de l’item n’a pas été trouvée." : null,
+    hasInvalidLot ? 'L’instance de l’item n’a pas été trouvée.' : null,
   );
   const currentError = hasInvalidLot
-    ? "L’instance de l’item n’a pas été trouvée."
+    ? 'L’instance de l’item n’a pas été trouvée.'
     : error;
 
   const { averageBuyMarkup } = useItemAverageBuyMarkup({ itemId: item?.id });
 
   const selectedLotId = lotId;
   const isInstanceView = Boolean(selectedLotId);
-  const isStoreView = variant === "store";
+  const isStoreView = variant === 'store';
 
   const displayName = useMemo(() => {
-    if (!item || currentError) return "";
+    if (!item || currentError) return '';
     if (isInstanceView) {
       return formatItemNameWithTier({
         name: item.name,
@@ -77,14 +77,14 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
       quantity: 1,
       // Selling MY instance consumes exactly this lot (the backend
       // requires lot_id for non-stackable sales).
-      ...(action === "sell" && isInstanceView && selectedLotId
+      ...(action === 'sell' && isInstanceView && selectedLotId
         ? { lotId: selectedLotId }
         : {}),
       closePath: location.pathname,
     };
 
     const search = new URLSearchParams();
-    search.set("transactionModal", JSON.stringify(query));
+    search.set('transactionModal', JSON.stringify(query));
 
     navigate({
       pathname: location.pathname,
@@ -117,7 +117,7 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
           </div>
           {isEditingTier && canEditTier ? (
             <ItemTierEditor
-              key={`${lot?.id ?? "none"}:${lot?.tierLevel ?? "null"}:${lot?.ttRemaining ?? "null"}`}
+              key={`${lot?.id ?? 'none'}:${lot?.tierLevel ?? 'null'}:${lot?.ttRemaining ?? 'null'}`}
               itemId={item.id}
               lot={lot}
               canEditTt={!item.isLimited && !item.type?.isStackable}
@@ -126,7 +126,7 @@ function ItemDetail({ item, lot = null, variant = "stock" }: ItemDetailProps) {
           ) : null}
           <div className="flex">
             <ItemImage
-              url={getItemImageUrl(item.imageUrlId, "normal") ?? ""}
+              url={getItemImageUrl(item.imageUrlId, 'normal') ?? ''}
               alt={item.name}
               size="medium"
             />

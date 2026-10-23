@@ -1,30 +1,30 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 
-import type { ContainerProps } from "@/shared/types";
-import { cva } from "class-variance-authority";
+import type { ContainerProps } from '@/shared/types';
+import { cva } from 'class-variance-authority';
 
-const containerVariants = cva("", {
+const containerVariants = cva('', {
   variants: {
     variant: {
-      default: "",
+      default: '',
       panel:
-        "m-0 box-border flex h-full max-h-[100dvh] min-h-0 w-full max-w-[100dvw] min-w-0 flex-col bg-transparent p-[10px] shadow-none overflow-x-hidden overflow-y-auto",
+        'm-0 box-border flex h-full max-h-[100dvh] min-h-0 w-full max-w-[100dvw] min-w-0 flex-col bg-transparent p-[10px] shadow-none overflow-x-hidden overflow-y-auto',
       section:
-        "rounded-lg flex flex-col text-text bg-surface border-border p-2 shadow-ambient-md",
-      subsection: "",
+        'rounded-lg flex flex-col text-text bg-surface border-border p-2 shadow-ambient-md',
+      subsection: '',
       modal:
-        "rounded-lg flex flex-col bg-section-modal-bg shadow-ambient text-text rounded-[var(--radius-md)]",
+        'rounded-lg flex flex-col bg-section-modal-bg shadow-ambient text-text rounded-[var(--radius-md)]',
     },
   },
   defaultVariants: {
-    variant: "default",
+    variant: 'default',
   },
 });
 
 function Container({
   children,
   className,
-  variant = "default",
+  variant = 'default',
   disableShadow = false,
   ...props
 }: ContainerProps) {
@@ -32,7 +32,7 @@ function Container({
     <div
       className={cn(
         containerVariants({ variant }),
-        disableShadow && "shadow-none",
+        disableShadow && 'shadow-none',
         className,
       )}
       {...props}

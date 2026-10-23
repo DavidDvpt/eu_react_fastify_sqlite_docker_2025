@@ -6,13 +6,13 @@
 
 export type SignInBody = {
   /**
-     * @minLength 8
-     * @maxLength 50
-     */
+   * @minLength 8
+   * @maxLength 50
+   */
   pseudo: string;
   /**
-     * @minLength 8
-     * @maxLength 50
-     */
+   * @minLength 8
+   * @maxLength 50
+   */
   password: string;
 };

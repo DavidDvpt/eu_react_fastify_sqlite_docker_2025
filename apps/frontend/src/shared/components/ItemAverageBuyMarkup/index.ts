@@ -1,2 +1,2 @@
-export { default } from "./ItemAverageBuyMarkup";
-export { default as ItemAverageBuyMarkup } from "./ItemAverageBuyMarkup";
+export { default } from './ItemAverageBuyMarkup';
+export { default as ItemAverageBuyMarkup } from './ItemAverageBuyMarkup';

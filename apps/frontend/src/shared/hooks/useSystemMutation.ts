@@ -1,7 +1,7 @@
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { CategoryCreateOutput } from "@/api/generated/zod/model/categoryCreate.zod";
-import type { ItemCreateOutput } from "@/api/generated/zod/model/itemCreate.zod";
-import type { TypeCreateOutput } from "@/api/generated/zod/model/typeCreate.zod";
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { CategoryCreateOutput } from '@/api/generated/zod/model/categoryCreate.zod';
+import type { ItemCreateOutput } from '@/api/generated/zod/model/itemCreate.zod';
+import type { TypeCreateOutput } from '@/api/generated/zod/model/typeCreate.zod';
 import {
   useCreateCategoryApiV2CategoriesPost,
   useCreateItemApiV2ItemsPost,
@@ -9,13 +9,13 @@ import {
   usePatchCategoryApiV2CategoriesIdPatch,
   usePatchItemApiV2ItemsIdPatch,
   usePatchTypeApiV2TypesIdPatch,
-} from "@/api/generated/react-query/entropiaManagerAPI";
+} from '@/api/generated/react-query/entropiaManagerAPI';
 import type {
   CategoryViewModel,
   ItemViewModel,
   TypeViewModel,
-} from "@zod-schemas";
-import { useMutation } from "@tanstack/react-query";
+} from '@zod-schemas';
+import { useMutation } from '@tanstack/react-query';
 
 export default function useSystemMutation() {
   const createCategory = useCreateCategoryApiV2CategoriesPost();
@@ -34,7 +34,10 @@ export default function useSystemMutation() {
       values: CategoryCreateOutput;
     }) => {
       if (category?.id) {
-        return await patchCategory.mutateAsync({ id: category.id, data: values });
+        return await patchCategory.mutateAsync({
+          id: category.id,
+          data: values,
+        });
       }
       return await createCategory.mutateAsync({ data: values });
     },

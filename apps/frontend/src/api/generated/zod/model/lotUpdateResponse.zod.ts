@@ -6,9 +6,9 @@
 import * as zod from 'zod';
 
 export const LotUpdateResponse = zod.object({
-  "id": zod.string(),
-  "tierLevel": zod.union([zod.int(),zod.null()]).optional(),
-  "ttRemaining": zod.union([zod.int(),zod.number()])
+  id: zod.string(),
+  tierLevel: zod.union([zod.int(), zod.null()]).optional(),
+  ttRemaining: zod.union([zod.int(), zod.number()]),
 });
 
 export type LotUpdateResponse = zod.input<typeof LotUpdateResponse>;

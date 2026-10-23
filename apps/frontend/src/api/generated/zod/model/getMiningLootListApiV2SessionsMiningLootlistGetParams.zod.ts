@@ -7,10 +7,17 @@ import * as zod from 'zod';
 
 export const getMiningLootListApiV2SessionsMiningLootlistGetParamsSessionTypeMax = 3;
 
+export const GetMiningLootListApiV2SessionsMiningLootlistGetParams = zod.object(
+  {
+    sessionType: zod
+      .int()
+      .min(1)
+      .max(getMiningLootListApiV2SessionsMiningLootlistGetParamsSessionTypeMax),
+  },
+);
 
-export const GetMiningLootListApiV2SessionsMiningLootlistGetParams = zod.object({
-  "sessionType": zod.int().min(1).max(getMiningLootListApiV2SessionsMiningLootlistGetParamsSessionTypeMax)
-})
-
-export type GetMiningLootListApiV2SessionsMiningLootlistGetParams = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetParams>;
-export type GetMiningLootListApiV2SessionsMiningLootlistGetParamsOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetParams>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetParams = zod.input<
+  typeof GetMiningLootListApiV2SessionsMiningLootlistGetParams
+>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetParamsOutput =
+  zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetParams>;

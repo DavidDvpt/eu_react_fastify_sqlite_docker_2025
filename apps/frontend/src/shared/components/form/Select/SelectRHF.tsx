@@ -1,13 +1,13 @@
-import { cn } from "@/lib/utils";
-import useSafeFormContext from "@/shared/components/form/hookForm/useSafeFormContext";
-import { Controller } from "react-hook-form";
-import type { SelectRHFProps } from "../form.types";
-import AppSelect from "./AppSelect";
+import { cn } from '@/lib/utils';
+import useSafeFormContext from '@/shared/components/form/hookForm/useSafeFormContext';
+import { Controller } from 'react-hook-form';
+import type { SelectRHFProps } from '../form.types';
+import AppSelect from './AppSelect';
 import {
   formErrorClassName,
   formFieldWrapperClassName,
   formLabelClassName,
-} from "../form.styles";
+} from '../form.styles';
 
 const SelectRHF: React.FC<SelectRHFProps> = ({
   name,
@@ -15,7 +15,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
   value,
   onValueChange,
   disabled = false,
-  placeholder = "default placeholder",
+  placeholder = 'default placeholder',
   options,
   wrapperClassName,
   triggerClassName,
@@ -36,7 +36,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
       disabled={disabled}
       placeholder={placeholder}
       options={options}
-      triggerClassName={cn(triggerClassName, label && "mt-1")}
+      triggerClassName={cn(triggerClassName, label && 'mt-1')}
       error={error}
     />
   );
@@ -44,7 +44,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
   if (name) {
     if (!rhf) {
       throw new Error(
-        "SelectRHF with a `name` must be used inside a FormProvider (GenericForm).",
+        'SelectRHF with a `name` must be used inside a FormProvider (GenericForm).',
       );
     }
 
@@ -62,9 +62,9 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
           control={rhf.control}
           render={({ field }) =>
             renderSelect(
-              typeof value === "string"
+              typeof value === 'string'
                 ? value
-                : typeof field.value === "string"
+                : typeof field.value === 'string'
                   ? field.value
                   : undefined,
               (nextValue) => {
@@ -76,9 +76,7 @@ const SelectRHF: React.FC<SelectRHFProps> = ({
           }
         />
         {!hideErrorMessage && fieldState.error?.message ? (
-          <p
-            className={cn(formErrorClassName, errorClassName)}
-          >
+          <p className={cn(formErrorClassName, errorClassName)}>
             {String(fieldState.error.message)}
           </p>
         ) : null}

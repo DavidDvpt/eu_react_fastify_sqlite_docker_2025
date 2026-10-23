@@ -1,14 +1,14 @@
-import { GenericList } from "@/shared/components";
-import { createRunningTransactionsColumns } from "@/shared/components/GenericList/columnDefinition";
-import { FormatTools } from "@/shared/tools/formatTools";
+import { GenericList } from '@/shared/components';
+import { createRunningTransactionsColumns } from '@/shared/components/GenericList/columnDefinition';
+import { FormatTools } from '@/shared/tools/formatTools';
 import {
   transactionStatusPatchDtoSchema,
   type TransactionViewModel,
-} from "@zod-schemas";
+} from '@zod-schemas';
 
-import { useNavigate } from "react-router-dom";
-import { useTransactionsData, useTransactionMutation } from "@/shared/hooks";
-import { Section } from "@/shared/components/Containers";
+import { useNavigate } from 'react-router-dom';
+import { useTransactionsData, useTransactionMutation } from '@/shared/hooks';
+import { Section } from '@/shared/components/Containers';
 
 function RunningTransactionsSection({ className }: { className?: string }) {
   const navigate = useNavigate();
@@ -36,18 +36,18 @@ function RunningTransactionsSection({ className }: { className?: string }) {
       {
         onSuccess(_data, { row }) {
           const query = {
-            action: row.status === "SOLDED" ? "sell" : "resell",
+            action: row.status === 'SOLDED' ? 'sell' : 'resell',
             itemId: row.item?.id,
             ttc: row.ttc,
             quantity: row.quantity,
-            closePath: "/home",
+            closePath: '/home',
           };
 
           const search = new URLSearchParams();
-          search.set("transactionModal", JSON.stringify(query));
+          search.set('transactionModal', JSON.stringify(query));
 
           navigate({
-            pathname: "/home",
+            pathname: '/home',
             search: search.toString(),
           });
         },
@@ -79,16 +79,16 @@ function RunningTransactionsSection({ className }: { className?: string }) {
         rowClassName="transition duration-150 ease-in-out  hover:bg-info/5  last:border-b"
         rowHeight={56}
         footerConfig={{
-          rowClassName: "justify-end py-3 text-table-body-text",
+          rowClassName: 'justify-end py-3 text-table-body-text',
           cells: [
             {
-              key: "total-ttc",
+              key: 'total-ttc',
               content: (
                 <span>
-                  Total:{" "}
+                  Total:{' '}
                   <strong className="font-semibold">
                     {FormatTools.pedFormat().format(totalTtc)}
-                  </strong>{" "}
+                  </strong>{' '}
                   Peds
                 </span>
               ),

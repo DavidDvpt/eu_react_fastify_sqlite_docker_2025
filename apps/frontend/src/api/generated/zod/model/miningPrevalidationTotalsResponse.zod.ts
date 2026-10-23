@@ -6,9 +6,13 @@
 import * as zod from 'zod';
 
 export const MiningPrevalidationTotalsResponse = zod.object({
-  "costTt": zod.union([zod.int(),zod.number()]),
-  "costTtc": zod.union([zod.int(),zod.number()])
+  costTt: zod.union([zod.int(), zod.number()]),
+  costTtc: zod.union([zod.int(), zod.number()]),
 });
 
-export type MiningPrevalidationTotalsResponse = zod.input<typeof MiningPrevalidationTotalsResponse>;
-export type MiningPrevalidationTotalsResponseOutput = zod.output<typeof MiningPrevalidationTotalsResponse>;
+export type MiningPrevalidationTotalsResponse = zod.input<
+  typeof MiningPrevalidationTotalsResponse
+>;
+export type MiningPrevalidationTotalsResponseOutput = zod.output<
+  typeof MiningPrevalidationTotalsResponse
+>;

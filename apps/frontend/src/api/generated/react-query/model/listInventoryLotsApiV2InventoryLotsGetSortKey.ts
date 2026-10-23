@@ -4,8 +4,9 @@
  * Entropia Manager API
  */
 
-export type ListInventoryLotsApiV2InventoryLotsGetSortKey = typeof ListInventoryLotsApiV2InventoryLotsGetSortKey[keyof typeof ListInventoryLotsApiV2InventoryLotsGetSortKey] | null;
-
+export type ListInventoryLotsApiV2InventoryLotsGetSortKey =
+  | (typeof ListInventoryLotsApiV2InventoryLotsGetSortKey)[keyof typeof ListInventoryLotsApiV2InventoryLotsGetSortKey]
+  | null;
 
 export const ListInventoryLotsApiV2InventoryLotsGetSortKey = {
   createdAt: 'createdAt',

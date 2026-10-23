@@ -1,19 +1,28 @@
-import type { LucideIcon } from "lucide-react";
-import { Check, CornerDownLeft, EllipsisVertical, Pencil, Save, Trash2, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import type { ButtonProps } from "@/components/ui/buttons.type";
+import type { LucideIcon } from 'lucide-react';
+import {
+  Check,
+  CornerDownLeft,
+  EllipsisVertical,
+  Pencil,
+  Save,
+  Trash2,
+  X,
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import type { ButtonProps } from '@/components/ui/buttons.type';
 
 export const IconButtonIcon = {
-  Edit: "Edit",
-  Enter: "Enter",
-  Delete: "Delete",
-  Close: "Close",
-  Save: "Save",
-  Confirm: "Confirm",
-  More: "More",
+  Edit: 'Edit',
+  Enter: 'Enter',
+  Delete: 'Delete',
+  Close: 'Close',
+  Save: 'Save',
+  Confirm: 'Confirm',
+  More: 'More',
 } as const;
 
-export type IconButtonIcon = (typeof IconButtonIcon)[keyof typeof IconButtonIcon];
+export type IconButtonIcon =
+  (typeof IconButtonIcon)[keyof typeof IconButtonIcon];
 
 const icons: Record<IconButtonIcon, LucideIcon> = {
   [IconButtonIcon.Edit]: Pencil,
@@ -25,7 +34,7 @@ const icons: Record<IconButtonIcon, LucideIcon> = {
   [IconButtonIcon.More]: EllipsisVertical,
 };
 
-type IconButtonProps = Omit<ButtonProps, "icon"> & {
+type IconButtonProps = Omit<ButtonProps, 'icon'> & {
   icon: IconButtonIcon;
 };
 

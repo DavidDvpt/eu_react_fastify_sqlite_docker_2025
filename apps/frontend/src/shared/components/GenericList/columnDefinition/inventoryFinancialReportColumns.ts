@@ -1,5 +1,5 @@
-import { FormatTools } from "@/shared/tools";
-import type { GenericListColumn } from "@/shared/types";
+import { FormatTools } from '@/shared/tools';
+import type { GenericListColumn } from '@/shared/types';
 
 export type InventoryFinancialReportRow = {
   key: string;
@@ -10,34 +10,34 @@ export type InventoryFinancialReportRow = {
 export const inventoryFinancialReportColumn: GenericListColumn<InventoryFinancialReportRow>[] =
   [
     {
-      key: "label",
-      label: "",
+      key: 'label',
+      label: '',
       fillRemainingSpace: true,
       minWidth: 0,
-      bodyCellClassName: "font-medium text-table-head-text",
+      bodyCellClassName: 'font-medium text-table-head-text',
       value: (row) => row.label,
     },
     {
-      key: "amount",
-      label: "",
-      kind: "text",
+      key: 'amount',
+      label: '',
+      kind: 'text',
       minWidth: 96,
       maxWidth: 120,
-      align: "right",
-      bodyCellClassName: "justify-end font-medium text-table-body-text",
+      align: 'right',
+      bodyCellClassName: 'justify-end font-medium text-table-body-text',
       value: (row) => FormatTools.pedFormat().format(row.amount),
     },
   ];
 
-export const inventoryFinancialReportListClassName = "m-2";
+export const inventoryFinancialReportListClassName = 'm-2';
 
 export const inventoryFinancialReportBodyClassName =
-  "min-h-0 overflow-auto pr-1";
+  'min-h-0 overflow-auto pr-1';
 
 export const inventoryFinancialReportRowBaseClassName =
-  "grid items-stretch text-text";
+  'grid items-stretch text-text';
 
 export const inventoryFinancialReportRowClassName =
-  "border-b-0 last:border-b-0";
+  'border-b-0 last:border-b-0';
 
 export const inventoryFinancialReportRowHeight = 30;

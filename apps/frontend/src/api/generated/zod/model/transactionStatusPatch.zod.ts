@@ -6,8 +6,10 @@
 import * as zod from 'zod';
 
 export const TransactionStatusPatch = zod.object({
-  "status": zod.enum(['SOLDED', 'RETURNED', 'CANCELED'])
+  status: zod.enum(['SOLDED', 'RETURNED', 'CANCELED']),
 });
 
 export type TransactionStatusPatch = zod.input<typeof TransactionStatusPatch>;
-export type TransactionStatusPatchOutput = zod.output<typeof TransactionStatusPatch>;
+export type TransactionStatusPatchOutput = zod.output<
+  typeof TransactionStatusPatch
+>;

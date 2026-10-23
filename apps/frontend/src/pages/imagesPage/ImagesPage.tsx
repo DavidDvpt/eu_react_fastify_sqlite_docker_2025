@@ -1,12 +1,12 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState } from 'react';
 
-import { useListImagesApiV2ImagesGet } from "@/api/generated/react-query/entropiaManagerAPI";
-import { Button } from "@/components/ui/button";
-import { CapsuleLoader } from "@/shared/components";
-import { Panel, Section } from "@/shared/components/Containers";
+import { useListImagesApiV2ImagesGet } from '@/api/generated/react-query/entropiaManagerAPI';
+import { Button } from '@/components/ui/button';
+import { CapsuleLoader } from '@/shared/components';
+import { Panel, Section } from '@/shared/components/Containers';
 
-import ImageFigure from "./ImageFigure";
-import { parseImageCatalog } from "./imagesTypes";
+import ImageFigure from './ImageFigure';
+import { parseImageCatalog } from './imagesTypes';
 
 const PAGE_SIZE_OPTIONS = [50, 100, 150, 200, 250, 300];
 
@@ -36,7 +36,9 @@ function ImagesPage() {
     <Panel className="min-h-0 gap-2 p-2">
       <Section className="flex-row items-center justify-between gap-3">
         <div>
-          <h1 className="m-0 text-xl font-semibold text-text">Banque d’images</h1>
+          <h1 className="m-0 text-xl font-semibold text-text">
+            Banque d’images
+          </h1>
           <p className="m-0 text-sm text-text-muted">
             {catalog?.pagination.totalItems ?? 0} image(s) référencée(s)
           </p>
@@ -56,11 +58,17 @@ function ImagesPage() {
         ) : catalog && Object.keys(catalog.items).length > 0 ? (
           <div className="grid grid-cols-[repeat(auto-fill,minmax(180px,1fr))] gap-4">
             {Object.entries(catalog.items).map(([imageId, variants]) => (
-              <ImageFigure key={imageId} imageId={imageId} variants={variants} />
+              <ImageFigure
+                key={imageId}
+                imageId={imageId}
+                variants={variants}
+              />
             ))}
           </div>
         ) : (
-          <p className="m-0 text-sm text-text-muted">Aucune image disponible.</p>
+          <p className="m-0 text-sm text-text-muted">
+            Aucune image disponible.
+          </p>
         )}
       </Section>
 
@@ -81,19 +89,39 @@ function ImagesPage() {
         </label>
 
         <div className="flex items-center gap-2">
-          <Button variant="secondary" size="sm" onClick={() => changePage(-5)} disabled={page <= 1}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => changePage(-5)}
+            disabled={page <= 1}
+          >
             −5
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => changePage(-1)} disabled={page <= 1}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => changePage(-1)}
+            disabled={page <= 1}
+          >
             −1
           </Button>
           <span className="min-w-24 text-center text-sm text-text">
             Page {page} / {totalPages}
           </span>
-          <Button variant="secondary" size="sm" onClick={() => changePage(1)} disabled={page >= totalPages}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => changePage(1)}
+            disabled={page >= totalPages}
+          >
             +1
           </Button>
-          <Button variant="secondary" size="sm" onClick={() => changePage(5)} disabled={page >= totalPages}>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => changePage(5)}
+            disabled={page >= totalPages}
+          >
             +5
           </Button>
         </div>

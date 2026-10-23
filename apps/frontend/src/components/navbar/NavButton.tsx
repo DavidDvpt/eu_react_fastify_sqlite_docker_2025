@@ -1,19 +1,19 @@
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation } from 'react-router-dom';
 
-import { Button } from "@/components/ui/button";
-import type { NavbarButtonType } from "@/shared/types";
+import { Button } from '@/components/ui/button';
+import type { NavbarButtonType } from '@/shared/types';
 
 function NavButton(props: NavbarButtonType) {
   const location = useLocation();
 
   // Sécurisez le résultat de useLocation
-  const pathname = location?.pathname || "/";
+  const pathname = location?.pathname || '/';
 
   const routeIsActive =
     pathname === props.route || pathname.startsWith(`${props.route}/`);
   const isActive = props.isActive ?? routeIsActive;
   const shouldPreserveSearch =
-    pathname.startsWith("/manage") && props.route.startsWith("/manage");
+    pathname.startsWith('/manage') && props.route.startsWith('/manage');
 
   return (
     <Button
@@ -30,7 +30,7 @@ function NavButton(props: NavbarButtonType) {
         <NavLink
           to={{
             pathname: props.route,
-            search: shouldPreserveSearch ? location.search : "",
+            search: shouldPreserveSearch ? location.search : '',
           }}
         >
           {props.content}

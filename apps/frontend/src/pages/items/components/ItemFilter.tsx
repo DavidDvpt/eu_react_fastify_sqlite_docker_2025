@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils";
-import { UrlParamFlag } from "@/shared/components";
-import { Section } from "@/shared/components/Containers";
+import { cn } from '@/lib/utils';
+import { UrlParamFlag } from '@/shared/components';
+import { Section } from '@/shared/components/Containers';
 
 function ItemFilter({ className }: { className?: string }) {
   return (
     <Section
-      className={cn("flex min-h-0 flex-row gap-4", className)}
+      className={cn('flex min-h-0 flex-row gap-4', className)}
       disableShadow
     >
       <UrlParamFlag

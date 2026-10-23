@@ -1,9 +1,9 @@
-import { z } from "zod";
-import { TransactionStatus } from "@/api/generated/zod/model/transactionStatus.zod";
-import { TransactionType } from "@/api/generated/zod/model/transactionType.zod";
-import { genericDateSchema, idSchema } from "./common.js";
-import { lotViewModelSchema } from "./lotSchema.js";
-import { itemViewModelSchema } from "./systemSchemas.js";
+import { z } from 'zod';
+import { TransactionStatus } from '@/api/generated/zod/model/transactionStatus.zod';
+import { TransactionType } from '@/api/generated/zod/model/transactionType.zod';
+import { genericDateSchema, idSchema } from './common.js';
+import { lotViewModelSchema } from './lotSchema.js';
+import { itemViewModelSchema } from './systemSchemas.js';
 
 export const transactionTypeSchema = TransactionType;
 export type TransactionTypeDto = z.output<typeof transactionTypeSchema>;
@@ -12,12 +12,12 @@ export const transactionStatusDtoSchema = TransactionStatus;
 export type TransactionStatusDto = z.output<typeof transactionStatusDtoSchema>;
 
 export const transactionStatusPatchDtoSchema =
-  transactionStatusDtoSchema.extract(["SOLDED", "RETURNED", "CANCELED"]);
+  transactionStatusDtoSchema.extract(['SOLDED', 'RETURNED', 'CANCELED']);
 export const transactionStatusPatchSchema = z.object({
   status: transactionStatusPatchDtoSchema,
 });
 export const transactionCancelDtoSchema = transactionStatusDtoSchema.extract([
-  "CANCELED",
+  'CANCELED',
 ]);
 export const transactionValuesSchema = z.object({
   tt: z.coerce.number().nonnegative(),

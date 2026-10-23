@@ -6,7 +6,13 @@
 import * as zod from 'zod';
 import { ItemFinancialReportResponse } from './itemFinancialReportResponse.zod.ts';
 
-export const ItemFinancialReportEnvelope = zod.record(zod.string(), ItemFinancialReportResponse).describe('The item id is a legacy dynamic JSON object key.');
+export const ItemFinancialReportEnvelope = zod
+  .record(zod.string(), ItemFinancialReportResponse)
+  .describe('The item id is a legacy dynamic JSON object key.');
 
-export type ItemFinancialReportEnvelope = zod.input<typeof ItemFinancialReportEnvelope>;
-export type ItemFinancialReportEnvelopeOutput = zod.output<typeof ItemFinancialReportEnvelope>;
+export type ItemFinancialReportEnvelope = zod.input<
+  typeof ItemFinancialReportEnvelope
+>;
+export type ItemFinancialReportEnvelopeOutput = zod.output<
+  typeof ItemFinancialReportEnvelope
+>;

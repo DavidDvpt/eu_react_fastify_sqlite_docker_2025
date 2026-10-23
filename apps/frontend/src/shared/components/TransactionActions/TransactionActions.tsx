@@ -1,21 +1,21 @@
-import { Button } from "@/components/ui/button";
-import type { TransactionActionsProps } from "@/shared/types";
+import { Button } from '@/components/ui/button';
+import type { TransactionActionsProps } from '@/shared/types';
 
 function TransactionActions({
   onBuy,
   onSell,
   onBack,
-  direction = "row",
+  direction = 'row',
   className,
   buttonClassName,
   disableBuy = false,
   disableSell = false,
 }: TransactionActionsProps) {
-  const directionClass = direction === "column" ? "flex-col" : "flex-row";
+  const directionClass = direction === 'column' ? 'flex-col' : 'flex-row';
 
   return (
     <div
-      className={`flex ${directionClass} justify-end gap-2 ${className ?? ""}`}
+      className={`flex ${directionClass} justify-end gap-2 ${className ?? ''}`}
     >
       <Button
         type="button"

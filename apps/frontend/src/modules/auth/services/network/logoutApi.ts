@@ -1,4 +1,4 @@
-import { logoutApiV2AuthLogoutPost } from "@/api/generated/react-query/entropiaManagerAPI";
+import { logoutApiV2AuthLogoutPost } from '@/api/generated/react-query/entropiaManagerAPI';
 
 async function logoutApi() {
   try {

@@ -1,8 +1,8 @@
-import { useFormContext } from "react-hook-form";
+import { useFormContext } from 'react-hook-form';
 
-import type { RefiningFormValues } from "@/shared/schemas";
-import RefiningRecipeList from "./RefiningRecipeList";
-import type { RefiningRecipeOptionData } from "./refiningTypes";
+import type { RefiningFormValues } from '@/shared/schemas';
+import RefiningRecipeList from './RefiningRecipeList';
+import type { RefiningRecipeOptionData } from './refiningTypes';
 
 type RefiningRecipeFieldProps = {
   options: RefiningRecipeOptionData[];
@@ -32,9 +32,12 @@ function RefiningRecipeField({
       selectedResultId={selectedResultId}
       onSelect={(id) => {
         onSelect(id);
-        setValue("result", id, { shouldValidate: true });
+        setValue('result', id, { shouldValidate: true });
         const option = options.find((candidate) => candidate.resultId === id);
-        if (option) setValue("clickCount", option.maxClickCount, { shouldValidate: true });
+        if (option)
+          setValue('clickCount', option.maxClickCount, {
+            shouldValidate: true,
+          });
       }}
     />
   );

@@ -1,1 +1,1 @@
-export * from "./ManageList";
+export * from './ManageList';

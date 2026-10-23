@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import type { ReactNode } from 'react';
 
 type NavbarButtonType = {
   key?: string;
@@ -11,7 +11,7 @@ type NavbarButtonType = {
   className?: string;
   isActive?: boolean;
   disabled?: boolean;
-  variant: "navVertical" | "navHorizontal";
+  variant: 'navVertical' | 'navHorizontal';
 };
 
 export type { NavbarButtonType };

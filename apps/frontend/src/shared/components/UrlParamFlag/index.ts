@@ -1,1 +1,1 @@
-export { default as UrlParamFlag } from "./UrlParamFlag";
+export { default as UrlParamFlag } from './UrlParamFlag';

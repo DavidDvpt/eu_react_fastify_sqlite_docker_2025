@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
-import { useState } from "react";
-import styles from "./itemImage.module.css";
+import { cn } from '@/lib/utils';
+import { useState } from 'react';
+import styles from './itemImage.module.css';
 
-export type ItemImageSize = "small" | "medium" | "large";
+export type ItemImageSize = 'small' | 'medium' | 'large';
 
 export type ItemImageProps = {
   url: string | null;
@@ -12,7 +12,7 @@ export type ItemImageProps = {
 };
 
 function ItemImage({ url, alt, size, classname }: ItemImageProps) {
-  const imageSize = styles[size ?? "medium"];
+  const imageSize = styles[size ?? 'medium'];
   const [failedUrl, setFailedUrl] = useState<string | null>(null);
   const hasError = failedUrl === url;
 

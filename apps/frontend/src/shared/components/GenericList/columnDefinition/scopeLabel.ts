@@ -1,4 +1,7 @@
-const getScopeLabel = (rowUserId: string | null | undefined, currentUserId?: string): string => {
+const getScopeLabel = (
+  rowUserId: string | null | undefined,
+  currentUserId?: string,
+): string => {
   if (!rowUserId) {
     return 'System';
   }

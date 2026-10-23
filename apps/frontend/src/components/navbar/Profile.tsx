@@ -1,15 +1,15 @@
-import { ChevronDown } from "lucide-react";
-import { useState } from "react";
-import logoutApi from "@/modules/auth/services/network/logoutApi";
+import { ChevronDown } from 'lucide-react';
+import { useState } from 'react';
+import logoutApi from '@/modules/auth/services/network/logoutApi';
 
-import { useAppDispatch, useAppSelector } from "@/store/hooks";
-import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from '@/store/hooks';
+import { useNavigate } from 'react-router-dom';
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover";
-import { authMeThunk } from "@/store";
+} from '@/components/ui/popover';
+import { authMeThunk } from '@/store';
 
 function Profile() {
   const [isOpen, setIsOpen] = useState(false);
@@ -17,11 +17,11 @@ function Profile() {
   const navigate = useNavigate();
   const pseudo = useAppSelector((state) => state.auth.user.result?.pseudo);
 
-  const avatarLetter = (pseudo?.trim()?.[0] ?? "U").toUpperCase();
+  const avatarLetter = (pseudo?.trim()?.[0] ?? 'U').toUpperCase();
 
   const handleProfile = () => {
     setIsOpen(false);
-    navigate("/profile");
+    navigate('/profile');
   };
 
   const handleLogout = async () => {
@@ -63,7 +63,6 @@ function Profile() {
           </button>
         </PopoverContent>
       </Popover>
-
     </div>
   );
 }

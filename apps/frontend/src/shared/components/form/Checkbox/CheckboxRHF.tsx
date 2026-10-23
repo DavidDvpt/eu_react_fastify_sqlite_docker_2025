@@ -1,6 +1,6 @@
-import { useEffect } from "react";
-import { useFormContext } from "react-hook-form";
-import CheckboxApp from "./CheckboxApp";
+import { useEffect } from 'react';
+import { useFormContext } from 'react-hook-form';
+import CheckboxApp from './CheckboxApp';
 
 type CheckboxRHFProps = {
   name: string;

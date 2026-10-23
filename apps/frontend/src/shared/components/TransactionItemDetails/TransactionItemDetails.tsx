@@ -1,8 +1,8 @@
-import { cn } from "@/lib/utils";
-import { getItemImageUrl } from "@/shared/helpers/imageUrl";
-import { FormatTools } from "@/shared/tools";
-import { TransactionActions } from "@/shared/components";
-import { useState, type CSSProperties } from "react";
+import { cn } from '@/lib/utils';
+import { getItemImageUrl } from '@/shared/helpers/imageUrl';
+import { FormatTools } from '@/shared/tools';
+import { TransactionActions } from '@/shared/components';
+import { useState, type CSSProperties } from 'react';
 
 type TransactionItemDetailsProps = {
   itemName: string;
@@ -14,8 +14,8 @@ type TransactionItemDetailsProps = {
   onBack: () => void;
   disableBuy?: boolean;
   disableSell?: boolean;
-  actionsDirection?: "row" | "column";
-  actionsPlacement?: "bottom" | "right";
+  actionsDirection?: 'row' | 'column';
+  actionsPlacement?: 'bottom' | 'right';
   className?: string;
   imageStyle?: CSSProperties;
   actionsClassName?: string;
@@ -32,14 +32,14 @@ function TransactionItemDetails({
   onBack,
   disableBuy = false,
   disableSell = false,
-  actionsDirection = "row",
-  actionsPlacement = "right",
+  actionsDirection = 'row',
+  actionsPlacement = 'right',
   className,
   imageStyle,
   actionsClassName,
   buttonClassName,
 }: TransactionItemDetailsProps) {
-  const image = getItemImageUrl(imageUrlId, "normal");
+  const image = getItemImageUrl(imageUrlId, 'normal');
   const [failedImage, setFailedImage] = useState<string | null>(null);
   const imageError = failedImage === image;
   const price = FormatTools.pedFormat().format(unitPrice);
@@ -47,9 +47,9 @@ function TransactionItemDetails({
   return (
     <div
       className={cn(
-        actionsPlacement === "bottom"
-          ? "flex min-h-0 flex-col gap-4"
-          : "flex flex-row items-center justify-between gap-4",
+        actionsPlacement === 'bottom'
+          ? 'flex min-h-0 flex-col gap-4'
+          : 'flex flex-row items-center justify-between gap-4',
         className,
       )}
     >
@@ -86,7 +86,7 @@ function TransactionItemDetails({
       <TransactionActions
         direction={actionsDirection}
         className={cn(
-          actionsPlacement === "bottom" ? "mt-auto" : undefined,
+          actionsPlacement === 'bottom' ? 'mt-auto' : undefined,
           actionsClassName,
         )}
         buttonClassName={buttonClassName}

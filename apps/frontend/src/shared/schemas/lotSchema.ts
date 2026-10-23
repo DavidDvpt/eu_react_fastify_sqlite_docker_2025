@@ -1,11 +1,11 @@
-import { z } from "zod";
-import { booleanSchema, genericDateSchema } from "./common.js";
+import { z } from 'zod';
+import { booleanSchema, genericDateSchema } from './common.js';
 
 export const lotTypeSchema = z.enum([
-  "MINING",
-  "CRAFTING",
-  "TRADE",
-  "REFINING",
+  'MINING',
+  'CRAFTING',
+  'TRADE',
+  'REFINING',
 ]);
 export const lotItemIdSchema = z.object({ itemId: z.string() });
 

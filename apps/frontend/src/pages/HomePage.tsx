@@ -1,10 +1,10 @@
-import { Panel } from "@/shared/components/Containers";
-import TransactionModal from "@/shared/components/TransactionModal";
+import { Panel } from '@/shared/components/Containers';
+import TransactionModal from '@/shared/components/TransactionModal';
 import {
   FinancialSummarySection,
   RunningTransactionsSection,
-} from "@/shared/components";
-import FinancialReportSection from "@/shared/components/sections/FinancialReportSection";
+} from '@/shared/components';
+import FinancialReportSection from '@/shared/components/sections/FinancialReportSection';
 
 function HomePage() {
   return (

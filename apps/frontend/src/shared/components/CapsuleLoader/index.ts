@@ -1,3 +1,3 @@
-import CapsuleLoader from "./CapsuleLoader";
+import CapsuleLoader from './CapsuleLoader';
 
 export default CapsuleLoader;

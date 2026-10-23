@@ -8,4 +8,6 @@ import type { ItemFinancialReportResponse } from './operations/itemFinancialRepo
 /**
  * The item id is a legacy dynamic JSON object key.
  */
-export type ItemFinancialReportEnvelope = {[key: string]: ItemFinancialReportResponse};
+export type ItemFinancialReportEnvelope = {
+  [key: string]: ItemFinancialReportResponse;
+};

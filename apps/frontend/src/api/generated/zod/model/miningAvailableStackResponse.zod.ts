@@ -6,9 +6,13 @@
 import * as zod from 'zod';
 
 export const MiningAvailableStackResponse = zod.object({
-  "itemId": zod.string(),
-  "quantity": zod.int()
+  itemId: zod.string(),
+  quantity: zod.int(),
 });
 
-export type MiningAvailableStackResponse = zod.input<typeof MiningAvailableStackResponse>;
-export type MiningAvailableStackResponseOutput = zod.output<typeof MiningAvailableStackResponse>;
+export type MiningAvailableStackResponse = zod.input<
+  typeof MiningAvailableStackResponse
+>;
+export type MiningAvailableStackResponseOutput = zod.output<
+  typeof MiningAvailableStackResponse
+>;

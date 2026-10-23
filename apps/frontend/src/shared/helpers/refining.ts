@@ -1,9 +1,9 @@
-import { NumberHelper } from "./NumberHelper.js";
+import { NumberHelper } from './NumberHelper.js';
 import type {
   RefinageOriginStockResponse,
   RefinageRecipeResponse,
   SessionLineCostCreate,
-} from "@/api/generated/react-query/model";
+} from '@/api/generated/react-query/model';
 
 export type RefinageOrigin = { origin: string; quantity: number };
 
@@ -12,11 +12,7 @@ export type RefinageOrigin = { origin: string; quantity: number };
  * est intentionnellement exclu (un raffinage ne provient pas d'un autre
  * raffinage).
  */
-export const REFINING_PROVENANCES = [
-  "TRADE",
-  "MINING",
-  "CRAFTING",
-] as const;
+export const REFINING_PROVENANCES = ['TRADE', 'MINING', 'CRAFTING'] as const;
 export type RefiningProvenance = (typeof REFINING_PROVENANCES)[number];
 
 export type StockByItemId = Readonly<Record<string, number>>;
@@ -27,9 +23,7 @@ export function getRecipePpcm(
 ): number {
   if (ingredientLines.length === 0) return 0;
 
-  return NumberHelper.lcm(
-    ...ingredientLines.map((line) => line.quantity),
-  );
+  return NumberHelper.lcm(...ingredientLines.map((line) => line.quantity));
 }
 
 /**
@@ -49,7 +43,10 @@ export function computeRefinageMaxClickCount(
 
   const maxByStock = ingredientLines.reduce(
     (min, line) =>
-      Math.min(min, Math.floor((stockByItemId[line.origin] ?? 0) / line.quantity)),
+      Math.min(
+        min,
+        Math.floor((stockByItemId[line.origin] ?? 0) / line.quantity),
+      ),
     Infinity,
   );
 

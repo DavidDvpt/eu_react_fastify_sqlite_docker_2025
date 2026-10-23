@@ -1,17 +1,17 @@
-@import "./buttons.css";
+@import './buttons.css';
 
 @font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-VariableFont_opsz,wght.ttf")
-    format("truetype");
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans/DMSans-VariableFont_opsz,wght.ttf')
+    format('truetype');
   font-style: normal;
   font-weight: 100 1000;
   font-display: swap;
 }
 @font-face {
-  font-family: "DM Sans";
-  src: url("/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.ttf")
-    format("truetype");
+  font-family: 'DM Sans';
+  src: url('/fonts/dm-sans/DMSans-Italic-VariableFont_opsz,wght.ttf')
+    format('truetype');
   font-style: italic;
   font-weight: 100 1000;
   font-display: swap;
@@ -32,7 +32,7 @@
 /* Legacy utility names remain available, but resolve to semantic tokens. */
 @theme inline {
   --font-sans:
-    "DM Sans", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    'DM Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
     sans-serif;
 
   --color-white: var(--white);
@@ -216,7 +216,7 @@
 
 /* Optional light palette. Switching to .light or data-theme="light" only
    changes the values here; component styles remain unchanged. */
-:where(.light, [data-theme="light"]) {
+:where(.light, [data-theme='light']) {
   --bg: #f2f5f7;
   --surface: #ffffff;
   --surface-hover: #e8eef2;
@@ -282,7 +282,7 @@
     accent-color: var(--primary-700);
   }
   button:enabled:active,
-  [role="button"]:enabled:active {
+  [role='button']:enabled:active {
     box-shadow: var(--shadow-active);
   }
   :focus-visible {
@@ -290,7 +290,7 @@
     outline-offset: 2px;
   }
   :disabled,
-  [aria-disabled="true"] {
+  [aria-disabled='true'] {
     color: var(--text-disabled);
   }
   input:-webkit-autofill,

@@ -6,12 +6,29 @@
 import * as zod from 'zod';
 
 export const ListItemsApiV2ItemsGetParams = zod.object({
-  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
-  "typeId": zod.union([zod.string(),zod.null()]).optional(),
-  "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
-  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
-  "detail": zod.union([zod.enum(['finderDetail', 'finderAmplifierDetails', 'excavatorDetail', 'refinerDetail', 'enhancerDetails']),zod.null()]).optional()
-})
+  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
+  typeId: zod.union([zod.string(), zod.null()]).optional(),
+  sortKey: zod
+    .union([zod.enum(['name', 'createdAt', 'updatedAt']), zod.null()])
+    .optional(),
+  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
+  detail: zod
+    .union([
+      zod.enum([
+        'finderDetail',
+        'finderAmplifierDetails',
+        'excavatorDetail',
+        'refinerDetail',
+        'enhancerDetails',
+      ]),
+      zod.null(),
+    ])
+    .optional(),
+});
 
-export type ListItemsApiV2ItemsGetParams = zod.input<typeof ListItemsApiV2ItemsGetParams>;
-export type ListItemsApiV2ItemsGetParamsOutput = zod.output<typeof ListItemsApiV2ItemsGetParams>;
+export type ListItemsApiV2ItemsGetParams = zod.input<
+  typeof ListItemsApiV2ItemsGetParams
+>;
+export type ListItemsApiV2ItemsGetParamsOutput = zod.output<
+  typeof ListItemsApiV2ItemsGetParams
+>;

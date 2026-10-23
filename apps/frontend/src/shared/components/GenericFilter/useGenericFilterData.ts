@@ -1,10 +1,13 @@
 // @shared/hooks/useGenericFilter.ts
 
-import { useMemo } from "react";
-import { selectOptionHelper, selectOptionsHelper } from "@/shared/helpers/selectHelper";
-import { allOptionValue } from "./genericFilter.utils";
-import { useSystemDatas } from "@/shared/hooks";
-import type { GenericFilterValues } from "@/shared/types";
+import { useMemo } from 'react';
+import {
+  selectOptionHelper,
+  selectOptionsHelper,
+} from '@/shared/helpers/selectHelper';
+import { allOptionValue } from './genericFilter.utils';
+import { useSystemDatas } from '@/shared/hooks';
+import type { GenericFilterValues } from '@/shared/types';
 
 /**
  * Hook de gestion des données filtrées.
@@ -24,14 +27,14 @@ export const useGenericFilterData = ({
   // --- 3. Formatters ---
   const categoriesForSelect = useMemo(() => {
     return [
-      selectOptionHelper(allOptionValue, "Toutes les catégories"),
+      selectOptionHelper(allOptionValue, 'Toutes les catégories'),
       ...selectOptionsHelper(categories.data ?? []),
     ];
   }, [categories.data]);
 
   const typesForSelect = useMemo(() => {
     return [
-      selectOptionHelper(allOptionValue, "Tous les types"),
+      selectOptionHelper(allOptionValue, 'Tous les types'),
       ...selectOptionsHelper(typesByCategory(params.categoryId)),
     ];
   }, [params.categoryId, typesByCategory]);

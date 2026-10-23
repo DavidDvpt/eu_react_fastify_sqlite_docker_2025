@@ -2,23 +2,22 @@ import {
   QueryClient,
   QueryClientProvider,
   useMutation,
-} from "@tanstack/react-query";
-import { act, renderHook, waitFor } from "@testing-library/react";
-import type { ReactNode } from "react";
-import { describe, expect, it, vi } from "vitest";
+} from '@tanstack/react-query';
+import { act, renderHook, waitFor } from '@testing-library/react';
+import type { ReactNode } from 'react';
+import { describe, expect, it, vi } from 'vitest';
 
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import useUpdateTransactionsStatus from "../useTransactionMutation";
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import useUpdateTransactionsStatus from '../useTransactionMutation';
 
 const { updateStatusMock } = vi.hoisted(() => ({
   updateStatusMock: vi.fn(),
 }));
 
-vi.mock("@/api/generated/react-query/entropiaManagerAPI", async () => {
-  const actual =
-    await vi.importActual<
-      typeof import("@/api/generated/react-query/entropiaManagerAPI")
-    >("@/api/generated/react-query/entropiaManagerAPI");
+vi.mock('@/api/generated/react-query/entropiaManagerAPI', async () => {
+  const actual = await vi.importActual<
+    typeof import('@/api/generated/react-query/entropiaManagerAPI')
+  >('@/api/generated/react-query/entropiaManagerAPI');
 
   return {
     ...actual,
@@ -40,11 +39,11 @@ function createWrapper(queryClient: QueryClient) {
   };
 }
 
-describe("useUpdateTransactionsStatus", () => {
-  it("invalidates related queries after a successful status update", async () => {
+describe('useUpdateTransactionsStatus', () => {
+  it('invalidates related queries after a successful status update', async () => {
     updateStatusMock.mockResolvedValue(undefined);
     const invalidateSpy = vi
-      .spyOn(InvalidateQueryAndKeys, "transactionMutation")
+      .spyOn(InvalidateQueryAndKeys, 'transactionMutation')
       .mockResolvedValue(undefined as never);
 
     const { result } = renderHook(() => useUpdateTransactionsStatus(), {
@@ -57,18 +56,18 @@ describe("useUpdateTransactionsStatus", () => {
 
     await act(async () => {
       await result.current.statusMutation.mutateAsync({
-        row: { id: "transaction-1", item: { id: "item-1" } },
-        status: "SOLDED",
+        row: { id: 'transaction-1', item: { id: 'item-1' } },
+        status: 'SOLDED',
       } as never);
     });
 
     await waitFor(() => {
       expect(updateStatusMock).toHaveBeenCalledWith({
-        id: "transaction-1",
-        status: "SOLDED",
+        id: 'transaction-1',
+        status: 'SOLDED',
       });
       expect(invalidateSpy).toHaveBeenCalledWith({
-        itemId: "item-1",
+        itemId: 'item-1',
       });
     });
   });

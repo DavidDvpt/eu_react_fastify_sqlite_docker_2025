@@ -1,6 +1,6 @@
-import type { genericFilterSchema } from "@/shared/components/GenericFilter/genericFilterSchema";
-import type { ItemViewModel } from "@zod-schemas";
-import type z from "zod";
+import type { genericFilterSchema } from '@/shared/components/GenericFilter/genericFilterSchema';
+import type { ItemViewModel } from '@zod-schemas';
+import type z from 'zod';
 
 export type GenericFilterAvailability = {
   isPending: boolean;
@@ -17,12 +17,12 @@ export interface DisplayedFields {
 }
 
 export type GenericFilterContext =
-  | "manageCategory"
-  | "manageType"
-  | "manageItem"
-  | "inventory"
-  | "store"
-  | "transaction";
+  | 'manageCategory'
+  | 'manageType'
+  | 'manageItem'
+  | 'inventory'
+  | 'store'
+  | 'transaction';
 export interface GenericFilterProps {
   className?: string;
   selectedItem?: ItemViewModel | null;
@@ -31,4 +31,4 @@ export interface GenericFilterProps {
   onSelectedType?: (type: string) => void;
 }
 
-export type FilterKeys = keyof GenericFilterValues | "reset";
+export type FilterKeys = keyof GenericFilterValues | 'reset';

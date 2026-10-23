@@ -1,11 +1,11 @@
-import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useWatch } from "react-hook-form";
+import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useWatch } from 'react-hook-form';
 
 import {
   computeFeePricing,
   computeQuantityPricing,
   computeTtcPricing,
-} from "@/shared/components/TransactionModal/transactionUtils";
+} from '@/shared/components/TransactionModal/transactionUtils';
 import type {
   AutoPricingFormValues,
   TransactionPricingField,
@@ -13,8 +13,8 @@ import type {
   TransactionPricingValues,
   UseTransactionAutoPricingParams,
   UseTransactionAutoPricingResult,
-} from "@/shared/types/transactions";
-import { parseDecimalInput } from "@/shared/helpers/transactionHelpers";
+} from '@/shared/types/transactions';
+import { parseDecimalInput } from '@/shared/helpers/transactionHelpers';
 
 function areSameSnapshot(
   previous: TransactionPricingSnapshot,
@@ -33,10 +33,10 @@ function detectChangedField(
   previous: TransactionPricingSnapshot,
   current: TransactionPricingSnapshot,
 ): TransactionPricingField | null {
-  if (previous.quantity !== current.quantity) return "quantity";
-  if (previous.tt !== current.tt) return "tt";
-  if (previous.fee !== current.fee) return "fee";
-  if (previous.ttc !== current.ttc) return "ttc";
+  if (previous.quantity !== current.quantity) return 'quantity';
+  if (previous.tt !== current.tt) return 'tt';
+  if (previous.fee !== current.fee) return 'fee';
+  if (previous.ttc !== current.ttc) return 'ttc';
   return null;
 }
 
@@ -48,24 +48,24 @@ function useTransactionAutoPricing({
 }: UseTransactionAutoPricingParams<AutoPricingFormValues>): UseTransactionAutoPricingResult {
   const quantity = useWatch({
     control: form.control,
-    name: "quantity" as never,
+    name: 'quantity' as never,
   });
   const fee = useWatch({
     control: form.control,
-    name: "fee" as never,
+    name: 'fee' as never,
   });
   const ttc = useWatch({
     control: form.control,
-    name: "ttc" as never,
+    name: 'ttc' as never,
   });
-  const tt = useWatch({ control: form.control, name: "tt" as never });
+  const tt = useWatch({ control: form.control, name: 'tt' as never });
   const isAuction = useWatch({
     control: form.control,
-    name: "isAuction" as never,
+    name: 'isAuction' as never,
   });
 
   const isAuctionEnabled = Boolean(isAuction);
-  const isBuy = action === "buy";
+  const isBuy = action === 'buy';
   // Free mode: fee is always user-editable (no auto computation).
   const isFeeReadOnly = isAuctionEnabled ? !isBuy : false;
 
@@ -76,7 +76,7 @@ function useTransactionAutoPricing({
 
   const snapshotRef = useRef<TransactionPricingSnapshot | null>(null);
   const skipNextEffectRef = useRef(false);
-  const lastEditedFieldRef = useRef<TransactionPricingField>("quantity");
+  const lastEditedFieldRef = useRef<TransactionPricingField>('quantity');
 
   const currentSnapshot = useMemo<TransactionPricingSnapshot>(
     () => ({
@@ -92,16 +92,18 @@ function useTransactionAutoPricing({
   const syncValues = useCallback(
     (nextValues: TransactionPricingValues) => {
       skipNextEffectRef.current = true;
-      form.setValue("quantity" as never, nextValues.quantity as never, {
+      form.setValue('quantity' as never, nextValues.quantity as never, {
         shouldDirty: true,
       });
       if (nextValues.tt !== undefined) {
-        form.setValue("tt" as never, nextValues.tt as never, { shouldDirty: true });
+        form.setValue('tt' as never, nextValues.tt as never, {
+          shouldDirty: true,
+        });
       }
-      form.setValue("fee" as never, nextValues.fee as never, {
+      form.setValue('fee' as never, nextValues.fee as never, {
         shouldDirty: true,
       });
-      form.setValue("ttc" as never, nextValues.ttc as never, {
+      form.setValue('ttc' as never, nextValues.ttc as never, {
         shouldDirty: true,
       });
       snapshotRef.current = {
@@ -127,7 +129,7 @@ function useTransactionAutoPricing({
         ? (baseValues.tt ?? unitPrice)
         : unitPrice;
 
-      if (isNonStackable && sourceField === "tt") {
+      if (isNonStackable && sourceField === 'tt') {
         return computeQuantityPricing({
           action,
           quantity: 1,
@@ -138,7 +140,7 @@ function useTransactionAutoPricing({
         });
       }
 
-      if (sourceField === "quantity") {
+      if (sourceField === 'quantity') {
         return computeQuantityPricing({
           action,
           quantity: pricingQuantity,
@@ -149,7 +151,7 @@ function useTransactionAutoPricing({
         });
       }
 
-      if (sourceField === "fee") {
+      if (sourceField === 'fee') {
         return computeFeePricing({
           action,
           quantity: pricingQuantity,
@@ -230,20 +232,13 @@ function useTransactionAutoPricing({
     lastEditedFieldRef.current = changedField;
     const nextValues = computeNextValues(changedField);
 
-    if (
-      areSameSnapshot(currentSnapshot, { ...nextValues, isAuction: true })
-    ) {
+    if (areSameSnapshot(currentSnapshot, { ...nextValues, isAuction: true })) {
       snapshotRef.current = currentSnapshot;
       return;
     }
 
     syncValues(nextValues);
-  }, [
-    computeNextValues,
-    currentSnapshot,
-    isAuctionEnabled,
-    syncValues,
-  ]);
+  }, [computeNextValues, currentSnapshot, isAuctionEnabled, syncValues]);
 
   const applyAuctionIfNeeded = useCallback(
     (checked: boolean) => {

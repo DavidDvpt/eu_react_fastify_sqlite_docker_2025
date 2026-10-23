@@ -11,10 +11,10 @@ type MeApiResponse = {
 
 async function meParser(data: MeApiResponse) {
   try {
-    if (!data) throw new Error("No data found");
-    if (!data.id) throw new Error("No userId found");
-    if (!data.pseudo) throw new Error("No pseudo found");
-    if (!data.role) throw new Error("No role found");
+    if (!data) throw new Error('No data found');
+    if (!data.id) throw new Error('No userId found');
+    if (!data.pseudo) throw new Error('No pseudo found');
+    if (!data.role) throw new Error('No role found');
 
     const user: AuthMe = {
       id: data.id,

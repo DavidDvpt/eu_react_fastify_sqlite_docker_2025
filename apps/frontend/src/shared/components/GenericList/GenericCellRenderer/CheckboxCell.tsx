@@ -1,4 +1,4 @@
-import type { GenericListColumn } from "@/shared/types";
+import type { GenericListColumn } from '@/shared/types';
 
 type CheckboxCellProps<T> = {
   column: GenericListColumn<T>;

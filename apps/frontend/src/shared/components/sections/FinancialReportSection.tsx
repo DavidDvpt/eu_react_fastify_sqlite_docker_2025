@@ -1,4 +1,4 @@
-import { GenericList } from "@/shared/components";
+import { GenericList } from '@/shared/components';
 import {
   inventoryFinancialReportBodyClassName,
   inventoryFinancialReportColumn,
@@ -6,15 +6,15 @@ import {
   inventoryFinancialReportRowClassName,
   inventoryFinancialReportRowHeight,
   type InventoryFinancialReportRow,
-} from "@/shared/components/GenericList/columnDefinition/inventoryFinancialReportColumns";
-import { Section } from "../Containers";
+} from '@/shared/components/GenericList/columnDefinition/inventoryFinancialReportColumns';
+import { Section } from '../Containers';
 import {
   useFinancialInventoryData,
   useInventoryStockData,
-} from "@/shared/hooks";
-import { FormatTools } from "@/shared/tools";
-import { NumberHelper } from "@/shared/helpers";
-import { useMemo } from "react";
+} from '@/shared/hooks';
+import { FormatTools } from '@/shared/tools';
+import { NumberHelper } from '@/shared/helpers';
+import { useMemo } from 'react';
 
 function FinancialReportSection() {
   const {
@@ -53,18 +53,18 @@ function FinancialReportSection() {
   const rows = useMemo<InventoryFinancialReportRow[]>(
     () => [
       {
-        key: "buy",
-        label: "Total achat",
+        key: 'buy',
+        label: 'Total achat',
         amount: values?.buy ?? 0,
       },
       {
-        key: "fee",
-        label: "Taxes",
+        key: 'fee',
+        label: 'Taxes',
         amount: values?.fee ?? 0,
       },
       {
-        key: "sell",
-        label: "Total Ventes",
+        key: 'sell',
+        label: 'Total Ventes',
         amount: values?.sell ?? 0,
       },
     ],
@@ -88,16 +88,16 @@ function FinancialReportSection() {
         rowClassName={inventoryFinancialReportRowClassName}
         rowHeight={inventoryFinancialReportRowHeight}
         footerConfig={{
-          rowClassName: "justify-end py-2 text-table-body-text",
+          rowClassName: 'justify-end py-2 text-table-body-text',
           cells: [
             {
-              key: "profit-summary",
+              key: 'profit-summary',
               content: (
                 <span>
-                  Profit global:{" "}
+                  Profit global:{' '}
                   <strong className="font-semibold">
                     {FormatTools.pedFormat().format(values?.profit ?? 0)}
-                  </strong>{" "}
+                  </strong>{' '}
                   Peds
                 </span>
               ),

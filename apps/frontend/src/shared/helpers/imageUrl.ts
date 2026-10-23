@@ -1,10 +1,10 @@
-import { getImageBaseUrl } from "@/config/runtime";
+import { getImageBaseUrl } from '@/config/runtime';
 
-type ImageSize = "micro" | "normal";
+type ImageSize = 'micro' | 'normal';
 
 function getItemImageUrl(
   imageUrlId: string | null,
-  size: ImageSize = "normal",
+  size: ImageSize = 'normal',
 ): string | null {
   const baseUrl = getImageBaseUrl();
   if (!baseUrl || !imageUrlId) {

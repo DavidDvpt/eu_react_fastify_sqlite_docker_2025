@@ -1,6 +1,6 @@
-import type { ReactNode } from "react";
-import { Outlet } from "react-router-dom";
-import LeftNavContentLayout from "./LeftNavContentLayout";
+import type { ReactNode } from 'react';
+import { Outlet } from 'react-router-dom';
+import LeftNavContentLayout from './LeftNavContentLayout';
 
 function LeftMenuLayout({ leftNav }: { leftNav: ReactNode }) {
   return (

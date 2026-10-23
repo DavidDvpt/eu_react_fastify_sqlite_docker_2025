@@ -1,6 +1,6 @@
-import type { UseFormReturn } from "react-hook-form";
-import type { TransactionViewModel } from "@zod-schemas";
-import type { TransactionPanelProps } from "@/shared/components/TransactionModal/TransactionPanelContent";
+import type { UseFormReturn } from 'react-hook-form';
+import type { TransactionViewModel } from '@zod-schemas';
+import type { TransactionPanelProps } from '@/shared/components/TransactionModal/TransactionPanelContent';
 
 export type TransactionFormValues = {
   isAuction: boolean;
@@ -8,19 +8,19 @@ export type TransactionFormValues = {
   fee: number;
   buyPrice: number;
 };
-export type TransactionPricingField = "quantity" | "fee" | "ttc" | "tt";
-export type TransactionAction = "buy" | "sell" | "resell" | "newSell";
+export type TransactionPricingField = 'quantity' | 'fee' | 'ttc' | 'tt';
+export type TransactionAction = 'buy' | 'sell' | 'resell' | 'newSell';
 
 export type TransactionFormFieldsProps = Pick<
   TransactionPanelProps,
-  "item" | "modalParams"
+  'item' | 'modalParams'
 >;
 
 export type TransactionActionsProps = {
   onBuy: () => void;
   onSell: () => void;
   onBack: () => void;
-  direction?: "row" | "column";
+  direction?: 'row' | 'column';
   className?: string;
   buttonClassName?: string;
   disableBuy?: boolean;
@@ -76,7 +76,7 @@ export type TransactionPricingValues = {
   ttc: number;
 };
 
-export type TransactionPricingInput = Omit<TransactionPricingValues, "tt"> & {
+export type TransactionPricingInput = Omit<TransactionPricingValues, 'tt'> & {
   tt?: number;
   action: TransactionAction;
   unitPrice: number;

@@ -1,23 +1,23 @@
-import { useMemo } from "react";
+import { useMemo } from 'react';
 
-import { GenericList } from "@/shared/components";
-import { Section } from "@/shared/components/Containers";
+import { GenericList } from '@/shared/components';
+import { Section } from '@/shared/components/Containers';
 
-import { FormatTools } from "@/shared/tools/formatTools";
-import { getItemStockValue, type StockRow } from "@/shared/helpers/stock";
+import { FormatTools } from '@/shared/tools/formatTools';
+import { getItemStockValue, type StockRow } from '@/shared/helpers/stock';
 
-import { stockColumns } from "@/shared/components/GenericList/columnDefinition/stockColumns";
-import useInventoryStockData from "@/shared/hooks/rqFetchHooks/useInventoryStockData";
-import { buildStockRows } from "@/shared/helpers";
-import type { InventoryPageQuery } from "@/pages/inventoryPage/inventoryPageSchema";
-import InventoryItemCard from "@/pages/inventoryPage/inventory/components/InventoryItemCard";
-import useSystemDatas from "@/shared/hooks/rqFetchHooks/useSystemDatas";
+import { stockColumns } from '@/shared/components/GenericList/columnDefinition/stockColumns';
+import useInventoryStockData from '@/shared/hooks/rqFetchHooks/useInventoryStockData';
+import { buildStockRows } from '@/shared/helpers';
+import type { InventoryPageQuery } from '@/pages/inventoryPage/inventoryPageSchema';
+import InventoryItemCard from '@/pages/inventoryPage/inventory/components/InventoryItemCard';
+import useSystemDatas from '@/shared/hooks/rqFetchHooks/useSystemDatas';
 
 interface ItemListProps extends InventoryPageQuery {
   className?: string;
   onSelectedItem: (itemId: string, lotId?: string | null) => void;
   onRefine?: (row: StockRow) => void;
-  mode?: "inventory" | "store";
+  mode?: 'inventory' | 'store';
 }
 
 function ItemList({
@@ -27,17 +27,17 @@ function ItemList({
   viewMode,
   onSelectedItem,
   onRefine,
-  mode = "inventory",
+  mode = 'inventory',
 }: ItemListProps) {
   const { inventoryStock, isInventoryStockError, isInventoryStockLoading } =
-    useInventoryStockData({ enabled: mode === "inventory" });
+    useInventoryStockData({ enabled: mode === 'inventory' });
   const {
     items: { itemDatas, isLoading: isItemsLoading, isError: isItemsError },
   } = useSystemDatas();
 
-  const visibleStock = useMemo(
-    () => {
-      const rows = mode === "store"
+  const visibleStock = useMemo(() => {
+    const rows =
+      mode === 'store'
         ? (itemDatas ?? []).map((item) => ({
             ...item,
             stock: 1,
@@ -47,7 +47,8 @@ function ItemList({
           }))
         : buildStockRows(inventoryStock).filter((item) => item.stock > 0);
 
-      return rows
+    return (
+      rows
         // `isActive` is optional in the API response. Items without the
         // field are still active (the API only uses `false` to deactivate an
         // item); filtering on truthiness made every loaded item disappear.
@@ -56,10 +57,9 @@ function ItemList({
           (f) =>
             (f.typeId === typeId || typeId === undefined) &&
             (f.type?.categoryId === categoryId || categoryId === undefined),
-        );
-    },
-    [inventoryStock, itemDatas, mode, categoryId, typeId],
-  );
+        )
+    );
+  }, [inventoryStock, itemDatas, mode, categoryId, typeId]);
 
   const totalStockValue = useMemo(() => {
     return visibleStock.reduce((t, c) => {
@@ -71,17 +71,27 @@ function ItemList({
   return (
     <Section className={className}>
       <GenericList<StockRow>
-        columns={stockColumns(viewMode === "card", {
-          onRefine: mode === "inventory" ? onRefine : undefined,
+        columns={stockColumns(viewMode === 'card', {
+          onRefine: mode === 'inventory' ? onRefine : undefined,
         })}
         rows={visibleStock}
         getRowKey={(row) => row.lotId ?? row.id}
         onRowClick={(row) => onSelectedItem(row.id, row.lotId)}
-        isLoading={mode === "store" ? isItemsLoading : isInventoryStockLoading}
-        isError={mode === "store" ? isItemsError : isInventoryStockError}
-        loadingMessage={mode === "store" ? "Chargement du magasin..." : "Chargement de l'inventaire..."}
-        errorMessage={mode === "store" ? "Impossible de charger le magasin." : "Impossible de charger l'inventaire."}
-        emptyMessage={mode === "store" ? "Aucun item trouvé." : "Aucun item en stock."}
+        isLoading={mode === 'store' ? isItemsLoading : isInventoryStockLoading}
+        isError={mode === 'store' ? isItemsError : isInventoryStockError}
+        loadingMessage={
+          mode === 'store'
+            ? 'Chargement du magasin...'
+            : "Chargement de l'inventaire..."
+        }
+        errorMessage={
+          mode === 'store'
+            ? 'Impossible de charger le magasin.'
+            : "Impossible de charger l'inventaire."
+        }
+        emptyMessage={
+          mode === 'store' ? 'Aucun item trouvé.' : 'Aucun item en stock.'
+        }
         headerClassName="pr-3"
         bodyClassName="pr-3"
         rowClassName="group"
@@ -91,11 +101,11 @@ function ItemList({
         viewMode={viewMode}
         CardComponent={InventoryItemCard}
         footerConfig={{
-          rowClassName: "justify-end py-2 pr-3 font-semibold text-text",
+          rowClassName: 'justify-end py-2 pr-3 font-semibold text-text',
           cells: [
             {
-              key: "total-stock-value",
-              content: `${mode === "store" ? "Prix total" : "Total"}: ${FormatTools.pedFormat().format(totalStockValue)} Peds`,
+              key: 'total-stock-value',
+              content: `${mode === 'store' ? 'Prix total' : 'Total'}: ${FormatTools.pedFormat().format(totalStockValue)} Peds`,
             },
           ],
         }}

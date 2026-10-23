@@ -8,11 +8,13 @@ export class NumberHelper {
   }
 
   static formatNumber(value: number): string {
-    return new Intl.NumberFormat("fr-FR", { maximumFractionDigits: 3 }).format(value);
+    return new Intl.NumberFormat('fr-FR', { maximumFractionDigits: 3 }).format(
+      value,
+    );
   }
 
   static formatPercent(value: number): string {
-    return new Intl.NumberFormat("fr-FR", {
+    return new Intl.NumberFormat('fr-FR', {
       minimumFractionDigits: 2,
       maximumFractionDigits: 2,
     }).format(value);

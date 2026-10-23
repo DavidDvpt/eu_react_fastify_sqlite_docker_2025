@@ -3,13 +3,13 @@ import {
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip";
-import ItemImage from "@/shared/components/itemImage/ItemImage";
-import { getItemImageUrl } from "@/shared/helpers";
-import { useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut } from "@/api/generated/react-query/entropiaManagerAPI";
-import { InvalidateQueryAndKeys } from "@/lib/react-query/InvalidateQueryAndKeys";
-import type { ItemViewModel } from "@zod-schemas";
-import type { EnhancerLine } from "./types";
+} from '@/components/ui/tooltip';
+import ItemImage from '@/shared/components/itemImage/ItemImage';
+import { getItemImageUrl } from '@/shared/helpers';
+import { useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut } from '@/api/generated/react-query/entropiaManagerAPI';
+import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import type { ItemViewModel } from '@zod-schemas';
+import type { EnhancerLine } from './types';
 
 function EnhancerLineView({
   line,
@@ -21,9 +21,15 @@ function EnhancerLineView({
   sessionId: string;
 }) {
   const name = item?.name ?? line.itemId;
-  const consumeMutation = useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut();
+  const consumeMutation =
+    useUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut();
   const consume = () => {
-    if (!line.costLineId || consumeMutation.isPending || line.quantityRemaining <= 0) return;
+    if (
+      !line.costLineId ||
+      consumeMutation.isPending ||
+      line.quantityRemaining <= 0
+    )
+      return;
     consumeMutation.mutate(
       {
         sessionId,
@@ -46,13 +52,13 @@ function EnhancerLineView({
                 className="cursor-pointer"
                 onClick={consume}
                 onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
+                  if (event.key === 'Enter' || event.key === ' ') {
                     event.preventDefault();
                   }
                 }}
               >
                 <ItemImage
-                  url={getItemImageUrl(item.imageUrlId, "normal")}
+                  url={getItemImageUrl(item.imageUrlId, 'normal')}
                   alt={name}
                   size="small"
                   classname="shrink-0"
