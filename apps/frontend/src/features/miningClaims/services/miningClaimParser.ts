@@ -92,16 +92,22 @@ export class MiningClaimParser {
 
     const resourceDeed = message.match(resourceDeedPattern);
     if (resourceDeed) {
-      this.currentClaim = emptyClaim();
+      this.currentClaim ??= emptyClaim();
       this.currentClaim.resourceType =
         resourceDeed[1] === 'Energy Matter' ? 'enmatter' : 'ore';
+      if (this.currentClaim.resourceName) {
+        this.setItems(items);
+        console.log('Source trouvée', this.currentClaim.resourceName);
+        return { type: 'claim-detected', payload: this.toPayload() };
+      }
       return null;
     }
 
     const claimedResource = message.match(claimedResourcePattern);
     if (claimedResource) {
-      if (!this.currentClaim) return null;
+      this.currentClaim ??= emptyClaim();
       this.currentClaim.resourceName = claimedResource[1] ?? null;
+      if (!this.currentClaim.resourceType) return null;
       this.setItems(items);
       console.log('Source trouvée', this.currentClaim.resourceName);
       return { type: 'claim-detected', payload: this.toPayload() };
