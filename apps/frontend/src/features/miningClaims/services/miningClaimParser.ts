@@ -55,6 +55,7 @@ function roundPed(value: number): number {
 
 export class MiningClaimParser {
   private currentClaim: CurrentMiningClaim | null = null;
+  private readonly claims = new Map<MiningResourceType, CurrentMiningClaim>();
   private playerName = '';
 
   setPlayerName(playerName: string) {
@@ -92,9 +93,16 @@ export class MiningClaimParser {
 
     const resourceDeed = message.match(resourceDeedPattern);
     if (resourceDeed) {
-      this.currentClaim ??= emptyClaim();
-      this.currentClaim.resourceType =
+      const resourceType: MiningResourceType =
         resourceDeed[1] === 'Energy Matter' ? 'enmatter' : 'ore';
+      if (this.currentClaim && !this.currentClaim.resourceType) {
+        this.currentClaim.resourceType = resourceType;
+        this.claims.set(resourceType, this.currentClaim);
+      } else {
+        this.currentClaim = this.claims.get(resourceType) ?? emptyClaim();
+        this.currentClaim.resourceType = resourceType;
+        this.claims.set(resourceType, this.currentClaim);
+      }
       if (this.currentClaim.resourceName) {
         this.setItems(items);
         console.log('Source trouvée', this.currentClaim.resourceName);
@@ -108,6 +116,7 @@ export class MiningClaimParser {
       this.currentClaim ??= emptyClaim();
       this.currentClaim.resourceName = claimedResource[1] ?? null;
       if (!this.currentClaim.resourceType) return null;
+      this.claims.set(this.currentClaim.resourceType, this.currentClaim);
       this.setItems(items);
       console.log('Source trouvée', this.currentClaim.resourceName);
       return { type: 'claim-detected', payload: this.toPayload() };
@@ -122,8 +131,9 @@ export class MiningClaimParser {
     );
     const ownGlobal = this.playerName ? message.match(ownGlobalPattern) : null;
     if (ownGlobal) {
-      if (!this.currentClaim) return null;
       const resourceName = ownGlobal[1];
+      this.activateClaim(resourceName);
+      if (!this.currentClaim) return null;
       if (resourceName === this.currentClaim.resourceName) {
         this.currentClaim.isGlobal = true;
         this.currentClaim.isHof = message.includes('Hall of Fame');
@@ -135,6 +145,7 @@ export class MiningClaimParser {
 
     const extraction = message.match(extractionPattern);
     if (extraction) {
+      this.activateClaim(extraction[1] ?? '');
       if (
         !this.currentClaim ||
         extraction[1] !== this.currentClaim.resourceName
@@ -167,6 +178,20 @@ export class MiningClaimParser {
 
   reset() {
     this.currentClaim = null;
+    this.claims.clear();
+  }
+
+  resetActiveClaim() {
+    if (!this.currentClaim?.resourceType) return;
+    this.claims.delete(this.currentClaim.resourceType);
+    this.currentClaim = null;
+  }
+
+  private activateClaim(resourceName: string) {
+    const claim = [...this.claims.values()].find(
+      (candidate) => candidate.resourceName === resourceName,
+    );
+    if (claim) this.currentClaim = claim;
   }
 
   private toPayload(): MiningClaimPayload {

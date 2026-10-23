@@ -184,7 +184,7 @@ export function useMiningChatLogClaims(
           ...updatedClaim,
           resourceName: event.payload.resourceName,
         });
-        parserRef.current.reset();
+        parserRef.current.resetActiveClaim();
         await InvalidateQueryAndKeys.miningMutation(sessionId);
       };
 
