@@ -11,22 +11,17 @@ export const miningSessionPrevalidationCreateTypeMax = 3;
 
 export const miningSessionPrevalidationCreateAmmoQuantityExclusiveMin = 0;
 
-export const MiningSessionPrevalidationCreate = zod
-  .object({
-    clicks: zod.int().gt(miningSessionPrevalidationCreateClicksExclusiveMin),
-    type: zod.int().min(1).max(miningSessionPrevalidationCreateTypeMax),
-    ammoItemId: zod.string(),
-    ammoQuantity: zod
-      .int()
-      .gt(miningSessionPrevalidationCreateAmmoQuantityExclusiveMin),
-    finderLotIds: zod.array(zod.string()).min(1),
-    ampLotIds: zod.array(zod.string()).optional(),
-  })
-  .describe('Inventory lots selected by the mining-session form.');
 
-export type MiningSessionPrevalidationCreate = zod.input<
-  typeof MiningSessionPrevalidationCreate
->;
-export type MiningSessionPrevalidationCreateOutput = zod.output<
-  typeof MiningSessionPrevalidationCreate
->;
+
+
+export const MiningSessionPrevalidationCreate = zod.object({
+  "clicks": zod.int().gt(miningSessionPrevalidationCreateClicksExclusiveMin),
+  "type": zod.int().min(1).max(miningSessionPrevalidationCreateTypeMax),
+  "ammoItemId": zod.string(),
+  "ammoQuantity": zod.int().gt(miningSessionPrevalidationCreateAmmoQuantityExclusiveMin),
+  "finderLotIds": zod.array(zod.string()).min(1),
+  "ampLotIds": zod.array(zod.string()).optional()
+}).describe('Inventory lots selected by the mining-session form.');
+
+export type MiningSessionPrevalidationCreate = zod.input<typeof MiningSessionPrevalidationCreate>;
+export type MiningSessionPrevalidationCreateOutput = zod.output<typeof MiningSessionPrevalidationCreate>;

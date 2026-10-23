@@ -4,9 +4,8 @@
  * Entropia Manager API
  */
 
-export type MiningSessionHistoryResponseSearchType =
-  | (typeof MiningSessionHistoryResponseSearchType)[keyof typeof MiningSessionHistoryResponseSearchType]
-  | null;
+export type MiningSessionHistoryResponseSearchType = typeof MiningSessionHistoryResponseSearchType[keyof typeof MiningSessionHistoryResponseSearchType] | null;
+
 
 export const MiningSessionHistoryResponseSearchType = {
   E: 'E',

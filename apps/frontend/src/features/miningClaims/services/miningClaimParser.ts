@@ -1,7 +1,10 @@
 import type { ItemResponse } from '@/api/generated/react-query/model/itemResponse';
 
+export type MiningResourceType = 'ore' | 'enmatter';
+
 export type CurrentMiningClaim = {
   resourceName: string | null;
+  resourceType: MiningResourceType | null;
   itemId: string | null;
   quantity: number;
   value: number;
@@ -12,6 +15,7 @@ export type CurrentMiningClaim = {
 
 export type MiningClaimPayload = {
   resourceName: string;
+  resourceType: MiningResourceType;
   itemId: string;
   quantity: number;
   value: number;
@@ -27,6 +31,7 @@ export type MiningClaimParserEvent =
 
 export const emptyClaim = (): CurrentMiningClaim => ({
   resourceName: null,
+  resourceType: null,
   itemId: null,
   quantity: 0,
   value: 0,
@@ -36,7 +41,7 @@ export const emptyClaim = (): CurrentMiningClaim => ({
 });
 
 const resourceDeedPattern =
-  /You received Energy Matter Resource Deed x \(\d+\) Value:/;
+  /You received (Energy Matter|Mineral) Resource Deed x \(\d+\) Value:/;
 const claimedResourcePattern = /You have claimed a resource! \(([^)]+)\)/;
 const extractionPattern = /You received (.+) x \((\d+)\) Value: ([\d.,]+) PED/;
 function parsePed(value: string): number {
@@ -57,10 +62,23 @@ export class MiningClaimParser {
   }
 
   setItems(items: ItemResponse[]) {
-    if (!this.currentClaim?.resourceName) return;
+    if (!this.currentClaim?.resourceName || !this.currentClaim.resourceType)
+      return;
     this.currentClaim.itemId =
-      items.find((item) => item.name === this.currentClaim?.resourceName)?.id ??
-      null;
+      items.find((item) => {
+        if (item.name !== this.currentClaim?.resourceName) return false;
+        const itemTypeName = item.type?.name?.toLowerCase() ?? '';
+        const categoryName = item.type?.category?.name?.toLowerCase() ?? '';
+        const miningTypeName = `${itemTypeName} ${categoryName}`;
+        const isEnmatter =
+          miningTypeName.includes('enmatter') ||
+          miningTypeName.includes('energy matter');
+        const isOre =
+          miningTypeName.includes('ore') || miningTypeName.includes('mineral');
+        return this.currentClaim.resourceType === 'enmatter'
+          ? isEnmatter
+          : isOre;
+      })?.id ?? null;
   }
 
   processLine(
@@ -72,8 +90,11 @@ export class MiningClaimParser {
       .replace(/^.*?\[(?:System|Globals)\]\s*\[.*?\]\s*/, '')
       .trim();
 
-    if (resourceDeedPattern.test(message)) {
+    const resourceDeed = message.match(resourceDeedPattern);
+    if (resourceDeed) {
       this.currentClaim = emptyClaim();
+      this.currentClaim.resourceType =
+        resourceDeed[1] === 'Energy Matter' ? 'enmatter' : 'ore';
       return null;
     }
 
@@ -146,6 +167,7 @@ export class MiningClaimParser {
     const claim = this.currentClaim ?? emptyClaim();
     return {
       resourceName: claim.resourceName ?? 'Unknown',
+      resourceType: claim.resourceType ?? 'ore',
       itemId: claim.itemId ?? '',
       quantity: claim.quantity,
       value: claim.value,

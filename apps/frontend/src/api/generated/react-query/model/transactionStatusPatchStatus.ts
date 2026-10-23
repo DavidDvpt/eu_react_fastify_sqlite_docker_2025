@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export type TransactionStatusPatchStatus =
-  (typeof TransactionStatusPatchStatus)[keyof typeof TransactionStatusPatchStatus];
+export type TransactionStatusPatchStatus = typeof TransactionStatusPatchStatus[keyof typeof TransactionStatusPatchStatus];
+
 
 export const TransactionStatusPatchStatus = {
   SOLDED: 'SOLDED',

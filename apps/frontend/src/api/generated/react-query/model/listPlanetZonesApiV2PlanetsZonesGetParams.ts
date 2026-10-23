@@ -5,5 +5,5 @@
  */
 
 export type ListPlanetZonesApiV2PlanetsZonesGetParams = {
-  planet?: string | null;
+planet?: string | null;
 };

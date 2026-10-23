@@ -9,37 +9,21 @@ export const miningClaimPatchQuantityOneExclusiveMin = 0;
 
 export const miningClaimPatchValueOneExclusiveMin = 0;
 
-export const miningClaimPatchValueTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
-export const miningClaimPatchDepthTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningClaimPatchValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const miningClaimPatchDepthTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const MiningClaimPatch = zod.object({
-  itemId: zod.union([zod.string(), zod.null()]).optional(),
-  quantity: zod
-    .union([zod.int().gt(miningClaimPatchQuantityOneExclusiveMin), zod.null()])
-    .optional(),
-  isHof: zod.union([zod.boolean(), zod.null()]).optional(),
-  isGlobal: zod.union([zod.boolean(), zod.null()]).optional(),
-  value: zod
-    .union([
-      zod.number().gt(miningClaimPatchValueOneExclusiveMin),
-      zod.string().regex(miningClaimPatchValueTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
-  depositSize: zod.union([zod.int(), zod.null()]).optional(),
-  latitude: zod.union([zod.int(), zod.null()]).optional(),
-  longitude: zod.union([zod.int(), zod.null()]).optional(),
-  depth: zod
-    .union([
-      zod.number(),
-      zod.string().regex(miningClaimPatchDepthTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
+  "itemId": zod.union([zod.string(),zod.null()]).optional(),
+  "quantity": zod.union([zod.int().gt(miningClaimPatchQuantityOneExclusiveMin),zod.null()]).optional(),
+  "isHof": zod.union([zod.boolean(),zod.null()]).optional(),
+  "isGlobal": zod.union([zod.boolean(),zod.null()]).optional(),
+  "depleted": zod.union([zod.boolean(),zod.null()]).optional(),
+  "value": zod.union([zod.number().gt(miningClaimPatchValueOneExclusiveMin),zod.string().regex(miningClaimPatchValueTwoRegExp),zod.null()]).optional(),
+  "depositSize": zod.union([zod.int(),zod.null()]).optional(),
+  "latitude": zod.union([zod.int(),zod.null()]).optional(),
+  "longitude": zod.union([zod.int(),zod.null()]).optional(),
+  "depth": zod.union([zod.number(),zod.string().regex(miningClaimPatchDepthTwoRegExp),zod.null()]).optional()
 });
 
 export type MiningClaimPatch = zod.input<typeof MiningClaimPatch>;

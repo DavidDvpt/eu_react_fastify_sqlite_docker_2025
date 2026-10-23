@@ -12,7 +12,10 @@ import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys
 import { getauthState } from '@/store';
 import { useAppSelector } from '@/store/hooks';
 import { MiningClaimParser } from '../services/miningClaimParser';
-import type { MiningClaimParserEvent } from '../services/miningClaimParser';
+import type {
+  MiningClaimParserEvent,
+  MiningResourceType,
+} from '../services/miningClaimParser';
 
 const POLL_INTERVAL_MS = 1000;
 const LISTENER_LOG_PREFIX = '[ChatLogListener]';
@@ -44,6 +47,7 @@ export function useMiningChatLogClaims(
     Array<{
       id: string;
       resourceName: string;
+      resourceType: MiningResourceType;
       itemId: string | null;
       depleted: boolean;
     }>
@@ -88,15 +92,28 @@ export function useMiningChatLogClaims(
     }
     let cancelled = false;
 
-    const findPendingClaim = (resourceName: string) =>
+    const findPendingClaim = (
+      resourceName: string,
+      resourceType: MiningResourceType,
+    ) =>
       claimQueueRef.current.find(
-        (claim) => !claim.depleted && claim.resourceName === resourceName,
+        (claim) =>
+          !claim.depleted &&
+          claim.resourceName === resourceName &&
+          claim.resourceType === resourceType,
       );
 
     const processClaimEvent = async (event: MiningClaimParserEvent) => {
       if (event.type === 'claim-detected') {
-        const { resourceName, itemId, quantity, value, isGlobal, isHof } =
-          event.payload;
+        const {
+          resourceName,
+          resourceType,
+          itemId,
+          quantity,
+          value,
+          isGlobal,
+          isHof,
+        } = event.payload;
         const createdClaim = await createClaim.mutateAsync({
           sessionId,
           data: {
@@ -110,6 +127,7 @@ export function useMiningChatLogClaims(
         claimQueueRef.current.push({
           id: createdClaim.id,
           resourceName,
+          resourceType,
           itemId: createdClaim.itemId,
           depleted: false,
         });
@@ -118,7 +136,10 @@ export function useMiningChatLogClaims(
         return;
       }
 
-      const pendingClaim = findPendingClaim(event.payload.resourceName);
+      const pendingClaim = findPendingClaim(
+        event.payload.resourceName,
+        event.payload.resourceType,
+      );
       if (!pendingClaim) return;
 
       if (event.type === 'claim-updated') {
@@ -132,6 +153,7 @@ export function useMiningChatLogClaims(
         (claim) =>
           !claim.depleted &&
           claim.resourceName === event.payload.resourceName &&
+          claim.resourceType === event.payload.resourceType &&
           !claim.itemId,
       );
       const completeDepletion = async (claim: {

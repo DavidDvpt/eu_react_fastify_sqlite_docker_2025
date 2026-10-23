@@ -7,14 +7,8 @@ import * as zod from 'zod';
 
 export const listLotOriginsApiV2InventoryLotsOriginGetParamsAllDefault = false;
 export const ListLotOriginsApiV2InventoryLotsOriginGetParams = zod.object({
-  all: zod
-    .boolean()
-    .default(listLotOriginsApiV2InventoryLotsOriginGetParamsAllDefault),
-});
+  "all": zod.boolean().default(listLotOriginsApiV2InventoryLotsOriginGetParamsAllDefault)
+})
 
-export type ListLotOriginsApiV2InventoryLotsOriginGetParams = zod.input<
-  typeof ListLotOriginsApiV2InventoryLotsOriginGetParams
->;
-export type ListLotOriginsApiV2InventoryLotsOriginGetParamsOutput = zod.output<
-  typeof ListLotOriginsApiV2InventoryLotsOriginGetParams
->;
+export type ListLotOriginsApiV2InventoryLotsOriginGetParams = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetParams>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetParamsOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetParams>;

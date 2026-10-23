@@ -6,23 +6,10 @@
 import * as zod from 'zod';
 
 export const GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.object({
-  status: zod
-    .union([
-      zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),
-      zod.null(),
-    ])
-    .optional(),
-  type: zod
-    .union([
-      zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),
-      zod.null(),
-    ])
-    .optional(),
-  withLotId: zod.union([zod.boolean(), zod.null()]).optional(),
-});
+  "status": zod.union([zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),zod.null()]).optional(),
+  "type": zod.union([zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),zod.null()]).optional(),
+  "withLotId": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.input<
-  typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams
->;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetParamsOutput =
-  zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetParamsOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;

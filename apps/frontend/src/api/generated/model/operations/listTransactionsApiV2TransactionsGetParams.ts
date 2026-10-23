@@ -7,9 +7,9 @@ import type { ListTransactionsApiV2TransactionsGetStatus } from '../listTransact
 import type { ListTransactionsApiV2TransactionsGetType } from '../listTransactionsApiV2TransactionsGetType.ts';
 
 export type ListTransactionsApiV2TransactionsGetParams = {
-  status?: ListTransactionsApiV2TransactionsGetStatus;
-  type?: ListTransactionsApiV2TransactionsGetType;
-  itemId?: string | null;
-  withItemId?: boolean | null;
-  withLotId?: boolean | null;
+status?: ListTransactionsApiV2TransactionsGetStatus;
+type?: ListTransactionsApiV2TransactionsGetType;
+itemId?: string | null;
+withItemId?: boolean | null;
+withLotId?: boolean | null;
 };

@@ -5,25 +5,18 @@
  */
 import * as zod from 'zod';
 
-export const miningDepositSizeResponseValueMinRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
-export const miningDepositSizeResponseValueMaxRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningDepositSizeResponseValueMinRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const miningDepositSizeResponseValueMaxRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const MiningDepositSizeResponse = zod.object({
-  id: zod.int(),
-  size: zod.int(),
-  romanSize: zod.string(),
-  sizeLabel: zod.string(),
-  valueMin: zod.string().regex(miningDepositSizeResponseValueMinRegExp),
-  valueMax: zod.string().regex(miningDepositSizeResponseValueMaxRegExp),
+  "id": zod.int(),
+  "size": zod.int(),
+  "romanSize": zod.string(),
+  "sizeLabel": zod.string(),
+  "valueMin": zod.string().regex(miningDepositSizeResponseValueMinRegExp),
+  "valueMax": zod.string().regex(miningDepositSizeResponseValueMaxRegExp)
 });
 
-export type MiningDepositSizeResponse = zod.input<
-  typeof MiningDepositSizeResponse
->;
-export type MiningDepositSizeResponseOutput = zod.output<
-  typeof MiningDepositSizeResponse
->;
+export type MiningDepositSizeResponse = zod.input<typeof MiningDepositSizeResponse>;
+export type MiningDepositSizeResponseOutput = zod.output<typeof MiningDepositSizeResponse>;

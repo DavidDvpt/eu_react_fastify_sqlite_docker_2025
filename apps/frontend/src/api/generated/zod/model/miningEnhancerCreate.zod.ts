@@ -10,17 +10,15 @@ export const miningEnhancerCreateSocketMax = 10;
 
 export const miningEnhancerCreateQuantityInitialExclusiveMin = 0;
 
+
+
 export const MiningEnhancerCreate = zod.object({
-  itemId: zod.string(),
-  target: MiningEnhancerTarget,
-  targetLotId: zod.string(),
-  socket: zod.int().min(1).max(miningEnhancerCreateSocketMax),
-  quantityInitial: zod
-    .int()
-    .gt(miningEnhancerCreateQuantityInitialExclusiveMin),
+  "itemId": zod.string(),
+  "target": MiningEnhancerTarget,
+  "targetLotId": zod.string(),
+  "socket": zod.int().min(1).max(miningEnhancerCreateSocketMax),
+  "quantityInitial": zod.int().gt(miningEnhancerCreateQuantityInitialExclusiveMin)
 });
 
 export type MiningEnhancerCreate = zod.input<typeof MiningEnhancerCreate>;
-export type MiningEnhancerCreateOutput = zod.output<
-  typeof MiningEnhancerCreate
->;
+export type MiningEnhancerCreateOutput = zod.output<typeof MiningEnhancerCreate>;

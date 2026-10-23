@@ -8,19 +8,17 @@ import * as zod from 'zod';
 export const lotResponseLotMarkupDefault = 100;
 
 export const LotResponse = zod.object({
-  id: zod.string(),
-  itemId: zod.string(),
-  isActive: zod.boolean(),
-  ttRemaining: zod.union([zod.int(), zod.number()]),
-  tierLevel: zod.union([zod.int(), zod.null()]).optional(),
-  lotMarkup: zod
-    .union([zod.int(), zod.number()])
-    .default(lotResponseLotMarkupDefault),
-  quantityRemaining: zod.int(),
-  lotType: zod.string(),
-  createdAt: zod.string(),
-  updatedAt: zod.union([zod.string(), zod.null()]),
-  initialQuantity: zod.int(),
+  "id": zod.string(),
+  "itemId": zod.string(),
+  "isActive": zod.boolean(),
+  "ttRemaining": zod.union([zod.int(),zod.number()]),
+  "tierLevel": zod.union([zod.int(),zod.null()]).optional(),
+  "lotMarkup": zod.union([zod.int(),zod.number()]).default(lotResponseLotMarkupDefault),
+  "quantityRemaining": zod.int(),
+  "lotType": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "initialQuantity": zod.int()
 });
 
 export type LotResponse = zod.input<typeof LotResponse>;

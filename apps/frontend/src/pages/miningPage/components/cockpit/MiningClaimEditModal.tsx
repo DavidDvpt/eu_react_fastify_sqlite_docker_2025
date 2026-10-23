@@ -93,7 +93,7 @@ function MiningClaimEditModal({
     latitude: claim?.latitude ?? null,
     longitude: claim?.longitude ?? null,
     depth: claim?.depth == null ? null : Number(claim.depth),
-    depleted: claim?.depositSize !== null && claim?.depositSize !== undefined,
+    depleted: claim?.depleted ?? false,
   };
 
   const handleSubmit = async (values: ClaimEditValues) => {
@@ -112,7 +112,11 @@ function MiningClaimEditModal({
           isHof: false,
         },
       });
-      if (values.depth !== null || depositSizeId !== null) {
+      if (
+        values.depth !== null ||
+        depositSizeId !== null ||
+        values.depleted
+      ) {
         await patchClaim.mutateAsync({
           sessionId,
           claimId: createdClaim.id,
@@ -124,6 +128,7 @@ function MiningClaimEditModal({
             longitude: values.longitude,
             depth: values.depth,
             depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
+            depleted: values.depleted,
           },
         });
       }
@@ -140,6 +145,7 @@ function MiningClaimEditModal({
           longitude: values.longitude,
           depth: values.depth,
           depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
+          depleted: values.depleted,
         },
       });
       await InvalidateQueryAndKeys.miningMutation(sessionId);

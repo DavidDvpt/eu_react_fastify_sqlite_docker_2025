@@ -5,14 +5,7 @@
  */
 import * as zod from 'zod';
 
-export const TransactionType = zod.enum([
-  'BUY',
-  'FOUND',
-  'GIFT',
-  'EXISTING_STOCK',
-  'SELL',
-  'GIVEN',
-]);
+export const TransactionType = zod.enum(['BUY', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'SELL', 'GIVEN']);
 
 export type TransactionType = zod.input<typeof TransactionType>;
 export type TransactionTypeOutput = zod.output<typeof TransactionType>;

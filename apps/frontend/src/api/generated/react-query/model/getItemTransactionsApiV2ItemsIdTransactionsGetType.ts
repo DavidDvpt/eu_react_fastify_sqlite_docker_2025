@@ -4,9 +4,8 @@
  * Entropia Manager API
  */
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetType =
-  | (typeof GetItemTransactionsApiV2ItemsIdTransactionsGetType)[keyof typeof GetItemTransactionsApiV2ItemsIdTransactionsGetType]
-  | null;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetType = typeof GetItemTransactionsApiV2ItemsIdTransactionsGetType[keyof typeof GetItemTransactionsApiV2ItemsIdTransactionsGetType] | null;
+
 
 export const GetItemTransactionsApiV2ItemsIdTransactionsGetType = {
   BUY: 'BUY',

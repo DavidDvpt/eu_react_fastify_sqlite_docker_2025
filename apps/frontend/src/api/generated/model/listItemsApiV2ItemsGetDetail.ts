@@ -4,9 +4,8 @@
  * Entropia Manager API
  */
 
-export type ListItemsApiV2ItemsGetDetail =
-  | (typeof ListItemsApiV2ItemsGetDetail)[keyof typeof ListItemsApiV2ItemsGetDetail]
-  | null;
+export type ListItemsApiV2ItemsGetDetail = typeof ListItemsApiV2ItemsGetDetail[keyof typeof ListItemsApiV2ItemsGetDetail] | null;
+
 
 export const ListItemsApiV2ItemsGetDetail = {
   finderDetail: 'finderDetail',

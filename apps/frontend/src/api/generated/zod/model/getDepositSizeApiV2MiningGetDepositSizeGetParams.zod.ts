@@ -5,21 +5,11 @@
  */
 import * as zod from 'zod';
 
-export const getDepositSizeApiV2MiningGetDepositSizeGetParamsValueTwoRegExp =
-  new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const getDepositSizeApiV2MiningGetDepositSizeGetParamsValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 
 export const GetDepositSizeApiV2MiningGetDepositSizeGetParams = zod.object({
-  value: zod.union([
-    zod.number(),
-    zod
-      .string()
-      .regex(getDepositSizeApiV2MiningGetDepositSizeGetParamsValueTwoRegExp),
-  ]),
-});
+  "value": zod.union([zod.number(),zod.string().regex(getDepositSizeApiV2MiningGetDepositSizeGetParamsValueTwoRegExp)])
+})
 
-export type GetDepositSizeApiV2MiningGetDepositSizeGetParams = zod.input<
-  typeof GetDepositSizeApiV2MiningGetDepositSizeGetParams
->;
-export type GetDepositSizeApiV2MiningGetDepositSizeGetParamsOutput = zod.output<
-  typeof GetDepositSizeApiV2MiningGetDepositSizeGetParams
->;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetParams = zod.input<typeof GetDepositSizeApiV2MiningGetDepositSizeGetParams>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetParamsOutput = zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetParams>;

@@ -6,16 +6,16 @@
 import * as zod from 'zod';
 
 export const PlanetResponse = zod.object({
-  id: zod.string(),
-  nexusId: zod.int(),
-  name: zod.string(),
-  description: zod.union([zod.string(), zod.null()]),
-  technicalName: zod.union([zod.string(), zod.null()]),
-  mapX: zod.union([zod.int(), zod.null()]),
-  mapY: zod.union([zod.int(), zod.null()]),
-  mapWidth: zod.union([zod.int(), zod.null()]),
-  mapHeight: zod.union([zod.int(), zod.null()]),
-  nexusUrl: zod.string(),
+  "id": zod.string(),
+  "nexusId": zod.int(),
+  "name": zod.string(),
+  "description": zod.union([zod.string(),zod.null()]),
+  "technicalName": zod.union([zod.string(),zod.null()]),
+  "mapX": zod.union([zod.int(),zod.null()]),
+  "mapY": zod.union([zod.int(),zod.null()]),
+  "mapWidth": zod.union([zod.int(),zod.null()]),
+  "mapHeight": zod.union([zod.int(),zod.null()]),
+  "nexusUrl": zod.string()
 });
 
 export type PlanetResponse = zod.input<typeof PlanetResponse>;

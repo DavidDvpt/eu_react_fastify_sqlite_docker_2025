@@ -5,16 +5,9 @@
  */
 import * as zod from 'zod';
 
-export const InventoryFinancialReportApiV2InventoryFinancialReportGetParams =
-  zod.object({
-    withLotId: zod.union([zod.boolean(), zod.null()]).optional(),
-  });
+export const InventoryFinancialReportApiV2InventoryFinancialReportGetParams = zod.object({
+  "withLotId": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetParams =
-  zod.input<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetParams
-  >;
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetParamsOutput =
-  zod.output<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetParams
-  >;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetParams = zod.input<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetParams>;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetParamsOutput = zod.output<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetParams>;

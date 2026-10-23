@@ -7,9 +7,9 @@
 export type SignUpBody = {
   pseudo: string;
   /**
-   * @minLength 8
-   * @maxLength 50
-   */
+     * @minLength 8
+     * @maxLength 50
+     */
   password: string;
   email: string;
   firstname?: string | null;

@@ -5,14 +5,7 @@
  */
 import * as zod from 'zod';
 
-export const SignupApiV2AuthSignupPost201 = zod.record(
-  zod.string(),
-  zod.string(),
-);
+export const SignupApiV2AuthSignupPost201 = zod.record(zod.string(), zod.string())
 
-export type SignupApiV2AuthSignupPost201 = zod.input<
-  typeof SignupApiV2AuthSignupPost201
->;
-export type SignupApiV2AuthSignupPost201Output = zod.output<
-  typeof SignupApiV2AuthSignupPost201
->;
+export type SignupApiV2AuthSignupPost201 = zod.input<typeof SignupApiV2AuthSignupPost201>;
+export type SignupApiV2AuthSignupPost201Output = zod.output<typeof SignupApiV2AuthSignupPost201>;

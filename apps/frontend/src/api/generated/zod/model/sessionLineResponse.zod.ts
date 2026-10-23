@@ -6,23 +6,18 @@
 import * as zod from 'zod';
 import { SessionLineType } from './sessionLineType.zod.ts';
 
-export const sessionLineResponseDecayOneRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const sessionLineResponseDecayOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const sessionLineResponseIsFinalizedDefault = false;
 
 export const SessionLineResponse = zod.object({
-  id: zod.string(),
-  sessionId: zod.string(),
-  lotId: zod.string(),
-  type: SessionLineType,
-  createdAt: zod.iso.datetime({ offset: true }),
-  quantity: zod.union([zod.int(), zod.null()]),
-  decay: zod.union([
-    zod.string().regex(sessionLineResponseDecayOneRegExp),
-    zod.null(),
-  ]),
-  isFinalized: zod.boolean().default(sessionLineResponseIsFinalizedDefault),
+  "id": zod.string(),
+  "sessionId": zod.string(),
+  "lotId": zod.string(),
+  "type": SessionLineType,
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "quantity": zod.union([zod.int(),zod.null()]),
+  "decay": zod.union([zod.string().regex(sessionLineResponseDecayOneRegExp),zod.null()]),
+  "isFinalized": zod.boolean().default(sessionLineResponseIsFinalizedDefault)
 });
 
 export type SessionLineResponse = zod.input<typeof SessionLineResponse>;

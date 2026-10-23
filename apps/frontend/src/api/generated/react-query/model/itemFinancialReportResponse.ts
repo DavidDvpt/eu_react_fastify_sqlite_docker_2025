@@ -6,21 +6,10 @@
 import type { MoneySummaryResponse } from './moneySummaryResponse.ts';
 
 export interface ItemFinancialReportResponse {
-  in: Partial<
-    Record<
-      'BUY' | 'FOUND' | 'GIFT' | 'EXISTING_STOCK' | 'GIVEN',
-      MoneySummaryResponse
-    >
-  >;
-  out: Partial<
-    Record<'RUNNING' | 'SOLDED' | 'RETURNED' | 'CANCELED', MoneySummaryResponse>
-  >;
+  in: Partial<Record<'BUY' | 'FOUND' | 'GIFT' | 'EXISTING_STOCK' | 'GIVEN', MoneySummaryResponse>>;
+  out: Partial<Record<'RUNNING' | 'SOLDED' | 'RETURNED' | 'CANCELED', MoneySummaryResponse>>;
   totalIn: MoneySummaryResponse;
   totalOut: MoneySummaryResponse;
-  inCount: Partial<
-    Record<'BUY' | 'FOUND' | 'GIFT' | 'EXISTING_STOCK' | 'GIVEN', number>
-  >;
-  outCount: Partial<
-    Record<'RUNNING' | 'SOLDED' | 'RETURNED' | 'CANCELED', number>
-  >;
+  inCount: Partial<Record<'BUY' | 'FOUND' | 'GIFT' | 'EXISTING_STOCK' | 'GIVEN', number>>;
+  outCount: Partial<Record<'RUNNING' | 'SOLDED' | 'RETURNED' | 'CANCELED', number>>;
 }

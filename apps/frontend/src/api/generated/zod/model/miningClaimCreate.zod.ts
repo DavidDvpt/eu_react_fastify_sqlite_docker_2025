@@ -11,24 +11,15 @@ export const miningClaimCreateIsHofDefault = false;
 export const miningClaimCreateIsGlobalDefault = false;
 export const miningClaimCreateValueOneExclusiveMin = 0;
 
-export const miningClaimCreateValueTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningClaimCreateValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const MiningClaimCreate = zod.object({
-  itemId: zod.union([zod.string(), zod.null()]).optional(),
-  quantity: zod
-    .union([zod.int().gt(miningClaimCreateQuantityOneExclusiveMin), zod.null()])
-    .optional(),
-  isHof: zod.boolean().default(miningClaimCreateIsHofDefault),
-  isGlobal: zod.boolean().default(miningClaimCreateIsGlobalDefault),
-  value: zod
-    .union([
-      zod.number().gt(miningClaimCreateValueOneExclusiveMin),
-      zod.string().regex(miningClaimCreateValueTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
+  "itemId": zod.union([zod.string(),zod.null()]).optional(),
+  "quantity": zod.union([zod.int().gt(miningClaimCreateQuantityOneExclusiveMin),zod.null()]).optional(),
+  "isHof": zod.boolean().default(miningClaimCreateIsHofDefault),
+  "isGlobal": zod.boolean().default(miningClaimCreateIsGlobalDefault),
+  "value": zod.union([zod.number().gt(miningClaimCreateValueOneExclusiveMin),zod.string().regex(miningClaimCreateValueTwoRegExp),zod.null()]).optional()
 });
 
 export type MiningClaimCreate = zod.input<typeof MiningClaimCreate>;

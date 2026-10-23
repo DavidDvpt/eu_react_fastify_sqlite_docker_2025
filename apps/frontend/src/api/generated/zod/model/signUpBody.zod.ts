@@ -8,12 +8,14 @@ import * as zod from 'zod';
 export const signUpBodyPasswordMin = 8;
 export const signUpBodyPasswordMax = 50;
 
+
+
 export const SignUpBody = zod.object({
-  pseudo: zod.string(),
-  password: zod.string().min(signUpBodyPasswordMin).max(signUpBodyPasswordMax),
-  email: zod.email(),
-  firstname: zod.union([zod.string(), zod.null()]).optional(),
-  lastname: zod.union([zod.string(), zod.null()]).optional(),
+  "pseudo": zod.string(),
+  "password": zod.string().min(signUpBodyPasswordMin).max(signUpBodyPasswordMax),
+  "email": zod.email(),
+  "firstname": zod.union([zod.string(),zod.null()]).optional(),
+  "lastname": zod.union([zod.string(),zod.null()]).optional()
 });
 
 export type SignUpBody = zod.input<typeof SignUpBody>;

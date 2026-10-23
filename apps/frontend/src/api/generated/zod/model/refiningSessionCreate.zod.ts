@@ -10,14 +10,15 @@ export const refiningSessionCreateClickCountExclusiveMin = 0;
 
 export const refiningSessionCreateResultQuantityExclusiveMin = 0;
 
+
+
+
 export const RefiningSessionCreate = zod.object({
-  clickCount: zod.int().gt(refiningSessionCreateClickCountExclusiveMin),
-  resultItemId: zod.string(),
-  resultQuantity: zod.int().gt(refiningSessionCreateResultQuantityExclusiveMin),
-  costs: zod.array(SessionLineCostCreate).min(1),
+  "clickCount": zod.int().gt(refiningSessionCreateClickCountExclusiveMin),
+  "resultItemId": zod.string(),
+  "resultQuantity": zod.int().gt(refiningSessionCreateResultQuantityExclusiveMin),
+  "costs": zod.array(SessionLineCostCreate).min(1)
 });
 
 export type RefiningSessionCreate = zod.input<typeof RefiningSessionCreate>;
-export type RefiningSessionCreateOutput = zod.output<
-  typeof RefiningSessionCreate
->;
+export type RefiningSessionCreateOutput = zod.output<typeof RefiningSessionCreate>;

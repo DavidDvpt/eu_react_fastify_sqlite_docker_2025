@@ -4,7 +4,8 @@
  * Entropia Manager API
  */
 
-export type SessionType = (typeof SessionType)[keyof typeof SessionType];
+export type SessionType = typeof SessionType[keyof typeof SessionType];
+
 
 export const SessionType = {
   MINING: 'MINING',

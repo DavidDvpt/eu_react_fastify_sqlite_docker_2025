@@ -10,24 +10,12 @@ export const lotUpdateTierLevelOneMax = 10;
 
 export const lotUpdateTtRemainingOneMin = 0;
 
-export const lotUpdateTtRemainingTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const lotUpdateTtRemainingTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const LotUpdate = zod.object({
-  tierLevel: zod
-    .union([
-      zod.int().min(lotUpdateTierLevelOneMin).max(lotUpdateTierLevelOneMax),
-      zod.null(),
-    ])
-    .optional(),
-  ttRemaining: zod
-    .union([
-      zod.number().min(lotUpdateTtRemainingOneMin),
-      zod.string().regex(lotUpdateTtRemainingTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
+  "tierLevel": zod.union([zod.int().min(lotUpdateTierLevelOneMin).max(lotUpdateTierLevelOneMax),zod.null()]).optional(),
+  "ttRemaining": zod.union([zod.number().min(lotUpdateTtRemainingOneMin),zod.string().regex(lotUpdateTtRemainingTwoRegExp),zod.null()]).optional()
 });
 
 export type LotUpdate = zod.input<typeof LotUpdate>;

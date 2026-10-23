@@ -5,33 +5,25 @@
  */
 import * as zod from 'zod';
 
-export const miningClaimResponseValueOneRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
-export const miningClaimResponseDepthOneRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningClaimResponseValueOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const miningClaimResponseDepthOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const MiningClaimResponse = zod.object({
-  id: zod.string(),
-  createdAt: zod.string(),
-  updatedAt: zod.union([zod.string(), zod.null()]),
-  sessionId: zod.string(),
-  itemId: zod.union([zod.string(), zod.null()]),
-  quantity: zod.union([zod.int(), zod.null()]),
-  isHof: zod.boolean(),
-  isGlobal: zod.boolean(),
-  value: zod.union([
-    zod.string().regex(miningClaimResponseValueOneRegExp),
-    zod.null(),
-  ]),
-  depositSize: zod.union([zod.int(), zod.null()]),
-  latitude: zod.union([zod.int(), zod.null()]),
-  longitude: zod.union([zod.int(), zod.null()]),
-  depth: zod.union([
-    zod.string().regex(miningClaimResponseDepthOneRegExp),
-    zod.null(),
-  ]),
+  "id": zod.string(),
+  "createdAt": zod.string(),
+  "updatedAt": zod.union([zod.string(),zod.null()]),
+  "sessionId": zod.string(),
+  "itemId": zod.union([zod.string(),zod.null()]),
+  "quantity": zod.union([zod.int(),zod.null()]),
+  "isHof": zod.boolean(),
+  "isGlobal": zod.boolean(),
+  "depleted": zod.boolean(),
+  "value": zod.union([zod.string().regex(miningClaimResponseValueOneRegExp),zod.null()]),
+  "depositSize": zod.union([zod.int(),zod.null()]),
+  "latitude": zod.union([zod.int(),zod.null()]),
+  "longitude": zod.union([zod.int(),zod.null()]),
+  "depth": zod.union([zod.string().regex(miningClaimResponseDepthOneRegExp),zod.null()])
 });
 
 export type MiningClaimResponse = zod.input<typeof MiningClaimResponse>;

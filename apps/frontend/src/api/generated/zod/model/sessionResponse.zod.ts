@@ -7,13 +7,13 @@ import * as zod from 'zod';
 import { SessionType } from './sessionType.zod.ts';
 
 export const SessionResponse = zod.object({
-  id: zod.string(),
-  type: SessionType,
-  clickCount: zod.union([zod.int(), zod.null()]),
-  searchType: zod.union([zod.int(), zod.null()]).optional(),
-  createdAt: zod.iso.datetime({ offset: true }),
-  endedAt: zod.union([zod.iso.datetime({ offset: true }), zod.null()]),
-  zoneId: zod.union([zod.string(), zod.null()]),
+  "id": zod.string(),
+  "type": SessionType,
+  "clickCount": zod.union([zod.int(),zod.null()]),
+  "searchType": zod.union([zod.int(),zod.null()]).optional(),
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "endedAt": zod.union([zod.iso.datetime({"offset":true}),zod.null()]),
+  "zoneId": zod.union([zod.string(),zod.null()])
 });
 
 export type SessionResponse = zod.input<typeof SessionResponse>;

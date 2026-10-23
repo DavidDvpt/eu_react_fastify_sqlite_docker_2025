@@ -4,8 +4,8 @@
  * Entropia Manager API
  */
 
-export type TransactionType =
-  (typeof TransactionType)[keyof typeof TransactionType];
+export type TransactionType = typeof TransactionType[keyof typeof TransactionType];
+
 
 export const TransactionType = {
   BUY: 'BUY',

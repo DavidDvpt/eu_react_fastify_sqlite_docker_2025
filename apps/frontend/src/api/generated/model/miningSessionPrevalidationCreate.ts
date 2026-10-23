@@ -11,9 +11,9 @@ export type MiningSessionPrevalidationCreate = {
   /** @exclusiveMinimum 0 */
   clicks: number;
   /**
-   * @minimum 1
-   * @maximum 3
-   */
+     * @minimum 1
+     * @maximum 3
+     */
   type: number;
   ammoItemId: string;
   /** @exclusiveMinimum 0 */

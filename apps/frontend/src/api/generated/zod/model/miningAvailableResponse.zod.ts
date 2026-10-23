@@ -8,21 +8,13 @@ import { MiningAvailableLotResponse } from './miningAvailableLotResponse.zod.ts'
 import { MiningAvailableStackResponse } from './miningAvailableStackResponse.zod.ts';
 
 export const MiningAvailableResponse = zod.object({
-  finder: zod.array(MiningAvailableLotResponse),
-  finderAmplifier: zod.array(MiningAvailableLotResponse),
-  finderEnhancers: zod.record(
-    zod.string(),
-    zod.array(MiningAvailableStackResponse),
-  ),
-  excavator: zod.array(MiningAvailableLotResponse),
-  excavatorEnhancers: zod.record(
-    zod.string(),
-    zod.array(MiningAvailableStackResponse),
-  ),
-  ammo: zod.array(MiningAvailableStackResponse),
+  "finder": zod.array(MiningAvailableLotResponse),
+  "finderAmplifier": zod.array(MiningAvailableLotResponse),
+  "finderEnhancers": zod.record(zod.string(), zod.array(MiningAvailableStackResponse)),
+  "excavator": zod.array(MiningAvailableLotResponse),
+  "excavatorEnhancers": zod.record(zod.string(), zod.array(MiningAvailableStackResponse)),
+  "ammo": zod.array(MiningAvailableStackResponse)
 });
 
 export type MiningAvailableResponse = zod.input<typeof MiningAvailableResponse>;
-export type MiningAvailableResponseOutput = zod.output<
-  typeof MiningAvailableResponse
->;
+export type MiningAvailableResponseOutput = zod.output<typeof MiningAvailableResponse>;

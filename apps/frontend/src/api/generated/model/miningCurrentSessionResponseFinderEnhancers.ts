@@ -5,6 +5,4 @@
  */
 import type { MiningCurrentEnhancerResponse } from './operations/miningCurrentEnhancerResponse.ts';
 
-export type MiningCurrentSessionResponseFinderEnhancers = {
-  [key: string]: MiningCurrentEnhancerResponse;
-};
+export type MiningCurrentSessionResponseFinderEnhancers = {[key: string]: MiningCurrentEnhancerResponse};

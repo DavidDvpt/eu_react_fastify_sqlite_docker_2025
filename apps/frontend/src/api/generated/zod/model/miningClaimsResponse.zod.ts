@@ -6,17 +6,14 @@
 import * as zod from 'zod';
 import { MiningClaimResponse } from './miningClaimResponse.zod.ts';
 
-export const miningClaimsResponseTotalValueRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningClaimsResponseTotalValueRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const MiningClaimsResponse = zod.object({
-  claims: zod.array(MiningClaimResponse),
-  count: zod.int(),
-  totalValue: zod.string().regex(miningClaimsResponseTotalValueRegExp),
+  "claims": zod.array(MiningClaimResponse),
+  "count": zod.int(),
+  "totalValue": zod.string().regex(miningClaimsResponseTotalValueRegExp)
 });
 
 export type MiningClaimsResponse = zod.input<typeof MiningClaimsResponse>;
-export type MiningClaimsResponseOutput = zod.output<
-  typeof MiningClaimsResponse
->;
+export type MiningClaimsResponseOutput = zod.output<typeof MiningClaimsResponse>;

@@ -5,6 +5,6 @@
  */
 
 export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = {
-  origin?: string[] | null;
-  'origin[]'?: string[] | null;
+origin?: string[] | null;
+'origin[]'?: string[] | null;
 };

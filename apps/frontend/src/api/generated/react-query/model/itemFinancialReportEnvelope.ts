@@ -8,6 +8,4 @@ import type { ItemFinancialReportResponse } from './itemFinancialReportResponse.
 /**
  * The item id is a legacy dynamic JSON object key.
  */
-export interface ItemFinancialReportEnvelope {
-  [key: string]: ItemFinancialReportResponse;
-}
+export interface ItemFinancialReportEnvelope {[key: string]: ItemFinancialReportResponse}

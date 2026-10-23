@@ -7,7 +7,7 @@ import type { GetItemTransactionsApiV2ItemsIdTransactionsGetStatus } from '../ge
 import type { GetItemTransactionsApiV2ItemsIdTransactionsGetType } from '../getItemTransactionsApiV2ItemsIdTransactionsGetType.ts';
 
 export type GetItemTransactionsApiV2ItemsIdTransactionsGetParams = {
-  status?: GetItemTransactionsApiV2ItemsIdTransactionsGetStatus;
-  type?: GetItemTransactionsApiV2ItemsIdTransactionsGetType;
-  withLotId?: boolean | null;
+status?: GetItemTransactionsApiV2ItemsIdTransactionsGetStatus;
+type?: GetItemTransactionsApiV2ItemsIdTransactionsGetType;
+withLotId?: boolean | null;
 };

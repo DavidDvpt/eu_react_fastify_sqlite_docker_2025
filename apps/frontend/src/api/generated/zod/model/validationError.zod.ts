@@ -6,11 +6,13 @@
 import * as zod from 'zod';
 
 export const ValidationError = zod.object({
-  loc: zod.array(zod.union([zod.string(), zod.int()])),
-  msg: zod.string(),
-  type: zod.string(),
-  input: zod.unknown().optional(),
-  ctx: zod.looseObject({}).optional(),
+  "loc": zod.array(zod.union([zod.string(),zod.int()])),
+  "msg": zod.string(),
+  "type": zod.string(),
+  "input": zod.unknown().optional(),
+  "ctx": zod.looseObject({
+
+}).optional()
 });
 
 export type ValidationError = zod.input<typeof ValidationError>;

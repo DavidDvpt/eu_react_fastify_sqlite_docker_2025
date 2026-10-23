@@ -7,16 +7,12 @@ import * as zod from 'zod';
 import { SessionLineType } from './sessionLineType.zod.ts';
 
 export const SessionResultLineResponse = zod.object({
-  id: zod.string(),
-  sessionId: zod.string(),
-  type: SessionLineType,
-  lotId: zod.string(),
-  quantity: zod.int(),
+  "id": zod.string(),
+  "sessionId": zod.string(),
+  "type": SessionLineType,
+  "lotId": zod.string(),
+  "quantity": zod.int()
 });
 
-export type SessionResultLineResponse = zod.input<
-  typeof SessionResultLineResponse
->;
-export type SessionResultLineResponseOutput = zod.output<
-  typeof SessionResultLineResponse
->;
+export type SessionResultLineResponse = zod.input<typeof SessionResultLineResponse>;
+export type SessionResultLineResponseOutput = zod.output<typeof SessionResultLineResponse>;

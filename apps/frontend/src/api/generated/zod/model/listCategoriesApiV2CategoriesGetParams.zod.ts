@@ -6,16 +6,10 @@
 import * as zod from 'zod';
 
 export const ListCategoriesApiV2CategoriesGetParams = zod.object({
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-  sortKey: zod
-    .union([zod.enum(['name', 'createdAt', 'updatedAt']), zod.null()])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-});
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional()
+})
 
-export type ListCategoriesApiV2CategoriesGetParams = zod.input<
-  typeof ListCategoriesApiV2CategoriesGetParams
->;
-export type ListCategoriesApiV2CategoriesGetParamsOutput = zod.output<
-  typeof ListCategoriesApiV2CategoriesGetParams
->;
+export type ListCategoriesApiV2CategoriesGetParams = zod.input<typeof ListCategoriesApiV2CategoriesGetParams>;
+export type ListCategoriesApiV2CategoriesGetParamsOutput = zod.output<typeof ListCategoriesApiV2CategoriesGetParams>;

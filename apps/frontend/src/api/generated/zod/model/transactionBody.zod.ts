@@ -14,63 +14,34 @@ export const transactionBodyTierLevelOneMax = 10;
 
 export const transactionBodyTtOneMin = 0;
 
-export const transactionBodyTtTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const transactionBodyTtTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const transactionBodyTtcOneMin = 0;
 
-export const transactionBodyTtcTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const transactionBodyTtcTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const transactionBodyFeeOneMin = 0;
 
-export const transactionBodyFeeTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const transactionBodyFeeTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const transactionBodyIsAuctionDefault = true;
 export const transactionBodyTtRemainingOneMin = 0;
 
-export const transactionBodyTtRemainingTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const transactionBodyTtRemainingTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const transactionBodyLotCountDefault = 1;
 
+
+
 export const TransactionBody = zod.object({
-  itemId: zod.string(),
-  quantity: zod.int().gt(transactionBodyQuantityExclusiveMin),
-  lotId: zod.union([zod.string(), zod.null()]).optional(),
-  tierLevel: zod
-    .union([
-      zod
-        .int()
-        .min(transactionBodyTierLevelOneMin)
-        .max(transactionBodyTierLevelOneMax),
-      zod.null(),
-    ])
-    .optional(),
-  transactionType: TransactionType,
-  status: zod.union([TransactionStatus, zod.null()]),
-  tt: zod.union([
-    zod.number().min(transactionBodyTtOneMin),
-    zod.string().regex(transactionBodyTtTwoRegExp),
-  ]),
-  ttc: zod.union([
-    zod.number().min(transactionBodyTtcOneMin),
-    zod.string().regex(transactionBodyTtcTwoRegExp),
-  ]),
-  fee: zod.union([
-    zod.number().min(transactionBodyFeeOneMin),
-    zod.string().regex(transactionBodyFeeTwoRegExp),
-  ]),
-  isAuction: zod.boolean().default(transactionBodyIsAuctionDefault),
-  ttRemaining: zod
-    .union([
-      zod.number().min(transactionBodyTtRemainingOneMin),
-      zod.string().regex(transactionBodyTtRemainingTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
-  lotCount: zod.int().min(1).default(transactionBodyLotCountDefault),
+  "itemId": zod.string(),
+  "quantity": zod.int().gt(transactionBodyQuantityExclusiveMin),
+  "lotId": zod.union([zod.string(),zod.null()]).optional(),
+  "tierLevel": zod.union([zod.int().min(transactionBodyTierLevelOneMin).max(transactionBodyTierLevelOneMax),zod.null()]).optional(),
+  "transactionType": TransactionType,
+  "status": zod.union([TransactionStatus,zod.null()]),
+  "tt": zod.union([zod.number().min(transactionBodyTtOneMin),zod.string().regex(transactionBodyTtTwoRegExp)]),
+  "ttc": zod.union([zod.number().min(transactionBodyTtcOneMin),zod.string().regex(transactionBodyTtcTwoRegExp)]),
+  "fee": zod.union([zod.number().min(transactionBodyFeeOneMin),zod.string().regex(transactionBodyFeeTwoRegExp)]),
+  "isAuction": zod.boolean().default(transactionBodyIsAuctionDefault),
+  "ttRemaining": zod.union([zod.number().min(transactionBodyTtRemainingOneMin),zod.string().regex(transactionBodyTtRemainingTwoRegExp),zod.null()]).optional(),
+  "lotCount": zod.int().min(1).default(transactionBodyLotCountDefault)
 });
 
 export type TransactionBody = zod.input<typeof TransactionBody>;

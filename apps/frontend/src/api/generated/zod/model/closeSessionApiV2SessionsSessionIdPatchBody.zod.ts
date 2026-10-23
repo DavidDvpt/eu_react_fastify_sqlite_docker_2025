@@ -6,14 +6,7 @@
 import * as zod from 'zod';
 import { MiningSessionClose } from './miningSessionClose.zod.ts';
 
-export const CloseSessionApiV2SessionsSessionIdPatchBody = zod.union([
-  MiningSessionClose,
-  zod.null(),
-]);
+export const CloseSessionApiV2SessionsSessionIdPatchBody = zod.union([MiningSessionClose,zod.null()])
 
-export type CloseSessionApiV2SessionsSessionIdPatchBody = zod.input<
-  typeof CloseSessionApiV2SessionsSessionIdPatchBody
->;
-export type CloseSessionApiV2SessionsSessionIdPatchBodyOutput = zod.output<
-  typeof CloseSessionApiV2SessionsSessionIdPatchBody
->;
+export type CloseSessionApiV2SessionsSessionIdPatchBody = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;
+export type CloseSessionApiV2SessionsSessionIdPatchBodyOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;

@@ -7,7 +7,7 @@ import type { GetItemLotsApiV2ItemsIdLotsGetSortKey } from '../getItemLotsApiV2I
 import type { GetItemLotsApiV2ItemsIdLotsGetSortOrder } from '../getItemLotsApiV2ItemsIdLotsGetSortOrder.ts';
 
 export type GetItemLotsApiV2ItemsIdLotsGetParams = {
-  isActive?: boolean | null;
-  sortKey?: GetItemLotsApiV2ItemsIdLotsGetSortKey;
-  sortOrder?: GetItemLotsApiV2ItemsIdLotsGetSortOrder;
+isActive?: boolean | null;
+sortKey?: GetItemLotsApiV2ItemsIdLotsGetSortKey;
+sortOrder?: GetItemLotsApiV2ItemsIdLotsGetSortOrder;
 };

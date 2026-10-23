@@ -7,7 +7,7 @@ import type { ListInventoryStockApiV2InventoryStockGetSortKey } from './listInve
 import type { ListInventoryStockApiV2InventoryStockGetSortOrder } from './listInventoryStockApiV2InventoryStockGetSortOrder.ts';
 
 export type ListInventoryStockApiV2InventoryStockGetParams = {
-  sortKey?: ListInventoryStockApiV2InventoryStockGetSortKey;
-  sortOrder?: ListInventoryStockApiV2InventoryStockGetSortOrder;
-  isActive?: boolean | null;
+sortKey?: ListInventoryStockApiV2InventoryStockGetSortKey;
+sortOrder?: ListInventoryStockApiV2InventoryStockGetSortOrder;
+isActive?: boolean | null;
 };

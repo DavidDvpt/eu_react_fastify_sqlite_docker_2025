@@ -6,31 +6,20 @@
 import * as zod from 'zod';
 import { SessionLineType } from './sessionLineType.zod.ts';
 
-export const miningResultLineResponseDecayOneRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const miningResultLineResponseDecayOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const miningResultLineResponseIsFinalizedDefault = false;
 
 export const MiningResultLineResponse = zod.object({
-  id: zod.string(),
-  sessionId: zod.string(),
-  lotId: zod.string(),
-  type: SessionLineType,
-  createdAt: zod.iso.datetime({ offset: true }),
-  quantity: zod.union([zod.int(), zod.null()]),
-  decay: zod.union([
-    zod.string().regex(miningResultLineResponseDecayOneRegExp),
-    zod.null(),
-  ]),
-  isFinalized: zod
-    .boolean()
-    .default(miningResultLineResponseIsFinalizedDefault),
-  itemId: zod.string(),
+  "id": zod.string(),
+  "sessionId": zod.string(),
+  "lotId": zod.string(),
+  "type": SessionLineType,
+  "createdAt": zod.iso.datetime({"offset":true}),
+  "quantity": zod.union([zod.int(),zod.null()]),
+  "decay": zod.union([zod.string().regex(miningResultLineResponseDecayOneRegExp),zod.null()]),
+  "isFinalized": zod.boolean().default(miningResultLineResponseIsFinalizedDefault),
+  "itemId": zod.string()
 });
 
-export type MiningResultLineResponse = zod.input<
-  typeof MiningResultLineResponse
->;
-export type MiningResultLineResponseOutput = zod.output<
-  typeof MiningResultLineResponse
->;
+export type MiningResultLineResponse = zod.input<typeof MiningResultLineResponse>;
+export type MiningResultLineResponseOutput = zod.output<typeof MiningResultLineResponse>;

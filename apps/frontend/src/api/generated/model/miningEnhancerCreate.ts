@@ -10,9 +10,9 @@ export type MiningEnhancerCreate = {
   target: MiningEnhancerTarget;
   targetLotId: string;
   /**
-   * @minimum 1
-   * @maximum 10
-   */
+     * @minimum 1
+     * @maximum 10
+     */
   socket: number;
   /** @exclusiveMinimum 0 */
   quantityInitial: number;

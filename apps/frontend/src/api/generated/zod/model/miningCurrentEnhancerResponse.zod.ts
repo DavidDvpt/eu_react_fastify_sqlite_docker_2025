@@ -6,15 +6,11 @@
 import * as zod from 'zod';
 
 export const MiningCurrentEnhancerResponse = zod.object({
-  itemId: zod.string(),
-  socket: zod.union([zod.int(), zod.null()]),
-  quantityInitial: zod.int(),
-  quantityRemaining: zod.int(),
+  "itemId": zod.string(),
+  "socket": zod.union([zod.int(),zod.null()]),
+  "quantityInitial": zod.int(),
+  "quantityRemaining": zod.int()
 });
 
-export type MiningCurrentEnhancerResponse = zod.input<
-  typeof MiningCurrentEnhancerResponse
->;
-export type MiningCurrentEnhancerResponseOutput = zod.output<
-  typeof MiningCurrentEnhancerResponse
->;
+export type MiningCurrentEnhancerResponse = zod.input<typeof MiningCurrentEnhancerResponse>;
+export type MiningCurrentEnhancerResponseOutput = zod.output<typeof MiningCurrentEnhancerResponse>;

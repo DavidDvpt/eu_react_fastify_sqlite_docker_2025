@@ -7,7 +7,7 @@ import * as zod from 'zod';
 import { ValidationError } from './validationError.zod.ts';
 
 export const HTTPValidationError = zod.object({
-  detail: zod.array(ValidationError).optional(),
+  "detail": zod.array(ValidationError).optional()
 });
 
 export type HTTPValidationError = zod.input<typeof HTTPValidationError>;

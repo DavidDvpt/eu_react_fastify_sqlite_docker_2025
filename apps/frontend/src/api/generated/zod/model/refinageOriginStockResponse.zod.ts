@@ -7,16 +7,12 @@ import * as zod from 'zod';
 import { RefinageOriginLotResponse } from './refinageOriginLotResponse.zod.ts';
 
 export const RefinageOriginStockResponse = zod.object({
-  itemId: zod.string(),
-  quantityRequired: zod.int(),
-  quantityAvailable: zod.int(),
-  sufficient: zod.boolean(),
-  lots: zod.array(RefinageOriginLotResponse),
+  "itemId": zod.string(),
+  "quantityRequired": zod.int(),
+  "quantityAvailable": zod.int(),
+  "sufficient": zod.boolean(),
+  "lots": zod.array(RefinageOriginLotResponse)
 });
 
-export type RefinageOriginStockResponse = zod.input<
-  typeof RefinageOriginStockResponse
->;
-export type RefinageOriginStockResponseOutput = zod.output<
-  typeof RefinageOriginStockResponse
->;
+export type RefinageOriginStockResponse = zod.input<typeof RefinageOriginStockResponse>;
+export type RefinageOriginStockResponseOutput = zod.output<typeof RefinageOriginStockResponse>;

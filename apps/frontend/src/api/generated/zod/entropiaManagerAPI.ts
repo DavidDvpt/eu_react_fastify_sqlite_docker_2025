@@ -60,945 +60,595 @@ import {
   TransactionStatusPatch,
   TypeCreate,
   TypePatch,
-  TypeResponse,
+  TypeResponse
 } from './model';
+
 
 /**
  * @summary Signup
  */
-export const SignupApiV2AuthSignupPostBody = SignUpBody;
+export const SignupApiV2AuthSignupPostBody = SignUpBody
 
-export type SignupApiV2AuthSignupPostBody = zod.input<
-  typeof SignupApiV2AuthSignupPostBody
->;
-export type SignupApiV2AuthSignupPostBodyOutput = zod.output<
-  typeof SignupApiV2AuthSignupPostBody
->;
+export type SignupApiV2AuthSignupPostBody = zod.input<typeof SignupApiV2AuthSignupPostBody>;
+export type SignupApiV2AuthSignupPostBodyOutput = zod.output<typeof SignupApiV2AuthSignupPostBody>;
 
-export const SignupApiV2AuthSignupPostResponse = zod.record(
-  zod.string(),
-  zod.string(),
-);
+export const SignupApiV2AuthSignupPostResponse = zod.record(zod.string(), zod.string())
 
-export type SignupApiV2AuthSignupPostResponse = zod.input<
-  typeof SignupApiV2AuthSignupPostResponse
->;
-export type SignupApiV2AuthSignupPostResponseOutput = zod.output<
-  typeof SignupApiV2AuthSignupPostResponse
->;
+export type SignupApiV2AuthSignupPostResponse = zod.input<typeof SignupApiV2AuthSignupPostResponse>;
+export type SignupApiV2AuthSignupPostResponseOutput = zod.output<typeof SignupApiV2AuthSignupPostResponse>;
+
 
 /**
  * @summary Signin
  */
-export const SigninApiV2AuthSigninPostBody = SignInBody;
+export const SigninApiV2AuthSigninPostBody = SignInBody
 
-export type SigninApiV2AuthSigninPostBody = zod.input<
-  typeof SigninApiV2AuthSigninPostBody
->;
-export type SigninApiV2AuthSigninPostBodyOutput = zod.output<
-  typeof SigninApiV2AuthSigninPostBody
->;
+export type SigninApiV2AuthSigninPostBody = zod.input<typeof SigninApiV2AuthSigninPostBody>;
+export type SigninApiV2AuthSigninPostBodyOutput = zod.output<typeof SigninApiV2AuthSigninPostBody>;
 
-export const SigninApiV2AuthSigninPostResponse = MessageResponse;
+export const SigninApiV2AuthSigninPostResponse = MessageResponse
 
-export type SigninApiV2AuthSigninPostResponse = zod.input<
-  typeof SigninApiV2AuthSigninPostResponse
->;
-export type SigninApiV2AuthSigninPostResponseOutput = zod.output<
-  typeof SigninApiV2AuthSigninPostResponse
->;
+export type SigninApiV2AuthSigninPostResponse = zod.input<typeof SigninApiV2AuthSigninPostResponse>;
+export type SigninApiV2AuthSigninPostResponseOutput = zod.output<typeof SigninApiV2AuthSigninPostResponse>;
+
 
 /**
  * @summary Logout
  */
-export const LogoutApiV2AuthLogoutPostResponse = MessageResponse;
+export const LogoutApiV2AuthLogoutPostResponse = MessageResponse
 
-export type LogoutApiV2AuthLogoutPostResponse = zod.input<
-  typeof LogoutApiV2AuthLogoutPostResponse
->;
-export type LogoutApiV2AuthLogoutPostResponseOutput = zod.output<
-  typeof LogoutApiV2AuthLogoutPostResponse
->;
+export type LogoutApiV2AuthLogoutPostResponse = zod.input<typeof LogoutApiV2AuthLogoutPostResponse>;
+export type LogoutApiV2AuthLogoutPostResponseOutput = zod.output<typeof LogoutApiV2AuthLogoutPostResponse>;
+
 
 /**
  * @summary Me
  */
-export const MeApiV2AuthMeGetResponse = MeResponse;
+export const MeApiV2AuthMeGetResponse = MeResponse
 
-export type MeApiV2AuthMeGetResponse = zod.input<
-  typeof MeApiV2AuthMeGetResponse
->;
-export type MeApiV2AuthMeGetResponseOutput = zod.output<
-  typeof MeApiV2AuthMeGetResponse
->;
+export type MeApiV2AuthMeGetResponse = zod.input<typeof MeApiV2AuthMeGetResponse>;
+export type MeApiV2AuthMeGetResponseOutput = zod.output<typeof MeApiV2AuthMeGetResponse>;
+
 
 /**
  * @summary In Game Username
  */
-export const InGameUsernameApiV2AuthInGameUsernameGetResponse =
-  InGameUsernameResponse;
+export const InGameUsernameApiV2AuthInGameUsernameGetResponse = InGameUsernameResponse
 
-export type InGameUsernameApiV2AuthInGameUsernameGetResponse = zod.input<
-  typeof InGameUsernameApiV2AuthInGameUsernameGetResponse
->;
-export type InGameUsernameApiV2AuthInGameUsernameGetResponseOutput = zod.output<
-  typeof InGameUsernameApiV2AuthInGameUsernameGetResponse
->;
+export type InGameUsernameApiV2AuthInGameUsernameGetResponse = zod.input<typeof InGameUsernameApiV2AuthInGameUsernameGetResponse>;
+export type InGameUsernameApiV2AuthInGameUsernameGetResponseOutput = zod.output<typeof InGameUsernameApiV2AuthInGameUsernameGetResponse>;
+
 
 /**
  * @summary Update In Game Username
  */
-export const UpdateInGameUsernameApiV2AuthInGameUsernamePutBody =
-  InGameUsernameUpdate;
+export const UpdateInGameUsernameApiV2AuthInGameUsernamePutBody = InGameUsernameUpdate
 
-export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBody = zod.input<
-  typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody
->;
-export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBodyOutput =
-  zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBody = zod.input<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutBodyOutput = zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutBody>;
 
-export const UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse =
-  InGameUsernameResponse;
+export const UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse = InGameUsernameResponse
 
-export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse = zod.input<
-  typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse
->;
-export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponseOutput =
-  zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse = zod.input<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse>;
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResponseOutput = zod.output<typeof UpdateInGameUsernameApiV2AuthInGameUsernamePutResponse>;
+
 
 /**
  * @summary List Categories
  */
 export const ListCategoriesApiV2CategoriesGetQueryParams = zod.object({
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-  sortKey: zod
-    .union([zod.enum(['name', 'createdAt', 'updatedAt']), zod.null()])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-});
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional()
+})
 
-export type ListCategoriesApiV2CategoriesGetQueryParams = zod.input<
-  typeof ListCategoriesApiV2CategoriesGetQueryParams
->;
-export type ListCategoriesApiV2CategoriesGetQueryParamsOutput = zod.output<
-  typeof ListCategoriesApiV2CategoriesGetQueryParams
->;
+export type ListCategoriesApiV2CategoriesGetQueryParams = zod.input<typeof ListCategoriesApiV2CategoriesGetQueryParams>;
+export type ListCategoriesApiV2CategoriesGetQueryParamsOutput = zod.output<typeof ListCategoriesApiV2CategoriesGetQueryParams>;
 
-export const ListCategoriesApiV2CategoriesGetResponseItem = CategoryResponse;
+export const ListCategoriesApiV2CategoriesGetResponseItem = CategoryResponse
 
-export type ListCategoriesApiV2CategoriesGetResponseItem = zod.input<
-  typeof ListCategoriesApiV2CategoriesGetResponseItem
->;
-export type ListCategoriesApiV2CategoriesGetResponseItemOutput = zod.output<
-  typeof ListCategoriesApiV2CategoriesGetResponseItem
->;
+export type ListCategoriesApiV2CategoriesGetResponseItem = zod.input<typeof ListCategoriesApiV2CategoriesGetResponseItem>;
+export type ListCategoriesApiV2CategoriesGetResponseItemOutput = zod.output<typeof ListCategoriesApiV2CategoriesGetResponseItem>;
 
-export const ListCategoriesApiV2CategoriesGetResponse = zod.array(
-  ListCategoriesApiV2CategoriesGetResponseItem,
-);
+export const ListCategoriesApiV2CategoriesGetResponse = zod.array(ListCategoriesApiV2CategoriesGetResponseItem)
 
-export type ListCategoriesApiV2CategoriesGetResponse = zod.input<
-  typeof ListCategoriesApiV2CategoriesGetResponse
->;
-export type ListCategoriesApiV2CategoriesGetResponseOutput = zod.output<
-  typeof ListCategoriesApiV2CategoriesGetResponse
->;
+export type ListCategoriesApiV2CategoriesGetResponse = zod.input<typeof ListCategoriesApiV2CategoriesGetResponse>;
+export type ListCategoriesApiV2CategoriesGetResponseOutput = zod.output<typeof ListCategoriesApiV2CategoriesGetResponse>;
+
 
 /**
  * @summary Create Category
  */
-export const CreateCategoryApiV2CategoriesPostBody = CategoryCreate;
+export const CreateCategoryApiV2CategoriesPostBody = CategoryCreate
 
-export type CreateCategoryApiV2CategoriesPostBody = zod.input<
-  typeof CreateCategoryApiV2CategoriesPostBody
->;
-export type CreateCategoryApiV2CategoriesPostBodyOutput = zod.output<
-  typeof CreateCategoryApiV2CategoriesPostBody
->;
+export type CreateCategoryApiV2CategoriesPostBody = zod.input<typeof CreateCategoryApiV2CategoriesPostBody>;
+export type CreateCategoryApiV2CategoriesPostBodyOutput = zod.output<typeof CreateCategoryApiV2CategoriesPostBody>;
 
-export const CreateCategoryApiV2CategoriesPostResponse = IdResponse;
+export const CreateCategoryApiV2CategoriesPostResponse = IdResponse
 
-export type CreateCategoryApiV2CategoriesPostResponse = zod.input<
-  typeof CreateCategoryApiV2CategoriesPostResponse
->;
-export type CreateCategoryApiV2CategoriesPostResponseOutput = zod.output<
-  typeof CreateCategoryApiV2CategoriesPostResponse
->;
+export type CreateCategoryApiV2CategoriesPostResponse = zod.input<typeof CreateCategoryApiV2CategoriesPostResponse>;
+export type CreateCategoryApiV2CategoriesPostResponseOutput = zod.output<typeof CreateCategoryApiV2CategoriesPostResponse>;
+
 
 /**
  * @summary Get Category
  */
 export const GetCategoryApiV2CategoriesIdGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetCategoryApiV2CategoriesIdGetParams = zod.input<
-  typeof GetCategoryApiV2CategoriesIdGetParams
->;
-export type GetCategoryApiV2CategoriesIdGetParamsOutput = zod.output<
-  typeof GetCategoryApiV2CategoriesIdGetParams
->;
+export type GetCategoryApiV2CategoriesIdGetParams = zod.input<typeof GetCategoryApiV2CategoriesIdGetParams>;
+export type GetCategoryApiV2CategoriesIdGetParamsOutput = zod.output<typeof GetCategoryApiV2CategoriesIdGetParams>;
 
-export const GetCategoryApiV2CategoriesIdGetResponse = CategoryResponse;
+export const GetCategoryApiV2CategoriesIdGetResponse = CategoryResponse
 
-export type GetCategoryApiV2CategoriesIdGetResponse = zod.input<
-  typeof GetCategoryApiV2CategoriesIdGetResponse
->;
-export type GetCategoryApiV2CategoriesIdGetResponseOutput = zod.output<
-  typeof GetCategoryApiV2CategoriesIdGetResponse
->;
+export type GetCategoryApiV2CategoriesIdGetResponse = zod.input<typeof GetCategoryApiV2CategoriesIdGetResponse>;
+export type GetCategoryApiV2CategoriesIdGetResponseOutput = zod.output<typeof GetCategoryApiV2CategoriesIdGetResponse>;
+
 
 /**
  * @summary Patch Category
  */
 export const PatchCategoryApiV2CategoriesIdPatchParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchCategoryApiV2CategoriesIdPatchParams = zod.input<
-  typeof PatchCategoryApiV2CategoriesIdPatchParams
->;
-export type PatchCategoryApiV2CategoriesIdPatchParamsOutput = zod.output<
-  typeof PatchCategoryApiV2CategoriesIdPatchParams
->;
+export type PatchCategoryApiV2CategoriesIdPatchParams = zod.input<typeof PatchCategoryApiV2CategoriesIdPatchParams>;
+export type PatchCategoryApiV2CategoriesIdPatchParamsOutput = zod.output<typeof PatchCategoryApiV2CategoriesIdPatchParams>;
 
-export const PatchCategoryApiV2CategoriesIdPatchBody = CategoryPatch;
+export const PatchCategoryApiV2CategoriesIdPatchBody = CategoryPatch
 
-export type PatchCategoryApiV2CategoriesIdPatchBody = zod.input<
-  typeof PatchCategoryApiV2CategoriesIdPatchBody
->;
-export type PatchCategoryApiV2CategoriesIdPatchBodyOutput = zod.output<
-  typeof PatchCategoryApiV2CategoriesIdPatchBody
->;
+export type PatchCategoryApiV2CategoriesIdPatchBody = zod.input<typeof PatchCategoryApiV2CategoriesIdPatchBody>;
+export type PatchCategoryApiV2CategoriesIdPatchBodyOutput = zod.output<typeof PatchCategoryApiV2CategoriesIdPatchBody>;
 
-export const PatchCategoryApiV2CategoriesIdPatchResponse = IdResponse;
+export const PatchCategoryApiV2CategoriesIdPatchResponse = IdResponse
 
-export type PatchCategoryApiV2CategoriesIdPatchResponse = zod.input<
-  typeof PatchCategoryApiV2CategoriesIdPatchResponse
->;
-export type PatchCategoryApiV2CategoriesIdPatchResponseOutput = zod.output<
-  typeof PatchCategoryApiV2CategoriesIdPatchResponse
->;
+export type PatchCategoryApiV2CategoriesIdPatchResponse = zod.input<typeof PatchCategoryApiV2CategoriesIdPatchResponse>;
+export type PatchCategoryApiV2CategoriesIdPatchResponseOutput = zod.output<typeof PatchCategoryApiV2CategoriesIdPatchResponse>;
+
 
 /**
  * @summary Delete Category
  */
 export const DeleteCategoryApiV2CategoriesIdDeleteParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type DeleteCategoryApiV2CategoriesIdDeleteParams = zod.input<
-  typeof DeleteCategoryApiV2CategoriesIdDeleteParams
->;
-export type DeleteCategoryApiV2CategoriesIdDeleteParamsOutput = zod.output<
-  typeof DeleteCategoryApiV2CategoriesIdDeleteParams
->;
+export type DeleteCategoryApiV2CategoriesIdDeleteParams = zod.input<typeof DeleteCategoryApiV2CategoriesIdDeleteParams>;
+export type DeleteCategoryApiV2CategoriesIdDeleteParamsOutput = zod.output<typeof DeleteCategoryApiV2CategoriesIdDeleteParams>;
 
-export const DeleteCategoryApiV2CategoriesIdDeleteResponse = IdResponse;
+export const DeleteCategoryApiV2CategoriesIdDeleteResponse = IdResponse
 
-export type DeleteCategoryApiV2CategoriesIdDeleteResponse = zod.input<
-  typeof DeleteCategoryApiV2CategoriesIdDeleteResponse
->;
-export type DeleteCategoryApiV2CategoriesIdDeleteResponseOutput = zod.output<
-  typeof DeleteCategoryApiV2CategoriesIdDeleteResponse
->;
+export type DeleteCategoryApiV2CategoriesIdDeleteResponse = zod.input<typeof DeleteCategoryApiV2CategoriesIdDeleteResponse>;
+export type DeleteCategoryApiV2CategoriesIdDeleteResponseOutput = zod.output<typeof DeleteCategoryApiV2CategoriesIdDeleteResponse>;
+
 
 /**
  * @summary Get Category Types
  */
 export const GetCategoryTypesApiV2CategoriesIdTypesGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetCategoryTypesApiV2CategoriesIdTypesGetParams = zod.input<
-  typeof GetCategoryTypesApiV2CategoriesIdTypesGetParams
->;
-export type GetCategoryTypesApiV2CategoriesIdTypesGetParamsOutput = zod.output<
-  typeof GetCategoryTypesApiV2CategoriesIdTypesGetParams
->;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetParams = zod.input<typeof GetCategoryTypesApiV2CategoriesIdTypesGetParams>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetParamsOutput = zod.output<typeof GetCategoryTypesApiV2CategoriesIdTypesGetParams>;
 
-export const GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem =
-  TypeResponse;
+export const GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem = TypeResponse
 
-export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem = zod.input<
-  typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem
->;
-export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseItemOutput =
-  zod.output<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem = zod.input<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseItemOutput = zod.output<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem>;
 
-export const GetCategoryTypesApiV2CategoriesIdTypesGetResponse = zod.array(
-  GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem,
-);
+export const GetCategoryTypesApiV2CategoriesIdTypesGetResponse = zod.array(GetCategoryTypesApiV2CategoriesIdTypesGetResponseItem)
 
-export type GetCategoryTypesApiV2CategoriesIdTypesGetResponse = zod.input<
-  typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponse
->;
-export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseOutput =
-  zod.output<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponse>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetResponse = zod.input<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponse>;
+export type GetCategoryTypesApiV2CategoriesIdTypesGetResponseOutput = zod.output<typeof GetCategoryTypesApiV2CategoriesIdTypesGetResponse>;
+
 
 /**
  * @summary List Types
  */
 export const ListTypesApiV2TypesGetQueryParams = zod.object({
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-  categoryId: zod.union([zod.string(), zod.null()]).optional(),
-  sortKey: zod
-    .union([zod.enum(['name', 'createdAt', 'updatedAt']), zod.null()])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-});
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "categoryId": zod.union([zod.string(),zod.null()]).optional(),
+  "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional()
+})
 
-export type ListTypesApiV2TypesGetQueryParams = zod.input<
-  typeof ListTypesApiV2TypesGetQueryParams
->;
-export type ListTypesApiV2TypesGetQueryParamsOutput = zod.output<
-  typeof ListTypesApiV2TypesGetQueryParams
->;
+export type ListTypesApiV2TypesGetQueryParams = zod.input<typeof ListTypesApiV2TypesGetQueryParams>;
+export type ListTypesApiV2TypesGetQueryParamsOutput = zod.output<typeof ListTypesApiV2TypesGetQueryParams>;
 
-export const ListTypesApiV2TypesGetResponseItem = TypeResponse;
+export const ListTypesApiV2TypesGetResponseItem = TypeResponse
 
-export type ListTypesApiV2TypesGetResponseItem = zod.input<
-  typeof ListTypesApiV2TypesGetResponseItem
->;
-export type ListTypesApiV2TypesGetResponseItemOutput = zod.output<
-  typeof ListTypesApiV2TypesGetResponseItem
->;
+export type ListTypesApiV2TypesGetResponseItem = zod.input<typeof ListTypesApiV2TypesGetResponseItem>;
+export type ListTypesApiV2TypesGetResponseItemOutput = zod.output<typeof ListTypesApiV2TypesGetResponseItem>;
 
-export const ListTypesApiV2TypesGetResponse = zod.array(
-  ListTypesApiV2TypesGetResponseItem,
-);
+export const ListTypesApiV2TypesGetResponse = zod.array(ListTypesApiV2TypesGetResponseItem)
 
-export type ListTypesApiV2TypesGetResponse = zod.input<
-  typeof ListTypesApiV2TypesGetResponse
->;
-export type ListTypesApiV2TypesGetResponseOutput = zod.output<
-  typeof ListTypesApiV2TypesGetResponse
->;
+export type ListTypesApiV2TypesGetResponse = zod.input<typeof ListTypesApiV2TypesGetResponse>;
+export type ListTypesApiV2TypesGetResponseOutput = zod.output<typeof ListTypesApiV2TypesGetResponse>;
+
 
 /**
  * @summary Create Type
  */
-export const CreateTypeApiV2TypesPostBody = TypeCreate;
+export const CreateTypeApiV2TypesPostBody = TypeCreate
 
-export type CreateTypeApiV2TypesPostBody = zod.input<
-  typeof CreateTypeApiV2TypesPostBody
->;
-export type CreateTypeApiV2TypesPostBodyOutput = zod.output<
-  typeof CreateTypeApiV2TypesPostBody
->;
+export type CreateTypeApiV2TypesPostBody = zod.input<typeof CreateTypeApiV2TypesPostBody>;
+export type CreateTypeApiV2TypesPostBodyOutput = zod.output<typeof CreateTypeApiV2TypesPostBody>;
 
-export const CreateTypeApiV2TypesPostResponse = IdResponse;
+export const CreateTypeApiV2TypesPostResponse = IdResponse
 
-export type CreateTypeApiV2TypesPostResponse = zod.input<
-  typeof CreateTypeApiV2TypesPostResponse
->;
-export type CreateTypeApiV2TypesPostResponseOutput = zod.output<
-  typeof CreateTypeApiV2TypesPostResponse
->;
+export type CreateTypeApiV2TypesPostResponse = zod.input<typeof CreateTypeApiV2TypesPostResponse>;
+export type CreateTypeApiV2TypesPostResponseOutput = zod.output<typeof CreateTypeApiV2TypesPostResponse>;
+
 
 /**
  * @summary Get Type
  */
 export const GetTypeApiV2TypesIdGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetTypeApiV2TypesIdGetParams = zod.input<
-  typeof GetTypeApiV2TypesIdGetParams
->;
-export type GetTypeApiV2TypesIdGetParamsOutput = zod.output<
-  typeof GetTypeApiV2TypesIdGetParams
->;
+export type GetTypeApiV2TypesIdGetParams = zod.input<typeof GetTypeApiV2TypesIdGetParams>;
+export type GetTypeApiV2TypesIdGetParamsOutput = zod.output<typeof GetTypeApiV2TypesIdGetParams>;
 
-export const GetTypeApiV2TypesIdGetResponse = TypeResponse;
+export const GetTypeApiV2TypesIdGetResponse = TypeResponse
 
-export type GetTypeApiV2TypesIdGetResponse = zod.input<
-  typeof GetTypeApiV2TypesIdGetResponse
->;
-export type GetTypeApiV2TypesIdGetResponseOutput = zod.output<
-  typeof GetTypeApiV2TypesIdGetResponse
->;
+export type GetTypeApiV2TypesIdGetResponse = zod.input<typeof GetTypeApiV2TypesIdGetResponse>;
+export type GetTypeApiV2TypesIdGetResponseOutput = zod.output<typeof GetTypeApiV2TypesIdGetResponse>;
+
 
 /**
  * @summary Patch Type
  */
 export const PatchTypeApiV2TypesIdPatchParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchTypeApiV2TypesIdPatchParams = zod.input<
-  typeof PatchTypeApiV2TypesIdPatchParams
->;
-export type PatchTypeApiV2TypesIdPatchParamsOutput = zod.output<
-  typeof PatchTypeApiV2TypesIdPatchParams
->;
+export type PatchTypeApiV2TypesIdPatchParams = zod.input<typeof PatchTypeApiV2TypesIdPatchParams>;
+export type PatchTypeApiV2TypesIdPatchParamsOutput = zod.output<typeof PatchTypeApiV2TypesIdPatchParams>;
 
-export const PatchTypeApiV2TypesIdPatchBody = TypePatch;
+export const PatchTypeApiV2TypesIdPatchBody = TypePatch
 
-export type PatchTypeApiV2TypesIdPatchBody = zod.input<
-  typeof PatchTypeApiV2TypesIdPatchBody
->;
-export type PatchTypeApiV2TypesIdPatchBodyOutput = zod.output<
-  typeof PatchTypeApiV2TypesIdPatchBody
->;
+export type PatchTypeApiV2TypesIdPatchBody = zod.input<typeof PatchTypeApiV2TypesIdPatchBody>;
+export type PatchTypeApiV2TypesIdPatchBodyOutput = zod.output<typeof PatchTypeApiV2TypesIdPatchBody>;
 
-export const PatchTypeApiV2TypesIdPatchResponse = IdResponse;
+export const PatchTypeApiV2TypesIdPatchResponse = IdResponse
 
-export type PatchTypeApiV2TypesIdPatchResponse = zod.input<
-  typeof PatchTypeApiV2TypesIdPatchResponse
->;
-export type PatchTypeApiV2TypesIdPatchResponseOutput = zod.output<
-  typeof PatchTypeApiV2TypesIdPatchResponse
->;
+export type PatchTypeApiV2TypesIdPatchResponse = zod.input<typeof PatchTypeApiV2TypesIdPatchResponse>;
+export type PatchTypeApiV2TypesIdPatchResponseOutput = zod.output<typeof PatchTypeApiV2TypesIdPatchResponse>;
+
 
 /**
  * @summary Delete Category
  */
 export const DeleteCategoryApiV2TypesIdDeleteParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type DeleteCategoryApiV2TypesIdDeleteParams = zod.input<
-  typeof DeleteCategoryApiV2TypesIdDeleteParams
->;
-export type DeleteCategoryApiV2TypesIdDeleteParamsOutput = zod.output<
-  typeof DeleteCategoryApiV2TypesIdDeleteParams
->;
+export type DeleteCategoryApiV2TypesIdDeleteParams = zod.input<typeof DeleteCategoryApiV2TypesIdDeleteParams>;
+export type DeleteCategoryApiV2TypesIdDeleteParamsOutput = zod.output<typeof DeleteCategoryApiV2TypesIdDeleteParams>;
 
-export const DeleteCategoryApiV2TypesIdDeleteResponse = IdResponse;
+export const DeleteCategoryApiV2TypesIdDeleteResponse = IdResponse
 
-export type DeleteCategoryApiV2TypesIdDeleteResponse = zod.input<
-  typeof DeleteCategoryApiV2TypesIdDeleteResponse
->;
-export type DeleteCategoryApiV2TypesIdDeleteResponseOutput = zod.output<
-  typeof DeleteCategoryApiV2TypesIdDeleteResponse
->;
+export type DeleteCategoryApiV2TypesIdDeleteResponse = zod.input<typeof DeleteCategoryApiV2TypesIdDeleteResponse>;
+export type DeleteCategoryApiV2TypesIdDeleteResponseOutput = zod.output<typeof DeleteCategoryApiV2TypesIdDeleteResponse>;
+
 
 /**
  * @summary Get Type Items
  */
 export const GetTypeItemsApiV2TypesTypeRefItemsGetParams = zod.object({
-  type_ref: zod.string(),
-});
+  "type_ref": zod.string()
+})
 
-export type GetTypeItemsApiV2TypesTypeRefItemsGetParams = zod.input<
-  typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams
->;
-export type GetTypeItemsApiV2TypesTypeRefItemsGetParamsOutput = zod.output<
-  typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams
->;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetParams = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetParamsOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetParams>;
 
-export const GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = ItemResponse;
+export const GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = ItemResponse
 
-export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = zod.input<
-  typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem
->;
-export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItemOutput =
-  zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseItemOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem>;
 
-export const GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.array(
-  GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem,
-);
+export const GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.array(GetTypeItemsApiV2TypesTypeRefItemsGetResponseItem)
 
-export type GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.input<
-  typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse
->;
-export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseOutput = zod.output<
-  typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse
->;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponse = zod.input<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse>;
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResponseOutput = zod.output<typeof GetTypeItemsApiV2TypesTypeRefItemsGetResponse>;
+
 
 /**
  * @summary Request Nexus Update
  */
 export const RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams = zod.input<
-  typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams
->;
-export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParamsOutput =
-  zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams = zod.input<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostParamsOutput = zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostParams>;
 
-export const RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = IdResponse;
+export const RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = IdResponse
 
-export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = zod.input<
-  typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse
->;
-export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponseOutput =
-  zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse = zod.input<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse>;
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponseOutput = zod.output<typeof RequestNexusUpdateApiV2TypesIdNexusUpdatePostResponse>;
+
 
 /**
  * @summary List Items
  */
 export const ListItemsApiV2ItemsGetQueryParams = zod.object({
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-  typeId: zod.union([zod.string(), zod.null()]).optional(),
-  sortKey: zod
-    .union([zod.enum(['name', 'createdAt', 'updatedAt']), zod.null()])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-  detail: zod
-    .union([
-      zod.enum([
-        'finderDetail',
-        'finderAmplifierDetails',
-        'excavatorDetail',
-        'refinerDetail',
-        'enhancerDetails',
-      ]),
-      zod.null(),
-    ])
-    .optional(),
-});
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "typeId": zod.union([zod.string(),zod.null()]).optional(),
+  "sortKey": zod.union([zod.enum(['name', 'createdAt', 'updatedAt']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
+  "detail": zod.union([zod.enum(['finderDetail', 'finderAmplifierDetails', 'excavatorDetail', 'refinerDetail', 'enhancerDetails']),zod.null()]).optional()
+})
 
-export type ListItemsApiV2ItemsGetQueryParams = zod.input<
-  typeof ListItemsApiV2ItemsGetQueryParams
->;
-export type ListItemsApiV2ItemsGetQueryParamsOutput = zod.output<
-  typeof ListItemsApiV2ItemsGetQueryParams
->;
+export type ListItemsApiV2ItemsGetQueryParams = zod.input<typeof ListItemsApiV2ItemsGetQueryParams>;
+export type ListItemsApiV2ItemsGetQueryParamsOutput = zod.output<typeof ListItemsApiV2ItemsGetQueryParams>;
 
-export const ListItemsApiV2ItemsGetResponseItem = ItemResponse;
+export const ListItemsApiV2ItemsGetResponseItem = ItemResponse
 
-export type ListItemsApiV2ItemsGetResponseItem = zod.input<
-  typeof ListItemsApiV2ItemsGetResponseItem
->;
-export type ListItemsApiV2ItemsGetResponseItemOutput = zod.output<
-  typeof ListItemsApiV2ItemsGetResponseItem
->;
+export type ListItemsApiV2ItemsGetResponseItem = zod.input<typeof ListItemsApiV2ItemsGetResponseItem>;
+export type ListItemsApiV2ItemsGetResponseItemOutput = zod.output<typeof ListItemsApiV2ItemsGetResponseItem>;
 
-export const ListItemsApiV2ItemsGetResponse = zod.array(
-  ListItemsApiV2ItemsGetResponseItem,
-);
+export const ListItemsApiV2ItemsGetResponse = zod.array(ListItemsApiV2ItemsGetResponseItem)
 
-export type ListItemsApiV2ItemsGetResponse = zod.input<
-  typeof ListItemsApiV2ItemsGetResponse
->;
-export type ListItemsApiV2ItemsGetResponseOutput = zod.output<
-  typeof ListItemsApiV2ItemsGetResponse
->;
+export type ListItemsApiV2ItemsGetResponse = zod.input<typeof ListItemsApiV2ItemsGetResponse>;
+export type ListItemsApiV2ItemsGetResponseOutput = zod.output<typeof ListItemsApiV2ItemsGetResponse>;
+
 
 /**
  * @summary Create Item
  */
-export const CreateItemApiV2ItemsPostBody = ItemCreate;
+export const CreateItemApiV2ItemsPostBody = ItemCreate
 
-export type CreateItemApiV2ItemsPostBody = zod.input<
-  typeof CreateItemApiV2ItemsPostBody
->;
-export type CreateItemApiV2ItemsPostBodyOutput = zod.output<
-  typeof CreateItemApiV2ItemsPostBody
->;
+export type CreateItemApiV2ItemsPostBody = zod.input<typeof CreateItemApiV2ItemsPostBody>;
+export type CreateItemApiV2ItemsPostBodyOutput = zod.output<typeof CreateItemApiV2ItemsPostBody>;
 
-export const CreateItemApiV2ItemsPostResponse = IdResponse;
+export const CreateItemApiV2ItemsPostResponse = IdResponse
 
-export type CreateItemApiV2ItemsPostResponse = zod.input<
-  typeof CreateItemApiV2ItemsPostResponse
->;
-export type CreateItemApiV2ItemsPostResponseOutput = zod.output<
-  typeof CreateItemApiV2ItemsPostResponse
->;
+export type CreateItemApiV2ItemsPostResponse = zod.input<typeof CreateItemApiV2ItemsPostResponse>;
+export type CreateItemApiV2ItemsPostResponseOutput = zod.output<typeof CreateItemApiV2ItemsPostResponse>;
+
 
 /**
  * @summary Get Item Stock
  */
 export const GetItemStockApiV2ItemsIdStockGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetItemStockApiV2ItemsIdStockGetParams = zod.input<
-  typeof GetItemStockApiV2ItemsIdStockGetParams
->;
-export type GetItemStockApiV2ItemsIdStockGetParamsOutput = zod.output<
-  typeof GetItemStockApiV2ItemsIdStockGetParams
->;
+export type GetItemStockApiV2ItemsIdStockGetParams = zod.input<typeof GetItemStockApiV2ItemsIdStockGetParams>;
+export type GetItemStockApiV2ItemsIdStockGetParamsOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetParams>;
 
-export const GetItemStockApiV2ItemsIdStockGetResponseItem = StockLineResponse;
+export const GetItemStockApiV2ItemsIdStockGetResponseItem = StockLineResponse
 
-export type GetItemStockApiV2ItemsIdStockGetResponseItem = zod.input<
-  typeof GetItemStockApiV2ItemsIdStockGetResponseItem
->;
-export type GetItemStockApiV2ItemsIdStockGetResponseItemOutput = zod.output<
-  typeof GetItemStockApiV2ItemsIdStockGetResponseItem
->;
+export type GetItemStockApiV2ItemsIdStockGetResponseItem = zod.input<typeof GetItemStockApiV2ItemsIdStockGetResponseItem>;
+export type GetItemStockApiV2ItemsIdStockGetResponseItemOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetResponseItem>;
 
-export const GetItemStockApiV2ItemsIdStockGetResponse = zod.array(
-  GetItemStockApiV2ItemsIdStockGetResponseItem,
-);
+export const GetItemStockApiV2ItemsIdStockGetResponse = zod.array(GetItemStockApiV2ItemsIdStockGetResponseItem)
 
-export type GetItemStockApiV2ItemsIdStockGetResponse = zod.input<
-  typeof GetItemStockApiV2ItemsIdStockGetResponse
->;
-export type GetItemStockApiV2ItemsIdStockGetResponseOutput = zod.output<
-  typeof GetItemStockApiV2ItemsIdStockGetResponse
->;
+export type GetItemStockApiV2ItemsIdStockGetResponse = zod.input<typeof GetItemStockApiV2ItemsIdStockGetResponse>;
+export type GetItemStockApiV2ItemsIdStockGetResponseOutput = zod.output<typeof GetItemStockApiV2ItemsIdStockGetResponse>;
+
 
 /**
  * @summary Get Refinage Origin Stock
  */
-export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams =
-  zod.object({
-    id: zod.string(),
-  });
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.object({
+  "id": zod.string()
+})
 
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams =
-  zod.input<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams
-  >;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput =
-  zod.output<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams
-  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams>;
 
-export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams =
-  zod.object({
-    origin: zod.union([zod.array(zod.string()), zod.null()]).optional(),
-    'origin[]': zod.union([zod.array(zod.string()), zod.null()]).optional(),
-  });
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.object({
+  "origin": zod.union([zod.array(zod.string()),zod.null()]).optional(),
+  "origin[]": zod.union([zod.array(zod.string()),zod.null()]).optional()
+})
 
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams =
-  zod.input<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams
-  >;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParamsOutput =
-  zod.output<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams
-  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParamsOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetQueryParams>;
 
-export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem =
-  RefinageOriginStockResponse;
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem = RefinageOriginStockResponse
 
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem =
-  zod.input<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem
-  >;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItemOutput =
-  zod.output<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem
-  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItemOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem>;
 
-export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse =
-  zod.array(
-    GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem,
-  );
+export const GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse = zod.array(GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseItem)
 
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse =
-  zod.input<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse
-  >;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseOutput =
-  zod.output<
-    typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse
-  >;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse = zod.input<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse>;
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponseOutput = zod.output<typeof GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResponse>;
+
 
 /**
  * @summary Get Item Lots
  */
 export const GetItemLotsApiV2ItemsIdLotsGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetItemLotsApiV2ItemsIdLotsGetParams = zod.input<
-  typeof GetItemLotsApiV2ItemsIdLotsGetParams
->;
-export type GetItemLotsApiV2ItemsIdLotsGetParamsOutput = zod.output<
-  typeof GetItemLotsApiV2ItemsIdLotsGetParams
->;
+export type GetItemLotsApiV2ItemsIdLotsGetParams = zod.input<typeof GetItemLotsApiV2ItemsIdLotsGetParams>;
+export type GetItemLotsApiV2ItemsIdLotsGetParamsOutput = zod.output<typeof GetItemLotsApiV2ItemsIdLotsGetParams>;
 
 export const GetItemLotsApiV2ItemsIdLotsGetQueryParams = zod.object({
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-  sortKey: zod
-    .union([
-      zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),
-      zod.null(),
-    ])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-});
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional(),
+  "sortKey": zod.union([zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional()
+})
 
-export type GetItemLotsApiV2ItemsIdLotsGetQueryParams = zod.input<
-  typeof GetItemLotsApiV2ItemsIdLotsGetQueryParams
->;
-export type GetItemLotsApiV2ItemsIdLotsGetQueryParamsOutput = zod.output<
-  typeof GetItemLotsApiV2ItemsIdLotsGetQueryParams
->;
+export type GetItemLotsApiV2ItemsIdLotsGetQueryParams = zod.input<typeof GetItemLotsApiV2ItemsIdLotsGetQueryParams>;
+export type GetItemLotsApiV2ItemsIdLotsGetQueryParamsOutput = zod.output<typeof GetItemLotsApiV2ItemsIdLotsGetQueryParams>;
 
-export const GetItemLotsApiV2ItemsIdLotsGetResponseItem = LotResponse;
+export const GetItemLotsApiV2ItemsIdLotsGetResponseItem = LotResponse
 
-export type GetItemLotsApiV2ItemsIdLotsGetResponseItem = zod.input<
-  typeof GetItemLotsApiV2ItemsIdLotsGetResponseItem
->;
-export type GetItemLotsApiV2ItemsIdLotsGetResponseItemOutput = zod.output<
-  typeof GetItemLotsApiV2ItemsIdLotsGetResponseItem
->;
+export type GetItemLotsApiV2ItemsIdLotsGetResponseItem = zod.input<typeof GetItemLotsApiV2ItemsIdLotsGetResponseItem>;
+export type GetItemLotsApiV2ItemsIdLotsGetResponseItemOutput = zod.output<typeof GetItemLotsApiV2ItemsIdLotsGetResponseItem>;
 
-export const GetItemLotsApiV2ItemsIdLotsGetResponse = zod.array(
-  GetItemLotsApiV2ItemsIdLotsGetResponseItem,
-);
+export const GetItemLotsApiV2ItemsIdLotsGetResponse = zod.array(GetItemLotsApiV2ItemsIdLotsGetResponseItem)
 
-export type GetItemLotsApiV2ItemsIdLotsGetResponse = zod.input<
-  typeof GetItemLotsApiV2ItemsIdLotsGetResponse
->;
-export type GetItemLotsApiV2ItemsIdLotsGetResponseOutput = zod.output<
-  typeof GetItemLotsApiV2ItemsIdLotsGetResponse
->;
+export type GetItemLotsApiV2ItemsIdLotsGetResponse = zod.input<typeof GetItemLotsApiV2ItemsIdLotsGetResponse>;
+export type GetItemLotsApiV2ItemsIdLotsGetResponseOutput = zod.output<typeof GetItemLotsApiV2ItemsIdLotsGetResponse>;
+
 
 /**
  * @summary Get Item Transactions
  */
 export const GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.input<
-  typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams
->;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetParamsOutput =
-  zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetParams = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetParamsOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetParams>;
 
-export const GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams =
-  zod.object({
-    status: zod
-      .union([
-        zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),
-        zod.null(),
-      ])
-      .optional(),
-    type: zod
-      .union([
-        zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),
-        zod.null(),
-      ])
-      .optional(),
-    withLotId: zod.union([zod.boolean(), zod.null()]).optional(),
-  });
+export const GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams = zod.object({
+  "status": zod.union([zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),zod.null()]).optional(),
+  "type": zod.union([zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),zod.null()]).optional(),
+  "withLotId": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams =
-  zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParamsOutput =
-  zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParamsOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetQueryParams>;
 
-export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem =
-  TransactionEntryResponse;
+export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem = TransactionEntryResponse
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem =
-  zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItemOutput =
-  zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItemOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem>;
 
-export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponse = zod.array(
-  GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem,
-);
+export const GetItemTransactionsApiV2ItemsIdTransactionsGetResponse = zod.array(GetItemTransactionsApiV2ItemsIdTransactionsGetResponseItem)
 
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponse = zod.input<
-  typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponse
->;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseOutput =
-  zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponse>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponse = zod.input<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponse>;
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetResponseOutput = zod.output<typeof GetItemTransactionsApiV2ItemsIdTransactionsGetResponse>;
+
 
 /**
  * @summary Get Item Financial Report
  */
-export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams =
-  zod.object({
-    id: zod.string(),
-  });
+export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams = zod.object({
+  "id": zod.string()
+})
 
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams =
-  zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParamsOutput =
-  zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams = zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetParamsOutput = zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetParams>;
 
-export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse =
-  ItemFinancialReportEnvelope;
+export const GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = ItemFinancialReportEnvelope
 
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse =
-  zod.input<
-    typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse
-  >;
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponseOutput =
-  zod.output<
-    typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse
-  >;
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse = zod.input<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponseOutput = zod.output<typeof GetItemFinancialReportApiV2ItemsIdFinancialReportGetResponse>;
+
 
 /**
  * @summary Get Item Average Buy Markup
  */
-export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams =
-  zod.object({
-    id: zod.string(),
-  });
+export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams = zod.object({
+  "id": zod.string()
+})
 
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams =
-  zod.input<
-    typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams
-  >;
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParamsOutput =
-  zod.output<
-    typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams
-  >;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams = zod.input<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams>;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParamsOutput = zod.output<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetParams>;
 
-export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse =
-  AverageBuyMarkupResponse;
+export const GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse = AverageBuyMarkupResponse
 
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse =
-  zod.input<
-    typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse
-  >;
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponseOutput =
-  zod.output<
-    typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse
-  >;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse = zod.input<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse>;
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponseOutput = zod.output<typeof GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResponse>;
+
 
 /**
  * @summary Get Item
  */
 export const GetItemApiV2ItemsIdGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetItemApiV2ItemsIdGetParams = zod.input<
-  typeof GetItemApiV2ItemsIdGetParams
->;
-export type GetItemApiV2ItemsIdGetParamsOutput = zod.output<
-  typeof GetItemApiV2ItemsIdGetParams
->;
+export type GetItemApiV2ItemsIdGetParams = zod.input<typeof GetItemApiV2ItemsIdGetParams>;
+export type GetItemApiV2ItemsIdGetParamsOutput = zod.output<typeof GetItemApiV2ItemsIdGetParams>;
 
-export const GetItemApiV2ItemsIdGetResponse = ItemResponse;
+export const GetItemApiV2ItemsIdGetResponse = ItemResponse
 
-export type GetItemApiV2ItemsIdGetResponse = zod.input<
-  typeof GetItemApiV2ItemsIdGetResponse
->;
-export type GetItemApiV2ItemsIdGetResponseOutput = zod.output<
-  typeof GetItemApiV2ItemsIdGetResponse
->;
+export type GetItemApiV2ItemsIdGetResponse = zod.input<typeof GetItemApiV2ItemsIdGetResponse>;
+export type GetItemApiV2ItemsIdGetResponseOutput = zod.output<typeof GetItemApiV2ItemsIdGetResponse>;
+
 
 /**
  * @summary Patch Item
  */
 export const PatchItemApiV2ItemsIdPatchParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchItemApiV2ItemsIdPatchParams = zod.input<
-  typeof PatchItemApiV2ItemsIdPatchParams
->;
-export type PatchItemApiV2ItemsIdPatchParamsOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPatchParams
->;
+export type PatchItemApiV2ItemsIdPatchParams = zod.input<typeof PatchItemApiV2ItemsIdPatchParams>;
+export type PatchItemApiV2ItemsIdPatchParamsOutput = zod.output<typeof PatchItemApiV2ItemsIdPatchParams>;
 
-export const PatchItemApiV2ItemsIdPatchBody = ItemPatch;
+export const PatchItemApiV2ItemsIdPatchBody = ItemPatch
 
-export type PatchItemApiV2ItemsIdPatchBody = zod.input<
-  typeof PatchItemApiV2ItemsIdPatchBody
->;
-export type PatchItemApiV2ItemsIdPatchBodyOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPatchBody
->;
+export type PatchItemApiV2ItemsIdPatchBody = zod.input<typeof PatchItemApiV2ItemsIdPatchBody>;
+export type PatchItemApiV2ItemsIdPatchBodyOutput = zod.output<typeof PatchItemApiV2ItemsIdPatchBody>;
 
-export const PatchItemApiV2ItemsIdPatchResponse = IdResponse;
+export const PatchItemApiV2ItemsIdPatchResponse = IdResponse
 
-export type PatchItemApiV2ItemsIdPatchResponse = zod.input<
-  typeof PatchItemApiV2ItemsIdPatchResponse
->;
-export type PatchItemApiV2ItemsIdPatchResponseOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPatchResponse
->;
+export type PatchItemApiV2ItemsIdPatchResponse = zod.input<typeof PatchItemApiV2ItemsIdPatchResponse>;
+export type PatchItemApiV2ItemsIdPatchResponseOutput = zod.output<typeof PatchItemApiV2ItemsIdPatchResponse>;
+
 
 /**
  * @summary Patch Item
  */
 export const PatchItemApiV2ItemsIdPutParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchItemApiV2ItemsIdPutParams = zod.input<
-  typeof PatchItemApiV2ItemsIdPutParams
->;
-export type PatchItemApiV2ItemsIdPutParamsOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPutParams
->;
+export type PatchItemApiV2ItemsIdPutParams = zod.input<typeof PatchItemApiV2ItemsIdPutParams>;
+export type PatchItemApiV2ItemsIdPutParamsOutput = zod.output<typeof PatchItemApiV2ItemsIdPutParams>;
 
-export const PatchItemApiV2ItemsIdPutBody = ItemPatch;
+export const PatchItemApiV2ItemsIdPutBody = ItemPatch
 
-export type PatchItemApiV2ItemsIdPutBody = zod.input<
-  typeof PatchItemApiV2ItemsIdPutBody
->;
-export type PatchItemApiV2ItemsIdPutBodyOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPutBody
->;
+export type PatchItemApiV2ItemsIdPutBody = zod.input<typeof PatchItemApiV2ItemsIdPutBody>;
+export type PatchItemApiV2ItemsIdPutBodyOutput = zod.output<typeof PatchItemApiV2ItemsIdPutBody>;
 
-export const PatchItemApiV2ItemsIdPutResponse = IdResponse;
+export const PatchItemApiV2ItemsIdPutResponse = IdResponse
 
-export type PatchItemApiV2ItemsIdPutResponse = zod.input<
-  typeof PatchItemApiV2ItemsIdPutResponse
->;
-export type PatchItemApiV2ItemsIdPutResponseOutput = zod.output<
-  typeof PatchItemApiV2ItemsIdPutResponse
->;
+export type PatchItemApiV2ItemsIdPutResponse = zod.input<typeof PatchItemApiV2ItemsIdPutResponse>;
+export type PatchItemApiV2ItemsIdPutResponseOutput = zod.output<typeof PatchItemApiV2ItemsIdPutResponse>;
+
 
 /**
  * @summary Delete Item
  */
 export const DeleteItemApiV2ItemsIdDeleteParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type DeleteItemApiV2ItemsIdDeleteParams = zod.input<
-  typeof DeleteItemApiV2ItemsIdDeleteParams
->;
-export type DeleteItemApiV2ItemsIdDeleteParamsOutput = zod.output<
-  typeof DeleteItemApiV2ItemsIdDeleteParams
->;
+export type DeleteItemApiV2ItemsIdDeleteParams = zod.input<typeof DeleteItemApiV2ItemsIdDeleteParams>;
+export type DeleteItemApiV2ItemsIdDeleteParamsOutput = zod.output<typeof DeleteItemApiV2ItemsIdDeleteParams>;
 
-export const DeleteItemApiV2ItemsIdDeleteResponse = IdResponse;
+export const DeleteItemApiV2ItemsIdDeleteResponse = IdResponse
 
-export type DeleteItemApiV2ItemsIdDeleteResponse = zod.input<
-  typeof DeleteItemApiV2ItemsIdDeleteResponse
->;
-export type DeleteItemApiV2ItemsIdDeleteResponseOutput = zod.output<
-  typeof DeleteItemApiV2ItemsIdDeleteResponse
->;
+export type DeleteItemApiV2ItemsIdDeleteResponse = zod.input<typeof DeleteItemApiV2ItemsIdDeleteResponse>;
+export type DeleteItemApiV2ItemsIdDeleteResponseOutput = zod.output<typeof DeleteItemApiV2ItemsIdDeleteResponse>;
+
 
 /**
  * @summary List Inventory Lots
  */
 export const ListInventoryLotsApiV2InventoryLotsGetQueryParams = zod.object({
-  sortKey: zod
-    .union([
-      zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),
-      zod.null(),
-    ])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-});
+  "sortKey": zod.union([zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type ListInventoryLotsApiV2InventoryLotsGetQueryParams = zod.input<
-  typeof ListInventoryLotsApiV2InventoryLotsGetQueryParams
->;
-export type ListInventoryLotsApiV2InventoryLotsGetQueryParamsOutput =
-  zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetQueryParams>;
+export type ListInventoryLotsApiV2InventoryLotsGetQueryParams = zod.input<typeof ListInventoryLotsApiV2InventoryLotsGetQueryParams>;
+export type ListInventoryLotsApiV2InventoryLotsGetQueryParamsOutput = zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetQueryParams>;
 
-export const ListInventoryLotsApiV2InventoryLotsGetResponseItem = LotResponse;
+export const ListInventoryLotsApiV2InventoryLotsGetResponseItem = LotResponse
 
-export type ListInventoryLotsApiV2InventoryLotsGetResponseItem = zod.input<
-  typeof ListInventoryLotsApiV2InventoryLotsGetResponseItem
->;
-export type ListInventoryLotsApiV2InventoryLotsGetResponseItemOutput =
-  zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetResponseItem>;
+export type ListInventoryLotsApiV2InventoryLotsGetResponseItem = zod.input<typeof ListInventoryLotsApiV2InventoryLotsGetResponseItem>;
+export type ListInventoryLotsApiV2InventoryLotsGetResponseItemOutput = zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetResponseItem>;
 
-export const ListInventoryLotsApiV2InventoryLotsGetResponse = zod.array(
-  ListInventoryLotsApiV2InventoryLotsGetResponseItem,
-);
+export const ListInventoryLotsApiV2InventoryLotsGetResponse = zod.array(ListInventoryLotsApiV2InventoryLotsGetResponseItem)
 
-export type ListInventoryLotsApiV2InventoryLotsGetResponse = zod.input<
-  typeof ListInventoryLotsApiV2InventoryLotsGetResponse
->;
-export type ListInventoryLotsApiV2InventoryLotsGetResponseOutput = zod.output<
-  typeof ListInventoryLotsApiV2InventoryLotsGetResponse
->;
+export type ListInventoryLotsApiV2InventoryLotsGetResponse = zod.input<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
+export type ListInventoryLotsApiV2InventoryLotsGetResponseOutput = zod.output<typeof ListInventoryLotsApiV2InventoryLotsGetResponse>;
+
 
 /**
  * @summary List Lot Origins
@@ -1006,171 +656,107 @@ export type ListInventoryLotsApiV2InventoryLotsGetResponseOutput = zod.output<
 export const listLotOriginsApiV2InventoryLotsOriginGetQueryAllDefault = false;
 
 export const ListLotOriginsApiV2InventoryLotsOriginGetQueryParams = zod.object({
-  all: zod
-    .boolean()
-    .default(listLotOriginsApiV2InventoryLotsOriginGetQueryAllDefault),
-});
+  "all": zod.boolean().default(listLotOriginsApiV2InventoryLotsOriginGetQueryAllDefault)
+})
 
-export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParams = zod.input<
-  typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams
->;
-export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParamsOutput =
-  zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParams = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetQueryParamsOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetQueryParams>;
 
-export const ListLotOriginsApiV2InventoryLotsOriginGetResponseItem =
-  LotOriginResponse;
+export const ListLotOriginsApiV2InventoryLotsOriginGetResponseItem = LotOriginResponse
 
-export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItem = zod.input<
-  typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem
->;
-export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItemOutput =
-  zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItem = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseItemOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponseItem>;
 
-export const ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.array(
-  ListLotOriginsApiV2InventoryLotsOriginGetResponseItem,
-);
+export const ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.array(ListLotOriginsApiV2InventoryLotsOriginGetResponseItem)
 
-export type ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.input<
-  typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse
->;
-export type ListLotOriginsApiV2InventoryLotsOriginGetResponseOutput =
-  zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponse = zod.input<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse>;
+export type ListLotOriginsApiV2InventoryLotsOriginGetResponseOutput = zod.output<typeof ListLotOriginsApiV2InventoryLotsOriginGetResponse>;
+
 
 /**
  * @summary Get Lot Origin
  */
 export const GetLotOriginApiV2InventoryLotsLotIdOriginGetParams = zod.object({
-  lot_id: zod.string(),
-});
+  "lot_id": zod.string()
+})
 
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParams = zod.input<
-  typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams
->;
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParamsOutput =
-  zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParams = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetParamsOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetParams>;
 
 export const getLotOriginApiV2InventoryLotsLotIdOriginGetQueryAllDefault = false;
 
-export const GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams =
-  zod.object({
-    all: zod
-      .boolean()
-      .default(getLotOriginApiV2InventoryLotsLotIdOriginGetQueryAllDefault),
-  });
+export const GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams = zod.object({
+  "all": zod.boolean().default(getLotOriginApiV2InventoryLotsLotIdOriginGetQueryAllDefault)
+})
 
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams = zod.input<
-  typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams
->;
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParamsOutput =
-  zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParamsOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetQueryParams>;
 
-export const GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse =
-  LotOriginResponse;
+export const GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse = LotOriginResponse
 
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse = zod.input<
-  typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse
->;
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponseOutput =
-  zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse = zod.input<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse>;
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResponseOutput = zod.output<typeof GetLotOriginApiV2InventoryLotsLotIdOriginGetResponse>;
+
 
 /**
  * @summary Update Inventory Lot
  */
 export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams = zod.object({
-  lot_id: zod.string(),
-});
+  "lot_id": zod.string()
+})
 
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams = zod.input<
-  typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams
->;
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParamsOutput =
-  zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchParamsOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchParams>;
 
-export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = LotUpdate;
+export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = LotUpdate
 
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = zod.input<
-  typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody
->;
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBodyOutput =
-  zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchBodyOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchBody>;
 
-export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse =
-  LotUpdateResponse;
+export const UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse = LotUpdateResponse
 
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse = zod.input<
-  typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse
->;
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponseOutput =
-  zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse = zod.input<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse>;
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponseOutput = zod.output<typeof UpdateInventoryLotApiV2InventoryLotsLotIdPatchResponse>;
+
 
 /**
  * @summary List Inventory Stock
  */
 export const ListInventoryStockApiV2InventoryStockGetQueryParams = zod.object({
-  sortKey: zod
-    .union([
-      zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),
-      zod.null(),
-    ])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-});
+  "sortKey": zod.union([zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type ListInventoryStockApiV2InventoryStockGetQueryParams = zod.input<
-  typeof ListInventoryStockApiV2InventoryStockGetQueryParams
->;
-export type ListInventoryStockApiV2InventoryStockGetQueryParamsOutput =
-  zod.output<typeof ListInventoryStockApiV2InventoryStockGetQueryParams>;
+export type ListInventoryStockApiV2InventoryStockGetQueryParams = zod.input<typeof ListInventoryStockApiV2InventoryStockGetQueryParams>;
+export type ListInventoryStockApiV2InventoryStockGetQueryParamsOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetQueryParams>;
 
-export const ListInventoryStockApiV2InventoryStockGetResponseItem =
-  StockLineResponse;
+export const ListInventoryStockApiV2InventoryStockGetResponseItem = StockLineResponse
 
-export type ListInventoryStockApiV2InventoryStockGetResponseItem = zod.input<
-  typeof ListInventoryStockApiV2InventoryStockGetResponseItem
->;
-export type ListInventoryStockApiV2InventoryStockGetResponseItemOutput =
-  zod.output<typeof ListInventoryStockApiV2InventoryStockGetResponseItem>;
+export type ListInventoryStockApiV2InventoryStockGetResponseItem = zod.input<typeof ListInventoryStockApiV2InventoryStockGetResponseItem>;
+export type ListInventoryStockApiV2InventoryStockGetResponseItemOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetResponseItem>;
 
-export const ListInventoryStockApiV2InventoryStockGetResponse = zod.array(
-  ListInventoryStockApiV2InventoryStockGetResponseItem,
-);
+export const ListInventoryStockApiV2InventoryStockGetResponse = zod.array(ListInventoryStockApiV2InventoryStockGetResponseItem)
 
-export type ListInventoryStockApiV2InventoryStockGetResponse = zod.input<
-  typeof ListInventoryStockApiV2InventoryStockGetResponse
->;
-export type ListInventoryStockApiV2InventoryStockGetResponseOutput = zod.output<
-  typeof ListInventoryStockApiV2InventoryStockGetResponse
->;
+export type ListInventoryStockApiV2InventoryStockGetResponse = zod.input<typeof ListInventoryStockApiV2InventoryStockGetResponse>;
+export type ListInventoryStockApiV2InventoryStockGetResponseOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetResponse>;
+
 
 /**
  * @summary Inventory Financial Report
  */
-export const InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams =
-  zod.object({
-    withLotId: zod.union([zod.boolean(), zod.null()]).optional(),
-  });
+export const InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams = zod.object({
+  "withLotId": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams =
-  zod.input<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams
-  >;
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParamsOutput =
-  zod.output<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams
-  >;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams = zod.input<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams>;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParamsOutput = zod.output<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetQueryParams>;
 
-export const InventoryFinancialReportApiV2InventoryFinancialReportGetResponse =
-  InventoryFinancialReportResponse;
+export const InventoryFinancialReportApiV2InventoryFinancialReportGetResponse = InventoryFinancialReportResponse
 
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponse =
-  zod.input<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse
-  >;
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponseOutput =
-  zod.output<
-    typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse
-  >;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponse = zod.input<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse>;
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetResponseOutput = zod.output<typeof InventoryFinancialReportApiV2InventoryFinancialReportGetResponse>;
+
 
 /**
  * Return the image catalog page requested by the frontend.
@@ -1181,983 +767,595 @@ export const listImagesApiV2ImagesGetQueryPageDefault = 1;
 export const listImagesApiV2ImagesGetQueryPageSizeDefault = 100;
 export const listImagesApiV2ImagesGetQueryPageSizeMax = 300;
 
+
+
 export const ListImagesApiV2ImagesGetQueryParams = zod.object({
-  page: zod.int().min(1).default(listImagesApiV2ImagesGetQueryPageDefault),
-  pageSize: zod
-    .int()
-    .min(1)
-    .max(listImagesApiV2ImagesGetQueryPageSizeMax)
-    .default(listImagesApiV2ImagesGetQueryPageSizeDefault),
-});
+  "page": zod.int().min(1).default(listImagesApiV2ImagesGetQueryPageDefault),
+  "pageSize": zod.int().min(1).max(listImagesApiV2ImagesGetQueryPageSizeMax).default(listImagesApiV2ImagesGetQueryPageSizeDefault)
+})
 
-export type ListImagesApiV2ImagesGetQueryParams = zod.input<
-  typeof ListImagesApiV2ImagesGetQueryParams
->;
-export type ListImagesApiV2ImagesGetQueryParamsOutput = zod.output<
-  typeof ListImagesApiV2ImagesGetQueryParams
->;
+export type ListImagesApiV2ImagesGetQueryParams = zod.input<typeof ListImagesApiV2ImagesGetQueryParams>;
+export type ListImagesApiV2ImagesGetQueryParamsOutput = zod.output<typeof ListImagesApiV2ImagesGetQueryParams>;
 
-export const ListImagesApiV2ImagesGetResponse = zod.record(
-  zod.string(),
-  zod.unknown(),
-);
+export const ListImagesApiV2ImagesGetResponse = zod.record(zod.string(), zod.unknown())
 
-export type ListImagesApiV2ImagesGetResponse = zod.input<
-  typeof ListImagesApiV2ImagesGetResponse
->;
-export type ListImagesApiV2ImagesGetResponseOutput = zod.output<
-  typeof ListImagesApiV2ImagesGetResponse
->;
+export type ListImagesApiV2ImagesGetResponse = zod.input<typeof ListImagesApiV2ImagesGetResponse>;
+export type ListImagesApiV2ImagesGetResponseOutput = zod.output<typeof ListImagesApiV2ImagesGetResponse>;
+
 
 /**
  * @summary List Transactions
  */
 export const ListTransactionsApiV2TransactionsGetQueryParams = zod.object({
-  status: zod
-    .union([
-      zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),
-      zod.null(),
-    ])
-    .optional(),
-  type: zod
-    .union([
-      zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),
-      zod.null(),
-    ])
-    .optional(),
-  itemId: zod.union([zod.string(), zod.null()]).optional(),
-  withItemId: zod.union([zod.boolean(), zod.null()]).optional(),
-  withLotId: zod.union([zod.boolean(), zod.null()]).optional(),
-});
+  "status": zod.union([zod.enum(['SOLDED', 'RUNNING', 'RETURNED', 'CANCELED']),zod.null()]).optional(),
+  "type": zod.union([zod.enum(['BUY', 'SELL', 'FOUND', 'GIFT', 'EXISTING_STOCK', 'GIVEN']),zod.null()]).optional(),
+  "itemId": zod.union([zod.string(),zod.null()]).optional(),
+  "withItemId": zod.union([zod.boolean(),zod.null()]).optional(),
+  "withLotId": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type ListTransactionsApiV2TransactionsGetQueryParams = zod.input<
-  typeof ListTransactionsApiV2TransactionsGetQueryParams
->;
-export type ListTransactionsApiV2TransactionsGetQueryParamsOutput = zod.output<
-  typeof ListTransactionsApiV2TransactionsGetQueryParams
->;
+export type ListTransactionsApiV2TransactionsGetQueryParams = zod.input<typeof ListTransactionsApiV2TransactionsGetQueryParams>;
+export type ListTransactionsApiV2TransactionsGetQueryParamsOutput = zod.output<typeof ListTransactionsApiV2TransactionsGetQueryParams>;
 
-export const ListTransactionsApiV2TransactionsGetResponseItem =
-  TransactionEntryResponse;
+export const ListTransactionsApiV2TransactionsGetResponseItem = TransactionEntryResponse
 
-export type ListTransactionsApiV2TransactionsGetResponseItem = zod.input<
-  typeof ListTransactionsApiV2TransactionsGetResponseItem
->;
-export type ListTransactionsApiV2TransactionsGetResponseItemOutput = zod.output<
-  typeof ListTransactionsApiV2TransactionsGetResponseItem
->;
+export type ListTransactionsApiV2TransactionsGetResponseItem = zod.input<typeof ListTransactionsApiV2TransactionsGetResponseItem>;
+export type ListTransactionsApiV2TransactionsGetResponseItemOutput = zod.output<typeof ListTransactionsApiV2TransactionsGetResponseItem>;
 
-export const ListTransactionsApiV2TransactionsGetResponse = zod.array(
-  ListTransactionsApiV2TransactionsGetResponseItem,
-);
+export const ListTransactionsApiV2TransactionsGetResponse = zod.array(ListTransactionsApiV2TransactionsGetResponseItem)
 
-export type ListTransactionsApiV2TransactionsGetResponse = zod.input<
-  typeof ListTransactionsApiV2TransactionsGetResponse
->;
-export type ListTransactionsApiV2TransactionsGetResponseOutput = zod.output<
-  typeof ListTransactionsApiV2TransactionsGetResponse
->;
+export type ListTransactionsApiV2TransactionsGetResponse = zod.input<typeof ListTransactionsApiV2TransactionsGetResponse>;
+export type ListTransactionsApiV2TransactionsGetResponseOutput = zod.output<typeof ListTransactionsApiV2TransactionsGetResponse>;
+
 
 /**
  * @summary Create Transaction
  */
-export const CreateTransactionApiV2TransactionsPostBody = TransactionBody;
+export const CreateTransactionApiV2TransactionsPostBody = TransactionBody
 
-export type CreateTransactionApiV2TransactionsPostBody = zod.input<
-  typeof CreateTransactionApiV2TransactionsPostBody
->;
-export type CreateTransactionApiV2TransactionsPostBodyOutput = zod.output<
-  typeof CreateTransactionApiV2TransactionsPostBody
->;
+export type CreateTransactionApiV2TransactionsPostBody = zod.input<typeof CreateTransactionApiV2TransactionsPostBody>;
+export type CreateTransactionApiV2TransactionsPostBodyOutput = zod.output<typeof CreateTransactionApiV2TransactionsPostBody>;
 
-export const CreateTransactionApiV2TransactionsPostResponse = IdResponse;
+export const CreateTransactionApiV2TransactionsPostResponse = IdResponse
 
-export type CreateTransactionApiV2TransactionsPostResponse = zod.input<
-  typeof CreateTransactionApiV2TransactionsPostResponse
->;
-export type CreateTransactionApiV2TransactionsPostResponseOutput = zod.output<
-  typeof CreateTransactionApiV2TransactionsPostResponse
->;
+export type CreateTransactionApiV2TransactionsPostResponse = zod.input<typeof CreateTransactionApiV2TransactionsPostResponse>;
+export type CreateTransactionApiV2TransactionsPostResponseOutput = zod.output<typeof CreateTransactionApiV2TransactionsPostResponse>;
+
 
 /**
  * @summary List Running
  */
-export const ListRunningApiV2TransactionsRunningGetResponseItem =
-  TransactionResponse;
+export const ListRunningApiV2TransactionsRunningGetResponseItem = TransactionResponse
 
-export type ListRunningApiV2TransactionsRunningGetResponseItem = zod.input<
-  typeof ListRunningApiV2TransactionsRunningGetResponseItem
->;
-export type ListRunningApiV2TransactionsRunningGetResponseItemOutput =
-  zod.output<typeof ListRunningApiV2TransactionsRunningGetResponseItem>;
+export type ListRunningApiV2TransactionsRunningGetResponseItem = zod.input<typeof ListRunningApiV2TransactionsRunningGetResponseItem>;
+export type ListRunningApiV2TransactionsRunningGetResponseItemOutput = zod.output<typeof ListRunningApiV2TransactionsRunningGetResponseItem>;
 
-export const ListRunningApiV2TransactionsRunningGetResponse = zod.array(
-  ListRunningApiV2TransactionsRunningGetResponseItem,
-);
+export const ListRunningApiV2TransactionsRunningGetResponse = zod.array(ListRunningApiV2TransactionsRunningGetResponseItem)
 
-export type ListRunningApiV2TransactionsRunningGetResponse = zod.input<
-  typeof ListRunningApiV2TransactionsRunningGetResponse
->;
-export type ListRunningApiV2TransactionsRunningGetResponseOutput = zod.output<
-  typeof ListRunningApiV2TransactionsRunningGetResponse
->;
+export type ListRunningApiV2TransactionsRunningGetResponse = zod.input<typeof ListRunningApiV2TransactionsRunningGetResponse>;
+export type ListRunningApiV2TransactionsRunningGetResponseOutput = zod.output<typeof ListRunningApiV2TransactionsRunningGetResponse>;
+
 
 /**
  * @summary Get Transaction
  */
 export const GetTransactionApiV2TransactionsIdGetParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type GetTransactionApiV2TransactionsIdGetParams = zod.input<
-  typeof GetTransactionApiV2TransactionsIdGetParams
->;
-export type GetTransactionApiV2TransactionsIdGetParamsOutput = zod.output<
-  typeof GetTransactionApiV2TransactionsIdGetParams
->;
+export type GetTransactionApiV2TransactionsIdGetParams = zod.input<typeof GetTransactionApiV2TransactionsIdGetParams>;
+export type GetTransactionApiV2TransactionsIdGetParamsOutput = zod.output<typeof GetTransactionApiV2TransactionsIdGetParams>;
 
-export const GetTransactionApiV2TransactionsIdGetResponse = TransactionResponse;
+export const GetTransactionApiV2TransactionsIdGetResponse = TransactionResponse
 
-export type GetTransactionApiV2TransactionsIdGetResponse = zod.input<
-  typeof GetTransactionApiV2TransactionsIdGetResponse
->;
-export type GetTransactionApiV2TransactionsIdGetResponseOutput = zod.output<
-  typeof GetTransactionApiV2TransactionsIdGetResponse
->;
+export type GetTransactionApiV2TransactionsIdGetResponse = zod.input<typeof GetTransactionApiV2TransactionsIdGetResponse>;
+export type GetTransactionApiV2TransactionsIdGetResponseOutput = zod.output<typeof GetTransactionApiV2TransactionsIdGetResponse>;
+
 
 /**
  * @summary Patch Status
  */
 export const PatchStatusApiV2TransactionsIdStatusPatchParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchStatusApiV2TransactionsIdStatusPatchParams = zod.input<
-  typeof PatchStatusApiV2TransactionsIdStatusPatchParams
->;
-export type PatchStatusApiV2TransactionsIdStatusPatchParamsOutput = zod.output<
-  typeof PatchStatusApiV2TransactionsIdStatusPatchParams
->;
+export type PatchStatusApiV2TransactionsIdStatusPatchParams = zod.input<typeof PatchStatusApiV2TransactionsIdStatusPatchParams>;
+export type PatchStatusApiV2TransactionsIdStatusPatchParamsOutput = zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchParams>;
 
-export const PatchStatusApiV2TransactionsIdStatusPatchBody =
-  TransactionStatusPatch;
+export const PatchStatusApiV2TransactionsIdStatusPatchBody = TransactionStatusPatch
 
-export type PatchStatusApiV2TransactionsIdStatusPatchBody = zod.input<
-  typeof PatchStatusApiV2TransactionsIdStatusPatchBody
->;
-export type PatchStatusApiV2TransactionsIdStatusPatchBodyOutput = zod.output<
-  typeof PatchStatusApiV2TransactionsIdStatusPatchBody
->;
+export type PatchStatusApiV2TransactionsIdStatusPatchBody = zod.input<typeof PatchStatusApiV2TransactionsIdStatusPatchBody>;
+export type PatchStatusApiV2TransactionsIdStatusPatchBodyOutput = zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchBody>;
 
-export const PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.void();
+export const PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.void()
 
-export type PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.input<
-  typeof PatchStatusApiV2TransactionsIdStatusPatchResponse
->;
-export type PatchStatusApiV2TransactionsIdStatusPatchResponseOutput =
-  zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchResponse>;
+export type PatchStatusApiV2TransactionsIdStatusPatchResponse = zod.input<typeof PatchStatusApiV2TransactionsIdStatusPatchResponse>;
+export type PatchStatusApiV2TransactionsIdStatusPatchResponseOutput = zod.output<typeof PatchStatusApiV2TransactionsIdStatusPatchResponse>;
+
 
 /**
  * Legacy ``PATCH /:id/cancel`` sent the raw string ``"CANCELED"`` as the body.
  * @summary Patch Cancel
  */
 export const PatchCancelApiV2TransactionsIdCancelPatchParams = zod.object({
-  id: zod.string(),
-});
+  "id": zod.string()
+})
 
-export type PatchCancelApiV2TransactionsIdCancelPatchParams = zod.input<
-  typeof PatchCancelApiV2TransactionsIdCancelPatchParams
->;
-export type PatchCancelApiV2TransactionsIdCancelPatchParamsOutput = zod.output<
-  typeof PatchCancelApiV2TransactionsIdCancelPatchParams
->;
+export type PatchCancelApiV2TransactionsIdCancelPatchParams = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchParams>;
+export type PatchCancelApiV2TransactionsIdCancelPatchParamsOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchParams>;
 
-export const PatchCancelApiV2TransactionsIdCancelPatchBody = zod.string();
+export const PatchCancelApiV2TransactionsIdCancelPatchBody = zod.string()
 
-export type PatchCancelApiV2TransactionsIdCancelPatchBody = zod.input<
-  typeof PatchCancelApiV2TransactionsIdCancelPatchBody
->;
-export type PatchCancelApiV2TransactionsIdCancelPatchBodyOutput = zod.output<
-  typeof PatchCancelApiV2TransactionsIdCancelPatchBody
->;
+export type PatchCancelApiV2TransactionsIdCancelPatchBody = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
+export type PatchCancelApiV2TransactionsIdCancelPatchBodyOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchBody>;
 
-export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.void();
+export const PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.void()
 
-export type PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.input<
-  typeof PatchCancelApiV2TransactionsIdCancelPatchResponse
->;
-export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput =
-  zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
+export type PatchCancelApiV2TransactionsIdCancelPatchResponse = zod.input<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
+export type PatchCancelApiV2TransactionsIdCancelPatchResponseOutput = zod.output<typeof PatchCancelApiV2TransactionsIdCancelPatchResponse>;
+
 
 /**
  * @summary Get Results By Origin
  */
-export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams =
-  zod.object({
-    item_id: zod.string(),
-  });
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams = zod.object({
+  "item_id": zod.string()
+})
 
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams =
-  zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParamsOutput =
-  zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParamsOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetParams>;
 
-export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem =
-  zod.string();
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem = zod.string()
 
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem =
-  zod.input<
-    typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem
-  >;
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItemOutput =
-  zod.output<
-    typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem
-  >;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItemOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem>;
 
-export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse =
-  zod.array(GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem);
+export const GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse = zod.array(GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseItem)
 
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse =
-  zod.input<
-    typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse
-  >;
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseOutput =
-  zod.output<
-    typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse
-  >;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse = zod.input<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse>;
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponseOutput = zod.output<typeof GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResponse>;
+
 
 /**
  * @summary Get Recipe By Result
  */
-export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams =
-  zod.object({
-    item_id: zod.string(),
-  });
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams = zod.object({
+  "item_id": zod.string()
+})
 
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams =
-  zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParamsOutput =
-  zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParamsOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetParams>;
 
-export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem =
-  RefinageRecipeResponse;
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem = RefinageRecipeResponse
 
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem =
-  zod.input<
-    typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem
-  >;
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItemOutput =
-  zod.output<
-    typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem
-  >;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItemOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem>;
 
-export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse =
-  zod.array(GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem);
+export const GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.array(GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseItem)
 
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse =
-  zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput =
-  zod.output<
-    typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse
-  >;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse = zod.input<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponseOutput = zod.output<typeof GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResponse>;
+
 
 /**
  * @summary Get Mining Sessions
  */
-export const GetMiningSessionsApiV2SessionsMiningGetResponseItem =
-  MiningSessionHistoryResponse;
+export const GetMiningSessionsApiV2SessionsMiningGetResponseItem = MiningSessionHistoryResponse
 
-export type GetMiningSessionsApiV2SessionsMiningGetResponseItem = zod.input<
-  typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem
->;
-export type GetMiningSessionsApiV2SessionsMiningGetResponseItemOutput =
-  zod.output<typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem>;
+export type GetMiningSessionsApiV2SessionsMiningGetResponseItem = zod.input<typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem>;
+export type GetMiningSessionsApiV2SessionsMiningGetResponseItemOutput = zod.output<typeof GetMiningSessionsApiV2SessionsMiningGetResponseItem>;
 
-export const GetMiningSessionsApiV2SessionsMiningGetResponse = zod.array(
-  GetMiningSessionsApiV2SessionsMiningGetResponseItem,
-);
+export const GetMiningSessionsApiV2SessionsMiningGetResponse = zod.array(GetMiningSessionsApiV2SessionsMiningGetResponseItem)
 
-export type GetMiningSessionsApiV2SessionsMiningGetResponse = zod.input<
-  typeof GetMiningSessionsApiV2SessionsMiningGetResponse
->;
-export type GetMiningSessionsApiV2SessionsMiningGetResponseOutput = zod.output<
-  typeof GetMiningSessionsApiV2SessionsMiningGetResponse
->;
+export type GetMiningSessionsApiV2SessionsMiningGetResponse = zod.input<typeof GetMiningSessionsApiV2SessionsMiningGetResponse>;
+export type GetMiningSessionsApiV2SessionsMiningGetResponseOutput = zod.output<typeof GetMiningSessionsApiV2SessionsMiningGetResponse>;
+
 
 /**
  * @summary Create Mining Session
  */
-export const CreateMiningSessionApiV2SessionsMiningPostBody =
-  MiningSessionCreate;
+export const CreateMiningSessionApiV2SessionsMiningPostBody = MiningSessionCreate
 
-export type CreateMiningSessionApiV2SessionsMiningPostBody = zod.input<
-  typeof CreateMiningSessionApiV2SessionsMiningPostBody
->;
-export type CreateMiningSessionApiV2SessionsMiningPostBodyOutput = zod.output<
-  typeof CreateMiningSessionApiV2SessionsMiningPostBody
->;
+export type CreateMiningSessionApiV2SessionsMiningPostBody = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
+export type CreateMiningSessionApiV2SessionsMiningPostBodyOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostBody>;
 
-export const CreateMiningSessionApiV2SessionsMiningPostResponse =
-  SessionResponse;
+export const CreateMiningSessionApiV2SessionsMiningPostResponse = SessionResponse
 
-export type CreateMiningSessionApiV2SessionsMiningPostResponse = zod.input<
-  typeof CreateMiningSessionApiV2SessionsMiningPostResponse
->;
-export type CreateMiningSessionApiV2SessionsMiningPostResponseOutput =
-  zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+export type CreateMiningSessionApiV2SessionsMiningPostResponse = zod.input<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+export type CreateMiningSessionApiV2SessionsMiningPostResponseOutput = zod.output<typeof CreateMiningSessionApiV2SessionsMiningPostResponse>;
+
 
 /**
  * @summary Get Mining Session Detail
  */
-export const GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams =
-  zod.object({
-    session_id: zod.string(),
-  });
+export const GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams = zod.object({
+  "session_id": zod.string()
+})
 
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams =
-  zod.input<
-    typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams
-  >;
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParamsOutput =
-  zod.output<
-    typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams
-  >;
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams = zod.input<typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams>;
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParamsOutput = zod.output<typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetParams>;
 
-export const GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse =
-  MiningCurrentSessionResponse;
+export const GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse = MiningCurrentSessionResponse
 
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse =
-  zod.input<
-    typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse
-  >;
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponseOutput =
-  zod.output<
-    typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse
-  >;
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse = zod.input<typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse>;
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponseOutput = zod.output<typeof GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResponse>;
+
 
 /**
  * @summary Get Available Mining Inventory
  */
-export const GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse =
-  MiningAvailableResponse;
+export const GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse = MiningAvailableResponse
 
-export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse =
-  zod.input<
-    typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse
-  >;
-export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponseOutput =
-  zod.output<
-    typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse
-  >;
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse = zod.input<typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse>;
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponseOutput = zod.output<typeof GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResponse>;
+
 
 /**
  * @summary Get Mining Loot List
  */
 export const getMiningLootListApiV2SessionsMiningLootlistGetQuerySessionTypeMax = 3;
 
-export const GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams =
-  zod.object({
-    sessionType: zod
-      .int()
-      .min(1)
-      .max(getMiningLootListApiV2SessionsMiningLootlistGetQuerySessionTypeMax),
-  });
 
-export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams =
-  zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
-export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParamsOutput =
-  zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
 
-export const GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem =
-  zod.string();
+export const GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams = zod.object({
+  "sessionType": zod.int().min(1).max(getMiningLootListApiV2SessionsMiningLootlistGetQuerySessionTypeMax)
+})
 
-export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem =
-  zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem>;
-export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItemOutput =
-  zod.output<
-    typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem
-  >;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetQueryParamsOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetQueryParams>;
 
-export const GetMiningLootListApiV2SessionsMiningLootlistGetResponse =
-  zod.array(GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem);
+export const GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem = zod.string()
 
-export type GetMiningLootListApiV2SessionsMiningLootlistGetResponse = zod.input<
-  typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse
->;
-export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseOutput =
-  zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseItemOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem>;
+
+export const GetMiningLootListApiV2SessionsMiningLootlistGetResponse = zod.array(GetMiningLootListApiV2SessionsMiningLootlistGetResponseItem)
+
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponse = zod.input<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse>;
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResponseOutput = zod.output<typeof GetMiningLootListApiV2SessionsMiningLootlistGetResponse>;
+
 
 /**
  * @summary Get Current Session
  */
 export const GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.object({
-  type: zod.union([SessionType, zod.null()]).optional(),
-});
+  "type": zod.union([SessionType,zod.null()]).optional()
+})
 
-export type GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.input<
-  typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams
->;
-export type GetCurrentSessionApiV2SessionsCurrentGetQueryParamsOutput =
-  zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryParams = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
+export type GetCurrentSessionApiV2SessionsCurrentGetQueryParamsOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetQueryParams>;
 
-export const GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.union([
-  MiningCurrentSessionResponse,
-  SessionResponse,
-  zod.null(),
-]);
+export const GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.union([MiningCurrentSessionResponse,SessionResponse,zod.null()])
 
-export type GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.input<
-  typeof GetCurrentSessionApiV2SessionsCurrentGetResponse
->;
-export type GetCurrentSessionApiV2SessionsCurrentGetResponseOutput = zod.output<
-  typeof GetCurrentSessionApiV2SessionsCurrentGetResponse
->;
+export type GetCurrentSessionApiV2SessionsCurrentGetResponse = zod.input<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
+export type GetCurrentSessionApiV2SessionsCurrentGetResponseOutput = zod.output<typeof GetCurrentSessionApiV2SessionsCurrentGetResponse>;
+
 
 /**
  * @summary Create Session
  */
-export const CreateSessionApiV2SessionsPostBody = SessionCreate;
+export const CreateSessionApiV2SessionsPostBody = SessionCreate
 
-export type CreateSessionApiV2SessionsPostBody = zod.input<
-  typeof CreateSessionApiV2SessionsPostBody
->;
-export type CreateSessionApiV2SessionsPostBodyOutput = zod.output<
-  typeof CreateSessionApiV2SessionsPostBody
->;
+export type CreateSessionApiV2SessionsPostBody = zod.input<typeof CreateSessionApiV2SessionsPostBody>;
+export type CreateSessionApiV2SessionsPostBodyOutput = zod.output<typeof CreateSessionApiV2SessionsPostBody>;
 
-export const CreateSessionApiV2SessionsPostResponse = SessionResponse;
+export const CreateSessionApiV2SessionsPostResponse = SessionResponse
 
-export type CreateSessionApiV2SessionsPostResponse = zod.input<
-  typeof CreateSessionApiV2SessionsPostResponse
->;
-export type CreateSessionApiV2SessionsPostResponseOutput = zod.output<
-  typeof CreateSessionApiV2SessionsPostResponse
->;
+export type CreateSessionApiV2SessionsPostResponse = zod.input<typeof CreateSessionApiV2SessionsPostResponse>;
+export type CreateSessionApiV2SessionsPostResponseOutput = zod.output<typeof CreateSessionApiV2SessionsPostResponse>;
+
 
 /**
  * @summary Create Refining Session
  */
-export const CreateRefiningSessionApiV2SessionsRefinagePostBody =
-  RefiningSessionCreate;
+export const CreateRefiningSessionApiV2SessionsRefinagePostBody = RefiningSessionCreate
 
-export type CreateRefiningSessionApiV2SessionsRefinagePostBody = zod.input<
-  typeof CreateRefiningSessionApiV2SessionsRefinagePostBody
->;
-export type CreateRefiningSessionApiV2SessionsRefinagePostBodyOutput =
-  zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostBody>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostBody = zod.input<typeof CreateRefiningSessionApiV2SessionsRefinagePostBody>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostBodyOutput = zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostBody>;
 
-export const CreateRefiningSessionApiV2SessionsRefinagePostResponse =
-  RefiningSessionResponse;
+export const CreateRefiningSessionApiV2SessionsRefinagePostResponse = RefiningSessionResponse
 
-export type CreateRefiningSessionApiV2SessionsRefinagePostResponse = zod.input<
-  typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse
->;
-export type CreateRefiningSessionApiV2SessionsRefinagePostResponseOutput =
-  zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostResponse = zod.input<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+export type CreateRefiningSessionApiV2SessionsRefinagePostResponseOutput = zod.output<typeof CreateRefiningSessionApiV2SessionsRefinagePostResponse>;
+
 
 /**
  * @summary Prevalidate Mining Session
  */
-export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody =
-  MiningSessionPrevalidationCreate;
+export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody = MiningSessionPrevalidationCreate
 
-export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody =
-  zod.input<
-    typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody
-  >;
-export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBodyOutput =
-  zod.output<
-    typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody
-  >;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody = zod.input<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBodyOutput = zod.output<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostBody>;
 
-export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse =
-  MiningPrevalidationResponse;
+export const PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse = MiningPrevalidationResponse
 
-export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse =
-  zod.input<
-    typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse
-  >;
-export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponseOutput =
-  zod.output<
-    typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse
-  >;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse = zod.input<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponseOutput = zod.output<typeof PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResponse>;
+
 
 /**
  * @summary Create Mining Resource Line
  */
-export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams =
-  zod.object({
-    session_id: zod.string(),
-  });
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams = zod.object({
+  "session_id": zod.string()
+})
 
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams =
-  zod.input<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams
-  >;
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParamsOutput =
-  zod.output<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams
-  >;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParamsOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostParams>;
 
-export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody =
-  MiningResourceCreate;
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody = MiningResourceCreate
 
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody =
-  zod.input<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody
-  >;
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBodyOutput =
-  zod.output<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody
-  >;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBodyOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostBody>;
 
-export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse =
-  SessionLineResponse;
+export const CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse = SessionLineResponse
 
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse =
-  zod.input<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse
-  >;
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponseOutput =
-  zod.output<
-    typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse
-  >;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse = zod.input<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse>;
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponseOutput = zod.output<typeof CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResponse>;
+
 
 /**
  * @summary Update Mining Resource Line
  */
-export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams =
-  zod.object({
-    session_id: zod.string(),
-    line_id: zod.string(),
-  });
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
 
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams =
-  zod.input<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams
-  >;
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParamsOutput =
-  zod.output<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams
-  >;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParamsOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutParams>;
 
-export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody =
-  MiningResourceUpdate;
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody = MiningResourceUpdate
 
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody =
-  zod.input<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody
-  >;
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBodyOutput =
-  zod.output<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody
-  >;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBodyOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutBody>;
 
-export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse =
-  SessionLineResponse;
+export const UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse = SessionLineResponse
 
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse =
-  zod.input<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse
-  >;
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponseOutput =
-  zod.output<
-    typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse
-  >;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse = zod.input<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse>;
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponseOutput = zod.output<typeof UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResponse>;
+
 
 /**
  * @summary Finalize Mining Resource Line
  */
-export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams =
-  zod.object({
-    session_id: zod.string(),
-    line_id: zod.string(),
-  });
+export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
 
-export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams =
-  zod.input<
-    typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams
-  >;
-export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParamsOutput =
-  zod.output<
-    typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams
-  >;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams = zod.input<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams>;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParamsOutput = zod.output<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostParams>;
 
-export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse =
-  SessionLineResponse;
+export const FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse = SessionLineResponse
 
-export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse =
-  zod.input<
-    typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse
-  >;
-export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponseOutput =
-  zod.output<
-    typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse
-  >;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse = zod.input<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse>;
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponseOutput = zod.output<typeof FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResponse>;
+
 
 /**
  * @summary Consume Mining Cost Line
  */
-export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams =
-  zod.object({
-    session_id: zod.string(),
-    line_id: zod.string(),
-  });
+export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
 
-export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams =
-  zod.input<
-    typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams
-  >;
-export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParamsOutput =
-  zod.output<
-    typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams
-  >;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams = zod.input<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams>;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParamsOutput = zod.output<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostParams>;
 
-export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse =
-  MiningCostLineResponse;
+export const ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse = MiningCostLineResponse
 
-export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse =
-  zod.input<
-    typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse
-  >;
-export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponseOutput =
-  zod.output<
-    typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse
-  >;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse = zod.input<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse>;
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponseOutput = zod.output<typeof ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResponse>;
+
 
 /**
  * @summary Update Mining Cost Line
  */
-export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams =
-  zod.object({
-    session_id: zod.string(),
-    line_id: zod.string(),
-  });
+export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams = zod.object({
+  "session_id": zod.string(),
+  "line_id": zod.string()
+})
 
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams =
-  zod.input<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams
-  >;
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParamsOutput =
-  zod.output<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams
-  >;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams = zod.input<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams>;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParamsOutput = zod.output<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutParams>;
 
-export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody =
-  MiningCostLineUpdate;
+export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody = MiningCostLineUpdate
 
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody =
-  zod.input<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody
-  >;
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBodyOutput =
-  zod.output<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody
-  >;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody = zod.input<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody>;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBodyOutput = zod.output<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutBody>;
 
-export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse =
-  MiningCostLineResponse;
+export const UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse = MiningCostLineResponse
 
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse =
-  zod.input<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse
-  >;
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponseOutput =
-  zod.output<
-    typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse
-  >;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse = zod.input<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse>;
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponseOutput = zod.output<typeof UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResponse>;
+
 
 /**
  * @summary Close Session
  */
 export const CloseSessionApiV2SessionsSessionIdPatchParams = zod.object({
-  session_id: zod.string(),
-});
+  "session_id": zod.string()
+})
 
-export type CloseSessionApiV2SessionsSessionIdPatchParams = zod.input<
-  typeof CloseSessionApiV2SessionsSessionIdPatchParams
->;
-export type CloseSessionApiV2SessionsSessionIdPatchParamsOutput = zod.output<
-  typeof CloseSessionApiV2SessionsSessionIdPatchParams
->;
+export type CloseSessionApiV2SessionsSessionIdPatchParams = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
+export type CloseSessionApiV2SessionsSessionIdPatchParamsOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchParams>;
 
-export const CloseSessionApiV2SessionsSessionIdPatchBody = zod.union([
-  MiningSessionClose,
-  zod.null(),
-]);
+export const CloseSessionApiV2SessionsSessionIdPatchBody = zod.union([MiningSessionClose,zod.null()])
 
-export type CloseSessionApiV2SessionsSessionIdPatchBody = zod.input<
-  typeof CloseSessionApiV2SessionsSessionIdPatchBody
->;
-export type CloseSessionApiV2SessionsSessionIdPatchBodyOutput = zod.output<
-  typeof CloseSessionApiV2SessionsSessionIdPatchBody
->;
+export type CloseSessionApiV2SessionsSessionIdPatchBody = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;
+export type CloseSessionApiV2SessionsSessionIdPatchBodyOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchBody>;
 
-export const CloseSessionApiV2SessionsSessionIdPatchResponse = SessionResponse;
+export const CloseSessionApiV2SessionsSessionIdPatchResponse = SessionResponse
 
-export type CloseSessionApiV2SessionsSessionIdPatchResponse = zod.input<
-  typeof CloseSessionApiV2SessionsSessionIdPatchResponse
->;
-export type CloseSessionApiV2SessionsSessionIdPatchResponseOutput = zod.output<
-  typeof CloseSessionApiV2SessionsSessionIdPatchResponse
->;
+export type CloseSessionApiV2SessionsSessionIdPatchResponse = zod.input<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
+export type CloseSessionApiV2SessionsSessionIdPatchResponseOutput = zod.output<typeof CloseSessionApiV2SessionsSessionIdPatchResponse>;
+
 
 /**
  * @summary List Claims
  */
 export const ListClaimsApiV2MiningSessionIdClaimsGetParams = zod.object({
-  session_id: zod.string(),
-});
+  "session_id": zod.string()
+})
 
-export type ListClaimsApiV2MiningSessionIdClaimsGetParams = zod.input<
-  typeof ListClaimsApiV2MiningSessionIdClaimsGetParams
->;
-export type ListClaimsApiV2MiningSessionIdClaimsGetParamsOutput = zod.output<
-  typeof ListClaimsApiV2MiningSessionIdClaimsGetParams
->;
+export type ListClaimsApiV2MiningSessionIdClaimsGetParams = zod.input<typeof ListClaimsApiV2MiningSessionIdClaimsGetParams>;
+export type ListClaimsApiV2MiningSessionIdClaimsGetParamsOutput = zod.output<typeof ListClaimsApiV2MiningSessionIdClaimsGetParams>;
 
-export const ListClaimsApiV2MiningSessionIdClaimsGetResponse =
-  MiningClaimsResponse;
+export const ListClaimsApiV2MiningSessionIdClaimsGetResponse = MiningClaimsResponse
 
-export type ListClaimsApiV2MiningSessionIdClaimsGetResponse = zod.input<
-  typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse
->;
-export type ListClaimsApiV2MiningSessionIdClaimsGetResponseOutput = zod.output<
-  typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse
->;
+export type ListClaimsApiV2MiningSessionIdClaimsGetResponse = zod.input<typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse>;
+export type ListClaimsApiV2MiningSessionIdClaimsGetResponseOutput = zod.output<typeof ListClaimsApiV2MiningSessionIdClaimsGetResponse>;
+
 
 /**
  * @summary Create Claim
  */
 export const CreateClaimApiV2MiningSessionIdClaimsPostParams = zod.object({
-  session_id: zod.string(),
-});
+  "session_id": zod.string()
+})
 
-export type CreateClaimApiV2MiningSessionIdClaimsPostParams = zod.input<
-  typeof CreateClaimApiV2MiningSessionIdClaimsPostParams
->;
-export type CreateClaimApiV2MiningSessionIdClaimsPostParamsOutput = zod.output<
-  typeof CreateClaimApiV2MiningSessionIdClaimsPostParams
->;
+export type CreateClaimApiV2MiningSessionIdClaimsPostParams = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostParams>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostParamsOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostParams>;
 
-export const CreateClaimApiV2MiningSessionIdClaimsPostBody = MiningClaimCreate;
+export const CreateClaimApiV2MiningSessionIdClaimsPostBody = MiningClaimCreate
 
-export type CreateClaimApiV2MiningSessionIdClaimsPostBody = zod.input<
-  typeof CreateClaimApiV2MiningSessionIdClaimsPostBody
->;
-export type CreateClaimApiV2MiningSessionIdClaimsPostBodyOutput = zod.output<
-  typeof CreateClaimApiV2MiningSessionIdClaimsPostBody
->;
+export type CreateClaimApiV2MiningSessionIdClaimsPostBody = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostBodyOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
 
-export const CreateClaimApiV2MiningSessionIdClaimsPostResponse =
-  MiningClaimResponse;
+export const CreateClaimApiV2MiningSessionIdClaimsPostResponse = MiningClaimResponse
 
-export type CreateClaimApiV2MiningSessionIdClaimsPostResponse = zod.input<
-  typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse
->;
-export type CreateClaimApiV2MiningSessionIdClaimsPostResponseOutput =
-  zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostResponse = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
+export type CreateClaimApiV2MiningSessionIdClaimsPostResponseOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
+
 
 /**
  * @summary Patch Claim
  */
-export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams =
-  zod.object({
-    session_id: zod.string(),
-    claim_id: zod.string(),
-  });
+export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams = zod.object({
+  "session_id": zod.string(),
+  "claim_id": zod.string()
+})
 
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams = zod.input<
-  typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams
->;
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParamsOutput =
-  zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams = zod.input<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParamsOutput = zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchParams>;
 
-export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody =
-  MiningClaimPatch;
+export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody = MiningClaimPatch
 
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody = zod.input<
-  typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody
->;
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBodyOutput =
-  zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody = zod.input<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBodyOutput = zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchBody>;
 
-export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse =
-  MiningClaimResponse;
+export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse = MiningClaimResponse
 
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse =
-  zod.input<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponseOutput =
-  zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse = zod.input<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponseOutput = zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
+
 
 /**
  * @summary List Deposit Sizes
  */
-export const ListDepositSizesApiV2MiningDepositSizesGetResponseItem =
-  MiningDepositSizeResponse;
+export const ListDepositSizesApiV2MiningDepositSizesGetResponseItem = MiningDepositSizeResponse
 
-export type ListDepositSizesApiV2MiningDepositSizesGetResponseItem = zod.input<
-  typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem
->;
-export type ListDepositSizesApiV2MiningDepositSizesGetResponseItemOutput =
-  zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseItem = zod.input<typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseItemOutput = zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponseItem>;
 
-export const ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.array(
-  ListDepositSizesApiV2MiningDepositSizesGetResponseItem,
-);
+export const ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.array(ListDepositSizesApiV2MiningDepositSizesGetResponseItem)
 
-export type ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.input<
-  typeof ListDepositSizesApiV2MiningDepositSizesGetResponse
->;
-export type ListDepositSizesApiV2MiningDepositSizesGetResponseOutput =
-  zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponse>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponse = zod.input<typeof ListDepositSizesApiV2MiningDepositSizesGetResponse>;
+export type ListDepositSizesApiV2MiningDepositSizesGetResponseOutput = zod.output<typeof ListDepositSizesApiV2MiningDepositSizesGetResponse>;
+
 
 /**
  * @summary Get Deposit Size
  */
-export const getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp =
-  new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 
-export const GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.object(
-  {
-    value: zod.union([
-      zod.number(),
-      zod
-        .string()
-        .regex(getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp),
-    ]),
-  },
-);
 
-export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.input<
-  typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams
->;
-export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParamsOutput =
-  zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams>;
+export const GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.object({
+  "value": zod.union([zod.number(),zod.string().regex(getDepositSizeApiV2MiningGetDepositSizeGetQueryValueTwoRegExp)])
+})
 
-export const GetDepositSizeApiV2MiningGetDepositSizeGetResponse =
-  MiningDepositSizeResponse;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams = zod.input<typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetQueryParamsOutput = zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetQueryParams>;
 
-export type GetDepositSizeApiV2MiningGetDepositSizeGetResponse = zod.input<
-  typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse
->;
-export type GetDepositSizeApiV2MiningGetDepositSizeGetResponseOutput =
-  zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse>;
+export const GetDepositSizeApiV2MiningGetDepositSizeGetResponse = MiningDepositSizeResponse
+
+export type GetDepositSizeApiV2MiningGetDepositSizeGetResponse = zod.input<typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse>;
+export type GetDepositSizeApiV2MiningGetDepositSizeGetResponseOutput = zod.output<typeof GetDepositSizeApiV2MiningGetDepositSizeGetResponse>;
+
 
 /**
  * @summary Get Deposit Size By Size
  */
-export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams =
-  zod.object({
-    size: zod.int(),
-  });
+export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams = zod.object({
+  "size": zod.int()
+})
 
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams =
-  zod.input<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams
-  >;
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParamsOutput =
-  zod.output<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams
-  >;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams>;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParamsOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetQueryParams>;
 
-export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse =
-  MiningDepositSizeResponse;
+export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = MiningDepositSizeResponse
 
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse =
-  zod.input<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse
-  >;
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponseOutput =
-  zod.output<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse
-  >;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponseOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResponse>;
+
 
 /**
  * @summary List Planets
  */
-export const ListPlanetsApiV2PlanetsGetResponseItem = PlanetResponse;
+export const ListPlanetsApiV2PlanetsGetResponseItem = PlanetResponse
 
-export type ListPlanetsApiV2PlanetsGetResponseItem = zod.input<
-  typeof ListPlanetsApiV2PlanetsGetResponseItem
->;
-export type ListPlanetsApiV2PlanetsGetResponseItemOutput = zod.output<
-  typeof ListPlanetsApiV2PlanetsGetResponseItem
->;
+export type ListPlanetsApiV2PlanetsGetResponseItem = zod.input<typeof ListPlanetsApiV2PlanetsGetResponseItem>;
+export type ListPlanetsApiV2PlanetsGetResponseItemOutput = zod.output<typeof ListPlanetsApiV2PlanetsGetResponseItem>;
 
-export const ListPlanetsApiV2PlanetsGetResponse = zod.array(
-  ListPlanetsApiV2PlanetsGetResponseItem,
-);
+export const ListPlanetsApiV2PlanetsGetResponse = zod.array(ListPlanetsApiV2PlanetsGetResponseItem)
 
-export type ListPlanetsApiV2PlanetsGetResponse = zod.input<
-  typeof ListPlanetsApiV2PlanetsGetResponse
->;
-export type ListPlanetsApiV2PlanetsGetResponseOutput = zod.output<
-  typeof ListPlanetsApiV2PlanetsGetResponse
->;
+export type ListPlanetsApiV2PlanetsGetResponse = zod.input<typeof ListPlanetsApiV2PlanetsGetResponse>;
+export type ListPlanetsApiV2PlanetsGetResponseOutput = zod.output<typeof ListPlanetsApiV2PlanetsGetResponse>;
+
 
 /**
  * @summary List Planet Zones
  */
 export const ListPlanetZonesApiV2PlanetsZonesGetQueryParams = zod.object({
-  planet: zod.union([zod.string(), zod.null()]).optional(),
-});
+  "planet": zod.union([zod.string(),zod.null()]).optional()
+})
 
-export type ListPlanetZonesApiV2PlanetsZonesGetQueryParams = zod.input<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams
->;
-export type ListPlanetZonesApiV2PlanetsZonesGetQueryParamsOutput = zod.output<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams
->;
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryParams = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams>;
+export type ListPlanetZonesApiV2PlanetsZonesGetQueryParamsOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetQueryParams>;
 
-export const ListPlanetZonesApiV2PlanetsZonesGetResponseItem =
-  PlanetZoneResponse;
+export const ListPlanetZonesApiV2PlanetsZonesGetResponseItem = PlanetZoneResponse
 
-export type ListPlanetZonesApiV2PlanetsZonesGetResponseItem = zod.input<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem
->;
-export type ListPlanetZonesApiV2PlanetsZonesGetResponseItemOutput = zod.output<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem
->;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseItem = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem>;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseItemOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetResponseItem>;
 
-export const ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.array(
-  ListPlanetZonesApiV2PlanetsZonesGetResponseItem,
-);
+export const ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.array(ListPlanetZonesApiV2PlanetsZonesGetResponseItem)
 
-export type ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.input<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetResponse
->;
-export type ListPlanetZonesApiV2PlanetsZonesGetResponseOutput = zod.output<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetResponse
->;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponse = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetResponse>;
+export type ListPlanetZonesApiV2PlanetsZonesGetResponseOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetResponse>;
+
 
 /**
  * @summary Create Planet Zone
  */
-export const CreatePlanetZoneApiV2PlanetsZonesPostBody = PlanetZoneCreate;
+export const CreatePlanetZoneApiV2PlanetsZonesPostBody = PlanetZoneCreate
 
-export type CreatePlanetZoneApiV2PlanetsZonesPostBody = zod.input<
-  typeof CreatePlanetZoneApiV2PlanetsZonesPostBody
->;
-export type CreatePlanetZoneApiV2PlanetsZonesPostBodyOutput = zod.output<
-  typeof CreatePlanetZoneApiV2PlanetsZonesPostBody
->;
+export type CreatePlanetZoneApiV2PlanetsZonesPostBody = zod.input<typeof CreatePlanetZoneApiV2PlanetsZonesPostBody>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostBodyOutput = zod.output<typeof CreatePlanetZoneApiV2PlanetsZonesPostBody>;
 
-export const CreatePlanetZoneApiV2PlanetsZonesPostResponse = IdResponse;
+export const CreatePlanetZoneApiV2PlanetsZonesPostResponse = IdResponse
 
-export type CreatePlanetZoneApiV2PlanetsZonesPostResponse = zod.input<
-  typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse
->;
-export type CreatePlanetZoneApiV2PlanetsZonesPostResponseOutput = zod.output<
-  typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse
->;
+export type CreatePlanetZoneApiV2PlanetsZonesPostResponse = zod.input<typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse>;
+export type CreatePlanetZoneApiV2PlanetsZonesPostResponseOutput = zod.output<typeof CreatePlanetZoneApiV2PlanetsZonesPostResponse>;
+
 
 /**
  * @summary Health
  */
-export const HealthHealthGetResponse = zod.record(zod.string(), zod.unknown());
+export const HealthHealthGetResponse = zod.record(zod.string(), zod.unknown())
 
 export type HealthHealthGetResponse = zod.input<typeof HealthHealthGetResponse>;
-export type HealthHealthGetResponseOutput = zod.output<
-  typeof HealthHealthGetResponse
->;
+export type HealthHealthGetResponseOutput = zod.output<typeof HealthHealthGetResponse>;
+
+

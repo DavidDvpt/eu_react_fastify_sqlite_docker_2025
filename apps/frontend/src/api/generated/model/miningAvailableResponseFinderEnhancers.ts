@@ -5,6 +5,4 @@
  */
 import type { MiningAvailableStackResponse } from './operations/miningAvailableStackResponse.ts';
 
-export type MiningAvailableResponseFinderEnhancers = {
-  [key: string]: MiningAvailableStackResponse[];
-};
+export type MiningAvailableResponseFinderEnhancers = {[key: string]: MiningAvailableStackResponse[]};

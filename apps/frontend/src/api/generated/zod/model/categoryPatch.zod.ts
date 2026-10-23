@@ -5,9 +5,12 @@
  */
 import * as zod from 'zod';
 
+
+
+
 export const CategoryPatch = zod.object({
-  name: zod.union([zod.string().min(1), zod.null()]).optional(),
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
+  "name": zod.union([zod.string().min(1),zod.null()]).optional(),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
 });
 
 export type CategoryPatch = zod.input<typeof CategoryPatch>;

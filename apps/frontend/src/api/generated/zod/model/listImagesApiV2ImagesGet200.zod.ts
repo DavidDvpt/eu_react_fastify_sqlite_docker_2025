@@ -5,14 +5,7 @@
  */
 import * as zod from 'zod';
 
-export const ListImagesApiV2ImagesGet200 = zod.record(
-  zod.string(),
-  zod.unknown(),
-);
+export const ListImagesApiV2ImagesGet200 = zod.record(zod.string(), zod.unknown())
 
-export type ListImagesApiV2ImagesGet200 = zod.input<
-  typeof ListImagesApiV2ImagesGet200
->;
-export type ListImagesApiV2ImagesGet200Output = zod.output<
-  typeof ListImagesApiV2ImagesGet200
->;
+export type ListImagesApiV2ImagesGet200 = zod.input<typeof ListImagesApiV2ImagesGet200>;
+export type ListImagesApiV2ImagesGet200Output = zod.output<typeof ListImagesApiV2ImagesGet200>;

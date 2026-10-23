@@ -6,16 +6,12 @@
 import * as zod from 'zod';
 
 export const MiningAvailableLotResponse = zod.object({
-  lotId: zod.union([zod.string(), zod.null()]).optional(),
-  itemId: zod.string(),
-  quantity: zod.int(),
-  ttRemaining: zod.union([zod.int(), zod.number(), zod.null()]).optional(),
-  tierLevel: zod.union([zod.int(), zod.null()]).optional(),
+  "lotId": zod.union([zod.string(),zod.null()]).optional(),
+  "itemId": zod.string(),
+  "quantity": zod.int(),
+  "ttRemaining": zod.union([zod.int(),zod.number(),zod.null()]).optional(),
+  "tierLevel": zod.union([zod.int(),zod.null()]).optional()
 });
 
-export type MiningAvailableLotResponse = zod.input<
-  typeof MiningAvailableLotResponse
->;
-export type MiningAvailableLotResponseOutput = zod.output<
-  typeof MiningAvailableLotResponse
->;
+export type MiningAvailableLotResponse = zod.input<typeof MiningAvailableLotResponse>;
+export type MiningAvailableLotResponseOutput = zod.output<typeof MiningAvailableLotResponse>;

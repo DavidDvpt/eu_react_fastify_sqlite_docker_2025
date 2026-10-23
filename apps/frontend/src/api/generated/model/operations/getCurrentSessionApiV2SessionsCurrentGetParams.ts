@@ -6,5 +6,5 @@
 import type { SessionType } from '../sessionType.ts';
 
 export type GetCurrentSessionApiV2SessionsCurrentGetParams = {
-  type?: SessionType | null;
+type?: SessionType | null;
 };

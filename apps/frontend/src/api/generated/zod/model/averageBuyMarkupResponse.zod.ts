@@ -6,18 +6,10 @@
 import * as zod from 'zod';
 import { AverageBuyMarkupScopeResponse } from './averageBuyMarkupScopeResponse.zod.ts';
 
-export const AverageBuyMarkupResponse = zod
-  .object({
-    global: AverageBuyMarkupScopeResponse,
-    current: AverageBuyMarkupScopeResponse,
-  })
-  .describe(
-    '``global`` is every BUY transaction, ``current`` only the quantity still\nheld in open lots.  ``global`` is a Python keyword, hence the alias.',
-  );
+export const AverageBuyMarkupResponse = zod.object({
+  "global": AverageBuyMarkupScopeResponse,
+  "current": AverageBuyMarkupScopeResponse
+}).describe('``global`` is every BUY transaction, ``current`` only the quantity still\nheld in open lots.  ``global`` is a Python keyword, hence the alias.');
 
-export type AverageBuyMarkupResponse = zod.input<
-  typeof AverageBuyMarkupResponse
->;
-export type AverageBuyMarkupResponseOutput = zod.output<
-  typeof AverageBuyMarkupResponse
->;
+export type AverageBuyMarkupResponse = zod.input<typeof AverageBuyMarkupResponse>;
+export type AverageBuyMarkupResponseOutput = zod.output<typeof AverageBuyMarkupResponse>;

@@ -7,11 +7,11 @@ import * as zod from 'zod';
 
 export const miningResourceUpdateQuantityMin = 0;
 
+
+
 export const MiningResourceUpdate = zod.object({
-  quantity: zod.int().min(miningResourceUpdateQuantityMin),
+  "quantity": zod.int().min(miningResourceUpdateQuantityMin)
 });
 
 export type MiningResourceUpdate = zod.input<typeof MiningResourceUpdate>;
-export type MiningResourceUpdateOutput = zod.output<
-  typeof MiningResourceUpdate
->;
+export type MiningResourceUpdateOutput = zod.output<typeof MiningResourceUpdate>;

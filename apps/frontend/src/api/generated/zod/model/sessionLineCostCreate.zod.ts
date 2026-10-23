@@ -9,28 +9,14 @@ export const sessionLineCostCreateQuantityOneExclusiveMin = 0;
 
 export const sessionLineCostCreateDecayOneMin = 0;
 
-export const sessionLineCostCreateDecayTwoRegExp = new RegExp(
-  '^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$',
-);
+export const sessionLineCostCreateDecayTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+
 
 export const SessionLineCostCreate = zod.object({
-  lotId: zod.string(),
-  quantity: zod
-    .union([
-      zod.int().gt(sessionLineCostCreateQuantityOneExclusiveMin),
-      zod.null(),
-    ])
-    .optional(),
-  decay: zod
-    .union([
-      zod.number().min(sessionLineCostCreateDecayOneMin),
-      zod.string().regex(sessionLineCostCreateDecayTwoRegExp),
-      zod.null(),
-    ])
-    .optional(),
+  "lotId": zod.string(),
+  "quantity": zod.union([zod.int().gt(sessionLineCostCreateQuantityOneExclusiveMin),zod.null()]).optional(),
+  "decay": zod.union([zod.number().min(sessionLineCostCreateDecayOneMin),zod.string().regex(sessionLineCostCreateDecayTwoRegExp),zod.null()]).optional()
 });
 
 export type SessionLineCostCreate = zod.input<typeof SessionLineCostCreate>;
-export type SessionLineCostCreateOutput = zod.output<
-  typeof SessionLineCostCreate
->;
+export type SessionLineCostCreateOutput = zod.output<typeof SessionLineCostCreate>;

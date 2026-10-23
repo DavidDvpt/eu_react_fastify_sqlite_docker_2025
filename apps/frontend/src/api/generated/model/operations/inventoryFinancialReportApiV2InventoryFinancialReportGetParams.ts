@@ -5,5 +5,5 @@
  */
 
 export type InventoryFinancialReportApiV2InventoryFinancialReportGetParams = {
-  withLotId?: boolean | null;
+withLotId?: boolean | null;
 };

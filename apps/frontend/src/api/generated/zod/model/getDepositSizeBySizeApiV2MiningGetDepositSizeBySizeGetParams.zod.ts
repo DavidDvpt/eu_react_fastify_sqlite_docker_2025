@@ -5,16 +5,9 @@
  */
 import * as zod from 'zod';
 
-export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams =
-  zod.object({
-    size: zod.int(),
-  });
+export const GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams = zod.object({
+  "size": zod.int()
+})
 
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams =
-  zod.input<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams
-  >;
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParamsOutput =
-  zod.output<
-    typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams
-  >;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams = zod.input<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams>;
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParamsOutput = zod.output<typeof GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams>;

@@ -9,6 +9,7 @@ export type MiningClaimPatch = {
   quantity?: number | null;
   isHof?: boolean | null;
   isGlobal?: boolean | null;
+  depleted?: boolean | null;
   value?: number | string | null;
   depositSize?: number | null;
   latitude?: number | null;

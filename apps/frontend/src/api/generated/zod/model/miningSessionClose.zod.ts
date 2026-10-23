@@ -7,7 +7,7 @@ import * as zod from 'zod';
 import { MiningSessionLineUpdate } from './miningSessionLineUpdate.zod.ts';
 
 export const MiningSessionClose = zod.object({
-  lines: zod.union([zod.array(MiningSessionLineUpdate), zod.null()]).optional(),
+  "lines": zod.union([zod.array(MiningSessionLineUpdate),zod.null()]).optional()
 });
 
 export type MiningSessionClose = zod.input<typeof MiningSessionClose>;

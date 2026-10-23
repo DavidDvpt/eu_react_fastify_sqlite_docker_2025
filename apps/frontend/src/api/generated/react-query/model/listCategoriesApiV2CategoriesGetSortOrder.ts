@@ -4,9 +4,8 @@
  * Entropia Manager API
  */
 
-export type ListCategoriesApiV2CategoriesGetSortOrder =
-  | (typeof ListCategoriesApiV2CategoriesGetSortOrder)[keyof typeof ListCategoriesApiV2CategoriesGetSortOrder]
-  | null;
+export type ListCategoriesApiV2CategoriesGetSortOrder = typeof ListCategoriesApiV2CategoriesGetSortOrder[keyof typeof ListCategoriesApiV2CategoriesGetSortOrder] | null;
+
 
 export const ListCategoriesApiV2CategoriesGetSortOrder = {
   asc: 'asc',

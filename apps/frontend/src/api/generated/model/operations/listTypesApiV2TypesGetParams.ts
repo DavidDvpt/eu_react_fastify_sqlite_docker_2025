@@ -7,8 +7,8 @@ import type { ListTypesApiV2TypesGetSortKey } from '../listTypesApiV2TypesGetSor
 import type { ListTypesApiV2TypesGetSortOrder } from '../listTypesApiV2TypesGetSortOrder.ts';
 
 export type ListTypesApiV2TypesGetParams = {
-  isActive?: boolean | null;
-  categoryId?: string | null;
-  sortKey?: ListTypesApiV2TypesGetSortKey;
-  sortOrder?: ListTypesApiV2TypesGetSortOrder;
+isActive?: boolean | null;
+categoryId?: string | null;
+sortKey?: ListTypesApiV2TypesGetSortKey;
+sortOrder?: ListTypesApiV2TypesGetSortOrder;
 };

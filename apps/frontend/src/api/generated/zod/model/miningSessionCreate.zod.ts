@@ -12,17 +12,18 @@ export const miningSessionCreateSearchTypeMax = 3;
 
 export const miningSessionCreateAmmoQuantityInitialExclusiveMin = 0;
 
+
+
+
 export const MiningSessionCreate = zod.object({
-  clickCount: zod.int().gt(miningSessionCreateClickCountExclusiveMin),
-  searchType: zod.int().min(1).max(miningSessionCreateSearchTypeMax),
-  finderLotId: zod.string(),
-  ammoItemId: zod.string(),
-  ammoQuantityInitial: zod
-    .int()
-    .gt(miningSessionCreateAmmoQuantityInitialExclusiveMin),
-  amplifierLotIds: zod.array(zod.string()).optional(),
-  excavatorLotIds: zod.array(zod.string()).min(1),
-  enhancers: zod.array(MiningEnhancerCreate).optional(),
+  "clickCount": zod.int().gt(miningSessionCreateClickCountExclusiveMin),
+  "searchType": zod.int().min(1).max(miningSessionCreateSearchTypeMax),
+  "finderLotId": zod.string(),
+  "ammoItemId": zod.string(),
+  "ammoQuantityInitial": zod.int().gt(miningSessionCreateAmmoQuantityInitialExclusiveMin),
+  "amplifierLotIds": zod.array(zod.string()).optional(),
+  "excavatorLotIds": zod.array(zod.string()).min(1),
+  "enhancers": zod.array(MiningEnhancerCreate).optional()
 });
 
 export type MiningSessionCreate = zod.input<typeof MiningSessionCreate>;

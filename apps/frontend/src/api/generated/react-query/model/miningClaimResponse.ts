@@ -13,6 +13,7 @@ export interface MiningClaimResponse {
   quantity: number | null;
   isHof: boolean;
   isGlobal: boolean;
+  depleted: boolean;
   value: string | null;
   depositSize: number | null;
   latitude: number | null;

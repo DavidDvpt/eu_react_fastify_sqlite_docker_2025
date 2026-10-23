@@ -7,17 +7,13 @@ import * as zod from 'zod';
 import { MoneySummaryResponse } from './moneySummaryResponse.zod.ts';
 
 export const ItemFinancialReportResponse = zod.object({
-  in: zod.record(zod.string(), MoneySummaryResponse),
-  out: zod.record(zod.string(), MoneySummaryResponse),
-  totalIn: MoneySummaryResponse,
-  totalOut: MoneySummaryResponse,
-  inCount: zod.record(zod.string(), zod.int()),
-  outCount: zod.record(zod.string(), zod.int()),
+  "in": zod.record(zod.string(), MoneySummaryResponse),
+  "out": zod.record(zod.string(), MoneySummaryResponse),
+  "totalIn": MoneySummaryResponse,
+  "totalOut": MoneySummaryResponse,
+  "inCount": zod.record(zod.string(), zod.int()),
+  "outCount": zod.record(zod.string(), zod.int())
 });
 
-export type ItemFinancialReportResponse = zod.input<
-  typeof ItemFinancialReportResponse
->;
-export type ItemFinancialReportResponseOutput = zod.output<
-  typeof ItemFinancialReportResponse
->;
+export type ItemFinancialReportResponse = zod.input<typeof ItemFinancialReportResponse>;
+export type ItemFinancialReportResponseOutput = zod.output<typeof ItemFinancialReportResponse>;

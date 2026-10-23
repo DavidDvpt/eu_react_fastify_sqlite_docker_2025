@@ -4,7 +4,11 @@
  * Entropia Manager API
  */
 import axios from 'axios';
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import type {
+  AxiosInstance,
+  AxiosRequestConfig,
+  AxiosResponse
+} from 'axios';
 
 import type {
   AverageBuyMarkupResponse,
@@ -81,2018 +85,1813 @@ import type {
   TransactionStatusPatch,
   TypeCreate,
   TypePatch,
-  TypeResponse,
+  TypeResponse
 } from '../model';
 
-export const getEntropiaManagerAPI = (axiosInstance: AxiosInstance = axios) => {
-  /**
-   * @summary Signup
-   */
-  const signupApiV2AuthSignupPost = (
-    signUpBody: SignUpBody,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<SignupApiV2AuthSignupPost201>> => {
-    return axiosInstance.post(`/api/v2/auth/signup`, signUpBody, options);
-  };
-  const getSignupApiV2AuthSignupPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/signup`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Signin
-   */
-  const signinApiV2AuthSigninPost = (
-    signInBody: SignInBody,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MessageResponse>> => {
-    return axiosInstance.post(`/api/v2/auth/signin`, signInBody, options);
-  };
-  const getSigninApiV2AuthSigninPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/signin`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Logout
-   */
-  const logoutApiV2AuthLogoutPost = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MessageResponse>> => {
-    return axiosInstance.post(`/api/v2/auth/logout`, undefined, options);
-  };
-  const getLogoutApiV2AuthLogoutPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/logout`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Me
-   */
-  const meApiV2AuthMeGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MeResponse>> => {
-    return axiosInstance.get(`/api/v2/auth/me`, options);
-  };
-  const getMeApiV2AuthMeGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/me`,
-        baseURL: '',
-      });
-  };
+  export const getEntropiaManagerAPI = (axiosInstance: AxiosInstance = axios) => {
+/**
+ * @summary Signup
+ */
+const signupApiV2AuthSignupPost = (
+    signUpBody: SignUpBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SignupApiV2AuthSignupPost201>> => {
+    return axiosInstance.post(
+      `/api/v2/auth/signup`,
+      signUpBody,options
+    );
+  }
+const getSignupApiV2AuthSignupPostUrl = () => {
 
-  /**
-   * @summary In Game Username
-   */
-  const inGameUsernameApiV2AuthInGameUsernameGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<InGameUsernameResponse>> => {
-    return axiosInstance.get(`/api/v2/auth/in-game-username`, options);
-  };
-  const getInGameUsernameApiV2AuthInGameUsernameGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/in-game-username`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/signup`,
+    baseURL: '',
 
-  /**
-   * @summary Update In Game Username
-   */
-  const updateInGameUsernameApiV2AuthInGameUsernamePut = (
-    inGameUsernameUpdate: InGameUsernameUpdate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<InGameUsernameResponse>> => {
+
+  });
+}
+
+/**
+ * @summary Signin
+ */
+const signinApiV2AuthSigninPost = (
+    signInBody: SignInBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MessageResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/auth/signin`,
+      signInBody,options
+    );
+  }
+const getSigninApiV2AuthSigninPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/signin`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Logout
+ */
+const logoutApiV2AuthLogoutPost = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MessageResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/auth/logout`,
+      undefined,options
+    );
+  }
+const getLogoutApiV2AuthLogoutPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/logout`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Me
+ */
+const meApiV2AuthMeGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MeResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/auth/me`,options
+    );
+  }
+const getMeApiV2AuthMeGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/me`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary In Game Username
+ */
+const inGameUsernameApiV2AuthInGameUsernameGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<InGameUsernameResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/auth/in-game-username`,options
+    );
+  }
+const getInGameUsernameApiV2AuthInGameUsernameGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/in-game-username`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Update In Game Username
+ */
+const updateInGameUsernameApiV2AuthInGameUsernamePut = (
+    inGameUsernameUpdate: InGameUsernameUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<InGameUsernameResponse>> => {
     return axiosInstance.put(
       `/api/v2/auth/in-game-username`,
-      inGameUsernameUpdate,
-      options,
+      inGameUsernameUpdate,options
     );
-  };
-  const getUpdateInGameUsernameApiV2AuthInGameUsernamePutUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/auth/in-game-username`,
-        baseURL: '',
-      });
-  };
+  }
+const getUpdateInGameUsernameApiV2AuthInGameUsernamePutUrl = () => {
 
-  /**
-   * @summary List Categories
-   */
-  const listCategoriesApiV2CategoriesGet = (
-    params?: ListCategoriesApiV2CategoriesGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<CategoryResponse[]>> => {
-    return axiosInstance.get(`/api/v2/categories`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListCategoriesApiV2CategoriesGetUrl = (
-    params?: ListCategoriesApiV2CategoriesGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories`,
-        baseURL: '',
-        params,
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/auth/in-game-username`,
+    baseURL: '',
 
-  /**
-   * @summary Create Category
-   */
-  const createCategoryApiV2CategoriesPost = (
-    categoryCreate: CategoryCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.post(`/api/v2/categories`, categoryCreate, options);
-  };
-  const getCreateCategoryApiV2CategoriesPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Get Category
-   */
-  const getCategoryApiV2CategoriesIdGet = (
+  });
+}
+
+/**
+ * @summary List Categories
+ */
+const listCategoriesApiV2CategoriesGet = (
+    params?: ListCategoriesApiV2CategoriesGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<CategoryResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/categories`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListCategoriesApiV2CategoriesGetUrl = (params?: ListCategoriesApiV2CategoriesGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Create Category
+ */
+const createCategoryApiV2CategoriesPost = (
+    categoryCreate: CategoryCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/categories`,
+      categoryCreate,options
+    );
+  }
+const getCreateCategoryApiV2CategoriesPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Category
+ */
+const getCategoryApiV2CategoriesIdGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<CategoryResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/categories/${id}`,options
+    );
+  }
+const getGetCategoryApiV2CategoriesIdGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Category
+ */
+const patchCategoryApiV2CategoriesIdPatch = (
     id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<CategoryResponse>> => {
-    return axiosInstance.get(`/api/v2/categories/${id}`, options);
-  };
-  const getGetCategoryApiV2CategoriesIdGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories/${id}`,
-        baseURL: '',
-      });
-  };
-
-  /**
-   * @summary Patch Category
-   */
-  const patchCategoryApiV2CategoriesIdPatch = (
-    id: string,
-    categoryPatch: CategoryPatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
+    categoryPatch: CategoryPatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
     return axiosInstance.patch(
       `/api/v2/categories/${id}`,
-      categoryPatch,
-      options,
+      categoryPatch,options
     );
-  };
-  const getPatchCategoryApiV2CategoriesIdPatchUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories/${id}`,
-        baseURL: '',
-      });
-  };
+  }
+const getPatchCategoryApiV2CategoriesIdPatchUrl = (id: string,) => {
 
-  /**
-   * @summary Delete Category
-   */
-  const deleteCategoryApiV2CategoriesIdDelete = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Delete Category
+ */
+const deleteCategoryApiV2CategoriesIdDelete = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.delete(
+      `/api/v2/categories/${id}`,options
+    );
+  }
+const getDeleteCategoryApiV2CategoriesIdDeleteUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Category Types
+ */
+const getCategoryTypesApiV2CategoriesIdTypesGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TypeResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/categories/${id}/types`,options
+    );
+  }
+const getGetCategoryTypesApiV2CategoriesIdTypesGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/categories/${id}/types`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary List Types
+ */
+const listTypesApiV2TypesGet = (
+    params?: ListTypesApiV2TypesGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TypeResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/types`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListTypesApiV2TypesGetUrl = (params?: ListTypesApiV2TypesGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Create Type
+ */
+const createTypeApiV2TypesPost = (
+    typeCreate: TypeCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/types`,
+      typeCreate,options
+    );
+  }
+const getCreateTypeApiV2TypesPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Type
+ */
+const getTypeApiV2TypesIdGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TypeResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/types/${id}`,options
+    );
+  }
+const getGetTypeApiV2TypesIdGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Type
+ */
+const patchTypeApiV2TypesIdPatch = (
     id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.delete(`/api/v2/categories/${id}`, options);
-  };
-  const getDeleteCategoryApiV2CategoriesIdDeleteUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories/${id}`,
-        baseURL: '',
-      });
-  };
+    typePatch: TypePatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.patch(
+      `/api/v2/types/${id}`,
+      typePatch,options
+    );
+  }
+const getPatchTypeApiV2TypesIdPatchUrl = (id: string,) => {
 
-  /**
-   * @summary Get Category Types
-   */
-  const getCategoryTypesApiV2CategoriesIdTypesGet = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TypeResponse[]>> => {
-    return axiosInstance.get(`/api/v2/categories/${id}/types`, options);
-  };
-  const getGetCategoryTypesApiV2CategoriesIdTypesGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/categories/${id}/types`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types/${id}`,
+    baseURL: '',
 
-  /**
-   * @summary List Types
-   */
-  const listTypesApiV2TypesGet = (
-    params?: ListTypesApiV2TypesGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TypeResponse[]>> => {
-    return axiosInstance.get(`/api/v2/types`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListTypesApiV2TypesGetUrl = (
-    params?: ListTypesApiV2TypesGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types`,
-        baseURL: '',
-        params,
-      });
-  };
 
-  /**
-   * @summary Create Type
-   */
-  const createTypeApiV2TypesPost = (
-    typeCreate: TypeCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.post(`/api/v2/types`, typeCreate, options);
-  };
-  const getCreateTypeApiV2TypesPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types`,
-        baseURL: '',
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Get Type
-   */
-  const getTypeApiV2TypesIdGet = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TypeResponse>> => {
-    return axiosInstance.get(`/api/v2/types/${id}`, options);
-  };
-  const getGetTypeApiV2TypesIdGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types/${id}`,
-        baseURL: '',
-      });
-  };
+/**
+ * @summary Delete Category
+ */
+const deleteCategoryApiV2TypesIdDelete = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.delete(
+      `/api/v2/types/${id}`,options
+    );
+  }
+const getDeleteCategoryApiV2TypesIdDeleteUrl = (id: string,) => {
 
-  /**
-   * @summary Patch Type
-   */
-  const patchTypeApiV2TypesIdPatch = (
-    id: string,
-    typePatch: TypePatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.patch(`/api/v2/types/${id}`, typePatch, options);
-  };
-  const getPatchTypeApiV2TypesIdPatchUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types/${id}`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types/${id}`,
+    baseURL: '',
 
-  /**
-   * @summary Delete Category
-   */
-  const deleteCategoryApiV2TypesIdDelete = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.delete(`/api/v2/types/${id}`, options);
-  };
-  const getDeleteCategoryApiV2TypesIdDeleteUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types/${id}`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Get Type Items
-   */
-  const getTypeItemsApiV2TypesTypeRefItemsGet = (
-    typeRef: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<ItemResponse[]>> => {
-    return axiosInstance.get(`/api/v2/types/${typeRef}/items`, options);
-  };
-  const getGetTypeItemsApiV2TypesTypeRefItemsGetUrl = (typeRef: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types/${typeRef}/items`,
-        baseURL: '',
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Request Nexus Update
-   */
-  const requestNexusUpdateApiV2TypesIdNexusUpdatePost = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
+/**
+ * @summary Get Type Items
+ */
+const getTypeItemsApiV2TypesTypeRefItemsGet = (
+    typeRef: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ItemResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/types/${typeRef}/items`,options
+    );
+  }
+const getGetTypeItemsApiV2TypesTypeRefItemsGetUrl = (typeRef: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types/${typeRef}/items`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Request Nexus Update
+ */
+const requestNexusUpdateApiV2TypesIdNexusUpdatePost = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
     return axiosInstance.post(
       `/api/v2/types/${id}/nexus-update`,
-      undefined,
-      options,
+      undefined,options
     );
-  };
-  const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/types/${id}/nexus-update`,
-        baseURL: '',
-      });
-  };
+  }
+const getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl = (id: string,) => {
 
-  /**
-   * @summary List Items
-   */
-  const listItemsApiV2ItemsGet = (
-    params?: ListItemsApiV2ItemsGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<ItemResponse[]>> => {
-    return axiosInstance.get(`/api/v2/items`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListItemsApiV2ItemsGetUrl = (
-    params?: ListItemsApiV2ItemsGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items`,
-        baseURL: '',
-        params,
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/types/${id}/nexus-update`,
+    baseURL: '',
 
-  /**
-   * @summary Create Item
-   */
-  const createItemApiV2ItemsPost = (
-    itemCreate: ItemCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.post(`/api/v2/items`, itemCreate, options);
-  };
-  const getCreateItemApiV2ItemsPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items`,
-        baseURL: '',
-      });
-  };
 
-  /**
-   * @summary Get Item Stock
-   */
-  const getItemStockApiV2ItemsIdStockGet = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<StockLineResponse[]>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/stock`, options);
-  };
-  const getGetItemStockApiV2ItemsIdStockGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/stock`,
-        baseURL: '',
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Get Refinage Origin Stock
-   */
-  const getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet = (
-    id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<RefinageOriginStockResponse[]>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/refinage/origin-stock`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl = (
-    id: string,
-    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/refinage/origin-stock`,
-        baseURL: '',
-        params,
-      });
-  };
+/**
+ * @summary List Items
+ */
+const listItemsApiV2ItemsGet = (
+    params?: ListItemsApiV2ItemsGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ItemResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/items`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListItemsApiV2ItemsGetUrl = (params?: ListItemsApiV2ItemsGetParams,) => {
 
-  /**
-   * @summary Get Item Lots
-   */
-  const getItemLotsApiV2ItemsIdLotsGet = (
-    id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<LotResponse[]>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/lots`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetItemLotsApiV2ItemsIdLotsGetUrl = (
-    id: string,
-    params?: GetItemLotsApiV2ItemsIdLotsGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/lots`,
-        baseURL: '',
-        params,
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items`,
+    baseURL: '',
+    params,
 
-  /**
-   * @summary Get Item Transactions
-   */
-  const getItemTransactionsApiV2ItemsIdTransactionsGet = (
-    id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TransactionEntryResponse[]>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/transactions`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl = (
-    id: string,
-    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/transactions`,
-        baseURL: '',
-        params,
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Get Item Financial Report
-   */
-  const getItemFinancialReportApiV2ItemsIdFinancialReportGet = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<ItemFinancialReportEnvelope>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/financial-report`, options);
-  };
-  const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl = (
-    id: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/financial-report`,
-        baseURL: '',
-      });
-  };
+/**
+ * @summary Create Item
+ */
+const createItemApiV2ItemsPost = (
+    itemCreate: ItemCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/items`,
+      itemCreate,options
+    );
+  }
+const getCreateItemApiV2ItemsPostUrl = () => {
 
-  /**
-   * @summary Get Item Average Buy Markup
-   */
-  const getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Item Stock
+ */
+const getItemStockApiV2ItemsIdStockGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<StockLineResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/stock`,options
+    );
+  }
+const getGetItemStockApiV2ItemsIdStockGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/stock`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Refinage Origin Stock
+ */
+const getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet = (
     id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<AverageBuyMarkupResponse>> => {
-    return axiosInstance.get(`/api/v2/items/${id}/average-buy-markup`, options);
-  };
-  const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl = (
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RefinageOriginStockResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/refinage/origin-stock`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl = (id: string,
+    params?: GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/refinage/origin-stock`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Item Lots
+ */
+const getItemLotsApiV2ItemsIdLotsGet = (
     id: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}/average-buy-markup`,
-        baseURL: '',
-      });
-  };
+    params?: GetItemLotsApiV2ItemsIdLotsGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LotResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/lots`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetItemLotsApiV2ItemsIdLotsGetUrl = (id: string,
+    params?: GetItemLotsApiV2ItemsIdLotsGetParams,) => {
 
-  /**
-   * @summary Get Item
-   */
-  const getItemApiV2ItemsIdGet = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/lots`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Item Transactions
+ */
+const getItemTransactionsApiV2ItemsIdTransactionsGet = (
     id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<ItemResponse>> => {
-    return axiosInstance.get(`/api/v2/items/${id}`, options);
-  };
-  const getGetItemApiV2ItemsIdGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}`,
-        baseURL: '',
-      });
-  };
+    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TransactionEntryResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/transactions`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl = (id: string,
+    params?: GetItemTransactionsApiV2ItemsIdTransactionsGetParams,) => {
 
-  /**
-   * @summary Patch Item
-   */
-  const patchItemApiV2ItemsIdPatch = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/transactions`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Item Financial Report
+ */
+const getItemFinancialReportApiV2ItemsIdFinancialReportGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ItemFinancialReportEnvelope>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/financial-report`,options
+    );
+  }
+const getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/financial-report`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Item Average Buy Markup
+ */
+const getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<AverageBuyMarkupResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}/average-buy-markup`,options
+    );
+  }
+const getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}/average-buy-markup`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Item
+ */
+const getItemApiV2ItemsIdGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ItemResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/items/${id}`,options
+    );
+  }
+const getGetItemApiV2ItemsIdGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Item
+ */
+const patchItemApiV2ItemsIdPatch = (
     id: string,
-    itemPatch: ItemPatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.patch(`/api/v2/items/${id}`, itemPatch, options);
-  };
-  const getPatchItemApiV2ItemsIdPatchUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}`,
-        baseURL: '',
-      });
-  };
+    itemPatch: ItemPatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.patch(
+      `/api/v2/items/${id}`,
+      itemPatch,options
+    );
+  }
+const getPatchItemApiV2ItemsIdPatchUrl = (id: string,) => {
 
-  /**
-   * @summary Patch Item
-   */
-  const patchItemApiV2ItemsIdPut = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Item
+ */
+const patchItemApiV2ItemsIdPut = (
     id: string,
-    itemPatch: ItemPatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.put(`/api/v2/items/${id}`, itemPatch, options);
-  };
-  const getPatchItemApiV2ItemsIdPutUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}`,
-        baseURL: '',
-      });
-  };
+    itemPatch: ItemPatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.put(
+      `/api/v2/items/${id}`,
+      itemPatch,options
+    );
+  }
+const getPatchItemApiV2ItemsIdPutUrl = (id: string,) => {
 
-  /**
-   * @summary Delete Item
-   */
-  const deleteItemApiV2ItemsIdDelete = (
-    id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.delete(`/api/v2/items/${id}`, options);
-  };
-  const getDeleteItemApiV2ItemsIdDeleteUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/items/${id}`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}`,
+    baseURL: '',
 
-  /**
-   * @summary List Inventory Lots
-   */
-  const listInventoryLotsApiV2InventoryLotsGet = (
-    params?: ListInventoryLotsApiV2InventoryLotsGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<LotResponse[]>> => {
-    return axiosInstance.get(`/api/v2/inventory/lots`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListInventoryLotsApiV2InventoryLotsGetUrl = (
-    params?: ListInventoryLotsApiV2InventoryLotsGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/lots`,
-        baseURL: '',
-        params,
-      });
-  };
 
-  /**
-   * @summary List Lot Origins
-   */
-  const listLotOriginsApiV2InventoryLotsOriginGet = (
-    params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<LotOriginResponse[]>> => {
-    return axiosInstance.get(`/api/v2/inventory/lots/origin`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListLotOriginsApiV2InventoryLotsOriginGetUrl = (
-    params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/lots/origin`,
-        baseURL: '',
-        params,
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Get Lot Origin
-   */
-  const getLotOriginApiV2InventoryLotsLotIdOriginGet = (
+/**
+ * @summary Delete Item
+ */
+const deleteItemApiV2ItemsIdDelete = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.delete(
+      `/api/v2/items/${id}`,options
+    );
+  }
+const getDeleteItemApiV2ItemsIdDeleteUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/items/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary List Inventory Lots
+ */
+const listInventoryLotsApiV2InventoryLotsGet = (
+    params?: ListInventoryLotsApiV2InventoryLotsGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LotResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/inventory/lots`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListInventoryLotsApiV2InventoryLotsGetUrl = (params?: ListInventoryLotsApiV2InventoryLotsGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/lots`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary List Lot Origins
+ */
+const listLotOriginsApiV2InventoryLotsOriginGet = (
+    params?: ListLotOriginsApiV2InventoryLotsOriginGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LotOriginResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/inventory/lots/origin`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListLotOriginsApiV2InventoryLotsOriginGetUrl = (params?: ListLotOriginsApiV2InventoryLotsOriginGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/lots/origin`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Lot Origin
+ */
+const getLotOriginApiV2InventoryLotsLotIdOriginGet = (
     lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<LotOriginResponse>> => {
-    return axiosInstance.get(`/api/v2/inventory/lots/${lotId}/origin`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl = (
-    lotId: string,
-    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/lots/${lotId}/origin`,
-        baseURL: '',
-        params,
-      });
-  };
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LotOriginResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/inventory/lots/${lotId}/origin`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl = (lotId: string,
+    params?: GetLotOriginApiV2InventoryLotsLotIdOriginGetParams,) => {
 
-  /**
-   * @summary Update Inventory Lot
-   */
-  const updateInventoryLotApiV2InventoryLotsLotIdPatch = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/lots/${lotId}/origin`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Update Inventory Lot
+ */
+const updateInventoryLotApiV2InventoryLotsLotIdPatch = (
     lotId: string,
-    lotUpdate: LotUpdate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<LotUpdateResponse>> => {
+    lotUpdate: LotUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<LotUpdateResponse>> => {
     return axiosInstance.patch(
       `/api/v2/inventory/lots/${lotId}`,
-      lotUpdate,
-      options,
+      lotUpdate,options
     );
-  };
-  const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchUrl = (
-    lotId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/lots/${lotId}`,
-        baseURL: '',
-      });
-  };
+  }
+const getUpdateInventoryLotApiV2InventoryLotsLotIdPatchUrl = (lotId: string,) => {
 
-  /**
-   * @summary List Inventory Stock
-   */
-  const listInventoryStockApiV2InventoryStockGet = (
-    params?: ListInventoryStockApiV2InventoryStockGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<StockLineResponse[]>> => {
-    return axiosInstance.get(`/api/v2/inventory/stock`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListInventoryStockApiV2InventoryStockGetUrl = (
-    params?: ListInventoryStockApiV2InventoryStockGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/stock`,
-        baseURL: '',
-        params,
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/lots/${lotId}`,
+    baseURL: '',
 
-  /**
-   * @summary Inventory Financial Report
-   */
-  const inventoryFinancialReportApiV2InventoryFinancialReportGet = (
-    params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<InventoryFinancialReportResponse>> => {
-    return axiosInstance.get(`/api/v2/inventory/financial-report`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl = (
-    params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/inventory/financial-report`,
-        baseURL: '',
-        params,
-      });
-  };
 
-  /**
-   * Return the image catalog page requested by the frontend.
-   * @summary List Images
-   */
-  const listImagesApiV2ImagesGet = (
-    params?: ListImagesApiV2ImagesGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<ListImagesApiV2ImagesGet200>> => {
-    return axiosInstance.get(`/api/v2/images`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListImagesApiV2ImagesGetUrl = (
-    params?: ListImagesApiV2ImagesGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/images`,
-        baseURL: '',
-        params,
-      });
-  };
+  });
+}
 
-  /**
-   * @summary List Transactions
-   */
-  const listTransactionsApiV2TransactionsGet = (
-    params?: ListTransactionsApiV2TransactionsGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TransactionEntryResponse[]>> => {
-    return axiosInstance.get(`/api/v2/transactions`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListTransactionsApiV2TransactionsGetUrl = (
-    params?: ListTransactionsApiV2TransactionsGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions`,
-        baseURL: '',
-        params,
-      });
-  };
+/**
+ * @summary List Inventory Stock
+ */
+const listInventoryStockApiV2InventoryStockGet = (
+    params?: ListInventoryStockApiV2InventoryStockGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<StockLineResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/inventory/stock`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListInventoryStockApiV2InventoryStockGetUrl = (params?: ListInventoryStockApiV2InventoryStockGetParams,) => {
 
-  /**
-   * @summary Create Transaction
-   */
-  const createTransactionApiV2TransactionsPost = (
-    transactionBody: TransactionBody,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
-    return axiosInstance.post(`/api/v2/transactions`, transactionBody, options);
-  };
-  const getCreateTransactionApiV2TransactionsPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/stock`,
+    baseURL: '',
+    params,
 
-  /**
-   * @summary List Running
-   */
-  const listRunningApiV2TransactionsRunningGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TransactionResponse[]>> => {
-    return axiosInstance.get(`/api/v2/transactions/running`, options);
-  };
-  const getListRunningApiV2TransactionsRunningGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions/running`,
-        baseURL: '',
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Get Transaction
-   */
-  const getTransactionApiV2TransactionsIdGet = (
+/**
+ * @summary Inventory Financial Report
+ */
+const inventoryFinancialReportApiV2InventoryFinancialReportGet = (
+    params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<InventoryFinancialReportResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/inventory/financial-report`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl = (params?: InventoryFinancialReportApiV2InventoryFinancialReportGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/inventory/financial-report`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * Return the image catalog page requested by the frontend.
+ * @summary List Images
+ */
+const listImagesApiV2ImagesGet = (
+    params?: ListImagesApiV2ImagesGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<ListImagesApiV2ImagesGet200>> => {
+    return axiosInstance.get(
+      `/api/v2/images`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListImagesApiV2ImagesGetUrl = (params?: ListImagesApiV2ImagesGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/images`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary List Transactions
+ */
+const listTransactionsApiV2TransactionsGet = (
+    params?: ListTransactionsApiV2TransactionsGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TransactionEntryResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/transactions`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListTransactionsApiV2TransactionsGetUrl = (params?: ListTransactionsApiV2TransactionsGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Create Transaction
+ */
+const createTransactionApiV2TransactionsPost = (
+    transactionBody: TransactionBody, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/transactions`,
+      transactionBody,options
+    );
+  }
+const getCreateTransactionApiV2TransactionsPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary List Running
+ */
+const listRunningApiV2TransactionsRunningGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TransactionResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/transactions/running`,options
+    );
+  }
+const getListRunningApiV2TransactionsRunningGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions/running`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Transaction
+ */
+const getTransactionApiV2TransactionsIdGet = (
+    id: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<TransactionResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/transactions/${id}`,options
+    );
+  }
+const getGetTransactionApiV2TransactionsIdGetUrl = (id: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions/${id}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Status
+ */
+const patchStatusApiV2TransactionsIdStatusPatch = (
     id: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<TransactionResponse>> => {
-    return axiosInstance.get(`/api/v2/transactions/${id}`, options);
-  };
-  const getGetTransactionApiV2TransactionsIdGetUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions/${id}`,
-        baseURL: '',
-      });
-  };
-
-  /**
-   * @summary Patch Status
-   */
-  const patchStatusApiV2TransactionsIdStatusPatch = (
-    id: string,
-    transactionStatusPatch: TransactionStatusPatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<void>> => {
+    transactionStatusPatch: TransactionStatusPatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
     return axiosInstance.patch(
       `/api/v2/transactions/${id}/status`,
-      transactionStatusPatch,
-      options,
+      transactionStatusPatch,options
     );
-  };
-  const getPatchStatusApiV2TransactionsIdStatusPatchUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions/${id}/status`,
-        baseURL: '',
-      });
-  };
+  }
+const getPatchStatusApiV2TransactionsIdStatusPatchUrl = (id: string,) => {
 
-  /**
-   * Legacy ``PATCH /:id/cancel`` sent the raw string ``"CANCELED"`` as the body.
-   * @summary Patch Cancel
-   */
-  const patchCancelApiV2TransactionsIdCancelPatch = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions/${id}/status`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * Legacy ``PATCH /:id/cancel`` sent the raw string ``"CANCELED"`` as the body.
+ * @summary Patch Cancel
+ */
+const patchCancelApiV2TransactionsIdCancelPatch = (
     id: string,
-    patchCancelApiV2TransactionsIdCancelPatchBody: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<void>> => {
+    patchCancelApiV2TransactionsIdCancelPatchBody: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<void>> => {
     return axiosInstance.patch(
       `/api/v2/transactions/${id}/cancel`,
-      patchCancelApiV2TransactionsIdCancelPatchBody,
-      options,
+      patchCancelApiV2TransactionsIdCancelPatchBody,options
     );
-  };
-  const getPatchCancelApiV2TransactionsIdCancelPatchUrl = (id: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/transactions/${id}/cancel`,
-        baseURL: '',
-      });
-  };
+  }
+const getPatchCancelApiV2TransactionsIdCancelPatchUrl = (id: string,) => {
 
-  /**
-   * @summary Get Results By Origin
-   */
-  const getResultsByOriginApiV2RefinageRecipeOriginItemIdGet = (
-    itemId: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<string[]>> => {
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/transactions/${id}/cancel`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Results By Origin
+ */
+const getResultsByOriginApiV2RefinageRecipeOriginItemIdGet = (
+    itemId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<string[]>> => {
     return axiosInstance.get(
-      `/api/v2/refinage/recipe/origin/${itemId}`,
-      options,
+      `/api/v2/refinage/recipe/origin/${itemId}`,options
     );
-  };
-  const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl = (
-    itemId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/refinage/recipe/origin/${itemId}`,
-        baseURL: '',
-      });
-  };
+  }
+const getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl = (itemId: string,) => {
 
-  /**
-   * @summary Get Recipe By Result
-   */
-  const getRecipeByResultApiV2RefinageRecipeResultItemIdGet = (
-    itemId: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<RefinageRecipeResponse[]>> => {
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/refinage/recipe/origin/${itemId}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Recipe By Result
+ */
+const getRecipeByResultApiV2RefinageRecipeResultItemIdGet = (
+    itemId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RefinageRecipeResponse[]>> => {
     return axiosInstance.get(
-      `/api/v2/refinage/recipe/result/${itemId}`,
-      options,
+      `/api/v2/refinage/recipe/result/${itemId}`,options
     );
-  };
-  const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl = (
-    itemId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/refinage/recipe/result/${itemId}`,
-        baseURL: '',
-      });
-  };
+  }
+const getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl = (itemId: string,) => {
 
-  /**
-   * @summary Get Mining Sessions
-   */
-  const getMiningSessionsApiV2SessionsMiningGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningSessionHistoryResponse[]>> => {
-    return axiosInstance.get(`/api/v2/sessions/mining`, options);
-  };
-  const getGetMiningSessionsApiV2SessionsMiningGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/mining`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/refinage/recipe/result/${itemId}`,
+    baseURL: '',
 
-  /**
-   * @summary Create Mining Session
-   */
-  const createMiningSessionApiV2SessionsMiningPost = (
-    miningSessionCreate: MiningSessionCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<SessionResponse>> => {
+
+  });
+}
+
+/**
+ * @summary Get Mining Sessions
+ */
+const getMiningSessionsApiV2SessionsMiningGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningSessionHistoryResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/sessions/mining`,options
+    );
+  }
+const getGetMiningSessionsApiV2SessionsMiningGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Create Mining Session
+ */
+const createMiningSessionApiV2SessionsMiningPost = (
+    miningSessionCreate: MiningSessionCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionResponse>> => {
     return axiosInstance.post(
       `/api/v2/sessions/mining`,
-      miningSessionCreate,
-      options,
+      miningSessionCreate,options
     );
-  };
-  const getCreateMiningSessionApiV2SessionsMiningPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/mining`,
-        baseURL: '',
-      });
-  };
+  }
+const getCreateMiningSessionApiV2SessionsMiningPostUrl = () => {
 
-  /**
-   * @summary Get Mining Session Detail
-   */
-  const getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet = (
-    sessionId: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningCurrentSessionResponse>> => {
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Mining Session Detail
+ */
+const getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet = (
+    sessionId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningCurrentSessionResponse>> => {
     return axiosInstance.get(
-      `/api/v2/sessions/mining/${sessionId}/detail`,
-      options,
+      `/api/v2/sessions/mining/${sessionId}/detail`,options
     );
-  };
-  const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetUrl = (
-    sessionId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/mining/${sessionId}/detail`,
-        baseURL: '',
-      });
-  };
+  }
+const getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetUrl = (sessionId: string,) => {
 
-  /**
-   * @summary Get Available Mining Inventory
-   */
-  const getAvailableMiningInventoryApiV2SessionsMiningAvailableGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningAvailableResponse>> => {
-    return axiosInstance.get(`/api/v2/sessions/mining/available`, options);
-  };
-  const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl =
-    () => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/available`,
-          baseURL: '',
-        });
-    };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/detail`,
+    baseURL: '',
 
-  /**
-   * @summary Get Mining Loot List
-   */
-  const getMiningLootListApiV2SessionsMiningLootlistGet = (
-    params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<string[]>> => {
-    return axiosInstance.get(`/api/v2/sessions/mining/lootlist`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetMiningLootListApiV2SessionsMiningLootlistGetUrl = (
-    params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/mining/lootlist`,
-        baseURL: '',
-        params,
-      });
-  };
 
-  /**
-   * @summary Get Current Session
-   */
-  const getCurrentSessionApiV2SessionsCurrentGet = (
-    params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<
-    AxiosResponse<MiningCurrentSessionResponse | SessionResponse | null>
-  > => {
-    return axiosInstance.get(`/api/v2/sessions/current`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetCurrentSessionApiV2SessionsCurrentGetUrl = (
-    params?: GetCurrentSessionApiV2SessionsCurrentGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/current`,
-        baseURL: '',
-        params,
-      });
-  };
+  });
+}
 
-  /**
-   * @summary Create Session
-   */
-  const createSessionApiV2SessionsPost = (
-    sessionCreate: SessionCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<SessionResponse>> => {
-    return axiosInstance.post(`/api/v2/sessions`, sessionCreate, options);
-  };
-  const getCreateSessionApiV2SessionsPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions`,
-        baseURL: '',
-      });
-  };
+/**
+ * @summary Get Available Mining Inventory
+ */
+const getAvailableMiningInventoryApiV2SessionsMiningAvailableGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningAvailableResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/sessions/mining/available`,options
+    );
+  }
+const getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl = () => {
 
-  /**
-   * @summary Create Refining Session
-   */
-  const createRefiningSessionApiV2SessionsRefinagePost = (
-    refiningSessionCreate: RefiningSessionCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<RefiningSessionResponse>> => {
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/available`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Get Mining Loot List
+ */
+const getMiningLootListApiV2SessionsMiningLootlistGet = (
+    params: GetMiningLootListApiV2SessionsMiningLootlistGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<string[]>> => {
+    return axiosInstance.get(
+      `/api/v2/sessions/mining/lootlist`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetMiningLootListApiV2SessionsMiningLootlistGetUrl = (params: GetMiningLootListApiV2SessionsMiningLootlistGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/lootlist`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Current Session
+ */
+const getCurrentSessionApiV2SessionsCurrentGet = (
+    params?: GetCurrentSessionApiV2SessionsCurrentGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningCurrentSessionResponse | SessionResponse | null>> => {
+    return axiosInstance.get(
+      `/api/v2/sessions/current`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetCurrentSessionApiV2SessionsCurrentGetUrl = (params?: GetCurrentSessionApiV2SessionsCurrentGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/current`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Create Session
+ */
+const createSessionApiV2SessionsPost = (
+    sessionCreate: SessionCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions`,
+      sessionCreate,options
+    );
+  }
+const getCreateSessionApiV2SessionsPostUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Create Refining Session
+ */
+const createRefiningSessionApiV2SessionsRefinagePost = (
+    refiningSessionCreate: RefiningSessionCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<RefiningSessionResponse>> => {
     return axiosInstance.post(
       `/api/v2/sessions/refinage`,
-      refiningSessionCreate,
-      options,
+      refiningSessionCreate,options
     );
-  };
-  const getCreateRefiningSessionApiV2SessionsRefinagePostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/refinage`,
-        baseURL: '',
-      });
-  };
+  }
+const getCreateRefiningSessionApiV2SessionsRefinagePostUrl = () => {
 
-  /**
-   * @summary Prevalidate Mining Session
-   */
-  const prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = (
-    miningSessionPrevalidationCreate: MiningSessionPrevalidationCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningPrevalidationResponse>> => {
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/refinage`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Prevalidate Mining Session
+ */
+const prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost = (
+    miningSessionPrevalidationCreate: MiningSessionPrevalidationCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningPrevalidationResponse>> => {
     return axiosInstance.post(
       `/api/v2/sessions/mining/prevalidate`,
-      miningSessionPrevalidationCreate,
-      options,
+      miningSessionPrevalidationCreate,options
     );
-  };
-  const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl =
-    () => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/prevalidate`,
-          baseURL: '',
-        });
-    };
+  }
+const getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl = () => {
 
-  /**
-   * @summary Create Mining Resource Line
-   */
-  const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost =
-    (
-      sessionId: string,
-      miningResourceCreate: MiningResourceCreate,
-      options?: AxiosRequestConfig,
-    ): Promise<AxiosResponse<SessionLineResponse>> => {
-      return axiosInstance.post(
-        `/api/v2/sessions/mining/${sessionId}/resource-lines`,
-        miningResourceCreate,
-        options,
-      );
-    };
-  const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl =
-    (sessionId: string) => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/${sessionId}/resource-lines`,
-          baseURL: '',
-        });
-    };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/prevalidate`,
+    baseURL: '',
 
-  /**
-   * @summary Update Mining Resource Line
-   */
-  const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut =
-    (
-      sessionId: string,
-      lineId: string,
-      miningResourceUpdate: MiningResourceUpdate,
-      options?: AxiosRequestConfig,
-    ): Promise<AxiosResponse<SessionLineResponse>> => {
-      return axiosInstance.put(
-        `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
-        miningResourceUpdate,
-        options,
-      );
-    };
-  const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl =
-    (sessionId: string, lineId: string) => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
-          baseURL: '',
-        });
-    };
 
-  /**
-   * @summary Finalize Mining Resource Line
-   */
-  const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost =
-    (
-      sessionId: string,
-      lineId: string,
-      options?: AxiosRequestConfig,
-    ): Promise<AxiosResponse<SessionLineResponse>> => {
-      return axiosInstance.post(
-        `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
-        undefined,
-        options,
-      );
-    };
-  const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl =
-    (sessionId: string, lineId: string) => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
-          baseURL: '',
-        });
-    };
+  });
+}
 
-  /**
-   * @summary Consume Mining Cost Line
-   */
-  const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost =
-    (
-      sessionId: string,
-      lineId: string,
-      options?: AxiosRequestConfig,
-    ): Promise<AxiosResponse<MiningCostLineResponse>> => {
-      return axiosInstance.post(
-        `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
-        undefined,
-        options,
-      );
-    };
-  const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl =
-    (sessionId: string, lineId: string) => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
-          baseURL: '',
-        });
-    };
+/**
+ * @summary Create Mining Resource Line
+ */
+const createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost = (
+    sessionId: string,
+    miningResourceCreate: MiningResourceCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines`,
+      miningResourceCreate,options
+    );
+  }
+const getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl = (sessionId: string,) => {
 
-  /**
-   * @summary Update Mining Cost Line
-   */
-  const updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Update Mining Resource Line
+ */
+const updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut = (
     sessionId: string,
     lineId: string,
-    miningCostLineUpdate: MiningCostLineUpdate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningCostLineResponse>> => {
+    miningResourceUpdate: MiningResourceUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.put(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
+      miningResourceUpdate,options
+    );
+  }
+const getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Finalize Mining Resource Line
+ */
+const finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost = (
+    sessionId: string,
+    lineId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
+      undefined,options
+    );
+  }
+const getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/resource-lines/${lineId}/finalize`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Consume Mining Cost Line
+ */
+const consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost = (
+    sessionId: string,
+    lineId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningCostLineResponse>> => {
+    return axiosInstance.post(
+      `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
+      undefined,options
+    );
+  }
+const getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl = (sessionId: string,
+    lineId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}/consume`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Update Mining Cost Line
+ */
+const updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut = (
+    sessionId: string,
+    lineId: string,
+    miningCostLineUpdate: MiningCostLineUpdate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningCostLineResponse>> => {
     return axiosInstance.put(
       `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}`,
-      miningCostLineUpdate,
-      options,
+      miningCostLineUpdate,options
     );
-  };
-  const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutUrl =
-    (sessionId: string, lineId: string) => {
-      return axiosInstance
-        .create({
-          baseURL: '',
-          params: null,
-        })
-        .getUri({
-          url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}`,
-          baseURL: '',
-        });
-    };
+  }
+const getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutUrl = (sessionId: string,
+    lineId: string,) => {
 
-  /**
-   * @summary Close Session
-   */
-  const closeSessionApiV2SessionsSessionIdPatch = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/mining/${sessionId}/cost-lines/${lineId}`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Close Session
+ */
+const closeSessionApiV2SessionsSessionIdPatch = (
     sessionId: string,
-    miningSessionCloseNull?: MiningSessionClose | null,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<SessionResponse>> => {
+    miningSessionCloseNull?: MiningSessionClose | null, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<SessionResponse>> => {
     return axiosInstance.patch(
       `/api/v2/sessions/${sessionId}`,
-      miningSessionCloseNull,
-      options,
+      miningSessionCloseNull,options
     );
-  };
-  const getCloseSessionApiV2SessionsSessionIdPatchUrl = (sessionId: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/sessions/${sessionId}`,
-        baseURL: '',
-      });
-  };
+  }
+const getCloseSessionApiV2SessionsSessionIdPatchUrl = (sessionId: string,) => {
 
-  /**
-   * @summary List Claims
-   */
-  const listClaimsApiV2MiningSessionIdClaimsGet = (
-    sessionId: string,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningClaimsResponse>> => {
-    return axiosInstance.get(`/api/v2/mining/${sessionId}/claims`, options);
-  };
-  const getListClaimsApiV2MiningSessionIdClaimsGetUrl = (sessionId: string) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/${sessionId}/claims`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/sessions/${sessionId}`,
+    baseURL: '',
 
-  /**
-   * @summary Create Claim
-   */
-  const createClaimApiV2MiningSessionIdClaimsPost = (
+
+  });
+}
+
+/**
+ * @summary List Claims
+ */
+const listClaimsApiV2MiningSessionIdClaimsGet = (
+    sessionId: string, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningClaimsResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/mining/${sessionId}/claims`,options
+    );
+  }
+const getListClaimsApiV2MiningSessionIdClaimsGetUrl = (sessionId: string,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/${sessionId}/claims`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Create Claim
+ */
+const createClaimApiV2MiningSessionIdClaimsPost = (
     sessionId: string,
-    miningClaimCreate: MiningClaimCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningClaimResponse>> => {
+    miningClaimCreate: MiningClaimCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningClaimResponse>> => {
     return axiosInstance.post(
       `/api/v2/mining/${sessionId}/claims`,
-      miningClaimCreate,
-      options,
+      miningClaimCreate,options
     );
-  };
-  const getCreateClaimApiV2MiningSessionIdClaimsPostUrl = (
-    sessionId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/${sessionId}/claims`,
-        baseURL: '',
-      });
-  };
+  }
+const getCreateClaimApiV2MiningSessionIdClaimsPostUrl = (sessionId: string,) => {
 
-  /**
-   * @summary Patch Claim
-   */
-  const patchClaimApiV2MiningSessionIdClaimsClaimIdPatch = (
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/${sessionId}/claims`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary Patch Claim
+ */
+const patchClaimApiV2MiningSessionIdClaimsClaimIdPatch = (
     sessionId: string,
     claimId: string,
-    miningClaimPatch: MiningClaimPatch,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningClaimResponse>> => {
+    miningClaimPatch: MiningClaimPatch, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningClaimResponse>> => {
     return axiosInstance.patch(
       `/api/v2/mining/${sessionId}/claims/${claimId}`,
-      miningClaimPatch,
-      options,
+      miningClaimPatch,options
     );
-  };
-  const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchUrl = (
-    sessionId: string,
-    claimId: string,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/${sessionId}/claims/${claimId}`,
-        baseURL: '',
-      });
-  };
+  }
+const getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchUrl = (sessionId: string,
+    claimId: string,) => {
 
-  /**
-   * @summary List Deposit Sizes
-   */
-  const listDepositSizesApiV2MiningDepositSizesGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningDepositSizeResponse[]>> => {
-    return axiosInstance.get(`/api/v2/mining/deposit-sizes`, options);
-  };
-  const getListDepositSizesApiV2MiningDepositSizesGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/deposit-sizes`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/${sessionId}/claims/${claimId}`,
+    baseURL: '',
 
-  /**
-   * @summary Get Deposit Size
-   */
-  const getDepositSizeApiV2MiningGetDepositSizeGet = (
-    params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningDepositSizeResponse>> => {
-    return axiosInstance.get(`/api/v2/mining/get-deposit-size`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetDepositSizeApiV2MiningGetDepositSizeGetUrl = (
-    params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/get-deposit-size`,
-        baseURL: '',
-        params,
-      });
-  };
 
-  /**
-   * @summary Get Deposit Size By Size
-   */
-  const getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet = (
-    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<MiningDepositSizeResponse>> => {
-    return axiosInstance.get(`/api/v2/mining/get-deposit-size-by-size`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetUrl = (
-    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/mining/get-deposit-size-by-size`,
-        baseURL: '',
-        params,
-      });
-  };
+  });
+}
 
-  /**
-   * @summary List Planets
-   */
-  const listPlanetsApiV2PlanetsGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<PlanetResponse[]>> => {
-    return axiosInstance.get(`/api/v2/planets`, options);
-  };
-  const getListPlanetsApiV2PlanetsGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/planets`,
-        baseURL: '',
-      });
-  };
+/**
+ * @summary List Deposit Sizes
+ */
+const listDepositSizesApiV2MiningDepositSizesGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningDepositSizeResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/mining/deposit-sizes`,options
+    );
+  }
+const getListDepositSizesApiV2MiningDepositSizesGetUrl = () => {
 
-  /**
-   * @summary List Planet Zones
-   */
-  const listPlanetZonesApiV2PlanetsZonesGet = (
-    params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<PlanetZoneResponse[]>> => {
-    return axiosInstance.get(`/api/v2/planets/zones`, {
-      ...options,
-      params: { ...params, ...options?.params },
-    });
-  };
-  const getListPlanetZonesApiV2PlanetsZonesGetUrl = (
-    params?: ListPlanetZonesApiV2PlanetsZonesGetParams,
-  ) => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/planets/zones`,
-        baseURL: '',
-        params,
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/deposit-sizes`,
+    baseURL: '',
 
-  /**
-   * @summary Create Planet Zone
-   */
-  const createPlanetZoneApiV2PlanetsZonesPost = (
-    planetZoneCreate: PlanetZoneCreate,
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<IdResponse>> => {
+
+  });
+}
+
+/**
+ * @summary Get Deposit Size
+ */
+const getDepositSizeApiV2MiningGetDepositSizeGet = (
+    params: GetDepositSizeApiV2MiningGetDepositSizeGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningDepositSizeResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/mining/get-deposit-size`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetDepositSizeApiV2MiningGetDepositSizeGetUrl = (params: GetDepositSizeApiV2MiningGetDepositSizeGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/get-deposit-size`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Get Deposit Size By Size
+ */
+const getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet = (
+    params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<MiningDepositSizeResponse>> => {
+    return axiosInstance.get(
+      `/api/v2/mining/get-deposit-size-by-size`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetUrl = (params: GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/mining/get-deposit-size-by-size`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary List Planets
+ */
+const listPlanetsApiV2PlanetsGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<PlanetResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/planets`,options
+    );
+  }
+const getListPlanetsApiV2PlanetsGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/planets`,
+    baseURL: '',
+
+
+  });
+}
+
+/**
+ * @summary List Planet Zones
+ */
+const listPlanetZonesApiV2PlanetsZonesGet = (
+    params?: ListPlanetZonesApiV2PlanetsZonesGetParams, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<PlanetZoneResponse[]>> => {
+    return axiosInstance.get(
+      `/api/v2/planets/zones`,{
+    ...options,
+        params: {...params, ...options?.params},}
+    );
+  }
+const getListPlanetZonesApiV2PlanetsZonesGetUrl = (params?: ListPlanetZonesApiV2PlanetsZonesGetParams,) => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/planets/zones`,
+    baseURL: '',
+    params,
+
+  });
+}
+
+/**
+ * @summary Create Planet Zone
+ */
+const createPlanetZoneApiV2PlanetsZonesPost = (
+    planetZoneCreate: PlanetZoneCreate, options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<IdResponse>> => {
     return axiosInstance.post(
       `/api/v2/planets/zones`,
-      planetZoneCreate,
-      options,
+      planetZoneCreate,options
     );
-  };
-  const getCreatePlanetZoneApiV2PlanetsZonesPostUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/api/v2/planets/zones`,
-        baseURL: '',
-      });
-  };
+  }
+const getCreatePlanetZoneApiV2PlanetsZonesPostUrl = () => {
 
-  /**
-   * @summary Health
-   */
-  const healthHealthGet = (
-    options?: AxiosRequestConfig,
-  ): Promise<AxiosResponse<HealthHealthGet200>> => {
-    return axiosInstance.get(`/health`, options);
-  };
-  const getHealthHealthGetUrl = () => {
-    return axiosInstance
-      .create({
-        baseURL: '',
-        params: null,
-      })
-      .getUri({
-        url: `/health`,
-        baseURL: '',
-      });
-  };
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/api/v2/planets/zones`,
+    baseURL: '',
 
-  return {
-    signupApiV2AuthSignupPost,
-    signinApiV2AuthSigninPost,
-    logoutApiV2AuthLogoutPost,
-    meApiV2AuthMeGet,
-    inGameUsernameApiV2AuthInGameUsernameGet,
-    updateInGameUsernameApiV2AuthInGameUsernamePut,
-    listCategoriesApiV2CategoriesGet,
-    createCategoryApiV2CategoriesPost,
-    getCategoryApiV2CategoriesIdGet,
-    patchCategoryApiV2CategoriesIdPatch,
-    deleteCategoryApiV2CategoriesIdDelete,
-    getCategoryTypesApiV2CategoriesIdTypesGet,
-    listTypesApiV2TypesGet,
-    createTypeApiV2TypesPost,
-    getTypeApiV2TypesIdGet,
-    patchTypeApiV2TypesIdPatch,
-    deleteCategoryApiV2TypesIdDelete,
-    getTypeItemsApiV2TypesTypeRefItemsGet,
-    requestNexusUpdateApiV2TypesIdNexusUpdatePost,
-    listItemsApiV2ItemsGet,
-    createItemApiV2ItemsPost,
-    getItemStockApiV2ItemsIdStockGet,
-    getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet,
-    getItemLotsApiV2ItemsIdLotsGet,
-    getItemTransactionsApiV2ItemsIdTransactionsGet,
-    getItemFinancialReportApiV2ItemsIdFinancialReportGet,
-    getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,
-    getItemApiV2ItemsIdGet,
-    patchItemApiV2ItemsIdPatch,
-    patchItemApiV2ItemsIdPut,
-    deleteItemApiV2ItemsIdDelete,
-    listInventoryLotsApiV2InventoryLotsGet,
-    listLotOriginsApiV2InventoryLotsOriginGet,
-    getLotOriginApiV2InventoryLotsLotIdOriginGet,
-    updateInventoryLotApiV2InventoryLotsLotIdPatch,
-    listInventoryStockApiV2InventoryStockGet,
-    inventoryFinancialReportApiV2InventoryFinancialReportGet,
-    listImagesApiV2ImagesGet,
-    listTransactionsApiV2TransactionsGet,
-    createTransactionApiV2TransactionsPost,
-    listRunningApiV2TransactionsRunningGet,
-    getTransactionApiV2TransactionsIdGet,
-    patchStatusApiV2TransactionsIdStatusPatch,
-    patchCancelApiV2TransactionsIdCancelPatch,
-    getResultsByOriginApiV2RefinageRecipeOriginItemIdGet,
-    getRecipeByResultApiV2RefinageRecipeResultItemIdGet,
-    getMiningSessionsApiV2SessionsMiningGet,
-    createMiningSessionApiV2SessionsMiningPost,
-    getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet,
-    getAvailableMiningInventoryApiV2SessionsMiningAvailableGet,
-    getMiningLootListApiV2SessionsMiningLootlistGet,
-    getCurrentSessionApiV2SessionsCurrentGet,
-    createSessionApiV2SessionsPost,
-    createRefiningSessionApiV2SessionsRefinagePost,
-    prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,
-    createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,
-    updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,
-    finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost,
-    consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost,
-    updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut,
-    closeSessionApiV2SessionsSessionIdPatch,
-    listClaimsApiV2MiningSessionIdClaimsGet,
-    createClaimApiV2MiningSessionIdClaimsPost,
-    patchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
-    listDepositSizesApiV2MiningDepositSizesGet,
-    getDepositSizeApiV2MiningGetDepositSizeGet,
-    getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet,
-    listPlanetsApiV2PlanetsGet,
-    listPlanetZonesApiV2PlanetsZonesGet,
-    createPlanetZoneApiV2PlanetsZonesPost,
-    healthHealthGet,
-    getSignupApiV2AuthSignupPostUrl,
-    getSigninApiV2AuthSigninPostUrl,
-    getLogoutApiV2AuthLogoutPostUrl,
-    getMeApiV2AuthMeGetUrl,
-    getInGameUsernameApiV2AuthInGameUsernameGetUrl,
-    getUpdateInGameUsernameApiV2AuthInGameUsernamePutUrl,
-    getListCategoriesApiV2CategoriesGetUrl,
-    getCreateCategoryApiV2CategoriesPostUrl,
-    getGetCategoryApiV2CategoriesIdGetUrl,
-    getPatchCategoryApiV2CategoriesIdPatchUrl,
-    getDeleteCategoryApiV2CategoriesIdDeleteUrl,
-    getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,
-    getListTypesApiV2TypesGetUrl,
-    getCreateTypeApiV2TypesPostUrl,
-    getGetTypeApiV2TypesIdGetUrl,
-    getPatchTypeApiV2TypesIdPatchUrl,
-    getDeleteCategoryApiV2TypesIdDeleteUrl,
-    getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,
-    getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl,
-    getListItemsApiV2ItemsGetUrl,
-    getCreateItemApiV2ItemsPostUrl,
-    getGetItemStockApiV2ItemsIdStockGetUrl,
-    getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl,
-    getGetItemLotsApiV2ItemsIdLotsGetUrl,
-    getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,
-    getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,
-    getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,
-    getGetItemApiV2ItemsIdGetUrl,
-    getPatchItemApiV2ItemsIdPatchUrl,
-    getPatchItemApiV2ItemsIdPutUrl,
-    getDeleteItemApiV2ItemsIdDeleteUrl,
-    getListInventoryLotsApiV2InventoryLotsGetUrl,
-    getListLotOriginsApiV2InventoryLotsOriginGetUrl,
-    getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl,
-    getUpdateInventoryLotApiV2InventoryLotsLotIdPatchUrl,
-    getListInventoryStockApiV2InventoryStockGetUrl,
-    getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,
-    getListImagesApiV2ImagesGetUrl,
-    getListTransactionsApiV2TransactionsGetUrl,
-    getCreateTransactionApiV2TransactionsPostUrl,
-    getListRunningApiV2TransactionsRunningGetUrl,
-    getGetTransactionApiV2TransactionsIdGetUrl,
-    getPatchStatusApiV2TransactionsIdStatusPatchUrl,
-    getPatchCancelApiV2TransactionsIdCancelPatchUrl,
-    getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl,
-    getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl,
-    getGetMiningSessionsApiV2SessionsMiningGetUrl,
-    getCreateMiningSessionApiV2SessionsMiningPostUrl,
-    getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetUrl,
-    getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl,
-    getGetMiningLootListApiV2SessionsMiningLootlistGetUrl,
-    getGetCurrentSessionApiV2SessionsCurrentGetUrl,
-    getCreateSessionApiV2SessionsPostUrl,
-    getCreateRefiningSessionApiV2SessionsRefinagePostUrl,
-    getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl,
-    getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl,
-    getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl,
-    getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl,
-    getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl,
-    getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutUrl,
-    getCloseSessionApiV2SessionsSessionIdPatchUrl,
-    getListClaimsApiV2MiningSessionIdClaimsGetUrl,
-    getCreateClaimApiV2MiningSessionIdClaimsPostUrl,
-    getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchUrl,
-    getListDepositSizesApiV2MiningDepositSizesGetUrl,
-    getGetDepositSizeApiV2MiningGetDepositSizeGetUrl,
-    getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetUrl,
-    getListPlanetsApiV2PlanetsGetUrl,
-    getListPlanetZonesApiV2PlanetsZonesGetUrl,
-    getCreatePlanetZoneApiV2PlanetsZonesPostUrl,
-    getHealthHealthGetUrl,
-  };
-};
-export type SignupApiV2AuthSignupPostResult =
-  AxiosResponse<SignupApiV2AuthSignupPost201>;
-export type SigninApiV2AuthSigninPostResult = AxiosResponse<MessageResponse>;
-export type LogoutApiV2AuthLogoutPostResult = AxiosResponse<MessageResponse>;
-export type MeApiV2AuthMeGetResult = AxiosResponse<MeResponse>;
-export type InGameUsernameApiV2AuthInGameUsernameGetResult =
-  AxiosResponse<InGameUsernameResponse>;
-export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResult =
-  AxiosResponse<InGameUsernameResponse>;
-export type ListCategoriesApiV2CategoriesGetResult = AxiosResponse<
-  CategoryResponse[]
->;
-export type CreateCategoryApiV2CategoriesPostResult = AxiosResponse<IdResponse>;
-export type GetCategoryApiV2CategoriesIdGetResult =
-  AxiosResponse<CategoryResponse>;
-export type PatchCategoryApiV2CategoriesIdPatchResult =
-  AxiosResponse<IdResponse>;
-export type DeleteCategoryApiV2CategoriesIdDeleteResult =
-  AxiosResponse<IdResponse>;
-export type GetCategoryTypesApiV2CategoriesIdTypesGetResult = AxiosResponse<
-  TypeResponse[]
->;
-export type ListTypesApiV2TypesGetResult = AxiosResponse<TypeResponse[]>;
-export type CreateTypeApiV2TypesPostResult = AxiosResponse<IdResponse>;
-export type GetTypeApiV2TypesIdGetResult = AxiosResponse<TypeResponse>;
-export type PatchTypeApiV2TypesIdPatchResult = AxiosResponse<IdResponse>;
-export type DeleteCategoryApiV2TypesIdDeleteResult = AxiosResponse<IdResponse>;
-export type GetTypeItemsApiV2TypesTypeRefItemsGetResult = AxiosResponse<
-  ItemResponse[]
->;
-export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResult =
-  AxiosResponse<IdResponse>;
-export type ListItemsApiV2ItemsGetResult = AxiosResponse<ItemResponse[]>;
-export type CreateItemApiV2ItemsPostResult = AxiosResponse<IdResponse>;
-export type GetItemStockApiV2ItemsIdStockGetResult = AxiosResponse<
-  StockLineResponse[]
->;
-export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResult =
-  AxiosResponse<RefinageOriginStockResponse[]>;
-export type GetItemLotsApiV2ItemsIdLotsGetResult = AxiosResponse<LotResponse[]>;
-export type GetItemTransactionsApiV2ItemsIdTransactionsGetResult =
-  AxiosResponse<TransactionEntryResponse[]>;
-export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResult =
-  AxiosResponse<ItemFinancialReportEnvelope>;
-export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResult =
-  AxiosResponse<AverageBuyMarkupResponse>;
-export type GetItemApiV2ItemsIdGetResult = AxiosResponse<ItemResponse>;
-export type PatchItemApiV2ItemsIdPatchResult = AxiosResponse<IdResponse>;
-export type PatchItemApiV2ItemsIdPutResult = AxiosResponse<IdResponse>;
-export type DeleteItemApiV2ItemsIdDeleteResult = AxiosResponse<IdResponse>;
-export type ListInventoryLotsApiV2InventoryLotsGetResult = AxiosResponse<
-  LotResponse[]
->;
-export type ListLotOriginsApiV2InventoryLotsOriginGetResult = AxiosResponse<
-  LotOriginResponse[]
->;
-export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResult =
-  AxiosResponse<LotOriginResponse>;
-export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResult =
-  AxiosResponse<LotUpdateResponse>;
-export type ListInventoryStockApiV2InventoryStockGetResult = AxiosResponse<
-  StockLineResponse[]
->;
-export type InventoryFinancialReportApiV2InventoryFinancialReportGetResult =
-  AxiosResponse<InventoryFinancialReportResponse>;
-export type ListImagesApiV2ImagesGetResult =
-  AxiosResponse<ListImagesApiV2ImagesGet200>;
-export type ListTransactionsApiV2TransactionsGetResult = AxiosResponse<
-  TransactionEntryResponse[]
->;
-export type CreateTransactionApiV2TransactionsPostResult =
-  AxiosResponse<IdResponse>;
-export type ListRunningApiV2TransactionsRunningGetResult = AxiosResponse<
-  TransactionResponse[]
->;
-export type GetTransactionApiV2TransactionsIdGetResult =
-  AxiosResponse<TransactionResponse>;
-export type PatchStatusApiV2TransactionsIdStatusPatchResult =
-  AxiosResponse<void>;
-export type PatchCancelApiV2TransactionsIdCancelPatchResult =
-  AxiosResponse<void>;
-export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResult =
-  AxiosResponse<string[]>;
-export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResult =
-  AxiosResponse<RefinageRecipeResponse[]>;
-export type GetMiningSessionsApiV2SessionsMiningGetResult = AxiosResponse<
-  MiningSessionHistoryResponse[]
->;
-export type CreateMiningSessionApiV2SessionsMiningPostResult =
-  AxiosResponse<SessionResponse>;
-export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResult =
-  AxiosResponse<MiningCurrentSessionResponse>;
-export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResult =
-  AxiosResponse<MiningAvailableResponse>;
-export type GetMiningLootListApiV2SessionsMiningLootlistGetResult =
-  AxiosResponse<string[]>;
-export type GetCurrentSessionApiV2SessionsCurrentGetResult = AxiosResponse<
-  MiningCurrentSessionResponse | SessionResponse | null
->;
-export type CreateSessionApiV2SessionsPostResult =
-  AxiosResponse<SessionResponse>;
-export type CreateRefiningSessionApiV2SessionsRefinagePostResult =
-  AxiosResponse<RefiningSessionResponse>;
-export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResult =
-  AxiosResponse<MiningPrevalidationResponse>;
-export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResult =
-  AxiosResponse<SessionLineResponse>;
-export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResult =
-  AxiosResponse<SessionLineResponse>;
-export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResult =
-  AxiosResponse<SessionLineResponse>;
-export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResult =
-  AxiosResponse<MiningCostLineResponse>;
-export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResult =
-  AxiosResponse<MiningCostLineResponse>;
-export type CloseSessionApiV2SessionsSessionIdPatchResult =
-  AxiosResponse<SessionResponse>;
-export type ListClaimsApiV2MiningSessionIdClaimsGetResult =
-  AxiosResponse<MiningClaimsResponse>;
-export type CreateClaimApiV2MiningSessionIdClaimsPostResult =
-  AxiosResponse<MiningClaimResponse>;
-export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResult =
-  AxiosResponse<MiningClaimResponse>;
-export type ListDepositSizesApiV2MiningDepositSizesGetResult = AxiosResponse<
-  MiningDepositSizeResponse[]
->;
-export type GetDepositSizeApiV2MiningGetDepositSizeGetResult =
-  AxiosResponse<MiningDepositSizeResponse>;
-export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResult =
-  AxiosResponse<MiningDepositSizeResponse>;
-export type ListPlanetsApiV2PlanetsGetResult = AxiosResponse<PlanetResponse[]>;
-export type ListPlanetZonesApiV2PlanetsZonesGetResult = AxiosResponse<
-  PlanetZoneResponse[]
->;
-export type CreatePlanetZoneApiV2PlanetsZonesPostResult =
-  AxiosResponse<IdResponse>;
-export type HealthHealthGetResult = AxiosResponse<HealthHealthGet200>;
+
+  });
+}
+
+/**
+ * @summary Health
+ */
+const healthHealthGet = (
+     options?: AxiosRequestConfig
+ ): Promise<AxiosResponse<HealthHealthGet200>> => {
+    return axiosInstance.get(
+      `/health`,options
+    );
+  }
+const getHealthHealthGetUrl = () => {
+
+  return axiosInstance.create({
+    baseURL: '',
+    params: null,
+  }).getUri({
+    url: `/health`,
+    baseURL: '',
+
+
+  });
+}
+
+return {signupApiV2AuthSignupPost,signinApiV2AuthSigninPost,logoutApiV2AuthLogoutPost,meApiV2AuthMeGet,inGameUsernameApiV2AuthInGameUsernameGet,updateInGameUsernameApiV2AuthInGameUsernamePut,listCategoriesApiV2CategoriesGet,createCategoryApiV2CategoriesPost,getCategoryApiV2CategoriesIdGet,patchCategoryApiV2CategoriesIdPatch,deleteCategoryApiV2CategoriesIdDelete,getCategoryTypesApiV2CategoriesIdTypesGet,listTypesApiV2TypesGet,createTypeApiV2TypesPost,getTypeApiV2TypesIdGet,patchTypeApiV2TypesIdPatch,deleteCategoryApiV2TypesIdDelete,getTypeItemsApiV2TypesTypeRefItemsGet,requestNexusUpdateApiV2TypesIdNexusUpdatePost,listItemsApiV2ItemsGet,createItemApiV2ItemsPost,getItemStockApiV2ItemsIdStockGet,getRefinageOriginStockApiV2ItemsIdRefinageOriginStockGet,getItemLotsApiV2ItemsIdLotsGet,getItemTransactionsApiV2ItemsIdTransactionsGet,getItemFinancialReportApiV2ItemsIdFinancialReportGet,getItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGet,getItemApiV2ItemsIdGet,patchItemApiV2ItemsIdPatch,patchItemApiV2ItemsIdPut,deleteItemApiV2ItemsIdDelete,listInventoryLotsApiV2InventoryLotsGet,listLotOriginsApiV2InventoryLotsOriginGet,getLotOriginApiV2InventoryLotsLotIdOriginGet,updateInventoryLotApiV2InventoryLotsLotIdPatch,listInventoryStockApiV2InventoryStockGet,inventoryFinancialReportApiV2InventoryFinancialReportGet,listImagesApiV2ImagesGet,listTransactionsApiV2TransactionsGet,createTransactionApiV2TransactionsPost,listRunningApiV2TransactionsRunningGet,getTransactionApiV2TransactionsIdGet,patchStatusApiV2TransactionsIdStatusPatch,patchCancelApiV2TransactionsIdCancelPatch,getResultsByOriginApiV2RefinageRecipeOriginItemIdGet,getRecipeByResultApiV2RefinageRecipeResultItemIdGet,getMiningSessionsApiV2SessionsMiningGet,createMiningSessionApiV2SessionsMiningPost,getMiningSessionDetailApiV2SessionsMiningSessionIdDetailGet,getAvailableMiningInventoryApiV2SessionsMiningAvailableGet,getMiningLootListApiV2SessionsMiningLootlistGet,getCurrentSessionApiV2SessionsCurrentGet,createSessionApiV2SessionsPost,createRefiningSessionApiV2SessionsRefinagePost,prevalidateMiningSessionApiV2SessionsMiningPrevalidatePost,createMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,updateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,finalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePost,consumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePost,updateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPut,closeSessionApiV2SessionsSessionIdPatch,listClaimsApiV2MiningSessionIdClaimsGet,createClaimApiV2MiningSessionIdClaimsPost,patchClaimApiV2MiningSessionIdClaimsClaimIdPatch,listDepositSizesApiV2MiningDepositSizesGet,getDepositSizeApiV2MiningGetDepositSizeGet,getDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGet,listPlanetsApiV2PlanetsGet,listPlanetZonesApiV2PlanetsZonesGet,createPlanetZoneApiV2PlanetsZonesPost,healthHealthGet,getSignupApiV2AuthSignupPostUrl,getSigninApiV2AuthSigninPostUrl,getLogoutApiV2AuthLogoutPostUrl,getMeApiV2AuthMeGetUrl,getInGameUsernameApiV2AuthInGameUsernameGetUrl,getUpdateInGameUsernameApiV2AuthInGameUsernamePutUrl,getListCategoriesApiV2CategoriesGetUrl,getCreateCategoryApiV2CategoriesPostUrl,getGetCategoryApiV2CategoriesIdGetUrl,getPatchCategoryApiV2CategoriesIdPatchUrl,getDeleteCategoryApiV2CategoriesIdDeleteUrl,getGetCategoryTypesApiV2CategoriesIdTypesGetUrl,getListTypesApiV2TypesGetUrl,getCreateTypeApiV2TypesPostUrl,getGetTypeApiV2TypesIdGetUrl,getPatchTypeApiV2TypesIdPatchUrl,getDeleteCategoryApiV2TypesIdDeleteUrl,getGetTypeItemsApiV2TypesTypeRefItemsGetUrl,getRequestNexusUpdateApiV2TypesIdNexusUpdatePostUrl,getListItemsApiV2ItemsGetUrl,getCreateItemApiV2ItemsPostUrl,getGetItemStockApiV2ItemsIdStockGetUrl,getGetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetUrl,getGetItemLotsApiV2ItemsIdLotsGetUrl,getGetItemTransactionsApiV2ItemsIdTransactionsGetUrl,getGetItemFinancialReportApiV2ItemsIdFinancialReportGetUrl,getGetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetUrl,getGetItemApiV2ItemsIdGetUrl,getPatchItemApiV2ItemsIdPatchUrl,getPatchItemApiV2ItemsIdPutUrl,getDeleteItemApiV2ItemsIdDeleteUrl,getListInventoryLotsApiV2InventoryLotsGetUrl,getListLotOriginsApiV2InventoryLotsOriginGetUrl,getGetLotOriginApiV2InventoryLotsLotIdOriginGetUrl,getUpdateInventoryLotApiV2InventoryLotsLotIdPatchUrl,getListInventoryStockApiV2InventoryStockGetUrl,getInventoryFinancialReportApiV2InventoryFinancialReportGetUrl,getListImagesApiV2ImagesGetUrl,getListTransactionsApiV2TransactionsGetUrl,getCreateTransactionApiV2TransactionsPostUrl,getListRunningApiV2TransactionsRunningGetUrl,getGetTransactionApiV2TransactionsIdGetUrl,getPatchStatusApiV2TransactionsIdStatusPatchUrl,getPatchCancelApiV2TransactionsIdCancelPatchUrl,getGetResultsByOriginApiV2RefinageRecipeOriginItemIdGetUrl,getGetRecipeByResultApiV2RefinageRecipeResultItemIdGetUrl,getGetMiningSessionsApiV2SessionsMiningGetUrl,getCreateMiningSessionApiV2SessionsMiningPostUrl,getGetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetUrl,getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetUrl,getGetMiningLootListApiV2SessionsMiningLootlistGetUrl,getGetCurrentSessionApiV2SessionsCurrentGetUrl,getCreateSessionApiV2SessionsPostUrl,getCreateRefiningSessionApiV2SessionsRefinagePostUrl,getPrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostUrl,getCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostUrl,getUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutUrl,getFinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostUrl,getConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostUrl,getUpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutUrl,getCloseSessionApiV2SessionsSessionIdPatchUrl,getListClaimsApiV2MiningSessionIdClaimsGetUrl,getCreateClaimApiV2MiningSessionIdClaimsPostUrl,getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchUrl,getListDepositSizesApiV2MiningDepositSizesGetUrl,getGetDepositSizeApiV2MiningGetDepositSizeGetUrl,getGetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetUrl,getListPlanetsApiV2PlanetsGetUrl,getListPlanetZonesApiV2PlanetsZonesGetUrl,getCreatePlanetZoneApiV2PlanetsZonesPostUrl,getHealthHealthGetUrl}};
+export type SignupApiV2AuthSignupPostResult = AxiosResponse<SignupApiV2AuthSignupPost201>
+export type SigninApiV2AuthSigninPostResult = AxiosResponse<MessageResponse>
+export type LogoutApiV2AuthLogoutPostResult = AxiosResponse<MessageResponse>
+export type MeApiV2AuthMeGetResult = AxiosResponse<MeResponse>
+export type InGameUsernameApiV2AuthInGameUsernameGetResult = AxiosResponse<InGameUsernameResponse>
+export type UpdateInGameUsernameApiV2AuthInGameUsernamePutResult = AxiosResponse<InGameUsernameResponse>
+export type ListCategoriesApiV2CategoriesGetResult = AxiosResponse<CategoryResponse[]>
+export type CreateCategoryApiV2CategoriesPostResult = AxiosResponse<IdResponse>
+export type GetCategoryApiV2CategoriesIdGetResult = AxiosResponse<CategoryResponse>
+export type PatchCategoryApiV2CategoriesIdPatchResult = AxiosResponse<IdResponse>
+export type DeleteCategoryApiV2CategoriesIdDeleteResult = AxiosResponse<IdResponse>
+export type GetCategoryTypesApiV2CategoriesIdTypesGetResult = AxiosResponse<TypeResponse[]>
+export type ListTypesApiV2TypesGetResult = AxiosResponse<TypeResponse[]>
+export type CreateTypeApiV2TypesPostResult = AxiosResponse<IdResponse>
+export type GetTypeApiV2TypesIdGetResult = AxiosResponse<TypeResponse>
+export type PatchTypeApiV2TypesIdPatchResult = AxiosResponse<IdResponse>
+export type DeleteCategoryApiV2TypesIdDeleteResult = AxiosResponse<IdResponse>
+export type GetTypeItemsApiV2TypesTypeRefItemsGetResult = AxiosResponse<ItemResponse[]>
+export type RequestNexusUpdateApiV2TypesIdNexusUpdatePostResult = AxiosResponse<IdResponse>
+export type ListItemsApiV2ItemsGetResult = AxiosResponse<ItemResponse[]>
+export type CreateItemApiV2ItemsPostResult = AxiosResponse<IdResponse>
+export type GetItemStockApiV2ItemsIdStockGetResult = AxiosResponse<StockLineResponse[]>
+export type GetRefinageOriginStockApiV2ItemsIdRefinageOriginStockGetResult = AxiosResponse<RefinageOriginStockResponse[]>
+export type GetItemLotsApiV2ItemsIdLotsGetResult = AxiosResponse<LotResponse[]>
+export type GetItemTransactionsApiV2ItemsIdTransactionsGetResult = AxiosResponse<TransactionEntryResponse[]>
+export type GetItemFinancialReportApiV2ItemsIdFinancialReportGetResult = AxiosResponse<ItemFinancialReportEnvelope>
+export type GetItemAverageBuyMarkupApiV2ItemsIdAverageBuyMarkupGetResult = AxiosResponse<AverageBuyMarkupResponse>
+export type GetItemApiV2ItemsIdGetResult = AxiosResponse<ItemResponse>
+export type PatchItemApiV2ItemsIdPatchResult = AxiosResponse<IdResponse>
+export type PatchItemApiV2ItemsIdPutResult = AxiosResponse<IdResponse>
+export type DeleteItemApiV2ItemsIdDeleteResult = AxiosResponse<IdResponse>
+export type ListInventoryLotsApiV2InventoryLotsGetResult = AxiosResponse<LotResponse[]>
+export type ListLotOriginsApiV2InventoryLotsOriginGetResult = AxiosResponse<LotOriginResponse[]>
+export type GetLotOriginApiV2InventoryLotsLotIdOriginGetResult = AxiosResponse<LotOriginResponse>
+export type UpdateInventoryLotApiV2InventoryLotsLotIdPatchResult = AxiosResponse<LotUpdateResponse>
+export type ListInventoryStockApiV2InventoryStockGetResult = AxiosResponse<StockLineResponse[]>
+export type InventoryFinancialReportApiV2InventoryFinancialReportGetResult = AxiosResponse<InventoryFinancialReportResponse>
+export type ListImagesApiV2ImagesGetResult = AxiosResponse<ListImagesApiV2ImagesGet200>
+export type ListTransactionsApiV2TransactionsGetResult = AxiosResponse<TransactionEntryResponse[]>
+export type CreateTransactionApiV2TransactionsPostResult = AxiosResponse<IdResponse>
+export type ListRunningApiV2TransactionsRunningGetResult = AxiosResponse<TransactionResponse[]>
+export type GetTransactionApiV2TransactionsIdGetResult = AxiosResponse<TransactionResponse>
+export type PatchStatusApiV2TransactionsIdStatusPatchResult = AxiosResponse<void>
+export type PatchCancelApiV2TransactionsIdCancelPatchResult = AxiosResponse<void>
+export type GetResultsByOriginApiV2RefinageRecipeOriginItemIdGetResult = AxiosResponse<string[]>
+export type GetRecipeByResultApiV2RefinageRecipeResultItemIdGetResult = AxiosResponse<RefinageRecipeResponse[]>
+export type GetMiningSessionsApiV2SessionsMiningGetResult = AxiosResponse<MiningSessionHistoryResponse[]>
+export type CreateMiningSessionApiV2SessionsMiningPostResult = AxiosResponse<SessionResponse>
+export type GetMiningSessionDetailApiV2SessionsMiningSessionIdDetailGetResult = AxiosResponse<MiningCurrentSessionResponse>
+export type GetAvailableMiningInventoryApiV2SessionsMiningAvailableGetResult = AxiosResponse<MiningAvailableResponse>
+export type GetMiningLootListApiV2SessionsMiningLootlistGetResult = AxiosResponse<string[]>
+export type GetCurrentSessionApiV2SessionsCurrentGetResult = AxiosResponse<MiningCurrentSessionResponse | SessionResponse | null>
+export type CreateSessionApiV2SessionsPostResult = AxiosResponse<SessionResponse>
+export type CreateRefiningSessionApiV2SessionsRefinagePostResult = AxiosResponse<RefiningSessionResponse>
+export type PrevalidateMiningSessionApiV2SessionsMiningPrevalidatePostResult = AxiosResponse<MiningPrevalidationResponse>
+export type CreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPostResult = AxiosResponse<SessionLineResponse>
+export type UpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPutResult = AxiosResponse<SessionLineResponse>
+export type FinalizeMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdFinalizePostResult = AxiosResponse<SessionLineResponse>
+export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdConsumePostResult = AxiosResponse<MiningCostLineResponse>
+export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResult = AxiosResponse<MiningCostLineResponse>
+export type CloseSessionApiV2SessionsSessionIdPatchResult = AxiosResponse<SessionResponse>
+export type ListClaimsApiV2MiningSessionIdClaimsGetResult = AxiosResponse<MiningClaimsResponse>
+export type CreateClaimApiV2MiningSessionIdClaimsPostResult = AxiosResponse<MiningClaimResponse>
+export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResult = AxiosResponse<MiningClaimResponse>
+export type ListDepositSizesApiV2MiningDepositSizesGetResult = AxiosResponse<MiningDepositSizeResponse[]>
+export type GetDepositSizeApiV2MiningGetDepositSizeGetResult = AxiosResponse<MiningDepositSizeResponse>
+export type GetDepositSizeBySizeApiV2MiningGetDepositSizeBySizeGetResult = AxiosResponse<MiningDepositSizeResponse>
+export type ListPlanetsApiV2PlanetsGetResult = AxiosResponse<PlanetResponse[]>
+export type ListPlanetZonesApiV2PlanetsZonesGetResult = AxiosResponse<PlanetZoneResponse[]>
+export type CreatePlanetZoneApiV2PlanetsZonesPostResult = AxiosResponse<IdResponse>
+export type HealthHealthGetResult = AxiosResponse<HealthHealthGet200>

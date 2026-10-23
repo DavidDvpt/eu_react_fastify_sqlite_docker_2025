@@ -6,19 +6,10 @@
 import * as zod from 'zod';
 
 export const ListInventoryStockApiV2InventoryStockGetParams = zod.object({
-  sortKey: zod
-    .union([
-      zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),
-      zod.null(),
-    ])
-    .optional(),
-  sortOrder: zod.union([zod.enum(['asc', 'desc']), zod.null()]).optional(),
-  isActive: zod.union([zod.boolean(), zod.null()]).optional(),
-});
+  "sortKey": zod.union([zod.enum(['createdAt', 'updatedAt', 'quantityRemaining', 'lotType']),zod.null()]).optional(),
+  "sortOrder": zod.union([zod.enum(['asc', 'desc']),zod.null()]).optional(),
+  "isActive": zod.union([zod.boolean(),zod.null()]).optional()
+})
 
-export type ListInventoryStockApiV2InventoryStockGetParams = zod.input<
-  typeof ListInventoryStockApiV2InventoryStockGetParams
->;
-export type ListInventoryStockApiV2InventoryStockGetParamsOutput = zod.output<
-  typeof ListInventoryStockApiV2InventoryStockGetParams
->;
+export type ListInventoryStockApiV2InventoryStockGetParams = zod.input<typeof ListInventoryStockApiV2InventoryStockGetParams>;
+export type ListInventoryStockApiV2InventoryStockGetParamsOutput = zod.output<typeof ListInventoryStockApiV2InventoryStockGetParams>;

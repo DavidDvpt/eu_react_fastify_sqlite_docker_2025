@@ -5,5 +5,5 @@
  */
 
 export type ListLotOriginsApiV2InventoryLotsOriginGetParams = {
-  all?: boolean;
+all?: boolean;
 };

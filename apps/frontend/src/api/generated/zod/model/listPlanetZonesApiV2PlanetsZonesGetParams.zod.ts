@@ -6,12 +6,8 @@
 import * as zod from 'zod';
 
 export const ListPlanetZonesApiV2PlanetsZonesGetParams = zod.object({
-  planet: zod.union([zod.string(), zod.null()]).optional(),
-});
+  "planet": zod.union([zod.string(),zod.null()]).optional()
+})
 
-export type ListPlanetZonesApiV2PlanetsZonesGetParams = zod.input<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetParams
->;
-export type ListPlanetZonesApiV2PlanetsZonesGetParamsOutput = zod.output<
-  typeof ListPlanetZonesApiV2PlanetsZonesGetParams
->;
+export type ListPlanetZonesApiV2PlanetsZonesGetParams = zod.input<typeof ListPlanetZonesApiV2PlanetsZonesGetParams>;
+export type ListPlanetZonesApiV2PlanetsZonesGetParamsOutput = zod.output<typeof ListPlanetZonesApiV2PlanetsZonesGetParams>;
