@@ -48,11 +48,11 @@ describe('getRecipePpcm', () => {
 });
 
 describe('computeRefinageMaxClickCount', () => {
-  it('caps the number of results at the largest ppcm multiple allowed by stock', () => {
-    // Recette 3A + 2B : ppcm = 6. Stock 24A / 230B → min(8, 115) = 8 → max 6.
+  it('returns the number of results allowed by the ingredient stock', () => {
+    // Recette 3A + 2B : stock 24A / 230B → min(8, 115) = 8.
     const stock: Record<string, number> = { a: 24, b: 230 };
     expect(computeRefinageMaxClickCount(lines(['a', 3], ['b', 2]), stock)).toBe(
-      6,
+      8,
     );
   });
 
@@ -63,10 +63,10 @@ describe('computeRefinageMaxClickCount', () => {
     );
   });
 
-  it('returns 0 when the stock cannot fill a single valid batch', () => {
+  it('returns the number of complete results possible with partial stock', () => {
     const stock: Record<string, number> = { a: 4, b: 230 };
     expect(computeRefinageMaxClickCount(lines(['a', 3], ['b', 2]), stock)).toBe(
-      0,
+      1,
     );
   });
 
@@ -88,9 +88,9 @@ describe('isRecipeRefinable', () => {
     expect(isRecipeRefinable(lines(['a', 3], ['b', 2]), stock)).toBe(true);
   });
 
-  it('is false when the stock is below one ppcm batch', () => {
+  it('is true when one complete result is possible', () => {
     const stock: Record<string, number> = { a: 4, b: 230 };
-    expect(isRecipeRefinable(lines(['a', 3], ['b', 2]), stock)).toBe(false);
+    expect(isRecipeRefinable(lines(['a', 3], ['b', 2]), stock)).toBe(true);
   });
 });
 

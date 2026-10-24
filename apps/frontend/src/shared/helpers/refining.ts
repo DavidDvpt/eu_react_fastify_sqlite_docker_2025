@@ -28,18 +28,14 @@ export function getRecipePpcm(
 
 /**
  * Nombre maximal de résultats pouvant être raffinés avec le stock disponible.
- * Le backend exige que `clickCount` (nombre de résultats) soit un multiple du
- * PPCM des quantités d'ingrédients, donc on retourne le plus grand multiple
- * du PPCM inférieur ou égal à la quantité que permet le stock
- * (`min_i floor(stock_i / quantity_i)`). Retourne 0 quand la recette n'est
- * pas faisable.
+ * Chaque ligne de recette décrit la quantité d'ingrédient nécessaire pour un
+ * résultat : `min_i floor(stock_i / quantity_i)`.
  */
 export function computeRefinageMaxClickCount(
   ingredientLines: RefinageRecipeResponse[],
   stockByItemId: StockByItemId,
 ): number {
-  const ppcm = getRecipePpcm(ingredientLines);
-  if (ppcm === 0 || ingredientLines.length === 0) return 0;
+  if (ingredientLines.length === 0) return 0;
 
   const maxByStock = ingredientLines.reduce(
     (min, line) =>
@@ -50,9 +46,7 @@ export function computeRefinageMaxClickCount(
     Infinity,
   );
 
-  if (maxByStock < ppcm) return 0;
-
-  return maxByStock - (maxByStock % ppcm);
+  return Number.isFinite(maxByStock) ? maxByStock : 0;
 }
 
 export function computeRefinageMaxClickCountFromOriginStock(

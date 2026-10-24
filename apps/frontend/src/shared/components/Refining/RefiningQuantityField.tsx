@@ -8,7 +8,6 @@ import { FormatTools } from '@/shared/tools';
 type RefiningQuantityFieldProps = {
   selectedResultId: string | null;
   linesPending: boolean;
-  ppcm: number;
   maxClickCount: number;
   refinerDecays: ReadonlyMap<string, number>;
 };
@@ -16,7 +15,6 @@ type RefiningQuantityFieldProps = {
 function RefiningQuantityField({
   selectedResultId,
   linesPending,
-  ppcm,
   maxClickCount,
   refinerDecays,
 }: RefiningQuantityFieldProps) {
@@ -46,13 +44,13 @@ function RefiningQuantityField({
         name="clickCount"
         label="Quantité (résultats)"
         type="number"
-        min={maxClickCount > 0 ? ppcm : 0}
+          min={maxClickCount > 0 ? 1 : 0}
         max={maxClickCount}
-        step={ppcm}
+          step={1}
         registerOptions={{ valueAsNumber: true }}
       />
       <p className="m-0 text-xs text-text-muted">
-        Multiple de {ppcm} — maximum {maxClickCount} résultat
+        Maximum {maxClickCount} résultat
         {maxClickCount > 1 ? 's' : ''}
       </p>
       <p className="m-0 text-xs text-text-muted">

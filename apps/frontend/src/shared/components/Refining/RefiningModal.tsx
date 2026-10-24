@@ -9,7 +9,6 @@ import {
   buildRefinageCosts,
   computeRefinageMaxClickCountFromOriginStock,
   getItemImageUrl,
-  getRecipePpcm,
 } from '@/shared/helpers';
 import type { StockRow } from '@/shared/helpers/stock';
 import { useSystemDatas } from '@/shared/hooks/rqFetchHooks';
@@ -41,20 +40,16 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
   ]);
   const resultsQuery = useRefinageResultsByOrigin(item.id);
   const resultIds = useMemo(() => resultsQuery.data ?? [], [resultsQuery.data]);
-  const { recipeLinesByResult, isLinesLoading, isLinesError } =
+  const { isLinesLoading, isLinesError } =
     useRefinageRecipeLines(resultIds);
   const { originStocksByResult, isOriginStocksLoading, isOriginStocksError } =
     useRefinageOriginStocks(resultIds, selectedProvenances);
   const recipeOptions = useMemo(
     () =>
       resultIds.map((resultId) => {
-        const lines = recipeLinesByResult.get(resultId) ?? [];
         const maxAvailable = computeRefinageMaxClickCountFromOriginStock(
           originStocksByResult.get(resultId) ?? [],
         );
-        const ppcm = getRecipePpcm(lines);
-        const maxClickCount =
-          ppcm > 0 ? maxAvailable - (maxAvailable % ppcm) : 0;
         const itemData = itemDatas?.find(
           (candidate) => candidate.id === resultId,
         );
@@ -64,11 +59,11 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
           imageUrl: itemData?.imageUrlId
             ? (getItemImageUrl(itemData.imageUrlId, 'normal') ?? null)
             : null,
-          maxClickCount,
-          refinable: maxClickCount > 0,
+          maxClickCount: maxAvailable,
+          refinable: maxAvailable > 0,
         };
       }),
-    [resultIds, recipeLinesByResult, originStocksByResult, itemDatas],
+    [resultIds, originStocksByResult, itemDatas],
   );
 
   const refinerOptions = useMemo(
@@ -127,18 +122,9 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
   const selectedOption = recipeOptions.find(
     (option) => option.resultId === selectedResultId,
   );
-  const ppcm = selectedOption
-    ? getRecipePpcm(recipeLinesByResult.get(selectedOption.resultId) ?? [])
-    : 0;
   const schema = useMemo(
     () =>
       refiningFormSchema.superRefine((values, context) => {
-        if (ppcm > 0 && values.clickCount % ppcm !== 0)
-          context.addIssue({
-            code: 'custom',
-            path: ['clickCount'],
-            message: `Le nombre de résultats doit être un multiple de ${ppcm}.`,
-          });
         if (selectedOption && values.clickCount > selectedOption.maxClickCount)
           context.addIssue({
             code: 'custom',
@@ -146,7 +132,7 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
             message: `Maximum ${selectedOption.maxClickCount} résultat(s) avec le stock disponible.`,
           });
       }),
-    [ppcm, selectedOption],
+    [selectedOption],
   );
   const { refineMutation } = useRefiningMutation();
   const onSubmit = async (values: RefiningFormValues) => {
@@ -215,7 +201,6 @@ function RefiningModal({ item, onClose }: RefiningModalProps) {
               <RefiningQuantityField
                 selectedResultId={selectedResultId}
                 linesPending={isLinesLoading || isOriginStocksLoading}
-                ppcm={ppcm}
                 maxClickCount={selectedOption?.maxClickCount ?? 0}
                 refinerDecays={refinerDecays}
               />
