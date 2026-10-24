@@ -178,6 +178,7 @@ function MiningSessionClaims({
         claims={displayedClaims}
         items={editableItems}
         depositSizes={depositSizes}
+        resourceNames={resourceNames}
       />
     </section>
   );

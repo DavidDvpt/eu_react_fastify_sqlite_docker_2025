@@ -65,21 +65,28 @@ export class MiningClaimParser {
   setItems(items: ItemResponse[]) {
     if (!this.currentClaim?.resourceName || !this.currentClaim.resourceType)
       return;
+    const resourceName = this.currentClaim.resourceName;
+    const resourceType = this.currentClaim.resourceType;
+    const matchingItems = items.filter(
+      (item) => item.name === resourceName,
+    );
+    const typedItem = matchingItems.find((item) => {
+      const itemTypeName = item.type?.name?.toLowerCase() ?? '';
+      const categoryName = item.type?.category?.name?.toLowerCase() ?? '';
+      const itemType = item.itemType?.toLowerCase() ?? '';
+      const miningTypeName = `${itemTypeName} ${categoryName} ${itemType}`;
+      const isEnmatter =
+        miningTypeName.includes('enmatter') ||
+        miningTypeName.includes('energy matter');
+      const isOre =
+        miningTypeName.includes('ore') || miningTypeName.includes('mineral');
+      return resourceType === 'enmatter'
+        ? isEnmatter
+        : isOre;
+    });
     this.currentClaim.itemId =
-      items.find((item) => {
-        if (item.name !== this.currentClaim?.resourceName) return false;
-        const itemTypeName = item.type?.name?.toLowerCase() ?? '';
-        const categoryName = item.type?.category?.name?.toLowerCase() ?? '';
-        const miningTypeName = `${itemTypeName} ${categoryName}`;
-        const isEnmatter =
-          miningTypeName.includes('enmatter') ||
-          miningTypeName.includes('energy matter');
-        const isOre =
-          miningTypeName.includes('ore') || miningTypeName.includes('mineral');
-        return this.currentClaim.resourceType === 'enmatter'
-          ? isEnmatter
-          : isOre;
-      })?.id ?? null;
+      typedItem?.id ??
+      (matchingItems.length === 1 ? (matchingItems[0]?.id ?? null) : null);
   }
 
   processLine(

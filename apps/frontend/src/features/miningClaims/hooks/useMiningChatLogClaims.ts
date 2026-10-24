@@ -143,9 +143,21 @@ export function useMiningChatLogClaims(
       if (!pendingClaim) return;
 
       if (event.type === 'claim-updated') {
-        // Keep accumulating parser data locally. The claim is patched once,
-        // when the game confirms depletion, with the final total quantity and
-        // value.
+        const updatedClaim = await patchClaim.mutateAsync({
+          sessionId,
+          claimId: pendingClaim.id,
+          data: {
+            itemId: pendingClaim.itemId,
+            ...(event.payload.quantity > 0
+              ? { quantity: event.payload.quantity }
+              : {}),
+            ...(event.payload.value > 0 ? { value: event.payload.value } : {}),
+            isGlobal: event.payload.isGlobal,
+            isHof: event.payload.isHof,
+            depleted: false,
+          },
+        });
+        pendingClaim.itemId = updatedClaim.itemId;
         return;
       }
 
@@ -174,6 +186,7 @@ export function useMiningChatLogClaims(
             value: event.payload.value > 0 ? event.payload.value : null,
             isGlobal: event.payload.isGlobal,
             isHof: event.payload.isHof,
+            depleted: true,
             // Claims store the reference row id, not the display size number.
             depositSize: depositSize.id,
           },

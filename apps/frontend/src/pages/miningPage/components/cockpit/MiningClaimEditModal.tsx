@@ -43,6 +43,7 @@ type MiningClaimEditModalProps = {
   claims: MiningClaimResponse[];
   items: ItemViewModel[];
   depositSizes: MiningDepositSizeResponse[];
+  resourceNames: Record<string, string>;
 };
 
 function MiningClaimEditModal({
@@ -50,6 +51,7 @@ function MiningClaimEditModal({
   claims,
   items,
   depositSizes,
+  resourceNames,
 }: MiningClaimEditModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
   const claimId = searchParams.get('claimId');
@@ -84,19 +86,24 @@ function MiningClaimEditModal({
   const selectedDepositSize = depositSizes.find(
     (size) => size.id === claim?.depositSize,
   );
+  const resolvedItemId =
+    claim?.itemId ??
+    items.find((item) => item.name === resourceNames[claim?.id ?? ''])?.id ??
+    null;
 
   const defaultValues = {
-    itemId: claim?.itemId ?? null,
+    itemId: resolvedItemId,
     depositSize: selectedDepositSize ? String(selectedDepositSize.id) : null,
     quantity: claim?.quantity ?? null,
     value: claim?.value == null ? null : Number(claim.value),
     latitude: claim?.latitude ?? null,
     longitude: claim?.longitude ?? null,
     depth: claim?.depth == null ? null : Number(claim.depth),
-    depleted: claim?.depleted ?? false,
+    depleted: claim?.depleted === true,
   };
 
   const handleSubmit = async (values: ClaimEditValues) => {
+    const depleted = values.depleted === true;
     const depositSizeId =
       values.depositSize ||
       (claim?.depositSize == null ? null : String(claim.depositSize));
@@ -128,7 +135,7 @@ function MiningClaimEditModal({
             longitude: values.longitude,
             depth: values.depth,
             depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
-            depleted: values.depleted,
+            depleted,
           },
         });
       }
@@ -145,7 +152,7 @@ function MiningClaimEditModal({
           longitude: values.longitude,
           depth: values.depth,
           depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
-          depleted: values.depleted,
+          depleted,
         },
       });
       await InvalidateQueryAndKeys.miningMutation(sessionId);
