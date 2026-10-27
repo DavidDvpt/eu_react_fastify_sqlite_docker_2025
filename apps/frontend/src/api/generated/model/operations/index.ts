@@ -40,6 +40,7 @@ export * from './miningAvailableResponse.ts';
 export * from './miningAvailableStackResponse.ts';
 export * from './miningClaimResponse.ts';
 export * from './miningClaimsResponse.ts';
+export * from './miningClaimsWithSessionResponse.ts';
 export * from './miningCostLineResponse.ts';
 export * from './miningCurrentEnhancerResponse.ts';
 export * from './miningCurrentSessionResponse.ts';
