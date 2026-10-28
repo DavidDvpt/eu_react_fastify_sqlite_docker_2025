@@ -17,7 +17,7 @@ export type CurrentMiningClaim = {
 export type MiningClaimPayload = {
   trackingId: number;
   resourceName: string;
-  resourceType: MiningResourceType;
+  resourceType: MiningResourceType | null;
   itemId: string;
   quantity: number;
   value: number;
@@ -199,11 +199,33 @@ export class MiningClaimParser {
     this.currentClaim = null;
   }
 
+  restoreClaim(claim: {
+    resourceName: string;
+    resourceType?: MiningResourceType | null;
+    itemId: string;
+    quantity?: number | null;
+    value?: number | null;
+    isGlobal?: boolean;
+    isHof?: boolean;
+  }) {
+    const restoredClaim: CurrentMiningClaim = {
+      trackingId: this.nextTrackingId++,
+      resourceName: claim.resourceName,
+      resourceType: claim.resourceType ?? null,
+      itemId: claim.itemId,
+      quantity: claim.quantity ?? 0,
+      value: claim.value ?? 0,
+      isGlobal: claim.isGlobal ?? false,
+      isHof: claim.isHof ?? false,
+      isAth: false,
+    };
+    this.toExtract.push(restoredClaim);
+    return restoredClaim.trackingId;
+  }
+
   private activateClaim(resourceName: string) {
     const claim = this.toExtract.find(
-      (candidate) =>
-        candidate.resourceName === resourceName &&
-        candidate.resourceType !== null,
+      (candidate) => candidate.resourceName === resourceName,
     );
     if (claim) this.currentClaim = claim;
   }
@@ -236,7 +258,7 @@ export class MiningClaimParser {
     return {
       trackingId: claim.trackingId,
       resourceName: claim.resourceName ?? 'Unknown',
-      resourceType: claim.resourceType ?? 'ore',
+      resourceType: claim.resourceType,
       itemId: claim.itemId ?? '',
       quantity: claim.quantity,
       value: claim.value,

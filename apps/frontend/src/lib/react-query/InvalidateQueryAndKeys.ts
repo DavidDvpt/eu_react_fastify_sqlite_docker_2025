@@ -1,8 +1,10 @@
 import { queryClient } from '@/lib/react-query/queryClient';
 import {
+  getGetCurrentSessionApiV2SessionsCurrentGetQueryKey,
   getGetAvailableMiningInventoryApiV2SessionsMiningAvailableGetQueryKey,
   getListClaimsApiV2MiningSessionIdClaimsGetQueryKey,
 } from '@/api/generated/react-query/entropiaManagerAPI';
+import { SessionType } from '@/api/generated/model';
 
 type InvalidateObject = { keys: (string | undefined)[] };
 
@@ -135,9 +137,15 @@ export class InvalidateQueryAndKeys {
   }
 
   static async miningMutation(sessionId?: string) {
+    const currentSessionKey =
+      getGetCurrentSessionApiV2SessionsCurrentGetQueryKey({
+        type: SessionType.MINING,
+      });
     return await Promise.all([
-      queryClient.invalidateQueries({
-        queryKey: this.getCurrentSessionKey().keys,
+      queryClient.refetchQueries({
+        queryKey: currentSessionKey,
+        exact: true,
+        type: 'active',
       }),
       ...(sessionId
         ? [

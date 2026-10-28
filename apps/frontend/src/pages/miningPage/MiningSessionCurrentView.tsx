@@ -9,6 +9,7 @@ import MiningSessionResults from './components/cockpit/MiningSessionResults';
 import {
   useMiningChatLogClaims,
   type ClaimDepletedInfo,
+  type ResultLineUpdate,
   type UnknownClaimCandidate,
 } from '@/features/miningClaims/hooks/useMiningChatLogClaims';
 import MiningClaimSnackbar, {
@@ -21,6 +22,9 @@ function MiningSessionCurrentView() {
   const [resourceNames, setResourceNames] = useState<Record<string, string>>(
     {},
   );
+  const [resultLineUpdates, setResultLineUpdates] = useState<
+    Record<string, ResultLineUpdate>
+  >({});
   const [unknownClaimDialog, setUnknownClaimDialog] = useState<{
     candidates: UnknownClaimCandidate[];
     resolve: (claimId: string) => void;
@@ -75,12 +79,29 @@ function MiningSessionCurrentView() {
     },
     [],
   );
+  const handleResultLineChanged = useCallback((line: ResultLineUpdate) => {
+    setResultLineUpdates((current) => ({ ...current, [line.id]: line }));
+  }, []);
+  const displayedResultLines = [
+    ...(miningSession?.resultLines ?? []).map((line) => {
+      const update = resultLineUpdates[String(line.id)];
+      return update ? { ...line, ...update } : line;
+    }),
+    ...Object.values(resultLineUpdates).filter(
+      (update) =>
+        !(miningSession?.resultLines ?? []).some(
+          (line) => line.id === update.id,
+        ),
+    ),
+  ];
   useMiningChatLogClaims(
     miningSession?.id,
     itemDatas ?? [],
+    miningSession?.resultLines ?? [],
     handleClaimDetected,
     handleClaimDepleted,
     handleUnknownClaim,
+    handleResultLineChanged,
   );
   useEffect(() => {
     if (!snackbarClaim) return;
@@ -131,7 +152,7 @@ function MiningSessionCurrentView() {
                 sessionId={miningSession.id}
                 items={itemDatas ?? []}
                 searchType={miningSession.searchType}
-                resultLines={miningSession.resultLines}
+                resultLines={displayedResultLines}
               />
             </div>
           )}

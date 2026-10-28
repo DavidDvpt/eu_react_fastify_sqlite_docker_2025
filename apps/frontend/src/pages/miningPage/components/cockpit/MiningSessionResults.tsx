@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { Input } from '@/components/ui/input';
 import {
@@ -63,18 +63,40 @@ function MiningSessionResults({
     },
   );
 
-  useEffect(() => {
-    if (!resultLines?.length || results.length > 0) return;
-    setResults(
-      resultLines.map((line) => ({
+  const displayedResults = useMemo(() => {
+    const serverLines = new Map(
+      (resultLines ?? []).map((line) => [line.id, line]),
+    );
+    const currentLineIds = new Set(
+      results
+        .map((result) => result.lineId)
+        .filter((lineId): lineId is string => Boolean(lineId)),
+    );
+    const synchronizedResults = results
+      .filter((result) => !result.lineId || serverLines.has(result.lineId))
+      .map((result) => {
+        if (!result.lineId) return result;
+        const line = serverLines.get(result.lineId);
+        if (!line) return result;
+        return {
+          ...result,
+          itemId: line.itemId,
+          quantity: line.quantity ?? 0,
+          isFinalized: line.isFinalized,
+        };
+      });
+    const newResults = (resultLines ?? [])
+      .filter((line) => !currentLineIds.has(line.id))
+      .map((line) => ({
         clientId: line.id,
         itemId: line.itemId,
         quantity: line.quantity ?? 0,
         lineId: line.id,
         isFinalized: line.isFinalized,
-      })),
-    );
-  }, [resultLines, results.length]);
+      }));
+
+    return [...synchronizedResults, ...newResults];
+  }, [resultLines, results]);
   const itemById = useMemo(
     () => new Map(items.map((item) => [item.id, item])),
     [items],
@@ -189,9 +211,9 @@ function MiningSessionResults({
           </div>
         )}
       </div>
-      {results.length > 0 ? (
+      {displayedResults.length > 0 ? (
         <div className="flex flex-wrap gap-2">
-          {results.map((result) => {
+          {displayedResults.map((result) => {
             const item = itemById.get(result.itemId);
             if (!item) return null;
             return (

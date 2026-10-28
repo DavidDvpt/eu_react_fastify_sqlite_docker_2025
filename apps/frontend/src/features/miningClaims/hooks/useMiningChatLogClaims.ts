@@ -1,13 +1,20 @@
 import { useEffect, useRef } from 'react';
 
 import {
+  getGetCurrentSessionApiV2SessionsCurrentGetQueryKey,
   useCreateClaimApiV2MiningSessionIdClaimsPost,
+  useListClaimsApiV2MiningSessionIdClaimsGet,
   usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
+  useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost,
+  useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut,
 } from '@/api/generated/react-query/entropiaManagerAPI';
+import { SessionType } from '@/api/generated/model';
 import type { ItemResponse } from '@/api/generated/react-query/model/itemResponse';
 import type { MiningClaimResponse } from '@/api/generated/react-query/model/miningClaimResponse';
+import type { MiningResultLineResponse } from '@/api/generated/react-query/model/miningResultLineResponse';
 import { getChatLog } from '@/features/chatLogSetup/services/chatLogStorage';
 import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
+import { queryClient } from '@/lib/react-query/queryClient';
 import { getauthState } from '@/store';
 import { useAppSelector } from '@/store/hooks';
 import { MiningClaimParser } from '../services/miningClaimParser';
@@ -22,18 +29,30 @@ const LISTENER_LOG_PREFIX = '[ChatLogListener]';
 export type ClaimDetectedInfo = MiningClaimResponse & { resourceName: string };
 export type ClaimDepletedInfo = MiningClaimResponse & { resourceName: string };
 export type UnknownClaimCandidate = { id: string; resourceName: string };
+export type ResultLineUpdate = {
+  id: string;
+  itemId: string;
+  quantity: number;
+  isFinalized?: boolean;
+};
 
 export function useMiningChatLogClaims(
   sessionId: string | undefined,
   items: ItemResponse[],
+  resultLines: MiningResultLineResponse[] = [],
   onClaimDetected?: (claim: ClaimDetectedInfo) => void,
   onClaimDepleted?: (claim: ClaimDepletedInfo) => void,
   onUnknownClaim?: (
     candidates: UnknownClaimCandidate[],
     resolve: (claimId: string) => void,
   ) => void,
+  onResultLineChanged?: (line: ResultLineUpdate) => void,
 ) {
   const parserRef = useRef(new MiningClaimParser());
+  const claimsQuery = useListClaimsApiV2MiningSessionIdClaimsGet(
+    sessionId ?? '',
+    { query: { enabled: Boolean(sessionId) } },
+  );
   const inGameUsername = useAppSelector(
     (state) => getauthState(state).user.result?.inGameUsername?.trim() ?? '',
   );
@@ -42,15 +61,68 @@ export function useMiningChatLogClaims(
   const pendingRef = useRef(false);
   const createClaim = useCreateClaimApiV2MiningSessionIdClaimsPost();
   const patchClaim = usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch();
+  const createResultLine =
+    useCreateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesPost();
+  const updateResultLine =
+    useUpdateMiningResourceLineApiV2SessionsMiningSessionIdResourceLinesLineIdPut();
+  const resultLinesRef = useRef(resultLines);
+  useEffect(() => {
+    resultLinesRef.current = resultLines;
+  }, [resultLines]);
   const toExtractRef = useRef<
     Array<{
       trackingId: number;
       id: string;
       resourceName: string;
-      resourceType: MiningResourceType;
+      resourceType: MiningResourceType | null;
       itemId: string | null;
     }>
   >([]);
+  const hydratedClaimIdsRef = useRef(new Set<string>());
+
+  const updateCurrentSessionResultLine = (
+    lineId: string,
+    itemId: string,
+    quantity: number,
+  ) => {
+    queryClient.setQueryData(
+      getGetCurrentSessionApiV2SessionsCurrentGetQueryKey({
+        type: SessionType.MINING,
+      }),
+      (session: unknown) => {
+        if (
+          !session ||
+          typeof session !== 'object' ||
+          !('resultLines' in session) ||
+          !Array.isArray(session.resultLines)
+        ) {
+          return session;
+        }
+        const resultLines = session.resultLines as Array<{
+          id: string;
+          itemId: string;
+          quantity: number | null;
+          isFinalized?: boolean;
+        }>;
+        const lineIndex = resultLines.findIndex((line) => line.id === lineId);
+        const nextLine = {
+          id: lineId,
+          itemId,
+          quantity,
+          isFinalized: false,
+        };
+        return {
+          ...session,
+          resultLines:
+            lineIndex >= 0
+              ? resultLines.map((line, index) =>
+                  index === lineIndex ? { ...line, ...nextLine } : line,
+                )
+              : [...resultLines, nextLine],
+        };
+      },
+    );
+  };
 
   useEffect(() => {
     console.log(LISTENER_LOG_PREFIX, 'Configuration du parser', {
@@ -69,12 +141,49 @@ export function useMiningChatLogClaims(
     offsetRef.current = null;
     pendingTextRef.current = '';
     toExtractRef.current = [];
+    hydratedClaimIdsRef.current.clear();
     pendingRef.current = false;
     console.log(
       LISTENER_LOG_PREFIX,
       'Parser prêt, lecture depuis la fin du fichier au prochain passage',
     );
-  }, [sessionId]);
+  }, [inGameUsername, sessionId]);
+
+  useEffect(() => {
+    if (
+      !sessionId ||
+      !claimsQuery.data ||
+      claimsQuery.data.session.id !== sessionId
+    )
+      return;
+
+    for (const claim of claimsQuery.data.claims) {
+      if (
+        claim.depleted ||
+        hydratedClaimIdsRef.current.has(claim.id) ||
+        !claim.item
+      ) {
+        continue;
+      }
+      const trackingId = parserRef.current.restoreClaim({
+        resourceName: claim.item.name,
+        resourceType: null,
+        itemId: claim.item.id,
+        quantity: claim.quantity,
+        value: claim.value === null ? null : Number(claim.value),
+        isGlobal: claim.isGlobal,
+        isHof: claim.isHof,
+      });
+      toExtractRef.current.push({
+        trackingId,
+        id: claim.id,
+        resourceName: claim.item.name,
+        resourceType: null,
+        itemId: claim.item.id,
+      });
+      hydratedClaimIdsRef.current.add(claim.id);
+    }
+  }, [claimsQuery.data, inGameUsername, sessionId]);
 
   useEffect(() => {
     console.log(LISTENER_LOG_PREFIX, 'Initialisation du listener', {
@@ -148,7 +257,7 @@ export function useMiningChatLogClaims(
             depleted: false,
           },
         });
-        pendingClaim.itemId = updatedClaim.item?.id ?? null;
+        pendingClaim.itemId = updatedClaim.item?.id ?? pendingClaim.itemId;
         return;
       }
 
@@ -167,7 +276,65 @@ export function useMiningChatLogClaims(
             depleted: true,
           },
         });
-        claim.itemId = updatedClaim.item?.id ?? null;
+        claim.itemId = updatedClaim.item?.id ?? claim.itemId;
+        if (claim.itemId && event.payload.quantity > 0) {
+          const existingLine = resultLinesRef.current.find(
+            (line) =>
+              line.itemId === claim.itemId && line.isFinalized !== true,
+          );
+          const quantity =
+            (existingLine?.quantity ?? 0) + event.payload.quantity;
+
+          if (existingLine) {
+            const updatedLine = await updateResultLine.mutateAsync({
+              sessionId,
+              lineId: existingLine.id,
+              data: { quantity },
+            });
+            existingLine.quantity = updatedLine.quantity ?? quantity;
+            updateCurrentSessionResultLine(
+              existingLine.id,
+              claim.itemId,
+              existingLine.quantity,
+            );
+            onResultLineChanged?.({
+              id: existingLine.id,
+              itemId: claim.itemId,
+              quantity: existingLine.quantity,
+              isFinalized: existingLine.isFinalized,
+            });
+          } else {
+            const createdLine = await createResultLine.mutateAsync({
+              sessionId,
+              data: {
+                itemId: claim.itemId,
+                quantity: event.payload.quantity,
+              },
+            });
+            resultLinesRef.current.push({
+              id: createdLine.id,
+              sessionId: createdLine.sessionId,
+              lotId: createdLine.lotId,
+              type: createdLine.type,
+              createdAt: createdLine.createdAt,
+              quantity: createdLine.quantity ?? event.payload.quantity,
+              decay: createdLine.decay,
+              isFinalized: createdLine.isFinalized,
+              itemId: claim.itemId,
+            });
+            updateCurrentSessionResultLine(
+              createdLine.id,
+              claim.itemId,
+              createdLine.quantity ?? event.payload.quantity,
+            );
+            onResultLineChanged?.({
+              id: createdLine.id,
+              itemId: claim.itemId,
+              quantity: createdLine.quantity ?? event.payload.quantity,
+              isFinalized: createdLine.isFinalized,
+            });
+          }
+        }
         toExtractRef.current = toExtractRef.current.filter(
           (queuedClaim) => queuedClaim.id !== claim.id,
         );
@@ -244,6 +411,9 @@ export function useMiningChatLogClaims(
         });
         for (const line of lines) {
           console.log(LISTENER_LOG_PREFIX, 'Ligne reçue', line);
+          console.log(LISTENER_LOG_PREFIX, 'État toExtract avant parsing', {
+            toExtract: toExtractRef.current,
+          });
           const event: MiningClaimParserEvent | null =
             parserRef.current.processLine(line, items);
           console.log(LISTENER_LOG_PREFIX, 'Résultat du parser', {
@@ -294,12 +464,15 @@ export function useMiningChatLogClaims(
     };
   }, [
     createClaim,
+    createResultLine,
     inGameUsername,
     items,
     onClaimDetected,
     onClaimDepleted,
     onUnknownClaim,
+    onResultLineChanged,
     patchClaim,
+    updateResultLine,
     sessionId,
   ]);
 }
