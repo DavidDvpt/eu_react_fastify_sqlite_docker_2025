@@ -33,6 +33,12 @@ function getRuntimeBaseUrl(
 }
 
 function getApiBaseUrl() {
+  // In Vite development, keep API calls same-origin so the dev proxy handles
+  // the backend request and the browser does not enforce cross-origin rules.
+  if (import.meta.env.DEV) {
+    return '/';
+  }
+
   return getRuntimeBaseUrl(runtimeConfig.API_URL, env.VITE_API_URL, '/');
 }
 

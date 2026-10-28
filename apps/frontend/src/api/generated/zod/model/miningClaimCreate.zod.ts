@@ -12,6 +12,9 @@ export const miningClaimCreateIsGlobalDefault = false;
 export const miningClaimCreateValueOneExclusiveMin = 0;
 
 export const miningClaimCreateValueTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
+export const miningClaimCreateDepthOneExclusiveMin = 0;
+
+export const miningClaimCreateDepthTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 
 
 export const MiningClaimCreate = zod.object({
@@ -19,7 +22,8 @@ export const MiningClaimCreate = zod.object({
   "quantity": zod.union([zod.int().gt(miningClaimCreateQuantityOneExclusiveMin),zod.null()]).optional(),
   "isHof": zod.boolean().default(miningClaimCreateIsHofDefault),
   "isGlobal": zod.boolean().default(miningClaimCreateIsGlobalDefault),
-  "value": zod.union([zod.number().gt(miningClaimCreateValueOneExclusiveMin),zod.string().regex(miningClaimCreateValueTwoRegExp),zod.null()]).optional()
+  "value": zod.union([zod.number().gt(miningClaimCreateValueOneExclusiveMin),zod.string().regex(miningClaimCreateValueTwoRegExp),zod.null()]).optional(),
+  "depth": zod.union([zod.number().gt(miningClaimCreateDepthOneExclusiveMin),zod.string().regex(miningClaimCreateDepthTwoRegExp),zod.null()]).optional()
 });
 
 export type MiningClaimCreate = zod.input<typeof MiningClaimCreate>;

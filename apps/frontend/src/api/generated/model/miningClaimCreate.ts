@@ -10,4 +10,5 @@ export type MiningClaimCreate = {
   isHof?: boolean;
   isGlobal?: boolean;
   value?: number | string | null;
+  depth?: number | string | null;
 };

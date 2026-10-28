@@ -11,4 +11,5 @@ export type MiningClaimPatch = {
   depleted?: boolean | null;
   latitude?: number | null;
   longitude?: number | null;
+  depth?: number | string | null;
 };

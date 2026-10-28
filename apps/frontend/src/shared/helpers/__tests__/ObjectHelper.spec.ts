@@ -33,6 +33,36 @@ describe('ObjectHelper', () => {
     });
   });
 
+  describe('omitNullish', () => {
+    it('removes keys with null or undefined values', () => {
+      expect(
+        ObjectHelper.omitNullish({
+          id: 1,
+          name: 'Alice',
+          email: null,
+          phone: undefined,
+        }),
+      ).toEqual({
+        id: 1,
+        name: 'Alice',
+      });
+    });
+
+    it('keeps falsy values', () => {
+      expect(
+        ObjectHelper.omitNullish({
+          active: false,
+          count: 0,
+          label: '',
+        }),
+      ).toEqual({
+        active: false,
+        count: 0,
+        label: '',
+      });
+    });
+  });
+
   describe('snakeToCamelKeys', () => {
     it('converts snake_case keys to camelCase', () => {
       expect(

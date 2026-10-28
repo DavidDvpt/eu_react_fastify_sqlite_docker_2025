@@ -6,7 +6,6 @@ import {
   usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
 } from '@/api/generated/react-query/entropiaManagerAPI';
 import type { MiningClaimResponse } from '@/api/generated/react-query/model/miningClaimResponse';
-import type { MiningDepositSizeResponse } from '@/api/generated/react-query/model/miningDepositSizeResponse';
 import { GenericForm } from '@/shared/components/form/Genericform';
 import FormButtonsSection from '@/shared/components/form/FormButtonsSection';
 import InputRHF from '@/shared/components/form/Input/InputRHF';
@@ -15,6 +14,7 @@ import CheckboxRHF from '@/shared/components/form/Checkbox/CheckboxRHF';
 import { ModalGeneric } from '@/shared/components';
 import { InvalidateQueryAndKeys } from '@/lib/react-query/InvalidateQueryAndKeys';
 import type { ItemViewModel } from '@zod-schemas';
+import { ObjectHelper } from '@/shared/helpers/ObjectHelper';
 
 const nullableNumber = (integer = false) =>
   z.preprocess(
@@ -27,9 +27,7 @@ const nullableNumber = (integer = false) =>
 
 const claimEditSchema = z.object({
   itemId: z.string().nullable(),
-  depositSize: z.string().nullable(),
   quantity: nullableNumber(true),
-  value: nullableNumber(),
   latitude: nullableNumber(true),
   longitude: nullableNumber(true),
   depth: nullableNumber(),
@@ -42,7 +40,6 @@ type MiningClaimEditModalProps = {
   sessionId: string;
   claims: MiningClaimResponse[];
   items: ItemViewModel[];
-  depositSizes: MiningDepositSizeResponse[];
   resourceNames: Record<string, string>;
 };
 
@@ -50,7 +47,6 @@ function MiningClaimEditModal({
   sessionId,
   claims,
   items,
-  depositSizes,
   resourceNames,
 }: MiningClaimEditModalProps) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -64,15 +60,6 @@ function MiningClaimEditModal({
     () => items.map((item) => ({ value: item.id, label: item.name })),
     [items],
   );
-  const sizeOptions = useMemo(
-    () =>
-      depositSizes.map((size) => ({
-        value: String(size.id),
-        label: `${size.romanSize} — ${size.sizeLabel}`,
-      })),
-    [depositSizes],
-  );
-
   const close = () => {
     const next = new URLSearchParams(searchParams);
     next.delete('claimId');
@@ -82,10 +69,6 @@ function MiningClaimEditModal({
 
   if ((!claimId || !claim) && !isCreateMode) return null;
 
-  // Claims store the reference row id, not the display size number.
-  const selectedDepositSize = depositSizes.find(
-    (size) => size.id === claim?.depositSize,
-  );
   const resolvedItemId =
     claim?.itemId ??
     items.find((item) => item.name === resourceNames[claim?.id ?? ''])?.id ??
@@ -93,9 +76,7 @@ function MiningClaimEditModal({
 
   const defaultValues = {
     itemId: resolvedItemId,
-    depositSize: selectedDepositSize ? String(selectedDepositSize.id) : null,
     quantity: claim?.quantity ?? null,
-    value: claim?.value == null ? null : Number(claim.value),
     latitude: claim?.latitude ?? null,
     longitude: claim?.longitude ?? null,
     depth: claim?.depth == null ? null : Number(claim.depth),
@@ -104,39 +85,34 @@ function MiningClaimEditModal({
 
   const handleSubmit = async (values: ClaimEditValues) => {
     const depleted = values.depleted === true;
-    const depositSizeId =
-      values.depositSize ||
-      (claim?.depositSize == null ? null : String(claim.depositSize));
-
     if (isCreateMode) {
       const createdClaim = await createClaim.mutateAsync({
         sessionId,
-        data: {
+        data: ObjectHelper.omitNullish({
           itemId: values.itemId || null,
           quantity: values.quantity,
-          value: values.value,
+          depth: values.depth,
           isGlobal: false,
           isHof: false,
-        },
+        }),
       });
       if (
+        values.latitude !== null ||
+        values.longitude !== null ||
         values.depth !== null ||
-        depositSizeId !== null ||
-        values.depleted
+        depleted
       ) {
         await patchClaim.mutateAsync({
           sessionId,
           claimId: createdClaim.id,
-          data: {
+          data: ObjectHelper.omitNullish({
             itemId: values.itemId || null,
             quantity: values.quantity,
-            value: values.value,
             latitude: values.latitude,
             longitude: values.longitude,
             depth: values.depth,
-            depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
             depleted,
-          },
+          }),
         });
       }
       await InvalidateQueryAndKeys.miningMutation(sessionId);
@@ -144,16 +120,14 @@ function MiningClaimEditModal({
       await patchClaim.mutateAsync({
         sessionId,
         claimId: claim.id,
-        data: {
+        data: ObjectHelper.omitNullish({
           itemId: values.itemId || null,
           quantity: values.quantity,
-          value: values.value,
           latitude: values.latitude,
           longitude: values.longitude,
           depth: values.depth,
-          depositSize: depositSizeId !== null ? Number(depositSizeId) : null,
           depleted,
-        },
+        }),
       });
       await InvalidateQueryAndKeys.miningMutation(sessionId);
     }
@@ -183,26 +157,12 @@ function MiningClaimEditModal({
           options={itemOptions}
           placeholder="Choisir une ressource..."
         />
-        <SelectRHF
-          name="depositSize"
-          label="Taille: "
-          options={sizeOptions}
-          placeholder="Choisir une taille..."
-        />
         <InputRHF
           name="quantity"
           label="Quantité: "
           type="number"
           min={1}
           step="1"
-          registerOptions={{ valueAsNumber: true }}
-        />
-        <InputRHF
-          name="value"
-          label="Valeur: "
-          type="number"
-          min={0}
-          step="any"
           registerOptions={{ valueAsNumber: true }}
         />
         <div className="grid grid-cols-2 gap-2">
@@ -225,6 +185,7 @@ function MiningClaimEditModal({
           name="depth"
           label="Profondeur: "
           type="number"
+          min={0}
           step="any"
           registerOptions={{ valueAsNumber: true }}
         />

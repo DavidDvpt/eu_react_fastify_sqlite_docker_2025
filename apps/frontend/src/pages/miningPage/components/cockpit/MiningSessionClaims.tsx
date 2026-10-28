@@ -7,7 +7,9 @@ import {
 import type { MiningClaimResponse } from '@/api/generated/react-query/model/miningClaimResponse';
 import type { MiningDepositSizeResponse } from '@/api/generated/react-query/model/miningDepositSizeResponse';
 import type { ItemViewModel } from '@zod-schemas';
+import IconButton, { IconButtonIcon } from '@/shared/components/IconButton';
 import MiningClaimEditModal from './MiningClaimEditModal';
+import MiningClaimDepthEditModal from './MiningClaimDepthEditModal';
 
 type MiningSessionClaimsProps = {
   sessionId: string;
@@ -17,11 +19,6 @@ type MiningSessionClaimsProps = {
   items: ItemViewModel[];
   searchType?: number | null;
 };
-
-function formatValue(value: string | null) {
-  if (value === null) return '—';
-  return `${Number(value).toFixed(2)} PED`;
-}
 
 function MiningSessionClaims({
   sessionId,
@@ -92,13 +89,22 @@ function MiningSessionClaims({
   const openClaim = (claimId: string) => {
     const params = new URLSearchParams(searchParams);
     params.set('claimId', claimId);
+    params.delete('depthClaimId');
     setSearchParams(params);
   };
 
   const openCreateClaim = () => {
     const params = new URLSearchParams(searchParams);
     params.delete('claimId');
+    params.delete('depthClaimId');
     params.set('createClaim', 'true');
+    setSearchParams(params);
+  };
+
+  const openDepthEdit = (claimId: string) => {
+    const params = new URLSearchParams(searchParams);
+    params.set('depthClaimId', claimId);
+    params.delete('claimId');
     setSearchParams(params);
   };
 
@@ -127,10 +133,10 @@ function MiningSessionClaims({
             <thead className="bg-surface-hover text-text-muted">
               <tr>
                 <th className="w-[8%] px-2 py-2">#</th>
-                <th className="w-[35%] px-2 py-2">Ressource</th>
-                <th className="w-[14%] px-2 py-2">Taille</th>
-                <th className="w-[14%] px-2 py-2 text-right">Depth</th>
-                <th className="w-[26%] px-2 py-2 text-right">Valeur</th>
+                <th className="w-[40%] px-2 py-2">Ressource</th>
+                <th className="w-[18%] px-2 py-2">Taille</th>
+                <th className="w-[18%] px-2 py-2 text-right">Depth</th>
+                <th className="w-[16%] px-2 py-2 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -164,7 +170,20 @@ function MiningSessionClaims({
                       {claim.depth ?? '-'}
                     </td>
                     <td className="px-2 py-2 text-right">
-                      {formatValue(claim.value)}
+                      <IconButton
+                        type="button"
+                        variant="secondary"
+                        size="icon"
+                        className="h-8 w-8 rounded-md border-[var(--blue-400)] bg-[var(--blue-400)] p-0 hover:bg-[var(--blue-400)]"
+                        icon={IconButtonIcon.Depth}
+                        iconClassName="text-white"
+                        aria-label={`Modifier la profondeur du claim ${index + 1}`}
+                        title="Modifier la profondeur"
+                        onClick={(event) => {
+                          event.stopPropagation();
+                          openDepthEdit(claim.id);
+                        }}
+                      />
                     </td>
                   </tr>
                 );
@@ -177,8 +196,11 @@ function MiningSessionClaims({
         sessionId={sessionId}
         claims={displayedClaims}
         items={editableItems}
-        depositSizes={depositSizes}
         resourceNames={resourceNames}
+      />
+      <MiningClaimDepthEditModal
+        sessionId={sessionId}
+        claims={displayedClaims}
       />
     </section>
   );

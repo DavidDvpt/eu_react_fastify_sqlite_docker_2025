@@ -26,7 +26,6 @@ import {
   MessageResponse,
   MiningAvailableResponse,
   MiningClaimCreate,
-  MiningClaimDepthPatch,
   MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
@@ -1252,28 +1251,6 @@ export const PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse = MiningCl
 
 export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse = zod.input<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
 export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponseOutput = zod.output<typeof PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResponse>;
-
-
-/**
- * @summary Patch Claim Depth
- */
-export const PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchParams = zod.object({
-  "session_id": zod.string(),
-  "claim_id": zod.string()
-})
-
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchParams = zod.input<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchParams>;
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchParamsOutput = zod.output<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchParams>;
-
-export const PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchBody = MiningClaimDepthPatch
-
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchBody = zod.input<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchBody>;
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchBodyOutput = zod.output<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchBody>;
-
-export const PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchResponse = MiningClaimResponse
-
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchResponse = zod.input<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchResponse>;
-export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchResponseOutput = zod.output<typeof PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchResponse>;
 
 
 /**

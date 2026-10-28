@@ -5,6 +5,7 @@ import {
   EllipsisVertical,
   Pencil,
   Save,
+  Target,
   Trash2,
   X,
 } from 'lucide-react';
@@ -19,6 +20,7 @@ export const IconButtonIcon = {
   Save: 'Save',
   Confirm: 'Confirm',
   More: 'More',
+  Depth: 'Depth',
 } as const;
 
 export type IconButtonIcon =
@@ -32,6 +34,7 @@ const icons: Record<IconButtonIcon, LucideIcon> = {
   [IconButtonIcon.Save]: Save,
   [IconButtonIcon.Confirm]: Check,
   [IconButtonIcon.More]: EllipsisVertical,
+  [IconButtonIcon.Depth]: Target,
 };
 
 type IconButtonProps = Omit<ButtonProps, 'icon'> & {

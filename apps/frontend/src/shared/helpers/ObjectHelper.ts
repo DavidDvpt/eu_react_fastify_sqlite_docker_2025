@@ -24,6 +24,16 @@ export class ObjectHelper {
     ) as Partial<T>;
   }
 
+  static omitNullish<T extends Record<string, unknown>>(
+    value: T,
+  ): Partial<{
+    [K in keyof T]: Exclude<T[K], null | undefined>;
+  }> {
+    return Object.fromEntries(
+      Object.entries(value).filter(([, entry]) => entry !== null && entry !== undefined),
+    ) as Partial<{ [K in keyof T]: Exclude<T[K], null | undefined> }>;
+  }
+
   static snakeToCamelKeys<T>(value: T): SnakeToCamelKeys<T>;
   static snakeToCamelKeys<T, K extends SnakeToCamelKeys<T>>(value: T): K;
   static snakeToCamelKeys<T>(value: T): SnakeToCamelKeys<T> {

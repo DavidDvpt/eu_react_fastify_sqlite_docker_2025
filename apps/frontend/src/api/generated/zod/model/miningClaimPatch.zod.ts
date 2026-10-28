@@ -7,6 +7,9 @@ import * as zod from 'zod';
 
 export const miningClaimPatchQuantityOneExclusiveMin = 0;
 
+export const miningClaimPatchDepthOneExclusiveMin = 0;
+
+export const miningClaimPatchDepthTwoRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 
 
 export const MiningClaimPatch = zod.object({
@@ -15,7 +18,8 @@ export const MiningClaimPatch = zod.object({
   "isHof": zod.union([zod.boolean(),zod.null()]).optional(),
   "depleted": zod.union([zod.boolean(),zod.null()]).optional(),
   "latitude": zod.union([zod.int(),zod.null()]).optional(),
-  "longitude": zod.union([zod.int(),zod.null()]).optional()
+  "longitude": zod.union([zod.int(),zod.null()]).optional(),
+  "depth": zod.union([zod.number().gt(miningClaimPatchDepthOneExclusiveMin),zod.string().regex(miningClaimPatchDepthTwoRegExp),zod.null()]).optional()
 });
 
 export type MiningClaimPatch = zod.input<typeof MiningClaimPatch>;

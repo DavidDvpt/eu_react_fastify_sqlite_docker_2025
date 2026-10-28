@@ -64,7 +64,6 @@ import type {
   MessageResponse,
   MiningAvailableResponse,
   MiningClaimCreate,
-  MiningClaimDepthPatch,
   MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
@@ -5350,76 +5349,6 @@ export const usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch = <TError = Err
         TContext
       > => {
       return useMutation(getPatchClaimApiV2MiningSessionIdClaimsClaimIdPatchMutationOptions(options), queryClient);
-    }
-
-/**
- * @summary Patch Claim Depth
- */
-export const patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch = (
-    sessionId: string,
-    claimId: string,
-    miningClaimDepthPatch: BodyType<MiningClaimDepthPatch>,
- options?: SecondParameter<typeof customInstance>,signal?: AbortSignal
-) => {
-
-
-      return customInstance<MiningClaimResponse>(
-      {url: `/api/v2/mining/${sessionId}/claims/${claimId}/depth`, method: 'PATCH',
-      headers: {'Content-Type': 'application/json', },
-      data: miningClaimDepthPatch, signal
-    },
-      options);
-    }
-
-
-
-
-export const getPatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationKey = () => ['patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch'] as const;
-
-export const getPatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationOptions = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>, TError,PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): UseMutationOptions<Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>, TError,PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables, TContext> => {
-
-const mutationKey = getPatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationKey();
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>, PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables> = (props) => {
-          const {sessionId,claimId,data} = props ?? {};
-
-          return  patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch(sessionId,claimId,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationResult = NonNullable<Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>>
-    export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationBody = BodyType<MiningClaimDepthPatch>
-    export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationError = ErrorType<HTTPValidationError>
-    export type PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables = {sessionId: string;claimId: string;data: BodyType<MiningClaimDepthPatch>}
-
-    /**
- * @summary Patch Claim Depth
- */
-export const usePatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch = <TError = ErrorType<HTTPValidationError>,
-    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>, TError,PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: QueryClient): UseMutationResult<
-        Awaited<ReturnType<typeof patchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatch>>,
-        TError,
-        PatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationVariables,
-        TContext
-      > => {
-      return useMutation(getPatchClaimDepthApiV2MiningSessionIdClaimsClaimIdDepthPatchMutationOptions(options), queryClient);
     }
 
 /**
