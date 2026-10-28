@@ -70,7 +70,7 @@ function MiningClaimEditModal({
   if ((!claimId || !claim) && !isCreateMode) return null;
 
   const resolvedItemId =
-    claim?.itemId ??
+    claim?.item?.id ??
     items.find((item) => item.name === resourceNames[claim?.id ?? ''])?.id ??
     null;
 

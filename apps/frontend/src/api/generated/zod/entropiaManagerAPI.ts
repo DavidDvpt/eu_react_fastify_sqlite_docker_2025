@@ -29,7 +29,6 @@ import {
   MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
-  MiningClaimsWithSessionResponse,
   MiningCostLineResponse,
   MiningCostLineUpdate,
   MiningCurrentSessionResponse,
@@ -1225,7 +1224,7 @@ export const CreateClaimApiV2MiningSessionIdClaimsPostBody = MiningClaimCreate
 export type CreateClaimApiV2MiningSessionIdClaimsPostBody = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
 export type CreateClaimApiV2MiningSessionIdClaimsPostBodyOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostBody>;
 
-export const CreateClaimApiV2MiningSessionIdClaimsPostResponse = MiningClaimsWithSessionResponse
+export const CreateClaimApiV2MiningSessionIdClaimsPostResponse = MiningClaimResponse
 
 export type CreateClaimApiV2MiningSessionIdClaimsPostResponse = zod.input<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;
 export type CreateClaimApiV2MiningSessionIdClaimsPostResponseOutput = zod.output<typeof CreateClaimApiV2MiningSessionIdClaimsPostResponse>;

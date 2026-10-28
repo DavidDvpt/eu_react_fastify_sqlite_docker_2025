@@ -53,7 +53,6 @@ export * from './miningClaimCreate.zod.ts';
 export * from './miningClaimPatch.zod.ts';
 export * from './miningClaimResponse.zod.ts';
 export * from './miningClaimsResponse.zod.ts';
-export * from './miningClaimsWithSessionResponse.zod.ts';
 export * from './miningCostLineResponse.zod.ts';
 export * from './miningCostLineUpdate.zod.ts';
 export * from './miningCurrentEnhancerResponse.zod.ts';

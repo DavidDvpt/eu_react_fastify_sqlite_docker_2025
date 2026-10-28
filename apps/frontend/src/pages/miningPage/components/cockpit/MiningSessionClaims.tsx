@@ -5,7 +5,6 @@ import {
   useListClaimsApiV2MiningSessionIdClaimsGet,
 } from '@/api/generated/react-query/entropiaManagerAPI';
 import type { MiningClaimResponse } from '@/api/generated/react-query/model/miningClaimResponse';
-import type { MiningDepositSizeResponse } from '@/api/generated/react-query/model/miningDepositSizeResponse';
 import type { ItemViewModel } from '@zod-schemas';
 import IconButton, { IconButtonIcon } from '@/shared/components/IconButton';
 import MiningClaimEditModal from './MiningClaimEditModal';
@@ -13,8 +12,6 @@ import MiningClaimDepthEditModal from './MiningClaimDepthEditModal';
 
 type MiningSessionClaimsProps = {
   sessionId: string;
-  itemById: Map<string, ItemViewModel>;
-  depositSizes: MiningDepositSizeResponse[];
   resourceNames: Record<string, string>;
   items: ItemViewModel[];
   searchType?: number | null;
@@ -22,8 +19,6 @@ type MiningSessionClaimsProps = {
 
 function MiningSessionClaims({
   sessionId,
-  itemById,
-  depositSizes,
   resourceNames,
   items,
   searchType,
@@ -45,43 +40,7 @@ function MiningSessionClaims({
   const editableItems = items.filter((item) =>
     lootItemIds.has(item.id.toLowerCase()),
   );
-  const fakeClaims: MiningClaimResponse[] = [
-    {
-      id: '__fake-claim-open__',
-      createdAt: '1970-01-01T00:00:00.000Z',
-      updatedAt: null,
-      sessionId,
-      itemId: editableItems[0]?.id ?? null,
-      quantity: 1250,
-      isHof: false,
-      isGlobal: true,
-      value: '42.50',
-      depositSize: null,
-      depleted: false,
-      latitude: null,
-      longitude: null,
-      depth: null,
-    },
-    {
-      id: '__fake-claim-depleted__',
-      createdAt: '1970-01-01T00:00:01.000Z',
-      updatedAt: null,
-      sessionId,
-      itemId: editableItems[0]?.id ?? null,
-      quantity: 800,
-      isHof: false,
-      isGlobal: false,
-      value: '18.75',
-      depositSize: 3,
-      depleted: true,
-      latitude: null,
-      longitude: null,
-      depth: null,
-    },
-  ];
-  const displayedClaims = (
-    import.meta.env.DEV ? [...fakeClaims, ...claims] : [...claims]
-  ).sort(
+  const displayedClaims = [...claims].sort(
     (first, second) =>
       Date.parse(second.createdAt) - Date.parse(first.createdAt),
   );
@@ -142,14 +101,8 @@ function MiningSessionClaims({
             <tbody>
               {displayedClaims.map((claim, index) => {
                 // Claims store the reference row id, not the display size number.
-                const size = depositSizes.find(
-                  (entry) => entry.id === claim.depositSize,
-                );
-                const resourceName = claim.itemId
-                  ? (itemById.get(claim.itemId)?.name ??
-                    resourceNames[claim.id] ??
-                    'Unknown')
-                  : (resourceNames[claim.id] ?? 'Unknown');
+                const resourceName =
+                  claim.item?.name ?? resourceNames[claim.id] ?? 'Unknown';
                 return (
                   <tr
                     key={claim.id}
@@ -165,7 +118,9 @@ function MiningSessionClaims({
                   >
                     <td className="px-2 py-2">{index + 1}</td>
                     <td className="break-words px-2 py-2">{resourceName}</td>
-                    <td className="px-2 py-2">{size?.romanSize ?? '—'}</td>
+                    <td className="px-2 py-2">
+                      {claim.depositSize?.romanSize ?? '—'}
+                    </td>
                     <td className="px-2 py-2 text-right">
                       {claim.depth ?? '-'}
                     </td>

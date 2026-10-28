@@ -54,7 +54,6 @@ import type {
   MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
-  MiningClaimsWithSessionResponse,
   MiningCostLineResponse,
   MiningCostLineUpdate,
   MiningCurrentSessionResponse,
@@ -1610,7 +1609,7 @@ const getListClaimsApiV2MiningSessionIdClaimsGetUrl = (sessionId: string,) => {
 const createClaimApiV2MiningSessionIdClaimsPost = (
     sessionId: string,
     miningClaimCreate: MiningClaimCreate, options?: AxiosRequestConfig
- ): Promise<AxiosResponse<MiningClaimsWithSessionResponse>> => {
+ ): Promise<AxiosResponse<MiningClaimResponse>> => {
     return axiosInstance.post(
       `/api/v2/mining/${sessionId}/claims`,
       miningClaimCreate,options
@@ -1887,7 +1886,7 @@ export type ConsumeMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdCons
 export type UpdateMiningCostLineApiV2SessionsMiningSessionIdCostLinesLineIdPutResult = AxiosResponse<MiningCostLineResponse>
 export type CloseSessionApiV2SessionsSessionIdPatchResult = AxiosResponse<SessionResponse>
 export type ListClaimsApiV2MiningSessionIdClaimsGetResult = AxiosResponse<MiningClaimsResponse>
-export type CreateClaimApiV2MiningSessionIdClaimsPostResult = AxiosResponse<MiningClaimsWithSessionResponse>
+export type CreateClaimApiV2MiningSessionIdClaimsPostResult = AxiosResponse<MiningClaimResponse>
 export type PatchClaimApiV2MiningSessionIdClaimsClaimIdPatchResult = AxiosResponse<MiningClaimResponse>
 export type ListDepositSizesApiV2MiningDepositSizesGetResult = AxiosResponse<MiningDepositSizeResponse[]>
 export type GetDepositSizeApiV2MiningGetDepositSizeGetResult = AxiosResponse<MiningDepositSizeResponse>

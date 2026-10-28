@@ -5,14 +5,11 @@
  */
 import * as zod from 'zod';
 import { MiningClaimResponse } from './miningClaimResponse.zod.ts';
-
-export const miningClaimsResponseTotalValueRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
-
+import { SessionResponse } from './sessionResponse.zod.ts';
 
 export const MiningClaimsResponse = zod.object({
-  "claims": zod.array(MiningClaimResponse),
-  "count": zod.int(),
-  "totalValue": zod.string().regex(miningClaimsResponseTotalValueRegExp)
+  "session": SessionResponse,
+  "claims": zod.array(MiningClaimResponse)
 });
 
 export type MiningClaimsResponse = zod.input<typeof MiningClaimsResponse>;

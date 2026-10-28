@@ -67,7 +67,6 @@ import type {
   MiningClaimPatch,
   MiningClaimResponse,
   MiningClaimsResponse,
-  MiningClaimsWithSessionResponse,
   MiningCostLineResponse,
   MiningCostLineUpdate,
   MiningCurrentSessionResponse,
@@ -5222,7 +5221,7 @@ export const createClaimApiV2MiningSessionIdClaimsPost = (
 ) => {
 
 
-      return customInstance<MiningClaimsWithSessionResponse>(
+      return customInstance<MiningClaimResponse>(
       {url: `/api/v2/mining/${sessionId}/claims`, method: 'POST',
       headers: {'Content-Type': 'application/json', },
       data: miningClaimCreate, signal

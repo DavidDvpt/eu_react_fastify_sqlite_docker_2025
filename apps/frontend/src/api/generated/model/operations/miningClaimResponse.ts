@@ -3,19 +3,20 @@
  * Do not edit manually.
  * Entropia Manager API
  */
+import type { ItemResponse } from './itemResponse.ts';
+import type { MiningDepositSizeResponse } from './miningDepositSizeResponse.ts';
 
 export type MiningClaimResponse = {
   id: string;
   createdAt: string;
   updatedAt: string | null;
-  sessionId: string;
-  itemId: string | null;
   quantity: number | null;
   isHof: boolean;
   isGlobal: boolean;
   depleted: boolean;
   value: string | null;
-  depositSize: number | null;
+  item: ItemResponse | null;
+  depositSize: MiningDepositSizeResponse | null;
   latitude: number | null;
   longitude: number | null;
   depth: string | null;

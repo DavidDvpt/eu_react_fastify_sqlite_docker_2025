@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import type { MiningCurrentSessionResponse } from '@/api/generated/react-query/model/miningCurrentSessionResponse';
 import type { ItemViewModel } from '@zod-schemas';
-import { useListDepositSizesApiV2MiningDepositSizesGet } from '@/api/generated/react-query/entropiaManagerAPI';
 import EquipmentSummaryComponent from './EquipmentSummary';
 import MiningSessionFinancialSummary from './MiningSessionFinancialSummary';
 import MiningSessionClaims from './MiningSessionClaims';
@@ -17,7 +16,6 @@ function MiningSessionCockpit({
   resourceNames: Record<string, string>;
 }) {
   const [tab, setTab] = useState<'setup' | 'claims'>('setup');
-  const depositSizesQuery = useListDepositSizesApiV2MiningDepositSizesGet();
   const toEnhancerLines = (
     enhancers: MiningCurrentSessionResponse['finderEnhancers'],
   ): EnhancerLine[] =>
@@ -91,8 +89,6 @@ function MiningSessionCockpit({
       {tab === 'claims' ? (
         <MiningSessionClaims
           sessionId={session.id}
-          itemById={itemById}
-          depositSizes={depositSizesQuery.data ?? []}
           resourceNames={resourceNames}
           items={Array.from(itemById.values())}
           searchType={session.searchType}

@@ -4,6 +4,8 @@
  * Entropia Manager API
  */
 import * as zod from 'zod';
+import { ItemResponse } from './itemResponse.zod.ts';
+import { MiningDepositSizeResponse } from './miningDepositSizeResponse.zod.ts';
 
 export const miningClaimResponseValueOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
 export const miningClaimResponseDepthOneRegExp = new RegExp('^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$');
@@ -13,14 +15,13 @@ export const MiningClaimResponse = zod.object({
   "id": zod.string(),
   "createdAt": zod.string(),
   "updatedAt": zod.union([zod.string(),zod.null()]),
-  "sessionId": zod.string(),
-  "itemId": zod.union([zod.string(),zod.null()]),
   "quantity": zod.union([zod.int(),zod.null()]),
   "isHof": zod.boolean(),
   "isGlobal": zod.boolean(),
   "depleted": zod.boolean(),
   "value": zod.union([zod.string().regex(miningClaimResponseValueOneRegExp),zod.null()]),
-  "depositSize": zod.union([zod.int(),zod.null()]),
+  "item": zod.union([ItemResponse,zod.null()]),
+  "depositSize": zod.union([MiningDepositSizeResponse,zod.null()]),
   "latitude": zod.union([zod.int(),zod.null()]),
   "longitude": zod.union([zod.int(),zod.null()]),
   "depth": zod.union([zod.string().regex(miningClaimResponseDepthOneRegExp),zod.null()])

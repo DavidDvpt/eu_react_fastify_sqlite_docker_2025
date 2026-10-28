@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 
 import {
-  getDepositSizeApiV2MiningGetDepositSizeGet,
   useCreateClaimApiV2MiningSessionIdClaimsPost,
   usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch,
 } from '@/api/generated/react-query/entropiaManagerAPI';
@@ -43,13 +42,13 @@ export function useMiningChatLogClaims(
   const pendingRef = useRef(false);
   const createClaim = useCreateClaimApiV2MiningSessionIdClaimsPost();
   const patchClaim = usePatchClaimApiV2MiningSessionIdClaimsClaimIdPatch();
-  const claimQueueRef = useRef<
+  const toExtractRef = useRef<
     Array<{
+      trackingId: number;
       id: string;
       resourceName: string;
       resourceType: MiningResourceType;
       itemId: string | null;
-      depleted: boolean;
     }>
   >([]);
 
@@ -69,7 +68,7 @@ export function useMiningChatLogClaims(
     parserRef.current.reset();
     offsetRef.current = null;
     pendingTextRef.current = '';
-    claimQueueRef.current = [];
+    toExtractRef.current = [];
     pendingRef.current = false;
     console.log(
       LISTENER_LOG_PREFIX,
@@ -90,17 +89,12 @@ export function useMiningChatLogClaims(
       );
       return;
     }
+    void onUnknownClaim;
     let cancelled = false;
 
-    const findPendingClaim = (
-      resourceName: string,
-      resourceType: MiningResourceType,
-    ) =>
-      claimQueueRef.current.find(
-        (claim) =>
-          !claim.depleted &&
-          claim.resourceName === resourceName &&
-          claim.resourceType === resourceType,
+    const findPendingClaim = (trackingId: number) =>
+      toExtractRef.current.find(
+        (claim) => claim.trackingId === trackingId,
       );
 
     const processClaimEvent = async (event: MiningClaimParserEvent) => {
@@ -124,12 +118,12 @@ export function useMiningChatLogClaims(
             isHof,
           },
         });
-        claimQueueRef.current.push({
+        toExtractRef.current.push({
+          trackingId: event.payload.trackingId,
           id: createdClaim.id,
           resourceName,
           resourceType,
-          itemId: createdClaim.itemId,
-          depleted: false,
+          itemId: createdClaim.item?.id ?? null,
         });
         onClaimDetected?.({ ...createdClaim, resourceName });
         await InvalidateQueryAndKeys.miningMutation(sessionId);
@@ -137,8 +131,7 @@ export function useMiningChatLogClaims(
       }
 
       const pendingClaim = findPendingClaim(
-        event.payload.resourceName,
-        event.payload.resourceType,
+        event.payload.trackingId,
       );
       if (!pendingClaim) return;
 
@@ -151,31 +144,18 @@ export function useMiningChatLogClaims(
             ...(event.payload.quantity > 0
               ? { quantity: event.payload.quantity }
               : {}),
-            ...(event.payload.value > 0 ? { value: event.payload.value } : {}),
-            isGlobal: event.payload.isGlobal,
             isHof: event.payload.isHof,
             depleted: false,
           },
         });
-        pendingClaim.itemId = updatedClaim.itemId;
+        pendingClaim.itemId = updatedClaim.item?.id ?? null;
         return;
       }
 
-      const unknownClaims = claimQueueRef.current.filter(
-        (claim) =>
-          !claim.depleted &&
-          claim.resourceName === event.payload.resourceName &&
-          claim.resourceType === event.payload.resourceType &&
-          !claim.itemId,
-      );
       const completeDepletion = async (claim: {
         id: string;
         itemId: string | null;
-        depleted: boolean;
       }) => {
-        const depositSize = await getDepositSizeApiV2MiningGetDepositSizeGet({
-          value: event.payload.value,
-        });
         const updatedClaim = await patchClaim.mutateAsync({
           sessionId,
           claimId: claim.id,
@@ -183,16 +163,14 @@ export function useMiningChatLogClaims(
             itemId: claim.itemId,
             quantity:
               event.payload.quantity > 0 ? event.payload.quantity : null,
-            value: event.payload.value > 0 ? event.payload.value : null,
-            isGlobal: event.payload.isGlobal,
             isHof: event.payload.isHof,
             depleted: true,
-            // Claims store the reference row id, not the display size number.
-            depositSize: depositSize.id,
           },
         });
-        claim.itemId = updatedClaim.itemId;
-        claim.depleted = true;
+        claim.itemId = updatedClaim.item?.id ?? null;
+        toExtractRef.current = toExtractRef.current.filter(
+          (queuedClaim) => queuedClaim.id !== claim.id,
+        );
         onClaimDepleted?.({
           ...updatedClaim,
           resourceName: event.payload.resourceName,
@@ -200,19 +178,6 @@ export function useMiningChatLogClaims(
         parserRef.current.resetActiveClaim();
         await InvalidateQueryAndKeys.miningMutation(sessionId);
       };
-
-      if (!pendingClaim.itemId && unknownClaims.length > 0 && onUnknownClaim) {
-        onUnknownClaim?.(
-          unknownClaims.map(({ id, resourceName }) => ({ id, resourceName })),
-          (claimId) => {
-            const selectedClaim = claimQueueRef.current.find(
-              (claim) => claim.id === claimId,
-            );
-            if (selectedClaim) void completeDepletion(selectedClaim);
-          },
-        );
-        return;
-      }
 
       await completeDepletion(pendingClaim);
     };

@@ -4,11 +4,11 @@ import type { MiningCurrentSessionResponse } from '@/api/generated/react-query/m
 import { Panel, Section } from '@/shared/components/Containers';
 import { useSystemDatas } from '@/shared/hooks';
 import { useCallback, useEffect, useState } from 'react';
-import { useListDepositSizesApiV2MiningDepositSizesGet } from '@/api/generated/react-query/entropiaManagerAPI';
 import MiningSessionCockpit from './components/cockpit/MiningSessionCockpit';
 import MiningSessionResults from './components/cockpit/MiningSessionResults';
 import {
   useMiningChatLogClaims,
+  type ClaimDepletedInfo,
   type UnknownClaimCandidate,
 } from '@/features/miningClaims/hooks/useMiningChatLogClaims';
 import MiningClaimSnackbar, {
@@ -25,7 +25,6 @@ function MiningSessionCurrentView() {
     candidates: UnknownClaimCandidate[];
     resolve: (claimId: string) => void;
   } | null>(null);
-  const depositSizesQuery = useListDepositSizesApiV2MiningDepositSizesGet();
   const currentSessionQuery = useGetCurrentSessionApiV2SessionsCurrentGet(
     { type: SessionType.MINING },
     { query: { retry: false } },
@@ -50,32 +49,22 @@ function MiningSessionCurrentView() {
     [],
   );
   const handleClaimDepleted = useCallback(
-    (claim: {
-      id: string;
-      resourceName: string;
-      value: string | null;
-      isGlobal: boolean;
-      isHof: boolean;
-      depositSize: number | null;
-    }) => {
+    (claim: ClaimDepletedInfo) => {
       setResourceNames((current) => ({
         ...current,
         [claim.id]: claim.resourceName,
       }));
-      const depositSize = depositSizesQuery.data?.find(
-        (size) => size.size === claim.depositSize,
-      );
       setSnackbarClaim({
         type: 'depleted',
         resourceName: claim.resourceName,
-        romanSize: depositSize?.romanSize ?? '',
+        romanSize: claim.depositSize?.romanSize ?? '',
         value: claim.value === null ? undefined : Number(claim.value),
         isGlobal: claim.isGlobal,
         isHof: claim.isHof,
         isAth: false,
       });
     },
-    [depositSizesQuery.data],
+    [],
   );
   const handleUnknownClaim = useCallback(
     (

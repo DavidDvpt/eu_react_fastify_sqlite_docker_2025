@@ -3,6 +3,7 @@ import type { ItemResponse } from '@/api/generated/react-query/model/itemRespons
 export type MiningResourceType = 'ore' | 'enmatter';
 
 export type CurrentMiningClaim = {
+  trackingId: number;
   resourceName: string | null;
   resourceType: MiningResourceType | null;
   itemId: string | null;
@@ -14,6 +15,7 @@ export type CurrentMiningClaim = {
 };
 
 export type MiningClaimPayload = {
+  trackingId: number;
   resourceName: string;
   resourceType: MiningResourceType;
   itemId: string;
@@ -30,6 +32,7 @@ export type MiningClaimParserEvent =
   | { type: 'claim-depleted'; payload: MiningClaimPayload };
 
 export const emptyClaim = (): CurrentMiningClaim => ({
+  trackingId: 0,
   resourceName: null,
   resourceType: null,
   itemId: null,
@@ -55,18 +58,21 @@ function roundPed(value: number): number {
 
 export class MiningClaimParser {
   private currentClaim: CurrentMiningClaim | null = null;
-  private readonly claims = new Map<MiningResourceType, CurrentMiningClaim>();
+  private readonly toExtract: CurrentMiningClaim[] = [];
+  private readonly discoveryClaims: CurrentMiningClaim[] = [];
+  private nextTrackingId = 1;
   private playerName = '';
 
   setPlayerName(playerName: string) {
     this.playerName = playerName;
   }
 
-  setItems(items: ItemResponse[]) {
-    if (!this.currentClaim?.resourceName || !this.currentClaim.resourceType)
+  setItems(items: ItemResponse[], targetClaim?: CurrentMiningClaim) {
+    const claim = targetClaim ?? this.currentClaim;
+    if (!claim?.resourceName || !claim.resourceType)
       return;
-    const resourceName = this.currentClaim.resourceName;
-    const resourceType = this.currentClaim.resourceType;
+    const resourceName = claim.resourceName;
+    const resourceType = claim.resourceType;
     const matchingItems = items.filter(
       (item) => item.name === resourceName,
     );
@@ -84,7 +90,7 @@ export class MiningClaimParser {
         ? isEnmatter
         : isOre;
     });
-    this.currentClaim.itemId =
+    claim.itemId =
       typedItem?.id ??
       (matchingItems.length === 1 ? (matchingItems[0]?.id ?? null) : null);
   }
@@ -102,31 +108,32 @@ export class MiningClaimParser {
     if (resourceDeed) {
       const resourceType: MiningResourceType =
         resourceDeed[1] === 'Energy Matter' ? 'enmatter' : 'ore';
-      if (this.currentClaim && !this.currentClaim.resourceType) {
-        this.currentClaim.resourceType = resourceType;
-        this.claims.set(resourceType, this.currentClaim);
-      } else {
-        this.currentClaim = this.claims.get(resourceType) ?? emptyClaim();
-        this.currentClaim.resourceType = resourceType;
-        this.claims.set(resourceType, this.currentClaim);
+      const claim = this.discoveryClaims.find(
+        (candidate) => !candidate.resourceType && candidate.resourceName,
+      ) ?? emptyClaim();
+      claim.resourceType = resourceType;
+      if (!this.discoveryClaims.includes(claim)) {
+        this.discoveryClaims.push(claim);
       }
-      if (this.currentClaim.resourceName) {
-        this.setItems(items);
-        console.log('Source trouvée', this.currentClaim.resourceName);
-        return { type: 'claim-detected', payload: this.toPayload() };
+      if (claim.resourceName) {
+        this.setItems(items, claim);
+        return this.registerDiscoveredClaim(claim);
       }
       return null;
     }
 
     const claimedResource = message.match(claimedResourcePattern);
     if (claimedResource) {
-      this.currentClaim ??= emptyClaim();
-      this.currentClaim.resourceName = claimedResource[1] ?? null;
-      if (!this.currentClaim.resourceType) return null;
-      this.claims.set(this.currentClaim.resourceType, this.currentClaim);
-      this.setItems(items);
-      console.log('Source trouvée', this.currentClaim.resourceName);
-      return { type: 'claim-detected', payload: this.toPayload() };
+      const claim =
+        this.discoveryClaims.find((candidate) => !candidate.resourceName) ??
+        emptyClaim();
+      claim.resourceName = claimedResource[1] ?? null;
+      if (!this.discoveryClaims.includes(claim)) {
+        this.discoveryClaims.push(claim);
+      }
+      if (!claim.resourceType) return null;
+      this.setItems(items, claim);
+      return this.registerDiscoveredClaim(claim);
     }
 
     const escapedPlayerName = this.playerName.replace(
@@ -139,31 +146,26 @@ export class MiningClaimParser {
     const ownGlobal = this.playerName ? message.match(ownGlobalPattern) : null;
     if (ownGlobal) {
       const resourceName = ownGlobal[1];
-      this.activateClaim(resourceName);
-      if (!this.currentClaim) return null;
-      if (resourceName === this.currentClaim.resourceName) {
-        this.currentClaim.isGlobal = true;
-        this.currentClaim.isHof = message.includes('Hall of Fame');
-        this.currentClaim.isAth = /ATH|all[- ]time high/i.test(message);
-        return { type: 'claim-updated', payload: this.toPayload() };
-      }
-      return null;
+      const claim = this.findClaim(resourceName);
+      if (!claim) return null;
+      claim.isGlobal = true;
+      claim.isHof = message.includes('Hall of Fame');
+      claim.isAth = /ATH|all[- ]time high/i.test(message);
+      return this.toEvent('claim-updated', claim);
     }
 
     const extraction = message.match(extractionPattern);
     if (extraction) {
-      this.activateClaim(extraction[1] ?? '');
-      if (
-        !this.currentClaim ||
-        extraction[1] !== this.currentClaim.resourceName
-      )
+      const resourceName = extraction[1] ?? '';
+      if (!this.currentClaim) this.activateClaim(resourceName);
+      if (!this.currentClaim || resourceName !== this.currentClaim.resourceName)
         return null;
       const quantity = Number(extraction[2]);
       const value = parsePed(extraction[3] ?? '');
       if (Number.isFinite(quantity) && Number.isFinite(value)) {
         this.currentClaim.quantity += quantity;
         this.currentClaim.value = roundPed(this.currentClaim.value + value);
-        return { type: 'claim-updated', payload: this.toPayload() };
+        return this.toEvent('claim-updated', this.currentClaim);
       }
       return null;
     }
@@ -177,7 +179,7 @@ export class MiningClaimParser {
         console.error('Mining claim incomplet, envoi annulé', claim);
         return null;
       }
-      return { type: 'claim-depleted', payload: this.toPayload() };
+      return this.toEvent('claim-depleted', this.currentClaim);
     }
 
     return null;
@@ -185,25 +187,54 @@ export class MiningClaimParser {
 
   reset() {
     this.currentClaim = null;
-    this.claims.clear();
+    this.discoveryClaims.length = 0;
+    this.toExtract.length = 0;
+    this.nextTrackingId = 1;
   }
 
   resetActiveClaim() {
-    if (!this.currentClaim?.resourceType) return;
-    this.claims.delete(this.currentClaim.resourceType);
+    if (!this.currentClaim) return;
+    const index = this.toExtract.indexOf(this.currentClaim);
+    if (index >= 0) this.toExtract.splice(index, 1);
     this.currentClaim = null;
   }
 
   private activateClaim(resourceName: string) {
-    const claim = [...this.claims.values()].find(
-      (candidate) => candidate.resourceName === resourceName,
+    const claim = this.toExtract.find(
+      (candidate) =>
+        candidate.resourceName === resourceName &&
+        candidate.resourceType !== null,
     );
     if (claim) this.currentClaim = claim;
   }
 
-  private toPayload(): MiningClaimPayload {
-    const claim = this.currentClaim ?? emptyClaim();
+  private findClaim(resourceName: string) {
+    if (this.currentClaim?.resourceName === resourceName) {
+      return this.currentClaim;
+    }
+    return this.toExtract.find((claim) => claim.resourceName === resourceName);
+  }
+
+  private registerDiscoveredClaim(claim: CurrentMiningClaim): MiningClaimParserEvent {
+    claim.trackingId = this.nextTrackingId++;
+    const discoveryIndex = this.discoveryClaims.indexOf(claim);
+    if (discoveryIndex >= 0) this.discoveryClaims.splice(discoveryIndex, 1);
+    this.toExtract.push(claim);
+    console.log('Source trouvée', claim.resourceName);
+    return this.toEvent('claim-detected', claim);
+  }
+
+  private toEvent(
+    type: MiningClaimParserEvent['type'],
+    claim: CurrentMiningClaim,
+  ): MiningClaimParserEvent {
+    return { type, payload: this.toPayload(claim) };
+  }
+
+  private toPayload(source?: CurrentMiningClaim): MiningClaimPayload {
+    const claim = source ?? this.currentClaim ?? emptyClaim();
     return {
+      trackingId: claim.trackingId,
       resourceName: claim.resourceName ?? 'Unknown',
       resourceType: claim.resourceType ?? 'ore',
       itemId: claim.itemId ?? '',

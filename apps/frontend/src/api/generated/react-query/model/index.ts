@@ -71,8 +71,6 @@ export * from './miningClaimCreate.ts';
 export * from './miningClaimPatch.ts';
 export * from './miningClaimResponse.ts';
 export * from './miningClaimsResponse.ts';
-export * from './miningClaimsWithSessionResponse.ts';
-export * from './miningClaimsWithSessionResponseClaimsItem.ts';
 export * from './miningCostLineResponse.ts';
 export * from './miningCostLineUpdate.ts';
 export * from './miningCurrentEnhancerResponse.ts';

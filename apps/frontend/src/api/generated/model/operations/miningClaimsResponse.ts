@@ -4,10 +4,9 @@
  * Entropia Manager API
  */
 import type { MiningClaimResponse } from './miningClaimResponse.ts';
+import type { SessionResponse } from './sessionResponse.ts';
 
 export type MiningClaimsResponse = {
+  session: SessionResponse;
   claims: MiningClaimResponse[];
-  count: number;
-  /** @pattern ^(?!^[-+.]*$)[+-]?0*\d*\.?\d*$ */
-  totalValue: string;
 };
